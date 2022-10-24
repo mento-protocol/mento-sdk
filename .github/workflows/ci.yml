@@ -1,7 +1,7 @@
 name: "CI"
 
 #  not sure what to put in here
-env: 
+env:
   TS_PROFILE: "ci"
 
 on:
@@ -64,4 +64,3 @@ jobs:
         run: |
           echo "## Tests" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
-     
