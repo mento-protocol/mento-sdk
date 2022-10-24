@@ -4,7 +4,6 @@
   "description": "The SDK for Mento Protocol",
   "main": "index.js",
   "scripts": {
-    "test": "yarn test",
     "lint": "yarn prettier",
     "lint:check": "yarn prettier:check && yarn lint:check",
     "postinstall": "husky install",
