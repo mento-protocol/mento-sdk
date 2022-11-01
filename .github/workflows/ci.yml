@@ -1,6 +1,5 @@
 name: "CI"
 
-#  not sure what to put in here
 env:
   TS_PROFILE: "ci"
 
@@ -48,19 +47,4 @@ jobs:
       - name: "Add lint summary"
         run: |
           echo "## Lint" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
-
-      - name: "Run the tests"
-        run: "yarn test"
-
-      - name: "Build the sdk"
-        run: |
-          "yarn build"
-
-      - name: "Publish npm packages"
-        run: "yarn publish"
-
-      - name: "Add test summary"
-        run: |
-          echo "## Tests" >> $GITHUB_STEP_SUMMARY
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY

@@ -6,9 +6,3 @@ singleQuote: false
 tabWidth: 2
 trailingComma: "all"
 
-overrides:
-  - files: ["*.sol"]
-    options:
-      compiler: ">=0.5.13"
-      tabWidth: 2
-      printWidth: 120
