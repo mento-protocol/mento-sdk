@@ -1,0 +1,32 @@
+{
+  "name": "mento-sdk",
+  "version": "1.0.0",
+  "description": "The SDK for Mento Protocol",
+  "main": "index.js",
+  "scripts": {
+    "lint": "yarn prettier",
+    "lint:check": "yarn prettier:check && yarn lint:check",
+    "postinstall": "husky install",
+    "prettier": "prettier --config \"./.prettierrc.yml\" --write \"**/*.{json,md,ts,js,yml}\"",
+    "prettier:check": "prettier --config \"./.prettierrc.yml\" --check \"**/*.{json,md,ts,js,yml}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mento-protocol/mento-sdk.git"
+  },
+  "author": "Mento Labs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mento-protocol/mento-sdk/issues"
+  },
+  "homepage": "https://github.com/mento-protocol/mento-sdk#readme",
+  "dependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "commitizen": "^4.2.5",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  }
+}
