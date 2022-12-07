@@ -1,32 +1,64 @@
 {
-  "name": "mento-sdk",
-  "version": "1.0.0",
-  "description": "The SDK for Mento Protocol",
-  "main": "index.js",
+  "name": "@mentoprotocol/sdk",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Mento LAbs",
+  "main": "dist/index.js",
+  "module": "dist/sdk.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
-    "lint": "yarn prettier",
-    "lint:check": "yarn prettier:check && yarn lint:check",
-    "postinstall": "husky install",
-    "prettier": "prettier --config \"./.prettierrc.yml\" --write \"**/*.{json,md,ts,js,yml}\"",
-    "prettier:check": "prettier --config \"./.prettierrc.yml\" --check \"**/*.{json,md,ts,js,yml}\""
+    "analyze": "size-limit --why",
+    "build": "dts build",
+    "lint": "dts lint",
+    "prepare": "dts build",
+    "size": "size-limit",
+    "start": "dts watch",
+    "test": "dts test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mento-protocol/mento-sdk.git"
+  "husky": {
+    "hooks": {
+      "pre-commit": "dts lint"
+    }
   },
-  "author": "Mento Labs",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mento-protocol/mento-sdk/issues"
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
   },
-  "homepage": "https://github.com/mento-protocol/mento-sdk#readme",
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=12"
+  },
+  "size-limit": [
+    {
+      "path": "dist/sdk.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/sdk.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^8.1.0",
+    "@tsconfig/recommended": "^1.0.1",
+    "dts-cli": "^1.6.0",
+    "husky": "^8.0.2",
+    "size-limit": "^8.1.0",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.3"
+  },
   "dependencies": {
-    "@commitlint/cli": "^17.1.2",
-    "@commitlint/config-conventional": "^17.1.0",
-    "commitizen": "^4.2.5",
-    "cz-conventional-changelog": "^3.3.0",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1"
+    "@ethersproject/providers": "^5.7.2",
+    "@mentolabs/core": "^1.0.3",
+    "ethers": "^5.7.2"
   }
 }
