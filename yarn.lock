@@ -1568,10 +1568,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@mentolabs/core@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@mentolabs/core/-/core-1.0.3.tgz#31d28868d3c0eae06c9b7e4579710cb46e16fa1f"
-  integrity sha512-pdNOKHO/eK/9HhWvCiE98xYpLBMLhDPL1lX0Mo2d32cUIMTlOQWrgx9hZZkxkktmtAzPcyO1Ep6JPF+8ZNYO0Q==
+"@mento-protocol/mento-core@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@mento-protocol/mento-core/-/mento-core-1.0.0.tgz#83e11b461cbe1cc3f026250cc62918d9fea4e7e2"
+  integrity sha512-EssErMTGvxfzsxjIDPPBkYKr0lyMDfC20Th1rpxTk9i5yhQgocnkvkwAhIp9iLLSbyrj17OhM+8sj/x78T1w/A==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"

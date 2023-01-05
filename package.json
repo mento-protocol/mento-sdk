@@ -2,7 +2,7 @@
   "name": "@mentoprotocol/sdk",
   "version": "0.1.0",
   "license": "MIT",
-  "author": "Mento LAbs",
+  "author": "Mento Labs",
   "main": "dist/index.js",
   "module": "dist/sdk.esm.js",
   "typings": "dist/index.d.ts",
@@ -17,7 +17,8 @@
     "prepare": "dts build",
     "size": "size-limit",
     "start": "dts watch",
-    "test": "dts test"
+    "test": "dts test",
+    "coverage": "dts test --coverage"
   },
   "husky": {
     "hooks": {
@@ -26,7 +27,7 @@
   },
   "prettier": {
     "printWidth": 80,
-    "semi": true,
+    "semi": false,
     "singleQuote": true,
     "trailingComma": "es5"
   },
@@ -58,7 +59,7 @@
   },
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",
-    "@mentolabs/core": "^1.0.3",
+    "@mento-protocol/mento-core": "^1.0.0",
     "ethers": "^5.7.2"
   }
 }
