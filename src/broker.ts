@@ -6,6 +6,7 @@ import {
   IExchangeProvider__factory,
 } from '@mentolabs/core'
 import { BigNumber } from 'ethers'
+import { strict as assert } from 'assert'
 
 interface Asset {
   address: string
@@ -81,6 +82,7 @@ export class Broker {
     amountOut: BigNumber
   ): Promise<BigNumber> {
     const pool = await this.getPoolForTokens(tokenIn, tokenOut)
+    // TODO: remove callStatic once vibisility of the function is updated
     return await this.broker.callStatic.getAmountIn(
       pool.poolManagerAddress,
       pool.poolId,
@@ -130,10 +132,10 @@ export class Broker {
       throw Error(`No pool found for ${tokenIn} and ${tokenOut}`)
     }
 
-    if (pools.length > 1) {
-      throw Error(`More than one pool found for ${tokenIn} and ${tokenOut}`)
-    }
-
+    assert(
+      pools.length === 1,
+      `More than one pool found for ${tokenIn} and ${tokenOut}`
+    )
     return pools[0]
   }
 }
