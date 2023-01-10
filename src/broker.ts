@@ -7,6 +7,7 @@ import {
 } from '@mentolabs/core'
 import { BigNumber } from 'ethers'
 import { strict as assert } from 'assert'
+import { getBrokerAddressFromRegistry } from './utils'
 
 interface Asset {
   address: string
@@ -21,15 +22,12 @@ interface Pool {
 
 export class Broker {
   private readonly provider: Provider
-  private readonly broker: IBroker
+  private readonly broker!: IBroker
   private pools: Pool[]
 
-  constructor(provider: Provider) {
+  constructor(provider: Provider, brokerAddress: string) {
     this.provider = provider
-    this.broker = IBroker__factory.connect(
-      '0x23a4D848b3976579d7371AFAF18b989D4ae0b031',
-      provider
-    )
+    this.broker = IBroker__factory.connect(brokerAddress, provider)
     this.pools = new Array<Pool>()
   }
 
@@ -67,6 +65,17 @@ export class Broker {
       pool.assets.forEach((a) => assets.add(a))
     }
     return Array.from(assets)
+  }
+
+  async getTradeablePairs(): Promise<[string, string][]> {
+    let assetPairs: [string, string][] = []
+
+    const pools = await this.getPools()
+    for (let pool of pools) {
+      assert(pool.assets.length == 2)
+      assetPairs.push([pool.assets[0], pool.assets[1]])
+    }
+    return assetPairs
   }
 
   /**
