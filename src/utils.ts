@@ -23,3 +23,14 @@ export async function getBrokerAddressFromRegistry(
 
   return brokerAddress
 }
+
+export async function getSymbolForAssetAddress(
+  provider: Provider,
+  address: string
+): Promise<string> {
+  const erc20SymbolSignature = [
+    'function symbol() external view returns (string)',
+  ]
+  const contract = new Contract(address, erc20SymbolSignature, provider)
+  return await contract.symbol()
+}

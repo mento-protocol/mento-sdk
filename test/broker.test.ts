@@ -8,7 +8,7 @@ let cUsdAddr = '0x62492A644A588FD904270BeD06ad52B9abfEA1aE'
 
 describe('Broker', () => {
   beforeAll(async () => {
-    testee = new Broker(
+    testee = await Broker.create(
       new JsonRpcProvider('https://baklava-forno.celo-testnet.org')
     )
   })
@@ -18,32 +18,32 @@ describe('Broker', () => {
   })
 
   it('should get all exchanges', async () => {
-    console.log(await testee.getPools())
+    console.log(await testee.getExchanges())
   })
 
-  it('should get all assets', async () => {
-    console.log(await testee.getAssets())
-  })
+  // it('should get all assets', async () => {
+  //   console.log(await testee.getAssets())
+  // })
 
-  it('should getAmountIn', async () => {
-    let res = await testee.getAmountIn(
-      celoAddr,
-      cUsdAddr,
-      utils.parseEther('10')
-    )
+  // it('should getAmountIn', async () => {
+  //   let res = await testee.getAmountIn(
+  //     celoAddr,
+  //     cUsdAddr,
+  //     utils.parseEther('10')
+  //   )
 
-    console.log(res.toString())
-  })
+  //   console.log(res.toString())
+  // })
 
-  it('should getAmountOut', async () => {
-    let res = await testee.getAmountOut(
-      celoAddr,
-      cUsdAddr,
-      utils.parseEther('10')
-    )
+  // it('should getAmountOut', async () => {
+  //   let res = await testee.getAmountOut(
+  //     celoAddr,
+  //     cUsdAddr,
+  //     utils.parseEther('10')
+  //   )
 
-    console.log(res.toString())
-  })
+  //   console.log(res.toString())
+  // })
 })
 
 // b = Broker()

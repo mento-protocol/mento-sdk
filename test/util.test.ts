@@ -1,6 +1,9 @@
 import { JsonRpcProvider } from '@ethersproject/providers'
 import { ethers, Contract } from 'ethers'
-import { getBrokerAddressFromRegistry } from '../src/utils'
+import {
+  getBrokerAddressFromRegistry,
+  getSymbolForAssetAddress,
+} from '../src/utils'
 
 class FakeRegistryContract {
   private returnaddress: string
@@ -52,4 +55,14 @@ describe('Utils', () => {
   //     await getBrokerAddressFromRegistry(new JsonRpcProvider('FakeProviderUrl'))
   //   ).toBe(brokerAddress)
   // })
+
+  it('Should return the symbol of an erc20 contract address', async () => {
+    const tokenAddr = '0x62492A644A588FD904270BeD06ad52B9abfEA1aE'
+
+    let result = await getSymbolForAssetAddress(
+      new JsonRpcProvider('https://baklava-forno.celo-testnet.org'),
+      tokenAddr
+    )
+    console.log(result)
+  })
 })

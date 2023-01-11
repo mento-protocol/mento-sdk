@@ -14,55 +14,62 @@ interface Asset {
   symbol: string
 }
 
-interface Pool {
-  poolManagerAddress: string
-  poolId: string
+interface Exchange {
+  exchangeManagerAddress: string
+  exchangeId: string
   assets: string[]
 }
 
 export class Broker {
   private readonly provider: Provider
-  private readonly broker!: IBroker
-  private pools: Pool[]
+  private readonly broker: IBroker
+  private exchanges: Exchange[]
 
   constructor(provider: Provider, brokerAddress: string) {
     this.provider = provider
     this.broker = IBroker__factory.connect(brokerAddress, provider)
-    this.pools = new Array<Pool>()
+    this.exchanges = new Array<Exchange>()
   }
 
-  async getPools(): Promise<Pool[]> {
-    if (this.pools.length > 0) {
-      return this.pools
+  /**
+   * Create a new Broker instance
+   * @param provider
+   * @returns
+   */
+  static async create(provider: Provider) {
+    return new Broker(provider, await getBrokerAddressFromRegistry(provider))
+  }
+
+  async getExchanges(): Promise<Exchange[]> {
+    if (this.exchanges.length > 0) {
+      return this.exchanges
     }
 
-    let pools: Pool[] = []
-    let poolManagersAddresses = await this.broker.getExchangeProviders()
-    for (let poolManagerAddr of poolManagersAddresses) {
-      let poolManager: IExchangeProvider = IExchangeProvider__factory.connect(
-        poolManagerAddr,
-        this.provider
-      )
-      let poolsInManager = await poolManager.getExchanges()
-      for (let pool of poolsInManager) {
-        pools.push({
-          poolManagerAddress: poolManagerAddr,
-          poolId: pool.exchangeId,
-          assets: pool.assets,
+    let exchanges: Exchange[] = []
+    let exchangeManagersAddresses = await this.broker.getExchangeProviders()
+    for (let exchangeManagerAddr of exchangeManagersAddresses) {
+      let exchangeManager: IExchangeProvider =
+        IExchangeProvider__factory.connect(exchangeManagerAddr, this.provider)
+      let exchangesInManager = await exchangeManager.getExchanges()
+      for (let exchange of exchangesInManager) {
+        exchanges.push({
+          exchangeManagerAddress: exchangeManagerAddr,
+          exchangeId: exchange.exchangeId,
+          assets: exchange.assets,
         })
       }
     }
 
-    this.pools = pools
-    return pools
+    this.exchanges = exchanges
+    return exchanges
   }
 
-  async getAssets(): Promise<string[]> {
-    let assets: Set<string> = new Set<string>()
+  async getAssets(): Promise<Asset[]> {
+    let assets: Set<Asset> = new Set<Asset>()
 
-    const pools = await this.getPools()
-    for (let pool of pools) {
-      pool.assets.forEach((a) => assets.add(a))
+    const exchanges = await this.getExchanges()
+    for (let exchange of exchanges) {
+      exchange.assets.forEach((a) => assets.add({ address: a, symbol: 'sds' }))
     }
     return Array.from(assets)
   }
@@ -70,10 +77,10 @@ export class Broker {
   async getTradeablePairs(): Promise<[string, string][]> {
     let assetPairs: [string, string][] = []
 
-    const pools = await this.getPools()
-    for (let pool of pools) {
-      assert(pool.assets.length == 2)
-      assetPairs.push([pool.assets[0], pool.assets[1]])
+    const exchanges = await this.getExchanges()
+    for (let exchange of exchanges) {
+      assert(exchange.assets.length == 2)
+      assetPairs.push([exchange.assets[0], exchange.assets[1]])
     }
     return assetPairs
   }
@@ -90,11 +97,11 @@ export class Broker {
     tokenOut: string,
     amountOut: BigNumber
   ): Promise<BigNumber> {
-    const pool = await this.getPoolForTokens(tokenIn, tokenOut)
+    const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
     // TODO: remove callStatic once vibisility of the function is updated
     return await this.broker.callStatic.getAmountIn(
-      pool.poolManagerAddress,
-      pool.poolId,
+      exchange.exchangeManagerAddress,
+      exchange.exchangeId,
       tokenIn,
       tokenOut,
       amountOut
@@ -113,10 +120,10 @@ export class Broker {
     tokenOut: string,
     amountIn: BigNumber
   ): Promise<BigNumber> {
-    const pool = await this.getPoolForTokens(tokenIn, tokenOut)
+    const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
     return await this.broker.callStatic.getAmountOut(
-      pool.poolManagerAddress,
-      pool.poolId,
+      exchange.exchangeManagerAddress,
+      exchange.exchangeId,
       tokenIn,
       tokenOut,
       amountIn
@@ -124,27 +131,27 @@ export class Broker {
   }
 
   /**
-   * Returns the pool for the provided pairs
+   * Returns the exchange for the provided pairs
    * @param tokenIn
    * @param tokenOut
    * @returns
    */
-  private async getPoolForTokens(
+  private async getExchangeForTokens(
     tokenIn: string,
     tokenOut: string
-  ): Promise<Pool> {
-    const pools = (await this.getPools()).filter(
-      (p) => p.assets.includes(tokenIn) && p.assets.includes(tokenOut)
+  ): Promise<Exchange> {
+    const exchanges = (await this.getExchanges()).filter(
+      (e) => e.assets.includes(tokenIn) && e.assets.includes(tokenOut)
     )
 
-    if (pools.length == 0) {
-      throw Error(`No pool found for ${tokenIn} and ${tokenOut}`)
+    if (exchanges.length == 0) {
+      throw Error(`No exchange found for ${tokenIn} and ${tokenOut}`)
     }
 
     assert(
-      pools.length === 1,
-      `More than one pool found for ${tokenIn} and ${tokenOut}`
+      exchanges.length === 1,
+      `More than one exchange found for ${tokenIn} and ${tokenOut}`
     )
-    return pools[0]
+    return exchanges[0]
   }
 }
