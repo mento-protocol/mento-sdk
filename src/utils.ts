@@ -7,14 +7,10 @@ export async function getBrokerAddressFromRegistry(
   const celoRegistryAddress = '0x000000000000000000000000000000000000ce10'
   const brokerIdentifier = 'Broker'
 
-  const registryFnSignature = [
+  const registryAbi = [
     'function getAddressForString(string calldata identifier) external view returns (address)',
   ]
-  const contract = new Contract(
-    celoRegistryAddress,
-    registryFnSignature,
-    provider
-  )
+  const contract = new Contract(celoRegistryAddress, registryAbi, provider)
 
   const brokerAddress = await contract.getAddressForString(brokerIdentifier)
   if (brokerAddress === constants.AddressZero) {
@@ -24,13 +20,12 @@ export async function getBrokerAddressFromRegistry(
   return brokerAddress
 }
 
-export async function getSymbolForAssetAddress(
+export async function getSymbolFromTokenAddress(
   provider: Provider,
-  address: string
+  tokenAddr: string
 ): Promise<string> {
-  const erc20SymbolSignature = [
-    'function symbol() external view returns (string)',
-  ]
-  const contract = new Contract(address, erc20SymbolSignature, provider)
+  const erc20Abi = ['function symbol() external view returns (string memory)']
+  const contract = new Contract(tokenAddr, erc20Abi, provider)
+
   return await contract.symbol()
 }

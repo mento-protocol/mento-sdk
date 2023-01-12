@@ -7,7 +7,10 @@ import {
 } from '@mentolabs/core'
 import { BigNumber } from 'ethers'
 import { strict as assert } from 'assert'
-import { getBrokerAddressFromRegistry } from './utils'
+import {
+  getBrokerAddressFromRegistry,
+  getSymbolFromTokenAddress,
+} from './utils'
 
 interface Asset {
   address: string
@@ -20,7 +23,7 @@ interface Exchange {
   assets: string[]
 }
 
-export class Broker {
+export class Mento {
   private readonly provider: Provider
   private readonly broker: IBroker
   private exchanges: Exchange[]
@@ -28,16 +31,17 @@ export class Broker {
   constructor(provider: Provider, brokerAddress: string) {
     this.provider = provider
     this.broker = IBroker__factory.connect(brokerAddress, provider)
+    console.log('Broker', this.broker)
     this.exchanges = new Array<Exchange>()
   }
 
   /**
-   * Create a new Broker instance
+   * Creates a Broker instance
    * @param provider
    * @returns
    */
   static async create(provider: Provider) {
-    return new Broker(provider, await getBrokerAddressFromRegistry(provider))
+    return new Mento(provider, await getBrokerAddressFromRegistry(provider))
   }
 
   async getExchanges(): Promise<Exchange[]> {
@@ -47,6 +51,7 @@ export class Broker {
 
     let exchanges: Exchange[] = []
     let exchangeManagersAddresses = await this.broker.getExchangeProviders()
+    console.log('Exchange managers', exchangeManagersAddresses)
     for (let exchangeManagerAddr of exchangeManagersAddresses) {
       let exchangeManager: IExchangeProvider =
         IExchangeProvider__factory.connect(exchangeManagerAddr, this.provider)
@@ -69,18 +74,40 @@ export class Broker {
 
     const exchanges = await this.getExchanges()
     for (let exchange of exchanges) {
-      exchange.assets.forEach((a) => assets.add({ address: a, symbol: 'sds' }))
+      for (let assetAddr of exchange.assets) {
+        assets.add({
+          address: assetAddr,
+          symbol: await getSymbolFromTokenAddress(this.provider, assetAddr),
+        })
+      }
     }
     return Array.from(assets)
   }
 
-  async getTradeablePairs(): Promise<[string, string][]> {
-    let assetPairs: [string, string][] = []
+  async getTradeablePairs(): Promise<[Asset, Asset][]> {
+    let assetPairs: [Asset, Asset][] = []
 
     const exchanges = await this.getExchanges()
     for (let exchange of exchanges) {
       assert(exchange.assets.length == 2)
-      assetPairs.push([exchange.assets[0], exchange.assets[1]])
+
+      const assetsAddressses = exchange.assets
+      assetPairs.push([
+        {
+          address: assetsAddressses[0],
+          symbol: await getSymbolFromTokenAddress(
+            this.provider,
+            assetsAddressses[0]
+          ),
+        },
+        {
+          address: assetsAddressses[1],
+          symbol: await getSymbolFromTokenAddress(
+            this.provider,
+            assetsAddressses[1]
+          ),
+        },
+      ])
     }
     return assetPairs
   }
@@ -127,6 +154,56 @@ export class Broker {
       tokenIn,
       tokenOut,
       amountIn
+    )
+  }
+
+  /**
+   * Execute a token swap with fixed amountIn.
+   * @param tokenIn
+   * @param tokenOut
+   * @param amountOut
+   * @returns
+   */
+  async swapIn(
+    tokenIn: string,
+    tokenOut: string,
+    amountOut: BigNumber,
+    amountOutMin: BigNumber
+  ): Promise<BigNumber> {
+    const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
+    // TODO: remove callStatic once vibisility of the function is updated
+    return await this.broker.callStatic.swapIn(
+      exchange.exchangeManagerAddress,
+      exchange.exchangeId,
+      tokenIn,
+      tokenOut,
+      amountOut,
+      amountOutMin
+    )
+  }
+
+  /**
+   * Execute a token swap with fixed amountOut.
+   * @param tokenIn
+   * @param tokenOut
+   * @param amountOut
+   * @returns
+   */
+  async swapOut(
+    tokenIn: string,
+    tokenOut: string,
+    amountIn: BigNumber,
+    amountInMax: BigNumber
+  ): Promise<BigNumber> {
+    const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
+    // TODO: remove callStatic once vibisility of the function is updated
+    return await this.broker.callStatic.swapOut(
+      exchange.exchangeManagerAddress,
+      exchange.exchangeId,
+      tokenIn,
+      tokenOut,
+      amountIn,
+      amountInMax
     )
   }
 

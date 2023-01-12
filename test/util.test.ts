@@ -1,68 +1,57 @@
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { ethers, Contract } from 'ethers'
+import { Contract } from 'ethers'
 import {
   getBrokerAddressFromRegistry,
-  getSymbolForAssetAddress,
+  getSymbolFromTokenAddress,
 } from '../src/utils'
 
-class FakeRegistryContract {
-  private returnaddress: string
-  constructor(returnAddress: string) {
-    this.returnaddress = returnAddress
-  }
-  public async getAddressForString(addressToGet: string): Promise<string> {
-    return this.returnaddress
-  }
-}
-
-let returnAddress
 jest.mock('ethers')
 
 const getAddressForString = jest.fn()
+const symbol = jest.fn()
 // @ts-ignore
 Contract.mockImplementation(() => ({
   getAddressForString,
+  symbol,
 }))
 
 describe('Utils', () => {
-  beforeAll(async () => {})
+  describe('getBrokerAddressFromRegistry()', () => {
+    it('should return the broker address from the registry', async () => {
+      const expectedBrokerAddr = '0xFakeBrokerAddress'
 
-  it('Should throw an exception when the registry returns the null address 0x...00', async () => {
-    // @ts-ignore
-    // ethers.Contract.mockReturnValue(
-    //   new FakeRegistryContract('0x0000000000000000000000000000000000000000')
-    // )
-    getAddressForString.mockReturnValue(
-      '0x0000000000000000000000000000000000000000'
-    )
+      getAddressForString.mockReturnValue(expectedBrokerAddr)
+      let result = await getBrokerAddressFromRegistry(
+        new JsonRpcProvider('FakeProviderUrl')
+      )
 
-    // @ts-ignore
-    // ethers.Contract.mockReturnValue(
-    //   new FakeRegistryContract('0x0000000000000000000000000000000000000000')
-    // )
+      expect(result).toBe(expectedBrokerAddr)
+    })
 
-    expect(async () => {
-      await getBrokerAddressFromRegistry(new JsonRpcProvider('FakeProviderUrl'))
-    }).rejects.toThrow()
+    it('should throw when the registry returns the null address 0x...00', async () => {
+      getAddressForString.mockReturnValue(
+        '0x0000000000000000000000000000000000000000'
+      )
+
+      expect(async () => {
+        await getBrokerAddressFromRegistry(
+          new JsonRpcProvider('FakeProviderUrl')
+        )
+      }).rejects.toThrow()
+    })
   })
 
-  // it('Should return the address from the registry', async () => {
-  //   let brokerAddress = '0xFakeBrokerAddress'
-  //   // @ts-ignore
-  //   ethers.Contract.mockReturnValue(new FakeRegistryContract(brokerAddress))
+  describe('getSymbolFromTokenAddress()', () => {
+    it('should return the symbol of the erc20 contract address', async () => {
+      const fakecUsdAddress = '0xcUSDAddress'
 
-  //   expect(
-  //     await getBrokerAddressFromRegistry(new JsonRpcProvider('FakeProviderUrl'))
-  //   ).toBe(brokerAddress)
-  // })
+      symbol.mockReturnValue('cUSD')
+      let result = await getSymbolFromTokenAddress(
+        new JsonRpcProvider('https://baklava-forno.celo-testnet.org'),
+        fakecUsdAddress
+      )
 
-  it('Should return the symbol of an erc20 contract address', async () => {
-    const tokenAddr = '0x62492A644A588FD904270BeD06ad52B9abfEA1aE'
-
-    let result = await getSymbolForAssetAddress(
-      new JsonRpcProvider('https://baklava-forno.celo-testnet.org'),
-      tokenAddr
-    )
-    console.log(result)
+      expect(result).toBe('cUSD')
+    })
   })
 })
