@@ -17,53 +17,28 @@ jest.setTimeout(70 * SECONDS)
 
 jest.mock('@mentolabs/core')
 
-const connect = jest.fn((a, b) => 'abc')
-const getExchangeProviders = jest.fn()
-const symbol = jest.fn()
+// const connect = jest.fn((a, b) => 'abc')
+// const getExchangeProviders = jest.fn()
+// const symbol = jest.fn()
 
 // @ts-ignore
 IBroker__factory.connect.mockReturnValue({
   getExchangeProviders: jest.fn(() => []),
 })
 
-describe('Broker', () => {
+describe('Mento', () => {
   beforeAll(async () => {
     testee = await Mento.create(
       new JsonRpcProvider('https://baklava-forno.celo-testnet.org')
     )
   })
 
-  // it('Should instantitate', async () => {
-  //   expect(Broker).toBeDefined()
-  // })
-
-  it('should get all exchanges', async () => {
-    console.log(await testee.getExchanges())
+  describe('getExchanges', () => {
+    it('should return the exchanges registered in the broker', async () => {
+      let result = await testee.getExchanges()
+      console.log(result)
+    })
   })
-
-  // it('should get all assets', async () => {
-  //   console.log(await testee.getTradeablePairs())
-  // })
-
-  // it('should getAmountIn', async () => {
-  //   let res = await testee.getAmountIn(
-  //     celoAddr,
-  //     cUsdAddr,
-  //     utils.parseEther('10')
-  //   )
-
-  //   console.log(res.toString())
-  // })
-
-  // it('should getAmountOut', async () => {
-  //   let res = await testee.getAmountOut(
-  //     celoAddr,
-  //     cUsdAddr,
-  //     utils.parseEther('10')
-  //   )
-
-  //   console.log(res.toString())
-  // })
 })
 
 // b = Broker()

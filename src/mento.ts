@@ -31,7 +31,6 @@ export class Mento {
   constructor(provider: Provider, brokerAddress: string) {
     this.provider = provider
     this.broker = IBroker__factory.connect(brokerAddress, provider)
-    console.log('Broker', this.broker)
     this.exchanges = new Array<Exchange>()
   }
 
