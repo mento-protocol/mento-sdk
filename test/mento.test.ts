@@ -2,12 +2,12 @@ import { Contract, utils } from 'ethers'
 import {
   IBroker__factory,
   IExchangeProvider__factory,
-} from '@mento-protocol/mento-core'
-import { JsonRpcProvider, Provider } from '@ethersproject/providers'
+} from '@mento-protocol/mento-core-ts'
 
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { Mento } from '../src/mento'
 
-jest.mock('@mento-protocol/mento-core')
+jest.mock('@mento-protocol/mento-core-ts')
 jest.mock('ethers')
 jest.setTimeout(60 * 1000)
 
@@ -20,12 +20,6 @@ describe('Mento', () => {
   const fakecEURTokenAddr = 'cEURTokenAddr'
   const fakecBRLTokenAddr = 'cBRLTokenAddr'
   const fakeCeloTokenAddr = 'celoTokenAddr'
-  const fakeSymbolsByTokenAddr = {
-    [fakecUSDTokenAddr]: 'cUSD',
-    [fakecEURTokenAddr]: 'cEUR',
-    [fakecBRLTokenAddr]: 'cBRL',
-    [fakeCeloTokenAddr]: 'CELO',
-  }
 
   // fake exchange providers and exchanges
   const fakeUsdAndEurExchangeProvider = 'ExchangeProvider0'

@@ -1,10 +1,10 @@
-import { JsonRpcProvider, Provider } from '@ethersproject/providers'
 import {
   getBrokerAddressFromRegistry,
   getSymbolFromTokenAddress,
 } from '../src/utils'
 
 import { Contract } from 'ethers'
+import { JsonRpcProvider } from '@ethersproject/providers'
 
 jest.mock('ethers')
 

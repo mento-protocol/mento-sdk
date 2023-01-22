@@ -4,7 +4,7 @@ import {
   IBroker__factory,
   IExchangeProvider,
   IExchangeProvider__factory,
-} from '@mento-protocol/mento-core'
+} from '@mento-protocol/mento-core-ts'
 import { Provider, TransactionResponse } from '@ethersproject/providers'
 import {
   getBrokerAddressFromRegistry,
