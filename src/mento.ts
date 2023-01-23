@@ -219,7 +219,7 @@ export class Mento {
         IExchangeProvider__factory.connect(exchangeProviderAddr, this.provider)
       let exchangesInManager = await exchangeManager.getExchanges()
       for (let exchange of exchangesInManager) {
-        assert(exchange.assets.length == 2, 'Exchange must have 2 assets')
+        assert(exchange.assets.length === 2, 'Exchange must have 2 assets')
 
         exchanges.push({
           providerAddr: exchangeProviderAddr,
@@ -247,7 +247,7 @@ export class Mento {
       (e) => e.assets.includes(token0) && e.assets.includes(token1)
     )
 
-    if (exchanges.length == 0) {
+    if (exchanges.length === 0) {
       throw Error(`No exchange found for ${token0} and ${token1}`)
     }
 

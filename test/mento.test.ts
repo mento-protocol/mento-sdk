@@ -124,7 +124,7 @@ describe('Mento', () => {
       let pairs = await mento.getTradeablePairs()
       expect(pairs.length).toBe(nOfFakeExchanges)
 
-      for (const [_, mockedExchanges] of Object.entries(
+      for (const [, mockedExchanges] of Object.entries(
         fakeExchangesByProviders
       )) {
         for (const mockedExchange of mockedExchanges) {
