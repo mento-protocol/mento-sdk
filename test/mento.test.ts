@@ -20,6 +20,12 @@ describe('Mento', () => {
   const fakecEURTokenAddr = 'cEURTokenAddr'
   const fakecBRLTokenAddr = 'cBRLTokenAddr'
   const fakeCeloTokenAddr = 'celoTokenAddr'
+  const fakeSymbolsByTokenAddr = {
+    [fakecUSDTokenAddr]: 'cUSD',
+    [fakecEURTokenAddr]: 'cEUR',
+    [fakecBRLTokenAddr]: 'cBRL',
+    [fakeCeloTokenAddr]: 'CELO',
+  }
 
   // fake exchange providers and exchanges
   const fakeUsdAndEurExchangeProvider = 'ExchangeProvider0'
@@ -81,30 +87,26 @@ describe('Mento', () => {
     }
   )
 
-  /*
-  TODO: Change the mock below to return different symbols for different tokens
-  instead of always returning 'fakeSymbol'
-
-  It's currently broken, looking into ito
-
-  const fakeSymbolsByTokenAddr = {
-    [fakecUSDTokenAddr]: 'cUSD',
-    [fakecEURTokenAddr]: 'cEUR',
-    [fakecBRLTokenAddr]: 'cBRL',
-    [fakeCeloTokenAddr]: 'CELO',
-  }
-  const symbolMockFn = jest.fn((provider: Provider, symbol: string) => {
-    return fakeSymbolsByTokenAddr[symbol as keyof typeof fakeSymbolsByTokenAddr]
-  })
-  */
-  const symbolMockFn = jest.fn(() => 'fakeSymbol')
-
   // @ts-ignore
-  Contract.mockImplementation(() => ({
-    getAddressForString: jest.fn(),
-    // @ts-ignore
-    symbol: symbolMockFn,
-  }))
+  Contract.mockImplementation((contractAddr: string) => {
+    const celoRegistryAddress = '0x000000000000000000000000000000000000ce10'
+    if (contractAddr === celoRegistryAddress) {
+      return {
+        getAddressForString: jest.fn(),
+      }
+    } else if (Object.keys(fakeSymbolsByTokenAddr).includes(contractAddr)) {
+      return {
+        symbol: jest.fn(
+          () =>
+            fakeSymbolsByTokenAddr[
+              contractAddr as keyof typeof fakeSymbolsByTokenAddr
+            ]
+        ),
+      }
+    } else {
+      throw new Error('Unknown contract address with no mock implementation')
+    }
+  })
 
   let mento: Mento
   let mentoWithSigner: Mento
@@ -128,9 +130,23 @@ describe('Mento', () => {
         fakeExchangesByProviders
       )) {
         for (const mockedExchange of mockedExchanges) {
+          const asset0Addr = mockedExchange.assets[0]
+          const asset1Addr = mockedExchange.assets[1]
           const pairOfMockedExchange = [
-            { address: mockedExchange.assets[0], symbol: 'fakeSymbol' },
-            { address: mockedExchange.assets[1], symbol: 'fakeSymbol' },
+            {
+              address: asset0Addr,
+              symbol:
+                fakeSymbolsByTokenAddr[
+                  asset0Addr as keyof typeof fakeSymbolsByTokenAddr
+                ],
+            },
+            {
+              address: asset1Addr,
+              symbol:
+                fakeSymbolsByTokenAddr[
+                  asset1Addr as keyof typeof fakeSymbolsByTokenAddr
+                ],
+            },
           ]
           expect(pairs).toContainEqual(pairOfMockedExchange)
         }
