@@ -1,10 +1,9 @@
-import { Contract, utils } from 'ethers'
+import { Contract, providers, utils } from 'ethers'
 import {
   IBroker__factory,
   IExchangeProvider__factory,
 } from '@mento-protocol/mento-core-ts'
 
-import { JsonRpcProvider } from '@ethersproject/providers'
 import { Mento } from '../src/mento'
 
 jest.mock('@mento-protocol/mento-core-ts')
@@ -53,7 +52,7 @@ describe('Mento', () => {
   )
 
   // fake ethers objects for initializing Mento
-  const fakeProvider = new JsonRpcProvider('fakeProviderUrl')
+  const fakeProvider = new providers.JsonRpcProvider('fakeProviderUrl')
   const mockSignerWithoutProvider = {
     sendTransaction: jest.fn(),
   }

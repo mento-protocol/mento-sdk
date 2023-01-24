@@ -1,6 +1,4 @@
-import { Contract, constants } from 'ethers'
-
-import { Provider } from '@ethersproject/providers'
+import { BigNumber, Contract, Signer, constants, providers } from 'ethers'
 
 /**
  * Returns the broker address from the Celo registry
@@ -8,7 +6,7 @@ import { Provider } from '@ethersproject/providers'
  * @returns the broker address
  */
 export async function getBrokerAddressFromRegistry(
-  provider: Provider
+  provider: providers.Provider
 ): Promise<string> {
   const celoRegistryAddress = '0x000000000000000000000000000000000000ce10'
   const brokerIdentifier = 'Broker'
@@ -33,7 +31,7 @@ export async function getBrokerAddressFromRegistry(
  * @returns the symbol of the erc20 token
  */
 export async function getSymbolFromTokenAddress(
-  provider: Provider,
+  provider: providers.Provider,
   tokenAddr: string
 ): Promise<string> {
   const erc20Abi = ['function symbol() external view returns (string memory)']

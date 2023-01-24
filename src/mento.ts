@@ -1,11 +1,10 @@
-import { BigNumber, ContractTransaction, Signer } from 'ethers'
+import { BigNumber, ContractTransaction, Signer, providers } from 'ethers'
 import {
   IBroker,
   IBroker__factory,
   IExchangeProvider,
   IExchangeProvider__factory,
 } from '@mento-protocol/mento-core-ts'
-import { Provider, TransactionResponse } from '@ethersproject/providers'
 import {
   getBrokerAddressFromRegistry,
   getSymbolFromTokenAddress,
@@ -25,7 +24,7 @@ interface Asset {
 }
 
 export class Mento {
-  private readonly provider: Provider
+  private readonly provider: providers.Provider
   private readonly signer?: Signer
   private readonly broker: IBroker
   private exchanges: Exchange[]
@@ -38,7 +37,7 @@ export class Mento {
    */
   private constructor(
     brokerAddress: string,
-    provider: Provider,
+    provider: providers.Provider,
     signer?: Signer
   ) {
     this.broker = IBroker__factory.connect(brokerAddress, provider)
@@ -54,7 +53,10 @@ export class Mento {
    * @param ethersSigner an optional ethers signer to execute swaps (must be connected to a provider)
    * @returns a new Mento object instance
    */
-  static async create(ethersProvider: Provider, ethersSigner?: Signer) {
+  static async create(
+    ethersProvider: providers.Provider,
+    ethersSigner?: Signer
+  ) {
     return new Mento(
       await getBrokerAddressFromRegistry(ethersProvider),
       ethersProvider,
@@ -143,7 +145,7 @@ export class Mento {
     tokenOut: string,
     amountIn: BigNumber,
     amountOutMin: BigNumber
-  ): Promise<TransactionResponse> {
+  ): Promise<providers.TransactionResponse> {
     if (!this.signer) {
       throw new Error('A signer is required to execute a swap')
     }
