@@ -24,12 +24,7 @@
       "pre-commit": "dts lint"
     }
   },
-  "prettier": {
-    "printWidth": 80,
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
+  "prettier": ".prettierrc.yml",
   "jest": {
     "testEnvironment": "node"
   },
