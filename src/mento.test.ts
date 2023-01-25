@@ -54,7 +54,7 @@ describe('Mento', () => {
   // fake ethers objects for initializing Mento
   const fakeProvider = new providers.JsonRpcProvider('fakeProviderUrl')
   const mockSignerWithoutProvider = {
-    sendTransaction: jest.fn(),
+    populateTransaction: jest.fn(),
   }
   const mockSignerWithProvider = {
     ...mockSignerWithoutProvider,
@@ -240,8 +240,10 @@ describe('Mento', () => {
         amountIn,
         amountOutMin
       )
-      expect(mockSignerWithProvider.sendTransaction).toHaveBeenCalledTimes(1)
-      expect(mockSignerWithProvider.sendTransaction).toHaveBeenCalledWith(
+      expect(mockSignerWithProvider.populateTransaction).toHaveBeenCalledTimes(
+        1
+      )
+      expect(mockSignerWithProvider.populateTransaction).toHaveBeenCalledWith(
         fakeTxObj
       )
     })
@@ -265,7 +267,7 @@ describe('Mento', () => {
           oneInWei,
           oneInWei
         )
-      ).rejects.toThrow('A signer is required to execute a swap')
+      ).rejects.toThrow('A signer is required to populate the swap tx object')
     })
 
     it('should throw if the signer is not connected to a provider', async () => {
@@ -279,7 +281,7 @@ describe('Mento', () => {
           oneInWei
         )
       ).rejects.toThrow(
-        'The signer must be connected to a provider to execute a swap'
+        'The signer must be connected to a provider to populate the swap tx object'
       )
     })
   })
@@ -311,8 +313,10 @@ describe('Mento', () => {
         amountOut,
         amountInMax
       )
-      expect(mockSignerWithProvider.sendTransaction).toHaveBeenCalledTimes(1)
-      expect(mockSignerWithProvider.sendTransaction).toHaveBeenCalledWith(
+      expect(mockSignerWithProvider.populateTransaction).toHaveBeenCalledTimes(
+        1
+      )
+      expect(mockSignerWithProvider.populateTransaction).toHaveBeenCalledWith(
         fakeTxObj
       )
     })
@@ -336,7 +340,7 @@ describe('Mento', () => {
           oneInWei,
           oneInWei
         )
-      ).rejects.toThrow('A signer is required to execute a swap')
+      ).rejects.toThrow('A signer is required to populate the swap tx object')
     })
 
     it('should throw if the signer is not connected to a provider', async () => {
@@ -350,7 +354,7 @@ describe('Mento', () => {
           oneInWei
         )
       ).rejects.toThrow(
-        'The signer must be connected to a provider to execute a swap'
+        'The signer must be connected to a provider to populate the swap tx object'
       )
     })
   })

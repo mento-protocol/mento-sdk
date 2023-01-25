@@ -1,4 +1,4 @@
-import { BigNumber, ContractTransaction, Signer, providers } from 'ethers'
+import { BigNumber, Signer, providers } from 'ethers'
 import {
   IBroker,
   IBroker__factory,
@@ -133,7 +133,8 @@ export class Mento {
   }
 
   /**
-   * Executes a swap with a fixed amount of tokenIn and a minimum amount of tokenOut
+   * Returns a token swap populated tx objerct with a fixed amount of tokenIn and a minimum amount of tokenOut
+   * Submitting the transaction to execute the swap is left to the consumer
    * @param tokenIn the token to be sold
    * @param tokenOut the token to be bought
    * @param amountIn the amount of tokenIn to be sold
@@ -145,14 +146,14 @@ export class Mento {
     tokenOut: Address,
     amountIn: BigNumber,
     amountOutMin: BigNumber
-  ): Promise<providers.TransactionResponse> {
+  ): Promise<providers.TransactionRequest> {
     if (!this.signer) {
-      throw new Error('A signer is required to execute a swap')
+      throw new Error('A signer is required to populate the swap tx object')
     }
 
     if (!this.signer.provider) {
       throw new Error(
-        'The signer must be connected to a provider to execute a swap'
+        'The signer must be connected to a provider to populate the swap tx object'
       )
     }
 
@@ -165,11 +166,12 @@ export class Mento {
       amountIn,
       amountOutMin
     )
-    return this.signer.sendTransaction(tx)
+    return this.signer.populateTransaction(tx)
   }
 
   /**
-   * Executes a token swap with a maximum amount of tokenIn and a fixed amount of tokenOut
+   * Returns a token swap populated tx object with a maximum amount of tokenIn and a fixed amount of tokenOut
+   * Submitting the transaction to execute the swap is left to the consumer
    * @param tokenIn the token to be sold
    * @param tokenOut the token to be bought
    * @param amountOut the amount of tokenOut to be bought
@@ -181,14 +183,14 @@ export class Mento {
     tokenOut: Address,
     amountOut: BigNumber,
     amountInMax: BigNumber
-  ): Promise<ContractTransaction> {
+  ): Promise<providers.TransactionRequest> {
     if (!this.signer) {
-      throw new Error('A signer is required to execute a swap')
+      throw new Error('A signer is required to populate the swap tx object')
     }
 
     if (!this.signer.provider) {
       throw new Error(
-        'The signer must be connected to a provider to execute a swap'
+        'The signer must be connected to a provider to populate the swap tx object'
       )
     }
 
@@ -201,7 +203,7 @@ export class Mento {
       amountOut,
       amountInMax
     )
-    return this.signer.sendTransaction(tx)
+    return this.signer.populateTransaction(tx)
   }
 
   /**
