@@ -65,6 +65,21 @@ export class Mento {
   }
 
   /**
+   * Create a new Mento object instance given a specific broker address
+   * @param brokerAddr the address of the broker contract
+   * @param ethersProvider an ethers provider
+   * @param ethersSigner an optional ethers signer to execute swaps (must be connected to a provider)
+   * @returns
+   */
+  static createWithBrokerAddress(
+    brokerAddr: Address,
+    ethersProvider: providers.Provider,
+    ethersSigner?: Signer
+  ) {
+    return new Mento(brokerAddr, ethersProvider, ethersSigner)
+  }
+
+  /**
    * Returns a list of all the pairs that can be traded on Mento
    * @returns The list of tradeable pairs in the form of [{address, symbol}]
    */
