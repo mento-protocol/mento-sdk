@@ -101,7 +101,7 @@ export class Mento {
     amountOut: BigNumber
   ): Promise<BigNumber> {
     const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
-    return await this.broker.getAmountIn(
+    return this.broker.getAmountIn(
       exchange.providerAddr,
       exchange.id,
       tokenIn,
@@ -123,7 +123,7 @@ export class Mento {
     amountIn: BigNumber
   ): Promise<BigNumber> {
     const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
-    return await this.broker.getAmountOut(
+    return this.broker.getAmountOut(
       exchange.providerAddr,
       exchange.id,
       tokenIn,
@@ -165,7 +165,7 @@ export class Mento {
       amountIn,
       amountOutMin
     )
-    return await this.signer.sendTransaction(tx)
+    return this.signer.sendTransaction(tx)
   }
 
   /**
@@ -201,7 +201,7 @@ export class Mento {
       amountOut,
       amountInMax
     )
-    return await this.signer.sendTransaction(tx)
+    return this.signer.sendTransaction(tx)
   }
 
   /**

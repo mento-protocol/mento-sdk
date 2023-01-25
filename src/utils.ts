@@ -37,5 +37,5 @@ export async function getSymbolFromTokenAddress(
   const erc20Abi = ['function symbol() external view returns (string memory)']
   const contract = new Contract(tokenAddr, erc20Abi, provider)
 
-  return await contract.symbol()
+  return contract.symbol()
 }
