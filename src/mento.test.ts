@@ -4,7 +4,7 @@ import {
   IExchangeProvider__factory,
 } from '@mento-protocol/mento-core-ts'
 
-import { Mento } from '../src/mento'
+import { Mento } from './mento'
 
 jest.mock('@mento-protocol/mento-core-ts')
 jest.mock('ethers')
