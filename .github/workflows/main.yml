@@ -19,14 +19,14 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1
+      - name: Install deps
+        run: yarn install
+
+      - name: Build
+        run: yarn build
 
       - name: Lint
         run: yarn lint
 
       - name: Test
         run: yarn test --ci --coverage --maxWorkers=2
-
-      - name: Build
-        run: yarn build
