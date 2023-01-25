@@ -12,7 +12,7 @@
   "scripts": {
     "analyze": "size-limit --why",
     "build": "dts build",
-    "lint": "dts lint",
+    "lint": "dts lint --config \"./.prettierrc.yml\"",
     "prepare": "dts build",
     "size": "size-limit",
     "start": "dts watch",
@@ -24,7 +24,6 @@
       "pre-commit": "dts lint"
     }
   },
-  "prettier": ".prettierrc.yml",
   "jest": {
     "testEnvironment": "node"
   },
