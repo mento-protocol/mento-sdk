@@ -7,7 +7,7 @@ import { BigNumber, Contract, Signer, constants, providers } from 'ethers'
  */
 export async function getBrokerAddressFromRegistry(
   provider: providers.Provider
-): Promise<string> {
+): Promise<Address> {
   const celoRegistryAddress = '0x000000000000000000000000000000000000ce10'
   const brokerIdentifier = 'Broker'
 
@@ -32,7 +32,7 @@ export async function getBrokerAddressFromRegistry(
  */
 export async function getSymbolFromTokenAddress(
   provider: providers.Provider,
-  tokenAddr: string
+  tokenAddr: Address
 ): Promise<string> {
   const erc20Abi = ['function symbol() external view returns (string memory)']
   const contract = new Contract(tokenAddr, erc20Abi, provider)

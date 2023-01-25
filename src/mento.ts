@@ -13,13 +13,13 @@ import {
 import { strict as assert } from 'assert'
 
 interface Exchange {
-  providerAddr: string
-  id: string
+  providerAddr: Address
+  id: Address
   assets: string[]
 }
 
 interface Asset {
-  address: string
+  address: Address
   symbol: string
 }
 
@@ -36,7 +36,7 @@ export class Mento {
    * @param signer an optional ethers signer to execute swaps (must be connected to a provider)
    */
   private constructor(
-    brokerAddress: string,
+    brokerAddress: Address,
     provider: providers.Provider,
     signer?: Signer
   ) {
@@ -96,8 +96,8 @@ export class Mento {
    * @returns the amount of tokenIn to be sold
    */
   async getAmountIn(
-    tokenIn: string,
-    tokenOut: string,
+    tokenIn: Address,
+    tokenOut: Address,
     amountOut: BigNumber
   ): Promise<BigNumber> {
     const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
@@ -118,8 +118,8 @@ export class Mento {
    * @returns the amount of tokenOut to be bought
    */
   async getAmountOut(
-    tokenIn: string,
-    tokenOut: string,
+    tokenIn: Address,
+    tokenOut: Address,
     amountIn: BigNumber
   ): Promise<BigNumber> {
     const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
@@ -141,8 +141,8 @@ export class Mento {
    * @returns an ethers TransactionResponse object
    */
   async swapIn(
-    tokenIn: string,
-    tokenOut: string,
+    tokenIn: Address,
+    tokenOut: Address,
     amountIn: BigNumber,
     amountOutMin: BigNumber
   ): Promise<providers.TransactionResponse> {
@@ -177,8 +177,8 @@ export class Mento {
    * @returns
    */
   async swapOut(
-    tokenIn: string,
-    tokenOut: string,
+    tokenIn: Address,
+    tokenOut: Address,
     amountOut: BigNumber,
     amountInMax: BigNumber
   ): Promise<ContractTransaction> {
@@ -242,8 +242,8 @@ export class Mento {
    * @returns
    */
   private async getExchangeForTokens(
-    token0: string,
-    token1: string
+    token0: Address,
+    token1: Address
   ): Promise<Exchange> {
     const exchanges = (await this.getExchanges()).filter(
       (e) => e.assets.includes(token0) && e.assets.includes(token1)
