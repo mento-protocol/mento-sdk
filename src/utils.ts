@@ -1,4 +1,4 @@
-import { BigNumber, Contract, Signer, constants, providers } from 'ethers'
+import { Contract, constants, providers } from 'ethers'
 
 /**
  * Returns the broker address from the Celo registry
