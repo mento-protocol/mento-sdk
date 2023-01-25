@@ -75,7 +75,7 @@ export class Mento {
     for (let exchange of exchanges) {
       const asset0 = exchange.assets[0]
       const asset1 = exchange.assets[1]
-      let symbols = await Promise.all([
+      const symbols = await Promise.all([
         getSymbolFromTokenAddress(this.provider, asset0),
         getSymbolFromTokenAddress(this.provider, asset1),
       ])
@@ -215,12 +215,12 @@ export class Mento {
 
     let exchanges: Exchange[] = []
 
-    let exchangeProvidersAddresses = await this.broker.getExchangeProviders()
-    for (let exchangeProviderAddr of exchangeProvidersAddresses) {
-      let exchangeManager: IExchangeProvider =
+    const exchangeProvidersAddresses = await this.broker.getExchangeProviders()
+    for (const exchangeProviderAddr of exchangeProvidersAddresses) {
+      const exchangeManager: IExchangeProvider =
         IExchangeProvider__factory.connect(exchangeProviderAddr, this.provider)
-      let exchangesInManager = await exchangeManager.getExchanges()
-      for (let exchange of exchangesInManager) {
+      const exchangesInManager = await exchangeManager.getExchanges()
+      for (const exchange of exchangesInManager) {
         assert(exchange.assets.length === 2, 'Exchange must have 2 assets')
 
         exchanges.push({
