@@ -148,7 +148,7 @@ export class Mento {
   }
 
   /**
-   * Returns a token swap populated tx objerct with a fixed amount of tokenIn and a minimum amount of tokenOut
+   * Returns a token swap populated tx object with a fixed amount of tokenIn and a minimum amount of tokenOut
    * Submitting the transaction to execute the swap is left to the consumer
    * @param tokenIn the token to be sold
    * @param tokenOut the token to be bought
