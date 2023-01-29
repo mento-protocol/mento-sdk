@@ -8,6 +8,7 @@ import {
 import {
   getBrokerAddressFromRegistry,
   getSymbolFromTokenAddress,
+  increaseAllowance,
 } from './utils'
 
 import { strict as assert } from 'assert'
@@ -24,59 +25,78 @@ interface Asset {
 }
 
 export class Mento {
-  private readonly provider: providers.Provider
-  private readonly signer?: Signer
+  private readonly signerOrProvider: Signer | providers.Provider
   private readonly broker: IBroker
   private exchanges: Exchange[]
 
   /**
-   * This constructor is private, use the static create method to create a new Mento instance
+   * This constructor is private, use the static create or createWithBrokerAddress methods
+   * to create a new Mento instance
    * @param brokerAddress the address of the broker contract
    * @param provider an ethers provider
    * @param signer an optional ethers signer to execute swaps (must be connected to a provider)
    */
   private constructor(
     brokerAddress: Address,
-    provider: providers.Provider,
-    signer?: Signer
+    signerOrProvider: Signer | providers.Provider
   ) {
-    this.broker = IBroker__factory.connect(brokerAddress, provider)
-    this.provider = provider
-    this.signer = signer
+    this.broker = IBroker__factory.connect(brokerAddress, signerOrProvider)
+    this.signerOrProvider = signerOrProvider
 
     this.exchanges = new Array<Exchange>()
   }
 
   /**
-   * Create a new Mento object instance
-   * @param ethersProvider an ethers provider
-   * @param ethersSigner an optional ethers signer to execute swaps (must be connected to a provider)
+   * Creates a new Mento object instance.
+   * When constructed with only a Provider only read-only operations are supported
+   * @param signerOrProvider an ethers signer or provider. A signer is required to execute swaps
    * @returns a new Mento object instance
    */
-  static async create(
-    ethersProvider: providers.Provider,
-    ethersSigner?: Signer
-  ) {
+  static async create(signerOrProvider: Signer | providers.Provider) {
+    const isSigner = Signer.isSigner(signerOrProvider)
+    const isProvider = providers.Provider.isProvider(signerOrProvider)
+
+    if (!isSigner && !isProvider) {
+      throw new Error('A valid signer or provider must be provided')
+    }
+
+    if (isSigner) {
+      if (!providers.Provider.isProvider(signerOrProvider.provider)) {
+        throw new Error('Signer must be connected to a provider')
+      }
+    }
+
     return new Mento(
-      await getBrokerAddressFromRegistry(ethersProvider),
-      ethersProvider,
-      ethersSigner
+      await getBrokerAddressFromRegistry(signerOrProvider),
+      signerOrProvider
     )
   }
 
   /**
    * Create a new Mento object instance given a specific broker address
+   * When constructed with only a Provider only read-only operations are supported
    * @param brokerAddr the address of the broker contract
-   * @param ethersProvider an ethers provider
-   * @param ethersSigner an optional ethers signer to execute swaps (must be connected to a provider)
-   * @returns
+   * @param signerOrProvider an ethers signer or provider. A signer is required to execute swaps
+   * @returns a new Mento object instance
    */
   static createWithBrokerAddress(
     brokerAddr: Address,
-    ethersProvider: providers.Provider,
-    ethersSigner?: Signer
+    signerOrProvider: Signer | providers.Provider
   ) {
-    return new Mento(brokerAddr, ethersProvider, ethersSigner)
+    const isSigner = Signer.isSigner(signerOrProvider)
+    const isProvider = providers.Provider.isProvider(signerOrProvider)
+
+    if (!isSigner && !isProvider) {
+      throw new Error('A valid signer or provider must be provided')
+    }
+
+    if (isSigner) {
+      if (!providers.Provider.isProvider(signerOrProvider.provider)) {
+        throw new Error('Signer must be connected to a provider')
+      }
+    }
+
+    return new Mento(brokerAddr, signerOrProvider)
   }
 
   /**
@@ -91,8 +111,8 @@ export class Mento {
       const asset0 = exchange.assets[0]
       const asset1 = exchange.assets[1]
       const symbols = await Promise.all([
-        getSymbolFromTokenAddress(this.provider, asset0),
-        getSymbolFromTokenAddress(this.provider, asset1),
+        getSymbolFromTokenAddress(asset0, this.signerOrProvider),
+        getSymbolFromTokenAddress(asset1, this.signerOrProvider),
       ])
       pairs.push([
         { address: asset0, symbol: symbols[0] },
@@ -148,13 +168,41 @@ export class Mento {
   }
 
   /**
+   * Increases the broker's trading allowance for the given token
+   * @param token the token to increase the allowance for
+   * @param amount the amount to increase the allowance by
+   * @returns the populated TransactionRequest object
+   */
+  async increaseTradingAllowance(
+    token: Address,
+    amount: BigNumber
+  ): Promise<providers.TransactionRequest> {
+    if (!Signer.isSigner(this.signerOrProvider)) {
+      throw new Error(
+        'A signer is required to increase the populate the increaseAllowance tx object'
+      )
+    }
+
+    const spender = this.broker.address
+    const tx = await increaseAllowance(
+      token,
+      spender,
+      amount,
+      this.signerOrProvider
+    )
+
+    // The contract call doesn't populate all of the signer fields, so we need an extra call for the signer
+    return this.broker.signer.populateTransaction(tx)
+  }
+
+  /**
    * Returns a token swap populated tx object with a fixed amount of tokenIn and a minimum amount of tokenOut
    * Submitting the transaction to execute the swap is left to the consumer
    * @param tokenIn the token to be sold
    * @param tokenOut the token to be bought
    * @param amountIn the amount of tokenIn to be sold
    * @param amountOutMin the minimum amount of tokenOut to be bought
-   * @returns an ethers TransactionResponse object
+   * @returns the populated TransactionRequest object
    */
   async swapIn(
     tokenIn: Address,
@@ -162,14 +210,8 @@ export class Mento {
     amountIn: BigNumber,
     amountOutMin: BigNumber
   ): Promise<providers.TransactionRequest> {
-    if (!this.signer) {
+    if (!Signer.isSigner(this.signerOrProvider)) {
       throw new Error('A signer is required to populate the swap tx object')
-    }
-
-    if (!this.signer.provider) {
-      throw new Error(
-        'The signer must be connected to a provider to populate the swap tx object'
-      )
     }
 
     const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
@@ -181,7 +223,9 @@ export class Mento {
       amountIn,
       amountOutMin
     )
-    return this.signer.populateTransaction(tx)
+
+    // The broker's call doesn't populate all of the signer fields, so we need an extra call for the signer
+    return this.broker.signer.populateTransaction(tx)
   }
 
   /**
@@ -191,7 +235,7 @@ export class Mento {
    * @param tokenOut the token to be bought
    * @param amountOut the amount of tokenOut to be bought
    * @param amountInMax the maximum amount of tokenIn to be sold
-   * @returns
+   * @returns the populated TransactionRequest object
    */
   async swapOut(
     tokenIn: Address,
@@ -199,14 +243,8 @@ export class Mento {
     amountOut: BigNumber,
     amountInMax: BigNumber
   ): Promise<providers.TransactionRequest> {
-    if (!this.signer) {
+    if (!Signer.isSigner(this.signerOrProvider)) {
       throw new Error('A signer is required to populate the swap tx object')
-    }
-
-    if (!this.signer.provider) {
-      throw new Error(
-        'The signer must be connected to a provider to populate the swap tx object'
-      )
     }
 
     const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
@@ -218,7 +256,9 @@ export class Mento {
       amountOut,
       amountInMax
     )
-    return this.signer.populateTransaction(tx)
+
+    // The broker's call doesn't populate all of the signer fields, so we need an extra call for the signer
+    return this.broker.signer.populateTransaction(tx)
   }
 
   /**
@@ -235,7 +275,10 @@ export class Mento {
     const exchangeProvidersAddresses = await this.broker.getExchangeProviders()
     for (const exchangeProviderAddr of exchangeProvidersAddresses) {
       const exchangeManager: IExchangeProvider =
-        IExchangeProvider__factory.connect(exchangeProviderAddr, this.provider)
+        IExchangeProvider__factory.connect(
+          exchangeProviderAddr,
+          this.signerOrProvider
+        )
       const exchangesInManager = await exchangeManager.getExchanges()
       for (const exchange of exchangesInManager) {
         assert(exchange.assets.length === 2, 'Exchange must have 2 assets')

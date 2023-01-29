@@ -1,4 +1,4 @@
-import { Contract, providers, utils } from 'ethers'
+import { Contract, Wallet, ethers, providers, utils } from 'ethers'
 import {
   IBroker__factory,
   IExchangeProvider__factory,
@@ -7,8 +7,16 @@ import {
 import { Mento } from './mento'
 
 jest.mock('@mento-protocol/mento-core-ts')
-jest.mock('ethers')
-jest.setTimeout(60 * 1000)
+jest.mock('ethers', () => {
+  return {
+    constants: jest.requireActual('ethers').constants,
+    providers: jest.requireActual('ethers').providers,
+    Signer: jest.requireActual('ethers').Signer,
+    utils: jest.requireActual('ethers').utils,
+    Wallet: jest.requireActual('ethers').Wallet,
+    Contract: jest.fn(),
+  }
+})
 
 describe('Mento', () => {
   const oneInWei = utils.parseUnits('1', 18)
@@ -51,17 +59,10 @@ describe('Mento', () => {
     0
   )
 
-  // fake ethers objects for initializing Mento
-  const fakeProvider = new providers.JsonRpcProvider('fakeProviderUrl')
-  const mockSignerWithoutProvider = {
-    populateTransaction: jest.fn(),
-  }
-  const mockSignerWithProvider = {
-    ...mockSignerWithoutProvider,
-    provider: fakeProvider,
-  }
-
-  const mockBrokerFactory = {
+  // mock contract factories
+  const fakeBrokerAddr = 'fakeBrokerAddr'
+  const mockBroker = {
+    address: fakeBrokerAddr,
     getExchangeProviders: jest.fn(() => Object.keys(fakeExchangesByProviders)),
     getAmountIn: jest.fn(),
     getAmountOut: jest.fn(),
@@ -69,11 +70,12 @@ describe('Mento', () => {
       swapOut: jest.fn(),
       swapIn: jest.fn(),
     },
+    signer: {
+      populateTransaction: jest.fn(),
+    },
   }
-
   // @ts-ignore
-  IBroker__factory.connect.mockReturnValue(mockBrokerFactory)
-
+  IBroker__factory.connect.mockReturnValue(mockBroker)
   // @ts-ignore
   IExchangeProvider__factory.connect = jest.fn(
     (exchangeProvider: string, _) => {
@@ -86,16 +88,21 @@ describe('Mento', () => {
     }
   )
 
+  // mock ethers Contracts
+  const celoRegistryAddress = '0x000000000000000000000000000000000000ce10'
   const fakeRegistryContract = {
-    getAddressForString: jest.fn(),
+    getAddressForString: jest.fn(() => fakeBrokerAddr),
   }
+  const increaseAllowanceFn = jest.fn()
+  const mockContractModule = jest.fn((contractAddr: string) => {
+    const isRegistryContract = contractAddr === celoRegistryAddress
+    const isErc20Contract = Object.keys(fakeSymbolsByTokenAddr).includes(
+      contractAddr
+    )
 
-  // @ts-ignore
-  Contract.mockImplementation((contractAddr: string) => {
-    const celoRegistryAddress = '0x000000000000000000000000000000000000ce10'
-    if (contractAddr === celoRegistryAddress) {
+    if (isRegistryContract) {
       return fakeRegistryContract
-    } else if (Object.keys(fakeSymbolsByTokenAddr).includes(contractAddr)) {
+    } else if (isErc20Contract) {
       return {
         symbol: jest.fn(
           () =>
@@ -103,10 +110,26 @@ describe('Mento', () => {
               contractAddr as keyof typeof fakeSymbolsByTokenAddr
             ]
         ),
+        populateTransaction: {
+          increaseAllowance: increaseAllowanceFn,
+        },
       }
     } else {
       throw new Error('Unknown contract address with no mock implementation')
     }
+  })
+  // @ts-ignore
+  Contract.mockImplementation(mockContractModule)
+
+  let provider: providers.JsonRpcProvider
+  let signer: ethers.Wallet
+  let signerWithoutProvider: ethers.Wallet
+  const pk = Wallet.createRandom().privateKey
+
+  beforeAll(async () => {
+    provider = new providers.JsonRpcProvider()
+    signer = new Wallet(pk, provider)
+    signerWithoutProvider = new Wallet(pk)
   })
 
   afterEach(async () => {
@@ -115,33 +138,65 @@ describe('Mento', () => {
 
   describe('create', () => {
     it('should return a Mento instance with the registry broker address', async () => {
-      const testee = await Mento.create(fakeProvider)
-
+      const testee = await Mento.create(provider)
       expect(testee).toBeDefined()
       expect(fakeRegistryContract.getAddressForString).toHaveBeenCalledTimes(1)
-      expect(fakeRegistryContract.getAddressForString).toHaveBeenCalledWith(
-        'Broker'
+      expect(mockContractModule).toHaveBeenCalledTimes(1)
+      expect(mockContractModule.mock.lastCall[0]).toBe(celoRegistryAddress)
+
+      const testee2 = await Mento.create(signer)
+      expect(testee2).toBeDefined()
+      expect(fakeRegistryContract.getAddressForString).toHaveBeenCalledTimes(2)
+      expect(mockContractModule).toHaveBeenCalledTimes(2)
+      expect(mockContractModule.mock.lastCall[0]).toBe(celoRegistryAddress)
+    })
+
+    it('should throw if the signer has no provider', async () => {
+      await expect(Mento.create(signerWithoutProvider)).rejects.toThrow(
+        'Signer must be connected to a provider'
+      )
+    })
+
+    it('should throw if no signer or provider is provided', async () => {
+      // @ts-ignore
+      await expect(Mento.create()).rejects.toThrow(
+        'A valid signer or provider must be provided'
       )
     })
   })
 
   describe('createWithBrokerAddress', () => {
     it('should return a Mento instance without querying the registry', () => {
-      const testee = Mento.createWithBrokerAddress(
-        'fakeBrokerAddr',
-        fakeProvider
-      )
-
+      const testee = Mento.createWithBrokerAddress(fakeBrokerAddr, provider)
       expect(testee).toBeDefined()
+      expect(mockContractModule).toHaveBeenCalledTimes(0)
       expect(fakeRegistryContract.getAddressForString).toHaveBeenCalledTimes(0)
+
+      const testee2 = Mento.createWithBrokerAddress(fakeBrokerAddr, signer)
+      expect(testee2).toBeDefined()
+      expect(mockContractModule).toHaveBeenCalledTimes(0)
+      expect(fakeRegistryContract.getAddressForString).toHaveBeenCalledTimes(0)
+    })
+
+    it('should throw if the signer has no provider', () => {
+      expect(() =>
+        Mento.createWithBrokerAddress(fakeBrokerAddr, signerWithoutProvider)
+      ).toThrow('Signer must be connected to a provider')
+    })
+
+    it('should throw if no signer or provider is provided', () => {
+      //@ts-ignore
+      expect(() => Mento.createWithBrokerAddress(fakeBrokerAddr)).toThrow(
+        'A valid signer or provider must be provided'
+      )
     })
   })
 
   describe('getTradeablePairs', () => {
     it('should return an array of tuples with all the tradeable pairs', async () => {
-      const testee = await Mento.create(fakeProvider)
-      const pairs = await testee.getTradeablePairs()
+      const testee = await Mento.create(provider)
 
+      const pairs = await testee.getTradeablePairs()
       expect(pairs.length).toBe(nOfFakeExchanges)
 
       for (const [, mockedExchanges] of Object.entries(
@@ -174,7 +229,7 @@ describe('Mento', () => {
 
   describe('getAmountIn', () => {
     it('should call broker.getAmountIn with the right parameters', async () => {
-      const testee = await Mento.create(fakeProvider)
+      const testee = await Mento.create(provider)
 
       for (const [mockedProvider, mockedExchanges] of Object.entries(
         fakeExchangesByProviders
@@ -183,7 +238,7 @@ describe('Mento', () => {
           const tokenIn = exchange.assets[0]
           const tokenOut = exchange.assets[1]
           await testee.getAmountIn(tokenIn, tokenOut, oneInWei)
-          expect(mockBrokerFactory.getAmountIn).toHaveBeenCalledWith(
+          expect(mockBroker.getAmountIn).toHaveBeenCalledWith(
             mockedProvider,
             exchange.exchangeId,
             tokenIn,
@@ -195,8 +250,7 @@ describe('Mento', () => {
     })
 
     it('should throw if no exchange is found for the given tokens', async () => {
-      const testee = await Mento.create(fakeProvider)
-
+      const testee = await Mento.create(provider)
       await expect(
         testee.getAmountIn(
           fakeCeloEURExchange.assets[0],
@@ -209,7 +263,7 @@ describe('Mento', () => {
 
   describe('getAmountOut', () => {
     it('should call broker.getAmountOut with the right parameters', async () => {
-      const testee = await Mento.create(fakeProvider)
+      const testee = await Mento.create(provider)
 
       for (const [mockedProvider, mockedExchanges] of Object.entries(
         fakeExchangesByProviders
@@ -218,7 +272,7 @@ describe('Mento', () => {
           const tokenIn = exchange.assets[1]
           const tokenOut = exchange.assets[0]
           await testee.getAmountOut(tokenIn, tokenOut, oneInWei)
-          expect(mockBrokerFactory.getAmountOut).toHaveBeenCalledWith(
+          expect(mockBroker.getAmountOut).toHaveBeenCalledWith(
             mockedProvider,
             exchange.exchangeId,
             tokenIn,
@@ -230,8 +284,7 @@ describe('Mento', () => {
     })
 
     it('should throw if no exchange is found for the given tokens', async () => {
-      const testee = await Mento.create(fakeProvider)
-
+      const testee = await Mento.create(provider)
       await expect(
         testee.getAmountOut(
           fakeCeloUSDExchange.assets[1],
@@ -242,10 +295,42 @@ describe('Mento', () => {
     })
   })
 
+  describe('increaseTradingAllowance', () => {
+    it('should return a populated increaseAllowance tx object', async () => {
+      const testee = await Mento.create(signer)
+      const token = fakeCeloBRLExchange.assets[0]
+      const amount = twoInWei
+
+      const fakePopulatedTxObj = {
+        to: '0x1337',
+        data: '0x345',
+        from: '0xad3',
+        gasLimit: 2200,
+      }
+      mockBroker.signer.populateTransaction.mockReturnValueOnce(
+        fakePopulatedTxObj
+      )
+
+      const tx = await testee.increaseTradingAllowance(token, amount)
+      expect(tx).toBe(fakePopulatedTxObj)
+      expect(increaseAllowanceFn).toHaveBeenCalledTimes(1)
+      expect(increaseAllowanceFn).toHaveBeenCalledWith(fakeBrokerAddr, amount)
+      expect(mockContractModule.mock.lastCall[0]).toEqual(token)
+    })
+
+    it('should throw if a signer is not provided', async () => {
+      const testee = await Mento.create(provider)
+      await expect(
+        testee.increaseTradingAllowance(fakeCeloBRLExchange.assets[1], oneInWei)
+      ).rejects.toThrow(
+        'A signer is required to increase the populate the increaseAllowance tx object'
+      )
+    })
+  })
+
   describe('swapIn', () => {
-    it('should submit a swapIn tx', async () => {
-      // @ts-ignore
-      const testee = await Mento.create(fakeProvider, mockSignerWithProvider)
+    it('should return a populated swapIn tx object', async () => {
+      const testee = await Mento.create(signer)
 
       const tokenIn = fakeCeloBRLExchange.assets[1]
       const tokenOut = fakeCeloBRLExchange.assets[0]
@@ -253,16 +338,27 @@ describe('Mento', () => {
       const amountOutMin = twoInWei
 
       const fakeTxObj = { to: '0x1337', data: '0x345' }
-      mockBrokerFactory.populateTransaction.swapIn.mockReturnValueOnce(
-        fakeTxObj
+      const fakePopulatedTxObj = {
+        to: '0x123',
+        data: '0x00456',
+        from: '0xad3',
+        gasLimit: 2200,
+      }
+      mockBroker.populateTransaction.swapIn.mockReturnValueOnce(fakeTxObj)
+      mockBroker.signer.populateTransaction.mockReturnValueOnce(
+        fakePopulatedTxObj
       )
-      await testee.swapIn(tokenIn, tokenOut, amountIn, amountOutMin)
 
-      expect(
-        mockBrokerFactory.populateTransaction.swapIn
-      ).toHaveBeenCalledTimes(1)
+      const result = await testee.swapIn(
+        tokenIn,
+        tokenOut,
+        amountIn,
+        amountOutMin
+      )
+      expect(result).toBe(fakePopulatedTxObj)
 
-      expect(mockBrokerFactory.populateTransaction.swapIn).toHaveBeenCalledWith(
+      expect(mockBroker.populateTransaction.swapIn).toHaveBeenCalledTimes(1)
+      expect(mockBroker.populateTransaction.swapIn).toHaveBeenCalledWith(
         fakeBrlExchangeProvider,
         fakeCeloBRLExchange.exchangeId,
         tokenIn,
@@ -270,31 +366,25 @@ describe('Mento', () => {
         amountIn,
         amountOutMin
       )
-      expect(mockSignerWithProvider.populateTransaction).toHaveBeenCalledTimes(
-        1
-      )
-      expect(mockSignerWithProvider.populateTransaction).toHaveBeenCalledWith(
+
+      expect(mockBroker.signer.populateTransaction).toHaveBeenCalledTimes(1)
+      expect(mockBroker.signer.populateTransaction).toHaveBeenCalledWith(
         fakeTxObj
       )
     })
 
     it('should throw if no exchange is found for the given tokens', async () => {
-      // @ts-ignore
-      const testee = await Mento.create(fakeProvider, mockSignerWithProvider)
+      const testee = await Mento.create(signer)
+      const tokenIn = fakeCeloEURExchange.assets[1]
+      const tokenOut = 'nonExistentAssetAddr'
 
       await expect(
-        testee.swapIn(
-          fakeCeloEURExchange.assets[1],
-          'nonExistentAssetAddr',
-          oneInWei,
-          oneInWei
-        )
-      ).rejects.toThrow()
+        testee.swapIn(tokenIn, tokenOut, oneInWei, oneInWei)
+      ).rejects.toThrow(`No exchange found for ${tokenIn} and ${tokenOut}`)
     })
 
     it('should throw if a signer is not provided', async () => {
-      const testee = await Mento.create(fakeProvider)
-
+      const testee = await Mento.create(provider)
       await expect(
         testee.swapIn(
           fakeCeloUSDExchange.assets[0],
@@ -304,28 +394,11 @@ describe('Mento', () => {
         )
       ).rejects.toThrow('A signer is required to populate the swap tx object')
     })
-
-    it('should throw if the signer is not connected to a provider', async () => {
-      // @ts-ignore
-      const testee = await Mento.create(fakeProvider, mockSignerWithoutProvider)
-
-      await expect(
-        testee.swapIn(
-          fakeCeloUSDExchange.assets[0],
-          fakeCeloUSDExchange.assets[1],
-          oneInWei,
-          oneInWei
-        )
-      ).rejects.toThrow(
-        'The signer must be connected to a provider to populate the swap tx object'
-      )
-    })
   })
 
   describe('swapOut', () => {
-    it('should submit a swapOut tx', async () => {
-      // @ts-ignore
-      const testee = await Mento.create(fakeProvider, mockSignerWithProvider)
+    it('should return a populated swapOut tx object', async () => {
+      const testee = await Mento.create(signer)
 
       const tokenIn = fakeCeloUSDExchange.assets[0]
       const tokenOut = fakeCeloUSDExchange.assets[1]
@@ -333,18 +406,27 @@ describe('Mento', () => {
       const amountInMax = twoInWei
 
       const fakeTxObj = { to: '0x123', data: '0x456' }
-      mockBrokerFactory.populateTransaction.swapOut.mockReturnValueOnce(
-        fakeTxObj
+      const fakePopulatedTxObj = {
+        to: '0x123',
+        data: '0x456',
+        from: '0x789',
+        gasLimit: 100,
+      }
+      mockBroker.populateTransaction.swapOut.mockReturnValueOnce(fakeTxObj)
+      mockBroker.signer.populateTransaction.mockReturnValueOnce(
+        fakePopulatedTxObj
       )
-      await testee.swapOut(tokenIn, tokenOut, amountOut, amountInMax)
 
-      expect(
-        mockBrokerFactory.populateTransaction.swapOut
-      ).toHaveBeenCalledTimes(1)
+      const result = await testee.swapOut(
+        tokenIn,
+        tokenOut,
+        amountOut,
+        amountInMax
+      )
+      expect(result).toBe(fakePopulatedTxObj)
 
-      expect(
-        mockBrokerFactory.populateTransaction.swapOut
-      ).toHaveBeenCalledWith(
+      expect(mockBroker.populateTransaction.swapOut).toHaveBeenCalledTimes(1)
+      expect(mockBroker.populateTransaction.swapOut).toHaveBeenCalledWith(
         fakeUsdAndEurExchangeProvider,
         fakeCeloUSDExchange.exchangeId,
         tokenIn,
@@ -352,30 +434,26 @@ describe('Mento', () => {
         amountOut,
         amountInMax
       )
-      expect(mockSignerWithProvider.populateTransaction).toHaveBeenCalledTimes(
-        1
-      )
-      expect(mockSignerWithProvider.populateTransaction).toHaveBeenCalledWith(
+
+      expect(mockBroker.signer.populateTransaction).toHaveBeenCalledTimes(1)
+      expect(mockBroker.signer.populateTransaction).toHaveBeenCalledWith(
         fakeTxObj
       )
     })
 
     it('should throw if no exchange is found for the given tokens', async () => {
-      // @ts-ignore
-      const testee = await Mento.create(fakeProvider, mockSignerWithoutProvider)
+      const testee = await Mento.create(signer)
+      const tokenIn = fakeCeloUSDExchange.assets[0]
+      const tokenOut = 'fakeAsset'
 
       await expect(
-        testee.swapOut(
-          fakeCeloUSDExchange.assets[0],
-          'fakeAsset',
-          oneInWei,
-          oneInWei
-        )
-      ).rejects.toThrow()
+        testee.swapOut(tokenIn, tokenOut, oneInWei, oneInWei)
+      ).rejects.toThrow(`No exchange found for ${tokenIn} and ${tokenOut}`)
     })
 
     it('should throw if a signer is not provided', async () => {
-      const testee = await Mento.create(fakeProvider)
+      const provider = new providers.JsonRpcProvider()
+      const testee = await Mento.create(provider)
 
       await expect(
         testee.swapOut(
@@ -385,22 +463,6 @@ describe('Mento', () => {
           oneInWei
         )
       ).rejects.toThrow('A signer is required to populate the swap tx object')
-    })
-
-    it('should throw if the signer is not connected to a provider', async () => {
-      // @ts-ignore
-      const testee = await Mento.create(fakeProvider, mockSignerWithoutProvider)
-
-      await expect(
-        testee.swapOut(
-          fakeCeloUSDExchange.assets[0],
-          fakeCeloUSDExchange.assets[1],
-          oneInWei,
-          oneInWei
-        )
-      ).rejects.toThrow(
-        'The signer must be connected to a provider to populate the swap tx object'
-      )
     })
   })
 })
