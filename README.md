@@ -35,12 +35,13 @@ const one = 1
 const tokenIn = '0xdDc9bE57f553fe75752D61606B94CBD7e0264eF8' // CELO
 const tokenOut = '0x62492A644A588FD904270BeD06ad52B9abfEA1aE' // cUSD
 const amountIn = utils.parseUnits(one.toString(), 18)
-const amountOutMin = await mento.getAmountOut(
+const expectedAmountOut = await mento.getAmountOut(
   tokenIn,
   tokenOut,
-  // 95% of amountIn to allow some slippage
-  utils.parseUnits((one * 0.95).toString(), 18)
+  utils.parseUnits(one.toString(), 18)
 )
+// 95% of the quote to allow some slippage
+const minAmountOut = expectedAmountOut.mul(95).div(100)
 
 // allow the broker contract to spend CELO on behalf of the wallet
 const allowanceTxObj = await mento.increaseTradingAllowance(tokenIn, amountIn)
@@ -49,7 +50,7 @@ const allowanceReceipt = await allowanceTx.wait()
 console.log('increaseAllowance receipt', allowanceReceipt)
 
 // execute the swap
-const swapTxObj = await mento.swapIn(tokenIn, tokenOut, amountIn, amountOutMin)
+const swapTxObj = await mento.swapIn(tokenIn, tokenOut, amountIn, minAmountOut)
 const swapTx = await wallet.sendTransaction(swapTxObj)
 const swapReceipt = await swapTx.wait()
 
