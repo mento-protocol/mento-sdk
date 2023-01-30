@@ -179,7 +179,7 @@ export class Mento {
   ): Promise<providers.TransactionRequest> {
     if (!Signer.isSigner(this.signerOrProvider)) {
       throw new Error(
-        'A signer is required to increase the populate the increaseAllowance tx object'
+        'A signer is required to populate the increaseAllowance tx object'
       )
     }
 
@@ -192,7 +192,7 @@ export class Mento {
     )
 
     // The contract call doesn't populate all of the signer fields, so we need an extra call for the signer
-    return this.broker.signer.populateTransaction(tx)
+    return this.signerOrProvider.populateTransaction(tx)
   }
 
   /**
@@ -211,7 +211,7 @@ export class Mento {
     amountOutMin: BigNumber
   ): Promise<providers.TransactionRequest> {
     if (!Signer.isSigner(this.signerOrProvider)) {
-      throw new Error('A signer is required to populate the swap tx object')
+      throw new Error('A signer is required to populate the swapIn tx object')
     }
 
     const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
@@ -225,7 +225,7 @@ export class Mento {
     )
 
     // The broker's call doesn't populate all of the signer fields, so we need an extra call for the signer
-    return this.broker.signer.populateTransaction(tx)
+    return this.signerOrProvider.populateTransaction(tx)
   }
 
   /**
@@ -244,7 +244,7 @@ export class Mento {
     amountInMax: BigNumber
   ): Promise<providers.TransactionRequest> {
     if (!Signer.isSigner(this.signerOrProvider)) {
-      throw new Error('A signer is required to populate the swap tx object')
+      throw new Error('A signer is required to populate the swapOut tx object')
     }
 
     const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
@@ -258,7 +258,7 @@ export class Mento {
     )
 
     // The broker's call doesn't populate all of the signer fields, so we need an extra call for the signer
-    return this.broker.signer.populateTransaction(tx)
+    return this.signerOrProvider.populateTransaction(tx)
   }
 
   /**

@@ -301,21 +301,27 @@ describe('Mento', () => {
       const token = fakeCeloBRLExchange.assets[0]
       const amount = twoInWei
 
+      const fakeTxObj = { to: '0x1337', data: '0x345' }
       const fakePopulatedTxObj = {
         to: '0x1337',
         data: '0x345',
         from: '0xad3',
         gasLimit: 2200,
       }
-      mockBroker.signer.populateTransaction.mockReturnValueOnce(
-        fakePopulatedTxObj
-      )
+
+      increaseAllowanceFn.mockReturnValueOnce(fakeTxObj)
+      const spy = jest
+        .spyOn(signer, 'populateTransaction')
+        // @ts-ignore
+        .mockReturnValueOnce(fakePopulatedTxObj)
 
       const tx = await testee.increaseTradingAllowance(token, amount)
       expect(tx).toBe(fakePopulatedTxObj)
       expect(increaseAllowanceFn).toHaveBeenCalledTimes(1)
       expect(increaseAllowanceFn).toHaveBeenCalledWith(fakeBrokerAddr, amount)
       expect(mockContractModule.mock.lastCall[0]).toEqual(token)
+      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy).toHaveBeenCalledWith(fakeTxObj)
     })
 
     it('should throw if a signer is not provided', async () => {
@@ -323,7 +329,7 @@ describe('Mento', () => {
       await expect(
         testee.increaseTradingAllowance(fakeCeloBRLExchange.assets[1], oneInWei)
       ).rejects.toThrow(
-        'A signer is required to increase the populate the increaseAllowance tx object'
+        'A signer is required to populate the increaseAllowance tx object'
       )
     })
   })
@@ -344,10 +350,12 @@ describe('Mento', () => {
         from: '0xad3',
         gasLimit: 2200,
       }
+
       mockBroker.populateTransaction.swapIn.mockReturnValueOnce(fakeTxObj)
-      mockBroker.signer.populateTransaction.mockReturnValueOnce(
-        fakePopulatedTxObj
-      )
+      const spy = jest
+        .spyOn(signer, 'populateTransaction')
+        // @ts-ignore
+        .mockReturnValueOnce(fakePopulatedTxObj)
 
       const result = await testee.swapIn(
         tokenIn,
@@ -367,10 +375,8 @@ describe('Mento', () => {
         amountOutMin
       )
 
-      expect(mockBroker.signer.populateTransaction).toHaveBeenCalledTimes(1)
-      expect(mockBroker.signer.populateTransaction).toHaveBeenCalledWith(
-        fakeTxObj
-      )
+      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy).toHaveBeenCalledWith(fakeTxObj)
     })
 
     it('should throw if no exchange is found for the given tokens', async () => {
@@ -392,7 +398,7 @@ describe('Mento', () => {
           oneInWei,
           oneInWei
         )
-      ).rejects.toThrow('A signer is required to populate the swap tx object')
+      ).rejects.toThrow('A signer is required to populate the swapIn tx object')
     })
   })
 
@@ -413,9 +419,10 @@ describe('Mento', () => {
         gasLimit: 100,
       }
       mockBroker.populateTransaction.swapOut.mockReturnValueOnce(fakeTxObj)
-      mockBroker.signer.populateTransaction.mockReturnValueOnce(
-        fakePopulatedTxObj
-      )
+      const spy = jest
+        .spyOn(signer, 'populateTransaction')
+        // @ts-ignore
+        .mockReturnValueOnce(fakePopulatedTxObj)
 
       const result = await testee.swapOut(
         tokenIn,
@@ -435,10 +442,8 @@ describe('Mento', () => {
         amountInMax
       )
 
-      expect(mockBroker.signer.populateTransaction).toHaveBeenCalledTimes(1)
-      expect(mockBroker.signer.populateTransaction).toHaveBeenCalledWith(
-        fakeTxObj
-      )
+      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy).toHaveBeenCalledWith(fakeTxObj)
     })
 
     it('should throw if no exchange is found for the given tokens', async () => {
@@ -462,7 +467,9 @@ describe('Mento', () => {
           oneInWei,
           oneInWei
         )
-      ).rejects.toThrow('A signer is required to populate the swap tx object')
+      ).rejects.toThrow(
+        'A signer is required to populate the swapOut tx object'
+      )
     })
   })
 })
