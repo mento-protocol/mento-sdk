@@ -1,22 +1,62 @@
-## Mento SDK
+# Mento SDK
 
-This repo contains the source code of the software development kit for the Mento protocol. The repository is built with npm which is used for the compilation, testing and deployment of the sdk.
+The official Mento Protocol SDK for interacting with Multi-Collateral Mento smart contracts on the Celo network.
 
-## Getting Started
+# Sample Usage
 
-```bash
-# Get the latest code
-git clone git@github.com:mento-protocol/mento-sdk.git
+```javascript
+const provider = new providers.JsonRpcProvider(
+  'https://baklava-forno.celo-testnet.org'
+)
+const pKey = 'privateKey'
+const wallet = new Wallet(pKey, provider)
 
-# Change directory to the the newly cloned repo
-cd mento-sdk
+const mento = await Mento.create(wallet)
 
-# Install dev dependencies with yarn
-yarn
+console.log('available pairs: ', await mento.getTradeablePairs())
+/*
+        [
+      [
+        {
+          address: '0x62492A644A588FD904270BeD06ad52B9abfEA1aE',
+          symbol: 'cUSD'
+        },
+        {
+          address: '0xdDc9bE57f553fe75752D61606B94CBD7e0264eF8',
+          symbol: 'CELO'
+        }
+      ],
+      ...
+    ]
+    */
 
-# Build the sdk with yarn
-yarn build
+// swap 1 CELO for cUSD
+const one = 1
+const tokenIn = '0xdDc9bE57f553fe75752D61606B94CBD7e0264eF8' // CELO
+const tokenOut = '0x62492A644A588FD904270BeD06ad52B9abfEA1aE' // cUSD
+const amountIn = utils.parseUnits(one.toString(), 18)
+const expectedAmountOut = await mento.getAmountOut(
+  tokenIn,
+  tokenOut,
+  utils.parseUnits(one.toString(), 18)
+)
+// 95% of the quote to allow some slippage
+const minAmountOut = expectedAmountOut.mul(95).div(100)
 
-# Run all tests with yarn
-yarn test
+// allow the broker contract to spend CELO on behalf of the wallet
+const allowanceTxObj = await mento.increaseTradingAllowance(tokenIn, amountIn)
+const allowanceTx = await wallet.sendTransaction(allowanceTxObj)
+const allowanceReceipt = await allowanceTx.wait()
+console.log('increaseAllowance receipt', allowanceReceipt)
+
+// execute the swap
+const swapTxObj = await mento.swapIn(tokenIn, tokenOut, amountIn, minAmountOut)
+const swapTx = await wallet.sendTransaction(swapTxObj)
+const swapReceipt = await swapTx.wait()
+
+console.log('swapIn receipt', swapReceipt)
 ```
+
+# In depth docs
+
+- [ ] TODO: Adds docs link

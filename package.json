@@ -1,32 +1,55 @@
 {
-  "name": "mento-sdk",
-  "version": "1.0.0",
-  "description": "The SDK for Mento Protocol",
-  "main": "index.js",
-  "scripts": {
-    "lint": "yarn prettier",
-    "lint:check": "yarn prettier:check && yarn lint:check",
-    "postinstall": "husky install",
-    "prettier": "prettier --config \"./.prettierrc.yml\" --write \"**/*.{json,md,ts,js,yml}\"",
-    "prettier:check": "prettier --config \"./.prettierrc.yml\" --check \"**/*.{json,md,ts,js,yml}\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mento-protocol/mento-sdk.git"
-  },
+  "name": "@mento-protocol/mento-sdk",
+  "version": "0.1.0",
+  "license": "MIT",
   "author": "Mento Labs",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mento-protocol/mento-sdk/issues"
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "analyze": "size-limit --why",
+    "build": "dts build",
+    "lint": "dts lint --config \"./.prettierrc.yml\"",
+    "prepare": "dts build",
+    "size": "size-limit",
+    "start": "dts watch",
+    "test": "dts test",
+    "coverage": "dts test --coverage"
   },
-  "homepage": "https://github.com/mento-protocol/mento-sdk#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "dts lint"
+    }
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "size-limit": [
+    {
+      "path": "dist/sdk.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/sdk.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^8.1.0",
+    "@tsconfig/recommended": "^1.0.1",
+    "dts-cli": "^1.6.0",
+    "husky": "^8.0.2",
+    "size-limit": "^8.1.0",
+    "typescript": "^4.9.3"
+  },
   "dependencies": {
-    "@commitlint/cli": "^17.1.2",
-    "@commitlint/config-conventional": "^17.1.0",
-    "commitizen": "^4.2.5",
-    "cz-conventional-changelog": "^3.3.0",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1"
+    "@mento-protocol/mento-core-ts": "^1.0.0",
+    "ethers": "^5.7.2"
   }
 }
