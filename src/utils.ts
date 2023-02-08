@@ -1,31 +1,23 @@
-import { BigNumber, Contract, Signer, constants, providers } from 'ethers'
+import { BigNumber, Contract, Signer, constants, providers } from "ethers";
 
 /**
  * Returns the broker address from the Celo registry
  * @param signerOrProvider an ethers provider or signer
  * @returns the broker address
  */
-export async function getBrokerAddressFromRegistry(
-  signerOrProvider: Signer | providers.Provider
-): Promise<Address> {
-  const celoRegistryAddress = '0x000000000000000000000000000000000000ce10'
-  const brokerIdentifier = 'Broker'
+export async function getBrokerAddressFromRegistry(signerOrProvider: Signer | providers.Provider): Promise<Address> {
+  const celoRegistryAddress = "0x000000000000000000000000000000000000ce10";
+  const brokerIdentifier = "Broker";
 
-  const registryAbi = [
-    'function getAddressForString(string calldata identifier) external view returns (address)',
-  ]
-  const contract = new Contract(
-    celoRegistryAddress,
-    registryAbi,
-    signerOrProvider
-  )
+  const registryAbi = ["function getAddressForString(string calldata identifier) external view returns (address)"];
+  const contract = new Contract(celoRegistryAddress, registryAbi, signerOrProvider);
 
-  const brokerAddress = await contract.getAddressForString(brokerIdentifier)
+  const brokerAddress = await contract.getAddressForString(brokerIdentifier);
   if (brokerAddress === constants.AddressZero) {
-    throw Error('Broker address not found in the registry')
+    throw Error("Broker address not found in the registry");
   }
 
-  return brokerAddress
+  return brokerAddress;
 }
 
 /**
@@ -36,12 +28,12 @@ export async function getBrokerAddressFromRegistry(
  */
 export async function getSymbolFromTokenAddress(
   tokenAddr: Address,
-  signerOrProvider: Signer | providers.Provider
+  signerOrProvider: Signer | providers.Provider,
 ): Promise<string> {
-  const erc20Abi = ['function symbol() external view returns (string memory)']
-  const contract = new Contract(tokenAddr, erc20Abi, signerOrProvider)
+  const erc20Abi = ["function symbol() external view returns (string memory)"];
+  const contract = new Contract(tokenAddr, erc20Abi, signerOrProvider);
 
-  return contract.symbol()
+  return contract.symbol();
 }
 
 /**
@@ -56,12 +48,10 @@ export async function increaseAllowance(
   tokenAddr: string,
   spender: string,
   amount: BigNumber,
-  signer: Signer
+  signer: Signer,
 ): Promise<providers.TransactionRequest> {
-  const abi = [
-    'function increaseAllowance(address spender, uint256 value) external returns (bool)',
-  ]
-  const contract = new Contract(tokenAddr, abi, signer)
+  const abi = ["function increaseAllowance(address spender, uint256 value) external returns (bool)"];
+  const contract = new Contract(tokenAddr, abi, signer);
 
-  return await contract.populateTransaction.increaseAllowance(spender, amount)
+  return await contract.populateTransaction.increaseAllowance(spender, amount);
 }
