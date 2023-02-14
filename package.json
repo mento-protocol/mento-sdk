@@ -11,9 +11,11 @@
   ],
   "scripts": {
     "analyze": "size-limit --why",
-    "build": "tsc",
-    "lint": "eslint --config \"./.eslintrc.json\" \"**/*.{json,ts,yml}\" && prettier --config \"./.prettierrc.json\" --write \"**/*.{json,md,js,ts,yml}\"",
-    "prepare": "tsc",
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "tsc --project ./tsconfig.json",
+    "build:esm": "tsc --project ./tsconfig.esm.json",
+    "lint": "eslint --config \"./.eslintrc.json\" \"**/*.{json,ts,yml}\"",
+    "prettier": "prettier --config \"./.prettierrc.json\" --write \"**/*.{json,md,js,ts,yml}\"",
     "size": "size-limit",
     "start": "jest --watch",
     "test": "jest --runInBand --verbose",
@@ -44,25 +46,27 @@
     }
   ],
   "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
     "@babel/preset-typescript": "^7.18.6",
     "@size-limit/preset-small-lib": "^8.1.0",
     "@tsconfig/recommended": "^1.0.1",
+    "@types/jest": "^29.4.0",
     "@types/node": "^18.13.0",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
     "eslint": "^8.33.0",
     "husky": "^8.0.2",
+    "jest": "^29.4.2",
+    "prettier": "^2.8.4",
+    "ethers": "^5.7.2",
     "size-limit": "^8.1.0",
     "ts-jest": "^29.0.5",
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@babel/preset-env": "^7.20.2",
-    "@mento-protocol/mento-core-ts": "^1.0.0",
-    "@types/jest": "^29.4.0",
-    "ethers": "^5.7.2",
-    "jest": "^29.4.2",
-    "prettier": "^2.8.4",
-    "ts-node": "^10.9.1"
+    "@mento-protocol/mento-core-ts": "^1.0.0"
+  },
+  "peerDependencies": {
+    "ethers": "^5.7.2"
   }
 }

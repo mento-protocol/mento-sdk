@@ -12,3 +12,4 @@
 coverage.json
 yarn-debug.log*
 yarn-error.log*
+dist/
