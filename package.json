@@ -17,7 +17,6 @@
     "lint": "eslint --config \"./.eslintrc.json\" \"**/*.{json,ts,yml}\"",
     "prettier": "prettier --config \"./.prettierrc.json\" --write \"**/*.{json,md,js,ts,yml}\"",
     "size": "size-limit",
-    "start": "jest --watch",
     "test": "jest --runInBand --verbose",
     "coverage": "jest --coverage"
   },
