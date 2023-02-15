@@ -2,6 +2,7 @@
   "extends": "@tsconfig/recommended/tsconfig.json",
   "include": ["src"],
   "compilerOptions": {
+    "declaration": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./dist/cjs"

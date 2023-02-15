@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "license": "MIT",
   "author": "Mento Labs",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "typings": "./dist/esm/index.d.ts",
   "files": [
     "dist"
   ],
@@ -14,8 +14,8 @@
     "build": "yarn build:cjs && yarn build:esm",
     "build:cjs": "tsc --project ./tsconfig.json",
     "build:esm": "tsc --project ./tsconfig.esm.json",
-    "lint": "eslint --config \"./.eslintrc.json\" \"**/*.{json,ts,yml}\"",
-    "prettier": "prettier --config \"./.prettierrc.json\" --write \"**/*.{json,md,js,ts,yml}\"",
+    "lint": "eslint --config ./.eslintrc.json **/*.{json,ts,yml}",
+    "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",
     "size": "size-limit",
     "test": "jest --runInBand --verbose",
     "coverage": "jest --coverage"
