@@ -3,29 +3,33 @@
   "version": "0.1.0",
   "license": "MIT",
   "author": "Mento Labs",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "typings": "dist/esm/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "analyze": "size-limit --why",
-    "build": "dts build",
-    "lint": "dts lint --config \"./.prettierrc.yml\"",
-    "prepare": "dts build",
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "tsc --project ./tsconfig.json",
+    "build:esm": "tsc --project ./tsconfig.esm.json",
+    "lint": "eslint --config ./.eslintrc.json **/*.{json,ts}",
+    "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",
     "size": "size-limit",
-    "start": "dts watch",
-    "test": "dts test",
-    "coverage": "dts test --coverage"
+    "test": "jest --runInBand --verbose",
+    "coverage": "jest --coverage"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "dts lint"
+      "pre-commit": "yarn lint"
     }
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/?(*.)+(test).ts"
+    ]
   },
   "engines": {
     "node": ">=12"
@@ -41,15 +45,27 @@
     }
   ],
   "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.18.6",
     "@size-limit/preset-small-lib": "^8.1.0",
     "@tsconfig/recommended": "^1.0.1",
-    "dts-cli": "^1.6.0",
+    "@types/jest": "^29.4.0",
+    "@types/node": "^18.13.0",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "eslint": "^8.33.0",
+    "ethers": "^5.7.2",
     "husky": "^8.0.2",
+    "jest": "^29.4.2",
+    "prettier": "^2.8.4",
     "size-limit": "^8.1.0",
-    "typescript": "^4.9.3"
+    "ts-jest": "^29.0.5",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@mento-protocol/mento-core-ts": "^1.0.0",
+    "@mento-protocol/mento-core-ts": "^0.1.0"
+  },
+  "peerDependencies": {
     "ethers": "^5.7.2"
   }
 }

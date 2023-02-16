@@ -3,9 +3,9 @@
   "include": ["src"],
   "compilerOptions": {
     "declaration": true,
-    "module": "commonjs",
+    "module": "es2020",
     "moduleResolution": "node",
-    "outDir": "./dist/cjs"
+    "outDir": "./dist/esm"
   },
   "exclude": ["node_modules", "dist"]
 }

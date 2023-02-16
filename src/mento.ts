@@ -106,9 +106,9 @@ export class Mento {
    */
   async getTradeablePairs(): Promise<[Asset, Asset][]> {
     const exchanges = await this.getExchanges()
-    let pairs: [Asset, Asset][] = []
+    const pairs: [Asset, Asset][] = []
 
-    for (let exchange of exchanges) {
+    for (const exchange of exchanges) {
       const asset0 = exchange.assets[0]
       const asset1 = exchange.assets[1]
       const symbols = await Promise.all([
@@ -271,7 +271,7 @@ export class Mento {
       return this.exchanges
     }
 
-    let exchanges: Exchange[] = []
+    const exchanges: Exchange[] = []
 
     const exchangeProvidersAddresses = await this.broker.getExchangeProviders()
     for (const exchangeProviderAddr of exchangeProvidersAddresses) {
