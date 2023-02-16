@@ -1694,10 +1694,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@mento-protocol/mento-core-ts@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@mento-protocol/mento-core-ts/-/mento-core-ts-1.0.0.tgz#54d5e41e244e94dc2dcea1099f1d991cf430e8c8"
-  integrity sha512-/anftCOzJ+dOsfhtLwq3FxUwY/Ri3qTT1QPWAKTQJ9UEAMJbWRkKLoCuZ6s1Lf1zTp7iRb9BmcMTxs/RZ8B/6Q==
+"@mento-protocol/mento-core-ts@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@mento-protocol/mento-core-ts/-/mento-core-ts-0.1.0.tgz#c17458597daa783c7907dd7fe4df202bb1188739"
+  integrity sha512-kREPdwLiM6JGTuNISyuZYWmdnq74CfljgNZWRqXsghO3dIf0B6bByFmtMet52DdJBkr2wGNWQ4OE0ePiZJPSZA==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
