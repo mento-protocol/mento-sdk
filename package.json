@@ -5,7 +5,7 @@
   "author": "Mento Labs",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "typings": "./dist/esm/index.d.ts",
+  "typings": "dist/esm/index.d.ts",
   "files": [
     "dist"
   ],
