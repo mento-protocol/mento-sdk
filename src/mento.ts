@@ -11,6 +11,7 @@ import {
   getSymbolFromTokenAddress,
   increaseAllowance,
 } from './utils'
+import { Address } from './types'
 
 import { strict as assert } from 'assert'
 
