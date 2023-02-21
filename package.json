@@ -1,8 +1,14 @@
 {
   "name": "@mento-protocol/mento-sdk",
+  "description": "Official SDK for interacting with the Mento Protocol",
   "version": "0.1.0",
   "license": "GPL-3.0-or-later",
   "author": "Mento Labs",
+  "keywords": [
+    "mento",
+    "celo",
+    "solidity"
+  ],
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "typings": "dist/esm/index.d.ts",
@@ -32,7 +38,7 @@
     ]
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=14"
   },
   "size-limit": [
     {
