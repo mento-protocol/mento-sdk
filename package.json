@@ -9,7 +9,6 @@
     "celo",
     "solidity"
   ],
-  {
   "repository": {
     "type": "git",
     "url": "https://github.com/mento-protocol/mento-sdk.git"
