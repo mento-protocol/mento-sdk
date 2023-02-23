@@ -56,7 +56,3 @@ const swapReceipt = await swapTx.wait()
 
 console.log('swapIn receipt', swapReceipt)
 ```
-
-# In depth docs
-
-- [ ] TODO: Adds docs link

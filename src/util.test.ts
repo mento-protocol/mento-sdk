@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
 import { Contract, Wallet, constants, providers, utils } from 'ethers'
 import {
   getBrokerAddressFromRegistry,

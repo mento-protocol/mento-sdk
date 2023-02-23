@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
 import { BigNumber, Contract, Signer, constants, providers } from 'ethers'
 
 import { Address } from './types'
