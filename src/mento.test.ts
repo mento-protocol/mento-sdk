@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
 import { Contract, Wallet, ethers, providers, utils } from 'ethers'
 import {
   IBroker__factory,
