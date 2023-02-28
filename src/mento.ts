@@ -1,26 +1,44 @@
-import { BigNumber, Signer, providers } from 'ethers'
 import {
+  IBiPoolManager,
+  IBiPoolManager__factory,
   IBroker,
   IBroker__factory,
   IExchangeProvider,
   IExchangeProvider__factory,
+  IPricingModule__factory,
 } from '@mento-protocol/mento-core-ts'
+import { BigNumber, providers, Signer } from 'ethers'
+import { Address } from './types'
 import {
   getBrokerAddressFromRegistry,
   getSymbolFromTokenAddress,
   increaseAllowance,
 } from './utils'
-import { Address } from './types'
 
 import { strict as assert } from 'assert'
 
-interface Exchange {
+export interface Exchange {
   providerAddr: Address
-  id: Address
-  assets: string[]
+  id: string
+  assets: Address[]
 }
 
-interface Asset {
+export interface PoolExchange extends Exchange {
+  asset0: Address
+  asset1: Address
+  pricingModule: Address
+  pricingModuleName: string
+  bucket0: string
+  bucket1: string
+  lastBucketUpdate: string
+  spread: string
+  referenceRateFeedID: string
+  referenceRateResetFrequency: string
+  minimumReports: string
+  stablePoolResetSize: string
+}
+
+export interface Asset {
   address: Address
   symbol: string
 }
@@ -28,7 +46,8 @@ interface Asset {
 export class Mento {
   private readonly signerOrProvider: Signer | providers.Provider
   private readonly broker: IBroker
-  private exchanges: Exchange[]
+  private exchanges: Exchange[] = []
+  private biPoolExchanges: PoolExchange[] = []
 
   /**
    * This constructor is private, use the static create or createWithBrokerAddress methods
@@ -43,8 +62,6 @@ export class Mento {
   ) {
     this.broker = IBroker__factory.connect(brokerAddress, signerOrProvider)
     this.signerOrProvider = signerOrProvider
-
-    this.exchanges = new Array<Exchange>()
   }
 
   /**
@@ -262,11 +279,16 @@ export class Mento {
     return this.signerOrProvider.populateTransaction(tx)
   }
 
+  /** Returns the Broker contract */
+  getBroker(): IBroker {
+    return this.broker
+  }
+
   /**
    * Returns the list of exchanges available in Mento (cached)
    * @returns the list of exchanges
    */
-  private async getExchanges(): Promise<Exchange[]> {
+  async getExchanges(): Promise<Exchange[]> {
     if (this.exchanges.length > 0) {
       return this.exchanges
     }
@@ -275,13 +297,13 @@ export class Mento {
 
     const exchangeProvidersAddresses = await this.broker.getExchangeProviders()
     for (const exchangeProviderAddr of exchangeProvidersAddresses) {
-      const exchangeManager: IExchangeProvider =
+      const exchangeProvider: IExchangeProvider =
         IExchangeProvider__factory.connect(
           exchangeProviderAddr,
           this.signerOrProvider
         )
-      const exchangesInManager = await exchangeManager.getExchanges()
-      for (const exchange of exchangesInManager) {
+      const exchangesInProvider = await exchangeProvider.getExchanges()
+      for (const exchange of exchangesInProvider) {
         assert(exchange.assets.length === 2, 'Exchange must have 2 assets')
 
         exchanges.push({
@@ -297,12 +319,84 @@ export class Mento {
   }
 
   /**
+   * Similar to getExchanges() but only works for Mento instances that
+   * use BiPoolManagers as ExchangeProviders.
+   * TODO remove this and improve IExchangeProvider to expose necessary data
+   * @returns the list of all pool exchanges
+   */
+  async getBiPoolExchanges(): Promise<PoolExchange[]> {
+    if (this.biPoolExchanges.length > 0) {
+      return this.biPoolExchanges
+    }
+
+    const biPoolAddresses = await this.broker.getExchangeProviders()
+    const poolExchanges = await Promise.all(
+      biPoolAddresses.map((addr) => this.getExchangesForBiPoolAddress(addr))
+    )
+
+    this.biPoolExchanges = poolExchanges.flat()
+    return this.biPoolExchanges
+  }
+
+  /**
+   * Similar to getExchanges() but only works for Mento instances that
+   * use BiPoolManagers as ExchangeProviders.
+   * TODO remove this and improve IExchangeProvider to expose necessary data
+   * @returns the list of all pool exchanges
+   */
+  async getExchangesForBiPoolAddress(
+    address: Address
+  ): Promise<Array<PoolExchange>> {
+    const biPoolManager: IBiPoolManager = IBiPoolManager__factory.connect(
+      address,
+      this.signerOrProvider
+    )
+    // TODO add a getPoolExchanges method on BiPoolManager to reduce the network requests here
+    // Currently requires n + 1 where n is number of exchanges
+    const exchangesIds = await biPoolManager.getExchangeIds()
+    const pools: IBiPoolManager.PoolExchangeStructOutput[] = await Promise.all(
+      exchangesIds.map((id) => biPoolManager.getPoolExchange(id))
+    )
+    const moduleNames: string[] = await Promise.all(
+      pools.map((p) =>
+        IPricingModule__factory.connect(
+          p.pricingModule,
+          this.signerOrProvider
+        ).name()
+      )
+    )
+    assert(
+      exchangesIds.length === pools.length &&
+        moduleNames.length === pools.length,
+      `Length of IDs (${exchangesIds.length}), Pools (${pools.length}), and names (${moduleNames.length}) must match`
+    )
+    return pools.map((pool, i) => ({
+      providerAddr: address,
+      id: exchangesIds[i],
+      assets: [pool.asset0, pool.asset1],
+      asset0: pool.asset0,
+      asset1: pool.asset1,
+      pricingModule: pool.pricingModule,
+      pricingModuleName: moduleNames[i],
+      bucket0: pool.bucket0.toString(),
+      bucket1: pool.bucket1.toString(),
+      lastBucketUpdate: pool.lastBucketUpdate.toString(),
+      spread: pool.config.spread.value.toString(),
+      referenceRateFeedID: pool.config.referenceRateFeedID,
+      referenceRateResetFrequency:
+        pool.config.referenceRateResetFrequency.toString(),
+      minimumReports: pool.config.minimumReports.toString(),
+      stablePoolResetSize: pool.config.stablePoolResetSize.toString(),
+    }))
+  }
+
+  /**
    * Returns the Mento exchange (if any) for a given pair of tokens
    * @param token0 the first token
    * @param token1 the second token
    * @returns
    */
-  private async getExchangeForTokens(
+  async getExchangeForTokens(
     token0: Address,
     token1: Address
   ): Promise<Exchange> {

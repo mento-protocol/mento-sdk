@@ -24,6 +24,7 @@
     "build": "yarn build:cjs && yarn build:esm",
     "build:cjs": "tsc --project ./tsconfig.json",
     "build:esm": "tsc --project ./tsconfig.esm.json",
+    "clean": "rm -rf ./dist",
     "lint": "eslint --config ./.eslintrc.json **/*.{json,ts}",
     "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",
     "size": "size-limit",
@@ -70,6 +71,7 @@
     "prettier": "^2.8.4",
     "size-limit": "^8.1.0",
     "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
     "typescript": "^4.9.5"
   },
   "dependencies": {
