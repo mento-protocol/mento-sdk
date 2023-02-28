@@ -1,8 +1,8 @@
-import { Contract, Wallet, ethers, providers, utils } from 'ethers'
 import {
   IBroker__factory,
   IExchangeProvider__factory,
 } from '@mento-protocol/mento-core-ts'
+import { Contract, ethers, providers, utils, Wallet } from 'ethers'
 
 import { Mento } from './mento'
 
@@ -77,16 +77,14 @@ describe('Mento', () => {
   // @ts-ignore
   IBroker__factory.connect.mockReturnValue(mockBroker)
   // @ts-ignore
-  IExchangeProvider__factory.connect = jest.fn(
-    (exchangeProvider: string, _) => {
-      return {
-        getExchanges: () =>
-          fakeExchangesByProviders[
-            exchangeProvider as keyof typeof fakeExchangesByProviders
-          ],
-      }
+  IExchangeProvider__factory.connect = jest.fn((exchangeProvider: string) => {
+    return {
+      getExchanges: () =>
+        fakeExchangesByProviders[
+          exchangeProvider as keyof typeof fakeExchangesByProviders
+        ],
     }
-  )
+  })
 
   // mock ethers Contracts
   const celoRegistryAddress = '0x000000000000000000000000000000000000ce10'
