@@ -1,26 +1,28 @@
-import { BigNumber, Signer, providers } from 'ethers'
 import {
   IBroker,
   IBroker__factory,
   IExchangeProvider,
   IExchangeProvider__factory,
 } from '@mento-protocol/mento-core-ts'
+import { BigNumber, providers, Signer } from 'ethers'
+import { Address } from './types'
 import {
   getBrokerAddressFromRegistry,
   getSymbolFromTokenAddress,
   increaseAllowance,
+  validateSigner,
+  validateSignerOrProvider,
 } from './utils'
-import { Address } from './types'
 
 import { strict as assert } from 'assert'
 
-interface Exchange {
+export interface Exchange {
   providerAddr: Address
-  id: Address
-  assets: string[]
+  id: string
+  assets: Address[]
 }
 
-interface Asset {
+export interface Asset {
   address: Address
   symbol: string
 }
@@ -31,20 +33,20 @@ export class Mento {
   private exchanges: Exchange[]
 
   /**
-   * This constructor is private, use the static create or createWithBrokerAddress methods
+   * This constructor is private, use the static create or createWithParams methods
    * to create a new Mento instance
+   * @param signerOrProvider an ethers provider or connected signer
    * @param brokerAddress the address of the broker contract
-   * @param provider an ethers provider
-   * @param signer an optional ethers signer to execute swaps (must be connected to a provider)
+   * @param exchanges exchange data for the broker
    */
   private constructor(
+    signerOrProvider: Signer | providers.Provider,
     brokerAddress: Address,
-    signerOrProvider: Signer | providers.Provider
+    exchanges?: Exchange[]
   ) {
-    this.broker = IBroker__factory.connect(brokerAddress, signerOrProvider)
     this.signerOrProvider = signerOrProvider
-
-    this.exchanges = new Array<Exchange>()
+    this.broker = IBroker__factory.connect(brokerAddress, signerOrProvider)
+    this.exchanges = exchanges || []
   }
 
   /**
@@ -54,50 +56,38 @@ export class Mento {
    * @returns a new Mento object instance
    */
   static async create(signerOrProvider: Signer | providers.Provider) {
-    const isSigner = Signer.isSigner(signerOrProvider)
-    const isProvider = providers.Provider.isProvider(signerOrProvider)
-
-    if (!isSigner && !isProvider) {
-      throw new Error('A valid signer or provider must be provided')
-    }
-
-    if (isSigner) {
-      if (!providers.Provider.isProvider(signerOrProvider.provider)) {
-        throw new Error('Signer must be connected to a provider')
-      }
-    }
-
+    validateSignerOrProvider(signerOrProvider)
     return new Mento(
-      await getBrokerAddressFromRegistry(signerOrProvider),
-      signerOrProvider
+      signerOrProvider,
+      await getBrokerAddressFromRegistry(signerOrProvider)
     )
   }
 
   /**
-   * Create a new Mento object instance given a specific broker address
-   * When constructed with only a Provider only read-only operations are supported
-   * @param brokerAddr the address of the broker contract
+   * Create a new Mento object instance given a broker address and optional exchanges data
+   * When constructed with a Provider, only read-only operations are supported
    * @param signerOrProvider an ethers signer or provider. A signer is required to execute swaps
+   * @param brokerAddr the address of the broker contract
+   * @param exchanges the exchanges data for the broker
    * @returns a new Mento object instance
    */
-  static createWithBrokerAddress(
+  static createWithParams(
+    signerOrProvider: Signer | providers.Provider,
     brokerAddr: Address,
-    signerOrProvider: Signer | providers.Provider
+    exchanges?: Exchange[]
   ) {
-    const isSigner = Signer.isSigner(signerOrProvider)
-    const isProvider = providers.Provider.isProvider(signerOrProvider)
+    validateSignerOrProvider(signerOrProvider)
+    return new Mento(signerOrProvider, brokerAddr, exchanges)
+  }
 
-    if (!isSigner && !isProvider) {
-      throw new Error('A valid signer or provider must be provided')
-    }
-
-    if (isSigner) {
-      if (!providers.Provider.isProvider(signerOrProvider.provider)) {
-        throw new Error('Signer must be connected to a provider')
-      }
-    }
-
-    return new Mento(brokerAddr, signerOrProvider)
+  /**
+   * Returns a new Mento instance connected to the given signer
+   * @param signer an ethers signer
+   * @returns new Mento object instance
+   */
+  connectSigner(signer: Signer) {
+    validateSigner(signer)
+    return new Mento(signer, this.broker.address, this.exchanges)
   }
 
   /**
@@ -263,46 +253,64 @@ export class Mento {
   }
 
   /**
+   * Returns the mento instance's broker contract
+   * @returns broker contract
+   */
+  getBroker(): IBroker {
+    return this.broker
+  }
+
+  /**
    * Returns the list of exchanges available in Mento (cached)
    * @returns the list of exchanges
    */
-  private async getExchanges(): Promise<Exchange[]> {
+  async getExchanges(): Promise<Exchange[]> {
     if (this.exchanges.length > 0) {
       return this.exchanges
     }
 
-    const exchanges: Exchange[] = []
-
     const exchangeProvidersAddresses = await this.broker.getExchangeProviders()
-    for (const exchangeProviderAddr of exchangeProvidersAddresses) {
-      const exchangeManager: IExchangeProvider =
-        IExchangeProvider__factory.connect(
-          exchangeProviderAddr,
-          this.signerOrProvider
-        )
-      const exchangesInManager = await exchangeManager.getExchanges()
-      for (const exchange of exchangesInManager) {
-        assert(exchange.assets.length === 2, 'Exchange must have 2 assets')
 
-        exchanges.push({
-          providerAddr: exchangeProviderAddr,
-          id: exchange.exchangeId,
-          assets: exchange.assets,
-        })
-      }
-    }
+    const exchanges: Exchange[] = (
+      await Promise.all(
+        exchangeProvidersAddresses.map((a) => this.getExchangesForProvider(a))
+      )
+    ).flat()
 
     this.exchanges = exchanges
     return exchanges
   }
 
   /**
+   * Returns the list of exchanges for a given exchange provider address
+   * @returns list of exchanges
+   */
+  async getExchangesForProvider(
+    exchangeProviderAddr: Address
+  ): Promise<Exchange[]> {
+    const exchangeProvider: IExchangeProvider =
+      IExchangeProvider__factory.connect(
+        exchangeProviderAddr,
+        this.signerOrProvider
+      )
+    const exchangesInProvider = await exchangeProvider.getExchanges()
+    return exchangesInProvider.map((e) => {
+      assert(e.assets.length === 2, 'Exchange must have 2 assets')
+      return {
+        providerAddr: exchangeProviderAddr,
+        id: e.exchangeId,
+        assets: e.assets,
+      }
+    })
+  }
+
+  /**
    * Returns the Mento exchange (if any) for a given pair of tokens
    * @param token0 the first token
    * @param token1 the second token
-   * @returns
+   * @returns exchange
    */
-  private async getExchangeForTokens(
+  async getExchangeForTokens(
     token0: Address,
     token1: Address
   ): Promise<Exchange> {

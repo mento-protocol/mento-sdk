@@ -1,6 +1,41 @@
-import { BigNumber, Contract, Signer, constants, providers } from 'ethers'
+import { BigNumber, constants, Contract, providers, Signer } from 'ethers'
 
 import { Address } from './types'
+
+/**
+ * Ensures that given signer is truly a a connected signer
+ * @param signer an ethers signer
+ * @throws if signer is invalid or not connected
+ */
+export function validateSigner(signer: Signer) {
+  if (!Signer.isSigner(signer)) {
+    throw new Error('A valid signer must be provided')
+  }
+
+  if (!providers.Provider.isProvider(signer.provider)) {
+    throw new Error('Signer must be connected to a provider')
+  }
+}
+
+/**
+ * Ensures that given signerOrProvider is truly a provider or a connected signer
+ * @param signerOrProvider an ethers provider or signer
+ * @throws if signerOrProvider is invalid or not connected
+ */
+export function validateSignerOrProvider(
+  signerOrProvider: Signer | providers.Provider
+) {
+  const isSigner = Signer.isSigner(signerOrProvider)
+  const isProvider = providers.Provider.isProvider(signerOrProvider)
+
+  if (!isSigner && !isProvider) {
+    throw new Error('A valid signer or provider must be provided')
+  }
+
+  if (isSigner && !providers.Provider.isProvider(signerOrProvider.provider)) {
+    throw new Error('Signer must be connected to a provider')
+  }
+}
 
 /**
  * Returns the broker address from the Celo registry

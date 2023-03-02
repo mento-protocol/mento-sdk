@@ -1,8 +1,8 @@
-import { Contract, Wallet, ethers, providers, utils } from 'ethers'
 import {
   IBroker__factory,
   IExchangeProvider__factory,
 } from '@mento-protocol/mento-core-ts'
+import { Contract, ethers, providers, utils, Wallet } from 'ethers'
 
 import { Mento } from './mento'
 
@@ -77,16 +77,14 @@ describe('Mento', () => {
   // @ts-ignore
   IBroker__factory.connect.mockReturnValue(mockBroker)
   // @ts-ignore
-  IExchangeProvider__factory.connect = jest.fn(
-    (exchangeProvider: string, _) => {
-      return {
-        getExchanges: () =>
-          fakeExchangesByProviders[
-            exchangeProvider as keyof typeof fakeExchangesByProviders
-          ],
-      }
+  IExchangeProvider__factory.connect = jest.fn((exchangeProvider: string) => {
+    return {
+      getExchanges: () =>
+        fakeExchangesByProviders[
+          exchangeProvider as keyof typeof fakeExchangesByProviders
+        ],
     }
-  )
+  })
 
   // mock ethers Contracts
   const celoRegistryAddress = '0x000000000000000000000000000000000000ce10'
@@ -164,14 +162,14 @@ describe('Mento', () => {
     })
   })
 
-  describe('createWithBrokerAddress', () => {
+  describe('createWithParams', () => {
     it('should return a Mento instance without querying the registry', () => {
-      const testee = Mento.createWithBrokerAddress(fakeBrokerAddr, provider)
+      const testee = Mento.createWithParams(provider, fakeBrokerAddr)
       expect(testee).toBeDefined()
       expect(mockContractModule).toHaveBeenCalledTimes(0)
       expect(fakeRegistryContract.getAddressForString).toHaveBeenCalledTimes(0)
 
-      const testee2 = Mento.createWithBrokerAddress(fakeBrokerAddr, signer)
+      const testee2 = Mento.createWithParams(signer, fakeBrokerAddr)
       expect(testee2).toBeDefined()
       expect(mockContractModule).toHaveBeenCalledTimes(0)
       expect(fakeRegistryContract.getAddressForString).toHaveBeenCalledTimes(0)
@@ -179,13 +177,13 @@ describe('Mento', () => {
 
     it('should throw if the signer has no provider', () => {
       expect(() =>
-        Mento.createWithBrokerAddress(fakeBrokerAddr, signerWithoutProvider)
+        Mento.createWithParams(signerWithoutProvider, fakeBrokerAddr)
       ).toThrow('Signer must be connected to a provider')
     })
 
     it('should throw if no signer or provider is provided', () => {
       //@ts-ignore
-      expect(() => Mento.createWithBrokerAddress(fakeBrokerAddr)).toThrow(
+      expect(() => Mento.createWithParams(fakeBrokerAddr)).toThrow(
         'A valid signer or provider must be provided'
       )
     })
