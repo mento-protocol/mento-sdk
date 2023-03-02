@@ -1,6 +1,26 @@
-import { BigNumber, Contract, Signer, constants, providers } from 'ethers'
+import { BigNumber, constants, Contract, providers, Signer } from 'ethers'
 
 import { Address } from './types'
+
+/**
+ * Ensures that given signerOrProvider is truly a provider or a connected signer
+ * @param signerOrProvider an ethers provider or signer
+ * @throws if signerOrProvider is invalid
+ */
+export function validateSignerOrProvider(
+  signerOrProvider: Signer | providers.Provider
+) {
+  const isSigner = Signer.isSigner(signerOrProvider)
+  const isProvider = providers.Provider.isProvider(signerOrProvider)
+
+  if (!isSigner && !isProvider) {
+    throw new Error('A valid signer or provider must be provided')
+  }
+
+  if (isSigner && !providers.Provider.isProvider(signerOrProvider.provider)) {
+    throw new Error('Signer must be connected to a provider')
+  }
+}
 
 /**
  * Returns the broker address from the Celo registry

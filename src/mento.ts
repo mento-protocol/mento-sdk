@@ -10,6 +10,7 @@ import {
   getBrokerAddressFromRegistry,
   getSymbolFromTokenAddress,
   increaseAllowance,
+  validateSignerOrProvider,
 } from './utils'
 
 import { strict as assert } from 'assert'
@@ -33,17 +34,17 @@ export class Mento {
   /**
    * This constructor is private, use the static create or createWithBrokerAddress methods
    * to create a new Mento instance
+   * @param signerOrProvider an ethers provider or connect signer
    * @param brokerAddress the address of the broker contract
-   * @param provider an ethers provider
-   * @param signer an optional ethers signer to execute swaps (must be connected to a provider)
+   * @param exchanges exchange data for the broker
    */
   private constructor(
-    brokerAddress: Address,
     signerOrProvider: Signer | providers.Provider,
+    brokerAddress: Address,
     exchanges?: Exchange[]
   ) {
-    this.broker = IBroker__factory.connect(brokerAddress, signerOrProvider)
     this.signerOrProvider = signerOrProvider
+    this.broker = IBroker__factory.connect(brokerAddress, signerOrProvider)
     this.exchanges = exchanges || []
   }
 
@@ -68,37 +69,36 @@ export class Mento {
     }
 
     return new Mento(
-      await getBrokerAddressFromRegistry(signerOrProvider),
-      signerOrProvider
+      signerOrProvider,
+      await getBrokerAddressFromRegistry(signerOrProvider)
     )
   }
 
   /**
-   * Create a new Mento object instance given a specific broker address
-   * When constructed with only a Provider only read-only operations are supported
-   * @param brokerAddr the address of the broker contract
+   * Create a new Mento object instance given a broker address and optional exchanges data
+   * When constructed with a Provider, only read-only operations are supported
    * @param signerOrProvider an ethers signer or provider. A signer is required to execute swaps
+   * @param brokerAddr the address of the broker contract
+   * @param exchanges the exchanges data for the broker
    * @returns a new Mento object instance
    */
-  static createWithBrokerAddress(
-    brokerAddr: Address,
+  static createWithParams(
     signerOrProvider: Signer | providers.Provider,
+    brokerAddr: Address,
     exchanges?: Exchange[]
   ) {
-    const isSigner = Signer.isSigner(signerOrProvider)
-    const isProvider = providers.Provider.isProvider(signerOrProvider)
+    validateSignerOrProvider(signerOrProvider)
+    return new Mento(signerOrProvider, brokerAddr, exchanges)
+  }
 
-    if (!isSigner && !isProvider) {
-      throw new Error('A valid signer or provider must be provided')
-    }
-
-    if (isSigner) {
-      if (!providers.Provider.isProvider(signerOrProvider.provider)) {
-        throw new Error('Signer must be connected to a provider')
-      }
-    }
-
-    return new Mento(brokerAddr, signerOrProvider, exchanges)
+  /**
+   * Returns a new Mento instance connected to the given signer
+   * @param signerOrProvider the second token
+   * @returns new Mento object instance
+   */
+  connectSigner(signerOrProvider: Signer | providers.Provider) {
+    validateSignerOrProvider(signerOrProvider)
+    return new Mento(signerOrProvider, this.broker.address, this.exchanges)
   }
 
   /**
@@ -263,7 +263,10 @@ export class Mento {
     return this.signerOrProvider.populateTransaction(tx)
   }
 
-  /** Returns the Broker contract */
+  /**
+   * Returns the mento instance's broker contract
+   * @returns broker contract
+   */
   getBroker(): IBroker {
     return this.broker
   }
@@ -330,14 +333,5 @@ export class Mento {
       `More than one exchange found for ${token0} and ${token1}`
     )
     return exchanges[0]
-  }
-
-  /**
-   * Returns a new Mento instance connected to the given signer or provider
-   * Similar to contract.connect() in Ethers.js
-   * @returns new Mento instance
-   */
-  connect(signerOrProvider: Signer | providers.Provider) {
-    return new Mento(this.broker.address, signerOrProvider, this.exchanges)
   }
 }
