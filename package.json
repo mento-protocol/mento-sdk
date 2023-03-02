@@ -18,7 +18,7 @@
   "typings": "dist/esm/index.d.ts",
   "files": [
     "dist",
-    "!dist/*.test.*",
+    "!dist/**/*.test.*",
     "LICENSE",
     "README.md"
   ],
