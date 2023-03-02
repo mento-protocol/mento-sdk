@@ -162,7 +162,7 @@ describe('Mento', () => {
     })
   })
 
-  describe('createWithBrokerAddress', () => {
+  describe('createWithParams', () => {
     it('should return a Mento instance without querying the registry', () => {
       const testee = Mento.createWithParams(provider, fakeBrokerAddr)
       expect(testee).toBeDefined()
