@@ -13,9 +13,6 @@ async function main() {
   const exchanges = await mento.getExchanges()
   console.log('Exchanges:\n================')
   console.log(exchanges, '\n')
-  const poolExchanges = await mento.getBiPoolExchanges()
-  console.log('Pool Exchanges:\n================')
-  console.log(poolExchanges, '\n')
 }
 
 main()
