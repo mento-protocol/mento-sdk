@@ -311,7 +311,7 @@ export class Mento {
    * Returns the Mento exchange (if any) for a given pair of tokens
    * @param token0 the first token
    * @param token1 the second token
-   * @returns
+   * @returns exchange
    */
   async getExchangeForTokens(
     token0: Address,
@@ -330,5 +330,14 @@ export class Mento {
       `More than one exchange found for ${token0} and ${token1}`
     )
     return exchanges[0]
+  }
+
+  /**
+   * Returns a new Mento instance connected to the given signer or provider
+   * Similar to contract.connect() in Ethers.js
+   * @returns new Mento instance
+   */
+  connect(signerOrProvider: Signer | providers.Provider) {
+    return new Mento(this.broker.address, signerOrProvider, this.exchanges)
   }
 }
