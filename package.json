@@ -18,9 +18,7 @@
   "typings": "dist/esm/index.d.ts",
   "files": [
     "dist",
-    "!dist/**/*.test.*",
-    "LICENSE",
-    "README.md"
+    "!dist/**/*.test.*"
   ],
   "scripts": {
     "analyze": "size-limit --why",
