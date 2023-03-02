@@ -7,6 +7,8 @@ async function main() {
   )
   const mento = await Mento.create(provider)
   const broker = mento.getBroker()
+  console.log('Broker:\n================')
+  console.log(broker.address, '\n')
   const exchangeProviders = await broker.getExchangeProviders()
   console.log('Exchange Providers:\n================')
   console.log(exchangeProviders, '\n')
