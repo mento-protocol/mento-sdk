@@ -320,15 +320,6 @@ describe('Mento', () => {
       expect(spy).toHaveBeenCalledTimes(1)
       expect(spy).toHaveBeenCalledWith(fakeTxObj)
     })
-
-    it('should throw if a signer is not provided', async () => {
-      const testee = await Mento.create(provider)
-      await expect(
-        testee.increaseTradingAllowance(fakeCeloBRLExchange.assets[1], oneInWei)
-      ).rejects.toThrow(
-        'A signer is required to populate the increaseAllowance tx object'
-      )
-    })
   })
 
   describe('swapIn', () => {
@@ -385,18 +376,6 @@ describe('Mento', () => {
         testee.swapIn(tokenIn, tokenOut, oneInWei, oneInWei)
       ).rejects.toThrow(`No exchange found for ${tokenIn} and ${tokenOut}`)
     })
-
-    it('should throw if a signer is not provided', async () => {
-      const testee = await Mento.create(provider)
-      await expect(
-        testee.swapIn(
-          fakeCeloUSDExchange.assets[0],
-          fakeCeloUSDExchange.assets[1],
-          oneInWei,
-          oneInWei
-        )
-      ).rejects.toThrow('A signer is required to populate the swapIn tx object')
-    })
   })
 
   describe('swapOut', () => {
@@ -451,22 +430,6 @@ describe('Mento', () => {
       await expect(
         testee.swapOut(tokenIn, tokenOut, oneInWei, oneInWei)
       ).rejects.toThrow(`No exchange found for ${tokenIn} and ${tokenOut}`)
-    })
-
-    it('should throw if a signer is not provided', async () => {
-      const provider = new providers.JsonRpcProvider()
-      const testee = await Mento.create(provider)
-
-      await expect(
-        testee.swapOut(
-          fakeCeloUSDExchange.assets[0],
-          fakeCeloUSDExchange.assets[1],
-          oneInWei,
-          oneInWei
-        )
-      ).rejects.toThrow(
-        'A signer is required to populate the swapOut tx object'
-      )
     })
   })
 })

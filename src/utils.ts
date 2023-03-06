@@ -1,4 +1,4 @@
-import { BigNumber, constants, Contract, providers, Signer } from 'ethers'
+import { BigNumberish, constants, Contract, providers, Signer } from 'ethers'
 
 import { Address } from './types'
 
@@ -86,19 +86,21 @@ export async function getSymbolFromTokenAddress(
  * @param tokenAddr the address of the erc20 token
  * @param spender the address of the spender
  * @param amount the amount to increase the allowance by
- * @param signer an ethers signer
+ * @param signerOrProvider an ethers signer or provider
  * @returns the populated TransactionRequest object
  */
 export async function increaseAllowance(
   tokenAddr: string,
   spender: string,
-  amount: BigNumber,
-  signer: Signer
+  amount: BigNumberish,
+  signerOrProvider: Signer | providers.Provider
 ): Promise<providers.TransactionRequest> {
   const abi = [
     'function increaseAllowance(address spender, uint256 value) external returns (bool)',
   ]
-  const contract = new Contract(tokenAddr, abi, signer)
+  // TODO, not all ERC-20 contracts support increaseAllowance
+  // Add a check for that here
+  const contract = new Contract(tokenAddr, abi, signerOrProvider)
 
   return await contract.populateTransaction.increaseAllowance(spender, amount)
 }
