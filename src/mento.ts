@@ -304,8 +304,8 @@ export class Mento {
 
   /**
    * Returns the Mento exchange (if any) for a given pair of tokens
-   * @param token0 the first token
-   * @param token1 the second token
+   * @param token0 the address of the first token
+   * @param token1 the address of the second token
    * @returns exchange
    */
   async getExchangeForTokens(
