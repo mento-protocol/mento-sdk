@@ -1,5 +1,16 @@
-import { BigNumberish, constants, Contract, providers, Signer } from 'ethers'
-
+import {
+  DEFAULT_ERROR_MESSAGE,
+  ETHERS_ERROR_CODE,
+  ETHERS_ERROR_METHOD,
+} from './constants'
+import {
+  BigNumberish,
+  constants,
+  Contract,
+  PopulatedTransaction,
+  providers,
+  Signer,
+} from 'ethers'
 import { Address } from './types'
 
 /**
@@ -87,13 +98,15 @@ export async function getSymbolFromTokenAddress(
  * @param spender the address of the spender
  * @param amount the amount to increase the allowance by
  * @param signerOrProvider an ethers signer or provider
+ * @param simulateTx whether to simulate the transaction or not, defaults to true
  * @returns the populated TransactionRequest object
  */
 export async function increaseAllowance(
   tokenAddr: string,
   spender: string,
   amount: BigNumberish,
-  signerOrProvider: Signer | providers.Provider
+  signerOrProvider: Signer | providers.Provider,
+  simulateTx = true
 ): Promise<providers.TransactionRequest> {
   const abi = [
     'function increaseAllowance(address spender, uint256 value) external returns (bool)',
@@ -102,5 +115,54 @@ export async function increaseAllowance(
   // Add a check for that here
   const contract = new Contract(tokenAddr, abi, signerOrProvider)
 
-  return await contract.populateTransaction.increaseAllowance(spender, amount)
+  const tx = await contract.populateTransaction.increaseAllowance(
+    spender,
+    amount
+  )
+
+  if (simulateTx) {
+    // If the simulation fails, it will throw an error
+    await simulateTransaction(signerOrProvider, tx)
+  }
+
+  return tx
+}
+
+/**
+ * Extracts the error message from an error object
+ * @param error the error object
+ * @returns The underlying error message from the smart contract
+ */
+export function parseContractError(error: any) {
+  let errorMessage = DEFAULT_ERROR_MESSAGE
+
+  if (
+    error.code === ETHERS_ERROR_CODE &&
+    error.method === ETHERS_ERROR_METHOD
+  ) {
+    // TODO:
+    // - Get the reaon then trim
+    // - Check if reason is known
+    // - If known, return the friendly error message instead
+    errorMessage = error.reason || DEFAULT_ERROR_MESSAGE
+  }
+
+  return errorMessage
+}
+
+/**
+ * Simulates a transaction
+ * @param signerOrProvider an ethers signer or provider
+ * @param tx the transaction to be simulated
+ */
+export async function simulateTransaction(
+  signerOrProvider: Signer | providers.Provider,
+  tx: PopulatedTransaction
+) {
+  try {
+    await signerOrProvider.estimateGas(tx)
+  } catch (error: any) {
+    error.message = parseContractError(error)
+    throw error
+  }
 }
