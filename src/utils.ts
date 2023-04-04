@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  DEFAULT_ERROR_MESSAGE,
-  ETHERS_ERROR_CODE,
-  ETHERS_ERROR_METHOD,
+  DEFAULT_SIMULATE_ERROR_MESSAGE,
+  ETHERS_ERROR_CODE_ESTIMATEGAS,
+  ETHERS_ERROR_METHOD_ESTIMATEGAS,
+  knownErrorsMapping,
 } from './constants'
 import {
   BigNumberish,
@@ -134,17 +136,13 @@ export async function increaseAllowance(
  * @returns The underlying error message from the smart contract
  */
 export function parseContractError(error: any) {
-  let errorMessage = DEFAULT_ERROR_MESSAGE
+  let errorMessage = DEFAULT_SIMULATE_ERROR_MESSAGE
+  let reason = error?.reason
 
-  if (
-    error.code === ETHERS_ERROR_CODE &&
-    error.method === ETHERS_ERROR_METHOD
-  ) {
-    // TODO:
-    // - Get the reaon then trim
-    // - Check if reason is known
-    // - If known, return the friendly error message instead
-    errorMessage = error.reason || DEFAULT_ERROR_MESSAGE
+  // If we have a reason, we can get the friendly error message
+  if (reason) {
+    reason = reason.split('execution reverted:')[1]?.trim()
+    errorMessage = knownErrorsMapping[reason] ?? reason
   }
 
   return errorMessage
@@ -162,7 +160,23 @@ export async function simulateTransaction(
   try {
     await signerOrProvider.estimateGas(tx)
   } catch (error: any) {
-    error.message = parseContractError(error)
-    throw error
+    if (isEstimateGasError(error)) {
+      error.message = parseContractError(error)
+      throw error
+    } else {
+      throw error
+    }
   }
+}
+
+/**
+ * Checks if an error is an estimateGas error
+ * @param error The error to be checked
+ * @returns A boolean indicating if the error is an estimateGas error
+ */
+function isEstimateGasError(error: any): boolean {
+  return (
+    error?.code === ETHERS_ERROR_CODE_ESTIMATEGAS &&
+    error?.method === ETHERS_ERROR_METHOD_ESTIMATEGAS
+  )
 }
