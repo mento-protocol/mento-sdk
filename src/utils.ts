@@ -155,7 +155,7 @@ export function parseContractError(error: any) {
  */
 export async function simulateTransaction(
   signerOrProvider: Signer | providers.Provider,
-  tx: PopulatedTransaction
+  tx: PopulatedTransaction | providers.TransactionRequest
 ) {
   try {
     await signerOrProvider.estimateGas(tx)

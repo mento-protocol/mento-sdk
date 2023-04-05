@@ -10,6 +10,7 @@ import {
   getBrokerAddressFromRegistry,
   getSymbolFromTokenAddress,
   increaseAllowance,
+  simulateTransaction,
   validateSigner,
   validateSignerOrProvider,
 } from './utils'
@@ -162,23 +163,32 @@ export class Mento {
    * Increases the broker's trading allowance for the given token
    * @param token the token to increase the allowance for
    * @param amount the amount to increase the allowance by
+   * @param simulateTx whether to simulate the transaction or not, defaults to true
    * @returns the populated TransactionRequest object
    */
   async increaseTradingAllowance(
     token: Address,
-    amount: BigNumberish
+    amount: BigNumberish,
+    simulateTx = true
   ): Promise<providers.TransactionRequest> {
     const spender = this.broker.address
     const tx = await increaseAllowance(
       token,
       spender,
       amount,
-      this.signerOrProvider
+      this.signerOrProvider,
+      simulateTx
     )
 
     if (Signer.isSigner(this.signerOrProvider)) {
       // The contract call doesn't populate all of the signer fields, so we need an extra call for the signer
-      return this.signerOrProvider.populateTransaction(tx)
+      const txRequest = await this.signerOrProvider.populateTransaction(tx)
+
+      if (simulateTx) {
+        await simulateTransaction(this.signerOrProvider, txRequest)
+      }
+
+      return txRequest
     } else {
       return tx
     }
@@ -191,13 +201,15 @@ export class Mento {
    * @param tokenOut the token to be bought
    * @param amountIn the amount of tokenIn to be sold
    * @param amountOutMin the minimum amount of tokenOut to be bought
+   * @param simulateTx whether to simulate the transaction or not, defaults to true
    * @returns the populated TransactionRequest object
    */
   async swapIn(
     tokenIn: Address,
     tokenOut: Address,
     amountIn: BigNumberish,
-    amountOutMin: BigNumberish
+    amountOutMin: BigNumberish,
+    simulateTx = true
   ): Promise<providers.TransactionRequest> {
     const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
     const tx = await this.broker.populateTransaction.swapIn(
@@ -211,7 +223,13 @@ export class Mento {
 
     if (Signer.isSigner(this.signerOrProvider)) {
       // The contract call doesn't populate all of the signer fields, so we need an extra call for the signer
-      return this.signerOrProvider.populateTransaction(tx)
+      const txRequest = await this.signerOrProvider.populateTransaction(tx)
+
+      if (simulateTx) {
+        await simulateTransaction(this.signerOrProvider, txRequest)
+      }
+
+      return txRequest
     } else {
       return tx
     }
@@ -224,13 +242,15 @@ export class Mento {
    * @param tokenOut the token to be bought
    * @param amountOut the amount of tokenOut to be bought
    * @param amountInMax the maximum amount of tokenIn to be sold
+   * @param simulateTx whether to simulate the transaction or not, defaults to true
    * @returns the populated TransactionRequest object
    */
   async swapOut(
     tokenIn: Address,
     tokenOut: Address,
     amountOut: BigNumberish,
-    amountInMax: BigNumberish
+    amountInMax: BigNumberish,
+    simulateTx = true
   ): Promise<providers.TransactionRequest> {
     const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
     const tx = await this.broker.populateTransaction.swapOut(
@@ -244,7 +264,13 @@ export class Mento {
 
     if (Signer.isSigner(this.signerOrProvider)) {
       // The contract call doesn't populate all of the signer fields, so we need an extra call for the signer
-      return this.signerOrProvider.populateTransaction(tx)
+      const txRequest = await this.signerOrProvider.populateTransaction(tx)
+
+      if (simulateTx) {
+        await simulateTransaction(this.signerOrProvider, txRequest)
+      }
+
+      return txRequest
     } else {
       return tx
     }
