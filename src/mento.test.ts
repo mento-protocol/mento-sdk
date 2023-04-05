@@ -312,7 +312,7 @@ describe('Mento', () => {
         // @ts-ignore
         .mockReturnValueOnce(fakePopulatedTxObj)
 
-      const tx = await testee.increaseTradingAllowance(token, amount)
+      const tx = await testee.increaseTradingAllowance(token, amount, false)
       expect(tx).toBe(fakePopulatedTxObj)
       expect(increaseAllowanceFn).toHaveBeenCalledTimes(1)
       expect(increaseAllowanceFn).toHaveBeenCalledWith(fakeBrokerAddr, amount)
@@ -349,7 +349,8 @@ describe('Mento', () => {
         tokenIn,
         tokenOut,
         amountIn,
-        amountOutMin
+        amountOutMin,
+        false
       )
       expect(result).toBe(fakePopulatedTxObj)
 
@@ -404,7 +405,8 @@ describe('Mento', () => {
         tokenIn,
         tokenOut,
         amountOut,
-        amountInMax
+        amountInMax,
+        false
       )
       expect(result).toBe(fakePopulatedTxObj)
 
