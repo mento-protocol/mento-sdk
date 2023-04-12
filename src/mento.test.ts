@@ -1,12 +1,21 @@
+import { Contract, Wallet, ethers, providers, utils } from 'ethers'
 import {
   IBroker__factory,
   IExchangeProvider__factory,
 } from '@mento-protocol/mento-core-ts'
-import { Contract, ethers, providers, utils, Wallet } from 'ethers'
 
 import { Mento } from './mento'
 
-jest.mock('@mento-protocol/mento-core-ts')
+jest.mock('@mento-protocol/mento-core-ts', () => {
+  return {
+    // IBroker: jest.fn(),
+    IBroker__factory: {
+      connect: jest.fn(),
+    },
+    // IExchangeProvider: jest.fn(),
+    IExchangeProvider__factory: jest.fn(),
+  }
+})
 jest.mock('ethers', () => {
   return {
     constants: jest.requireActual('ethers').constants,
