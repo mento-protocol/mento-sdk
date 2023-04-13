@@ -1,11 +1,20 @@
 import {
+  Address,
+  TradingLimit,
+  TradingLimitsConfig,
+  TradingLimitsState,
+  TradingMode,
+} from './types'
+import {
+  BiPoolManager__factory,
+  Broker__factory,
+  IBreakerBox__factory,
   IBroker,
   IBroker__factory,
   IExchangeProvider,
   IExchangeProvider__factory,
 } from '@mento-protocol/mento-core-ts'
-import { BigNumber, BigNumberish, providers, Signer } from 'ethers'
-import { Address } from './types'
+import { BigNumber, BigNumberish, Signer, providers } from 'ethers'
 import {
   getBrokerAddressFromRegistry,
   getSymbolFromTokenAddress,
@@ -13,6 +22,7 @@ import {
   validateSigner,
   validateSignerOrProvider,
 } from './utils'
+import { getLimits, getLimitsConfig, getLimitsState } from './limits'
 
 import { strict as assert } from 'assert'
 
@@ -325,5 +335,112 @@ export class Mento {
       `More than one exchange found for ${token0} and ${token1}`
     )
     return exchanges[0]
+  }
+
+  /**
+   * Returns the Mento exchange for a given exchange id
+   * @param exchangeId the id of the exchange
+   * @returns the exchange with the given id
+   */
+  async getExchangeById(exchangeId: string): Promise<Exchange> {
+    const exchanges = (await this.getExchanges()).filter(
+      (e) => e.id === exchangeId
+    )
+
+    if (exchanges.length === 0) {
+      throw Error(`No exchange found for id ${exchangeId}`)
+    }
+
+    assert(
+      exchanges.length === 1,
+      `More than one exchange found with id ${exchangeId}`
+    )
+    return exchanges[0]
+  }
+
+  /**
+   * Returns whether trading is enabled in the given mode for a given exchange id
+   * @param exchangeId the id of the exchange
+   * @param mode the trading mode
+   * @returns true if trading is enabled in the given mode, false otherwise
+   */
+  async isTradingEnabled(
+    exchangeId: string,
+    mode: TradingMode = TradingMode.BI_DIRECTIONAL
+  ): Promise<boolean> {
+    const exchange = await this.getExchangeById(exchangeId)
+    const biPoolManager = BiPoolManager__factory.connect(
+      exchange.providerAddr,
+      this.signerOrProvider
+    )
+
+    const [breakerBoxAddr, exchangeConfig] = await Promise.all([
+      biPoolManager.breakerBox(),
+      biPoolManager.getPoolExchange(exchangeId),
+    ])
+
+    const breakerBox = IBreakerBox__factory.connect(
+      breakerBoxAddr,
+      this.signerOrProvider
+    )
+    const currentMode = await breakerBox.getRateFeedTradingMode(
+      exchangeConfig.config.referenceRateFeedID
+    )
+
+    return currentMode.toNumber() == mode
+  }
+
+  /**
+   * Return the trading limits for a given exchange id. Each limit is an object with the following fields:
+   * asset: the address of the asset with the limit
+   * maxIn: the maximum amount of the asset that can be sold
+   * maxOut: the maximum amount of the asset that can be bought
+   * until: the timestamp until which the limit is valid
+   * @param exchangeId the id of the exchange
+   * @returns the list of trading limits
+   */
+  async getTradingLimits(exchangeId: string): Promise<TradingLimit[]> {
+    const exchange = await this.getExchangeById(exchangeId)
+    const broker = Broker__factory.connect(
+      this.broker.address,
+      this.signerOrProvider
+    )
+
+    const assetWithLimit = exchange.assets[0] // currently limits are configured only on asset0
+    return getLimits(broker, exchangeId, assetWithLimit)
+  }
+
+  /**
+   * Returns the trading limits configuration for a given exchange id
+   * @param exchangeId the id of the exchange
+   * @returns the trading limits configuration
+   */
+  async getTradingLimitConfig(
+    exchangeId: string
+  ): Promise<TradingLimitsConfig> {
+    const exchange = await this.getExchangeById(exchangeId)
+    const broker = Broker__factory.connect(
+      this.broker.address,
+      this.signerOrProvider
+    )
+
+    const assetWithLimit = exchange.assets[0] // currently limits are configured only on asset0
+    return getLimitsConfig(broker, exchangeId, assetWithLimit)
+  }
+
+  /**
+   * Returns the trading limits state for a given exchange id
+   * @param exchangeId the id of the exchange
+   * @returns the trading limits state
+   */
+  async getTradingLimitState(exchangeId: string): Promise<TradingLimitsState> {
+    const exchange = await this.getExchangeById(exchangeId)
+    const broker = Broker__factory.connect(
+      this.broker.address,
+      this.signerOrProvider
+    )
+
+    const assetWithLimit = exchange.assets[0] // currently limits are configured only on asset0
+    return getLimitsState(broker, exchangeId, assetWithLimit)
   }
 }
