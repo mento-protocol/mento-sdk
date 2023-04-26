@@ -6,14 +6,14 @@ import {
 } from './types'
 
 import { Broker } from '@mento-protocol/mento-core-ts'
-import { assert } from 'console'
+import { strict as assert } from 'assert'
 import { utils } from 'ethers'
 
 /**
  * Returns the limit configuration in the broker for the given exchange and asset
  * @param broker an instance of the broker
  * @param exchangeId the id of the exchange
- * @param asset the address of the asset with the limit
+ * @param asset the address of the limited asset
  * @returns the limit configuration
  */
 export async function getLimitsConfig(
@@ -38,7 +38,7 @@ export async function getLimitsConfig(
  * Returns the limit state in the broker for the given exchange and asset
  * @param broker an instance of the broker
  * @param exchangeId the id of the exchange
- * @param asset the address of the asset with the limit
+ * @param asset the address of the limited asset
  * @returns the limit state
  */
 export async function getLimitsState(
@@ -126,10 +126,7 @@ export async function getLimits(
  * @param asset the address of the asset with the limit
  * @returns the limit id
  */
-export async function getLimitId(
-  exchangeId: string,
-  asset: Address
-): Promise<string> {
+export function getLimitId(exchangeId: string, asset: Address): string {
   const assetBytes32 = utils.zeroPad(asset, 32)
   const exchangeIdBytes = utils.arrayify(exchangeId)
   const assetBytes = utils.arrayify(assetBytes32)
