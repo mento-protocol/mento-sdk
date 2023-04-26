@@ -3,7 +3,6 @@ import {
   TradingLimit,
   TradingLimitsConfig,
   TradingLimitsState,
-  TradingMode,
 } from './types'
 import {
   BiPoolManager__factory,
