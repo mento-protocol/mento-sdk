@@ -1,9 +1,5 @@
 export type Address = string
 
-export enum TradingMode {
-  BI_DIRECTIONAL = 0,
-}
-
 export interface TradingLimit {
   asset: Address
   maxIn: number

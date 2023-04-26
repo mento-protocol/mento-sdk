@@ -364,10 +364,7 @@ export class Mento {
    * @param mode the trading mode
    * @returns true if trading is enabled in the given mode, false otherwise
    */
-  async isTradingEnabled(
-    exchangeId: string,
-    mode: TradingMode = TradingMode.BI_DIRECTIONAL
-  ): Promise<boolean> {
+  async isTradingEnabled(exchangeId: string): Promise<boolean> {
     const exchange = await this.getExchangeById(exchangeId)
     const biPoolManager = BiPoolManager__factory.connect(
       exchange.providerAddr,
@@ -387,7 +384,8 @@ export class Mento {
       exchangeConfig.config.referenceRateFeedID
     )
 
-    return currentMode.toNumber() == mode
+    const BI_DIRECTIONAL_TRADING_MODE = 0
+    return currentMode.toNumber() == BI_DIRECTIONAL_TRADING_MODE
   }
 
   /**
