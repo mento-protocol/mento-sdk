@@ -1,12 +1,30 @@
 import {
+  BiPoolManager__factory,
+  IBreakerBox__factory,
   IBroker__factory,
   IExchangeProvider__factory,
 } from '@mento-protocol/mento-core-ts'
-import { Contract, ethers, providers, utils, Wallet } from 'ethers'
+import { Contract, Wallet, constants, ethers, providers, utils } from 'ethers'
 
 import { Mento } from './mento'
 
-jest.mock('@mento-protocol/mento-core-ts')
+jest.mock('@mento-protocol/mento-core-ts', () => {
+  return {
+    IBroker__factory: {
+      connect: jest.fn(),
+    },
+    Broker__factory: {
+      connect: jest.fn(),
+    },
+    IExchangeProvider__factory: jest.fn(),
+    BiPoolManager__factory: {
+      connect: jest.fn(),
+    },
+    IBreakerBox__factory: {
+      connect: jest.fn(),
+    },
+  }
+})
 jest.mock('ethers', () => {
   return {
     constants: jest.requireActual('ethers').constants,
@@ -59,7 +77,7 @@ describe('Mento', () => {
     0
   )
 
-  // mock contract factories
+  // ========== Mock contract factories ==========
   const fakeBrokerAddr = 'fakeBrokerAddr'
   const mockBroker = {
     address: fakeBrokerAddr,
@@ -74,6 +92,20 @@ describe('Mento', () => {
       populateTransaction: jest.fn(),
     },
   }
+  const mockBiPoolManager = {
+    breakerBox: jest.fn(() => 'fakeBreakerBoxAddr'),
+    getPoolExchange: jest.fn(() => {
+      return {
+        config: {
+          referenceRateFeedID: 'fakeReferenceRateId',
+        },
+      }
+    }),
+  }
+  const mockBreakerBox = {
+    getRateFeedTradingMode: jest.fn(),
+  }
+
   // @ts-ignore
   IBroker__factory.connect.mockReturnValue(mockBroker)
   // @ts-ignore
@@ -85,8 +117,12 @@ describe('Mento', () => {
         ],
     }
   })
+  // @ts-ignore
+  BiPoolManager__factory.connect.mockReturnValue(mockBiPoolManager)
+  // @ts-ignore
+  IBreakerBox__factory.connect.mockReturnValue(mockBreakerBox)
 
-  // mock ethers Contracts
+  // ========== Mock ethers contracts ==========
   const celoRegistryAddress = '0x000000000000000000000000000000000000ce10'
   const fakeRegistryContract = {
     getAddressForString: jest.fn(() => fakeBrokerAddr),
@@ -430,6 +466,47 @@ describe('Mento', () => {
       await expect(
         testee.swapOut(tokenIn, tokenOut, oneInWei, oneInWei)
       ).rejects.toThrow(`No exchange found for ${tokenIn} and ${tokenOut}`)
+    })
+  })
+
+  describe('getExchangeById', () => {
+    it('should return the exchange with the given id', async () => {
+      const testee = await Mento.create(provider)
+      const celoUSDExchange = await testee.getExchangeById(
+        fakeCeloUSDExchange.exchangeId
+      )
+      const celoEURExchange = await testee.getExchangeById(
+        fakeCeloEURExchange.exchangeId
+      )
+
+      expect(celoUSDExchange.id).toEqual(fakeCeloUSDExchange.exchangeId)
+      expect(celoEURExchange.id).toEqual(fakeCeloEURExchange.exchangeId)
+    })
+
+    it('should throw if no exchange is found for the given id', async () => {
+      const testee = await Mento.create(provider)
+      await expect(
+        testee.getExchangeById('nonExistentExchangeId')
+      ).rejects.toThrow()
+    })
+  })
+
+  describe('isTradingEnabled', () => {
+    it('should return true if the trading mode is 0', async () => {
+      const testee = await Mento.create(provider)
+
+      mockBreakerBox.getRateFeedTradingMode.mockReturnValueOnce(constants.Zero)
+      expect(
+        await testee.isTradingEnabled(fakeCeloUSDExchange.exchangeId)
+      ).toBe(true)
+    })
+    it('should return false if the trading mode is not 0', async () => {
+      const testee = await Mento.create(provider)
+
+      mockBreakerBox.getRateFeedTradingMode.mockReturnValueOnce(constants.One)
+      expect(
+        await testee.isTradingEnabled(fakeCeloUSDExchange.exchangeId)
+      ).toBe(false)
     })
   })
 })
