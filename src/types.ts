@@ -23,3 +23,16 @@ export interface TradingLimitsState {
   netflow1: number
   netflowGlobal: number
 }
+
+export interface ContractAddressMap {
+  [chainId: string]: ContractAddresses
+}
+
+export interface ContractAddresses {
+  Airgrab: string
+  Emission: string
+  Factory: string
+  MentoGovernor: string
+  MentoToken: string
+  TimelockController: string
+}

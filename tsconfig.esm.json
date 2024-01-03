@@ -5,7 +5,8 @@
     "declaration": true,
     "module": "es2020",
     "moduleResolution": "node",
-    "outDir": "./dist/esm"
+    "outDir": "./dist/esm",
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules", "dist"]
 }

@@ -5,7 +5,8 @@
     "declaration": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "./dist/cjs"
+    "outDir": "./dist/cjs",
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules", "dist"]
 }
