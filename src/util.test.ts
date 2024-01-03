@@ -1,9 +1,11 @@
 import { Contract, Wallet, constants, providers, utils } from 'ethers'
 import {
   getBrokerAddressFromRegistry,
+  getContractsByChainId,
   getSymbolFromTokenAddress,
   increaseAllowance,
 } from './utils'
+import contractAddresses from './contracts.json'
 
 jest.mock('ethers', () => {
   return {
@@ -89,6 +91,25 @@ describe('Utils', () => {
       expect(increaseAllowanceFn).toHaveBeenCalledTimes(1)
       expect(increaseAllowanceFn).toHaveBeenCalledWith('fakeSpender', ten)
       expect(tx).toEqual(fakePopulatedTxObj)
+    })
+  })
+
+  describe('getContractsByChainId', () => {
+    it('should return contract addresses for a valid chainId', () => {
+      const validChainId = 42220
+      const expectedContracts = contractAddresses[validChainId]
+
+      const contracts = getContractsByChainId(validChainId)
+
+      expect(contracts).toEqual(expectedContracts)
+    })
+
+    it('should throw an error for a non-existent chainId', () => {
+      const invalidChainId = 99999
+
+      expect(() => {
+        getContractsByChainId(invalidChainId)
+      }).toThrow(`No contracts found for chainId ${invalidChainId}`)
     })
   })
 })
