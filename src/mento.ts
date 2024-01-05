@@ -384,7 +384,7 @@ export class Mento {
     )
 
     const BI_DIRECTIONAL_TRADING_MODE = 0
-    return currentMode.toNumber() == BI_DIRECTIONAL_TRADING_MODE
+    return currentMode == BI_DIRECTIONAL_TRADING_MODE
   }
 
   /**
