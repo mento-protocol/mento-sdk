@@ -31,7 +31,6 @@ export interface ContractAddressMap {
 export interface ContractAddresses {
   Airgrab: string
   Emission: string
-  Factory: string
   MentoGovernor: string
   MentoToken: string
   TimelockController: string
