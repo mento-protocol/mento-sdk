@@ -6,14 +6,16 @@ import {
 } from '@mento-protocol/mento-core-ts'
 import { ProposalState, IChainClient } from './types'
 import { ChainClient } from './ChainClient'
+import { TestChainClient } from './TestChainClient'
 
 export class Governance {
   private chainClient: IChainClient
 
+  // TODO: Remove use of TestChainClient
   constructor(chainClient: IChainClient)
   constructor(signerOrProvider: Signer | providers.Provider)
   constructor(arg: Signer | providers.Provider | IChainClient) {
-    if (arg instanceof ChainClient) {
+    if (arg instanceof ChainClient || arg instanceof TestChainClient) {
       this.chainClient = arg
     } else if (arg instanceof Signer || arg instanceof providers.Provider) {
       this.chainClient = new ChainClient(arg)
