@@ -1,28 +1,29 @@
 import { BigNumberish, Signer, providers } from 'ethers'
-import { getContractsByChainId, validateSignerOrProvider } from './utils'
+import { getContractsByChainId } from './utils'
 import {
   MentoGovernor,
   MentoGovernor__factory,
 } from '@mento-protocol/mento-core-ts'
-import { ProposalState } from './types'
+import { ProposalState, IChainClient } from './types'
+import { ChainClient } from './ChainClient'
 
 export class Governance {
-  private readonly signerOrProvider: Signer | providers.Provider
+  private chainClient: IChainClient
 
-  /**
-   * This constructor is private, use the static create Governance instance
-   * @param signerOrProvider an ethers provider or connected signer
-   */
-  private constructor(signerOrProvider: Signer | providers.Provider) {
-    this.signerOrProvider = signerOrProvider
+  constructor(chainClient: IChainClient)
+  constructor(signerOrProvider: Signer | providers.Provider)
+  constructor(arg: Signer | providers.Provider | IChainClient) {
+    if(arg instanceof ChainClient) {
+      this.chainClient = arg
+    }
+    else if (arg instanceof Signer || arg instanceof providers.Provider) {
+      this.chainClient = new ChainClient(arg)
+    }
+    else {
+      throw new Error('Invalid constructor argument')
+    }
   }
-
-  // TODO: Don't use static create, just use constructor.
-
-  static async create(signerOrProvider: Signer) { // Philip - why here type is Signer and not Signer | providers.Provider?
-    validateSignerOrProvider(signerOrProvider)
-    return new Governance(signerOrProvider)
-  }
+  
 
   /**
    * This function submits a proposal to be created to the Mento Governor contract usint the specified values.
@@ -46,62 +47,22 @@ export class Governance {
       'propose(address[],uint256[],bytes[],string)'
     ](targets, values, calldatas, description)
 
-    if (Signer.isSigner(this.signerOrProvider)) {
-      // The contract call doesn't populate all of the signer fields, so we need an extra call for the signer
-      return this.signerOrProvider.populateTransaction(tx)
-    } else {
-      return tx
-    }
+    return await this.chainClient.populateTransaction(tx)
   }
 
+  // TO
   public async queueProposal(proposalId: BigNumberish): Promise<providers.TransactionRequest> {
-    const chainId = await this.getChainId()
-
-    if (chainId === 0) {
-      throw new Error('Could not get chainId from signer or provider')
-    }
-
-    const contracts = getContractsByChainId(chainId)
-    const mentoGovernorAddress = contracts.MentoGovernor
-
-    const governor = MentoGovernor__factory.connect(
-      mentoGovernorAddress,
-      this.signerOrProvider
-    )
-
+    const governor = await this.getGovernorContract()
     const tx = await governor.populateTransaction['queue(uint256)'](proposalId)
 
-    if (Signer.isSigner(this.signerOrProvider)) {
-      // The contract call doesn't populate all of the signer fields, so we need an extra call for the signer
-      return this.signerOrProvider.populateTransaction(tx)
-    } else {
-      return tx
-    }  
+    return await this.chainClient.populateTransaction(tx)  
   }
 
   public async executeProposal(proposalId: BigNumberish): Promise<providers.TransactionRequest> {
-    const chainId = await this.getChainId()
-
-    if (chainId === 0) {
-      throw new Error('Could not get chainId from signer or provider')
-    }
-
-    const contracts = getContractsByChainId(chainId)
-    const mentoGovernorAddress = contracts.MentoGovernor
-
-    const governor = MentoGovernor__factory.connect(
-      mentoGovernorAddress,
-      this.signerOrProvider
-    )
-
+    const governor = await this.getGovernorContract()
     const tx = await governor.populateTransaction['execute(uint256)'](proposalId)
 
-    if (Signer.isSigner(this.signerOrProvider)) {
-      // The contract call doesn't populate all of the signer fields, so we need an extra call for the signer
-      return this.signerOrProvider.populateTransaction(tx)
-    } else {
-      return tx
-    }  
+    return await this.chainClient.populateTransaction(tx) 
   }
 
   /**
@@ -113,12 +74,19 @@ export class Governance {
     const governor = await this.getGovernorContract()
     const tx = await governor.populateTransaction.castVote(proposalId, support)
 
-    if (Signer.isSigner(this.signerOrProvider)) {
-      // The contract call doesn't populate all of the signer fields, so we need an extra call for the signer
-      return this.signerOrProvider.populateTransaction(tx)
-    } else {
-      return tx
-    }
+    return await this.chainClient.populateTransaction(tx)
+  }
+
+  /**
+   * This function cancels the proposal with the specified id.
+   * @param proposalId The id of the proposal to vote on.
+   * @param support Whether or not to support the proposal.
+   */
+  public async cancelProposal(proposalId: BigNumberish): Promise<providers.TransactionRequest> {
+    const governor = await this.getGovernorContract()
+    const tx = await governor.populateTransaction.cancel(proposalId)
+
+    return await this.chainClient.populateTransaction(tx) 
   }
 
   /**
@@ -170,39 +138,12 @@ export class Governance {
    * @returns The MentoGovernor contract.
    */
   private async getGovernorContract(): Promise<MentoGovernor> {
-    const chainId = await this.getChainId()
-    const contracts = getContractsByChainId(chainId)
+    const contracts = getContractsByChainId(await this.chainClient.getChainId())
     const mentoGovernorAddress = contracts.MentoGovernor
 
     return MentoGovernor__factory.connect(
       mentoGovernorAddress,
-      this.signerOrProvider
+      await this.chainClient.getSigner()
     )
-  }
-
-  /**
-   * This function retrieves the chainId from the signer or provider.
-   * @returns The chainId of the signer or provider.
-   */
-  private async getChainId(): Promise<number> {
-    let chainId = 0
-
-    if (Signer.isSigner(this.signerOrProvider)) {
-      const network = await this.signerOrProvider.provider?.getNetwork()
-      if (network) {
-        chainId = network.chainId
-      }
-    } else if (providers.Provider.isProvider(this.signerOrProvider)) {
-      const network = await this.signerOrProvider.getNetwork()
-      if (network) {
-        chainId = network.chainId
-      }
-    }
-
-    if (chainId === 0) {
-      throw new Error('Could not get chainId from signer or provider')
-    }
-
-    return chainId
   }
 }

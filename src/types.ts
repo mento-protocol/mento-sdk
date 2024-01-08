@@ -1,3 +1,5 @@
+import { ethers, providers } from "ethers"
+
 export type Address = string
 
 export interface TradingLimit {
@@ -45,4 +47,10 @@ export enum ProposalState {
   QUEUED = 5,
   EXPIRED = 6,
   EXECUTED = 7,
+}
+
+export interface IChainClient {
+  getSigner(): Promise<ethers.Signer | providers.Provider>
+  getChainId(): Promise<number>
+  populateTransaction(tx: ethers.PopulatedTransaction): Promise<providers.TransactionRequest>
 }

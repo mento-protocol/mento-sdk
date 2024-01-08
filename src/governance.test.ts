@@ -58,7 +58,8 @@ describe('Governance', () => {
 
     describe('create', () => {
         it('should return a Governance instance', async () => {
-            const governance = await Governance.create(signer)
+ 
+            const governance = await new Governance(signer)
             expect(governance).toBeDefined()
             expect(governance).toBeInstanceOf(Governance)
         })
