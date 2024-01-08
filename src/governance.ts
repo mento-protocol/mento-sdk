@@ -64,6 +64,31 @@ export class Governance {
   }
 
   /**
+   * This function submits a vote to the Mento Governor contract for the specified proposal.
+   * @param proposalId The id of the proposal to vote on.
+   * @param support Whether or not to support the proposal.
+   */
+  public async castVote(proposalId: BigNumberish, support: BigNumberish) {
+    const chainId = await this.getChainId()
+    const contracts = getContractsByChainId(chainId)
+    const mentoGovernorAddress = contracts.MentoGovernor
+
+    const governor = MentoGovernor__factory.connect(
+      mentoGovernorAddress,
+      this.signerOrProvider
+    )
+
+    const tx = await governor.populateTransaction.castVote(proposalId, support)
+
+    if (Signer.isSigner(this.signerOrProvider)) {
+      // The contract call doesn't populate all of the signer fields, so we need an extra call for the signer
+      return this.signerOrProvider.populateTransaction(tx)
+    } else {
+      return tx
+    }
+  }
+
+  /**
    * This function validates the args that are to be used in the createProposal function.
    * @param targets The addresses of the contracts to be called during proposal execution.
    * @param values  The values to be passed to the calls to the target contracts.
@@ -98,6 +123,10 @@ export class Governance {
     }
   }
 
+  /**
+   * This function retrieves the chainId from the signer or provider.
+   * @returns The chainId of the signer or provider.
+   */
   private async getChainId(): Promise<number> {
     let chainId = 0
 
@@ -111,6 +140,10 @@ export class Governance {
       if (network) {
         chainId = network.chainId
       }
+    }
+
+    if (chainId === 0) {
+      throw new Error('Could not get chainId from signer or provider')
     }
 
     return chainId
