@@ -1,6 +1,10 @@
 import { BigNumberish, Signer, providers } from 'ethers'
 import { getContractsByChainId, validateSignerOrProvider } from './utils'
-import { MentoGovernor__factory } from '@mento-protocol/mento-core-ts'
+import {
+  MentoGovernor,
+  MentoGovernor__factory,
+} from '@mento-protocol/mento-core-ts'
+import { ProposalState } from './types'
 
 export class Governance {
   private readonly signerOrProvider: Signer | providers.Provider
@@ -35,21 +39,8 @@ export class Governance {
     calldatas: string[],
     description: string
   ): Promise<providers.TransactionRequest> {
-    const chainId = await this.getChainId()
-
-    if (chainId === 0) {
-      throw new Error('Could not get chainId from signer or provider')
-    }
-
     this.validateProposalArgs(targets, values, calldatas, description)
-
-    const contracts = getContractsByChainId(chainId)
-    const mentoGovernorAddress = contracts.MentoGovernor
-
-    const governor = MentoGovernor__factory.connect(
-      mentoGovernorAddress,
-      this.signerOrProvider
-    )
+    const governor = await this.getGovernorContract()
 
     const tx = await governor.populateTransaction[
       'propose(address[],uint256[],bytes[],string)'
@@ -69,15 +60,7 @@ export class Governance {
    * @param support Whether or not to support the proposal.
    */
   public async castVote(proposalId: BigNumberish, support: BigNumberish) {
-    const chainId = await this.getChainId()
-    const contracts = getContractsByChainId(chainId)
-    const mentoGovernorAddress = contracts.MentoGovernor
-
-    const governor = MentoGovernor__factory.connect(
-      mentoGovernorAddress,
-      this.signerOrProvider
-    )
-
+    const governor = await this.getGovernorContract()
     const tx = await governor.populateTransaction.castVote(proposalId, support)
 
     if (Signer.isSigner(this.signerOrProvider)) {
@@ -86,6 +69,15 @@ export class Governance {
     } else {
       return tx
     }
+  }
+
+  /**
+   * This function returns the state of the proposal with the specified id.
+   * @param proposalId The id of the proposal to get the state of.
+   */
+  public async getProposalState(proposalId: BigNumberish): Promise<ProposalState> {
+    const governor = await this.getGovernorContract()
+    return await governor.state(proposalId)
   }
 
   /**
@@ -121,6 +113,21 @@ export class Governance {
         'Targets, values, and calldatas must all have the same length'
       )
     }
+  }
+
+  /**
+   * This function retrieves the MentoGovernor contract.
+   * @returns The MentoGovernor contract.
+   */
+  private async getGovernorContract(): Promise<MentoGovernor> {
+    const chainId = await this.getChainId()
+    const contracts = getContractsByChainId(chainId)
+    const mentoGovernorAddress = contracts.MentoGovernor
+
+    return MentoGovernor__factory.connect(
+      mentoGovernorAddress,
+      this.signerOrProvider
+    )
   }
 
   /**
