@@ -15,7 +15,7 @@ export class Governance {
 
   // TODO: Don't use static create, just use constructor.
 
-  static async create(signerOrProvider: Signer) {
+  static async create(signerOrProvider: Signer) { // Philip - why here type is Signer and not Signer | providers.Provider?
     validateSignerOrProvider(signerOrProvider)
     return new Governance(signerOrProvider)
   }
@@ -61,10 +61,62 @@ export class Governance {
     }
   }
 
+  public async queueProposal(proposalId: BigNumberish): Promise<providers.TransactionRequest> {
+    const chainId = await this.getChainId()
+
+    if (chainId === 0) {
+      throw new Error('Could not get chainId from signer or provider')
+    }
+
+    const contracts = getContractsByChainId(chainId)
+    const mentoGovernorAddress = contracts.MentoGovernor
+
+    const governor = MentoGovernor__factory.connect(
+      mentoGovernorAddress,
+      this.signerOrProvider
+    )
+
+    const tx = await governor.populateTransaction['queue(uint256)'](proposalId)
+
+    if (Signer.isSigner(this.signerOrProvider)) {
+      // The contract call doesn't populate all of the signer fields, so we need an extra call for the signer
+      return this.signerOrProvider.populateTransaction(tx)
+    } else {
+      return tx
+    }  
+  }
+
+  public async executeProposal(proposalId: BigNumberish): Promise<providers.TransactionRequest> {
+    const chainId = await this.getChainId()
+
+    if (chainId === 0) {
+      throw new Error('Could not get chainId from signer or provider')
+    }
+
+    const contracts = getContractsByChainId(chainId)
+    const mentoGovernorAddress = contracts.MentoGovernor
+
+    const governor = MentoGovernor__factory.connect(
+      mentoGovernorAddress,
+      this.signerOrProvider
+    )
+
+    const tx = await governor.populateTransaction['execute(uint256)'](proposalId)
+
+    if (Signer.isSigner(this.signerOrProvider)) {
+      // The contract call doesn't populate all of the signer fields, so we need an extra call for the signer
+      return this.signerOrProvider.populateTransaction(tx)
+    } else {
+      return tx
+    }  
+  }
+
   private async getChainId(): Promise<number> {
     let chainId = 0
 
     if (Signer.isSigner(this.signerOrProvider)) {
+      console.log('SignerOrProvider: ', this.signerOrProvider)
+      console.log('provider: ', await this.signerOrProvider.provider)
       const network = await this.signerOrProvider.provider?.getNetwork()
       if (network) {
         chainId = network.chainId
