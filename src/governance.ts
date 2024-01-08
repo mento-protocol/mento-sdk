@@ -41,6 +41,8 @@ export class Governance {
       throw new Error('Could not get chainId from signer or provider')
     }
 
+    this.validateProposalArgs(targets, values, calldatas, description)
+
     const contracts = getContractsByChainId(chainId)
     const mentoGovernorAddress = contracts.MentoGovernor
 
@@ -58,6 +60,41 @@ export class Governance {
       return this.signerOrProvider.populateTransaction(tx)
     } else {
       return tx
+    }
+  }
+
+  /**
+   * This function validates the args that are to be used in the createProposal function.
+   * @param targets The addresses of the contracts to be called during proposal execution.
+   * @param values  The values to be passed to the calls to the target contracts.
+   * @param calldatas The calldata to be passed to the calls to the target contracts.
+   * @param description A human readable description of the proposal.
+   */
+  private validateProposalArgs(
+    targets: string[],
+    values: BigNumberish[],
+    calldatas: string[],
+    description: string
+  ): void {
+    if (!targets || targets.length === 0) {
+      throw new Error('Targets must be specified')
+    }
+    if (!values || values.length === 0) {
+      throw new Error('Values must be specified')
+    }
+    if (!calldatas || calldatas.length === 0) {
+      throw new Error('Calldatas must be specified')
+    }
+    if (!description) {
+      throw new Error('Description must be specified')
+    }
+    if (
+      targets.length !== values.length ||
+      targets.length !== calldatas.length
+    ) {
+      throw new Error(
+        'Targets, values, and calldatas must all have the same length'
+      )
     }
   }
 
