@@ -4,7 +4,7 @@ import {
   MentoGovernor,
   MentoGovernor__factory,
 } from '@mento-protocol/mento-core-ts'
-import { ProposalState, IChainClient } from './types'
+import { IChainClient, ProposalState } from './types'
 import { ChainClient } from './ChainClient'
 import { TestChainClient } from './TestChainClient'
 
@@ -109,12 +109,13 @@ export class Governance {
   /**
    * Returns the state of the proposal with the specified id.
    * @param proposalId The id of the proposal to get the state of.
+   * @returns The state of the proposal.
    */
   public async getProposalState(
     proposalId: BigNumberish
-  ): Promise<ProposalState> {
+  ): Promise<[number]> {
     const governor = await this.getGovernorContract()
-    return await governor.state(proposalId)
+    return await governor.functions.state(proposalId) // ToDo: refactor to use string indicating stateName
   }
 
   /**
