@@ -1,11 +1,10 @@
 import { BigNumberish, constants, providers } from 'ethers'
 import { MentoGovernor__factory } from '@mento-protocol/mento-core-ts'
 
-import { ContractAddresses, IChainClient } from './types'
+import { ContractAddresses, ProposalState } from './types'
 import { Governance } from './governance'
-import { getContractsByChainId, validateSignerOrProvider } from './utils'
+import { getContractsByChainId } from './utils'
 import { TestChainClient } from './TestChainClient'
-import { exec } from 'child_process'
 
 jest.mock('./utils', () => {
   return {
@@ -23,7 +22,6 @@ jest.mock('@mento-protocol/mento-core-ts', () => {
 describe('Governance', () => {
   let testee: Governance
   let mockChainClient: TestChainClient
-  let mockContractAddresses: ContractAddresses
 
   async function setupMockContractAddresses() {
     const mockContractAddresses: ContractAddresses = {
@@ -37,33 +35,30 @@ describe('Governance', () => {
     getContractsByChainId.mockReturnValue(mockContractAddresses)
   }
 
-  //async function setupMockContractFactory() {
-    const mockMentoGovernor = {
-      address: 'fakeMentoGovernorAddress',
-      populateTransaction: {
-        'propose(address[],uint256[],bytes[],string)': jest.fn(),
-        'queue(uint256)': jest.fn(),
-        execute: jest.fn(),
-        castVote: jest.fn(),
-        cancel: jest.fn(),
-        'execute(uint256)': jest.fn(),
-      },
-      functions: {
-        state: jest.fn(),
-      },
-      signer: {
-        populateTransaction: jest.fn(),
-      },
-    }
-    // @ts-ignore
-    MentoGovernor__factory.connect = jest
-      .fn()
-      .mockReturnValue(mockMentoGovernor)
-  //}
+  const mockMentoGovernor = {
+    address: 'fakeMentoGovernorAddress',
+    populateTransaction: {
+      'propose(address[],uint256[],bytes[],string)': jest.fn(),
+      'queue(uint256)': jest.fn(),
+      execute: jest.fn(),
+      castVote: jest.fn(),
+      cancel: jest.fn(),
+      'execute(uint256)': jest.fn(),
+    },
+    functions: {
+      state: jest.fn(),
+    },
+    signer: {
+      populateTransaction: jest.fn(),
+    },
+  }
+  // @ts-ignore
+  MentoGovernor__factory.connect = jest
+    .fn()
+    .mockReturnValue(mockMentoGovernor)
 
   beforeEach(async () => {
     await setupMockContractAddresses()
-    //await setupMockContractFactory()
 
     mockChainClient = new TestChainClient()
     testee = new Governance(mockChainClient)
@@ -291,13 +286,13 @@ describe('Governance', () => {
   describe('getProposalState', () => {
     it('should return the state of the proposal', async () => {
         const proposalId = 1
-        const fakeProposalState = 1
+        const fakeProposalState = [1]
         
         mockMentoGovernor.functions.state.mockReturnValue(fakeProposalState)
         
         const result = await testee.getProposalState(proposalId)
 
-        expect(result).toEqual(fakeProposalState)
+        expect(result).toEqual(ProposalState[fakeProposalState[0]])
         expect(mockMentoGovernor.functions.state).toHaveBeenCalledTimes(1)
         expect(mockMentoGovernor.functions.state).toHaveBeenCalledWith(proposalId)
     })

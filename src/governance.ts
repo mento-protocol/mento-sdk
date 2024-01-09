@@ -11,10 +11,10 @@ import { TestChainClient } from './TestChainClient'
 export class Governance {
   private chainClient: IChainClient
 
-  // TODO: Remove use of TestChainClient
   constructor(chainClient: IChainClient)
   constructor(signerOrProvider: Signer | providers.Provider)
   constructor(arg: Signer | providers.Provider | IChainClient) {
+    // TODO: Remove use of TestChainClient in future this is only meant for testing
     if (arg instanceof ChainClient || arg instanceof TestChainClient) {
       this.chainClient = arg
     } else if (arg instanceof Signer || arg instanceof providers.Provider) {
@@ -111,11 +111,11 @@ export class Governance {
    * @param proposalId The id of the proposal to get the state of.
    * @returns The state of the proposal.
    */
-  public async getProposalState(
-    proposalId: BigNumberish
-  ): Promise<[number]> {
+  public async getProposalState(proposalId: BigNumberish): Promise<string> {
     const governor = await this.getGovernorContract()
-    return await governor.functions.state(proposalId) // ToDo: refactor to use string indicating stateName
+    const state = (await governor.functions.state(proposalId))[0]
+
+    return ProposalState[state]
   }
 
   /**
