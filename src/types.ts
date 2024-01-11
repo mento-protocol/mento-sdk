@@ -1,3 +1,5 @@
+import { ethers, providers } from "ethers"
+
 export type Address = string
 
 export interface TradingLimit {
@@ -31,8 +33,24 @@ export interface ContractAddressMap {
 export interface ContractAddresses {
   Airgrab: string
   Emission: string
-  Factory: string
   MentoGovernor: string
   MentoToken: string
   TimelockController: string
+}
+
+export enum ProposalState {
+  PENDING = 0,
+  ACTIVE = 1,
+  CANCELED = 2,
+  DEFEATED = 3,
+  SUCCEEDED = 4,
+  QUEUED = 5,
+  EXPIRED = 6,
+  EXECUTED = 7,
+}
+
+export interface IChainClient {
+  getSigner(): Promise<ethers.Signer | providers.Provider>
+  getChainId(): Promise<number>
+  populateTransaction(tx: ethers.PopulatedTransaction): Promise<providers.TransactionRequest>
 }
