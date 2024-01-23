@@ -25,6 +25,20 @@ export class Governance {
   }
 
   /**
+   * This function retrieves the MentoGovernor contract.
+   * @returns The MentoGovernor contract.
+   */
+  public async getGovernorContract(): Promise<MentoGovernor> {
+    const contracts = getContractsByChainId(await this.chainClient.getChainId())
+    const mentoGovernorAddress = contracts.MentoGovernor
+
+    return MentoGovernor__factory.connect(
+      mentoGovernorAddress,
+      await this.chainClient.getSigner()
+    )
+  }
+
+  /**
    * Generates a transaction that submits a proposal to be created to the Mento Governor contract using the specified values.
    * @param targets The addresses of the contracts to be called during proposal execution.
    * @param values The values to be passed to the calls to the target contracts.
@@ -151,19 +165,5 @@ export class Governance {
         'Targets, values, and calldatas must all have the same length'
       )
     }
-  }
-
-  /**
-   * This function retrieves the MentoGovernor contract.
-   * @returns The MentoGovernor contract.
-   */
-  private async getGovernorContract(): Promise<MentoGovernor> {
-    const contracts = getContractsByChainId(await this.chainClient.getChainId())
-    const mentoGovernorAddress = contracts.MentoGovernor
-
-    return MentoGovernor__factory.connect(
-      mentoGovernorAddress,
-      await this.chainClient.getSigner()
-    )
   }
 }
