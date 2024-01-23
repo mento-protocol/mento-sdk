@@ -30,6 +30,7 @@ describe('Governance', () => {
       MentoToken: '0x789',
       Emission: '0xabc',
       TimelockController: '0xdef',
+      Locking: '0xghi',
     }
     // @ts-ignore
     getContractsByChainId.mockReturnValue(mockContractAddresses)
