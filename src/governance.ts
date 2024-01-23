@@ -17,11 +17,25 @@ export class Governance {
     // TODO: Remove use of TestChainClient in future this is only meant for testing
     if (arg instanceof ChainClient || arg instanceof TestChainClient) {
       this.chainClient = arg
-    } else if (arg instanceof Signer || arg instanceof providers.Provider) {
+    } else if (Signer.isSigner(arg) || providers.Provider.isProvider(arg)) {
       this.chainClient = new ChainClient(arg)
     } else {
       throw new Error('Invalid constructor argument')
     }
+  }
+
+  /**
+   * This function retrieves the MentoGovernor contract.
+   * @returns The MentoGovernor contract.
+   */
+  public async getGovernorContract(): Promise<MentoGovernor> {
+    const contracts = getContractsByChainId(await this.chainClient.getChainId())
+    const mentoGovernorAddress = contracts.MentoGovernor
+
+    return MentoGovernor__factory.connect(
+      mentoGovernorAddress,
+      await this.chainClient.getSigner()
+    )
   }
 
   /**
@@ -151,19 +165,5 @@ export class Governance {
         'Targets, values, and calldatas must all have the same length'
       )
     }
-  }
-
-  /**
-   * This function retrieves the MentoGovernor contract.
-   * @returns The MentoGovernor contract.
-   */
-  private async getGovernorContract(): Promise<MentoGovernor> {
-    const contracts = getContractsByChainId(await this.chainClient.getChainId())
-    const mentoGovernorAddress = contracts.MentoGovernor
-
-    return MentoGovernor__factory.connect(
-      mentoGovernorAddress,
-      await this.chainClient.getSigner()
-    )
   }
 }
