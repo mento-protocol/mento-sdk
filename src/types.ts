@@ -36,6 +36,7 @@ export interface ContractAddresses {
   MentoGovernor: string
   MentoToken: string
   TimelockController: string
+  Locking: string
 }
 
 export enum ProposalState {
