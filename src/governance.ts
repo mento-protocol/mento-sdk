@@ -17,7 +17,7 @@ export class Governance {
     // TODO: Remove use of TestChainClient in future this is only meant for testing
     if (arg instanceof ChainClient || arg instanceof TestChainClient) {
       this.chainClient = arg
-    } else if (arg instanceof Signer || arg instanceof providers.Provider) {
+    } else if (Signer.isSigner(arg) || providers.Provider.isProvider(arg)) {
       this.chainClient = new ChainClient(arg)
     } else {
       throw new Error('Invalid constructor argument')
