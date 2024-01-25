@@ -4,9 +4,10 @@ import {
   MentoGovernor,
   MentoGovernor__factory,
 } from '@mento-protocol/mento-core-ts'
-import { IChainClient, ProposalState } from './types'
 import { ChainClient } from './ChainClient'
 import { TestChainClient } from './TestChainClient'
+import { ProposalState } from './enums'
+import { IChainClient } from './interfaces'
 
 export class Governance {
   private chainClient: IChainClient

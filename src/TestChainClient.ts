@@ -1,5 +1,5 @@
 import { PopulatedTransaction, ethers, providers } from 'ethers'
-import { IChainClient } from './types'
+import { IChainClient } from './interfaces'
 
 export class TestChainClient implements IChainClient {
   public async getSigner(): Promise<ethers.Signer | providers.Provider> {

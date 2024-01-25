@@ -1,10 +1,11 @@
 import { BigNumberish, providers } from 'ethers'
 import { MentoGovernor__factory } from '@mento-protocol/mento-core-ts'
 
-import { ContractAddresses, ProposalState } from './types'
 import { Governance } from './governance'
 import { getContractsByChainId } from './utils'
 import { TestChainClient } from './TestChainClient'
+import { ProposalState } from './enums'
+import { ContractAddresses } from './types'
 
 jest.mock('./utils', () => {
   return {
