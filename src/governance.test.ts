@@ -25,6 +25,7 @@ describe('Governance', () => {
 
   async function setupMockContractAddresses() {
     const mockContractAddresses: ContractAddresses = {
+      GovernanceFactory: '0x321',
       MentoGovernor: '0x123',
       Airgrab: '0x456',
       MentoToken: '0x789',
