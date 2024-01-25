@@ -1,7 +1,7 @@
 {
   "name": "@mento-protocol/mento-sdk",
   "description": "Official SDK for interacting with the Mento Protocol",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "author": "Mento Labs",
   "keywords": [
