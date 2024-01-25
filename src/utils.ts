@@ -1,8 +1,6 @@
 import { BigNumberish, constants, Contract, providers, Signer } from 'ethers'
 
 import { Address } from './interfaces'
-import { ContractAddresses } from './types'
-import { addresses } from './constants'
 
 /**
  * Ensures that given signer is truly a a connected signer
@@ -105,13 +103,4 @@ export async function increaseAllowance(
   const contract = new Contract(tokenAddr, abi, signerOrProvider)
 
   return await contract.populateTransaction.increaseAllowance(spender, amount)
-}
-
-export function getContractsByChainId(chainId: number): ContractAddresses {
-  const contracts = addresses[chainId]
-
-  if (!contracts) {
-    throw new Error(`No contracts found for chainId ${chainId}`)
-  }
-  return contracts
 }
