@@ -1,4 +1,4 @@
-import { ethers, providers } from "ethers"
+import { ethers, providers } from 'ethers'
 
 export type Address = string
 
@@ -31,6 +31,7 @@ export interface ContractAddressMap {
 }
 
 export interface ContractAddresses {
+  GovernanceFactory: string
   Airgrab: string
   Emission: string
   MentoGovernor: string
@@ -53,5 +54,7 @@ export enum ProposalState {
 export interface IChainClient {
   getSigner(): Promise<ethers.Signer | providers.Provider>
   getChainId(): Promise<number>
-  populateTransaction(tx: ethers.PopulatedTransaction): Promise<providers.TransactionRequest>
+  populateTransaction(
+    tx: ethers.PopulatedTransaction
+  ): Promise<providers.TransactionRequest>
 }
