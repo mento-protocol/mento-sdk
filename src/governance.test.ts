@@ -1,14 +1,12 @@
 import { BigNumberish, providers } from 'ethers'
 import { MentoGovernor__factory } from '@mento-protocol/mento-core-ts'
 
-import { ContractAddresses, ProposalState } from './types'
 import { Governance } from './governance'
-import { getContractsByChainId } from './utils'
 import { TestChainClient } from './TestChainClient'
+import { ProposalState } from './enums'
 
 jest.mock('./utils', () => {
   return {
-    getContractsByChainId: jest.fn(),
     validateSignerOrProvider: jest.fn(),
   }
 })
@@ -22,20 +20,6 @@ jest.mock('@mento-protocol/mento-core-ts', () => {
 describe('Governance', () => {
   let testee: Governance
   let mockChainClient: TestChainClient
-
-  async function setupMockContractAddresses() {
-    const mockContractAddresses: ContractAddresses = {
-      GovernanceFactory: '0x321',
-      MentoGovernor: '0x123',
-      Airgrab: '0x456',
-      MentoToken: '0x789',
-      Emission: '0xabc',
-      TimelockController: '0xdef',
-      Locking: '0xghi',
-    }
-    // @ts-ignore
-    getContractsByChainId.mockReturnValue(mockContractAddresses)
-  }
 
   const mockMentoGovernor = {
     address: 'fakeMentoGovernorAddress',
@@ -58,8 +42,6 @@ describe('Governance', () => {
   MentoGovernor__factory.connect = jest.fn().mockReturnValue(mockMentoGovernor)
 
   beforeEach(async () => {
-    await setupMockContractAddresses()
-
     mockChainClient = new TestChainClient()
     testee = new Governance(mockChainClient)
   })

@@ -1,6 +1,6 @@
 import { PopulatedTransaction, Signer, ethers, providers } from 'ethers'
 import { validateSignerOrProvider } from './utils'
-import { IChainClient } from './types'
+import { IChainClient } from './interfaces'
 
 export class ChainClient implements IChainClient {
   private readonly signerOrProvider: ethers.Signer | providers.Provider

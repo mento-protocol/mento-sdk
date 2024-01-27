@@ -1,12 +1,13 @@
 import { BigNumberish, Signer, providers } from 'ethers'
-import { getContractsByChainId } from './utils'
 import {
   MentoGovernor,
   MentoGovernor__factory,
 } from '@mento-protocol/mento-core-ts'
-import { IChainClient, ProposalState } from './types'
 import { ChainClient } from './ChainClient'
 import { TestChainClient } from './TestChainClient'
+import { ProposalState } from './enums'
+import { IChainClient } from './interfaces'
+import { addresses } from './constants'
 
 export class Governance {
   private chainClient: IChainClient
@@ -29,7 +30,15 @@ export class Governance {
    * @returns The MentoGovernor contract.
    */
   public async getGovernorContract(): Promise<MentoGovernor> {
-    const contracts = getContractsByChainId(await this.chainClient.getChainId())
+    const chainId = await this.chainClient.getChainId()
+
+    const contracts = addresses[chainId]
+    if (!contracts) {
+      throw new Error(
+        `Contracts not deployed on network with chain id ${chainId}`
+      )
+    }
+
     const mentoGovernorAddress = contracts.MentoGovernor
 
     return MentoGovernor__factory.connect(

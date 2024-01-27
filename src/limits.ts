@@ -3,7 +3,7 @@ import {
   TradingLimit,
   TradingLimitsConfig,
   TradingLimitsState,
-} from './types'
+} from './interfaces'
 
 import { Broker } from '@mento-protocol/mento-core-ts'
 import { strict as assert } from 'assert'
