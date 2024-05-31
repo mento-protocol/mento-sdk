@@ -3,13 +3,13 @@ import { ContractAddressMap } from '../types'
 
 export const addresses: ContractAddressMap = {
   [ChainId.CELO]: {
-    GovernanceFactory: '',
-    Airgrab: '',
-    Emission: '',
-    MentoGovernor: '',
-    MentoToken: '',
-    TimelockController: '',
-    Locking: '',
+    GovernanceFactory: '0xee6CE2dbe788dFC38b8F583Da86cB9caf2C8cF5A',
+    Airgrab: '0x7D8E73deafDBAfc98fDBe7974168cFA6d8B9AE0C',
+    Emission: '0x5C789592E2611df1873b46D394c69f75faB99778',
+    MentoGovernor: '0x47036d78bB3169b4F5560dD77BF93f4412A59852',
+    MentoToken: '0x7FF62f59e3e89EA34163EA1458EEBCc81177Cfb6',
+    TimelockController: '0x890DB8A597940165901372Dd7DB61C9f246e2147',
+    Locking: '0x001Bb66636dCd149A1A2bA8C50E408BdDd80279C',
     Broker: '0x777A8255cA72412f0d706dc03C9D1987306B4CaD',
     BiPoolManager: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
     BreakerBox: '0x303ED1df62Fa067659B586EbEe8De0EcE824Ab39',
