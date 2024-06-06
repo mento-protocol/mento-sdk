@@ -403,26 +403,36 @@ export class Mento {
       this.signerOrProvider
     )
 
-    const assetWithLimit = exchange.assets[0] // currently limits are configured only on asset0
-    return getLimits(broker, exchangeId, assetWithLimit)
+    const asset0Limits = await getLimits(broker, exchangeId, exchange.assets[0])
+    const asset1Limits = await getLimits(broker, exchangeId, exchange.assets[1])
+
+    return asset0Limits.concat(asset1Limits)
   }
 
   /**
-   * Returns the trading limits configuration for a given exchange id
+   * Returns the trading limits configurations for a given exchange id
    * @param exchangeId the id of the exchange
    * @returns the trading limits configuration
    */
   async getTradingLimitConfig(
     exchangeId: string
-  ): Promise<TradingLimitsConfig> {
+  ): Promise<TradingLimitsConfig[]> {
     const exchange = await this.getExchangeById(exchangeId)
     const broker = Broker__factory.connect(
       this.broker.address,
       this.signerOrProvider
     )
 
-    const assetWithLimit = exchange.assets[0] // currently limits are configured only on asset0
-    return getLimitsConfig(broker, exchangeId, assetWithLimit)
+    const cfgs = []
+    for (const asset of exchange.assets) {
+      const limitCfg = await getLimitsConfig(broker, exchangeId, asset)
+      const isLimitConfigured = limitCfg.flags > 0
+      if (isLimitConfigured) {
+        cfgs.push(limitCfg)
+      }
+    }
+
+    return cfgs
   }
 
   /**
@@ -430,14 +440,21 @@ export class Mento {
    * @param exchangeId the id of the exchange
    * @returns the trading limits state
    */
-  async getTradingLimitState(exchangeId: string): Promise<TradingLimitsState> {
+  async getTradingLimitState(
+    exchangeId: string
+  ): Promise<TradingLimitsState[]> {
     const exchange = await this.getExchangeById(exchangeId)
     const broker = Broker__factory.connect(
       this.broker.address,
       this.signerOrProvider
     )
 
-    const assetWithLimit = exchange.assets[0] // currently limits are configured only on asset0
-    return getLimitsState(broker, exchangeId, assetWithLimit)
+    const configuredLimitCfgs = await this.getTradingLimitConfig(exchangeId)
+
+    return await Promise.all(
+      configuredLimitCfgs.map(
+        async (cfg) => await getLimitsState(broker, exchangeId, cfg.asset)
+      )
+    )
   }
 }
