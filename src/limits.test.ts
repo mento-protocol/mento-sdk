@@ -249,7 +249,7 @@ describe('Limits', () => {
       )
 
       const broker = Broker__factory.connect('0xfakeBrokerAddr', provider)
-      let limits = await getLimits(broker, fakeExchangeId, fakeAsset)
+      const limits = await getLimits(broker, fakeExchangeId, fakeAsset)
       expect(limits.length).toEqual(3)
       expect(limits[0].maxIn).toEqual(5)
       expect(limits[1].maxIn).toEqual(5)

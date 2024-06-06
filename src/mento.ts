@@ -443,7 +443,6 @@ export class Mento {
   async getTradingLimitState(
     exchangeId: string
   ): Promise<TradingLimitsState[]> {
-    const exchange = await this.getExchangeById(exchangeId)
     const broker = Broker__factory.connect(
       this.broker.address,
       this.signerOrProvider
