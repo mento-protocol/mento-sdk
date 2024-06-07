@@ -25,6 +25,7 @@ export async function getLimitsConfig(
   const cfg = await broker.tradingLimitsConfig(limitId)
 
   return {
+    asset,
     timestep0: cfg['timestep0'],
     timestep1: cfg['timestep1'],
     limit0: cfg['limit0'],
@@ -63,6 +64,7 @@ export async function getLimitsState(
     isL1Enabled && nowEpoch > state['lastUpdated1'] + cfg.timestep1
 
   return {
+    asset,
     lastUpdated0: isL0Outdated ? nowEpoch : state['lastUpdated0'],
     lastUpdated1: isL1Outdated ? nowEpoch : state['lastUpdated1'],
     netflow0: isL0Outdated ? 0 : state['netflow0'],
@@ -115,6 +117,13 @@ export async function getLimits(
       maxOut: cfg.limitGlobal + state.netflowGlobal,
       until: timestampIn2030,
     })
+  }
+
+  // Limits with a smaller timeframe are restricted by the ones with a larger one
+  // e.g: if maxIn is 0 in LG, it should also be 0 in L1 and L0
+  for (let i = limits.length - 1; i > 0; i--) {
+    limits[i - 1].maxIn = Math.min(limits[i - 1].maxIn, limits[i].maxIn)
+    limits[i - 1].maxOut = Math.min(limits[i - 1].maxOut, limits[i].maxOut)
   }
 
   return limits

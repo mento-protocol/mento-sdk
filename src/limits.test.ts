@@ -17,7 +17,12 @@ jest.mock('@mento-protocol/mento-core-ts', () => {
 })
 
 // ========== Mock data ==========
+const fakeAsset = '0x62492A644A588FD904270BeD06ad52B9abfEA1aE'
+const fakeExchangeId =
+  '0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c'
+
 const fakeLimitConfig = {
+  asset: fakeAsset,
   timestep0: 300,
   timestep1: 86400,
   limit0: 100000,
@@ -26,15 +31,13 @@ const fakeLimitConfig = {
   flags: 3,
 }
 const fakeLimitState = {
+  asset: fakeAsset,
   lastUpdated0: 1681381868,
   lastUpdated1: 1681375758,
   netflow0: 15,
   netflow1: 20,
   netflowGlobal: 0,
 }
-const fakeExchangeId =
-  '0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c'
-const fakeAsset = '0x62492A644A588FD904270BeD06ad52B9abfEA1aE'
 
 // ========== Mock contract factories ==========
 const mockBrokerFactory = {
@@ -221,6 +224,51 @@ describe('Limits', () => {
       const broker = Broker__factory.connect('0xfakeBrokerAddr', provider)
       const limits = await getLimits(broker, fakeExchangeId, fakeAsset)
       expect(limits.length).toEqual(3)
+    })
+
+    it('should constrain smaller limits according to bigger ones', async () => {
+      const nowEpoch = Math.floor(Date.now() / 1000)
+      const cfg = {
+        ...fakeLimitConfig,
+        limit0: 100,
+        limit1: 1000,
+        limitGlobal: 10000,
+      }
+      const stateWithL1ConstrainingL0 = {
+        ...fakeLimitState,
+        lastUpdated0: nowEpoch,
+        lastUpdated1: nowEpoch,
+        netflow0: 25,
+        netflow1: 995,
+        netflowGlobal: 1020,
+      }
+
+      mockBrokerFactory.tradingLimitsConfig.mockResolvedValue(cfg)
+      mockBrokerFactory.tradingLimitsState.mockResolvedValue(
+        stateWithL1ConstrainingL0
+      )
+
+      const broker = Broker__factory.connect('0xfakeBrokerAddr', provider)
+      const limits = await getLimits(broker, fakeExchangeId, fakeAsset)
+      expect(limits.length).toEqual(3)
+      expect(limits[0].maxIn).toEqual(5)
+      expect(limits[1].maxIn).toEqual(5)
+      expect(limits[2].maxIn).toEqual(8980)
+
+      const stateWithLGMaxedOut = {
+        ...fakeLimitState,
+        lastUpdated0: nowEpoch,
+        lastUpdated1: nowEpoch,
+        netflow0: 25,
+        netflow1: 25,
+        netflowGlobal: cfg.limitGlobal,
+      }
+      mockBrokerFactory.tradingLimitsState.mockResolvedValue(
+        stateWithLGMaxedOut
+      )
+      const maxedOutLimits = await getLimits(broker, fakeExchangeId, fakeAsset)
+      expect(maxedOutLimits.length).toEqual(3)
+      expect(maxedOutLimits.every((limit) => limit.maxIn === 0)).toBe(true)
     })
   })
 
