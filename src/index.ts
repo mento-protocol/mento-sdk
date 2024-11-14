@@ -2,9 +2,9 @@ import type { PublicClient } from 'viem'
 import type { Provider as EthersV6Provider } from 'ethers'
 import type { providers as EthersV5Providers } from 'ethers-v5'
 
-import { EthersAdapter, EthersV5Adapter, ViemAdapter } from 'adapters'
-import { ProviderAdapter } from 'types'
-import { CollateralAssetService, StableTokenService } from 'services'
+import { EthersAdapter, EthersV5Adapter, ViemAdapter } from './adapters'
+import { CollateralAsset, ProviderAdapter, StableToken } from './types'
+import { CollateralAssetService, StableTokenService } from './services'
 
 export type SupportedProvider =
   | EthersV6Provider
@@ -24,14 +24,25 @@ export interface MentoConfig {
 function isEthersV5Provider(
   provider: SupportedProvider
 ): provider is EthersV5Providers.Provider {
-  return 'getNetwork' in provider && '_network' in provider
+  // Check for v5 specific properties that don't exist in v6
+  return (
+    'getNetwork' in provider &&
+    '_network' in provider &&
+    // v5 specific internal property
+    'formatter' in provider
+  )
 }
 
 /** Helper type guard for Ethers v6 Provider */
 function isEthersV6Provider(
   provider: SupportedProvider
 ): provider is EthersV6Provider {
-  return 'getNetwork' in provider && !('_network' in provider)
+  // Check for v6 specific properties that don't exist in v5
+  return (
+    'getNetwork' in provider &&
+    // v6 specific methods
+    'broadcastTransaction' in provider
+  )
 }
 
 /** Helper type guard for Viem Provider */
@@ -57,70 +68,50 @@ function isViemProvider(provider: SupportedProvider): provider is PublicClient {
  */
 export class Mento {
   private provider: ProviderAdapter
-  private stableTokenService!: StableTokenService
-  private collateralAssetService!: CollateralAssetService
-  private chainId!: number
-  private initialized = false
+  private stableTokenService: StableTokenService
+  private collateralAssetService: CollateralAssetService
 
-  constructor(config: MentoConfig) {
+  private constructor(
+    provider: ProviderAdapter,
+    stableTokenService: StableTokenService,
+    collateralAssetService: CollateralAssetService
+  ) {
+    this.provider = provider
+    this.stableTokenService = stableTokenService
+    this.collateralAssetService = collateralAssetService
+  }
+
+  public static async create(config: MentoConfig): Promise<Mento> {
     if (!config.provider) {
       throw new Error('Provider is required to initialize Mento SDK')
     }
 
     // Initialize provider adapter based on provider type
+    let provider: ProviderAdapter
     if (isEthersV5Provider(config.provider)) {
-      this.provider = new EthersV5Adapter(config.provider)
+      provider = new EthersV5Adapter(config.provider)
     } else if (isEthersV6Provider(config.provider)) {
-      this.provider = new EthersAdapter(config.provider)
+      provider = new EthersAdapter(config.provider)
     } else if (isViemProvider(config.provider)) {
-      this.provider = new ViemAdapter(config.provider)
+      provider = new ViemAdapter(config.provider)
     } else {
       throw new Error('Unsupported provider type')
     }
 
-    // Initialize services
-    this.initializeServices().catch((error) => {
-      console.error('Failed to initialize Mento services:', error)
-    })
+    // Initialize everything we need
+    const stableTokenService = new StableTokenService(provider)
+    const collateralAssetService = new CollateralAssetService(provider)
+
+    // Return fully initialized instance
+    return new Mento(provider, stableTokenService, collateralAssetService)
   }
 
-  private async initializeServices(): Promise<void> {
-    if (this.initialized) {
-      return
-    }
-
-    // Get chainId from provider
-    this.chainId = await this.provider.getChainId()
-
-    this.stableTokenService = new StableTokenService(this.provider)
-    this.collateralAssetService = new CollateralAssetService(this.provider)
-
-    this.initialized = true
+  public async getStableTokens(): Promise<StableToken[]> {
+    return this.stableTokenService.getStableTokens()
   }
 
-  private ensureInitialized() {
-    if (!this.initialized) {
-      throw new Error(
-        'Mento SDK not initialized. Services are being initialized.'
-      )
-    }
-  }
-
-  // Public API methods
-  public get stable(): StableTokenService {
-    this.ensureInitialized()
-    return this.stableTokenService
-  }
-
-  public get collateral(): CollateralAssetService {
-    this.ensureInitialized()
-    return this.collateralAssetService
-  }
-
-  // Convenience method to get current chainId
-  public getChainId(): number {
-    this.ensureInitialized()
-    return this.chainId
+  public async getCollateralAssets(): Promise<CollateralAsset[]> {
+    return this.collateralAssetService.getCollateralAssets()
   }
 }
 

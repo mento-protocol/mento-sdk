@@ -6,7 +6,7 @@ export interface BaseToken {
 }
 
 export interface StableToken extends BaseToken {
-	totalSupply: bigint;
+	totalSupply: string;
 }
 
 export type CollateralAsset = BaseToken

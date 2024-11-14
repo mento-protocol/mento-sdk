@@ -19,7 +19,7 @@
     "dist",
     "!dist/**/*.test.*"
   ],
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "build": "tsc --project ./tsconfig.json",
     "clean": "rm -rf ./dist",
@@ -56,10 +56,23 @@
     "ts-node": "^10.9.1",
     "typescript": "5.6.3"
   },
-  "dependencies": {
-    "@mento-protocol/mento-core-ts": "^0.2.0",
+  "peerDependencies": {
     "ethers": "^6.13.4",
-    "ethers-v5": "^5.7.2",
+    "ethers-v5": "npm:ethers@^5.7.2",
     "viem": "^2.21.44"
+  },
+  "peerDependenciesMeta": {
+    "ethers": {
+      "optional": true
+    },
+    "ethers-v5": {
+      "optional": true
+    },
+    "viem": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@mento-protocol/mento-core-ts": "^0.2.0"
   }
 }

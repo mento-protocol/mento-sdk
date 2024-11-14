@@ -1,5 +1,5 @@
-import { BIPOOL_MANAGER_ABI, ERC20_ABI, RESERVE_ABI } from 'abis'
-import { CollateralAsset, Exchange, ProviderAdapter } from 'types'
+import { BIPOOL_MANAGER_ABI, ERC20_ABI, RESERVE_ABI } from '../abis'
+import { CollateralAsset, Exchange, ProviderAdapter } from '../types'
 import { getContractAddress } from '../constants'
 
 //TODO: Update paths in tsconfig.json to use @

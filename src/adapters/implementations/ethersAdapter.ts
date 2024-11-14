@@ -1,5 +1,5 @@
 import { Contract, Interface, Provider as EthersProvider } from 'ethers'
-import { ContractCallOptions, ProviderAdapter } from 'types'
+import { ContractCallOptions, ProviderAdapter } from '../../types'
 
 export class EthersAdapter implements ProviderAdapter {
   constructor(private provider: EthersProvider) {}
