@@ -2,8 +2,6 @@ import { BIPOOL_MANAGER_ABI, ERC20_ABI, RESERVE_ABI } from '../abis'
 import { CollateralAsset, Exchange, ProviderAdapter } from '../types'
 import { getContractAddress } from '../constants'
 
-//TODO: Update paths in tsconfig.json to use @
-
 export class CollateralAssetService {
   constructor(private provider: ProviderAdapter) {}
 
@@ -65,6 +63,7 @@ export class CollateralAssetService {
       } catch (error) {
         // TODO: impement retry logic.
         // One call cannot fail, if one fails, the whole operation should fail.
+        // Should retry logic be implemented here or in the consumer?
         console.error(`Error processing address ${address}:`, error)
       }
     }

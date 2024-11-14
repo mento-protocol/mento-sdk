@@ -129,6 +129,10 @@ export class Mento {
     return this.stableTokenService.getStableTokens()
   }
 
+  /**
+   * Get all collateral assets that are available on the current chain.
+   * @returns An array of collateral assets
+   */
   public async getCollateralAssets(): Promise<CollateralAsset[]> {
     return this.collateralAssetService.getCollateralAssets()
   }
@@ -151,3 +155,4 @@ export * from './constants'
 export * from './types'
 export * from './adapters'
 export * from './services'
+export * from './abis'
