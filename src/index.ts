@@ -3,8 +3,15 @@ import type { Provider as EthersV6Provider } from 'ethers'
 import type { providers as EthersV5Providers } from 'ethers-v5'
 
 import { EthersAdapter, EthersV5Adapter, ViemAdapter } from './adapters'
-import { CollateralAsset, ProviderAdapter, StableToken } from './types'
+import {
+  CollateralAsset,
+  ContractAddresses,
+  ProviderAdapter,
+  StableToken,
+} from './types'
 import { CollateralAssetService, StableTokenService } from './services'
+import { ChainId } from './constants/chainId'
+import { addresses } from './constants/addresses'
 
 export type SupportedProvider =
   | EthersV6Provider
@@ -53,18 +60,30 @@ function isViemProvider(provider: SupportedProvider): provider is PublicClient {
 /**
  * @class Mento
  * @description The main class for the Mento SDK. It initializes the provider and services,
- *              and provides a public API for accessing the services.
+ *              and provides a public API for interacting with the Mento Protocol.
  * @dev         example usage:
  *              // Ethers v6
- *              const mento = new Mento({ provider: new ethers.JsonRpcProvider("https://forno.celo.org") });
+ *              const mento = await Mento.create({
+ *                provider: new ethers.JsonRpcProvider("https://forno.celo.org")
+ *              });
  *
  *              // Ethers v5
- *              const mento = new Mento({ provider: new ethersV5.providers.JsonRpcProvider("https://forno.celo.org") });
+ *              const mento = await Mento.create({
+ *                provider: new ethersV5.providers.JsonRpcProvider("https://forno.celo.org")
+ *              });
  *
  *              // Viem
- *              const mento = new Mento({ provider: createPublicClient({ transport: http("https://forno.celo.org") }) });
+ *              const mento = await Mento.create({
+ *                provider: createPublicClient({
+ *                  transport: http("https://forno.celo.org")
+ *                })
+ *              });
  *
- *              const stableTokens = await mento.stable.getStableTokens();
+ *              // Get all stable tokens
+ *              const stableTokens = await mento.getStableTokens();
+ *
+ *              // Get all collateral assets
+ *              const collateralAssets = await mento.getCollateralAssets();
  */
 export class Mento {
   private provider: ProviderAdapter
@@ -112,6 +131,18 @@ export class Mento {
 
   public async getCollateralAssets(): Promise<CollateralAsset[]> {
     return this.collateralAssetService.getCollateralAssets()
+  }
+
+  /**
+   * Get the address of a contract for the current chain
+   * @param contractName - The contract name
+   * @returns The contract address
+   */
+  public async getContractAddress(
+    contractName: keyof ContractAddresses
+  ): Promise<string> {
+    const chainId = (await this.provider.getChainId()) as ChainId
+    return addresses[chainId][contractName]
   }
 }
 
