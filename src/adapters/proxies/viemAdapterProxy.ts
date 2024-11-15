@@ -2,13 +2,20 @@ import type { PublicClient } from 'viem'
 import { ProviderAdapter } from '../../types'
 
 /**
- * Wrapper class that implements lazy loading for viem provider adapter.
- *
- * Why do we need this?
- * Read the README.md in this directory for more information
- * ./adapters/wrappers/README.md
+ * Proxy class that implements lazy loading for viem provider adapter.
+ * 
+ * This is an implementation of the Virtual Proxy pattern, which provides
+ * a placeholder for the ViemAdapter and controls its initialization.
+ * The actual adapter is only loaded when needed, allowing for:
+ * - Lazy loading of the viem dependency
+ * - Better error handling for missing dependencies
+ * - Same interface as the real adapter (ProviderAdapter)
+ * 
+ * For more information about the proxy pattern implementation,
+ * see the README.md in this directory:
+ * ./adapters/proxies/README.md
  */
-export class ViemAdapterWrapper implements ProviderAdapter {
+export class ViemAdapterProxy implements ProviderAdapter {
   private adapter: ProviderAdapter | null = null
   private initPromise: Promise<void>
 

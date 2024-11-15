@@ -1,9 +1,9 @@
-import { EthersV5AdapterWrapper } from './wrappers/ethersV5AdapterWrapper'
-import { EthersAdapterWrapper } from './wrappers/ethersWrapper'
-import { ViemAdapterWrapper } from './wrappers/viemAdapter'
+import { EthersV5AdapterProxy } from './proxies/ethersV5AdapterProxy'
+import { EthersAdapterProxy } from './proxies/ethersAdapterProxy'
+import { ViemAdapterProxy } from './proxies/viemAdapterProxy'
 
 export {
-  EthersV5AdapterWrapper as EthersV5Adapter,
-  EthersAdapterWrapper as EthersAdapter,
-  ViemAdapterWrapper as ViemAdapter,
+  EthersV5AdapterProxy as EthersV5Adapter,
+  EthersAdapterProxy as EthersAdapter,
+  ViemAdapterProxy as ViemAdapter,
 }

@@ -2,13 +2,20 @@ import { ProviderAdapter } from '../../types'
 import type { providers as EthersV5Providers } from 'ethers-v5'
 
 /**
- * Wrapper class that implements lazy loading for ethers v5 provider adapter.
+ * Proxy class that implements lazy loading for ethers v5 provider adapter.
  *
- * Why do we need this?
- * Read the README.md in this directory for more information
- * ./adapters/wrappers/README.md
+ * This is an implementation of the Virtual Proxy pattern, which provides
+ * a placeholder for the EthersV5Adapter and controls its initialization.
+ * The actual adapter is only loaded when needed, allowing for:
+ * - Lazy loading of the ethers v5 dependency
+ * - Better error handling for missing dependencies
+ * - Same interface as the real adapter (ProviderAdapter)
+ * 
+ * For more information about the proxy pattern implementation,
+ * see the README.md in this directory:
+ * ./adapters/proxies/README.md
  */
-export class EthersV5AdapterWrapper implements ProviderAdapter {
+export class EthersV5AdapterProxy implements ProviderAdapter {
   private adapter: ProviderAdapter | null = null
   private initPromise: Promise<void>
 
