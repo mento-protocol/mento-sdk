@@ -19,6 +19,6 @@
       "@abis/*": ["./abis/*"]
     }
   },
-  "include": ["src/**/*", "../tests/**/*"],
+  "include": ["src/**/*", "../tests/**/*.*"],
   "exclude": ["node_modules", "dist"]
 }

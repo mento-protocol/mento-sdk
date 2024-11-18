@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import {
   addresses,
   getContractAddress,
-  isContractDeployed, 
+  isContractDeployed,
   ChainId,
 } from '../../src/constants/'
 import { ContractAddresses } from '../../src/types/'

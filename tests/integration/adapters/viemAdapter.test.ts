@@ -1,18 +1,21 @@
-// TODO: Update to use jest
+import { ViemAdapter } from '../../../src/adapters'
+import { createPublicClient, http } from 'viem'
+import {
+  CollateralAssetService,
+  StableTokenService,
+} from '../../../src/services'
+import { createCollateralAssetTests, createStableTokenTests } from '../shared'
 
-// import { ViemAdapter } from "adapters";
-// import { createPublicClient, http } from "jsr:@wevm/viem";
-// import { CollateralAssetService, StableTokenService } from "services";
-// import { createCollateralAssetTests, createStableTokenTests } from "shared";
+describe('ViemAdapter Integration Tests', () => {
+  // Setup shared test instances
+  const viemClient = createPublicClient({
+    transport: http('https://forno.celo.org'),
+  })
+  const adapter = new ViemAdapter(viemClient)
+  const stableTokenService = new StableTokenService(adapter)
+  const collateralAssetService = new CollateralAssetService(adapter)
 
-// Deno.test("ViemAdapter Integration Tests", async (t) => {
-// 	// Setup
-// 	const viemClient = createPublicClient({ transport: http("https://forno.celo.org") });
-// 	const adapter = new ViemAdapter(viemClient);
-// 	const stableTokenService = new StableTokenService(adapter);
-// 	const collateralAssetService = new CollateralAssetService(adapter);
-
-// 	// Run shared tests
-// 	await createStableTokenTests(stableTokenService)(t);
-// 	await createCollateralAssetTests(collateralAssetService)(t);
-// });
+  // Run shared test suites
+  createStableTokenTests(stableTokenService)
+  createCollateralAssetTests(collateralAssetService)
+})

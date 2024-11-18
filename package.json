@@ -25,7 +25,7 @@
     "clean": "rm -rf ./dist",
     "lint": "eslint --config ./.eslintrc.json src/**/*.ts",
     "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",
-    "test": "jest --runInBand --verbose",
+    "test": "jest --verbose",
     "coverage": "jest --coverage"
   },
   "jest": {
