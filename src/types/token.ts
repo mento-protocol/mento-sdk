@@ -7,6 +7,7 @@ export interface BaseToken {
 
 export interface StableToken extends BaseToken {
 	totalSupply: string;
+	fiatTicker: string;
 }
 
 export type CollateralAsset = BaseToken

@@ -1,5 +1,5 @@
 import { ERC20_ABI, RESERVE_ABI } from '../abis'
-import { getContractAddress } from '../constants'
+import { getContractAddress, getFiatTicker } from '../constants'
 import { ProviderAdapter, StableToken } from '../types'
 
 export class StableTokenService {
@@ -48,6 +48,7 @@ export class StableTokenService {
           symbol: symbol as string,
           decimals: Number(decimals),
           totalSupply: (totalSupply as bigint).toString(),
+          fiatTicker: getFiatTicker(symbol as string),
         })
       } catch (error) {
         // TODO: impement retry logic.
