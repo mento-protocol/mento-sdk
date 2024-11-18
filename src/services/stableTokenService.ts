@@ -5,6 +5,7 @@ import {
   StableTokenSymbol,
 } from '../constants'
 import { ProviderAdapter, StableToken } from '../types'
+import { retryOperation } from '../utils/retry'
 
 export class StableTokenService {
   constructor(private provider: ProviderAdapter) {}
@@ -22,57 +23,45 @@ export class StableTokenService {
     const tokens: StableToken[] = []
 
     for (const address of tokenAddresses) {
-      let attempts = 0
-      const maxAttempts = 3
-      const backoffMs = 1000 // Start with 1 second
-
-      while (attempts < maxAttempts) {
-        try {
-          const [name, symbol, decimals, totalSupply] = await Promise.all([
-            this.provider.readContract({
-              address,
-              abi: ERC20_ABI,
-              functionName: 'name',
-            }),
-            this.provider.readContract({
-              address,
-              abi: ERC20_ABI,
-              functionName: 'symbol',
-            }),
-            this.provider.readContract({
-              address,
-              abi: ERC20_ABI,
-              functionName: 'decimals',
-            }),
-            this.provider.readContract({
-              address,
-              abi: ERC20_ABI,
-              functionName: 'totalSupply',
-            }),
-          ])
-
-          tokens.push({
+      const [name, symbol, decimals, totalSupply] = await Promise.all([
+        retryOperation(() =>
+          this.provider.readContract({
             address,
-            name: name as string,
-            symbol: symbol as string,
-            decimals: Number(decimals),
-            totalSupply: (totalSupply as bigint).toString(),
-            fiatTicker: getFiatTicker(symbol as StableTokenSymbol),
+            abi: ERC20_ABI,
+            functionName: 'name',
           })
-          break // Success, exit retry loop
-        } catch (error) {
-          attempts++
-          if (attempts === maxAttempts) {
-            throw new Error(
-              `Failed to fetch token info for ${address} after ${maxAttempts} attempts: ${error}`
-            )
-          }
-          // Exponential backoff
-          await new Promise((resolve) =>
-            setTimeout(resolve, backoffMs * attempts)
-          )
-        }
-      }
+        ),
+        retryOperation(() =>
+          this.provider.readContract({
+            address,
+            abi: ERC20_ABI,
+            functionName: 'symbol',
+          })
+        ),
+        retryOperation(() =>
+          this.provider.readContract({
+            address,
+            abi: ERC20_ABI,
+            functionName: 'decimals',
+          })
+        ),
+        retryOperation(() =>
+          this.provider.readContract({
+            address,
+            abi: ERC20_ABI,
+            functionName: 'totalSupply',
+          })
+        ),
+      ])
+
+      tokens.push({
+        address,
+        name: name as string,
+        symbol: symbol as string,
+        decimals: Number(decimals),
+        totalSupply: (totalSupply as bigint).toString(),
+        fiatTicker: getFiatTicker(symbol as StableTokenSymbol),
+      })
     }
 
     return tokens
