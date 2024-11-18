@@ -1,4 +1,16 @@
-export const STABLE_TOKEN_FIAT_MAPPING: Record<string, string> = {
+export const STABLE_TOKEN_SYMBOLS = {
+  cUSD: 'cUSD',
+  cEUR: 'cEUR',
+  cREAL: 'cREAL',
+  cKES: 'cKES',
+  PUSO: 'PUSO',
+  cCOP: 'cCOP',
+  eXOF: 'eXOF',
+} as const
+
+export type StableTokenSymbol = keyof typeof STABLE_TOKEN_SYMBOLS
+
+export const STABLE_TOKEN_FIAT_MAPPING: Record<StableTokenSymbol, string> = {
   cUSD: 'USD',
   cEUR: 'EUR',
   cREAL: 'BRL',
@@ -8,13 +20,10 @@ export const STABLE_TOKEN_FIAT_MAPPING: Record<string, string> = {
   eXOF: 'XOF',
 } as const
 
-// Helper function to get FIAT ticker from token symbol
-export function getFiatTicker(symbol: string): string {
+export function getFiatTicker(symbol: StableTokenSymbol): string {
   const ticker = STABLE_TOKEN_FIAT_MAPPING[symbol]
   if (!ticker) {
-    // Don't throw an error if the ticker is not found, just return a blank string.
-    // TODO: Need some better feedback for the consumer
-    return ''
+    throw new Error(`No fiat ticker found for token symbol: ${symbol}`)
   }
   return ticker
 }
