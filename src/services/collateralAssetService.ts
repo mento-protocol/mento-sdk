@@ -1,7 +1,7 @@
 import { BIPOOL_MANAGER_ABI, ERC20_ABI, RESERVE_ABI } from '../abis'
 import { CollateralAsset, Exchange, ProviderAdapter } from '../types'
 import { getContractAddress } from '../constants'
-import { retryOperation } from '../utils/retry'
+import { retryOperation } from '../utils'
 
 export class CollateralAssetService {
   constructor(private provider: ProviderAdapter) {}

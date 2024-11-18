@@ -5,7 +5,7 @@ import {
   StableTokenSymbol,
 } from '../constants'
 import { ProviderAdapter, StableToken } from '../types'
-import { retryOperation } from '../utils/retry'
+import { retryOperation } from '../utils'
 
 export class StableTokenService {
   constructor(private provider: ProviderAdapter) {}
