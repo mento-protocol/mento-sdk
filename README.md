@@ -82,13 +82,14 @@ pnpm test
 
 ### Project Structure
 
-```
+```bash
 ├── src/
 │   ├── abis/           # Contract ABIs
 │   ├── adapters/       # Provider adapters (Ethers, Viem)
 │   ├── constants/      # Constants and addresses
 │   ├── services/       # Core services
 │   ├── types/          # TypeScript type definitions
+|   ├── utils/          # Utility functions
 │   └── index.ts        # Main entry point
 ├── tests/
 │   ├── unit/          # Unit tests

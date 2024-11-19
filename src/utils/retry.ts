@@ -3,6 +3,12 @@ export interface RetryOptions {
   initialDelayMs?: number
 }
 
+/**
+ * Retry an operation a number of times with exponential backoff.
+ * @param operation - The operation to retry
+ * @param options - The retry options
+ * @returns The result of the operation
+ */
 export async function retryOperation<T>(
   operation: () => Promise<T>,
   options: RetryOptions = {}
