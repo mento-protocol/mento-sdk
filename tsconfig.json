@@ -11,6 +11,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./src",
+    "types": ["jest"],
     "paths": {
       "@adapters/*": ["./adapters/*"],
       "@services/*": ["./services/*"],
@@ -19,6 +20,6 @@
       "@abis/*": ["./abis/*"]
     }
   },
-  "include": ["src/**/*", "../tests/**/*.*"],
+  "include": ["src/**/*", "../tests/**/*"],
   "exclude": ["node_modules", "dist"]
 }

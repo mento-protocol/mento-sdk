@@ -28,21 +28,16 @@
     "test": "jest --verbose",
     "coverage": "jest --coverage"
   },
-  "jest": {
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/?(*.)+(test).ts"
-    ]
-  },
   "engines": {
     "node": ">=18",
     "pnpm": ">=9"
   },
   "devDependencies": {
+    "@jest/types": "^29.6.3",
     "@size-limit/preset-small-lib": "^8.1.0",
     "@tsconfig/recommended": "^1.0.1",
     "@types/chai": "^5.0.1",
-    "@types/jest": "^29.4.0",
+    "@types/jest": "^29.5.14",
     "@types/node": "^18.13.0",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
