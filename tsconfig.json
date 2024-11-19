@@ -5,7 +5,6 @@
     "lib": ["ES2020"],
     "declaration": true,
     "outDir": "./dist",
-    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -20,6 +19,6 @@
       "@abis/*": ["./abis/*"]
     }
   },
-  "include": ["src/**/*", "../tests/**/*"],
+  "include": ["src/**/*", "tests/**/*"],
   "exclude": ["node_modules", "dist"]
 }
