@@ -17,39 +17,39 @@ pnpm add @mento/sdk
 ### Initialize with Viem
 
 ```typescript
-import { createPublicClient, http } from "viem";
-import { celo } from "viem/chains";
-import { Mento } from "@mento/sdk";
+import { createPublicClient, http } from 'viem'
+import { celo } from 'viem/chains'
+import { Mento } from '@mento/sdk'
 
 // Create Viem client
 const provider = createPublicClient({
-	chain: celo,
-	transport: http(),
-});
+  chain: celo,
+  transport: http(),
+})
 
 // Initialize Mento SDK
-const mento = new Mento({ provider });
+const mento = new Mento({ provider })
 
 // Use the SDK
-const stableTokens = await mento.stable.getStableTokens();
-console.log("Stable Tokens:", stableTokens);
+const stableTokens = await mento.stable.getStableTokens()
+console.log('Stable Tokens:', stableTokens)
 ```
 
 ### Initialize with Ethers.js
 
 ```typescript
-import { JsonRpcProvider } from "ethers";
-import { Mento } from "@mento/sdk";
+import { JsonRpcProvider } from 'ethers'
+import { Mento } from '@mento/sdk'
 
 // Create Ethers provider
-const provider = new JsonRpcProvider("YOUR_RPC_URL");
+const provider = new JsonRpcProvider('YOUR_RPC_URL')
 
 // Initialize Mento SDK
-const mento = new Mento({ provider });
+const mento = new Mento({ provider })
 
 // Use the SDK
-const collateralAssets = await mento.collateral.getCollateralAssets();
-console.log("Collateral Assets:", collateralAssets);
+const collateralAssets = await mento.collateral.getCollateralAssets()
+console.log('Collateral Assets:', collateralAssets)
 ```
 
 ## Development Setup
@@ -69,9 +69,13 @@ cd mento-sdk
 pnpm install
 ```
 
-The project uses import maps for [dependency management](https://docs.deno.com/runtime/fundamentals/modules/#managing-third-party-modules-and-libraries). Dependencies are specified in `deno.json`:
-
 ### Development Workflow
+
+#### Build
+
+```bash
+pnpm build
+```
 
 #### Running Tests
 
@@ -104,7 +108,7 @@ Query Mento stable tokens:
 
 ```typescript
 // Get all stable tokens
-const tokens = await mento.stable.getStableTokens();
+const tokens = await mento.getStableTokens()
 ```
 
 ### Collateral Assets
@@ -113,39 +117,8 @@ Retrieve collateral assets:
 
 ```typescript
 // Get all collateral assets
-const assets = await mento.collateral.getCollateralAssets();
+const assets = await mento.getCollateralAssets()
 ```
-
-## API Reference
-
-### `Mento`
-
-Main SDK class that provides access to all functionality.
-
-#### Constructor
-
-```typescript
-new Mento(config: MentoConfig)
-```
-
-Configuration options:
-
-```typescript
-interface MentoConfig {
-	provider: EthersProvider | PublicClient;
-}
-```
-
-- `provider`: Either an Ethers.js Provider or Viem PublicClient
-
-#### Properties
-
-- `stable`: Access stable token functionality
-- `collateral`: Access collateral asset functionality
-
-#### Methods
-
-- `getChainId()`: Get the current chain ID
 
 ## Contributing
 
