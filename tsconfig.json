@@ -4,7 +4,10 @@
     "module": "CommonJS",
     "lib": ["ES2020"],
     "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -12,13 +15,13 @@
     "baseUrl": "./src",
     "types": ["jest"],
     "paths": {
-      "@adapters/*": ["./adapters/*"],
-      "@services/*": ["./services/*"],
-      "@types/*": ["./types/*"],
-      "@constants/*": ["./constants/*"],
-      "@abis/*": ["./abis/*"]
+      "@adapters/*": ["adapters/*"],
+      "@services/*": ["services/*"],
+      "@types/*": ["types/*"],
+      "@constants/*": ["constants/*"],
+      "@abis/*": ["abis/*"]
     }
   },
-  "include": ["src/**/*", "tests/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "tests/**/*"]
 }
