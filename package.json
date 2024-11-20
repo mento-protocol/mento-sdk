@@ -21,7 +21,7 @@
   ],
   "type": "commonjs",
   "scripts": {
-    "build": "tsc --project ./tsconfig.json",
+    "build": "pnpm clean && tsc --project ./tsconfig.json",
     "clean": "rm -rf ./dist",
     "lint": "eslint --config ./.eslintrc.json src/**/*.ts",
     "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",
