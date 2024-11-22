@@ -10,7 +10,7 @@ import type { providers as EthersV5Providers } from 'ethers-v5'
  * - Lazy loading of the ethers v5 dependency
  * - Better error handling for missing dependencies
  * - Same interface as the real adapter (ProviderAdapter)
- * 
+ *
  * For more information about the proxy pattern implementation,
  * see the README.md in this directory:
  * ./adapters/proxies/README.md
@@ -47,6 +47,7 @@ export class EthersV5AdapterProxy implements ProviderAdapter {
   }
 
   async getChainId() {
+    await this.initPromise
     if (!this.adapter) {
       throw new Error(
         'Adapter not initialized. Are you missing ethers v5 dependency?'
