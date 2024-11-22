@@ -1,17 +1,21 @@
-import { BIPOOL_MANAGER_ABI, ERC20_ABI, RESERVE_ABI } from '../abis'
+import { BIPOOL_MANAGER_ABI, RESERVE_ABI } from '../abis'
 import { CollateralAsset, Exchange, ProviderAdapter } from '../types'
 import { getContractAddress } from '../constants'
 import { retryOperation } from '../utils'
+import { TokenMetadataService } from './tokenMetadataService'
 
 export class CollateralAssetService {
-  constructor(private provider: ProviderAdapter) {}
+  private tokenMetadataService: TokenMetadataService
+
+  constructor(private provider: ProviderAdapter) {
+    this.tokenMetadataService = new TokenMetadataService(provider)
+  }
 
   async getCollateralAssets(): Promise<CollateralAsset[]> {
     const chainId = await this.provider.getChainId()
     const biPoolManagerAddress = getContractAddress(chainId, 'BiPoolManager')
     const reserveAddress = getContractAddress(chainId, 'Reserve')
 
-    // Get all exchanges from BiPoolManager
     const exchanges = (await retryOperation(() =>
       this.provider.readContract({
         address: biPoolManagerAddress,
@@ -20,7 +24,6 @@ export class CollateralAssetService {
       })
     )) as Exchange[]
 
-    // Extract unique token addresses from all exchanges
     const uniqueAddresses = new Set<string>()
     for (const exchange of exchanges) {
       exchange.assets.forEach((address) => uniqueAddresses.add(address))
@@ -39,35 +42,12 @@ export class CollateralAssetService {
       )) as boolean
 
       if (isCollateral) {
-        const [name, symbol, decimals] = await Promise.all([
-          retryOperation(() =>
-            this.provider.readContract({
-              address,
-              abi: ERC20_ABI,
-              functionName: 'name',
-            })
-          ),
-          retryOperation(() =>
-            this.provider.readContract({
-              address,
-              abi: ERC20_ABI,
-              functionName: 'symbol',
-            })
-          ),
-          retryOperation(() =>
-            this.provider.readContract({
-              address,
-              abi: ERC20_ABI,
-              functionName: 'decimals',
-            })
-          ),
-        ])
-
+        const metadata = await this.tokenMetadataService.getTokenMetadata(
+          address
+        )
         assets.push({
           address,
-          name: name as string,
-          symbol: symbol as string,
-          decimals: Number(decimals),
+          ...metadata,
         })
       }
     }

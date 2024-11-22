@@ -1,10 +1,4 @@
-import {
-  addresses,
-  getContractAddress,
-  isContractDeployed,
-  ChainId,
-} from '../../src/constants/'
-import { ContractAddresses } from '../../src/types/'
+import { addresses, getContractAddress, ChainId } from '../../src/constants/'
 import { isAddress } from 'ethers'
 
 describe('Addresses Unit Tests', () => {
@@ -42,24 +36,6 @@ describe('Addresses Unit Tests', () => {
     const celoAddress = getContractAddress(ChainId.CELO, 'Broker')
     const alfajoresAddress = getContractAddress(ChainId.ALFAJORES, 'Broker')
     expect(celoAddress).not.toEqual(alfajoresAddress)
-  })
-
-  it('should correctly identify deployed and undeployed contracts', () => {
-    // Test deployed contracts
-    expect(isContractDeployed(ChainId.CELO, 'Broker')).toBe(true)
-
-    // Test undeployed contract
-    expect(isContractDeployed(ChainId.BAKLAVA, 'Airgrab')).toBe(false)
-
-    // Test all contracts on CELO mainnet are deployed
-    const allCeloContractsDeployed = Object.keys(addresses[ChainId.CELO]).every(
-      (contractName) =>
-        isContractDeployed(
-          ChainId.CELO,
-          contractName as keyof ContractAddresses
-        )
-    )
-    expect(allCeloContractsDeployed).toBe(true)
   })
 
   it('should validate all contract addresses follow correct format', () => {

@@ -105,7 +105,6 @@ export class Mento {
       throw new Error('Provider is required to initialize Mento SDK')
     }
 
-    // Initialize provider adapter based on provider type
     let provider: ProviderAdapter
     if (isEthersV5Provider(config.provider)) {
       provider = new EthersV5Adapter(config.provider)
@@ -117,11 +116,9 @@ export class Mento {
       throw new Error('Unsupported provider type')
     }
 
-    // Initialize everything we need
     const stableTokenService = new StableTokenService(provider)
     const collateralAssetService = new CollateralAssetService(provider)
 
-    // Return fully initialized instance
     return new Mento(provider, stableTokenService, collateralAssetService)
   }
 
@@ -150,7 +147,6 @@ export class Mento {
   }
 }
 
-// Export types that consumers might need
 export * from './constants'
 export * from './types'
 export * from './adapters'

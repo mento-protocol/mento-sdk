@@ -1,14 +1,18 @@
-import { ERC20_ABI, RESERVE_ABI } from '../abis'
+import { RESERVE_ABI } from '../abis'
 import {
   getContractAddress,
   getFiatTicker,
   StableTokenSymbol,
 } from '../constants'
 import { ProviderAdapter, StableToken } from '../types'
-import { retryOperation } from '../utils'
+import { TokenMetadataService } from './tokenMetadataService'
 
 export class StableTokenService {
-  constructor(private provider: ProviderAdapter) {}
+  private tokenMetadataService: TokenMetadataService
+
+  constructor(private provider: ProviderAdapter) {
+    this.tokenMetadataService = new TokenMetadataService(provider)
+  }
 
   async getStableTokens(): Promise<StableToken[]> {
     const chainId = await this.provider.getChainId()
@@ -23,45 +27,19 @@ export class StableTokenService {
     const tokens: StableToken[] = []
 
     for (const address of tokenAddresses) {
-      const [name, symbol, decimals, totalSupply] = await Promise.all([
-        retryOperation(() =>
-          this.provider.readContract({
-            address,
-            abi: ERC20_ABI,
-            functionName: 'name',
-          })
-        ),
-        retryOperation(() =>
-          this.provider.readContract({
-            address,
-            abi: ERC20_ABI,
-            functionName: 'symbol',
-          })
-        ),
-        retryOperation(() =>
-          this.provider.readContract({
-            address,
-            abi: ERC20_ABI,
-            functionName: 'decimals',
-          })
-        ),
-        retryOperation(() =>
-          this.provider.readContract({
-            address,
-            abi: ERC20_ABI,
-            functionName: 'totalSupply',
-          })
-        ),
-      ])
+      const metadata = await this.tokenMetadataService.getTokenMetadata(address)
+      const totalSupply = await this.tokenMetadataService.getTotalSupply(
+        address
+      )
 
-      tokens.push({
+      const token = {
         address,
-        name: name as string,
-        symbol: symbol as string,
-        decimals: Number(decimals),
-        totalSupply: (totalSupply as bigint).toString(),
-        fiatTicker: getFiatTicker(symbol as StableTokenSymbol),
-      })
+        ...metadata,
+        totalSupply,
+        fiatTicker: getFiatTicker(metadata.symbol as StableTokenSymbol),
+      }
+
+      tokens.push(token)
     }
 
     return tokens
