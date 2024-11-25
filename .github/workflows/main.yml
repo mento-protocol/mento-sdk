@@ -19,14 +19,27 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Install deps
-        run: yarn install
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9.10.0
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm add -D ethers viem @types/node
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Lint
-        run: yarn lint
+        run: pnpm lint
 
       - name: Test
-        run: yarn test --ci --coverage
+        run: pnpm test

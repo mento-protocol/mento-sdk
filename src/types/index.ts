@@ -1,2 +1,4 @@
 export * from './contractAddresses'
-export * from './contractAddressMap'
+export * from './provider'
+export * from './token'
+export * from './exchange'
