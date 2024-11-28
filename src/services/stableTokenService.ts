@@ -2,6 +2,7 @@ import { RESERVE_ABI } from '../abis'
 import {
   getContractAddress,
   getFiatTicker,
+  RESERVE,
   StableTokenSymbol,
 } from '../constants'
 import { ProviderAdapter, StableToken } from '../types'
@@ -19,7 +20,7 @@ export class StableTokenService {
 
   async getStableTokens(): Promise<StableToken[]> {
     const chainId = await this.provider.getChainId()
-    const reserveAddress = getContractAddress(chainId, 'Reserve')
+    const reserveAddress = getContractAddress(chainId, RESERVE)
 
     const tokenAddresses = (await this.provider.readContract({
       address: reserveAddress,

@@ -1,6 +1,6 @@
 import { BIPOOL_MANAGER_ABI, RESERVE_ABI } from '../abis'
 import { CollateralAsset, Exchange, ProviderAdapter } from '../types'
-import { getContractAddress } from '../constants'
+import { BIPOOLMANAGER, getContractAddress, RESERVE } from '../constants'
 import { retryOperation } from '../utils'
 import { TokenMetadataService } from './tokenMetadataService'
 
@@ -13,8 +13,8 @@ export class CollateralAssetService {
 
   async getCollateralAssets(): Promise<CollateralAsset[]> {
     const chainId = await this.provider.getChainId()
-    const biPoolManagerAddress = getContractAddress(chainId, 'BiPoolManager')
-    const reserveAddress = getContractAddress(chainId, 'Reserve')
+    const biPoolManagerAddress = getContractAddress(chainId, BIPOOLMANAGER)
+    const reserveAddress = getContractAddress(chainId, RESERVE)
 
     const exchanges = (await retryOperation(() =>
       this.provider.readContract({
