@@ -1,10 +1,17 @@
+import { StableToken } from './../../../dist/types/token.d'
 import { EthersAdapter } from '../../../src/adapters'
 import { JsonRpcProvider } from 'ethers'
 import {
   SupplyAdjustmentService,
   StableTokenService,
+  TokenMetadataService,
 } from '../../../src/services'
-import { STABLE_TOKEN_SYMBOLS } from '../../../src/constants'
+import {
+  addresses,
+  ChainId,
+  MENTO_ADDRESSES,
+  STABLE_TOKEN_SYMBOLS,
+} from '../../../src/constants'
 import { TEST_CONFIG } from '../../config'
 
 describe.only('SupplyAdjustmentService Integration Tests', () => {
@@ -12,16 +19,21 @@ describe.only('SupplyAdjustmentService Integration Tests', () => {
   const ethersProvider = new JsonRpcProvider(TEST_CONFIG.rpcUrl)
   const adapter = new EthersAdapter(ethersProvider)
   const supplyAdjustmentService = new SupplyAdjustmentService(adapter)
-  const stableTokenService = new StableTokenService(adapter)
-
+  const tokenMetadataService = new TokenMetadataService(adapter)
   describe('adjustSupply()', () => {
     it(`should return the correct cUSD supply`, async function () {
-      const stableTokens = await stableTokenService.getStableTokens()
-      const cusd = stableTokens.find(
-        (token) => token.symbol === STABLE_TOKEN_SYMBOLS.cUSD
+      const cusdOnChainSupply = await tokenMetadataService.getTotalSupply(
+        addresses[ChainId.CELO].StableToken
       )
 
-      if (!cusd) throw new Error('cUSD token not found...')
+      const cusd: StableToken = {
+        address: addresses[ChainId.CELO].StableToken,
+        symbol: STABLE_TOKEN_SYMBOLS.cUSD,
+        totalSupply: cusdOnChainSupply,
+        name: 'Celo Dollar',
+        decimals: 18,
+        fiatTicker: 'USD',
+      }
 
       const adjustedSupply = await supplyAdjustmentService.getAdjustedSupply(
         cusd
