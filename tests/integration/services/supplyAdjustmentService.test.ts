@@ -5,10 +5,11 @@ import {
   StableTokenService,
 } from '../../../src/services'
 import { STABLE_TOKEN_SYMBOLS } from '../../../src/constants'
+import { TEST_CONFIG } from '../../config'
 
 describe.only('SupplyAdjustmentService Integration Tests', () => {
   // Setup provider and adapter
-  const ethersProvider = new JsonRpcProvider('https://forno.celo.org')
+  const ethersProvider = new JsonRpcProvider(TEST_CONFIG.rpcUrl)
   const adapter = new EthersAdapter(ethersProvider)
   const supplyAdjustmentService = new SupplyAdjustmentService(adapter)
   const stableTokenService = new StableTokenService(adapter)

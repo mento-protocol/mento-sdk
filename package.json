@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "@mento-protocol/mento-core-ts": "^0.2.0",
-    "bignumber.js": "^9.1.2"
+    "bignumber.js": "^9.1.2",
+    "dotenv": "^16.4.5"
   }
 }
