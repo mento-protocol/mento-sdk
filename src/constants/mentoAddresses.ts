@@ -1,0 +1,3 @@
+export const MENTO_ADDRESSES = {
+  PROTOCOL_MULTISIG: '0x87647780180b8f55980c7d3ffefe08a9b29e9ae1',
+} as const
