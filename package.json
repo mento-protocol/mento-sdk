@@ -1,7 +1,7 @@
 {
   "name": "@mento-protocol/mento-sdk",
   "description": "Official SDK for interacting with the Mento Protocol",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "license": "MIT",
   "author": "Mento Labs",
   "keywords": [
@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "@mento-protocol/mento-core-ts": "^0.2.0",
-    "bignumber.js": "^9.1.2"
+    "bignumber.js": "^9.1.2",
+    "dotenv": "^16.4.5"
   }
 }
