@@ -12,10 +12,11 @@ import {
 } from '../shared'
 import { TEST_CONFIG } from '../../config'
 
-describe('EthersAdapter Integration Tests', () => {
+describe('EthersAdapter Integration Tests', async () => {
   // Setup shared test instances
   const ethersProvider = new JsonRpcProvider(TEST_CONFIG.rpcUrl)
   const adapter = new EthersAdapter(ethersProvider)
+  const chainId = await adapter.getChainId()
 
   const stableTokenService = new StableTokenService(adapter)
   const collateralAssetService = new CollateralAssetService(adapter)
@@ -24,5 +25,5 @@ describe('EthersAdapter Integration Tests', () => {
   // Run shared test suites
   createStableTokenTests(stableTokenService)
   createCollateralAssetTests(collateralAssetService)
-  createExchangeTests(exchangeService)
+  createExchangeTests(exchangeService, chainId)
 })

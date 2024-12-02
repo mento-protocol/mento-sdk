@@ -12,12 +12,13 @@ import {
 } from '../shared'
 import { TEST_CONFIG } from '../../config'
 
-describe('ViemAdapter Integration Tests', () => {
+describe('ViemAdapter Integration Tests', async () => {
   // Setup shared test instances
   const viemClient = createPublicClient({
     transport: http(TEST_CONFIG.rpcUrl),
   })
   const adapter = new ViemAdapter(viemClient)
+  const chainId = await adapter.getChainId()
 
   const stableTokenService = new StableTokenService(adapter)
   const collateralAssetService = new CollateralAssetService(adapter)
@@ -26,5 +27,5 @@ describe('ViemAdapter Integration Tests', () => {
   // Run shared test suites
   createStableTokenTests(stableTokenService)
   createCollateralAssetTests(collateralAssetService)
-  createExchangeTests(exchangeService)
+  createExchangeTests(exchangeService, chainId)
 })
