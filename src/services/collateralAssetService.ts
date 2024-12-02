@@ -45,10 +45,7 @@ export class CollateralAssetService {
         const metadata = await this.tokenMetadataService.getTokenMetadata(
           address
         )
-        assets.push({
-          address,
-          ...metadata,
-        })
+        assets.push(metadata)
       }
     }
 

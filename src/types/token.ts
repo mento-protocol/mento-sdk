@@ -1,18 +1,18 @@
 import { ISupplyCalculator } from '../services'
 
-export interface BaseToken {
+export interface IERC20Token {
   name: string
   symbol: string
   address: string
   decimals: number
 }
 
-export interface StableToken extends BaseToken {
+export interface StableToken extends IERC20Token {
   totalSupply: string
   fiatTicker: string
 }
 
-export type CollateralAsset = BaseToken
+export type CollateralAsset = IERC20Token
 
 export interface SupplyAdjustment {
   calculator: ISupplyCalculator

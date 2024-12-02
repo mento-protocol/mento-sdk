@@ -36,8 +36,7 @@ export class StableTokenService {
         address
       )
 
-      const token = {
-        address,
+      const token: StableToken = {
         ...metadata,
         totalSupply,
         fiatTicker: getFiatTicker(metadata.symbol as StableTokenSymbol),

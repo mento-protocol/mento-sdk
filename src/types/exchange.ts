@@ -1,5 +1,13 @@
+import { IERC20Token } from './token'
+
 export interface Exchange {
-  providerAddr: string
-  id: string
+  exchangeId: string
+  providerAddress: string
   assets: string[]
+}
+
+export interface EnrichedExchange {
+  exchangeId: string
+  providerAddress: string
+  assets: IERC20Token[]
 }
