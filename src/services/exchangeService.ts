@@ -1,4 +1,4 @@
-import { ProviderAdapter, EnrichedExchange } from '../types'
+import { ProviderAdapter, EnrichedExchange, IERC20Token } from '../types'
 import { BIPOOLMANAGER, getContractAddress } from '../constants'
 import { BIPOOL_MANAGER_ABI } from '../abis'
 import { retryOperation } from '../utils'
@@ -49,5 +49,20 @@ export class ExchangeService {
     console.log(exchanges[0])
 
     return exchanges
+  }
+
+  /**
+   * Returns all tradeable pairs in the Mento protocol
+   * @returns Array of exchange pairs with asset details
+   */
+  async getTradeablePairs(): Promise<[IERC20Token, IERC20Token][]> {
+    const pairs: [IERC20Token, IERC20Token][] = []
+    const exchanges = await this.getExchanges()
+
+    exchanges.forEach((exchange) => {
+      pairs.push([exchange.assets[0], exchange.assets[1]])
+    })
+
+    return pairs
   }
 }
