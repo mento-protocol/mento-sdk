@@ -7,6 +7,7 @@ import {
 import { ProviderAdapter, ContractCallOptions } from '../../types'
 import { ISupplyCalculator } from './ISupplyCalculator'
 import BigNumber from 'bignumber.js'
+import { retryOperation } from '../../utils'
 
 const BATCH_SIZE = 5
 const BATCH_DELAY = 100
@@ -32,9 +33,9 @@ export class UniV3SupplyCalculator implements ISupplyCalculator {
       // Process positions in batches
       for (let i = 0; i < positions.length; i += BATCH_SIZE) {
         const batchPositions = positions.slice(i, i + BATCH_SIZE)
-        const batchAmount = await this.processPositionBatch(
-          batchPositions,
-          tokenAddress
+
+        const batchAmount = await retryOperation(() =>
+          this.processPositionBatch(batchPositions, tokenAddress)
         )
         totalAmount = totalAmount.plus(batchAmount)
 
