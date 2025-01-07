@@ -65,8 +65,8 @@ export class UniV3SupplyCalculator implements ISupplyCalculator {
         return 0n
       }
     } catch (error) {
-      console.error('Failed to calculate UniV3 supply:', error)
-      return 0n
+      const errorMessage = `Univ3SupplyCalculator: Failed to calculate supply for token ${tokenAddress}: ${error}`
+      throw new Error(errorMessage)
     }
   }
 
