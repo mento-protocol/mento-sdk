@@ -6,6 +6,7 @@ export const STABLE_TOKEN_SYMBOLS = {
   PUSO: 'PUSO',
   cCOP: 'cCOP',
   eXOF: 'eXOF',
+  cGHS: 'cGHS',
 } as const
 
 export type StableTokenSymbol = keyof typeof STABLE_TOKEN_SYMBOLS
@@ -18,6 +19,7 @@ export const STABLE_TOKEN_FIAT_MAPPING: Record<StableTokenSymbol, string> = {
   PUSO: 'PHP',
   cCOP: 'COP',
   eXOF: 'XOF',
+  cGHS: 'GHS',
 } as const
 
 export function getFiatTicker(symbol: StableTokenSymbol): string {
