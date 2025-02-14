@@ -2308,6 +2308,7 @@ __metadata:
     ethers: ^5.7.2
     husky: ^8.0.2
     jest: ^29.4.2
+    mento-router-ts: ^0.2.0
     prettier: ^2.8.4
     size-limit: ^8.1.0
     ts-jest: ^29.0.5
@@ -5182,6 +5183,13 @@ __metadata:
   dependencies:
     tmpl: 1.0.5
   checksum: b38a025a12c8146d6eeea5a7f2bf27d51d8ad6064da8ca9405fcf7bf9b54acd43e3b30ddd7abb9b1bfa4ddb266019133313482570ddb207de568f71ecfcf6060
+  languageName: node
+  linkType: hard
+
+"mento-router-ts@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "mento-router-ts@npm:0.2.0"
+  checksum: 94a01a2cd898dc20379a2961f17b3c8bb29b01cd2bb9e5efb6b5d67d0270d9e347411b89eb8afb7c6b6f272b4242a3dd21465802e78fc724067316bc7661ad61
   languageName: node
   linkType: hard
 

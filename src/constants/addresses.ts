@@ -10,6 +10,7 @@ export const addresses: ContractAddressMap = {
     MentoToken: '0x7FF62f59e3e89EA34163EA1458EEBCc81177Cfb6',
     TimelockController: '0x890DB8A597940165901372Dd7DB61C9f246e2147',
     Locking: '0x001Bb66636dCd149A1A2bA8C50E408BdDd80279C',
+    MentoRouter: '0xbe729350f8cdfc19db6866e8579841188ee57f67',
     Broker: '0x777A8255cA72412f0d706dc03C9D1987306B4CaD',
     BiPoolManager: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
     BreakerBox: '0x303ED1df62Fa067659B586EbEe8De0EcE824Ab39',
@@ -32,6 +33,7 @@ export const addresses: ContractAddressMap = {
     MentoToken: '0x3eDd2f7c90e2E931c817a44302Af7112E84be6Cc',
     TimelockController: '0xa0Ad8DD40104556122c21dF50eD14bb1B53A3338',
     Locking: '0x537CaE97C588C6DA64A385817F3D3563DDCf0591',
+    MentoRouter: '0xe6101a457a69b53e298e35a7f6e3dcb0390df02a',
     Broker: '0xD3Dff18E465bCa6241A244144765b4421Ac14D09',
     BiPoolManager: '0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3',
     BreakerBox: '0xC76BDf0AFb654888728003683cf748A8B1b4f5fD',
@@ -54,6 +56,7 @@ export const addresses: ContractAddressMap = {
     MentoToken: '0x8942330eCB5A6c808aac3Aec3C6aab6D8CF436FE',
     TimelockController: '0x8c045769087F9de69B70949ED7fC23c14Db71e20',
     Locking: '0x1E15b108c51a0cAEAFf1a0E6f27A853Bde1AA2e6',
+    MentoRouter: '0xC5449dbB0aF89F5E3C8E0e1611966E1964F891b1',
     Broker: '0x6723749339e320E1EFcd9f1B0D997ecb45587208',
     BiPoolManager: '0xFF9a3da00F42839CD6D33AD7adf50bCc97B41411',
     BreakerBox: '0x5Ea5A5F694F10de979BEeC7b8041E9f931F54bc7',
@@ -68,4 +71,22 @@ export const addresses: ContractAddressMap = {
     StableTokenXOF: '0x64c1D812673E93Bc036AdC3D547d9950696DA5Af',
     SortedOracles: '0x88A187a876290E9843175027902B9f7f1B092c88',
   },
+}
+
+export type Identifier = keyof ContractAddressMap[keyof ContractAddressMap]
+
+export function getAddress(identifier: Identifier, chainId: number): string {
+  const addressesForChain = addresses[chainId]
+  if (!addresses) {
+    throw new Error(`No addresses found for chain ID ${chainId}`)
+  }
+
+  const address = addressesForChain[identifier]
+  if (!address) {
+    throw new Error(
+      `Address not found for identifier ${identifier} on chain ID ${chainId}`
+    )
+  }
+
+  return address
 }
