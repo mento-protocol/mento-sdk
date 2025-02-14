@@ -182,7 +182,7 @@ export class Mento {
    * @returns An array of TradablePair objects representing available trade routes.
    */
   async getTradablePairs(
-    cached: boolean = true
+    cached = true
   ): Promise<readonly TradablePair[]> {
     // Get tradable pairs from cache if available.
     if (cached) {
@@ -559,7 +559,11 @@ export class Mento {
     tokenOut: Address,
     tradablePair: TradablePair
   ) {
-    return tradablePair.path.map((step, idx) => {
+    let path = [...tradablePair.path];
+    if (path[0].assets.includes(tokenOut)) {
+      path = path.reverse()
+    }
+    return path.map((step, idx) => {
       const isFirstStep = idx === 0
       const isLastStep = idx === tradablePair.path.length - 1
       const prevStep = idx > 0 ? tradablePair.path[idx - 1] : null
