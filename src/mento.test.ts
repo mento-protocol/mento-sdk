@@ -136,7 +136,7 @@ describe('Mento', () => {
     return {
       getExchanges: () =>
         fakeExchangesByProviders[
-          exchangeProvider as keyof typeof fakeExchangesByProviders
+        exchangeProvider as keyof typeof fakeExchangesByProviders
         ],
     }
   })
@@ -164,7 +164,7 @@ describe('Mento', () => {
         symbol: jest.fn(
           () =>
             fakeSymbolsByTokenAddr[
-              contractAddr as keyof typeof fakeSymbolsByTokenAddr
+            contractAddr as keyof typeof fakeSymbolsByTokenAddr
             ]
         ),
         populateTransaction: {
@@ -263,11 +263,11 @@ describe('Mento', () => {
     })
   })
 
-  describe('getTradeablePairs', () => {
+  describe('getTradeablePairsWithPath', () => {
     it('should return an array of pairs including direct and routed (one-hop) pairs', async () => {
       const testee = await Mento.create(provider)
 
-      const pairs = await testee.getTradablePairs(false)
+      const pairs = await testee.getTradablePairsWithPath(false)
       // Check direct pairs (length 2)
       const directPairs = pairs.filter((p: TradablePair) => p.path.length === 1)
       expect(directPairs.length).toBe(nOfFakeDirectExchanges)

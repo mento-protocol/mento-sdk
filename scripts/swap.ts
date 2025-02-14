@@ -45,7 +45,7 @@ async function main() {
   const mento = await Mento.create(wallet)
 
   // Fetch tradable pairs
-  const pairs = await mento.getTradablePairs(true)
+  const pairs = await mento.getTradablePairsWithPath(true)
 
   // Find the specified tradable pair
   const tradablePair = pairs.find((p) => p.id === pairId)
@@ -84,7 +84,6 @@ async function main() {
     tokenIn,
     tokenOut,
     amountIn,
-    tradablePair
   )
 
   // Calculate minAmountOut with 5% slippage
@@ -109,7 +108,6 @@ async function main() {
     tokenOut,
     amountIn,
     minAmountOut,
-    tradablePair
   )
   const swapTx = await wallet.sendTransaction(swapTxReq)
   console.log(`Swap transaction sent: ${swapTx.hash}`)
