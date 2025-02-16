@@ -13,7 +13,7 @@ async function main() {
   const args = process.argv.slice(2)
   if (args.length < 4) {
     console.error(
-      'Usage: ts-node testSwap.ts <chainId> <pairId> <direction> <amount>'
+      'Usage: ts-node swap.ts <chainId> <pairId> <direction> <amount>'
     )
     process.exit(1)
   }
