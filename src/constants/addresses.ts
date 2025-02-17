@@ -77,7 +77,7 @@ export type Identifier = keyof ContractAddressMap[keyof ContractAddressMap]
 
 export function getAddress(identifier: Identifier, chainId: number): string {
   const addressesForChain = addresses[chainId]
-  if (!addresses) {
+  if (!addressesForChain) {
     throw new Error(`No addresses found for chain ID ${chainId}`)
   }
 
