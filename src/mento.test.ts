@@ -136,7 +136,7 @@ describe('Mento', () => {
     return {
       getExchanges: () =>
         fakeExchangesByProviders[
-        exchangeProvider as keyof typeof fakeExchangesByProviders
+          exchangeProvider as keyof typeof fakeExchangesByProviders
         ],
     }
   })
@@ -164,7 +164,7 @@ describe('Mento', () => {
         symbol: jest.fn(
           () =>
             fakeSymbolsByTokenAddr[
-            contractAddr as keyof typeof fakeSymbolsByTokenAddr
+              contractAddr as keyof typeof fakeSymbolsByTokenAddr
             ]
         ),
         populateTransaction: {
@@ -807,9 +807,6 @@ describe('Mento', () => {
         for (const exchange of mockedExchanges) {
           const tokenIn = exchange.assets[0]
           const tokenOut = exchange.assets[1]
-          const symbol0 = fakeSymbolsByTokenAddr[tokenIn]
-          const symbol1 = fakeSymbolsByTokenAddr[tokenOut]
-          const [firstSymbol, secondSymbol] = [symbol0, symbol1].sort()
           const directPair: TradablePair = {
             id: `${fakeSymbolsByTokenAddr[tokenIn]}-${fakeSymbolsByTokenAddr[tokenOut]}`,
             assets: [
@@ -907,7 +904,7 @@ describe('Mento', () => {
       mockRouter.populateTransaction.swapTokensForExactTokens.mockReturnValueOnce(
         fakeTxObj
       )
-      const spy = jest
+      jest
         .spyOn(signer, 'populateTransaction')
         // @ts-ignore
         .mockReturnValueOnce(fakePopulatedTxObj)

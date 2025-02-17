@@ -9,7 +9,7 @@ import { Mento } from '../src/mento'
 import fs from 'fs'
 import path from 'path'
 
-async function getTradablePairsForNetwork(chainId: number, rpcUrl: string) {
+async function getTradablePairsForNetwork(rpcUrl: string) {
   const provider = new providers.JsonRpcProvider(rpcUrl)
   const mento = await Mento.create(provider)
   return await mento.getTradablePairs(true)
@@ -22,10 +22,7 @@ async function main() {
   for (const [chainId, rpcUrl] of Object.entries(rpcUrls)) {
     console.log(`Fetching pairs for chain ${chainId}...`)
     try {
-      results[Number(chainId)] = await getTradablePairsForNetwork(
-        Number(chainId),
-        rpcUrl
-      )
+      results[Number(chainId)] = await getTradablePairsForNetwork(rpcUrl)
     } catch (e) {
       console.error(`Error fetching pairs for chain ${chainId}:`, e)
     }
