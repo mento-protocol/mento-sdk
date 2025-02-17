@@ -3,6 +3,20 @@ import { BigNumberish, constants, Contract, providers, Signer } from 'ethers'
 import { Address } from './interfaces'
 
 /**
+ * Gets the chain ID from a signer or provider
+ * @param signerOrProvider an ethers provider or signer
+ * @returns the chain ID
+ */
+export async function getChainId(
+  signerOrProvider: Signer | providers.Provider
+): Promise<number> {
+  const provider = Signer.isSigner(signerOrProvider)
+    ? signerOrProvider.provider!
+    : signerOrProvider
+  return (await provider.getNetwork()).chainId
+}
+
+/**
  * Ensures that given signer is truly a a connected signer
  * @param signer an ethers signer
  * @throws if signer is invalid or not connected

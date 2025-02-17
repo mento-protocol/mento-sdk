@@ -1,6 +1,7 @@
 import { Contract, Wallet, constants, providers, utils } from 'ethers'
 import {
   getBrokerAddressFromRegistry,
+  getChainId,
   getSymbolFromTokenAddress,
   increaseAllowance,
 } from './utils'
@@ -89,6 +90,16 @@ describe('Utils', () => {
       expect(increaseAllowanceFn).toHaveBeenCalledTimes(1)
       expect(increaseAllowanceFn).toHaveBeenCalledWith('fakeSpender', ten)
       expect(tx).toEqual(fakePopulatedTxObj)
+    })
+  })
+
+  describe('getChainId', () => {
+    it('should return the chain ID from a signer or provider', async () => {
+      provider.getNetwork = jest
+        .fn()
+        .mockResolvedValue({ chainId: 42220, name: 'celo' })
+      const chainId = await getChainId(provider)
+      expect(chainId).toBe(42220)
     })
   })
 })

@@ -6,6 +6,7 @@ export type ContractAddresses = {
   MentoToken: string
   TimelockController: string
   Locking: string
+  MentoRouter: string
   Broker: string
   BiPoolManager: string
   BreakerBox: string

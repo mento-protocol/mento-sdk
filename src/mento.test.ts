@@ -6,7 +6,8 @@ import {
 } from '@mento-protocol/mento-core-ts'
 import { Contract, Wallet, constants, ethers, providers, utils } from 'ethers'
 
-import { Mento } from './mento'
+import { IMentoRouter__factory } from 'mento-router-ts'
+import { Mento, TradablePair } from './mento'
 
 jest.mock('@mento-protocol/mento-core-ts', () => {
   return {
@@ -21,6 +22,13 @@ jest.mock('@mento-protocol/mento-core-ts', () => {
       connect: jest.fn(),
     },
     IBreakerBox__factory: {
+      connect: jest.fn(),
+    },
+  }
+})
+jest.mock('mento-router-ts', () => {
+  return {
+    IMentoRouter__factory: {
       connect: jest.fn(),
     },
   }
@@ -45,7 +53,7 @@ describe('Mento', () => {
   const fakecEURTokenAddr = 'cEURTokenAddr'
   const fakecBRLTokenAddr = 'cBRLTokenAddr'
   const fakeCeloTokenAddr = 'celoTokenAddr'
-  const fakeSymbolsByTokenAddr = {
+  const fakeSymbolsByTokenAddr: Record<string, string> = {
     [fakecUSDTokenAddr]: 'cUSD',
     [fakecEURTokenAddr]: 'cEUR',
     [fakecBRLTokenAddr]: 'cBRL',
@@ -72,13 +80,14 @@ describe('Mento', () => {
     [fakeBrlExchangeProvider]: [fakeCeloBRLExchange],
     ExchangeProvider2: [],
   }
-  const nOfFakeExchanges = Object.values(fakeExchangesByProviders).reduce(
+  const nOfFakeDirectExchanges = Object.values(fakeExchangesByProviders).reduce(
     (acc, curr) => acc + curr.length,
     0
   )
 
   // ========== Mock contract factories ==========
   const fakeBrokerAddr = 'fakeBrokerAddr'
+  const fakeRouterAddr = 'fakeRouterAddr'
   const mockBroker = {
     address: fakeBrokerAddr,
     getExchangeProviders: jest.fn(() => Object.keys(fakeExchangesByProviders)),
@@ -87,6 +96,18 @@ describe('Mento', () => {
     populateTransaction: {
       swapOut: jest.fn(),
       swapIn: jest.fn(),
+    },
+    signer: {
+      populateTransaction: jest.fn(),
+    },
+  }
+  const mockRouter = {
+    address: fakeRouterAddr,
+    getAmountIn: jest.fn(),
+    getAmountOut: jest.fn(),
+    populateTransaction: {
+      swapTokensForExactTokens: jest.fn(),
+      swapExactTokensForTokens: jest.fn(),
     },
     signer: {
       populateTransaction: jest.fn(),
@@ -108,6 +129,8 @@ describe('Mento', () => {
 
   // @ts-ignore
   IBroker__factory.connect.mockReturnValue(mockBroker)
+  // @ts-ignore
+  IMentoRouter__factory.connect.mockReturnValue(mockRouter)
   // @ts-ignore
   IExchangeProvider__factory.connect = jest.fn((exchangeProvider: string) => {
     return {
@@ -162,6 +185,9 @@ describe('Mento', () => {
 
   beforeAll(async () => {
     provider = new providers.JsonRpcProvider()
+    provider.getNetwork = jest
+      .fn()
+      .mockResolvedValue({ chainId: 42220, name: 'celo' })
     signer = new Wallet(pk, provider)
     signerWithoutProvider = new Wallet(pk)
   })
@@ -171,7 +197,7 @@ describe('Mento', () => {
   })
 
   describe('create', () => {
-    it('should return a Mento instance with the registry broker address', async () => {
+    it('should return a Mento instance with the registry broker address and a router object', async () => {
       const testee = await Mento.create(provider)
       expect(testee).toBeDefined()
       expect(fakeRegistryContract.getAddressForString).toHaveBeenCalledTimes(1)
@@ -199,13 +225,21 @@ describe('Mento', () => {
   })
 
   describe('createWithParams', () => {
-    it('should return a Mento instance without querying the registry', () => {
-      const testee = Mento.createWithParams(provider, fakeBrokerAddr)
+    it('should return a Mento instance without querying the registry and include a router object', () => {
+      const testee = Mento.createWithParams(
+        provider,
+        fakeBrokerAddr,
+        fakeRouterAddr
+      )
       expect(testee).toBeDefined()
       expect(mockContractModule).toHaveBeenCalledTimes(0)
       expect(fakeRegistryContract.getAddressForString).toHaveBeenCalledTimes(0)
 
-      const testee2 = Mento.createWithParams(signer, fakeBrokerAddr)
+      const testee2 = Mento.createWithParams(
+        signer,
+        fakeBrokerAddr,
+        fakeRouterAddr
+      )
       expect(testee2).toBeDefined()
       expect(mockContractModule).toHaveBeenCalledTimes(0)
       expect(fakeRegistryContract.getAddressForString).toHaveBeenCalledTimes(0)
@@ -213,7 +247,11 @@ describe('Mento', () => {
 
     it('should throw if the signer has no provider', () => {
       expect(() =>
-        Mento.createWithParams(signerWithoutProvider, fakeBrokerAddr)
+        Mento.createWithParams(
+          signerWithoutProvider,
+          fakeBrokerAddr,
+          fakeRouterAddr
+        )
       ).toThrow('Signer must be connected to a provider')
     })
 
@@ -225,43 +263,87 @@ describe('Mento', () => {
     })
   })
 
-  describe('getTradeablePairs', () => {
-    it('should return an array of tuples with all the tradeable pairs', async () => {
+  describe('getTradeablePairsWithPath', () => {
+    it('should return an array of pairs including direct and routed (one-hop) pairs', async () => {
       const testee = await Mento.create(provider)
 
-      const pairs = await testee.getTradeablePairs()
-      expect(pairs.length).toBe(nOfFakeExchanges)
+      const pairs = await testee.getTradablePairsWithPath(false)
+      // Check direct pairs (length 2)
+      const directPairs = pairs.filter((p: TradablePair) => p.path.length === 1)
+      expect(directPairs.length).toBe(nOfFakeDirectExchanges)
 
-      for (const [, mockedExchanges] of Object.entries(
+      // Verify each direct exchange pair is included
+      for (const [provider, exchanges] of Object.entries(
         fakeExchangesByProviders
       )) {
-        for (const mockedExchange of mockedExchanges) {
-          const asset0Addr = mockedExchange.assets[0]
-          const asset1Addr = mockedExchange.assets[1]
-          const pairOfMockedExchange = [
-            {
-              address: asset0Addr,
-              symbol:
-                fakeSymbolsByTokenAddr[
-                  asset0Addr as keyof typeof fakeSymbolsByTokenAddr
-                ],
-            },
-            {
-              address: asset1Addr,
-              symbol:
-                fakeSymbolsByTokenAddr[
-                  asset1Addr as keyof typeof fakeSymbolsByTokenAddr
-                ],
-            },
-          ]
-          expect(pairs).toContainEqual(pairOfMockedExchange)
+        for (const exchange of exchanges) {
+          const symbol0 = fakeSymbolsByTokenAddr[exchange.assets[0]]
+          const symbol1 = fakeSymbolsByTokenAddr[exchange.assets[1]]
+          const [firstSymbol, secondSymbol] = [symbol0, symbol1].sort()
+          const directPair: TradablePair = {
+            id: `${firstSymbol}-${secondSymbol}`,
+            assets: [
+              {
+                address:
+                  firstSymbol === symbol0
+                    ? exchange.assets[0]
+                    : exchange.assets[1],
+                symbol: firstSymbol,
+              },
+              {
+                address:
+                  secondSymbol === symbol1
+                    ? exchange.assets[1]
+                    : exchange.assets[0],
+                symbol: secondSymbol,
+              },
+            ],
+            path: [
+              {
+                providerAddr: provider,
+                id: exchange.exchangeId,
+                assets: [exchange.assets[0], exchange.assets[1]],
+              },
+            ],
+          }
+          expect(pairs).toContainEqual(directPair)
         }
       }
+
+      // Check that at least one routed (one-hop) pair is included (length > 2)
+      const routedPairs = pairs.filter((p: TradablePair) => p.path.length == 2)
+      expect(routedPairs.length).toBeGreaterThan(0)
+      // For example, expect cUSD -> cEUR via CELO to be present
+      expect(pairs).toContainEqual({
+        id: 'cEUR-cUSD',
+        assets: [
+          {
+            address: fakecEURTokenAddr,
+            symbol: 'cEUR',
+          },
+          {
+            address: fakecUSDTokenAddr,
+            symbol: 'cUSD',
+          },
+        ],
+        path: [
+          {
+            providerAddr: fakeUsdAndEurExchangeProvider,
+            id: fakeCeloUSDExchange.exchangeId,
+            assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+          },
+          {
+            providerAddr: fakeUsdAndEurExchangeProvider,
+            id: fakeCeloEURExchange.exchangeId,
+            assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+          },
+        ],
+      })
     })
   })
 
   describe('getAmountIn', () => {
-    it('should call broker.getAmountIn with the right parameters', async () => {
+    it('should call broker.getAmountIn with the right parameters for a direct swap', async () => {
       const testee = await Mento.create(provider)
 
       for (const [mockedProvider, mockedExchanges] of Object.entries(
@@ -270,7 +352,30 @@ describe('Mento', () => {
         for (const exchange of mockedExchanges) {
           const tokenIn = exchange.assets[0]
           const tokenOut = exchange.assets[1]
-          await testee.getAmountIn(tokenIn, tokenOut, oneInWei)
+          const symbol0 = fakeSymbolsByTokenAddr[tokenIn]
+          const symbol1 = fakeSymbolsByTokenAddr[tokenOut]
+          const [firstSymbol, secondSymbol] = [symbol0, symbol1].sort()
+          const directPair: TradablePair = {
+            id: `${firstSymbol}-${secondSymbol}`,
+            assets: [
+              {
+                address: firstSymbol === symbol0 ? tokenIn : tokenOut,
+                symbol: firstSymbol,
+              },
+              {
+                address: secondSymbol === symbol1 ? tokenOut : tokenIn,
+                symbol: secondSymbol,
+              },
+            ],
+            path: [
+              {
+                providerAddr: mockedProvider,
+                id: exchange.exchangeId,
+                assets: [tokenIn, tokenOut],
+              },
+            ],
+          }
+          await testee.getAmountIn(tokenIn, tokenOut, oneInWei, directPair)
           expect(mockBroker.getAmountIn).toHaveBeenCalledWith(
             mockedProvider,
             exchange.exchangeId,
@@ -282,20 +387,63 @@ describe('Mento', () => {
       }
     })
 
-    it('should throw if no exchange is found for the given tokens', async () => {
+    it('should call router.getAmountIn with the right parameters for a routed swap', async () => {
       const testee = await Mento.create(provider)
-      await expect(
-        testee.getAmountIn(
-          fakeCeloEURExchange.assets[0],
-          'nonExistentAssetAddr',
-          oneInWei
-        )
-      ).rejects.toThrow()
+      const routedPair: TradablePair = {
+        id: 'cEUR-cUSD',
+        assets: [
+          {
+            address: fakecEURTokenAddr,
+            symbol: 'cEUR',
+          },
+          {
+            address: fakecUSDTokenAddr,
+            symbol: 'cUSD',
+          },
+        ],
+        path: [
+          {
+            providerAddr: fakeUsdAndEurExchangeProvider,
+            id: fakeCeloUSDExchange.exchangeId,
+            assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+          },
+          {
+            providerAddr: fakeUsdAndEurExchangeProvider,
+            id: fakeCeloEURExchange.exchangeId,
+            assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+          },
+        ],
+      }
+
+      mockRouter.getAmountIn.mockResolvedValue('routedAmountIn')
+
+      const result = await testee.getAmountIn(
+        fakecUSDTokenAddr,
+        fakecEURTokenAddr,
+        oneInWei,
+        routedPair
+      )
+
+      expect(mockRouter.getAmountIn).toHaveBeenCalledWith(oneInWei, [
+        {
+          exchangeProvider: fakeUsdAndEurExchangeProvider,
+          exchangeId: fakeCeloUSDExchange.exchangeId,
+          assetIn: fakecUSDTokenAddr,
+          assetOut: fakeCeloTokenAddr,
+        },
+        {
+          exchangeProvider: fakeUsdAndEurExchangeProvider,
+          exchangeId: fakeCeloEURExchange.exchangeId,
+          assetIn: fakeCeloTokenAddr,
+          assetOut: fakecEURTokenAddr,
+        },
+      ])
+      expect(result).toBe('routedAmountIn')
     })
   })
 
   describe('getAmountOut', () => {
-    it('should call broker.getAmountOut with the right parameters', async () => {
+    it('should call broker.getAmountOut with the right parameters for a direct swap', async () => {
       const testee = await Mento.create(provider)
 
       for (const [mockedProvider, mockedExchanges] of Object.entries(
@@ -304,7 +452,31 @@ describe('Mento', () => {
         for (const exchange of mockedExchanges) {
           const tokenIn = exchange.assets[1]
           const tokenOut = exchange.assets[0]
-          await testee.getAmountOut(tokenIn, tokenOut, oneInWei)
+          const symbol0 = fakeSymbolsByTokenAddr[tokenIn]
+          const symbol1 = fakeSymbolsByTokenAddr[tokenOut]
+          const [firstSymbol, secondSymbol] = [symbol0, symbol1].sort()
+          const directPair: TradablePair = {
+            id: `${firstSymbol}-${secondSymbol}`,
+            assets: [
+              {
+                address: firstSymbol === symbol0 ? tokenIn : tokenOut,
+                symbol: firstSymbol,
+              },
+              {
+                address: secondSymbol === symbol1 ? tokenOut : tokenIn,
+                symbol: secondSymbol,
+              },
+            ],
+            path: [
+              {
+                providerAddr: mockedProvider,
+                id: exchange.exchangeId,
+                assets: [tokenIn, tokenOut],
+              },
+            ],
+          }
+
+          await testee.getAmountOut(tokenIn, tokenOut, oneInWei, directPair)
           expect(mockBroker.getAmountOut).toHaveBeenCalledWith(
             mockedProvider,
             exchange.exchangeId,
@@ -316,23 +488,86 @@ describe('Mento', () => {
       }
     })
 
-    it('should throw if no exchange is found for the given tokens', async () => {
+    it('should call router.getAmountOut with the right parameters for a routed swap', async () => {
       const testee = await Mento.create(provider)
-      await expect(
-        testee.getAmountOut(
-          fakeCeloUSDExchange.assets[1],
-          'nonExistentAssetAddr',
-          oneInWei
-        )
-      ).rejects.toThrow()
+      const routedPair: TradablePair = {
+        id: 'cEUR-cUSD',
+        assets: [
+          {
+            address: fakecEURTokenAddr,
+            symbol: 'cEUR',
+          },
+          {
+            address: fakecUSDTokenAddr,
+            symbol: 'cUSD',
+          },
+        ],
+        path: [
+          {
+            providerAddr: fakeUsdAndEurExchangeProvider,
+            id: fakeCeloEURExchange.exchangeId,
+            assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+          },
+          {
+            providerAddr: fakeUsdAndEurExchangeProvider,
+            id: fakeCeloUSDExchange.exchangeId,
+            assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+          },
+        ],
+      }
+
+      mockRouter.getAmountOut.mockResolvedValue('routedAmountOut')
+
+      const result = await testee.getAmountOut(
+        fakecEURTokenAddr,
+        fakecUSDTokenAddr,
+        oneInWei,
+        routedPair
+      )
+
+      expect(mockRouter.getAmountOut).toHaveBeenCalledWith(oneInWei, [
+        {
+          exchangeProvider: fakeUsdAndEurExchangeProvider,
+          exchangeId: fakeCeloEURExchange.exchangeId,
+          assetIn: fakecEURTokenAddr,
+          assetOut: fakeCeloTokenAddr,
+        },
+        {
+          exchangeProvider: fakeUsdAndEurExchangeProvider,
+          exchangeId: fakeCeloUSDExchange.exchangeId,
+          assetIn: fakeCeloTokenAddr,
+          assetOut: fakecUSDTokenAddr,
+        },
+      ])
+      expect(result).toBe('routedAmountOut')
     })
   })
 
   describe('increaseTradingAllowance', () => {
-    it('should return a populated increaseAllowance tx object', async () => {
+    it('should return a populated increaseAllowance tx object for a direct pair', async () => {
       const testee = await Mento.create(signer)
       const token = fakeCeloBRLExchange.assets[0]
       const amount = twoInWei
+      const directPair: TradablePair = {
+        id: 'CELO-cBRL',
+        assets: [
+          {
+            address: fakeCeloTokenAddr,
+            symbol: 'CELO',
+          },
+          {
+            address: fakecBRLTokenAddr,
+            symbol: 'cBRL',
+          },
+        ],
+        path: [
+          {
+            providerAddr: fakeBrlExchangeProvider,
+            id: fakeCeloBRLExchange.exchangeId,
+            assets: [fakeCeloTokenAddr, fakecBRLTokenAddr],
+          },
+        ],
+      }
 
       const fakeTxObj = { to: '0x1337', data: '0x345' }
       const fakePopulatedTxObj = {
@@ -348,7 +583,11 @@ describe('Mento', () => {
         // @ts-ignore
         .mockReturnValueOnce(fakePopulatedTxObj)
 
-      const tx = await testee.increaseTradingAllowance(token, amount)
+      const tx = await testee.increaseTradingAllowance(
+        token,
+        amount,
+        directPair
+      )
       expect(tx).toBe(fakePopulatedTxObj)
       expect(increaseAllowanceFn).toHaveBeenCalledTimes(1)
       expect(increaseAllowanceFn).toHaveBeenCalledWith(fakeBrokerAddr, amount)
@@ -356,16 +595,163 @@ describe('Mento', () => {
       expect(spy).toHaveBeenCalledTimes(1)
       expect(spy).toHaveBeenCalledWith(fakeTxObj)
     })
+
+    it('should return a populated increaseAllowance tx object for a routed pair', async () => {
+      const testee = await Mento.create(signer)
+      const token = fakecUSDTokenAddr
+      const amount = twoInWei
+      const routedPair: TradablePair = {
+        id: 'cEUR-cUSD',
+        assets: [
+          {
+            address: fakecEURTokenAddr,
+            symbol: 'cEUR',
+          },
+          {
+            address: fakecUSDTokenAddr,
+            symbol: 'cUSD',
+          },
+        ],
+        path: [
+          {
+            providerAddr: fakeUsdAndEurExchangeProvider,
+            id: fakeCeloUSDExchange.exchangeId,
+            assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+          },
+          {
+            providerAddr: fakeUsdAndEurExchangeProvider,
+            id: fakeCeloEURExchange.exchangeId,
+            assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+          },
+        ],
+      }
+
+      const fakeTxObj = { to: '0x1337', data: '0x345' }
+      const fakePopulatedTxObj = {
+        to: '0x1337',
+        data: '0x345',
+        from: '0xad3',
+        gasLimit: 2200,
+      }
+
+      increaseAllowanceFn.mockReturnValueOnce(fakeTxObj)
+      const spy = jest
+        .spyOn(signer, 'populateTransaction')
+        // @ts-ignore
+        .mockReturnValueOnce(fakePopulatedTxObj)
+
+      const tx = await testee.increaseTradingAllowance(
+        token,
+        amount,
+        routedPair
+      )
+      expect(tx).toBe(fakePopulatedTxObj)
+      expect(increaseAllowanceFn).toHaveBeenCalledTimes(1)
+      expect(increaseAllowanceFn).toHaveBeenCalledWith(fakeRouterAddr, amount)
+      expect(mockContractModule.mock.lastCall![0]).toEqual(token)
+      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy).toHaveBeenCalledWith(fakeTxObj)
+    })
   })
 
   describe('swapIn', () => {
-    it('should return a populated swapIn tx object', async () => {
+    it('should call broker.swapIn with the right parameters for a direct swap', async () => {
       const testee = await Mento.create(signer)
 
-      const tokenIn = fakeCeloBRLExchange.assets[1]
-      const tokenOut = fakeCeloBRLExchange.assets[0]
-      const amountIn = oneInWei
-      const amountOutMin = twoInWei
+      for (const [mockedProvider, mockedExchanges] of Object.entries(
+        fakeExchangesByProviders
+      )) {
+        for (const exchange of mockedExchanges) {
+          const tokenIn = exchange.assets[0]
+          const tokenOut = exchange.assets[1]
+          const symbol0 = fakeSymbolsByTokenAddr[tokenIn]
+          const symbol1 = fakeSymbolsByTokenAddr[tokenOut]
+          const [firstSymbol, secondSymbol] = [symbol0, symbol1].sort()
+          const directPair: TradablePair = {
+            id: `${firstSymbol}-${secondSymbol}`,
+            assets: [
+              {
+                address: firstSymbol === symbol0 ? tokenIn : tokenOut,
+                symbol: firstSymbol,
+              },
+              {
+                address: secondSymbol === symbol1 ? tokenOut : tokenIn,
+                symbol: secondSymbol,
+              },
+            ],
+            path: [
+              {
+                providerAddr: mockedProvider,
+                id: exchange.exchangeId,
+                assets: [tokenIn, tokenOut],
+              },
+            ],
+          }
+
+          const fakeTxObj = { to: '0x1337', data: '0x345' }
+          const fakePopulatedTxObj = {
+            to: '0x123',
+            data: '0x00456',
+            from: '0xad3',
+            gasLimit: 2200,
+          }
+
+          mockBroker.populateTransaction.swapIn.mockReturnValueOnce(fakeTxObj)
+          const spy = jest
+            .spyOn(signer, 'populateTransaction')
+            // @ts-ignore
+            .mockReturnValueOnce(fakePopulatedTxObj)
+
+          const result = await testee.swapIn(
+            tokenIn,
+            tokenOut,
+            oneInWei,
+            twoInWei,
+            directPair
+          )
+          expect(result).toBe(fakePopulatedTxObj)
+
+          expect(mockBroker.populateTransaction.swapIn).toHaveBeenCalledWith(
+            mockedProvider,
+            exchange.exchangeId,
+            tokenIn,
+            tokenOut,
+            oneInWei,
+            twoInWei
+          )
+
+          expect(spy).toHaveBeenCalledWith(fakeTxObj)
+        }
+      }
+    })
+
+    it('should call router.swapIn with the right parameters for a routed swap', async () => {
+      const testee = await Mento.create(signer)
+      const routedPair: TradablePair = {
+        id: 'cEUR-cUSD',
+        assets: [
+          {
+            address: fakecEURTokenAddr,
+            symbol: 'cEUR',
+          },
+          {
+            address: fakecUSDTokenAddr,
+            symbol: 'cUSD',
+          },
+        ],
+        path: [
+          {
+            providerAddr: fakeUsdAndEurExchangeProvider,
+            id: fakeCeloUSDExchange.exchangeId,
+            assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+          },
+          {
+            providerAddr: fakeUsdAndEurExchangeProvider,
+            id: fakeCeloEURExchange.exchangeId,
+            assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+          },
+        ],
+      }
 
       const fakeTxObj = { to: '0x1337', data: '0x345' }
       const fakePopulatedTxObj = {
@@ -375,97 +761,179 @@ describe('Mento', () => {
         gasLimit: 2200,
       }
 
-      mockBroker.populateTransaction.swapIn.mockReturnValueOnce(fakeTxObj)
+      mockRouter.populateTransaction.swapExactTokensForTokens.mockReturnValueOnce(
+        fakeTxObj
+      )
       const spy = jest
         .spyOn(signer, 'populateTransaction')
         // @ts-ignore
         .mockReturnValueOnce(fakePopulatedTxObj)
 
       const result = await testee.swapIn(
-        tokenIn,
-        tokenOut,
-        amountIn,
-        amountOutMin
+        fakecUSDTokenAddr,
+        fakecEURTokenAddr,
+        oneInWei,
+        twoInWei,
+        routedPair
       )
+
+      expect(
+        mockRouter.populateTransaction.swapExactTokensForTokens
+      ).toHaveBeenCalledWith(oneInWei, twoInWei, [
+        {
+          exchangeProvider: fakeUsdAndEurExchangeProvider,
+          exchangeId: fakeCeloUSDExchange.exchangeId,
+          assetIn: fakecUSDTokenAddr,
+          assetOut: fakeCeloTokenAddr,
+        },
+        {
+          exchangeProvider: fakeUsdAndEurExchangeProvider,
+          exchangeId: fakeCeloEURExchange.exchangeId,
+          assetIn: fakeCeloTokenAddr,
+          assetOut: fakecEURTokenAddr,
+        },
+      ])
       expect(result).toBe(fakePopulatedTxObj)
-
-      expect(mockBroker.populateTransaction.swapIn).toHaveBeenCalledTimes(1)
-      expect(mockBroker.populateTransaction.swapIn).toHaveBeenCalledWith(
-        fakeBrlExchangeProvider,
-        fakeCeloBRLExchange.exchangeId,
-        tokenIn,
-        tokenOut,
-        amountIn,
-        amountOutMin
-      )
-
-      expect(spy).toHaveBeenCalledTimes(1)
-      expect(spy).toHaveBeenCalledWith(fakeTxObj)
-    })
-
-    it('should throw if no exchange is found for the given tokens', async () => {
-      const testee = await Mento.create(signer)
-      const tokenIn = fakeCeloEURExchange.assets[1]
-      const tokenOut = 'nonExistentAssetAddr'
-
-      await expect(
-        testee.swapIn(tokenIn, tokenOut, oneInWei, oneInWei)
-      ).rejects.toThrow(`No exchange found for ${tokenIn} and ${tokenOut}`)
     })
   })
 
   describe('swapOut', () => {
-    it('should return a populated swapOut tx object', async () => {
+    it('should call broker.swapOut with the right parameters for a direct swap', async () => {
       const testee = await Mento.create(signer)
 
-      const tokenIn = fakeCeloUSDExchange.assets[0]
-      const tokenOut = fakeCeloUSDExchange.assets[1]
-      const amountOut = oneInWei
-      const amountInMax = twoInWei
+      for (const [mockedProvider, mockedExchanges] of Object.entries(
+        fakeExchangesByProviders
+      )) {
+        for (const exchange of mockedExchanges) {
+          const tokenIn = exchange.assets[0]
+          const tokenOut = exchange.assets[1]
+          const directPair: TradablePair = {
+            id: `${fakeSymbolsByTokenAddr[tokenIn]}-${fakeSymbolsByTokenAddr[tokenOut]}`,
+            assets: [
+              {
+                address: tokenIn,
+                symbol: fakeSymbolsByTokenAddr[tokenIn],
+              },
+              {
+                address: tokenOut,
+                symbol: fakeSymbolsByTokenAddr[tokenOut],
+              },
+            ],
+            path: [
+              {
+                providerAddr: mockedProvider,
+                id: exchange.exchangeId,
+                assets: [tokenIn, tokenOut],
+              },
+            ],
+          }
 
-      const fakeTxObj = { to: '0x123', data: '0x456' }
+          const fakeTxObj = { to: '0x1337', data: '0x345' }
+          const fakePopulatedTxObj = {
+            to: '0x123',
+            data: '0x00456',
+            from: '0xad3',
+            gasLimit: 2200,
+          }
+
+          mockBroker.populateTransaction.swapOut.mockReturnValueOnce(fakeTxObj)
+          const spy = jest
+            .spyOn(signer, 'populateTransaction')
+            // @ts-ignore
+            .mockReturnValueOnce(fakePopulatedTxObj)
+
+          const result = await testee.swapOut(
+            tokenIn,
+            tokenOut,
+            oneInWei,
+            twoInWei,
+            directPair
+          )
+          expect(result).toBe(fakePopulatedTxObj)
+
+          expect(mockBroker.populateTransaction.swapOut).toHaveBeenCalledWith(
+            mockedProvider,
+            exchange.exchangeId,
+            tokenIn,
+            tokenOut,
+            oneInWei,
+            twoInWei
+          )
+
+          expect(spy).toHaveBeenCalledWith(fakeTxObj)
+        }
+      }
+    })
+
+    it('should call router.swapOut with the right parameters for a routed swap', async () => {
+      const testee = await Mento.create(signer)
+      const routedPair: TradablePair = {
+        id: 'cUSD-cEUR',
+        assets: [
+          {
+            address: fakecUSDTokenAddr,
+            symbol: fakeSymbolsByTokenAddr[fakecUSDTokenAddr],
+          },
+          {
+            address: fakecEURTokenAddr,
+            symbol: fakeSymbolsByTokenAddr[fakecEURTokenAddr],
+          },
+        ],
+        path: [
+          {
+            providerAddr: fakeUsdAndEurExchangeProvider,
+            id: fakeCeloUSDExchange.exchangeId,
+            assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+          },
+          {
+            providerAddr: fakeUsdAndEurExchangeProvider,
+            id: fakeCeloEURExchange.exchangeId,
+            assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+          },
+        ],
+      }
+
+      const fakeTxObj = { to: '0x1337', data: '0x345' }
       const fakePopulatedTxObj = {
         to: '0x123',
-        data: '0x456',
-        from: '0x789',
-        gasLimit: 100,
+        data: '0x00456',
+        from: '0xad3',
+        gasLimit: 2200,
       }
-      mockBroker.populateTransaction.swapOut.mockReturnValueOnce(fakeTxObj)
-      const spy = jest
+
+      mockRouter.populateTransaction.swapTokensForExactTokens.mockReturnValueOnce(
+        fakeTxObj
+      )
+      jest
         .spyOn(signer, 'populateTransaction')
         // @ts-ignore
         .mockReturnValueOnce(fakePopulatedTxObj)
 
       const result = await testee.swapOut(
-        tokenIn,
-        tokenOut,
-        amountOut,
-        amountInMax
+        fakecUSDTokenAddr,
+        fakecEURTokenAddr,
+        oneInWei,
+        twoInWei,
+        routedPair
       )
+
+      expect(
+        mockRouter.populateTransaction.swapTokensForExactTokens
+      ).toHaveBeenCalledWith(oneInWei, twoInWei, [
+        {
+          exchangeProvider: fakeUsdAndEurExchangeProvider,
+          exchangeId: fakeCeloUSDExchange.exchangeId,
+          assetIn: fakecUSDTokenAddr,
+          assetOut: fakeCeloTokenAddr,
+        },
+        {
+          exchangeProvider: fakeUsdAndEurExchangeProvider,
+          exchangeId: fakeCeloEURExchange.exchangeId,
+          assetIn: fakeCeloTokenAddr,
+          assetOut: fakecEURTokenAddr,
+        },
+      ])
       expect(result).toBe(fakePopulatedTxObj)
-
-      expect(mockBroker.populateTransaction.swapOut).toHaveBeenCalledTimes(1)
-      expect(mockBroker.populateTransaction.swapOut).toHaveBeenCalledWith(
-        fakeUsdAndEurExchangeProvider,
-        fakeCeloUSDExchange.exchangeId,
-        tokenIn,
-        tokenOut,
-        amountOut,
-        amountInMax
-      )
-
-      expect(spy).toHaveBeenCalledTimes(1)
-      expect(spy).toHaveBeenCalledWith(fakeTxObj)
-    })
-
-    it('should throw if no exchange is found for the given tokens', async () => {
-      const testee = await Mento.create(signer)
-      const tokenIn = fakeCeloUSDExchange.assets[0]
-      const tokenOut = 'fakeAsset'
-
-      await expect(
-        testee.swapOut(tokenIn, tokenOut, oneInWei, oneInWei)
-      ).rejects.toThrow(`No exchange found for ${tokenIn} and ${tokenOut}`)
     })
   })
 
