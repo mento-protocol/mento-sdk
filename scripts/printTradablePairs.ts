@@ -39,8 +39,8 @@ async function main() {
     )
   }
 
-  // Fetch tradable pairs. Here, we pass "true" to use the cached pairs as defined in getTradablePairs.
-  const pairs = await mento.getTradablePairs(true)
+  // Fetch cached tradable pairs
+  const pairs = await mento.getTradablePairsWithPath()
 
   console.log(`Tradable pairs for chain ${chainId}:\n`)
   for (const pair of pairs) {

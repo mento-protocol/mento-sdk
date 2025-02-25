@@ -267,7 +267,7 @@ describe('Mento', () => {
     it('should return an array of pairs including direct and routed (one-hop) pairs', async () => {
       const testee = await Mento.create(provider)
 
-      const pairs = await testee.getTradablePairsWithPath(false)
+      const pairs = await testee.getTradablePairsWithPath({ cached: false })
       // Check direct pairs (length 2)
       const directPairs = pairs.filter((p: TradablePair) => p.path.length === 1)
       expect(directPairs.length).toBe(nOfFakeDirectExchanges)

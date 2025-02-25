@@ -1,4 +1,4 @@
-import { BigNumber, Contract, providers, utils, Wallet } from 'ethers'
+import { Contract, providers, utils, Wallet } from 'ethers'
 import { Mento } from '../src/mento'
 
 // Start Generation Here
@@ -44,8 +44,8 @@ async function main() {
   // Create Mento instance
   const mento = await Mento.create(wallet)
 
-  // Fetch tradable pairs
-  const pairs = await mento.getTradablePairsWithPath(true)
+  // Fetch tradable pairs from cache
+  const pairs = await mento.getTradablePairsWithPath()
 
   // Find the specified tradable pair
   const tradablePair = pairs.find((p) => p.id === pairId)
@@ -80,11 +80,7 @@ async function main() {
   const amountIn = utils.parseUnits(amountStr, decimals)
 
   // Get amountOut from Mento
-  const amountOut = await mento.getAmountOut(
-    tokenIn,
-    tokenOut,
-    amountIn,
-  )
+  const amountOut = await mento.getAmountOut(tokenIn, tokenOut, amountIn)
 
   // Calculate minAmountOut with 5% slippage
   const minAmountOut = amountOut.mul(95).div(100)
@@ -107,7 +103,7 @@ async function main() {
     tokenIn,
     tokenOut,
     amountIn,
-    minAmountOut,
+    minAmountOut
   )
   const swapTx = await wallet.sendTransaction(swapTxReq)
   console.log(`Swap transaction sent: ${swapTx.hash}`)
