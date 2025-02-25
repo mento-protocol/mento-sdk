@@ -372,6 +372,29 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ],
     },
     {
+      id: 'cGHS-cUSD',
+      assets: [
+        {
+          address: '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          symbol: 'cGHS',
+        },
+        {
+          address: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+          symbol: 'cUSD',
+        },
+      ],
+      path: [
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          ],
+        },
+      ],
+    },
+    {
       id: 'CELO-cKES',
       assets: [
         {
@@ -553,6 +576,37 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
           assets: [
             '0x765DE816845861e75A25fCA122bb6898B8B1282a',
             '0x8A567e2aE79CA692Bd748aB832081C45de4041eA',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'CELO-cGHS',
+      assets: [
+        {
+          address: '0x471EcE3750Da237f93B8E339c536989b8978a438',
+          symbol: 'CELO',
+        },
+        {
+          address: '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          symbol: 'cGHS',
+        },
+      ],
+      path: [
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0x471EcE3750Da237f93B8E339c536989b8978a438',
+          ],
+        },
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
           ],
         },
       ],
@@ -961,6 +1015,37 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ],
     },
     {
+      id: 'USDC-cGHS',
+      assets: [
+        {
+          address: '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
+          symbol: 'USDC',
+        },
+        {
+          address: '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          symbol: 'cGHS',
+        },
+      ],
+      path: [
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
+          ],
+        },
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          ],
+        },
+      ],
+    },
+    {
       id: 'axlEUROC-axlUSDC',
       assets: [
         {
@@ -1116,6 +1201,37 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ],
     },
     {
+      id: 'axlUSDC-cGHS',
+      assets: [
+        {
+          address: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
+          symbol: 'axlUSDC',
+        },
+        {
+          address: '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          symbol: 'cGHS',
+        },
+      ],
+      path: [
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
+          ],
+        },
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          ],
+        },
+      ],
+    },
+    {
       id: 'USD₮-cKES',
       assets: [
         {
@@ -1209,6 +1325,37 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ],
     },
     {
+      id: 'cGHS-cKES',
+      assets: [
+        {
+          address: '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          symbol: 'cGHS',
+        },
+        {
+          address: '0x456a3D042C0DbD3db53D5489e98dFb038553B0d0',
+          symbol: 'cKES',
+        },
+      ],
+      path: [
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0x456a3D042C0DbD3db53D5489e98dFb038553B0d0',
+          ],
+        },
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          ],
+        },
+      ],
+    },
+    {
       id: 'PUSO-USD₮',
       assets: [
         {
@@ -1271,6 +1418,37 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ],
     },
     {
+      id: 'USD₮-cGHS',
+      assets: [
+        {
+          address: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
+          symbol: 'USD₮',
+        },
+        {
+          address: '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          symbol: 'cGHS',
+        },
+      ],
+      path: [
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
+          ],
+        },
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          ],
+        },
+      ],
+    },
+    {
       id: 'PUSO-cCOP',
       assets: [
         {
@@ -1297,6 +1475,68 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
           assets: [
             '0x765DE816845861e75A25fCA122bb6898B8B1282a',
             '0x8A567e2aE79CA692Bd748aB832081C45de4041eA',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'PUSO-cGHS',
+      assets: [
+        {
+          address: '0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B',
+          symbol: 'PUSO',
+        },
+        {
+          address: '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          symbol: 'cGHS',
+        },
+      ],
+      path: [
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B',
+          ],
+        },
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'cCOP-cGHS',
+      assets: [
+        {
+          address: '0x8A567e2aE79CA692Bd748aB832081C45de4041eA',
+          symbol: 'cCOP',
+        },
+        {
+          address: '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+          symbol: 'cGHS',
+        },
+      ],
+      path: [
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0x8A567e2aE79CA692Bd748aB832081C45de4041eA',
+          ],
+        },
+        {
+          providerAddr: '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901',
+          id: '0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187',
+          assets: [
+            '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+            '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
           ],
         },
       ],

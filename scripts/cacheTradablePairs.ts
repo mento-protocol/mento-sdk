@@ -5,14 +5,16 @@ const rpcUrls = {
 }
 
 import { providers } from 'ethers'
-import { Mento } from '../src/mento'
 import fs from 'fs'
 import path from 'path'
+import { Mento } from '../src/mento'
 
 async function getTradablePairsForNetwork(rpcUrl: string) {
   const provider = new providers.JsonRpcProvider(rpcUrl)
   const mento = await Mento.create(provider)
-  return await mento.getTradablePairs(true)
+
+  // We want to fetch the pairs from the network, not from the cache.
+  return await mento.getTradablePairsWithPath({ cached: false })
 }
 
 async function main() {

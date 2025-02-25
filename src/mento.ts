@@ -1,10 +1,4 @@
 import {
-  Address,
-  TradingLimit,
-  TradingLimitsConfig,
-  TradingLimitsState,
-} from './interfaces'
-import {
   BiPoolManager__factory,
   Broker__factory,
   IBreakerBox__factory,
@@ -15,6 +9,13 @@ import {
 } from '@mento-protocol/mento-core-ts'
 import { BigNumber, BigNumberish, Signer, providers } from 'ethers'
 import {
+  Address,
+  TradingLimit,
+  TradingLimitsConfig,
+  TradingLimitsState,
+} from './interfaces'
+import { getLimits, getLimitsConfig, getLimitsState } from './limits'
+import {
   getBrokerAddressFromRegistry,
   getChainId,
   getSymbolFromTokenAddress,
@@ -22,12 +23,11 @@ import {
   validateSigner,
   validateSignerOrProvider,
 } from './utils'
-import { getLimits, getLimitsConfig, getLimitsState } from './limits'
 
 import { strict as assert } from 'assert'
-import { getCachedTradablePairs } from './constants/tradablePairs'
 import { IMentoRouter, IMentoRouter__factory } from 'mento-router-ts'
 import { getAddress } from './constants/addresses'
+import { getCachedTradablePairs } from './constants/tradablePairs'
 
 export interface Exchange {
   providerAddr: Address
@@ -127,8 +127,12 @@ export class Mento {
    * Get tradable pairs for backwards compatibility
    * @returns an array of Asset pairs
    */
-  async getTradablePairs(cached = true): Promise<[Asset, Asset][]> {
-    return (await this.getTradablePairsWithPath(cached)).map((pair) => pair.assets)
+  async getTradablePairs(options?: {
+    cached?: boolean
+  }): Promise<[Asset, Asset][]> {
+    return (
+      await this.getTradablePairsWithPath({ cached: options?.cached ?? true })
+    ).map((pair) => pair.assets)
   }
 
   /**
@@ -189,11 +193,11 @@ export class Mento {
    * the two Asset objects, and an array of exchange details for each hop.
    * @returns An array of TradablePair objects representing available trade routes.
    */
-  async getTradablePairsWithPath(
-    cached = true
-  ): Promise<readonly TradablePair[]> {
+  async getTradablePairsWithPath(options?: {
+    cached?: boolean
+  }): Promise<readonly TradablePair[]> {
     // Get tradable pairs from cache if available.
-    if (cached) {
+    if (options?.cached) {
       const value = getCachedTradablePairs(
         await getChainId(this.signerOrProvider)
       )
@@ -410,7 +414,9 @@ export class Mento {
     tradablePair?: TradablePair
   ): Promise<providers.TransactionRequest> {
     const spender =
-      !tradablePair || tradablePair?.path.length == 1 ? this.broker.address : this.router.address
+      !tradablePair || tradablePair?.path.length == 1
+        ? this.broker.address
+        : this.router.address
     const tx = await increaseAllowance(
       tokenIn,
       spender,
@@ -578,7 +584,7 @@ export class Mento {
     tokenOut: Address,
     tradablePair: TradablePair
   ) {
-    let path = [...tradablePair.path];
+    let path = [...tradablePair.path]
     if (path[0].assets.includes(tokenOut)) {
       path = path.reverse()
     }
@@ -624,29 +630,36 @@ export class Mento {
   /**
    * Finds a tradable pair for the given input and output tokens
    * @param tokenIn the input token address
-   * @param tokenOut the output token address 
+   * @param tokenOut the output token address
    * @returns the tradable pair containing the path between the tokens
    * @throws if no path is found between the tokens
    */
-  async findPairForTokens(tokenIn: Address, tokenOut: Address): Promise<TradablePair> {
+  async findPairForTokens(
+    tokenIn: Address,
+    tokenOut: Address
+  ): Promise<TradablePair> {
     const pair = (await this.getTradablePairsWithPath()).find(
-      (p) => 
+      (p) =>
         // Direct path
-        (p.path.length === 1 && p.path[0].assets.includes(tokenIn) && p.path[0].assets.includes(tokenOut)) ||
+        (p.path.length === 1 &&
+          p.path[0].assets.includes(tokenIn) &&
+          p.path[0].assets.includes(tokenOut)) ||
         // Routed path
-        (p.path.length === 2 && 
-          ((p.path[0].assets.includes(tokenIn) && p.path[1].assets.includes(tokenOut)) ||
-           (p.path[0].assets.includes(tokenOut) && p.path[1].assets.includes(tokenIn)))
-        )
+        (p.path.length === 2 &&
+          ((p.path[0].assets.includes(tokenIn) &&
+            p.path[1].assets.includes(tokenOut)) ||
+            (p.path[0].assets.includes(tokenOut) &&
+              p.path[1].assets.includes(tokenIn))))
     )
 
     if (!pair) {
-      throw new Error(`No tradable pair found for tokens ${tokenIn} and ${tokenOut}`)
+      throw new Error(
+        `No tradable pair found for tokens ${tokenIn} and ${tokenOut}`
+      )
     }
 
     return pair
   }
-
 
   /**
    * Returns the list of exchanges available in Mento (cached)
