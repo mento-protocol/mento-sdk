@@ -30,7 +30,8 @@
     "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",
     "size": "size-limit",
     "test": "jest --runInBand --verbose",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "cacheTradablePairs": "ts-node scripts/cacheTradablePairs.ts"
   },
   "husky": {
     "hooks": {
