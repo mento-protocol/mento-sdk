@@ -197,7 +197,7 @@ export class Mento {
     cached?: boolean
   }): Promise<readonly TradablePair[]> {
     // Get tradable pairs from cache if available.
-    if (options?.cached) {
+    if (options?.cached ?? true) {
       const value = getCachedTradablePairs(
         await getChainId(this.signerOrProvider)
       )
