@@ -1,7 +1,7 @@
 {
   "name": "@mento-protocol/mento-sdk",
   "description": "Official SDK for interacting with the Mento Protocol",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "author": "Mento Labs",
   "keywords": [
@@ -31,7 +31,8 @@
     "size": "size-limit",
     "test": "jest --runInBand --verbose",
     "coverage": "jest --coverage",
-    "cacheTradablePairs": "ts-node scripts/cacheTradablePairs.ts"
+    "cacheTradablePairs": "ts-node scripts/cacheTradablePairs.ts",
+    "printTradablePairs": "ts-node scripts/printTradablePairs.ts"
   },
   "husky": {
     "hooks": {
