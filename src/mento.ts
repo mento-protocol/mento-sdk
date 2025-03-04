@@ -127,12 +127,14 @@ export class Mento {
    * Get tradable pairs for backwards compatibility
    * @returns an array of Asset pairs
    */
-  async getTradablePairs(options?: {
+  async getTradablePairs({
+    cached = true,
+  }: {
     cached?: boolean
-  }): Promise<[Asset, Asset][]> {
-    return (
-      await this.getTradablePairsWithPath({ cached: options?.cached ?? true })
-    ).map((pair) => pair.assets)
+  } = {}): Promise<[Asset, Asset][]> {
+    return (await this.getTradablePairsWithPath({ cached })).map(
+      (pair) => pair.assets
+    )
   }
 
   /**
@@ -193,11 +195,13 @@ export class Mento {
    * the two Asset objects, and an array of exchange details for each hop.
    * @returns An array of TradablePair objects representing available trade routes.
    */
-  async getTradablePairsWithPath(options?: {
+  async getTradablePairsWithPath({
+    cached = true,
+  }: {
     cached?: boolean
-  }): Promise<readonly TradablePair[]> {
+  } = {}): Promise<readonly TradablePair[]> {
     // Get tradable pairs from cache if available.
-    if (options?.cached ?? true) {
+    if (cached) {
       const value = getCachedTradablePairs(
         await getChainId(this.signerOrProvider)
       )
