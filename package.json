@@ -31,7 +31,8 @@
     "size": "size-limit",
     "test": "jest --runInBand --verbose",
     "coverage": "jest --coverage",
-    "cacheTradablePairs": "ts-node scripts/cacheTradablePairs.ts"
+    "cacheTradablePairs": "ts-node scripts/cacheTradablePairs.ts",
+    "printTradablePairs": "ts-node scripts/printTradablePairs.ts"
   },
   "husky": {
     "hooks": {
