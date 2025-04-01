@@ -1,10 +1,5 @@
 import { RESERVE_ABI } from '../abis'
-import {
-  getContractAddress,
-  getFiatTicker,
-  RESERVE,
-  StableTokenSymbol,
-} from '../constants'
+import { getContractAddress, RESERVE } from '../constants'
 import { ProviderAdapter, StableToken } from '../types'
 import { SupplyAdjustmentService } from './supplyAdjustmentService'
 import { TokenMetadataService } from './tokenMetadataService'
@@ -40,7 +35,6 @@ export class StableTokenService {
         address,
         ...metadata,
         totalSupply,
-        fiatTicker: getFiatTicker(metadata.symbol as StableTokenSymbol),
       }
 
       const adjustedSupply =
