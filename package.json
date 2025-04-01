@@ -1,7 +1,7 @@
 {
   "name": "@mento-protocol/mento-sdk",
   "description": "Official SDK for interacting with the Mento Protocol",
-  "version": "2.0.0-beta.6",
+  "version": "2.0.0-beta.7",
   "license": "MIT",
   "author": "Mento Labs",
   "keywords": [
@@ -53,7 +53,7 @@
   },
   "peerDependencies": {
     "ethers": "^6.13.4",
-    "ethers-v5": "npm:ethers@^5.7.2",
+    "ethers-v5": "npm:ethers@^5.7",
     "viem": "^2.21.44"
   },
   "peerDependenciesMeta": {

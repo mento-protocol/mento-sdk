@@ -32,7 +32,6 @@ describe.only('SupplyAdjustmentService Integration Tests', () => {
         totalSupply: cusdOnChainSupply,
         name: 'Celo Dollar',
         decimals: 18,
-        fiatTicker: 'USD',
       }
 
       const adjustedSupply = await supplyAdjustmentService.getAdjustedSupply(

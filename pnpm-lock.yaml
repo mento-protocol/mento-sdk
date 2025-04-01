@@ -21,7 +21,7 @@ importers:
         specifier: ^6.13.4
         version: 6.13.4
       ethers-v5:
-        specifier: npm:ethers@^5.7.2
+        specifier: npm:ethers@^5.7
         version: ethers@5.7.2
       viem:
         specifier: ^2.21.44
