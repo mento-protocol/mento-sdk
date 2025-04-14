@@ -3,25 +3,23 @@ import { EthersAdapter } from '../../../src/adapters'
 import { JsonRpcProvider } from 'ethers'
 import {
   SupplyAdjustmentService,
-  StableTokenService,
   TokenMetadataService,
 } from '../../../src/services'
 import {
   addresses,
   ChainId,
-  MENTO_ADDRESSES,
   STABLE_TOKEN_SYMBOLS,
 } from '../../../src/constants'
 import { TEST_CONFIG } from '../../config'
 
-describe.only('SupplyAdjustmentService Integration Tests', () => {
+describe('SupplyAdjustmentService Integration Tests', () => {
   // Setup provider and adapter
   const ethersProvider = new JsonRpcProvider(TEST_CONFIG.rpcUrl)
   const adapter = new EthersAdapter(ethersProvider)
   const supplyAdjustmentService = new SupplyAdjustmentService(adapter)
   const tokenMetadataService = new TokenMetadataService(adapter)
   describe('adjustSupply()', () => {
-    it(`should return the correct cUSD supply`, async function () {
+    it(`should return the adjusted cUSD supply`, async function () {
       const cusdOnChainSupply = await tokenMetadataService.getTotalSupply(
         addresses[ChainId.CELO].StableToken
       )
@@ -33,7 +31,7 @@ describe.only('SupplyAdjustmentService Integration Tests', () => {
         name: 'Celo Dollar',
         decimals: 18,
       }
-
+      
       const adjustedSupply = await supplyAdjustmentService.getAdjustedSupply(
         cusd
       )

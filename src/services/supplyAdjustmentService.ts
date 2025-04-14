@@ -5,6 +5,7 @@ import {
   PROTOCOL_ADDRESSES,
 } from '../constants'
 import { UniV3SupplyCalculator, MultisigSupplyCalculator } from './supply'
+import { AAVESupplyCalculator } from './supply/aaveSupplyCalculator'
 
 export class SupplyAdjustmentService {
   private config: TokenSupplyConfig
@@ -17,6 +18,11 @@ export class SupplyAdjustmentService {
       MENTO_ADDRESSES.PROTOCOL_MULTISIG
     )
 
+    const aaveCalculator = new AAVESupplyCalculator(provider, [
+      MENTO_ADDRESSES.OPERATIONAL_WALLET,
+      MENTO_ADDRESSES.PROTOCOL_MULTISIG,
+    ])
+
     const multisigCalculator = new MultisigSupplyCalculator(
       provider,
       MENTO_ADDRESSES.PROTOCOL_MULTISIG
@@ -26,7 +32,9 @@ export class SupplyAdjustmentService {
       [STABLE_TOKEN_SYMBOLS.cUSD]: [
         { calculator: uniV3Calculator },
         { calculator: multisigCalculator },
+        { calculator: aaveCalculator },
       ],
+      [STABLE_TOKEN_SYMBOLS.cEUR]: [{ calculator: aaveCalculator }],
     }
   }
 
