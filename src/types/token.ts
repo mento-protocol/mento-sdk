@@ -25,5 +25,5 @@ export interface SupplyAdjustment {
 }
 
 export interface TokenSupplyConfig {
-  [tokenSymbol: string]: SupplyAdjustment[]
+  [tokenSymbol: string]: readonly SupplyAdjustment[]
 }

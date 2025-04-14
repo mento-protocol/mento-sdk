@@ -1,41 +1,35 @@
 import { ProviderAdapter, StableToken, TokenSupplyConfig } from '../types'
-import {
-  STABLE_TOKEN_SYMBOLS,
-  MENTO_ADDRESSES,
-  PROTOCOL_ADDRESSES,
-} from '../constants'
-import { UniV3SupplyCalculator, MultisigSupplyCalculator } from './supply'
-import { AAVESupplyCalculator } from './supply/aaveSupplyCalculator'
+import { STABLE_TOKEN_SYMBOLS } from '../constants'
+import { CalculatorFactory } from './supply/calculatorFactory'
 
 export class SupplyAdjustmentService {
-  private config: TokenSupplyConfig
+  private readonly config: Readonly<TokenSupplyConfig>
 
-  constructor(provider: ProviderAdapter) {
-    const uniV3Calculator = new UniV3SupplyCalculator(
-      provider,
-      PROTOCOL_ADDRESSES.UNIV3_POSITION_MANAGER,
-      PROTOCOL_ADDRESSES.UNIV3_FACTORY,
-      MENTO_ADDRESSES.PROTOCOL_MULTISIG
-    )
+  constructor(provider: ProviderAdapter, calculatorFactory: CalculatorFactory) {
+    if (!provider) throw new Error('Provider is required')
+    if (!calculatorFactory) throw new Error('Calculator factory is required')
 
-    const aaveCalculator = new AAVESupplyCalculator(provider, [
-      MENTO_ADDRESSES.OPERATIONAL_WALLET,
-      MENTO_ADDRESSES.PROTOCOL_MULTISIG,
-    ])
+    this.config = this.initializeConfig(provider, calculatorFactory)
+  }
 
-    const multisigCalculator = new MultisigSupplyCalculator(
-      provider,
-      MENTO_ADDRESSES.PROTOCOL_MULTISIG
-    )
+  private initializeConfig(
+    provider: ProviderAdapter,
+    factory: CalculatorFactory
+  ): Readonly<TokenSupplyConfig> {
+    const uniV3Calculator = factory.createUniV3Calculator(provider)
+    const aaveCalculator = factory.createAAVECalculator(provider)
+    const multisigCalculator = factory.createMultisigCalculator(provider)
 
-    this.config = {
-      [STABLE_TOKEN_SYMBOLS.cUSD]: [
+    return Object.freeze({
+      [STABLE_TOKEN_SYMBOLS.cUSD]: Object.freeze([
         { calculator: uniV3Calculator },
         { calculator: multisigCalculator },
         { calculator: aaveCalculator },
-      ],
-      [STABLE_TOKEN_SYMBOLS.cEUR]: [{ calculator: aaveCalculator }],
-    }
+      ]),
+      [STABLE_TOKEN_SYMBOLS.cEUR]: Object.freeze([
+        { calculator: aaveCalculator },
+      ]),
+    })
   }
 
   /**

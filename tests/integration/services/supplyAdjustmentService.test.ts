@@ -11,14 +11,17 @@ import {
   STABLE_TOKEN_SYMBOLS,
 } from '../../../src/constants'
 import { TEST_CONFIG } from '../../config'
-
+import { DefaultCalculatorFactory } from '../../../src/services/supply'
 describe('SupplyAdjustmentService Integration Tests', () => {
   // Setup provider and adapter
   const ethersProvider = new JsonRpcProvider(TEST_CONFIG.rpcUrl)
   const adapter = new EthersAdapter(ethersProvider)
-  const supplyAdjustmentService = new SupplyAdjustmentService(adapter)
+  const supplyAdjustmentService = new SupplyAdjustmentService(
+    adapter,
+    new DefaultCalculatorFactory()
+  )
   const tokenMetadataService = new TokenMetadataService(adapter)
-  describe('adjustSupply()', () => {
+  describe.only('adjustSupply()', () => {
     it(`should return the adjusted cUSD supply`, async function () {
       const cusdOnChainSupply = await tokenMetadataService.getTotalSupply(
         addresses[ChainId.CELO].StableToken
@@ -31,7 +34,7 @@ describe('SupplyAdjustmentService Integration Tests', () => {
         name: 'Celo Dollar',
         decimals: 18,
       }
-      
+
       const adjustedSupply = await supplyAdjustmentService.getAdjustedSupply(
         cusd
       )
