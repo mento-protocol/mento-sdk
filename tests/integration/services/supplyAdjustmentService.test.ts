@@ -21,7 +21,7 @@ describe('SupplyAdjustmentService Integration Tests', () => {
     new DefaultCalculatorFactory()
   )
   const tokenMetadataService = new TokenMetadataService(adapter)
-  describe.only('adjustSupply()', () => {
+  describe('adjustSupply()', () => {
     it(`should return the adjusted cUSD supply`, async function () {
       const cusdOnChainSupply = await tokenMetadataService.getTotalSupply(
         addresses[ChainId.CELO].StableToken
