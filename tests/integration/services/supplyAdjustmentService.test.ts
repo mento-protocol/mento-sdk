@@ -3,25 +3,26 @@ import { EthersAdapter } from '../../../src/adapters'
 import { JsonRpcProvider } from 'ethers'
 import {
   SupplyAdjustmentService,
-  StableTokenService,
   TokenMetadataService,
 } from '../../../src/services'
 import {
   addresses,
   ChainId,
-  MENTO_ADDRESSES,
   STABLE_TOKEN_SYMBOLS,
 } from '../../../src/constants'
 import { TEST_CONFIG } from '../../config'
-
-describe.only('SupplyAdjustmentService Integration Tests', () => {
+import { DefaultCalculatorFactory } from '../../../src/services/supply'
+describe('SupplyAdjustmentService Integration Tests', () => {
   // Setup provider and adapter
   const ethersProvider = new JsonRpcProvider(TEST_CONFIG.rpcUrl)
   const adapter = new EthersAdapter(ethersProvider)
-  const supplyAdjustmentService = new SupplyAdjustmentService(adapter)
+  const supplyAdjustmentService = new SupplyAdjustmentService(
+    adapter,
+    new DefaultCalculatorFactory()
+  )
   const tokenMetadataService = new TokenMetadataService(adapter)
   describe('adjustSupply()', () => {
-    it(`should return the correct cUSD supply`, async function () {
+    it(`should return the adjusted cUSD supply`, async function () {
       const cusdOnChainSupply = await tokenMetadataService.getTotalSupply(
         addresses[ChainId.CELO].StableToken
       )

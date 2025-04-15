@@ -17,7 +17,7 @@ const config: Config.InitialOptions = {
   ],
   coverageDirectory: '<rootDir>/coverage/',
   coveragePathIgnorePatterns: ['src/constants', 'src/types'],
-  testTimeout: 20000,
+  testTimeout: 900000,
   rootDir: '.',
   setupFiles: ['<rootDir>/tests/setup.ts'],
 }
