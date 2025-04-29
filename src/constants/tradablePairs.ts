@@ -3297,6 +3297,75 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ]
     },
     {
+      "id": "cCHF-cUSD",
+      "assets": [
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        },
+        {
+          "address": "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+          "symbol": "cUSD"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cNGN-cUSD",
+      "assets": [
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        },
+        {
+          "address": "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+          "symbol": "cUSD"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cJPY-cUSD",
+      "assets": [
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        },
+        {
+          "address": "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+          "symbol": "cUSD"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
       "id": "BridgedUSDC-CELO",
       "assets": [
         {
@@ -3664,6 +3733,99 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
           "assets": [
             "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
             "0x02EC9E0D2Fd73e89168C1709e542a48f58d7B133"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CELO-cCHF",
+      "assets": [
+        {
+          "address": "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9",
+          "symbol": "CELO"
+        },
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CELO-cNGN",
+      "assets": [
+        {
+          "address": "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9",
+          "symbol": "CELO"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CELO-cJPY",
+      "assets": [
+        {
+          "address": "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9",
+          "symbol": "CELO"
+        },
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
           ]
         }
       ]
@@ -4165,6 +4327,99 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ]
     },
     {
+      "id": "USDC-cCHF",
+      "assets": [
+        {
+          "address": "0x2F25deB3848C207fc8E0c34035B3Ba7fC157602B",
+          "symbol": "USDC"
+        },
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2F25deB3848C207fc8E0c34035B3Ba7fC157602B"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "USDC-cNGN",
+      "assets": [
+        {
+          "address": "0x2F25deB3848C207fc8E0c34035B3Ba7fC157602B",
+          "symbol": "USDC"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2F25deB3848C207fc8E0c34035B3Ba7fC157602B"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "USDC-cJPY",
+      "assets": [
+        {
+          "address": "0x2F25deB3848C207fc8E0c34035B3Ba7fC157602B",
+          "symbol": "USDC"
+        },
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2F25deB3848C207fc8E0c34035B3Ba7fC157602B"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
       "id": "BridgedEUROC-BridgedUSDC",
       "assets": [
         {
@@ -4475,6 +4730,99 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ]
     },
     {
+      "id": "BridgedUSDC-cCHF",
+      "assets": [
+        {
+          "address": "0x87D61dA3d668797786D73BC674F053f87111570d",
+          "symbol": "BridgedUSDC"
+        },
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0xf77561650ba043a244ae9c58f778c141532c4afdb7cae5e6fd623b565c5584a0",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x87D61dA3d668797786D73BC674F053f87111570d"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "BridgedUSDC-cNGN",
+      "assets": [
+        {
+          "address": "0x87D61dA3d668797786D73BC674F053f87111570d",
+          "symbol": "BridgedUSDC"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0xf77561650ba043a244ae9c58f778c141532c4afdb7cae5e6fd623b565c5584a0",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x87D61dA3d668797786D73BC674F053f87111570d"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "BridgedUSDC-cJPY",
+      "assets": [
+        {
+          "address": "0x87D61dA3d668797786D73BC674F053f87111570d",
+          "symbol": "BridgedUSDC"
+        },
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0xf77561650ba043a244ae9c58f778c141532c4afdb7cae5e6fd623b565c5584a0",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x87D61dA3d668797786D73BC674F053f87111570d"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
       "id": "cUSD-eXOF",
       "assets": [
         {
@@ -4754,6 +5102,99 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ]
     },
     {
+      "id": "cCHF-cKES",
+      "assets": [
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        },
+        {
+          "address": "0x1E0433C1769271ECcF4CFF9FDdD515eefE6CdF92",
+          "symbol": "cKES"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x1E0433C1769271ECcF4CFF9FDdD515eefE6CdF92"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cKES-cNGN",
+      "assets": [
+        {
+          "address": "0x1E0433C1769271ECcF4CFF9FDdD515eefE6CdF92",
+          "symbol": "cKES"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x1E0433C1769271ECcF4CFF9FDdD515eefE6CdF92"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cJPY-cKES",
+      "assets": [
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        },
+        {
+          "address": "0x1E0433C1769271ECcF4CFF9FDdD515eefE6CdF92",
+          "symbol": "cKES"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x1E0433C1769271ECcF4CFF9FDdD515eefE6CdF92"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
       "id": "PUSO-USDT",
       "assets": [
         {
@@ -4971,6 +5412,99 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ]
     },
     {
+      "id": "USDT-cCHF",
+      "assets": [
+        {
+          "address": "0xBba91F588d031469ABCCA566FE80fB1Ad8Ee3287",
+          "symbol": "USDT"
+        },
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xBba91F588d031469ABCCA566FE80fB1Ad8Ee3287"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "USDT-cNGN",
+      "assets": [
+        {
+          "address": "0xBba91F588d031469ABCCA566FE80fB1Ad8Ee3287",
+          "symbol": "USDT"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xBba91F588d031469ABCCA566FE80fB1Ad8Ee3287"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "USDT-cJPY",
+      "assets": [
+        {
+          "address": "0xBba91F588d031469ABCCA566FE80fB1Ad8Ee3287",
+          "symbol": "USDT"
+        },
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xBba91F588d031469ABCCA566FE80fB1Ad8Ee3287"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
       "id": "PUSO-cAUD",
       "assets": [
         {
@@ -5157,6 +5691,99 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ]
     },
     {
+      "id": "PUSO-cCHF",
+      "assets": [
+        {
+          "address": "0x5E0E3c9419C42a1B04e2525991FB1A2C467AB8bF",
+          "symbol": "PUSO"
+        },
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x5E0E3c9419C42a1B04e2525991FB1A2C467AB8bF"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PUSO-cNGN",
+      "assets": [
+        {
+          "address": "0x5E0E3c9419C42a1B04e2525991FB1A2C467AB8bF",
+          "symbol": "PUSO"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x5E0E3c9419C42a1B04e2525991FB1A2C467AB8bF"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PUSO-cJPY",
+      "assets": [
+        {
+          "address": "0x5E0E3c9419C42a1B04e2525991FB1A2C467AB8bF",
+          "symbol": "PUSO"
+        },
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x5E0E3c9419C42a1B04e2525991FB1A2C467AB8bF"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
       "id": "cAUD-cCOP",
       "assets": [
         {
@@ -5312,6 +5939,99 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ]
     },
     {
+      "id": "cAUD-cCHF",
+      "assets": [
+        {
+          "address": "0x84CBD49F5aE07632B6B88094E81Cce8236125Fe0",
+          "symbol": "cAUD"
+        },
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x84CBD49F5aE07632B6B88094E81Cce8236125Fe0"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cAUD-cNGN",
+      "assets": [
+        {
+          "address": "0x84CBD49F5aE07632B6B88094E81Cce8236125Fe0",
+          "symbol": "cAUD"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x84CBD49F5aE07632B6B88094E81Cce8236125Fe0"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cAUD-cJPY",
+      "assets": [
+        {
+          "address": "0x84CBD49F5aE07632B6B88094E81Cce8236125Fe0",
+          "symbol": "cAUD"
+        },
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x84CBD49F5aE07632B6B88094E81Cce8236125Fe0"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
       "id": "cCOP-cGHS",
       "assets": [
         {
@@ -5436,6 +6156,99 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ]
     },
     {
+      "id": "cCHF-cCOP",
+      "assets": [
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        },
+        {
+          "address": "0xe6A57340f0df6E020c1c0a80bC6E13048601f0d4",
+          "symbol": "cCOP"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xe6A57340f0df6E020c1c0a80bC6E13048601f0d4"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cCOP-cNGN",
+      "assets": [
+        {
+          "address": "0xe6A57340f0df6E020c1c0a80bC6E13048601f0d4",
+          "symbol": "cCOP"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xe6A57340f0df6E020c1c0a80bC6E13048601f0d4"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cCOP-cJPY",
+      "assets": [
+        {
+          "address": "0xe6A57340f0df6E020c1c0a80bC6E13048601f0d4",
+          "symbol": "cCOP"
+        },
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xe6A57340f0df6E020c1c0a80bC6E13048601f0d4"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
       "id": "cGBP-cGHS",
       "assets": [
         {
@@ -5529,6 +6342,99 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ]
     },
     {
+      "id": "cCHF-cGHS",
+      "assets": [
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        },
+        {
+          "address": "0x295B66bE7714458Af45E6A6Ea142A5358A6cA375",
+          "symbol": "cGHS"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x295B66bE7714458Af45E6A6Ea142A5358A6cA375"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cGHS-cNGN",
+      "assets": [
+        {
+          "address": "0x295B66bE7714458Af45E6A6Ea142A5358A6cA375",
+          "symbol": "cGHS"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x295B66bE7714458Af45E6A6Ea142A5358A6cA375"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cGHS-cJPY",
+      "assets": [
+        {
+          "address": "0x295B66bE7714458Af45E6A6Ea142A5358A6cA375",
+          "symbol": "cGHS"
+        },
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x295B66bE7714458Af45E6A6Ea142A5358A6cA375"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
       "id": "cGBP-cZAR",
       "assets": [
         {
@@ -5591,6 +6497,99 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
       ]
     },
     {
+      "id": "cCHF-cGBP",
+      "assets": [
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        },
+        {
+          "address": "0x47f2Fb88105155a18c390641C8a73f1402B2BB12",
+          "symbol": "cGBP"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x47f2Fb88105155a18c390641C8a73f1402B2BB12"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cGBP-cNGN",
+      "assets": [
+        {
+          "address": "0x47f2Fb88105155a18c390641C8a73f1402B2BB12",
+          "symbol": "cGBP"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x47f2Fb88105155a18c390641C8a73f1402B2BB12"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cGBP-cJPY",
+      "assets": [
+        {
+          "address": "0x47f2Fb88105155a18c390641C8a73f1402B2BB12",
+          "symbol": "cGBP"
+        },
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x47f2Fb88105155a18c390641C8a73f1402B2BB12"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
       "id": "cCAD-cZAR",
       "assets": [
         {
@@ -5617,6 +6616,285 @@ export const TRADABLE_PAIRS: Record<number, TradablePair[]> = {
           "assets": [
             "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
             "0x02EC9E0D2Fd73e89168C1709e542a48f58d7B133"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cCHF-cZAR",
+      "assets": [
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        },
+        {
+          "address": "0x1e5b44015Ff90610b54000DAad31C89b3284df4d",
+          "symbol": "cZAR"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x1e5b44015Ff90610b54000DAad31C89b3284df4d"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cNGN-cZAR",
+      "assets": [
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        },
+        {
+          "address": "0x1e5b44015Ff90610b54000DAad31C89b3284df4d",
+          "symbol": "cZAR"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x1e5b44015Ff90610b54000DAad31C89b3284df4d"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cJPY-cZAR",
+      "assets": [
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        },
+        {
+          "address": "0x1e5b44015Ff90610b54000DAad31C89b3284df4d",
+          "symbol": "cZAR"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x1e5b44015Ff90610b54000DAad31C89b3284df4d"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cCAD-cCHF",
+      "assets": [
+        {
+          "address": "0x02EC9E0D2Fd73e89168C1709e542a48f58d7B133",
+          "symbol": "cCAD"
+        },
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x02EC9E0D2Fd73e89168C1709e542a48f58d7B133"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cCAD-cNGN",
+      "assets": [
+        {
+          "address": "0x02EC9E0D2Fd73e89168C1709e542a48f58d7B133",
+          "symbol": "cCAD"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x02EC9E0D2Fd73e89168C1709e542a48f58d7B133"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cCAD-cJPY",
+      "assets": [
+        {
+          "address": "0x02EC9E0D2Fd73e89168C1709e542a48f58d7B133",
+          "symbol": "cCAD"
+        },
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x02EC9E0D2Fd73e89168C1709e542a48f58d7B133"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cCHF-cNGN",
+      "assets": [
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cCHF-cJPY",
+      "assets": [
+        {
+          "address": "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F",
+          "symbol": "cCHF"
+        },
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0xADC57C2C34aD021Df4421230a6532F4e2E1dCE4F"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cJPY-cNGN",
+      "assets": [
+        {
+          "address": "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67",
+          "symbol": "cJPY"
+        },
+        {
+          "address": "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0",
+          "symbol": "cNGN"
+        }
+      ],
+      "path": [
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x4a5b03B8b16122D330306c65e4CA4BC5Dd6511d0"
+          ]
+        },
+        {
+          "providerAddr": "0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3",
+          "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "assets": [
+            "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1",
+            "0x2E51F41238cA36a421C9B8b3e189e8Cc7653FE67"
           ]
         }
       ]
