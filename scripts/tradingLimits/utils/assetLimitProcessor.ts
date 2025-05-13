@@ -98,7 +98,7 @@ export function getLimitDetails(
  * @param limits - Trading limits for this asset
  * @param configByAsset - Config by asset mapping
  * @param stateByAsset - State by asset mapping
- * @param args - Script command line arguments
+ * @param args - Script command line arguments (currently unused but passed through)
  * @param limitsTable - The table for displaying results
  * @param exchangeNameDisplayed - Whether the exchange name has been displayed already
  * @returns Object containing blocking information
@@ -214,7 +214,7 @@ export function processAssetWithLimits(
  * @param utilizationText - The utilization text
  * @param status - The status text
  * @param limitIndex - The index of this limit
- * @param args - Script command line arguments
+ * @param args - Script command line arguments (currently unused but passed through)
  * @param skipExchangeName - Whether to skip exchange name column
  * @param skipSymbol - Whether to skip symbol column
  * @returns Array representing a table row
@@ -303,7 +303,7 @@ export function createLimitRow(
  * @param exchangeName - Formatted exchange name
  * @param limitType - The limit type (L0, L1, LG)
  * @param limitIndex - The index of this limit
- * @param args - Script command line arguments
+ * @param args - Script command line arguments (currently unused but passed through)
  * @param skipExchangeName - Whether to skip exchange name column
  * @param skipSymbol - Whether to skip symbol column
  * @returns Array representing a table row

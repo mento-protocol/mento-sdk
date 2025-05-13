@@ -2,8 +2,8 @@
  * TypeScript declaration extensions for global objects
  */
 
-// FIXME: This workaround should not be necessary much longer as native groupBy support should be in latest TS already
-// https://github.com/microsoft/TypeScript/pull/56805
+// FIXME: This workaround for Object.groupBy should be removable once the project updates to TypeScript 5.4+
+// which includes built-in support for this method (see https://github.com/microsoft/TypeScript/pull/56805)
 declare global {
   interface ObjectConstructor {
     groupBy<T, K extends PropertyKey>(

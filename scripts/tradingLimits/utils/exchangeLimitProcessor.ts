@@ -10,7 +10,7 @@ import { handleExchangeWithNoLimits } from './tableFormatter'
  * @param tokenAssets - List of token assets in the exchange
  * @param exchangeName - Formatted exchange name
  * @param exchangeData - Exchange data including limits, configs, and states
- * @param args - Script command line arguments
+ * @param args - Script command line arguments (currently unused but passed through)
  * @param limitsTable - The table for displaying results
  */
 export function processExchangeWithLimits(
@@ -28,10 +28,6 @@ export function processExchangeWithLimits(
 ): void {
   // Track if we've displayed the exchange name - only show exchange name once per exchange
   let exchangeNameDisplayed = false
-
-  // Track if any limits are blocked
-  let hasBlockingLimit = false
-  let hasFullyBlockedLimit = false
 
   // Process each asset in the exchange
   for (const asset of tokenAssets) {
@@ -51,10 +47,6 @@ export function processExchangeWithLimits(
         limitsTable,
         exchangeNameDisplayed
       )
-
-      // Track if this asset has blocked limits
-      hasBlockingLimit = hasBlockingLimit || blockingInfo.hasBlockedLimit
-      hasFullyBlockedLimit = hasFullyBlockedLimit || blockingInfo.isFullyBlocked
 
       // Mark that we've displayed the exchange name
       exchangeNameDisplayed = true

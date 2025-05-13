@@ -81,7 +81,7 @@ export async function processTradingLimits(
           tokenAssets,
           exchangeName,
           limitsTable,
-          false // Always show exchange name for the first row of a new exchange
+          false // Pass false to ensure the exchange name is displayed in the first row for this exchange
         )
       }
     } catch (error) {

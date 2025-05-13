@@ -5,7 +5,7 @@ import { ScriptArgs } from '../types'
 /**
  * Create a table for displaying trading limits
  *
- * @param args - Script command line arguments
+ * @param args - Script command line arguments (required parameter but not currently used)
  * @returns A configured table instance
  */
 export function createLimitsTable(args: ScriptArgs): Table.Table {
