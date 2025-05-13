@@ -2,44 +2,57 @@ import chalk from 'chalk'
 import { ExchangeData } from '../types'
 
 /**
- * Handle errors when processing an exchange
- *
- * @param exchange - The exchange that caused the error
- * @param error - The error that occurred
+ * Error type enum for trading limits
  */
-export function handleExchangeError(
-  exchange: ExchangeData,
-  error: unknown
-): void {
-  console.error(
-    chalk.red(`Error processing exchange ${exchange.id || 'unknown'}`)
-  )
-  console.error(error instanceof Error ? error.message : String(error))
+export enum ErrorType {
+  EXCHANGE_ERROR = 'exchange_error',
+  MISSING_CONFIG = 'missing_config',
+  LIMIT_ID_ERROR = 'limit_id_error',
 }
 
 /**
- * Handle errors for missing configuration
+ * Generic error handler for trading limits script
  *
- * @param exchangeId - The exchange ID
- * @param asset - The asset address
+ * @param type - The type of error
+ * @param context - The context object (exchange, asset, etc)
+ * @param error - The error that occurred (optional)
  */
-export function handleMissingConfigError(
-  exchangeId: string,
-  asset: string
+export function handleError(
+  type: ErrorType,
+  context: { exchangeId?: string; asset?: string; exchange?: ExchangeData },
+  error?: unknown
 ): void {
-  console.error(
-    chalk.red(
-      `Error: Missing configuration for asset ${asset} in exchange ${exchangeId}`
-    )
-  )
-}
+  const exchangeId =
+    context.exchangeId || (context.exchange ? context.exchange.id : 'unknown')
 
-/**
- * Handle errors for limit ID calculation
- *
- * @param exchangeId - The exchange ID
- * @param asset - The asset address
- */
-export function handleLimitIdError(exchangeId: string, asset: string): void {
-  console.error(`Error calculating limit ID for ${exchangeId} and ${asset}`)
+  switch (type) {
+    case ErrorType.EXCHANGE_ERROR:
+      console.error(chalk.red(`Error processing exchange ${exchangeId}`))
+      if (error) {
+        console.error(error instanceof Error ? error.message : String(error))
+      }
+      break
+
+    case ErrorType.MISSING_CONFIG:
+      console.error(
+        chalk.red(
+          `Error: Missing configuration for asset ${context.asset} in exchange ${exchangeId}`
+        )
+      )
+      break
+
+    case ErrorType.LIMIT_ID_ERROR:
+      console.error(
+        chalk.red(
+          `Error calculating limit ID for ${exchangeId} and ${context.asset}`
+        )
+      )
+      break
+
+    default:
+      console.error(chalk.red('An unknown error occurred'))
+      if (error) {
+        console.error(error instanceof Error ? error.message : String(error))
+      }
+  }
 }

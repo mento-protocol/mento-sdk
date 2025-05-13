@@ -14,23 +14,20 @@ declare global {
 
 /**
  * Parse command line arguments using yargs-parser
- * Supports both "--token=cGHS" and "--token cGHS" formats, as well as short flags (-t, -e, -v)
+ * Supports both "--token=cGHS" and "--token cGHS" formats, as well as short flags (-t, -e)
  *
  * @returns Object containing parsed arguments
  */
 export function parseCommandLineArgs(): ScriptArgs {
   const argv = yargsParser(process.argv.slice(2), {
     string: ['token', 'exchange'],
-    boolean: ['verbose'],
     alias: {
       t: 'token',
       e: 'exchange',
-      v: 'verbose',
     },
     default: {
       token: '',
       exchange: '',
-      verbose: false,
     },
     configuration: {
       'short-option-groups': true,
@@ -41,6 +38,5 @@ export function parseCommandLineArgs(): ScriptArgs {
   return {
     token: argv.token,
     exchange: argv.exchange,
-    verbose: argv.verbose,
   }
 }

@@ -11,9 +11,22 @@ import { ScriptArgs } from '../types'
 export function createLimitsTable(args: ScriptArgs): Table.Table {
   // Create table configuration with clean and properly aligned headers
   const tableConfig: any = {
-    head: [],
+    head: [
+      'Exchange',
+      'Symbol',
+      'Type',
+      'Timeframe',
+      'Limit',
+      'Netflow',
+      'Utilization',
+      'Max In',
+      'Max Out',
+      'Resets In',
+      'Reset Time',
+      'Status',
+    ],
     style: {
-      head: ['white'],
+      head: ['white', 'bold'],
       border: ['gray'],
     },
     chars: {
@@ -33,41 +46,6 @@ export function createLimitsTable(args: ScriptArgs): Table.Table {
       'right-mid': '┤',
       middle: '│',
     },
-  }
-
-  // Define headers based on verbose mode
-  if (args.verbose) {
-    tableConfig.head = [
-      'Exchange',
-      'Asset',
-      'Symbol',
-      'Limit ID',
-      'Type',
-      'Timeframe',
-      'Limit',
-      'Netflow',
-      'Utilization',
-      'Max In',
-      'Max Out',
-      'Resets In',
-      'Reset Time',
-      'Status',
-    ]
-  } else {
-    tableConfig.head = [
-      'Exchange',
-      'Symbol',
-      'Type',
-      'Timeframe',
-      'Limit',
-      'Netflow',
-      'Utilization',
-      'Max In',
-      'Max Out',
-      'Resets In',
-      'Reset Time',
-      'Status',
-    ]
   }
 
   return new Table(tableConfig)
@@ -94,24 +72,11 @@ export function processAssetWithoutLimits(
   // This asset has no limits configured
   const row: any[] = []
 
-  if (args.verbose) {
-    // In verbose mode, show Exchange ID and Asset
-    row.push(
-      !exchangeNameDisplayed ? chalk.cyan(exchange.id) : '',
-      asset.address
-    )
-  } else {
-    // In normal mode, show human-readable Exchange name
-    row.push(!exchangeNameDisplayed ? chalk.cyan(exchangeName) : '')
-  }
+  // Show human-readable Exchange name
+  row.push(!exchangeNameDisplayed ? chalk.cyan(exchangeName) : '')
 
   // Symbol is always shown
   row.push(chalk.green(asset.symbol))
-
-  // Add limit ID column in verbose mode
-  if (args.verbose) {
-    row.push('—')
-  }
 
   row.push(
     '—',
@@ -151,24 +116,11 @@ export function handleExchangeWithNoLimits(
   for (const asset of tokenAssets) {
     const row: any[] = []
 
-    if (args.verbose) {
-      // In verbose mode, show Exchange ID and Asset columns
-      row.push(
-        !exchangeNameDisplayed ? chalk.cyan(exchange.id) : '',
-        asset.address
-      )
-    } else {
-      // In normal mode, show human-readable Exchange name
-      row.push(!exchangeNameDisplayed ? chalk.cyan(exchangeName) : '')
-    }
+    // Show human-readable Exchange name
+    row.push(!exchangeNameDisplayed ? chalk.cyan(exchangeName) : '')
 
     // Symbol is always shown
     row.push(chalk.green(asset.symbol))
-
-    // Add limit ID column in verbose mode
-    if (args.verbose) {
-      row.push('—')
-    }
 
     row.push(
       '—',
@@ -186,18 +138,4 @@ export function handleExchangeWithNoLimits(
     limitsTable.push(row)
     exchangeNameDisplayed = true
   }
-}
-
-/**
- * Display summary statistics for trading limits
- *
- * @param stats - Statistics object to display
- */
-export function displayStatsSummary(stats: any): void {
-  console.log('\n===== System Summary =====')
-  console.log(`Total Exchanges: ${stats.totalExchanges}`)
-  console.log(`Exchanges with Limits: ${stats.exchangesWithLimits}`)
-  console.log(`Active Exchanges: ${stats.activeExchanges}`)
-  console.log(`Partially Blocked Exchanges: ${stats.partiallyBlockedExchanges}`)
-  console.log(`Fully Blocked Exchanges: ${stats.fullyBlockedExchanges}`)
 }

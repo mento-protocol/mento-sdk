@@ -2,6 +2,8 @@ import chalk from 'chalk'
 import { ethers } from 'ethers'
 import { ExchangeData, Mento, TradingLimit } from '../types'
 import { getSymbolFromTokenAddress } from './getSymbolFromTokenAddress'
+// Import type extensions for Object.groupBy
+import './typeExtensions'
 
 /**
  * Helper function to filter exchanges by token

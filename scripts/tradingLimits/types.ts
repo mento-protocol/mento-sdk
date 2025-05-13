@@ -24,23 +24,6 @@ export interface ExchangeData {
 export interface ScriptArgs {
   token: string
   exchange: string
-  verbose: boolean
-}
-
-// Interface for limit type statistics
-export interface LimitTypeStats {
-  total: number
-  active: number
-  blocked: number
-}
-
-// Interface for tracking overall statistics
-export interface StatsData {
-  totalExchanges: number
-  exchangesWithLimits: number
-  activeExchanges: number
-  partiallyBlockedExchanges: number
-  fullyBlockedExchanges: number
 }
 
 // Export types from SDK to avoid importing from multiple places
@@ -54,6 +37,5 @@ export type ProcessExchangeFunc = (
   provider: ethers.providers.Provider,
   args: ScriptArgs,
   limitsTable: Table.Table,
-  stats: StatsData,
   getLimitId: GetLimitIdFunc
 ) => Promise<void>

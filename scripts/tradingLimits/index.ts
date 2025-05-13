@@ -6,10 +6,8 @@ import ora from 'ora'
 import { getLimitId } from '../../src/limits'
 import { ExchangeData, Mento } from './types'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
-import {
-  prefetchTokenSymbols,
-  processTradingLimits,
-} from './utils/tradingLimitsProcessor'
+import { prefetchTokenSymbols } from './utils/prefetchTokenSymbols'
+import { processTradingLimits } from './utils/tradingLimitsProcessor'
 
 /**
  * CLI tool to visualize all trading limit configurations and their current states
@@ -35,12 +33,6 @@ async function main(): Promise<void> {
 
     if (args.exchange) {
       console.log(chalk.yellow(`Filtering by exchange ID: ${args.exchange}`))
-    }
-
-    if (args.verbose) {
-      console.log(
-        chalk.yellow('Verbose mode enabled: Showing additional details')
-      )
     }
 
     // Create Mento SDK instance
@@ -108,7 +100,7 @@ async function main(): Promise<void> {
     // Display usage information
     console.log('\n' + chalk.bold('Usage:'))
     console.log(
-      '  yarn tradingLimits [--token|-t <symbol>] [--exchange|-e <exchangeId>] [--verbose|-v]'
+      '  yarn tradingLimits [--token|-t <symbol>] [--exchange|-e <exchangeId>]'
     )
   } catch (error) {
     console.error(chalk.red('ERROR: An unexpected error occurred:'))

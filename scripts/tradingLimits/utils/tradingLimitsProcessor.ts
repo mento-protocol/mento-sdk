@@ -1,79 +1,15 @@
 import { ethers } from 'ethers'
 import ora from 'ora'
-import {
-  ExchangeData,
-  GetLimitIdFunc,
-  Mento,
-  ScriptArgs,
-  StatsData,
-} from '../types'
-import { getSymbolFromTokenAddress } from './getSymbolFromTokenAddress'
+import { ExchangeData, GetLimitIdFunc, Mento, ScriptArgs } from '../types'
 
-import { handleExchangeError } from './errorHandler'
+import { ErrorType, handleError } from './errorHandler'
 import {
   fetchExchangeData,
   filterExchangesByToken,
   prepareExchangeInfo,
 } from './exchangeProcessor'
 import { processExchangeWithLimits } from './limitProcessor'
-import {
-  createLimitsTable,
-  displayStatsSummary,
-  handleExchangeWithNoLimits,
-} from './tableFormatter'
-
-/**
- * Initialize statistics data structure
- *
- * @returns Initialized statistics object
- */
-export function initializeStats(): StatsData {
-  return {
-    totalExchanges: 0,
-    exchangesWithLimits: 0,
-    activeExchanges: 0,
-    partiallyBlockedExchanges: 0,
-    fullyBlockedExchanges: 0,
-  }
-}
-
-/**
- * Pre-fetch token symbols for caching
- * This reduces repeated calls for the same token
- *
- * @param exchanges - List of exchanges
- * @param provider - The ethers provider
- */
-export async function prefetchTokenSymbols(
-  exchanges: ExchangeData[],
-  provider: ethers.providers.Provider
-): Promise<void> {
-  const spinner = ora({
-    text: 'Pre-fetching token symbols...',
-    color: 'cyan',
-  }).start()
-
-  // Extract unique token addresses from all exchanges
-  const uniqueTokenAddresses = new Set<string>()
-
-  for (const exchange of exchanges) {
-    for (const asset of exchange.assets) {
-      uniqueTokenAddresses.add(asset)
-    }
-  }
-
-  const uniqueTokenCount = uniqueTokenAddresses.size
-  spinner.text = `Prefetching ${uniqueTokenCount} token symbols...`
-
-  // Fetch all token symbols in parallel
-  await Promise.all(
-    Array.from(uniqueTokenAddresses).map(async (address) => {
-      await getSymbolFromTokenAddress(address, provider)
-    })
-  )
-
-  spinner.succeed(`Prefetched ${uniqueTokenCount} token symbols`)
-}
+import { createLimitsTable, handleExchangeWithNoLimits } from './tableFormatter'
 
 /**
  * Process all exchanges and display their trading limits
@@ -91,10 +27,6 @@ export async function processTradingLimits(
   args: ScriptArgs,
   getLimitId: GetLimitIdFunc
 ): Promise<void> {
-  // Initialize statistics
-  const stats = initializeStats()
-  stats.totalExchanges = exchanges.length
-
   // Create table for displaying results
   const limitsTable = createLimitsTable(args)
 
@@ -141,7 +73,6 @@ export async function processTradingLimits(
           exchangeData,
           args,
           limitsTable,
-          stats,
           getLimitId
         )
       } else {
@@ -155,14 +86,13 @@ export async function processTradingLimits(
         )
       }
     } catch (error) {
-      handleExchangeError(exchange, error)
+      handleError(ErrorType.EXCHANGE_ERROR, { exchange }, error)
     }
   }
 
   // Stop the spinner once processing is complete
   spinner.succeed('Processed all exchanges')
 
-  // Display the table and statistics
+  // Display the table
   console.log('\n' + limitsTable.toString())
-  displayStatsSummary(stats)
 }

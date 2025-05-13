@@ -112,7 +112,6 @@ scripts/tradingLimits/
 ├── types.ts                   # Type definitions
 ├── utils/
 │   ├── general.ts             # General utilities
-│   ├── formatting.ts          # Display formatting helpers
 │   ├── time.ts                # Time-related utilities
 │   ├── tradingLimitsProcessor.ts  # Main processing orchestration
 │   └── modules/               # Modular components

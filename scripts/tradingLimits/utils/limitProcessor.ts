@@ -1,11 +1,6 @@
 import chalk from 'chalk'
 import Table from 'cli-table3'
-import { GetLimitIdFunc, ScriptArgs, StatsData, TradingLimit } from '../types'
-import {
-  formatNetflow,
-  formatNumber,
-  formatUtilizationPercentage,
-} from './formatting'
+import { GetLimitIdFunc, ScriptArgs, TradingLimit } from '../types'
 import { processAssetWithoutLimits } from './tableFormatter'
 import { formatRelativeTime, formatTimeframe, formatTimestamp } from './time'
 
@@ -106,7 +101,6 @@ export function getLimitDetails(
  * @param stateByAsset - State by asset mapping
  * @param args - Script command line arguments
  * @param limitsTable - The table for displaying results
- * @param stats - Statistics object to update
  * @param getLimitId - Function to calculate limit ID from exchange ID and asset
  * @param exchangeNameDisplayed - Whether the exchange name has been displayed already
  * @returns Object containing blocking information
@@ -120,7 +114,6 @@ export function processAssetWithLimits(
   stateByAsset: Record<string, any>,
   args: ScriptArgs,
   limitsTable: Table.Table,
-  stats: StatsData,
   getLimitId: GetLimitIdFunc,
   exchangeNameDisplayed: boolean
 ): { hasBlockedLimit: boolean; isFullyBlocked: boolean } {
@@ -234,37 +227,18 @@ export function createLimitRow(
 ): any[] {
   const row: any[] = []
 
-  if (args.verbose) {
-    // In verbose mode, show Exchange ID and Asset columns
-    row.push(
-      !skipExchangeAndSymbol ? chalk.cyan(exchange.id) : '',
-      asset.address
-    )
-  } else {
-    // In normal mode, show human-readable Exchange name
-    row.push(!skipExchangeAndSymbol ? chalk.cyan(exchangeName) : '')
-  }
+  // Show human-readable Exchange name
+  row.push(!skipExchangeAndSymbol ? chalk.cyan(exchangeName) : '')
 
   // Symbol column is always shown
   row.push(!skipExchangeAndSymbol ? chalk.green(asset.symbol) : '')
 
-  // Add limit ID in verbose mode
-  if (args.verbose) {
-    // Only show limit ID for the first row of each asset
-    if (limitIndex === 0) {
-      try {
-        // Calculate the limit ID (XOR of exchange ID and asset address)
-        const limitId = getLimitId(exchange.id, asset.address)
-        row.push(chalk.gray(limitId))
-      } catch (error) {
-        console.error(
-          `Error calculating limit ID for ${exchange.id} and ${asset.address}`
-        )
-        row.push(chalk.red('Error'))
-      }
-    } else {
-      row.push('')
-    }
+  // Helper to add thousand separators, remove decimals
+  function formatNumber(num: number): string {
+    return num.toLocaleString(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })
   }
 
   // Add the rest of the data
@@ -309,38 +283,11 @@ export function createPlaceholderLimitRow(
 ): any[] {
   const row: any[] = []
 
-  if (args.verbose) {
-    // In verbose mode, show Exchange ID and Asset columns
-    row.push(
-      !skipExchangeAndSymbol ? chalk.cyan(exchange.id) : '',
-      asset.address
-    )
-  } else {
-    // In normal mode, show human-readable Exchange name
-    row.push(!skipExchangeAndSymbol ? chalk.cyan(exchangeName) : '')
-  }
+  // Show human-readable Exchange name
+  row.push(!skipExchangeAndSymbol ? chalk.cyan(exchangeName) : '')
 
   // Symbol column is always shown
   row.push(!skipExchangeAndSymbol ? chalk.green(asset.symbol) : '')
-
-  // Add limit ID in verbose mode
-  if (args.verbose) {
-    // Only show limit ID for the first row of each asset
-    if (limitIndex === 0) {
-      try {
-        // Calculate the limit ID (XOR of exchange ID and asset address)
-        const limitId = getLimitId(exchange.id, asset.address)
-        row.push(chalk.gray(limitId))
-      } catch (error) {
-        console.error(
-          `Error calculating limit ID for ${exchange.id} and ${asset.address}`
-        )
-        row.push(chalk.red('Error'))
-      }
-    } else {
-      row.push('')
-    }
-  }
 
   // Add the rest of the data with placeholder values
   row.push(
@@ -368,7 +315,6 @@ export function createPlaceholderLimitRow(
  * @param exchangeData - The exchange data
  * @param args - Script command line arguments
  * @param limitsTable - The table for displaying results
- * @param stats - Statistics object to update
  * @param getLimitId - Function to calculate limit ID from exchange ID and asset
  */
 export function processExchangeWithLimits(
@@ -383,12 +329,8 @@ export function processExchangeWithLimits(
   },
   args: ScriptArgs,
   limitsTable: Table.Table,
-  stats: StatsData,
   getLimitId: GetLimitIdFunc
 ): void {
-  // Exchange has limits for at least one asset, update stats
-  stats.exchangesWithLimits++
-
   // Track if this exchange has any blocked limits
   let hasBlockedLimit = false
   let isFullyBlocked = false
@@ -427,7 +369,6 @@ export function processExchangeWithLimits(
       exchangeData.stateByAsset,
       args,
       limitsTable,
-      stats,
       getLimitId,
       exchangeNameDisplayed
     )
@@ -436,13 +377,60 @@ export function processExchangeWithLimits(
     isFullyBlocked = isFullyBlocked || blockingInfo.isFullyBlocked
     exchangeNameDisplayed = true
   }
+}
 
-  // Update exchange stats based on limits
-  if (isFullyBlocked) {
-    stats.fullyBlockedExchanges++
-  } else if (hasBlockedLimit) {
-    stats.partiallyBlockedExchanges++
+/**
+ * Format utilization percentage with color based on percentage
+ *
+ * @param percentage - Utilization percentage to format
+ * @returns Formatted string with visual bar and colored percentage
+ */
+function formatUtilizationPercentage(percentage: number): string {
+  const barWidth = 10 // Number of characters in the bar
+  const filledCount = Math.round((percentage / 100) * barWidth)
+  const emptyCount = barWidth - filledCount
+
+  // Create a visual bar representing the utilization
+  let bar = ''
+
+  // Filled portion of the bar
+  if (filledCount > 0) {
+    if (percentage >= 50) {
+      bar += chalk.red('■'.repeat(filledCount))
+    } else if (percentage >= 25) {
+      bar += chalk.yellow('■'.repeat(filledCount))
+    } else {
+      bar += chalk.green('■'.repeat(filledCount))
+    }
+  }
+
+  // Empty portion of the bar
+  if (emptyCount > 0) {
+    bar += chalk.gray('□'.repeat(emptyCount))
+  }
+
+  // Add percentage after the bar
+  if (percentage >= 50) {
+    return `${bar} ${chalk.red(`${percentage.toFixed(1)}%`)}`
+  } else if (percentage >= 25) {
+    return `${bar} ${chalk.yellow(`${percentage.toFixed(1)}%`)}`
   } else {
-    stats.activeExchanges++
+    return `${bar} ${chalk.green(`${percentage.toFixed(1)}%`)}`
+  }
+}
+
+/**
+ * Format netflow value with color based on netflow sign
+ *
+ * @param value - Netflow value to format
+ * @returns Colored string representation
+ */
+function formatNetflow(value: number): string {
+  if (value > 0) {
+    return chalk.green(value.toLocaleString())
+  } else if (value < 0) {
+    return chalk.red(value.toLocaleString())
+  } else {
+    return '0'
   }
 }
