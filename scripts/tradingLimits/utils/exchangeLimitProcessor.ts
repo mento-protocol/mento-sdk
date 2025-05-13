@@ -61,10 +61,8 @@ export function processExchangeWithLimits(
     } else {
       // Handle asset without limits
       handleExchangeWithNoLimits(
-        exchange,
         [asset],
         exchangeName,
-        args,
         limitsTable,
         exchangeNameDisplayed
       )

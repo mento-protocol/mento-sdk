@@ -54,18 +54,14 @@ export function createLimitsTable(args: ScriptArgs): Table.Table {
 /**
  * Handle exchanges that have no trading limits configured
  *
- * @param exchange - The exchange to process
  * @param tokenAssets - The token assets in the exchange
  * @param exchangeName - Formatted exchange name
- * @param args - Script command line arguments
  * @param limitsTable - The table for displaying results
  * @param exchangeNameDisplayed - Whether the exchange name has been displayed already
  */
 export function handleExchangeWithNoLimits(
-  exchange: any,
   tokenAssets: Array<{ address: string; symbol: string }>,
   exchangeName: string,
-  args: ScriptArgs,
   limitsTable: Table.Table,
   exchangeNameDisplayed: boolean = false
 ): void {

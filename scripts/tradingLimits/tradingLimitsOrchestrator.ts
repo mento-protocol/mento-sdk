@@ -78,10 +78,8 @@ export async function processTradingLimits(
       } else {
         // Handle exchange with no trading limits
         handleExchangeWithNoLimits(
-          exchange,
           tokenAssets,
           exchangeName,
-          args,
           limitsTable,
           false // Always show exchange name for the first row of a new exchange
         )

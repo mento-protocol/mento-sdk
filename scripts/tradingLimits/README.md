@@ -9,7 +9,6 @@ A CLI tool for visualizing all trading limit configurations and their current st
 - Provides filtering by token symbol or exchange ID
 - Shows netflow and utilization metrics with visual bars
 - Color-coded status indicators (green/yellow/red)
-- System summary with statistics on blocked vs. active limits
 
 ## Usage
 
@@ -59,7 +58,7 @@ The script produces a table with the following columns:
 
 | Column | Description |
 |--------|-------------|
-| Exchange | The exchange pair |
+| Exchange | The exchange pair (shown only once per exchange) |
 | Symbol | The token symbol |
 | Limit Type | L0 (short-term), L1 (medium-term), or LG (global) |
 | Timeframe | The time window for this limit |
@@ -79,33 +78,23 @@ The tool uses color-coded statuses to indicate the current state of each trading
 - **OUTFLOWS BLOCKED** (yellow): Withdrawals are blocked, but deposits are still allowed  
 - **BLOCKED** (red): All trading is blocked until the time window resets
 
-## System Summary
-
-The tool provides a comprehensive system summary, showing:
-
-- Total number of exchanges in the system
-- Number of exchanges with trading limits configured
-- Number of fully active exchanges
-- Number of partially blocked exchanges
-- Number of fully blocked exchanges
-
 ## Project Structure
 
 ```
 scripts/tradingLimits/
 ├── index.ts                   # Main script entry point
-├── printTradingLimits.ts      # Executable script wrapper
 ├── types.ts                   # Type definitions
+├── tradingLimitsOrchestrator.ts # Main processing orchestration
 ├── utils/
-│   ├── general.ts             # General utilities
-│   ├── time.ts                # Time-related utilities
-│   ├── tradingLimitsProcessor.ts  # Main processing orchestration
-│   └── modules/               # Modular components
-│       ├── index.ts           # Exports all modules
-│       ├── exchangeProcessor.ts  # Exchange handling functions
-│       ├── limitProcessor.ts  # Trading limit processing
-│       ├── tableFormatter.ts  # Table creation and display
-│       └── errorHandler.ts    # Error handling utilities
+│   ├── assetLimitProcessor.ts   # Asset limit processing
+│   ├── errorHandler.ts          # Error handling utilities
+│   ├── exchangeLimitProcessor.ts # Exchange limit processing
+│   ├── exchangeProcessor.ts     # Exchange handling functions
+│   ├── getSymbolFromTokenAddress.ts # Token symbol utilities
+│   ├── parseCommandLineArgs.ts  # Command line parsing
+│   ├── prefetchTokenSymbols.ts  # Symbol prefetching for performance
+│   ├── tableFormatter.ts        # Table creation and formatting
+│   └── typeExtensions.ts        # TypeScript extensions
 ```
 
 ## Development
