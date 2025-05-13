@@ -1,0 +1,133 @@
+# Mento Trading Limits Visualizer
+
+A CLI tool for visualizing all trading limit configurations and their current states across the Mento protocol.
+
+## Features
+
+- Displays all exchanges/pools and their trading limits in a tabular format
+- Shows information for both assets in each exchange (including those without limits)
+- Provides filtering by token symbol or exchange ID
+- Offers a verbose mode for technical details (exchange IDs, asset addresses, limit IDs)
+- Shows netflow and utilization metrics with visual bars
+- Color-coded status indicators (green/yellow/red)
+- System summary with statistics on blocked vs. active limits
+
+## Usage
+
+```bash
+# Basic usage
+yarn tradingLimits
+
+# Filter by token symbol
+yarn tradingLimits --token cUSD
+yarn tradingLimits --token=cUSD
+yarn tradingLimits -t cUSD
+
+# Filter by exchange ID
+yarn tradingLimits --exchange BiPoolManager
+yarn tradingLimits --exchange=BiPoolManager
+yarn tradingLimits -e BiPoolManager
+
+# Enable verbose output mode
+yarn tradingLimits --verbose
+yarn tradingLimits -v
+
+# Combine options
+yarn tradingLimits --token cUSD --verbose
+yarn tradingLimits -t cUSD -v
+
+# Connect to a specific RPC endpoint
+RPC_URL=https://your-rpc-url.com yarn tradingLimits
+```
+
+## Display Modes
+
+### Normal Mode
+
+In normal mode, the tool shows a simplified view focused on usability:
+
+- Exchange column shows human-readable format (e.g., "cUSD <-> CELO")
+- Technical details like Exchange IDs, Asset addresses, and Limit IDs are hidden
+
+### Verbose Mode
+
+In verbose mode (`--verbose` or `-v`), additional technical columns are shown:
+
+- Exchange ID - The internal ID of the exchange
+- Asset - The token address
+- Limit ID - The unique identifier used by the Broker contract (XOR of exchange ID and asset address)
+
+## Understanding Trading Limits
+
+Mento uses a multi-tiered trading limit system:
+
+- **L0** (short time window): Typically 5 minutes for most assets
+- **L1** (medium time window): Typically 1 day (24 hours) for most assets
+- **LG** (global limit): Doesn't reset automatically, requires manual intervention
+
+Each limit has a maximum inflow and outflow value. When either is reached, trading in that direction is blocked until the time window resets.
+
+## Output Explanation
+
+The script produces a table with the following columns:
+
+| Column | Description |
+|--------|-------------|
+| Exchange | The exchange pair (or exchange ID in verbose mode) |
+| Symbol | The token symbol |
+| Limit Type | L0 (short-term), L1 (medium-term), or LG (global) |
+| Timeframe | The time window for this limit |
+| Limit | The maximum configured limit value |
+| Netflow | Current usage (positive for inflows, negative for outflows) |
+| Utilization | Visual representation of limit usage |
+| Max In | Maximum allowed inflow remaining |
+| Max Out | Maximum allowed outflow remaining |
+| Resets In | Time until limit window resets |
+| Reset Time | Unix timestamp when limit resets |
+| Status | Current status (ACTIVE, INFLOWS BLOCKED, OUTFLOWS BLOCKED, or BLOCKED) |
+
+The tool uses color-coded statuses to indicate the current state of each trading limit:
+
+- **ACTIVE** (green): Trading is fully enabled in both directions
+- **INFLOWS BLOCKED** (yellow): Deposits are blocked, but withdrawals are still allowed
+- **OUTFLOWS BLOCKED** (yellow): Withdrawals are blocked, but deposits are still allowed  
+- **BLOCKED** (red): All trading is blocked until the time window resets
+
+## System Summary
+
+The tool provides a comprehensive system summary, showing:
+
+- Total number of exchanges in the system
+- Number of exchanges with trading limits configured
+- Number of fully active exchanges
+- Number of partially blocked exchanges
+- Number of fully blocked exchanges
+
+## Project Structure
+
+```
+scripts/tradingLimits/
+├── index.ts                   # Main script entry point
+├── printTradingLimits.ts      # Executable script wrapper
+├── types.ts                   # Type definitions
+├── utils/
+│   ├── general.ts             # General utilities
+│   ├── formatting.ts          # Display formatting helpers
+│   ├── time.ts                # Time-related utilities
+│   ├── tradingLimitsProcessor.ts  # Main processing orchestration
+│   └── modules/               # Modular components
+│       ├── index.ts           # Exports all modules
+│       ├── exchangeProcessor.ts  # Exchange handling functions
+│       ├── limitProcessor.ts  # Trading limit processing
+│       ├── tableFormatter.ts  # Table creation and display
+│       └── errorHandler.ts    # Error handling utilities
+```
+
+## Development
+
+The code is organized modularly to improve maintainability:
+
+- **Exchange Processing** - Functions for handling exchanges and their assets
+- **Limit Processing** - Logic for processing trading limits
+- **Table Formatting** - Functions for creating and formatting the output table
+- **Error Handling** - Centralized error handling utilities
