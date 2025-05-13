@@ -1,15 +1,18 @@
 import { ethers } from 'ethers'
 import ora from 'ora'
-import { ExchangeData, GetLimitIdFunc, Mento, ScriptArgs } from '../types'
+import { ExchangeData, Mento, ScriptArgs } from './types'
 
-import { ErrorType, handleError } from './errorHandler'
+import { ErrorType, handleError } from './utils/errorHandler'
+import { processExchangeWithLimits } from './utils/exchangeLimitProcessor'
 import {
   fetchExchangeData,
   filterExchangesByToken,
   prepareExchangeInfo,
-} from './exchangeProcessor'
-import { processExchangeWithLimits } from './limitProcessor'
-import { createLimitsTable, handleExchangeWithNoLimits } from './tableFormatter'
+} from './utils/exchangeProcessor'
+import {
+  createLimitsTable,
+  handleExchangeWithNoLimits,
+} from './utils/tableFormatter'
 
 /**
  * Process all exchanges and display their trading limits
@@ -18,14 +21,12 @@ import { createLimitsTable, handleExchangeWithNoLimits } from './tableFormatter'
  * @param mento - The Mento SDK instance
  * @param provider - The ethers provider
  * @param args - Script command line arguments
- * @param getLimitId - Function to calculate limit ID from exchange ID and asset
  */
 export async function processTradingLimits(
   exchanges: ExchangeData[],
   mento: Mento,
   provider: ethers.providers.Provider,
-  args: ScriptArgs,
-  getLimitId: GetLimitIdFunc
+  args: ScriptArgs
 ): Promise<void> {
   // Create table for displaying results
   const limitsTable = createLimitsTable(args)
@@ -72,8 +73,7 @@ export async function processTradingLimits(
           exchangeName,
           exchangeData,
           args,
-          limitsTable,
-          getLimitId
+          limitsTable
         )
       } else {
         // Handle exchange with no trading limits
@@ -82,7 +82,8 @@ export async function processTradingLimits(
           tokenAssets,
           exchangeName,
           args,
-          limitsTable
+          limitsTable,
+          false // Always show exchange name for the first row of a new exchange
         )
       }
     } catch (error) {

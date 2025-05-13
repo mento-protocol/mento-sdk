@@ -1,8 +1,7 @@
 import chalk from 'chalk'
 import Table from 'cli-table3'
-import { GetLimitIdFunc, ScriptArgs, TradingLimit } from '../types'
-import { processAssetWithoutLimits } from './tableFormatter'
-import { formatRelativeTime, formatTimeframe, formatTimestamp } from './time'
+import { format, formatDistance, fromUnixTime } from 'date-fns'
+import { ScriptArgs, TradingLimit } from '../types'
 
 /**
  * Get limit details including values, timeframe, and status
@@ -101,7 +100,6 @@ export function getLimitDetails(
  * @param stateByAsset - State by asset mapping
  * @param args - Script command line arguments
  * @param limitsTable - The table for displaying results
- * @param getLimitId - Function to calculate limit ID from exchange ID and asset
  * @param exchangeNameDisplayed - Whether the exchange name has been displayed already
  * @returns Object containing blocking information
  */
@@ -114,11 +112,13 @@ export function processAssetWithLimits(
   stateByAsset: Record<string, any>,
   args: ScriptArgs,
   limitsTable: Table.Table,
-  getLimitId: GetLimitIdFunc,
   exchangeNameDisplayed: boolean
 ): { hasBlockedLimit: boolean; isFullyBlocked: boolean } {
   let hasBlockedLimit = false
   let isFullyBlocked = false
+
+  // Make a local copy of the flag to track its state during processing
+  let localExchangeNameDisplayed = exchangeNameDisplayed
 
   // Expected limit types
   const limitTypes = ['L0', 'L1', 'LG']
@@ -165,11 +165,16 @@ export function processAssetWithLimits(
         status,
         i,
         args,
-        getLimitId,
-        exchangeNameDisplayed || i > 0
+        localExchangeNameDisplayed,
+        i > 0
       )
 
       limitsTable.push(row)
+
+      // Once we've added a row with the exchange name, mark it as displayed
+      if (!localExchangeNameDisplayed) {
+        localExchangeNameDisplayed = true
+      }
     } else {
       // Create placeholder row for missing limit type
       const row = createPlaceholderLimitRow(
@@ -179,11 +184,16 @@ export function processAssetWithLimits(
         limitType,
         i,
         args,
-        getLimitId,
-        exchangeNameDisplayed || i > 0
+        localExchangeNameDisplayed,
+        i > 0
       )
 
       limitsTable.push(row)
+
+      // Once we've added a row with the exchange name, mark it as displayed
+      if (!localExchangeNameDisplayed) {
+        localExchangeNameDisplayed = true
+      }
     }
   }
 
@@ -205,8 +215,8 @@ export function processAssetWithLimits(
  * @param status - The status text
  * @param limitIndex - The index of this limit
  * @param args - Script command line arguments
- * @param getLimitId - Function to calculate limit ID from exchange ID and asset
- * @param skipExchangeAndSymbol - Whether to skip exchange and symbol columns
+ * @param skipExchangeName - Whether to skip exchange name column
+ * @param skipSymbol - Whether to skip symbol column
  * @returns Array representing a table row
  */
 export function createLimitRow(
@@ -222,16 +232,16 @@ export function createLimitRow(
   status: string,
   limitIndex: number,
   args: ScriptArgs,
-  getLimitId: GetLimitIdFunc,
-  skipExchangeAndSymbol: boolean
+  skipExchangeName: boolean,
+  skipSymbol: boolean
 ): any[] {
   const row: any[] = []
 
-  // Show human-readable Exchange name
-  row.push(!skipExchangeAndSymbol ? chalk.cyan(exchangeName) : '')
+  // Show human-readable Exchange name only once per exchange
+  row.push(!skipExchangeName ? chalk.cyan(exchangeName) : '')
 
-  // Symbol column is always shown
-  row.push(!skipExchangeAndSymbol ? chalk.green(asset.symbol) : '')
+  // Show symbol only once per asset
+  row.push(!skipSymbol ? chalk.green(asset.symbol) : '')
 
   // Helper to add thousand separators, remove decimals
   function formatNumber(num: number): string {
@@ -241,25 +251,52 @@ export function createLimitRow(
     })
   }
 
-  // Add the rest of the data
-  row.push(
-    chalk.magenta(limitType),
-    chalk.blue(timeframe),
-    limitValue > 0 ? formatNumber(limitValue) : '—',
-    formatNetflow(netflowValue),
-    utilizationText,
-    formatNumber(limit.maxIn),
-    formatNumber(limit.maxOut),
-    formatRelativeTime(limit.until - Math.floor(Date.now() / 1000)),
-    formatTimestamp(limit.until),
-    status
-  )
+  // Format reset time information
+  const seconds = limit.until - Math.floor(Date.now() / 1000)
+  const futureDate = new Date(Date.now() + seconds * 1000)
+  let resetIn = `in ${formatDistance(futureDate, new Date(), {
+    addSuffix: false,
+  })}`
+  let resetTime = `${format(fromUnixTime(limit.until), 'MMM d, HH:mm:ss')}`
 
+  // Handle global limits which don't have resets
+  if (limitType === 'LG') {
+    resetIn = '—'
+    resetTime = 'manual reset required'
+  } else if (seconds <= 0) {
+    resetIn = 'now'
+  }
+
+  // Limit type
+  row.push(chalk.cyan(limitType))
+
+  // Limit value and usage (netflow)
+  row.push(limitValue > 0 ? formatNumber(limitValue) : '—')
+  row.push(netflowValue !== 0 ? formatNetflow(netflowValue) : '0')
+
+  // Utilization percentage
+  row.push(utilizationText)
+
+  // Timeframe
+  row.push(timeframe)
+
+  // Reset information
+  row.push(resetIn)
+  row.push(resetTime)
+
+  // Max in/out values
+  row.push(formatNumber(limit.maxIn))
+  row.push(formatNumber(limit.maxOut))
+
+  // Status column
+  row.push(status)
+
+  // Return the completed row
   return row
 }
 
 /**
- * Create a placeholder row for a missing limit type
+ * Create a placeholder row for a non-existent limit type
  *
  * @param exchange - The exchange to process
  * @param asset - The token asset
@@ -267,8 +304,8 @@ export function createLimitRow(
  * @param limitType - The limit type (L0, L1, LG)
  * @param limitIndex - The index of this limit
  * @param args - Script command line arguments
- * @param getLimitId - Function to calculate limit ID from exchange ID and asset
- * @param skipExchangeAndSymbol - Whether to skip exchange and symbol columns
+ * @param skipExchangeName - Whether to skip exchange name column
+ * @param skipSymbol - Whether to skip symbol column
  * @returns Array representing a table row
  */
 export function createPlaceholderLimitRow(
@@ -278,159 +315,119 @@ export function createPlaceholderLimitRow(
   limitType: string,
   limitIndex: number,
   args: ScriptArgs,
-  getLimitId: GetLimitIdFunc,
-  skipExchangeAndSymbol: boolean
+  skipExchangeName: boolean,
+  skipSymbol: boolean
 ): any[] {
   const row: any[] = []
 
-  // Show human-readable Exchange name
-  row.push(!skipExchangeAndSymbol ? chalk.cyan(exchangeName) : '')
+  // Show human-readable Exchange name only once per exchange
+  row.push(!skipExchangeName ? chalk.cyan(exchangeName) : '')
 
-  // Symbol column is always shown
-  row.push(!skipExchangeAndSymbol ? chalk.green(asset.symbol) : '')
+  // Show symbol only once per asset
+  row.push(!skipSymbol ? chalk.green(asset.symbol) : '')
 
-  // Add the rest of the data with placeholder values
-  row.push(
-    chalk.magenta(limitType),
-    '—', // Timeframe
-    '—', // Limit
-    '—', // Netflow
-    '—', // Utilization
-    '—', // Max In
-    '—', // Max Out
-    '—', // Resets In
-    '—', // Reset Time
-    chalk.gray('No limit configured') // Status
-  )
+  // Limit type
+  row.push(chalk.gray(limitType))
+
+  // Empty data for placeholder
+  row.push(chalk.gray('—')) // Limit
+  row.push(chalk.gray('—')) // Netflow
+  row.push(chalk.gray('—')) // Utilization
+  row.push(chalk.gray('—')) // Timeframe
+  row.push(chalk.gray('—')) // Resets In
+  row.push(chalk.gray('—')) // Reset Time
+  row.push(chalk.gray('—')) // Max In
+  row.push(chalk.gray('—')) // Max Out
+  row.push(chalk.gray('NOT CONFIGURED')) // Status
 
   return row
 }
 
 /**
- * Process exchanges that have trading limits configured
+ * Format utilization percentage with color coding based on usage level
+ * and include a visual progress bar
  *
- * @param exchange - The exchange to process
- * @param tokenAssets - The token assets in the exchange
- * @param exchangeName - Formatted exchange name
- * @param exchangeData - The exchange data
- * @param args - Script command line arguments
- * @param limitsTable - The table for displaying results
- * @param getLimitId - Function to calculate limit ID from exchange ID and asset
- */
-export function processExchangeWithLimits(
-  exchange: any,
-  tokenAssets: Array<{ address: string; symbol: string }>,
-  exchangeName: string,
-  exchangeData: {
-    allLimits: TradingLimit[]
-    configByAsset: Record<string, any>
-    stateByAsset: Record<string, any>
-    limitsByAsset: Record<string, TradingLimit[]>
-  },
-  args: ScriptArgs,
-  limitsTable: Table.Table,
-  getLimitId: GetLimitIdFunc
-): void {
-  // Track if this exchange has any blocked limits
-  let hasBlockedLimit = false
-  let isFullyBlocked = false
-
-  // Keep track of which assets have limits
-  const assetsWithLimits = new Set(Object.keys(exchangeData.limitsByAsset))
-
-  // Flag to track if exchange name has been displayed
-  let exchangeNameDisplayed = false
-
-  // Process each asset in the exchange
-  for (const asset of tokenAssets) {
-    const limits = exchangeData.limitsByAsset[asset.address] || []
-
-    if (limits.length === 0) {
-      // Handle assets without limits
-      processAssetWithoutLimits(
-        exchange,
-        asset,
-        exchangeName,
-        args,
-        limitsTable,
-        exchangeNameDisplayed
-      )
-      exchangeNameDisplayed = true
-      continue
-    }
-
-    // Process assets with limits
-    const blockingInfo = processAssetWithLimits(
-      exchange,
-      asset,
-      exchangeName,
-      limits,
-      exchangeData.configByAsset,
-      exchangeData.stateByAsset,
-      args,
-      limitsTable,
-      getLimitId,
-      exchangeNameDisplayed
-    )
-
-    hasBlockedLimit = hasBlockedLimit || blockingInfo.hasBlockedLimit
-    isFullyBlocked = isFullyBlocked || blockingInfo.isFullyBlocked
-    exchangeNameDisplayed = true
-  }
-}
-
-/**
- * Format utilization percentage with color based on percentage
- *
- * @param percentage - Utilization percentage to format
- * @returns Formatted string with visual bar and colored percentage
+ * @param percentage - Utilization percentage
+ * @returns Formatted utilization string with color and progress bar
  */
 function formatUtilizationPercentage(percentage: number): string {
-  const barWidth = 10 // Number of characters in the bar
-  const filledCount = Math.round((percentage / 100) * barWidth)
-  const emptyCount = barWidth - filledCount
+  // Round to 1 decimal place
+  const rounded = Math.round(percentage * 10) / 10
 
-  // Create a visual bar representing the utilization
-  let bar = ''
+  // Create a visual progress bar
+  const progressBarWidth = 10
+  const filledBlocks = Math.min(
+    Math.floor((rounded / 100) * progressBarWidth),
+    progressBarWidth
+  )
+  const emptyBlocks = progressBarWidth - filledBlocks
 
-  // Filled portion of the bar
-  if (filledCount > 0) {
-    if (percentage >= 50) {
-      bar += chalk.red('■'.repeat(filledCount))
-    } else if (percentage >= 25) {
-      bar += chalk.yellow('■'.repeat(filledCount))
-    } else {
-      bar += chalk.green('■'.repeat(filledCount))
-    }
+  let progressBar = ''
+  let barColor = chalk.green
+
+  // Apply color based on utilization level
+  if (rounded >= 90) {
+    barColor = chalk.red.bold
+  } else if (rounded >= 75) {
+    barColor = chalk.yellow.bold
+  } else if (rounded >= 50) {
+    barColor = chalk.yellow
+  } else if (rounded > 0) {
+    barColor = chalk.green
   }
 
-  // Empty portion of the bar
-  if (emptyCount > 0) {
-    bar += chalk.gray('□'.repeat(emptyCount))
+  // Create the filled portion of the bar
+  progressBar = barColor('█'.repeat(filledBlocks))
+
+  // Add the empty portion of the bar
+  if (emptyBlocks > 0) {
+    progressBar += chalk.gray('░'.repeat(emptyBlocks))
   }
 
-  // Add percentage after the bar
-  if (percentage >= 50) {
-    return `${bar} ${chalk.red(`${percentage.toFixed(1)}%`)}`
-  } else if (percentage >= 25) {
-    return `${bar} ${chalk.yellow(`${percentage.toFixed(1)}%`)}`
+  // Combine progress bar with percentage
+  return `${progressBar} ${barColor(`${rounded.toFixed(1)}%`)}`
+}
+
+/**
+ * Format netflow values with colors
+ *
+ * @param value - The netflow value
+ * @returns Formatted netflow string with colors
+ */
+function formatNetflow(value: number): string {
+  // Helper to add thousand separators, remove decimals
+  const formatted = value.toLocaleString(undefined, {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  })
+
+  // Apply colors based on positive/negative values
+  if (value < 0) {
+    return chalk.green(formatted) // Negative is outflow, shown in green
+  } else if (value > 0) {
+    return chalk.red(formatted) // Positive is inflow, shown in red
   } else {
-    return `${bar} ${chalk.green(`${percentage.toFixed(1)}%`)}`
+    return formatted
   }
 }
 
 /**
- * Format netflow value with color based on netflow sign
+ * Format timeframe in human-readable form
  *
- * @param value - Netflow value to format
- * @returns Colored string representation
+ * @param seconds - Timeframe in seconds
+ * @returns Human-readable timeframe
  */
-function formatNetflow(value: number): string {
-  if (value > 0) {
-    return chalk.green(value.toLocaleString())
-  } else if (value < 0) {
-    return chalk.red(value.toLocaleString())
+export function formatTimeframe(seconds: number): string {
+  if (seconds >= 86400) {
+    const days = seconds / 86400
+    return `${days} day${days !== 1 ? 's' : ''}`
+  } else if (seconds >= 3600) {
+    const hours = seconds / 3600
+    return `${hours} hour${hours !== 1 ? 's' : ''}`
+  } else if (seconds >= 60) {
+    const minutes = seconds / 60
+    return `${minutes} minute${minutes !== 1 ? 's' : ''}`
   } else {
-    return '0'
+    return `${seconds} second${seconds !== 1 ? 's' : ''}`
   }
 }

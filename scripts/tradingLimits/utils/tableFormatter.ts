@@ -15,14 +15,14 @@ export function createLimitsTable(args: ScriptArgs): Table.Table {
       'Exchange',
       'Symbol',
       'Type',
-      'Timeframe',
       'Limit',
       'Netflow',
       'Utilization',
-      'Max In',
-      'Max Out',
+      'Timeframe',
       'Resets In',
       'Reset Time',
+      'Max In',
+      'Max Out',
       'Status',
     ],
     style: {
@@ -72,23 +72,23 @@ export function processAssetWithoutLimits(
   // This asset has no limits configured
   const row: any[] = []
 
-  // Show human-readable Exchange name
+  // Show human-readable Exchange name only once per exchange
   row.push(!exchangeNameDisplayed ? chalk.cyan(exchangeName) : '')
 
-  // Symbol is always shown
+  // Show symbol only once per asset
   row.push(chalk.green(asset.symbol))
 
   row.push(
-    '—',
-    '—',
-    '—',
-    '—',
-    '—',
-    '—',
-    '—',
-    '—',
-    '—',
-    chalk.gray('No limits configured')
+    chalk.gray('—'), // Type
+    chalk.gray('—'), // Limit
+    chalk.gray('—'), // Netflow
+    chalk.gray('—'), // Utilization
+    chalk.gray('—'), // Timeframe
+    chalk.gray('—'), // Resets In
+    chalk.gray('—'), // Reset Time
+    chalk.gray('—'), // Max In
+    chalk.gray('—'), // Max Out
+    chalk.gray('NO LIMITS CONFIGURED') // Status - changed to match other unconfigured messages
   )
 
   limitsTable.push(row)
@@ -102,40 +102,42 @@ export function processAssetWithoutLimits(
  * @param exchangeName - Formatted exchange name
  * @param args - Script command line arguments
  * @param limitsTable - The table for displaying results
+ * @param exchangeNameDisplayed - Whether the exchange name has been displayed already
  */
 export function handleExchangeWithNoLimits(
   exchange: any,
   tokenAssets: Array<{ address: string; symbol: string }>,
   exchangeName: string,
   args: ScriptArgs,
-  limitsTable: Table.Table
+  limitsTable: Table.Table,
+  exchangeNameDisplayed: boolean = false
 ): void {
   // No limits for any assets in this exchange
-  let exchangeNameDisplayed = false
+  let isExchangeNameDisplayed = exchangeNameDisplayed
 
   for (const asset of tokenAssets) {
     const row: any[] = []
 
-    // Show human-readable Exchange name
-    row.push(!exchangeNameDisplayed ? chalk.cyan(exchangeName) : '')
+    // Show human-readable Exchange name only once per exchange
+    row.push(!isExchangeNameDisplayed ? chalk.cyan(exchangeName) : '')
 
-    // Symbol is always shown
+    // Show symbol once for each asset
     row.push(chalk.green(asset.symbol))
 
     row.push(
-      '—',
-      '—',
-      '—',
-      '—',
-      '—',
-      '—',
-      '—',
-      '—',
-      '—',
-      chalk.gray('No limits configured')
+      chalk.gray('—'), // Type
+      chalk.gray('—'), // Limit
+      chalk.gray('—'), // Netflow
+      chalk.gray('—'), // Utilization
+      chalk.gray('—'), // Timeframe
+      chalk.gray('—'), // Resets In
+      chalk.gray('—'), // Reset Time
+      chalk.gray('—'), // Max In
+      chalk.gray('—'), // Max Out
+      chalk.gray('NO LIMITS CONFIGURED') // Status - changed to match the text from createPlaceholderLimitRow
     )
 
     limitsTable.push(row)
-    exchangeNameDisplayed = true
+    isExchangeNameDisplayed = true
   }
 }

@@ -7,7 +7,6 @@ A CLI tool for visualizing all trading limit configurations and their current st
 - Displays all exchanges/pools and their trading limits in a tabular format
 - Shows information for both assets in each exchange (including those without limits)
 - Provides filtering by token symbol or exchange ID
-- Offers a verbose mode for technical details (exchange IDs, asset addresses, limit IDs)
 - Shows netflow and utilization metrics with visual bars
 - Color-coded status indicators (green/yellow/red)
 - System summary with statistics on blocked vs. active limits
@@ -28,13 +27,8 @@ yarn tradingLimits --exchange BiPoolManager
 yarn tradingLimits --exchange=BiPoolManager
 yarn tradingLimits -e BiPoolManager
 
-# Enable verbose output mode
-yarn tradingLimits --verbose
-yarn tradingLimits -v
-
 # Combine options
-yarn tradingLimits --token cUSD --verbose
-yarn tradingLimits -t cUSD -v
+yarn tradingLimits --token cUSD --exchange BiPoolManager
 
 # Connect to a specific RPC endpoint
 RPC_URL=https://your-rpc-url.com yarn tradingLimits
@@ -48,14 +42,6 @@ In normal mode, the tool shows a simplified view focused on usability:
 
 - Exchange column shows human-readable format (e.g., "cUSD <-> CELO")
 - Technical details like Exchange IDs, Asset addresses, and Limit IDs are hidden
-
-### Verbose Mode
-
-In verbose mode (`--verbose` or `-v`), additional technical columns are shown:
-
-- Exchange ID - The internal ID of the exchange
-- Asset - The token address
-- Limit ID - The unique identifier used by the Broker contract (XOR of exchange ID and asset address)
 
 ## Understanding Trading Limits
 
@@ -73,7 +59,7 @@ The script produces a table with the following columns:
 
 | Column | Description |
 |--------|-------------|
-| Exchange | The exchange pair (or exchange ID in verbose mode) |
+| Exchange | The exchange pair |
 | Symbol | The token symbol |
 | Limit Type | L0 (short-term), L1 (medium-term), or LG (global) |
 | Timeframe | The time window for this limit |

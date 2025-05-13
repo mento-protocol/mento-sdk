@@ -3,11 +3,10 @@
 import chalk from 'chalk'
 import { ethers } from 'ethers'
 import ora from 'ora'
-import { getLimitId } from '../../src/limits'
+import { processTradingLimits } from './tradingLimitsOrchestrator'
 import { ExchangeData, Mento } from './types'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
 import { prefetchTokenSymbols } from './utils/prefetchTokenSymbols'
-import { processTradingLimits } from './utils/tradingLimitsProcessor'
 
 /**
  * CLI tool to visualize all trading limit configurations and their current states
@@ -51,7 +50,7 @@ async function main(): Promise<void> {
     const exchanges = (await mento.getExchanges()) as ExchangeData[]
 
     // Apply exchange ID filter if specified
-    let filteredExchanges = args.exchange
+    const filteredExchanges = args.exchange
       ? exchanges.filter((exchange) =>
           exchange.id.toLowerCase().includes(args.exchange.toLowerCase())
         )
@@ -68,17 +67,11 @@ async function main(): Promise<void> {
       )
     }
 
-    // Prefetch token symbols if needed
+    // Prefetch token symbols if needed (for better performance)
     await prefetchTokenSymbols(filteredExchanges, provider)
 
     // Process all exchanges and display trading limits
-    await processTradingLimits(
-      filteredExchanges,
-      mento,
-      provider,
-      args,
-      getLimitId
-    )
+    await processTradingLimits(filteredExchanges, mento, provider, args)
 
     // Display legend
     console.log(chalk.bold('\nLegend:'))
