@@ -1,17 +1,13 @@
 import chalk from 'chalk'
 import Table from 'cli-table3'
-import {
-  GetLimitIdFunc,
-  ScriptArgs,
-  StatsData,
-  TradingLimit,
-} from '../../types'
+import { GetLimitIdFunc, ScriptArgs, StatsData, TradingLimit } from '../types'
 import {
   formatNetflow,
   formatNumber,
   formatUtilizationPercentage,
-} from '../formatting'
-import { formatTimeframe } from '../time'
+} from './formatting'
+import { processAssetWithoutLimits } from './tableFormatter'
+import { formatRelativeTime, formatTimeframe, formatTimestamp } from './time'
 
 /**
  * Get limit details including values, timeframe, and status
@@ -450,7 +446,3 @@ export function processExchangeWithLimits(
     stats.activeExchanges++
   }
 }
-
-// Import these to avoid circular dependencies
-import { formatRelativeTime, formatTimestamp } from '../time'
-import { processAssetWithoutLimits } from './tableFormatter'

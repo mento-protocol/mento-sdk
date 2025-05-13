@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import { ethers } from 'ethers'
-import { ExchangeData, Mento, TradingLimit } from '../../types'
-import { getSymbolFromTokenAddress } from '../general'
+import { ExchangeData, Mento, TradingLimit } from '../types'
+import { getSymbolFromTokenAddress } from './getSymbolFromTokenAddress'
 
 /**
  * Helper function to filter exchanges by token

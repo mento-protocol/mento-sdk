@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import Table from 'cli-table3'
-import { ScriptArgs } from '../../types'
+import { ScriptArgs } from '../types'
 
 /**
  * Create a table for displaying trading limits

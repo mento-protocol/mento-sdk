@@ -5,7 +5,7 @@ import { ethers } from 'ethers'
 import ora from 'ora'
 import { getLimitId } from '../../src/limits'
 import { ExchangeData, Mento } from './types'
-import { parseCommandLineArgs } from './utils/general'
+import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
 import {
   prefetchTokenSymbols,
   processTradingLimits,

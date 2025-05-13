@@ -7,17 +7,20 @@ import {
   ScriptArgs,
   StatsData,
 } from '../types'
-import { getSymbolFromTokenAddress } from './general'
+import { getSymbolFromTokenAddress } from './getSymbolFromTokenAddress'
+
+import { handleExchangeError } from './errorHandler'
+import {
+  fetchExchangeData,
+  filterExchangesByToken,
+  prepareExchangeInfo,
+} from './exchangeProcessor'
+import { processExchangeWithLimits } from './limitProcessor'
 import {
   createLimitsTable,
   displayStatsSummary,
-  fetchExchangeData,
-  filterExchangesByToken,
-  handleExchangeError,
   handleExchangeWithNoLimits,
-  prepareExchangeInfo,
-  processExchangeWithLimits,
-} from './modules'
+} from './tableFormatter'
 
 /**
  * Initialize statistics data structure

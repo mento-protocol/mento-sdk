@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import { ExchangeData } from '../../types'
+import { ExchangeData } from '../types'
 
 /**
  * Handle errors when processing an exchange
