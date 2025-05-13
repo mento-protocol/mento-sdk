@@ -52,49 +52,6 @@ export function createLimitsTable(args: ScriptArgs): Table.Table {
 }
 
 /**
- * Process assets that have no trading limits configured
- *
- * @param exchange - The exchange to process
- * @param asset - The token asset
- * @param exchangeName - Formatted exchange name
- * @param args - Script command line arguments
- * @param limitsTable - The table for displaying results
- * @param exchangeNameDisplayed - Whether the exchange name has been displayed already
- */
-export function processAssetWithoutLimits(
-  exchange: any,
-  asset: { address: string; symbol: string },
-  exchangeName: string,
-  args: ScriptArgs,
-  limitsTable: Table.Table,
-  exchangeNameDisplayed: boolean
-): void {
-  // This asset has no limits configured
-  const row: any[] = []
-
-  // Show human-readable Exchange name only once per exchange
-  row.push(!exchangeNameDisplayed ? chalk.cyan(exchangeName) : '')
-
-  // Show symbol only once per asset
-  row.push(chalk.green(asset.symbol))
-
-  row.push(
-    chalk.gray('—'), // Type
-    chalk.gray('—'), // Limit
-    chalk.gray('—'), // Netflow
-    chalk.gray('—'), // Utilization
-    chalk.gray('—'), // Timeframe
-    chalk.gray('—'), // Resets In
-    chalk.gray('—'), // Reset Time
-    chalk.gray('—'), // Max In
-    chalk.gray('—'), // Max Out
-    chalk.gray('NO LIMITS CONFIGURED') // Status - changed to match other unconfigured messages
-  )
-
-  limitsTable.push(row)
-}
-
-/**
  * Handle exchanges that have no trading limits configured
  *
  * @param exchange - The exchange to process

@@ -1,16 +1,7 @@
 import yargsParser from 'yargs-parser'
 import { ScriptArgs } from '../types'
-
-// FIXME: This workaround should not be necessary much longer as native groupBy support should be in latest TS already https://github.com/microsoft/TypeScript/pull/56805
-// Add TypeScript declaration for Object.groupBy
-declare global {
-  interface ObjectConstructor {
-    groupBy<T, K extends PropertyKey>(
-      items: Iterable<T>,
-      keySelector: (item: T) => K
-    ): Record<K, T[]>
-  }
-}
+// Import type extensions instead of redeclaring them
+import './typeExtensions'
 
 /**
  * Parse command line arguments using yargs-parser
