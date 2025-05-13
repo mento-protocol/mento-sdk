@@ -110,7 +110,6 @@ async function main(): Promise<void> {
     console.log(
       '  yarn tradingLimits [--token|-t <symbol>] [--exchange|-e <exchangeId>] [--verbose|-v]'
     )
-    console.log('  RPC_URL=<your-rpc-url> yarn tradingLimits')
   } catch (error) {
     console.error(chalk.red('ERROR: An unexpected error occurred:'))
     console.error(error instanceof Error ? error.message : String(error))

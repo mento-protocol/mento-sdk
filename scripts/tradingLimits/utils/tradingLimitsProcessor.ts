@@ -160,6 +160,6 @@ export async function processTradingLimits(
   spinner.succeed('Processed all exchanges')
 
   // Display the table and statistics
-  console.log('\n', limitsTable.toString())
+  console.log('\n' + limitsTable.toString())
   displayStatsSummary(stats)
 }

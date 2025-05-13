@@ -9,41 +9,68 @@ import { ScriptArgs } from '../../types'
  * @returns A configured table instance
  */
 export function createLimitsTable(args: ScriptArgs): Table.Table {
-  const tableColumns: any[] = args.verbose
-    ? [
-        { content: 'Exchange', colSpan: 1 }, // Exchange ID in verbose mode
-        { content: 'Asset', colSpan: 1 },
-        { content: 'Symbol', colSpan: 1 },
-        { content: 'Limit ID', colSpan: 1 },
-      ]
-    : [
-        { content: 'Exchange', colSpan: 1 }, // Exchange name in normal mode
-        { content: 'Symbol', colSpan: 1 },
-      ]
-
-  // Common columns for both modes
-  tableColumns.push(
-    { content: 'Type', colSpan: 1 },
-    { content: 'Timeframe', colSpan: 1 },
-    { content: 'Limit', colSpan: 1 },
-    { content: 'Netflow', colSpan: 1 },
-    { content: 'Utilization', colSpan: 1 },
-    { content: 'Max In', colSpan: 1 },
-    { content: 'Max Out', colSpan: 1 },
-    { content: 'Resets In', colSpan: 1 },
-    { content: 'Reset Time', colSpan: 1 },
-    { content: 'Status', colSpan: 1 }
-  )
-
-  return new Table({
-    head: tableColumns,
+  // Create table configuration with clean and properly aligned headers
+  const tableConfig: any = {
+    head: [],
     style: {
       head: ['white'],
       border: ['gray'],
     },
-    wordWrap: true,
-    wrapOnWordBoundary: false,
-  })
+    chars: {
+      top: '─',
+      'top-mid': '┬',
+      'top-left': '┌',
+      'top-right': '┐',
+      bottom: '─',
+      'bottom-mid': '┴',
+      'bottom-left': '└',
+      'bottom-right': '┘',
+      left: '│',
+      'left-mid': '├',
+      mid: '─',
+      'mid-mid': '┼',
+      right: '│',
+      'right-mid': '┤',
+      middle: '│',
+    },
+  }
+
+  // Define headers based on verbose mode
+  if (args.verbose) {
+    tableConfig.head = [
+      'Exchange',
+      'Asset',
+      'Symbol',
+      'Limit ID',
+      'Type',
+      'Timeframe',
+      'Limit',
+      'Netflow',
+      'Utilization',
+      'Max In',
+      'Max Out',
+      'Resets In',
+      'Reset Time',
+      'Status',
+    ]
+  } else {
+    tableConfig.head = [
+      'Exchange',
+      'Symbol',
+      'Type',
+      'Timeframe',
+      'Limit',
+      'Netflow',
+      'Utilization',
+      'Max In',
+      'Max Out',
+      'Resets In',
+      'Reset Time',
+      'Status',
+    ]
+  }
+
+  return new Table(tableConfig)
 }
 
 /**
