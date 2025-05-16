@@ -4,6 +4,9 @@
 
 The Mento SDK provides a high-level, developer-friendly interface for interacting with the Mento Protocol's smart contracts. It aims to simplify the development of decentralized applications (DApps) and integrations by abstracting away the complexities of low-level blockchain operations. This SDK enables developers to easily query protocol information, manage assets, and interact with governance mechanisms.
 
+All smart contracts can be found here - https://github.com/mento-protocol/mento-core/tree/develop/contracts
+Current documentation(may not be completely up to date) can be found here - https://docs.mento.org/mento
+
 ## 2. User Stories
 
 - **As a DApp developer, I want to easily query the current list of stable tokens and their metadata so I can display them in my application.**
