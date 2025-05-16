@@ -1,0 +1,1 @@
+Using the specification detailed in specs/$ARGUMENTS, please generate the necessary code. Ensure you follow all requirements and implementation steps outlined. Refer to ai_docs/project_patterns.md for coding standards and ai_docs/api_integrations.md if external services are involved. Provide the code for each relevant file.
