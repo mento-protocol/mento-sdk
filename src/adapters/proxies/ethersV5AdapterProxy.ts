@@ -1,4 +1,4 @@
-import { ProviderAdapter } from '../../types'
+import { ProviderAdapter, TransactionResponse } from '../../types'
 import type { providers as EthersV5Providers } from 'ethers-v5'
 
 /**
@@ -44,6 +44,16 @@ export class EthersV5AdapterProxy implements ProviderAdapter {
       )
     }
     return this.adapter.readContract(...args)
+  }
+  
+  async writeContract(...args: Parameters<ProviderAdapter['writeContract']>): Promise<TransactionResponse> {
+    await this.initPromise
+    if (!this.adapter) {
+      throw new Error(
+        'Adapter not initialized. Are you missing ethers v5 dependency?'
+      )
+    }
+    return this.adapter.writeContract(...args)
   }
 
   async getChainId() {

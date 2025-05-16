@@ -120,60 +120,147 @@ Retrieve collateral assets:
 const assets = await mento.getCollateralAssets()
 ```
 
-### Swap Tokens
+### Swap Functionality
 
-Exchange tokens using the Mento protocol:
+The SDK provides comprehensive swap functionality, supporting exchanges between collateral assets and stable tokens:
+
+#### Provider-Specific Setup for Write Operations
+
+Before executing swaps, ensure your provider is set up with the appropriate signing capabilities:
+
+**With Ethers v6:**
+```typescript
+import { JsonRpcProvider, Wallet } from 'ethers'
+import { Mento } from '@mento/sdk'
+
+// Create a provider with a signer
+const provider = new JsonRpcProvider('YOUR_RPC_URL')
+const wallet = new Wallet('YOUR_PRIVATE_KEY', provider)
+
+// Initialize Mento SDK with the provider+signer
+const mento = await Mento.create({ provider: wallet })
+```
+
+**With Ethers v5:**
+```typescript
+import { providers, Wallet } from 'ethers-v5'
+import { Mento } from '@mento/sdk'
+
+// Create a provider with a signer
+const provider = new providers.JsonRpcProvider('YOUR_RPC_URL')
+const wallet = new Wallet('YOUR_PRIVATE_KEY', provider)
+
+// Initialize Mento SDK with the provider+signer
+const mento = await Mento.create({ provider: wallet })
+```
+
+**With Viem:**
+```typescript
+import { createPublicClient, createWalletClient, http } from 'viem'
+import { privateKeyToAccount } from 'viem/accounts'
+import { celo } from 'viem/chains'
+import { Mento } from '@mento/sdk'
+
+// Create public client
+const publicClient = createPublicClient({
+  chain: celo,
+  transport: http('YOUR_RPC_URL')
+})
+
+// Create wallet client
+const account = privateKeyToAccount('0x' + 'YOUR_PRIVATE_KEY')
+const walletClient = createWalletClient({
+  account,
+  chain: celo,
+  transport: http('YOUR_RPC_URL')
+})
+
+// Initialize Mento SDK
+const mento = await Mento.create({ 
+  provider: publicClient,
+  viemAdapterConfig: { walletClient, account }
+})
+```
+
+#### Swap In (Fixed Input)
+
+Exchange a specific amount of input token for at least a minimum amount of output token:
 
 ```typescript
 // Get estimated swap amounts
 const amountOut = await mento.getAmountOut(
   celoAddress,
   cUsdAddress,
-  '1000000000000000000'
+  '1000000000000000000' // 1 CELO with 18 decimals
 )
 console.log(`Expected amount out: ${amountOut}`)
 
-// Execute a swap with 0.5% slippage
-const minAmountOut = (BigInt(amountOut) * BigInt(995)) / BigInt(1000) // 0.5% slippage
+// Calculate slippage (0.5% in this example)
+const minAmountOut = (BigInt(amountOut) * BigInt(995)) / BigInt(1000)
+
+// Execute the swap
 const tx = await mento.swapIn(
   celoAddress, // tokenIn (CELO)
   cUsdAddress, // tokenOut (cUSD)
-  '1000000000000000000', // amountIn (1 CELO)
-  minAmountOut.toString(),
+  '1000000000000000000', // amountIn (fixed)
+  minAmountOut.toString(), // minimum acceptable output
   { gasLimit: '300000' } // Optional gas settings
 )
 
-// Wait for the transaction to be confirmed
+// Wait for confirmation
 const receipt = await tx.wait()
 console.log('Swap completed!', receipt)
 ```
 
-### Exact Output Swaps
+#### Swap Out (Fixed Output)
 
-Swap for an exact amount of output tokens:
+Get a specific amount of output token by spending at most a maximum amount of input token:
 
 ```typescript
 // Get required input amount
 const amountIn = await mento.getAmountIn(
   celoAddress,
   cUsdAddress,
-  '1000000000000000000'
+  '1000000000000000000' // 1 cUSD with 18 decimals
 )
 console.log(`Required amount in: ${amountIn}`)
 
-// Execute a swap with 0.5% slippage
-const maxAmountIn = (BigInt(amountIn) * BigInt(1005)) / BigInt(1000) // 0.5% slippage
+// Calculate slippage (0.5% in this example)
+const maxAmountIn = (BigInt(amountIn) * BigInt(1005)) / BigInt(1000)
+
+// Execute the swap
 const tx = await mento.swapOut(
   celoAddress, // tokenIn (CELO)
   cUsdAddress, // tokenOut (cUSD)
-  '1000000000000000000', // amountOut (1 cUSD)
-  maxAmountIn.toString(),
+  '1000000000000000000', // amountOut (fixed)
+  maxAmountIn.toString(), // maximum acceptable input
   { gasLimit: '350000' } // Optional gas settings
 )
 
-// Wait for the transaction to be confirmed
+// Wait for confirmation
 const receipt = await tx.wait()
 console.log('Swap completed!', receipt)
+```
+
+#### Gas Estimation
+
+Estimate gas costs for a swap operation:
+
+```typescript
+const estimatedGas = await mento.estimateGas(
+  'swapIn', // or 'swapOut'
+  [celoAddress, cUsdAddress, '1000000000000000000', minAmountOut.toString()]
+)
+console.log(`Estimated gas: ${estimatedGas}`)
+
+// Use the estimated gas in your transaction
+const tx = await mento.swapIn(
+  celoAddress,
+  cUsdAddress,
+  '1000000000000000000',
+  minAmountOut.toString(),
+  { gasLimit: estimatedGas }
+)
 ```
 
 ## Agentic Coding with Claude Code
