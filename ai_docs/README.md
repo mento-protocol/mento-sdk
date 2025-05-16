@@ -1,0 +1,1 @@
+This directory contains documents that provide context and knowledge to AI coding assistants. It includes information on third-party APIs, project-specific patterns, integration details, and important implementation notes.
