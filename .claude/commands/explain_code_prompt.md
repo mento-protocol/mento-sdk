@@ -1,4 +1,6 @@
-Please explain the functionality of the following code block/file: 
+# Explain Code Prompt
+
+Please explain the functionality of the following code block/file:
 
 $ARGUMENTS
 
