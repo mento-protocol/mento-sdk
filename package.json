@@ -33,7 +33,8 @@
     "coverage": "jest --coverage",
     "cacheTradablePairs": "ts-node scripts/cacheTradablePairs.ts",
     "printTradablePairs": "ts-node scripts/printTradablePairs.ts",
-    "tradingLimits": "ts-node scripts/printTradingLimits.ts"
+    "tradingLimits": "ts-node scripts/printTradingLimits.ts",
+    "spreads": "ts-node scripts/printSpreads.ts"
   },
   "husky": {
     "hooks": {
