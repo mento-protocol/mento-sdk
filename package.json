@@ -34,7 +34,8 @@
     "cacheTradablePairs": "ts-node scripts/cacheTradablePairs.ts",
     "printTradablePairs": "ts-node scripts/printTradablePairs.ts",
     "tradingLimits": "ts-node scripts/printTradingLimits.ts",
-    "poolConfigs": "ts-node scripts/printPoolConfigs.ts"
+    "poolConfigs": "ts-node scripts/printPoolConfigs.ts",
+    "breakerBox": "ts-node scripts/printBreakerBox.ts"
   },
   "husky": {
     "hooks": {
