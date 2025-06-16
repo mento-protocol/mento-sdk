@@ -6,7 +6,7 @@ import ora from 'ora'
 import { ExchangeData } from './types'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
 import { prefetchTokenSymbols } from './utils/prefetchTokenSymbols'
-import { displaySpreads } from './spreadsOrchestrator'
+import { displayPoolConfig } from './poolConfigOrchestrator'
 import { Mento } from '../../src/mento'
 import { BiPoolManager__factory } from '@mento-protocol/mento-core-ts'
 import { getSymbolFromTokenAddress } from '../../src/utils'
@@ -24,7 +24,7 @@ async function main(): Promise<void> {
     const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
 
     console.log(chalk.gray('\n==============================='))
-    console.log(chalk.bold.blue('Mento Spreads Visualizer'))
+    console.log(chalk.bold.blue('Mento Pool Config Visualizer'))
     console.log(chalk.gray('===============================\n'))
     console.log(chalk.yellow(`Using RPC URL: ${rpcUrl}\n`))
 
@@ -99,12 +99,12 @@ async function main(): Promise<void> {
       : exchangeData
 
     // Process and display the spreads
-    displaySpreads(filteredData)
+    displayPoolConfig(filteredData)
 
     // Display usage information
     console.log('\n' + chalk.bold('Usage:'))
     console.log(
-      '  yarn spreads [--token|-t <symbol>] [--exchange|-e <exchangeId>]'
+      '  yarn poolConfig [--token|-t <symbol>] [--exchange|-e <exchangeId>]'
     )
   } catch (error) {
     console.error(chalk.red('ERROR: An unexpected error occurred:'))

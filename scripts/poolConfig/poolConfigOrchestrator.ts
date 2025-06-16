@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import { ExchangeData } from './types'
 
-export function displaySpreads(exchangeData: ExchangeData[]) {
+export function displayPoolConfig(exchangeData: ExchangeData[]) {
   if (exchangeData.length === 0) {
     console.log('No exchanges found matching the criteria.')
     return
