@@ -20,15 +20,15 @@ image.png
 
 ```bash
 # Basic usage
-yarn poolConfig
+yarn poolConfigs
 
 # Filter by token symbol
-yarn poolConfig --token cUSD
-yarn poolConfig --token=cUSD
-yarn poolConfig -t cUSD
+yarn poolConfigs --token cUSD
+yarn poolConfigs --token=cUSD
+yarn poolConfigs -t cUSD
 
 # Connect to a specific RPC endpoint
-RPC_URL=https://your-rpc-url.com yarn poolConfig
+RPC_URL=https://your-rpc-url.com yarn poolConfigs
 ```
 
 ## Understanding PoolConfig
