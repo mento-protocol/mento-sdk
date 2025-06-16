@@ -1,7 +1,7 @@
 # Mento Spreads Visualizer
 
 A CLI tool for visualizing all spread configurations across the Mento protocol's trading pairs.
-
+image.png
 ## Features
 
 - Displays all exchanges/pools and their spread configurations in a tabular format
@@ -9,6 +9,11 @@ A CLI tool for visualizing all spread configurations across the Mento protocol's
 - Provides filtering by token symbol or exchange ID
 - Shows spread percentages in a clear, readable format
 - Color-coded spread values
+- Displays additional pool configuration parameters:
+  - Reference rate feed ID
+  - Bucket reset frequency
+  - Minimum required oracle reports
+  - Stable pool reset size
 
 ## Usage
 
@@ -47,8 +52,15 @@ The script produces a table with the following columns:
 | Asset 0 | The first asset in the trading pair |
 | Asset 1 | The second asset in the trading pair |
 | Spread (%) | The fee percentage charged on each trade |
+| Ref Rate Feed | The oracle rateFeedID used as reference rate |
+| Reset Freq (h) | How often the buckets reset to reference rate (in hours) |
+| Min Reports | Minimum required oracle reports to trust reference rate |
+| Reset Size | Value that bucket0 resets to during bucket updates |
 
-The tool uses color-coded spread values to make them easily distinguishable in the output.
+The tool uses color-coded spread values to make them easily distinguishable in the output:
+- Green: Spread ≤ 0.5%
+- Yellow: 0.5% < Spread ≤ 1%
+- Red: Spread > 1%
 
 ## Project Structure
 

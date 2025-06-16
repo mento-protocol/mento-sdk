@@ -1,118 +1,82 @@
 import chalk from 'chalk'
-import { ethers } from 'ethers'
-import ora from 'ora'
-import { BiPoolManager__factory } from '@mento-protocol/mento-core-ts'
-import { ExchangeData, Mento } from './types'
-import { CommandLineArgs } from './utils/parseCommandLineArgs'
-import { getTokenSymbol } from './utils/prefetchTokenSymbols'
+import { ExchangeData } from './types'
 
-// FixidityLib uses 24 decimal places
-const FIXIDITY_DECIMALS = 24
-
-interface SpreadInfo {
-  exchangeId: string
-  asset0Symbol: string
-  asset1Symbol: string
-  spreadPercentage: string
-}
-
-export async function processSpreads(
-  exchanges: ExchangeData[],
-  mento: Mento,
-  provider: ethers.providers.Provider,
-  args: CommandLineArgs
-): Promise<void> {
-  const spinner = ora({
-    text: 'Fetching spread information...',
-    color: 'cyan',
-  }).start()
-
-  const spreadInfos: SpreadInfo[] = []
-
-  // Process each exchange
-  for (const exchange of exchanges) {
-    // Get the BiPoolManager contract for this exchange
-    const biPoolManager = BiPoolManager__factory.connect(
-      exchange.providerAddr,
-      provider
-    )
-    
-    // Get token symbols
-    const asset0Symbol = await getTokenSymbol(exchange.assets[0], provider)
-    const asset1Symbol = await getTokenSymbol(exchange.assets[1], provider)
-
-    // Apply token filter if specified
-    if (
-      args.token &&
-      !asset0Symbol.toLowerCase().includes(args.token.toLowerCase()) &&
-      !asset1Symbol.toLowerCase().includes(args.token.toLowerCase())
-    ) {
-      continue
-    }
-
-    try {
-      // Get pool exchange info
-      const poolExchange = await biPoolManager.getPoolExchange(exchange.id)
-      
-      // Convert spread from FixidityLib.Fraction to percentage
-      // The spread is stored as a fraction with 24 decimal places
-      const spreadValue = Number(poolExchange.config.spread)
-      const spreadPercentage = ((spreadValue / Math.pow(10, FIXIDITY_DECIMALS)) * 100).toFixed(6).replace(/\.?0+$/, '')
-
-      spreadInfos.push({
-        exchangeId: exchange.id,
-        asset0Symbol,
-        asset1Symbol,
-        spreadPercentage,
-      })
-    } catch (error) {
-      // If we can't get the pool exchange info, skip this exchange
-      continue
-    }
+export function displaySpreads(exchangeData: ExchangeData[]) {
+  if (exchangeData.length === 0) {
+    console.log('No exchanges found matching the criteria.')
+    return
   }
 
-  spinner.succeed('Spread information fetched')
+  // Define column widths
+  const colWidths = {
+    exchangeId: 66,
+    asset0: 10,
+    asset1: 10,
+    spread: 12,
+    refRateFeed: 42,
+    resetFreq: 14,
+    minReports: 12,
+    resetSize: 10
+  }
 
-  // Create a table header
-  console.log('\n' + chalk.bold('Exchange Spreads:'))
-  console.log(
-    chalk.gray(
-      '----------------------------------------------------------------'
-    )
-  )
-  console.log(
-    chalk.bold(
-      'Exchange ID'.padEnd(20) +
-        ' | ' +
-        'Asset 0'.padEnd(15) +
-        ' | ' +
-        'Asset 1'.padEnd(15) +
-        ' | ' +
-        'Spread (%)'
-    )
-  )
-  console.log(
-    chalk.gray(
-      '----------------------------------------------------------------'
-    )
-  )
+  // Calculate total table width
+  const numColumns = Object.keys(colWidths).length
+  const totalWidth = Object.values(colWidths).reduce((a, b) => a + b, 0) + (numColumns - 1) * 3 + 1 // 3 for ' | ', 1 for initial space
 
-  // Display all spread information
-  for (const info of spreadInfos) {
+  // Create table header
+  console.log('\nPool Configuration Details:')
+  console.log('='.repeat(totalWidth))
+  console.log(
+    'Exchange ID'.padEnd(colWidths.exchangeId) +
+      ' | ' +
+      'Asset 0'.padEnd(colWidths.asset0) +
+      ' | ' +
+      'Asset 1'.padEnd(colWidths.asset1) +
+      ' | ' +
+      'Spread (%)'.padEnd(colWidths.spread) +
+      ' | ' +
+      'Ref Rate Feed'.padEnd(colWidths.refRateFeed) +
+      ' | ' +
+      'Reset Freq (h)'.padEnd(colWidths.resetFreq) +
+      ' | ' +
+      'Min Reports'.padEnd(colWidths.minReports) +
+      ' | ' +
+      'Reset Size'.padEnd(colWidths.resetSize)
+  )
+  console.log('-'.repeat(totalWidth))
+
+  // Sort exchanges by spread
+  const sortedExchanges = [...exchangeData].sort((a, b) => a.spread - b.spread)
+
+  // Display each exchange
+  for (const exchange of sortedExchanges) {
+    // Pad the spread string before coloring
+    const spreadRaw = exchange.spread.toFixed(4).padEnd(colWidths.spread)
+    const spreadColor = exchange.spread > 1 ? chalk.red : exchange.spread > 0.5 ? chalk.yellow : chalk.green
+    const spreadStr = spreadColor(spreadRaw)
+
+    // Format reset size to be more readable (convert from e18 to actual number)
+    const resetSize = exchange.stablePoolResetSize / 1e18
+
     console.log(
-      info.exchangeId.slice(0, 20).padEnd(20) +
+      exchange.exchangeId.padEnd(colWidths.exchangeId) +
         ' | ' +
-        info.asset0Symbol.padEnd(15) +
+        exchange.asset0.symbol.padEnd(colWidths.asset0) +
         ' | ' +
-        info.asset1Symbol.padEnd(15) +
+        exchange.asset1.symbol.padEnd(colWidths.asset1) +
         ' | ' +
-        chalk.green(info.spreadPercentage + '%')
+        spreadStr +
+        ' | ' +
+        exchange.referenceRateFeedID.padEnd(colWidths.refRateFeed) +
+        ' | ' +
+        exchange.referenceRateResetFrequency.toFixed(1).padEnd(colWidths.resetFreq) +
+        ' | ' +
+        exchange.minimumReports.toString().padEnd(colWidths.minReports) +
+        ' | ' +
+        resetSize.toLocaleString().padEnd(colWidths.resetSize)
     )
   }
 
-  console.log(
-    chalk.gray(
-      '----------------------------------------------------------------'
-    )
-  )
+  console.log('='.repeat(totalWidth))
+  console.log(`Total exchanges: ${exchangeData.length}`)
 } 

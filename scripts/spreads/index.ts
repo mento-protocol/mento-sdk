@@ -3,10 +3,13 @@
 import chalk from 'chalk'
 import { ethers } from 'ethers'
 import ora from 'ora'
-import { ExchangeData, Mento } from './types'
+import { ExchangeData } from './types'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
 import { prefetchTokenSymbols } from './utils/prefetchTokenSymbols'
-import { processSpreads } from './spreadsOrchestrator'
+import { displaySpreads } from './spreadsOrchestrator'
+import { Mento } from '../../src/mento'
+import { BiPoolManager__factory } from '@mento-protocol/mento-core-ts'
+import { getSymbolFromTokenAddress } from '../../src/utils'
 
 /**
  * CLI tool to visualize all spread configurations for all exchanges in the Mento protocol.
@@ -41,36 +44,62 @@ async function main(): Promise<void> {
     const mento = await Mento.create(provider)
     connectSpinner.succeed('Connected to Mento protocol')
 
-    // Get all exchanges
+    // Fetch all exchanges
     const exchangesSpinner = ora({
       text: 'Fetching exchanges...',
       color: 'cyan',
     }).start()
-    const exchanges = (await mento.getExchanges()) as ExchangeData[]
+    const exchanges = await mento.getExchanges()
+    exchangesSpinner.succeed(`Successfully fetched ${exchanges.length} exchanges`)
 
-    // Apply exchange ID filter if specified
-    const filteredExchanges = args.exchange
-      ? exchanges.filter((exchange) =>
-          exchange.id.toLowerCase().includes(args.exchange!.toLowerCase())
-        )
-      : exchanges
+    // Prefetch token symbols for better performance
+    await prefetchTokenSymbols(exchanges, provider)
 
-    // Show combined success message with filter information if relevant
-    if (args.exchange) {
-      exchangesSpinner.succeed(
-        `Fetched ${exchanges.length} exchanges from protocol, filtered to ${filteredExchanges.length} matching exchange ID "${args.exchange}"`
-      )
-    } else {
-      exchangesSpinner.succeed(
-        `Fetched ${exchanges.length} exchanges from protocol`
-      )
+    // Process spreads for each exchange
+    const exchangeData: ExchangeData[] = []
+    for (const exchange of exchanges) {
+      const biPoolManager = BiPoolManager__factory.connect(exchange.providerAddr, provider)
+      const poolExchange = await biPoolManager.getPoolExchange(exchange.id)
+      if (!poolExchange) continue
+
+      const asset0Symbol = await getSymbolFromTokenAddress(poolExchange.asset0, provider)
+      const asset1Symbol = await getSymbolFromTokenAddress(poolExchange.asset1, provider)
+
+      // Convert spread from FixidityLib.Fraction to percentage
+      const spread = Number(poolExchange.config.spread.value) / 1e24 * 100
+
+      // Convert referenceRateResetFrequency from seconds to hours
+      const resetFrequencyHours = Number(poolExchange.config.referenceRateResetFrequency) / 3600
+
+      exchangeData.push({
+        exchangeId: exchange.id,
+        asset0: {
+          address: poolExchange.asset0,
+          symbol: asset0Symbol,
+        },
+        asset1: {
+          address: poolExchange.asset1,
+          symbol: asset1Symbol,
+        },
+        spread,
+        referenceRateFeedID: poolExchange.config.referenceRateFeedID,
+        referenceRateResetFrequency: resetFrequencyHours,
+        minimumReports: Number(poolExchange.config.minimumReports),
+        stablePoolResetSize: Number(poolExchange.config.stablePoolResetSize),
+      })
     }
 
-    // Prefetch token symbols if needed (for better performance)
-    await prefetchTokenSymbols(filteredExchanges, provider)
+    // Filter by token symbol if specified
+    const filteredData = args.token
+      ? exchangeData.filter(
+          (data) =>
+            data.asset0.symbol.toLowerCase() === args.token?.toLowerCase() ||
+            data.asset1.symbol.toLowerCase() === args.token?.toLowerCase()
+        )
+      : exchangeData
 
-    // Process all exchanges and display spreads
-    await processSpreads(filteredExchanges, mento, provider, args)
+    // Process and display the spreads
+    displaySpreads(filteredData)
 
     // Display usage information
     console.log('\n' + chalk.bold('Usage:'))

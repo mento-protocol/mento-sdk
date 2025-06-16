@@ -1,10 +1,10 @@
 import { ethers } from 'ethers'
-import { ExchangeData } from '../types'
+import { Exchange } from '../../../src/mento'
 
 const tokenSymbolCache: { [address: string]: string } = {}
 
 export async function prefetchTokenSymbols(
-  exchanges: ExchangeData[],
+  exchanges: Exchange[],
   provider: ethers.providers.Provider
 ): Promise<void> {
   const uniqueTokens = new Set<string>()
