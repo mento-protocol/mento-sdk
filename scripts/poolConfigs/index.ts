@@ -1,15 +1,15 @@
 #!/usr/bin/env ts-node
 
+import { BiPoolManager__factory } from '@mento-protocol/mento-core-ts'
 import chalk from 'chalk'
 import { ethers } from 'ethers'
 import ora from 'ora'
+import { Mento } from '../../src/mento'
+import { getSymbolFromTokenAddress } from '../../src/utils'
+import { displayPoolConfig } from './poolConfigOrchestrator'
 import { ExchangeData } from './types'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
 import { prefetchTokenSymbols } from './utils/prefetchTokenSymbols'
-import { displayPoolConfig } from './poolConfigOrchestrator'
-import { Mento } from '../../src/mento'
-import { BiPoolManager__factory } from '@mento-protocol/mento-core-ts'
-import { getSymbolFromTokenAddress } from '../../src/utils'
 
 /**
  * CLI tool to visualize all spread configurations for all exchanges in the Mento protocol.
@@ -50,7 +50,9 @@ async function main(): Promise<void> {
       color: 'cyan',
     }).start()
     const exchanges = await mento.getExchanges()
-    exchangesSpinner.succeed(`Successfully fetched ${exchanges.length} exchanges`)
+    exchangesSpinner.succeed(
+      `Successfully fetched ${exchanges.length} exchanges`
+    )
 
     // Prefetch token symbols for better performance
     await prefetchTokenSymbols(exchanges, provider)
@@ -58,18 +60,28 @@ async function main(): Promise<void> {
     // Process spreads for each exchange
     const exchangeData: ExchangeData[] = []
     for (const exchange of exchanges) {
-      const biPoolManager = BiPoolManager__factory.connect(exchange.providerAddr, provider)
+      const biPoolManager = BiPoolManager__factory.connect(
+        exchange.providerAddr,
+        provider
+      )
       const poolExchange = await biPoolManager.getPoolExchange(exchange.id)
       if (!poolExchange) continue
 
-      const asset0Symbol = await getSymbolFromTokenAddress(poolExchange.asset0, provider)
-      const asset1Symbol = await getSymbolFromTokenAddress(poolExchange.asset1, provider)
+      const asset0Symbol = await getSymbolFromTokenAddress(
+        poolExchange.asset0,
+        provider
+      )
+      const asset1Symbol = await getSymbolFromTokenAddress(
+        poolExchange.asset1,
+        provider
+      )
 
       // Convert spread from FixidityLib.Fraction to percentage
-      const spread = Number(poolExchange.config.spread.value) / 1e24 * 100
+      const spread = (Number(poolExchange.config.spread.value) / 1e24) * 100
 
       // Convert referenceRateResetFrequency from seconds to hours
-      const resetFrequencyHours = Number(poolExchange.config.referenceRateResetFrequency) / 3600
+      const resetFrequencyHours =
+        Number(poolExchange.config.referenceRateResetFrequency) / 3600
 
       exchangeData.push({
         exchangeId: exchange.id,
@@ -90,7 +102,7 @@ async function main(): Promise<void> {
     }
 
     // Filter by token symbol if specified
-    const filteredData = args.token
+    let filteredData = args.token
       ? exchangeData.filter(
           (data) =>
             data.asset0.symbol.toLowerCase() === args.token?.toLowerCase() ||
@@ -98,13 +110,20 @@ async function main(): Promise<void> {
         )
       : exchangeData
 
+    // Filter by exchange ID if specified
+    if (args.exchange) {
+      filteredData = filteredData.filter(
+        (data) => data.exchangeId === args.exchange
+      )
+    }
+
     // Process and display the spreads
     displayPoolConfig(filteredData)
 
     // Display usage information
     console.log('\n' + chalk.bold('Usage:'))
     console.log(
-      '  yarn poolConfig [--token|-t <symbol>] [--exchange|-e <exchangeId>]'
+      '  yarn poolConfigs [--token|-t <symbol>] [--exchange|-e <exchangeId>]'
     )
   } catch (error) {
     console.error(chalk.red('ERROR: An unexpected error occurred:'))
@@ -117,4 +136,4 @@ async function main(): Promise<void> {
 main().catch((error) => {
   console.error('Error:', error)
   process.exit(1)
-}) 
+})
