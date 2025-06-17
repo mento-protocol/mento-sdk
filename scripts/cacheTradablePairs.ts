@@ -7,7 +7,7 @@ const rpcUrls = {
 import { providers } from 'ethers'
 import fs from 'fs'
 import path from 'path'
-import { Mento } from '../src/mento'
+import { Mento, TradablePair } from '../src/mento'
 
 async function getTradablePairsForNetwork(rpcUrl: string) {
   const provider = new providers.JsonRpcProvider(rpcUrl)
@@ -18,7 +18,7 @@ async function getTradablePairsForNetwork(rpcUrl: string) {
 }
 
 async function main() {
-  const results: Record<number, any> = {}
+  const results: Record<number, readonly TradablePair[]> = {}
 
   // Get pairs for each network
   for (const [chainId, rpcUrl] of Object.entries(rpcUrls)) {

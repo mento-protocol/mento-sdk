@@ -1,8 +1,10 @@
 import chalk from 'chalk'
 import { ethers } from 'ethers'
 import { ExchangeData, Mento, TradingLimit } from '../types'
+import { TradingLimitsConfig } from './../../../src/interfaces/tradingLimitsConfig'
 import { getSymbolFromTokenAddress } from './getSymbolFromTokenAddress'
 // Import type extensions for Object.groupBy
+import { TradingLimitsState } from '../../../src/interfaces'
 import './typeExtensions'
 
 /**
@@ -89,10 +91,10 @@ export async function fetchExchangeData(
   mento: Mento
 ): Promise<{
   allLimits: TradingLimit[]
-  limitConfigs: any[]
-  limitStates: any[]
-  configByAsset: Record<string, any>
-  stateByAsset: Record<string, any>
+  limitConfigs: TradingLimitsConfig[]
+  limitStates: TradingLimitsState[]
+  configByAsset: Record<string, TradingLimitsConfig>
+  stateByAsset: Record<string, TradingLimitsState>
   limitsByAsset: Record<string, TradingLimit[]>
 }> {
   // Get exchange data in parallel to reduce network calls
@@ -104,7 +106,7 @@ export async function fetchExchangeData(
 
   // Create maps for easy lookup by asset address
   const configByAsset = limitConfigs.reduce(
-    (map: Record<string, any>, cfg: any) => {
+    (map: Record<string, TradingLimitsConfig>, cfg: TradingLimitsConfig) => {
       map[cfg.asset] = cfg
       return map
     },
@@ -112,7 +114,7 @@ export async function fetchExchangeData(
   )
 
   const stateByAsset = limitStates.reduce(
-    (map: Record<string, any>, state: any) => {
+    (map: Record<string, TradingLimitsState>, state: TradingLimitsState) => {
       map[state.asset] = state
       return map
     },

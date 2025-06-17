@@ -1,6 +1,9 @@
 import Table from 'cli-table3'
-import { ExchangeData, ScriptArgs } from '../types'
-import { processAssetWithLimits } from './assetLimitProcessor'
+import {
+  TradingLimitsConfig,
+  TradingLimitsState,
+} from '../../../src/interfaces'
+import { ExchangeData, ScriptArgs, TradingLimit } from '../types'
 import { handleExchangeWithNoLimits } from './tableFormatter'
 
 /**
@@ -18,10 +21,10 @@ export function processExchangeWithLimits(
   tokenAssets: Array<{ address: string; symbol: string }>,
   exchangeName: string,
   exchangeData: {
-    allLimits: any[]
-    configByAsset: Record<string, any>
-    stateByAsset: Record<string, any>
-    limitsByAsset: Record<string, any[]>
+    allLimits: TradingLimit[]
+    configByAsset: Record<string, TradingLimitsConfig>
+    stateByAsset: Record<string, TradingLimitsState>
+    limitsByAsset: Record<string, TradingLimit[]>
   },
   args: ScriptArgs,
   limitsTable: Table.Table
@@ -35,19 +38,6 @@ export function processExchangeWithLimits(
 
     // Process asset limits
     if (limits.length > 0) {
-      // Process asset with limits
-      const blockingInfo = processAssetWithLimits(
-        exchange,
-        asset,
-        exchangeName,
-        limits,
-        exchangeData.configByAsset,
-        exchangeData.stateByAsset,
-        args,
-        limitsTable,
-        exchangeNameDisplayed
-      )
-
       // Mark that we've displayed the exchange name
       exchangeNameDisplayed = true
     } else {

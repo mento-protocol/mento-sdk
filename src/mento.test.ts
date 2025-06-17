@@ -764,10 +764,6 @@ describe('Mento', () => {
       mockRouter.populateTransaction.swapExactTokensForTokens.mockReturnValueOnce(
         fakeTxObj
       )
-      const spy = jest
-        .spyOn(signer, 'populateTransaction')
-        // @ts-ignore
-        .mockReturnValueOnce(fakePopulatedTxObj)
 
       const result = await testee.swapIn(
         fakecUSDTokenAddr,

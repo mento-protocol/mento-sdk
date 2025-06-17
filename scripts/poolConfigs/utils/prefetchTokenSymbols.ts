@@ -38,9 +38,6 @@ export async function prefetchTokenSymbols(
   }
 }
 
-export function getTokenSymbol(
-  tokenAddress: string,
-  provider: ethers.providers.Provider
-): string {
+export function getTokenSymbol(tokenAddress: string): string {
   return tokenSymbolCache[tokenAddress] || tokenAddress.slice(0, 6) + '...'
-} 
+}

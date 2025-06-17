@@ -29,7 +29,7 @@ export async function processTradingLimits(
   args: ScriptArgs
 ): Promise<void> {
   // Create table for displaying results
-  const limitsTable = createLimitsTable(args)
+  const limitsTable = createLimitsTable()
 
   // Filter exchanges if a token filter is provided
   let exchangesToProcess = exchanges

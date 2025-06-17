@@ -13,7 +13,6 @@ async function main() {
   const sums = [0, 0, 0]
   const iterations = 3
   for (let i = 0; i < 3; i++) {
-    let t = Date.now()
     const [initDuration, mento] = await timedOperation('Mento init time', () =>
       Mento.create(provider)
     )

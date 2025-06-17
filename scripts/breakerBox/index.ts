@@ -150,7 +150,7 @@ async function main(): Promise<void> {
         ])
 
         // Convert threshold from e24 to decimal and format numbers
-        const formatNumber = (num: BigNumber, decimals: number = 4) => {
+        const formatNumber = (num: BigNumber, decimals = 4) => {
           const decimal = Number(num) / 1e24
           return decimal.toFixed(decimals).replace(/\.?0+$/, '')
         }
@@ -337,19 +337,6 @@ async function main(): Promise<void> {
     console.error(chalk.red('ERROR: An unexpected error occurred:'))
     console.error(error instanceof Error ? error.message : String(error))
     process.exit(1)
-  }
-}
-
-function getStatusColor(status: string): string {
-  switch (status.toLowerCase()) {
-    case 'active':
-      return chalk.green('ACTIVE')
-    case 'tripped':
-      return chalk.red('TRIPPED')
-    case 'disabled':
-      return chalk.yellow('DISABLED')
-    default:
-      return chalk.gray(status)
   }
 }
 
