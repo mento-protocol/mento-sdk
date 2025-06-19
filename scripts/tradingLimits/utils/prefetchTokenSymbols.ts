@@ -1,5 +1,6 @@
 import { ethers } from 'ethers'
 import ora from 'ora'
+import { batchProcess } from '../../shared/batchProcessor'
 import { ExchangeData } from '../types'
 import { getSymbolFromTokenAddress } from './getSymbolFromTokenAddress'
 
@@ -29,13 +30,20 @@ export async function prefetchTokenSymbols(
   }
 
   const uniqueTokenCount = uniqueTokenAddresses.size
+  if (uniqueTokenCount === 0) {
+    spinner.succeed('No tokens to prefetch')
+    return
+  }
+
   spinner.text = `Prefetching ${uniqueTokenCount} token symbols...`
 
-  // Fetch all token symbols in parallel
-  await Promise.all(
-    Array.from(uniqueTokenAddresses).map(async (address) => {
+  // Fetch all token symbols in batches to avoid overwhelming RPC endpoint
+  await batchProcess(
+    Array.from(uniqueTokenAddresses),
+    async (address, index) => {
       await getSymbolFromTokenAddress(address, provider)
-    })
+    },
+    15 // Process 15 tokens concurrently
   )
 
   spinner.succeed(`Prefetched ${uniqueTokenCount} token symbols`)

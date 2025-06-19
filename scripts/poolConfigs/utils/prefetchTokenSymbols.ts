@@ -1,24 +1,8 @@
 import { ethers } from 'ethers'
 import { Exchange } from '../../../src/mento'
+import { batchProcess } from '../../shared/batchProcessor'
 
 const tokenSymbolCache: { [address: string]: string } = {}
-
-// Batch process promises with limited concurrency
-async function batchProcess<T, R>(
-  items: T[],
-  processor: (item: T) => Promise<R>,
-  batchSize = 10
-): Promise<R[]> {
-  const results: R[] = []
-
-  for (let i = 0; i < items.length; i += batchSize) {
-    const batch = items.slice(i, i + batchSize)
-    const batchResults = await Promise.all(batch.map(processor))
-    results.push(...batchResults)
-  }
-
-  return results
-}
 
 export async function prefetchTokenSymbols(
   exchanges: Exchange[],
@@ -45,7 +29,7 @@ export async function prefetchTokenSymbols(
   // Process tokens in batches to avoid overwhelming the RPC endpoint
   await batchProcess(
     tokensToFetch,
-    async (tokenAddress) => {
+    async (tokenAddress, index) => {
       try {
         const contract = new ethers.Contract(tokenAddress, erc20Abi, provider)
         const symbol = await contract.symbol()

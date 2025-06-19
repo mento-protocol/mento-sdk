@@ -13,6 +13,8 @@ import { prefetchTokenSymbols } from './utils/prefetchTokenSymbols'
  * for all exchanges in the Mento protocol.
  */
 async function main(): Promise<void> {
+  const startTime = Date.now()
+
   try {
     // Parse command line arguments
     const args = parseCommandLineArgs()
@@ -75,10 +77,16 @@ async function main(): Promise<void> {
     }
 
     // Prefetch token symbols if needed (for better performance)
-    await prefetchTokenSymbols(filteredExchanges, provider)
+    if (filteredExchanges.length > 0) {
+      await prefetchTokenSymbols(filteredExchanges, provider)
+    }
 
     // Process all exchanges and display trading limits
     await processTradingLimits(filteredExchanges, mento, provider, args)
+
+    // Display performance summary
+    const totalTime = ((Date.now() - startTime) / 1000).toFixed(2)
+    console.log(chalk.gray(`\nCompleted in ${totalTime}s`))
 
     // Display legend
     console.log(chalk.bold('\nLegend:'))

@@ -5,6 +5,7 @@ import chalk from 'chalk'
 import { ethers } from 'ethers'
 import ora from 'ora'
 import { Mento } from '../../src/mento'
+import { batchProcess } from '../shared/batchProcessor'
 import { displayPoolConfig } from './poolConfigOrchestrator'
 import { ExchangeData } from './types'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
@@ -12,23 +13,6 @@ import {
   getTokenSymbol,
   prefetchTokenSymbols,
 } from './utils/prefetchTokenSymbols'
-
-// Batch process promises with limited concurrency
-async function batchProcess<T, R>(
-  items: T[],
-  processor: (item: T) => Promise<R>,
-  batchSize = 10
-): Promise<R[]> {
-  const results: R[] = []
-
-  for (let i = 0; i < items.length; i += batchSize) {
-    const batch = items.slice(i, i + batchSize)
-    const batchResults = await Promise.all(batch.map(processor))
-    results.push(...batchResults)
-  }
-
-  return results
-}
 
 /**
  * CLI tool to visualize all spread configurations for all exchanges in the Mento protocol.
@@ -97,7 +81,7 @@ async function main(): Promise<void> {
     // Process exchanges in batches to avoid overwhelming the RPC endpoint
     const results = await batchProcess(
       exchanges,
-      async (exchange) => {
+      async (exchange, index) => {
         try {
           const biPoolManager = BiPoolManager__factory.connect(
             exchange.providerAddr,

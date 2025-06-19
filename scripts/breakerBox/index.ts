@@ -9,15 +9,42 @@ import {
 import chalk from 'chalk'
 import { BigNumber, ethers } from 'ethers'
 import ora from 'ora'
-import { getSymbolFromTokenAddress } from '../../src/utils'
+import { batchProcess } from '../shared/batchProcessor'
 import { Mento } from './types'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
+import {
+  getSymbolFromTokenAddress,
+  prefetchTokenSymbols,
+} from './utils/prefetchTokenSymbols'
+
+interface BreakerBoxData {
+  exchangeId: string
+  rateFeedId: string
+  asset0: string
+  asset1: string
+  status: string
+  tradingMode: string
+  medianThreshold: string
+  medianSmoothingFactor: string
+  medianEMA: string
+  valueThreshold: string
+  valueReference: string
+  cooldown: string
+}
+
+interface ProcessedExchangeResult {
+  success: boolean
+  data?: BreakerBoxData
+  error?: Error
+}
 
 /**
  * CLI tool to visualize all breaker box configurations and their current states
  * for all exchanges in the Mento protocol.
  */
 async function main(): Promise<void> {
+  const startTime = Date.now()
+
   try {
     // Parse command line arguments
     const args = parseCommandLineArgs()
@@ -57,158 +84,162 @@ async function main(): Promise<void> {
       `Fetched ${exchanges.length} exchanges from protocol`
     )
 
-    // Process each exchange
-    const tableData: {
-      exchangeId: string
-      rateFeedId: string
-      asset0: string
-      asset1: string
-      status: string
-      tradingMode: string
-      medianThreshold: string
-      medianSmoothingFactor: string
-      medianEMA: string
-      valueThreshold: string
-      valueReference: string
-      cooldown: string
-    }[] = []
+    // Prefetch token symbols for better performance
+    if (exchanges.length > 0) {
+      await prefetchTokenSymbols(exchanges, provider)
+    }
+
+    // Process exchanges in parallel
     const processSpinner = ora({
-      text: 'Processing exchange data...',
+      text: `Processing ${exchanges.length} exchanges in parallel...`,
       color: 'cyan',
     }).start()
 
-    for (const exchange of exchanges) {
-      try {
-        const biPoolManager = BiPoolManager__factory.connect(
-          exchange.providerAddr,
-          provider
-        )
-        const [breakerBoxAddr, exchangeConfig] = await Promise.all([
-          biPoolManager.breakerBox(),
-          biPoolManager.getPoolExchange(exchange.id),
-        ])
-        const breakerBox = IBreakerBox__factory.connect(
-          breakerBoxAddr,
-          provider
-        )
+    // Helper functions for formatting
+    const formatNumber = (num: BigNumber, decimals = 4) => {
+      const decimal = Number(num) / 1e24
+      return decimal.toFixed(decimals).replace(/\.?0+$/, '')
+    }
 
-        // Get and display breaker parameters
-        const referenceRateFeedId = exchangeConfig.config.referenceRateFeedID
-        const tradingMode = await breakerBox.getRateFeedTradingMode(
-          referenceRateFeedId
-        )
-        const status =
-          tradingMode === 0
-            ? 'active'
-            : tradingMode === 1
-            ? 'tripped'
-            : 'disabled'
+    const formatEMA = (num: BigNumber) => {
+      const decimal = Number(num) / 1e24
+      return decimal.toFixed(6).replace(/\.?0+$/, '')
+    }
 
-        // Get breaker addresses
-        const breakerAddresses = await breakerBox.getBreakers()
+    // Process exchanges in batches to avoid overwhelming the RPC endpoint
+    const results = await batchProcess(
+      exchanges,
+      async (exchange, index): Promise<ProcessedExchangeResult> => {
+        try {
+          // Update spinner text periodically
+          if (index % 6 === 0) {
+            processSpinner.text = `Processing exchanges... (${index + 1}/${
+              exchanges.length
+            })`
+          }
 
-        if (breakerAddresses.length === 0) {
-          console.log(
-            chalk.red(`No breakers found for exchange ${exchange.id}`)
+          const biPoolManager = BiPoolManager__factory.connect(
+            exchange.providerAddr,
+            provider
           )
-          continue
-        }
 
-        // Get parameters from both breakers
-        const medianBreaker = MedianDeltaBreaker__factory.connect(
-          breakerAddresses[0],
-          provider
-        )
+          // Fetch exchange config and breaker box address in parallel
+          const [breakerBoxAddr, exchangeConfig] = await Promise.all([
+            biPoolManager.breakerBox(),
+            biPoolManager.getPoolExchange(exchange.id),
+          ])
 
-        if (breakerAddresses.length === 1) {
-          console.log(
-            chalk.red(
-              `Only MedianDeltaBreaker found for exchange ${exchange.id}`
+          const breakerBox = IBreakerBox__factory.connect(
+            breakerBoxAddr,
+            provider
+          )
+
+          // Get breaker parameters
+          const referenceRateFeedId = exchangeConfig.config.referenceRateFeedID
+
+          // Get trading mode and breaker addresses in parallel
+          const [tradingMode, breakerAddresses] = await Promise.all([
+            breakerBox.getRateFeedTradingMode(referenceRateFeedId),
+            breakerBox.getBreakers(),
+          ])
+
+          const status =
+            tradingMode === 0
+              ? 'active'
+              : tradingMode === 1
+              ? 'tripped'
+              : 'disabled'
+
+          if (breakerAddresses.length < 2) {
+            throw new Error(
+              `Insufficient breakers found for exchange ${exchange.id}`
             )
+          }
+
+          // Connect to both breakers
+          const medianBreaker = MedianDeltaBreaker__factory.connect(
+            breakerAddresses[0],
+            provider
           )
-          continue
+          const valueBreaker = ValueDeltaBreaker__factory.connect(
+            breakerAddresses[1],
+            provider
+          )
+
+          // Fetch all breaker parameters and token symbols in parallel
+          const [
+            medianThreshold,
+            medianSmoothingFactor,
+            medianEMA,
+            valueThreshold,
+            valueReference,
+            cooldown,
+            asset0Symbol,
+            asset1Symbol,
+          ] = await Promise.all([
+            medianBreaker.rateChangeThreshold(referenceRateFeedId),
+            medianBreaker.getSmoothingFactor(referenceRateFeedId),
+            medianBreaker.medianRatesEMA(referenceRateFeedId),
+            valueBreaker.rateChangeThreshold(referenceRateFeedId),
+            valueBreaker.referenceValues(referenceRateFeedId),
+            medianBreaker.getCooldown(referenceRateFeedId),
+            getSymbolFromTokenAddress(exchangeConfig.asset0, provider),
+            getSymbolFromTokenAddress(exchangeConfig.asset1, provider),
+          ])
+
+          const data: BreakerBoxData = {
+            exchangeId: exchange.id,
+            rateFeedId: referenceRateFeedId,
+            asset0: asset0Symbol,
+            asset1: asset1Symbol,
+            status: status,
+            tradingMode: tradingMode.toString(),
+            medianThreshold: formatNumber(medianThreshold),
+            medianSmoothingFactor: formatNumber(medianSmoothingFactor),
+            medianEMA: formatEMA(medianEMA),
+            valueThreshold: formatNumber(valueThreshold),
+            valueReference: formatNumber(valueReference),
+            cooldown: `${cooldown.div(60).toString()}m`,
+          }
+
+          return { success: true, data }
+        } catch (error) {
+          return {
+            success: false,
+            error: error instanceof Error ? error : new Error(String(error)),
+          }
         }
-        const valueBreaker = ValueDeltaBreaker__factory.connect(
-          breakerAddresses[1],
-          provider
-        )
+      },
+      6 // Process 6 exchanges concurrently
+    )
 
-        const [
-          medianThreshold,
-          medianSmoothingFactor,
-          medianEMA,
-          valueThreshold,
-          valueReference,
-          cooldown,
-        ] = await Promise.all([
-          medianBreaker.rateChangeThreshold(referenceRateFeedId),
-          medianBreaker.getSmoothingFactor(referenceRateFeedId),
-          medianBreaker.medianRatesEMA(referenceRateFeedId),
-          valueBreaker.rateChangeThreshold(referenceRateFeedId),
-          valueBreaker.referenceValues(referenceRateFeedId),
-          medianBreaker.getCooldown(referenceRateFeedId),
-        ])
+    processSpinner.succeed('Exchange data processed')
 
-        // Convert threshold from e24 to decimal and format numbers
-        const formatNumber = (num: BigNumber, decimals = 4) => {
-          const decimal = Number(num) / 1e24
-          return decimal.toFixed(decimals).replace(/\.?0+$/, '')
-        }
+    // Process results and collect successful data
+    const tableData: BreakerBoxData[] = []
+    let successCount = 0
+    let errorCount = 0
 
-        const formatEMA = (num: BigNumber) => {
-          const decimal = Number(num) / 1e24
-          return decimal.toFixed(6).replace(/\.?0+$/, '')
-        }
-
-        // Get token symbols
-        const asset0Symbol = await getSymbolFromTokenAddress(
-          exchangeConfig.asset0,
-          provider
-        )
-        const asset1Symbol = await getSymbolFromTokenAddress(
-          exchangeConfig.asset1,
-          provider
-        )
-
-        tableData.push({
-          exchangeId: exchange.id,
-          rateFeedId: referenceRateFeedId,
-          asset0: asset0Symbol,
-          asset1: asset1Symbol,
-          status: status,
-          tradingMode: tradingMode.toString(),
-          medianThreshold: formatNumber(medianThreshold),
-          medianSmoothingFactor: formatNumber(medianSmoothingFactor),
-          medianEMA: formatEMA(medianEMA),
-          valueThreshold: formatNumber(valueThreshold),
-          valueReference: formatNumber(valueReference),
-          cooldown: `${cooldown.div(60).toString()}m`,
-        })
-      } catch (error) {
-        // Print error row
+    for (const result of results) {
+      if (result.success && result.data) {
+        tableData.push(result.data)
+        successCount++
+      } else {
+        errorCount++
         console.log(
-          (exchange.id.slice(0, 64) + '...').padEnd(66) +
-            ' | ' +
-            chalk.red('ERROR').padEnd(10) +
-            ' | ' +
-            'N/A'.padEnd(14) +
-            ' | ' +
-            'N/A'.padEnd(16) +
-            ' | ' +
-            'N/A'.padEnd(16) +
-            ' | ' +
-            'N/A'
-        )
-        console.log(
-          chalk.gray(
-            '  Error: ' +
-              (error instanceof Error ? error.message : String(error))
+          chalk.yellow(
+            `Warning: Failed to process exchange - ${result.error?.message}`
           )
         )
       }
     }
 
-    processSpinner.succeed('Exchange data processed')
+    // Display processing summary
+    if (errorCount > 0) {
+      console.log(
+        `\nProcessing summary: ${successCount} successful, ${errorCount} failed`
+      )
+    }
 
     // Filter by token symbol if specified
     let filteredData = args.token
@@ -319,6 +350,10 @@ async function main(): Promise<void> {
 
     console.log('='.repeat(totalWidth))
     console.log(`Total exchanges: ${filteredData.length}`)
+
+    // Display performance summary
+    const totalTime = ((Date.now() - startTime) / 1000).toFixed(2)
+    console.log(chalk.gray(`\nCompleted in ${totalTime}s`))
 
     // Display legend
     console.log(chalk.bold('\nLegend:'))
