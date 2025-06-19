@@ -7,7 +7,7 @@ import {
   IExchangeProvider,
   IExchangeProvider__factory,
 } from '@mento-protocol/mento-core-ts'
-import { BigNumber, BigNumberish, Signer, providers } from 'ethers'
+import { BigNumber, BigNumberish, providers, Signer } from 'ethers'
 import {
   Address,
   TradingLimit,
@@ -27,7 +27,15 @@ import {
 import { strict as assert } from 'assert'
 import { IMentoRouter, IMentoRouter__factory } from 'mento-router-ts'
 import { getAddress } from './constants/addresses'
-import { getCachedTradablePairs } from './constants/tradablePairs'
+import {
+  getCachedTradablePairs,
+  TradablePairWithSpread,
+} from './constants/tradablePairs'
+import {
+  buildConnectivityStructures,
+  generateAllRoutes,
+  selectOptimalRoutes,
+} from './routeUtils'
 
 export interface Exchange {
   providerAddr: Address
@@ -193,99 +201,44 @@ export class Mento {
    * via two-hop routes. For two-hop pairs, the path will contain two exchange hops.
    * Each TradablePair contains an id (the concatenation of the two asset symbols in alphabetical order),
    * the two Asset objects, and an array of exchange details for each hop.
+   * @param options - Optional parameters
+   * @param options.cached - Whether to use cached data (default: true)
+   * @param options.returnAllRoutes - Whether to return all possible routes or just the best one per pair (default: false)
    * @returns An array of TradablePair objects representing available trade routes.
    */
   async getTradablePairsWithPath({
     cached = true,
+    returnAllRoutes = false,
   }: {
     cached?: boolean
-  } = {}): Promise<readonly TradablePair[]> {
-    // Get tradable pairs from cache if available.
+    returnAllRoutes?: boolean
+  } = {}): Promise<readonly (TradablePair | TradablePairWithSpread)[]> {
+    // Try to get cached data first
     if (cached) {
-      const value = getCachedTradablePairs(
-        await getChainId(this.signerOrProvider)
-      )
-      if (value) {
-        return value
-      }
+      const cachedPairs = await this.getCachedTradablePairs()
+      if (cachedPairs) return cachedPairs
     }
 
-    // Retrieve direct pairs first.
+    // Generate routes from scratch
     const directPairs = await this.getDirectPairs()
+    const connectivity = buildConnectivityStructures(directPairs)
+    const allRoutes = generateAllRoutes(connectivity)
 
-    // Build helper maps:
-    // assetMap: maps token address to its Asset details.
-    const assetMap = new Map<string, Asset>()
-    // directPathMap: maps a sorted pair of token addresses (by address) to a direct exchange hop.
-    const directPathMap = new Map<
-      string,
-      { providerAddr: Address; id: string; assets: [Address, Address] }
-    >()
-    // graph: maps a token address to the set of addresses it connects to directly.
-    const graph = new Map<string, Set<string>>()
+    return selectOptimalRoutes(
+      allRoutes,
+      returnAllRoutes,
+      connectivity.assetMap
+    )
+  }
 
-    for (const pair of directPairs) {
-      const [assetA, assetB] = pair.assets
-      assetMap.set(assetA.address, assetA)
-      assetMap.set(assetB.address, assetB)
-      const sortedAddresses = [assetA.address, assetB.address].sort().join('-')
-      if (!directPathMap.has(sortedAddresses)) {
-        // Use the first available direct hop for the connectivity graph.
-        directPathMap.set(sortedAddresses, pair.path[0])
-      }
-      if (!graph.has(assetA.address)) graph.set(assetA.address, new Set())
-      if (!graph.has(assetB.address)) graph.set(assetB.address, new Set())
-      graph.get(assetA.address)!.add(assetB.address)
-      graph.get(assetB.address)!.add(assetA.address)
-    }
-
-    // Initialize tradablePairsMap with direct pairs keyed by their id (symbol-symbol).
-    const tradablePairsMap = new Map<string, TradablePair>()
-    for (const pair of directPairs) {
-      tradablePairsMap.set(pair.id, pair)
-    }
-
-    // Generate two-hop pairs using the connectivity graph.
-    // For each potential route: start -> intermediate -> end, add a two-hop pair
-    // only if no direct route (i.e. same symbol pair) exists.
-    for (const [start, neighbors] of graph.entries()) {
-      for (const intermediate of neighbors) {
-        const secondHopNeighbors = graph.get(intermediate)
-        if (!secondHopNeighbors) continue
-        for (const end of secondHopNeighbors) {
-          if (end === start) continue // Avoid self-loop.
-          const assetStart = assetMap.get(start)
-          const assetEnd = assetMap.get(end)
-          if (!assetStart || !assetEnd) continue
-          // Determine canonical pair id based on asset symbols.
-          const sortedSymbols = [assetStart.symbol, assetEnd.symbol].sort()
-          const pairId = `${sortedSymbols[0]}-${sortedSymbols[1]}`
-          if (tradablePairsMap.has(pairId)) continue // Skip if a direct pair exists.
-
-          // Retrieve the direct hops for the two segments.
-          const hop1Key = [start, intermediate].sort().join('-')
-          const hop2Key = [intermediate, end].sort().join('-')
-          const hop1 = directPathMap.get(hop1Key)
-          const hop2 = directPathMap.get(hop2Key)
-          if (!hop1 || !hop2) continue
-
-          let assets: [Asset, Asset]
-          if (assetStart.symbol <= assetEnd.symbol) {
-            assets = [assetStart, assetEnd]
-          } else {
-            assets = [assetEnd, assetStart]
-          }
-
-          tradablePairsMap.set(pairId, {
-            id: pairId,
-            assets,
-            path: [hop1, hop2],
-          })
-        }
-      }
-    }
-
-    return Array.from(tradablePairsMap.values())
+  /**
+   * Attempts to get cached tradable pairs for the current chain
+   */
+  private async getCachedTradablePairs(): Promise<
+    readonly (TradablePair | TradablePairWithSpread)[] | undefined
+  > {
+    const chainId = await getChainId(this.signerOrProvider)
+    return await getCachedTradablePairs(chainId)
   }
 
   /**
@@ -642,23 +595,24 @@ export class Mento {
     tokenIn: Address,
     tokenOut: Address
   ): Promise<TradablePair> {
-    const pair = (await this.getTradablePairsWithPath()).find(
-      (p) =>
-        // Direct path
-        (p.path.length === 1 &&
-          p.path[0].assets.includes(tokenIn) &&
-          p.path[0].assets.includes(tokenOut)) ||
-        // Routed path
-        (p.path.length === 2 &&
-          ((p.path[0].assets.includes(tokenIn) &&
-            p.path[1].assets.includes(tokenOut)) ||
-            (p.path[0].assets.includes(tokenOut) &&
-              p.path[1].assets.includes(tokenIn))))
-    )
+    const allPairs = await this.getTradablePairsWithPath()
+
+    // Find the pair for these tokens
+    const pair = allPairs.find((p) => {
+      // Check if the pair connects tokenIn to tokenOut
+      if (p.assets[0].address === tokenIn && p.assets[1].address === tokenOut) {
+        return true
+      }
+      // Check reverse direction
+      if (p.assets[0].address === tokenOut && p.assets[1].address === tokenIn) {
+        return true
+      }
+      return false
+    })
 
     if (!pair) {
       throw new Error(
-        `No tradable pair found for tokens ${tokenIn} and ${tokenOut}`
+        `No pair found for tokens ${tokenIn} and ${tokenOut}. They may not have a tradable path.`
       )
     }
 
