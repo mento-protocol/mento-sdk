@@ -4,6 +4,7 @@ import {
   TradingLimitsState,
 } from '../../../src/interfaces'
 import { ExchangeData, ScriptArgs, TradingLimit } from '../types'
+import { processAssetWithLimits } from './assetLimitProcessor'
 import { handleExchangeWithNoLimits } from './tableFormatter'
 
 /**
@@ -38,6 +39,16 @@ export function processExchangeWithLimits(
 
     // Process asset limits
     if (limits.length > 0) {
+      processAssetWithLimits(
+        asset,
+        exchangeName,
+        limits,
+        exchangeData.configByAsset,
+        exchangeData.stateByAsset,
+        args,
+        limitsTable,
+        exchangeNameDisplayed
+      )
       // Mark that we've displayed the exchange name
       exchangeNameDisplayed = true
     } else {

@@ -12,6 +12,8 @@ export interface ExchangeData {
 export interface ScriptArgs {
   token: string
   exchange: string
+  chainId?: number
+  rpcUrl?: string
 }
 
 // Export types from SDK to avoid importing from multiple places

@@ -5,11 +5,30 @@ import chalk from 'chalk'
 import { ethers } from 'ethers'
 import ora from 'ora'
 import { Mento } from '../../src/mento'
-import { getSymbolFromTokenAddress } from '../../src/utils'
 import { displayPoolConfig } from './poolConfigOrchestrator'
 import { ExchangeData } from './types'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
-import { prefetchTokenSymbols } from './utils/prefetchTokenSymbols'
+import {
+  getTokenSymbol,
+  prefetchTokenSymbols,
+} from './utils/prefetchTokenSymbols'
+
+// Batch process promises with limited concurrency
+async function batchProcess<T, R>(
+  items: T[],
+  processor: (item: T) => Promise<R>,
+  batchSize = 10
+): Promise<R[]> {
+  const results: R[] = []
+
+  for (let i = 0; i < items.length; i += batchSize) {
+    const batch = items.slice(i, i + batchSize)
+    const batchResults = await Promise.all(batch.map(processor))
+    results.push(...batchResults)
+  }
+
+  return results
+}
 
 /**
  * CLI tool to visualize all spread configurations for all exchanges in the Mento protocol.
@@ -62,51 +81,81 @@ async function main(): Promise<void> {
     )
 
     // Prefetch token symbols for better performance
+    const symbolsSpinner = ora({
+      text: 'Prefetching token symbols...',
+      color: 'cyan',
+    }).start()
     await prefetchTokenSymbols(exchanges, provider)
+    symbolsSpinner.succeed('Token symbols cached')
 
-    // Process spreads for each exchange
-    const exchangeData: ExchangeData[] = []
-    for (const exchange of exchanges) {
-      const biPoolManager = BiPoolManager__factory.connect(
-        exchange.providerAddr,
-        provider
-      )
-      const poolExchange = await biPoolManager.getPoolExchange(exchange.id)
-      if (!poolExchange) continue
+    // Process spreads for each exchange in batches
+    const configSpinner = ora({
+      text: 'Fetching pool configurations...',
+      color: 'cyan',
+    }).start()
 
-      const asset0Symbol = await getSymbolFromTokenAddress(
-        poolExchange.asset0,
-        provider
-      )
-      const asset1Symbol = await getSymbolFromTokenAddress(
-        poolExchange.asset1,
-        provider
-      )
+    // Process exchanges in batches to avoid overwhelming the RPC endpoint
+    const results = await batchProcess(
+      exchanges,
+      async (exchange) => {
+        try {
+          const biPoolManager = BiPoolManager__factory.connect(
+            exchange.providerAddr,
+            provider
+          )
+          const poolExchange = await biPoolManager.getPoolExchange(exchange.id)
+          if (!poolExchange) return null
 
-      // Convert spread from FixidityLib.Fraction to percentage
-      const spread = (Number(poolExchange.config.spread.value) / 1e24) * 100
+          // Use cached symbols instead of making additional RPC calls
+          const asset0Symbol = getTokenSymbol(poolExchange.asset0)
+          const asset1Symbol = getTokenSymbol(poolExchange.asset1)
 
-      // Convert referenceRateResetFrequency from seconds to hours
-      const resetFrequencyHours =
-        Number(poolExchange.config.referenceRateResetFrequency) / 3600
+          // Convert spread from FixidityLib.Fraction to percentage
+          const spread = (Number(poolExchange.config.spread.value) / 1e24) * 100
 
-      exchangeData.push({
-        exchangeId: exchange.id,
-        asset0: {
-          address: poolExchange.asset0,
-          symbol: asset0Symbol,
-        },
-        asset1: {
-          address: poolExchange.asset1,
-          symbol: asset1Symbol,
-        },
-        spread,
-        referenceRateFeedID: poolExchange.config.referenceRateFeedID,
-        referenceRateResetFrequency: resetFrequencyHours,
-        minimumReports: Number(poolExchange.config.minimumReports),
-        stablePoolResetSize: Number(poolExchange.config.stablePoolResetSize),
-      })
-    }
+          // Convert referenceRateResetFrequency from seconds to hours
+          const resetFrequencyHours =
+            Number(poolExchange.config.referenceRateResetFrequency) / 3600
+
+          const exchangeData: ExchangeData = {
+            exchangeId: exchange.id,
+            asset0: {
+              address: poolExchange.asset0,
+              symbol: asset0Symbol,
+            },
+            asset1: {
+              address: poolExchange.asset1,
+              symbol: asset1Symbol,
+            },
+            spread,
+            referenceRateFeedID: poolExchange.config.referenceRateFeedID,
+            referenceRateResetFrequency: resetFrequencyHours,
+            minimumReports: Number(poolExchange.config.minimumReports),
+            stablePoolResetSize: Number(
+              poolExchange.config.stablePoolResetSize
+            ),
+          }
+
+          return exchangeData
+        } catch (error) {
+          console.warn(
+            chalk.yellow(
+              `Warning: Failed to fetch config for exchange ${exchange.id}`
+            )
+          )
+          return null
+        }
+      },
+      12 // Process 12 exchanges concurrently
+    )
+
+    const exchangeData = results.filter(
+      (data): data is ExchangeData => data !== null
+    )
+
+    configSpinner.succeed(
+      `Successfully fetched ${exchangeData.length} pool configurations`
+    )
 
     // Filter by token symbol if specified
     let filteredData = args.token

@@ -3,6 +3,23 @@ import { Exchange } from '../../../src/mento'
 
 const tokenSymbolCache: { [address: string]: string } = {}
 
+// Batch process promises with limited concurrency
+async function batchProcess<T, R>(
+  items: T[],
+  processor: (item: T) => Promise<R>,
+  batchSize = 10
+): Promise<R[]> {
+  const results: R[] = []
+
+  for (let i = 0; i < items.length; i += batchSize) {
+    const batch = items.slice(i, i + batchSize)
+    const batchResults = await Promise.all(batch.map(processor))
+    results.push(...batchResults)
+  }
+
+  return results
+}
+
 export async function prefetchTokenSymbols(
   exchanges: Exchange[],
   provider: ethers.providers.Provider
@@ -17,8 +34,18 @@ export async function prefetchTokenSymbols(
     'function name() view returns (string)',
   ]
 
-  for (const tokenAddress of uniqueTokens) {
-    if (!tokenSymbolCache[tokenAddress]) {
+  const tokensToFetch = Array.from(uniqueTokens).filter(
+    (tokenAddress) => !tokenSymbolCache[tokenAddress]
+  )
+
+  if (tokensToFetch.length === 0) {
+    return
+  }
+
+  // Process tokens in batches to avoid overwhelming the RPC endpoint
+  await batchProcess(
+    tokensToFetch,
+    async (tokenAddress) => {
       try {
         const contract = new ethers.Contract(tokenAddress, erc20Abi, provider)
         const symbol = await contract.symbol()
@@ -34,8 +61,9 @@ export async function prefetchTokenSymbols(
           tokenSymbolCache[tokenAddress] = tokenAddress.slice(0, 6) + '...'
         }
       }
-    }
-  }
+    },
+    15 // Process 15 tokens concurrently
+  )
 }
 
 export function getTokenSymbol(tokenAddress: string): string {
