@@ -1,6 +1,8 @@
-import { providers } from 'ethers'
+import { BigNumber, providers } from 'ethers'
+import { formatUnits } from 'ethers/lib/utils'
 import yargsParser from 'yargs-parser'
 import { Asset, Mento, TradablePair } from '../../src/mento'
+import { findTokenBySymbol } from '../../src/utils'
 
 // ANSI color codes
 const colors = {
@@ -27,36 +29,57 @@ interface RouteArgs {
   to: string
   chainId?: number
   chain?: string
+  mode?: 'fast' | 'accurate'
+}
+
+interface RouteWithCost extends TradablePair {
+  outputAmount?: BigNumber
+  effectiveRate?: number
+  costRank?: number
+  testAmount?: BigNumber
 }
 
 function parseCommandLineArgs(): RouteArgs {
   const argv = yargsParser(process.argv.slice(2), {
-    string: ['from', 'to', 'chainId', 'chain'],
+    string: ['from', 'to', 'chainId', 'chain', 'mode'],
     alias: {
       f: 'from',
       t: 'to',
       c: 'chain', // Changed to map to chain instead of chainId
+      m: 'mode',
     },
     default: {
       chainId: '42220', // Default to Celo mainnet
+      mode: 'fast', // Default to fast heuristic mode
     },
   })
 
   if (!argv.from || !argv.to) {
     console.error(
-      `${colors.red}Usage: ts-node getRoute.ts --from <tokenSymbol> --to <tokenSymbol> [--chain <chainName>|--chainId <chainId>]${colors.reset}`
+      `${colors.red}Usage: ts-node getRoute.ts --from <tokenSymbol> --to <tokenSymbol> [--chain <chainName>|--chainId <chainId>] [--mode <fast|accurate>]${colors.reset}`
     )
     console.error(
       `${colors.yellow}Example: ts-node getRoute.ts --from cUSD --to USDC --chain celo${colors.reset}`
     )
     console.error(
-      `${colors.yellow}Example: ts-node getRoute.ts --from cUSD --to USDC --chain alfajores${colors.reset}`
+      `${colors.yellow}Example: ts-node getRoute.ts --from cUSD --to USDC --chain alfajores --mode accurate${colors.reset}`
     )
     console.error(
       `${colors.blue}Available chains: celo, alfajores${colors.reset}`
     )
     console.error(
       `${colors.blue}Available chain IDs: 42220 (Celo), 44787 (Alfajores)${colors.reset}`
+    )
+    console.error(
+      `${colors.blue}Modes: fast (heuristic-based), accurate (cost simulation)${colors.reset}`
+    )
+    process.exit(1)
+  }
+
+  // Validate mode
+  if (argv.mode && argv.mode !== 'fast' && argv.mode !== 'accurate') {
+    console.error(
+      `${colors.red}Invalid mode "${argv.mode}". Available modes: fast, accurate${colors.reset}`
     )
     process.exit(1)
   }
@@ -90,21 +113,8 @@ function parseCommandLineArgs(): RouteArgs {
     to: transformTokenSymbol(argv.to),
     chainId: getChainId(),
     chain: argv.chain,
+    mode: (argv.mode as 'fast' | 'accurate') || 'fast',
   }
-}
-
-function findTokenBySymbol(
-  pairs: readonly TradablePair[],
-  symbol: string
-): string | null {
-  for (const pair of pairs) {
-    for (const asset of pair.assets) {
-      if (asset.symbol.toLowerCase() === symbol.toLowerCase()) {
-        return asset.address
-      }
-    }
-  }
-  return null
 }
 
 /**
@@ -237,15 +247,24 @@ function buildRouteDisplay(
  * Display detailed information about a route
  */
 function displayRouteDetails(
-  tradablePair: TradablePair,
+  tradablePair: TradablePair | RouteWithCost,
   allPairs: readonly TradablePair[],
   routeIndex: number,
-  totalRoutes: number
+  totalRoutes: number,
+  isOptimal = false
 ) {
+  const routeWithCost = tradablePair as RouteWithCost // Type assertion for optional properties
+
+  const rankingBadge = isOptimal
+    ? `${colors.green}🏆 OPTIMAL${colors.reset}`
+    : routeWithCost.costRank
+    ? `${colors.yellow}#${routeWithCost.costRank}${colors.reset}`
+    : `${colors.gray}N/A${colors.reset}`
+
   console.log(
-    `${colors.magenta}📋 Route ${routeIndex + 1}/${totalRoutes} Details:${
-      colors.reset
-    }`
+    `${colors.magenta}📋 Route ${
+      routeIndex + 1
+    }/${totalRoutes} ${rankingBadge} Details:${colors.reset}`
   )
   console.log(
     `   ${colors.yellow}Pair ID:${colors.reset} ${colors.cyan}${tradablePair.id}${colors.reset}`
@@ -264,6 +283,35 @@ function displayRouteDetails(
   } else {
     console.log(
       `   ${colors.yellow}🔄 Multi-hop route (${tradablePair.path.length} hops)${colors.reset}`
+    )
+  }
+
+  // Display cost metrics if available
+  if (routeWithCost.effectiveRate !== undefined) {
+    console.log(
+      `   ${colors.yellow}💸 Effective Rate:${colors.reset} ${
+        colors.cyan
+      }${routeWithCost.effectiveRate.toFixed(6)}${colors.reset} ${
+        colors.gray
+      }(output/input ratio)${colors.reset}`
+    )
+    console.log(
+      `   ${colors.yellow}📈 Spread:${colors.reset} ${colors.cyan}${(
+        (1 - routeWithCost.effectiveRate) *
+        100
+      ).toFixed(2)}%${colors.reset}`
+    )
+  }
+
+  if (routeWithCost.outputAmount && routeWithCost.testAmount) {
+    const testAmountFormatted = formatUnits(routeWithCost.testAmount, 18)
+    const outputAmountFormatted = formatUnits(routeWithCost.outputAmount, 18)
+    console.log(
+      `   ${colors.yellow}📊 Test Results:${colors.reset} ${
+        colors.cyan
+      }${parseFloat(testAmountFormatted).toFixed(6)}${colors.reset} input → ${
+        colors.cyan
+      }${parseFloat(outputAmountFormatted).toFixed(6)}${colors.reset} output`
     )
   }
 
@@ -297,6 +345,107 @@ function displayRouteDetails(
     )
   })
   console.log()
+}
+
+/**
+ * Calculate the cost/efficiency of routes by comparing output amounts
+ * @param mento Mento instance
+ * @param routes Array of routes to evaluate
+ * @param tokenIn Input token address
+ * @param tokenOut Output token address
+ * @param testAmount Amount to use for testing (default: 1 token)
+ * @returns Routes with cost information added
+ */
+async function calculateRouteCosts(
+  mento: Mento,
+  routes: TradablePair[],
+  tokenIn: string,
+  tokenOut: string,
+  testAmount: BigNumber = BigNumber.from('1000000000000000000') // 1 token with 18 decimals
+): Promise<RouteWithCost[]> {
+  const routesWithCost: RouteWithCost[] = []
+
+  console.log(`${colors.blue}💰 Calculating route costs...${colors.reset}`)
+  console.log()
+
+  // Try different test amounts if we get overflow errors
+  const testAmounts = [
+    testAmount,
+    BigNumber.from('100000000000000000'), // 0.1 token
+    BigNumber.from('10000000000000000'), // 0.01 token
+    BigNumber.from('1000000000000000'), // 0.001 token
+  ]
+
+  for (const route of routes) {
+    let success = false
+    let outputAmount: BigNumber | undefined
+    let effectiveRate: number | undefined
+    let usedTestAmount: BigNumber = testAmount
+
+    // Try with different amounts if we get overflow
+    for (const amount of testAmounts) {
+      try {
+        // Calculate output amount for this route
+        outputAmount = await mento.getAmountOut(
+          tokenIn,
+          tokenOut,
+          amount,
+          route
+        )
+
+        // Calculate effective exchange rate (output/input)
+        effectiveRate =
+          outputAmount.mul(1000000).div(amount).toNumber() / 1000000
+        usedTestAmount = amount
+        success = true
+        break
+      } catch (error) {
+        if (!error?.toString().includes('overflow')) {
+          // If it's not an overflow error, log it and break
+          console.warn(
+            `${colors.yellow}⚠️  Could not calculate cost for route ${
+              route.id
+            }: ${error instanceof Error ? error.message : String(error)}${
+              colors.reset
+            }`
+          )
+          break
+        }
+        // Otherwise, continue with smaller amount
+      }
+    }
+
+    if (!success) {
+      console.warn(
+        `${colors.yellow}⚠️  Could not calculate cost for route ${route.id} - all test amounts failed${colors.reset}`
+      )
+    }
+
+    routesWithCost.push({
+      ...route,
+      outputAmount,
+      effectiveRate,
+      testAmount: success ? usedTestAmount : undefined,
+    })
+  }
+
+  // Sort by effective rate (highest first = best route)
+  routesWithCost.sort((a, b) => {
+    if (!a.effectiveRate && !b.effectiveRate) return 0
+    if (!a.effectiveRate) return 1
+    if (!b.effectiveRate) return -1
+    return b.effectiveRate - a.effectiveRate
+  })
+
+  // Add cost ranking
+  let rank = 1
+  routesWithCost.forEach((route) => {
+    if (route.effectiveRate) {
+      route.costRank = rank++
+    }
+  })
+
+  return routesWithCost
 }
 
 async function main() {
@@ -374,87 +523,240 @@ async function main() {
   console.log(
     `${colors.blue}📍 To: ${colors.cyan}${args.to}${colors.gray} (${toAddress})${colors.reset}`
   )
+  console.log(
+    `${colors.blue}🚀 Mode: ${colors.cyan}${
+      args.mode === 'accurate'
+        ? 'Accurate (all routes with simulation)'
+        : 'Fast (spread-based from pool configs)'
+    }${colors.reset}`
+  )
   console.log()
 
   try {
-    // Find all possible routes between the tokens
-    const allRoutes = await findAllRoutesForTokens(
-      mento,
-      fromAddress,
-      toAddress
-    )
+    if (args.mode === 'fast') {
+      // Fast mode: Use the SDK's heuristic-based route selection
+      const tradablePair = await mento.findPairForTokens(fromAddress, toAddress)
 
-    if (allRoutes.length === 0) {
-      console.error(
-        `${colors.red}❌ No routes found between ${args.from} and ${args.to}${colors.reset}`
+      console.log(
+        `${colors.bright}${colors.green}✅ Optimal route found (spread-based):${colors.reset}`
       )
       console.log()
-      console.log(`${colors.yellow}💡 This could indicate that:${colors.reset}`)
-      console.log(
-        `   ${colors.gray}• No direct or routed path exists between these tokens${colors.reset}`
-      )
-      console.log(
-        `   ${colors.gray}• The tokens are not supported on this chain${colors.reset}`
-      )
-      process.exit(1)
-    }
 
-    // Sort routes by path length (direct routes first, then by number of hops)
-    allRoutes.sort((a, b) => a.path.length - b.path.length)
-
-    console.log(
-      `${colors.bright}${colors.green}✅ Found ${allRoutes.length} route${
-        allRoutes.length > 1 ? 's' : ''
-      }:${colors.reset}`
-    )
-    console.log()
-
-    // Display summary of all routes
-    console.log(`${colors.magenta}🛣️  Available Routes Summary:${colors.reset}`)
-    allRoutes.forEach((route, index) => {
       const routeDisplay = buildRouteDisplay(
-        route,
+        tradablePair,
         allPairs,
         args.from,
         args.to
       )
       const routeType =
-        route.path.length === 1 ? 'Direct' : `${route.path.length}-hop`
+        tradablePair.path.length === 1
+          ? 'Direct'
+          : `${tradablePair.path.length}-hop`
+
       console.log(
-        `   ${colors.yellow}${index + 1}.${colors.reset} ${
-          colors.white
-        }${routeDisplay}${colors.reset} ${colors.dim}(${routeType})${
-          colors.reset
-        }`
+        `   ${colors.green}[SELECTED]${colors.reset} ${colors.white}${routeDisplay}${colors.reset} ${colors.dim}(${routeType})${colors.reset}`
       )
-    })
-    console.log()
+      console.log()
 
-    // Display detailed information for each route
-    allRoutes.forEach((route, index) => {
-      displayRouteDetails(route, allPairs, index, allRoutes.length)
-    })
+      // Show route details
+      displayRouteDetails(tradablePair, allPairs, 0, 1, true)
 
-    // Summary statistics
-    const directRoutes = allRoutes.filter((r) => r.path.length === 1)
-    const multiHopRoutes = allRoutes.filter((r) => r.path.length > 1)
-
-    console.log(`${colors.magenta}📊 Route Statistics:${colors.reset}`)
-    console.log(
-      `   ${colors.yellow}Total routes:${colors.reset} ${colors.cyan}${allRoutes.length}${colors.reset}`
-    )
-    console.log(
-      `   ${colors.yellow}Direct routes:${colors.reset} ${colors.cyan}${directRoutes.length}${colors.reset}`
-    )
-    console.log(
-      `   ${colors.yellow}Multi-hop routes:${colors.reset} ${colors.cyan}${multiHopRoutes.length}${colors.reset}`
-    )
-
-    if (multiHopRoutes.length > 0) {
-      const maxHops = Math.max(...multiHopRoutes.map((r) => r.path.length))
+      // Quick cost estimate for the selected route
       console.log(
-        `   ${colors.yellow}Maximum hops:${colors.reset} ${colors.cyan}${maxHops}${colors.reset}`
+        `${colors.magenta}💰 Route spread information:${colors.reset}`
       )
+
+      // Check if the route has spread data
+      const routeWithSpread = tradablePair as any
+      if (routeWithSpread.spreadData) {
+        console.log(
+          `   ${colors.yellow}Total Spread:${colors.reset} ${
+            colors.cyan
+          }${routeWithSpread.spreadData.totalSpreadPercent.toFixed(2)}%${
+            colors.reset
+          } ${colors.green}(from pool configurations)${colors.reset}`
+        )
+        if (routeWithSpread.spreadData.hops) {
+          routeWithSpread.spreadData.hops.forEach((hop: any, idx: number) => {
+            console.log(
+              `   ${colors.gray}Hop ${idx + 1}: ${hop.spreadPercent.toFixed(
+                2
+              )}% (${hop.exchangeId.substring(0, 8)}...)${colors.reset}`
+            )
+          })
+        }
+      } else {
+        // Fallback to simulation if no spread data
+        try {
+          const testAmount = BigNumber.from('1000000000000000000') // 1 token
+          const outputAmount = await mento.getAmountOut(
+            fromAddress,
+            toAddress,
+            testAmount,
+            tradablePair
+          )
+          const effectiveRate =
+            outputAmount.mul(1000000).div(testAmount).toNumber() / 1000000
+          const spread = (1 - effectiveRate) * 100
+
+          console.log(
+            `   ${colors.yellow}Effective Rate:${colors.reset} ${
+              colors.cyan
+            }${effectiveRate.toFixed(6)}${colors.reset}`
+          )
+          console.log(
+            `   ${colors.yellow}Estimated Spread:${colors.reset} ${
+              colors.cyan
+            }${spread.toFixed(2)}%${colors.reset} ${colors.gray}(simulated)${
+              colors.reset
+            }`
+          )
+        } catch (error) {
+          console.log(
+            `   ${colors.gray}Could not estimate spread${colors.reset}`
+          )
+        }
+      }
+    } else {
+      // Accurate mode: Find all routes and calculate costs
+      const allRoutes = await findAllRoutesForTokens(
+        mento,
+        fromAddress,
+        toAddress
+      )
+
+      if (allRoutes.length === 0) {
+        console.error(
+          `${colors.red}❌ No routes found between ${args.from} and ${args.to}${colors.reset}`
+        )
+        console.log()
+        console.log(
+          `${colors.yellow}💡 This could indicate that:${colors.reset}`
+        )
+        console.log(
+          `   ${colors.gray}• No direct or routed path exists between these tokens${colors.reset}`
+        )
+        console.log(
+          `   ${colors.gray}• The tokens are not supported on this chain${colors.reset}`
+        )
+        process.exit(1)
+      }
+
+      // Calculate costs for all routes
+      const routesWithCost = await calculateRouteCosts(
+        mento,
+        allRoutes,
+        fromAddress,
+        toAddress
+      )
+
+      console.log(
+        `${colors.bright}${colors.green}✅ Found ${
+          routesWithCost.length
+        } route${routesWithCost.length > 1 ? 's' : ''}:${colors.reset}`
+      )
+      console.log()
+
+      // Display summary of all routes sorted by cost
+      console.log(
+        `${colors.magenta}🛣️  Routes Ranked by Cost Efficiency:${colors.reset}`
+      )
+      routesWithCost.forEach((route, index) => {
+        const routeDisplay = buildRouteDisplay(
+          route,
+          allPairs,
+          args.from,
+          args.to
+        )
+        const routeType =
+          route.path.length === 1 ? 'Direct' : `${route.path.length}-hop`
+
+        const isOptimal = index === 0 && route.effectiveRate !== undefined
+        const rankDisplay = isOptimal
+          ? `${colors.green}[BEST]${colors.reset}`
+          : route.costRank
+          ? `${colors.yellow}[#${route.costRank}]${colors.reset}`
+          : `${colors.gray}[N/A]${colors.reset}`
+
+        console.log(
+          `   ${rankDisplay} ${colors.white}${routeDisplay}${colors.reset} ${colors.dim}(${routeType})${colors.reset}`
+        )
+
+        if (route.effectiveRate !== undefined) {
+          console.log(
+            `       ${colors.gray}Rate: ${route.effectiveRate.toFixed(6)} | ` +
+              `Spread: ${((1 - route.effectiveRate) * 100).toFixed(2)}%${
+                colors.reset
+              }`
+          )
+        }
+      })
+      console.log()
+
+      // Display detailed information for each route
+      routesWithCost.forEach((route, index) => {
+        const isOptimal = index === 0 && route.effectiveRate !== undefined
+        displayRouteDetails(
+          route,
+          allPairs,
+          index,
+          routesWithCost.length,
+          isOptimal
+        )
+      })
+
+      // Summary statistics
+      const directRoutes = routesWithCost.filter((r) => r.path.length === 1)
+      const multiHopRoutes = routesWithCost.filter((r) => r.path.length > 1)
+      const routesWithPricing = routesWithCost.filter(
+        (r) => r.effectiveRate !== undefined
+      )
+
+      console.log(`${colors.magenta}📊 Route Statistics:${colors.reset}`)
+      console.log(
+        `   ${colors.yellow}Total routes:${colors.reset} ${colors.cyan}${routesWithCost.length}${colors.reset}`
+      )
+      console.log(
+        `   ${colors.yellow}Direct routes:${colors.reset} ${colors.cyan}${directRoutes.length}${colors.reset}`
+      )
+      console.log(
+        `   ${colors.yellow}Multi-hop routes:${colors.reset} ${colors.cyan}${multiHopRoutes.length}${colors.reset}`
+      )
+      console.log(
+        `   ${colors.yellow}Routes with pricing:${colors.reset} ${colors.cyan}${routesWithPricing.length}${colors.reset}`
+      )
+
+      if (multiHopRoutes.length > 0) {
+        const maxHops = Math.max(...multiHopRoutes.map((r) => r.path.length))
+        console.log(
+          `   ${colors.yellow}Maximum hops:${colors.reset} ${colors.cyan}${maxHops}${colors.reset}`
+        )
+      }
+
+      // Highlight the optimal route
+      if (
+        routesWithPricing.length > 0 &&
+        routesWithCost[0].effectiveRate !== undefined
+      ) {
+        console.log()
+        console.log(
+          `${colors.bright}${colors.green}🏆 Recommended Route:${colors.reset}`
+        )
+        const optimalRoute = routesWithCost[0]
+        const routeDisplay = buildRouteDisplay(
+          optimalRoute,
+          allPairs,
+          args.from,
+          args.to
+        )
+        console.log(`   ${colors.white}${routeDisplay}${colors.reset}`)
+        console.log(
+          `   ${colors.gray}This route offers the best exchange rate with ` +
+            `${((1 - optimalRoute.effectiveRate!) * 100).toFixed(2)}% spread${
+              colors.reset
+            }`
+        )
+      }
     }
   } catch (error) {
     console.error(
