@@ -2,9 +2,7 @@ import { providers } from 'ethers'
 import { Mento } from '../src/mento'
 
 async function main() {
-  const provider = new providers.JsonRpcProvider(
-    'https://baklava-forno.celo-testnet.org'
-  )
+  const provider = new providers.JsonRpcProvider('https://forno.celo.org')
   const mento = await Mento.create(provider)
   const broker = mento.getBroker()
   console.log('Broker:\n================')

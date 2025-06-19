@@ -28,10 +28,6 @@ export async function getCachedTradablePairs(
       return await import('./tradablePairs.44787').then(
         (module) => module.tradablePairs44787
       )
-    case 62320:
-      return await import('./tradablePairs.62320').then(
-        (module) => module.tradablePairs62320
-      )
     default:
       return undefined
   }

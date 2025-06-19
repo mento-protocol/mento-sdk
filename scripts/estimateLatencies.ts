@@ -6,9 +6,7 @@ function sleep(milliseconds: number) {
 }
 
 async function main() {
-  const provider = new providers.JsonRpcProvider(
-    'https://baklava-forno.celo-testnet.org'
-  )
+  const provider = new providers.JsonRpcProvider('https://forno.celo.org')
 
   const sums = [0, 0, 0]
   const iterations = 3

@@ -2,13 +2,11 @@
 export const NETWORK_MAP: Record<string, number> = {
   celo: 42220,
   alfajores: 44787,
-  baklava: 62320,
 }
 
 // RPC URLs for different networks
 export const rpcUrls = {
   42220: 'https://forno.celo.org',
-  62320: 'https://baklava-forno.celo-testnet.org',
   44787: 'https://alfajores-forno.celo-testnet.org',
 } as const
 

@@ -51,7 +51,6 @@ The script generates TypeScript files in `src/constants/` with the format:
 
 - `tradablePairs.42220.ts` (Celo mainnet)
 - `tradablePairs.44787.ts` (Alfajores testnet)
-- `tradablePairs.62320.ts` (Baklava testnet)
 
 Each file contains:
 
