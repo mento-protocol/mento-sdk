@@ -37,7 +37,8 @@
     "tradingLimits": "ts-node scripts/printTradingLimits.ts",
     "poolConfigs": "ts-node scripts/printPoolConfigs.ts",
     "breakerBox": "ts-node scripts/printBreakerBox.ts",
-    "getRoute": "ts-node scripts/getRoute.ts"
+    "getRoute": "ts-node scripts/getRoute.ts",
+    "getTokenGraph": "ts-node scripts/visualizeTokenGraph.ts"
   },
   "husky": {
     "hooks": {
