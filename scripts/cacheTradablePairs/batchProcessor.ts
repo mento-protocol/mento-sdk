@@ -15,9 +15,6 @@ export async function processPairsInBatches(
   let processed = 0
   let errors = 0
 
-  console.log(`📊 Fetching spreads from pool configurations...`)
-  console.log(`   Using batch size of ${batchSize} concurrent requests`)
-
   for (let i = 0; i < pairs.length; i += batchSize) {
     const batch = pairs.slice(i, i + batchSize)
 
@@ -36,20 +33,25 @@ export async function processPairsInBatches(
           `\r   Processing ${processed}/${pairs.length} routes... (${errors} errors)`
         )
 
-        // Return a pair with no spread data on error
-        return {
-          ...pair,
-          spreadData: undefined,
-        } as TradablePairWithSpread
+        // Return null for failed pairs - we'll filter them out later
+        return null
       }
     })
 
     const batchResults = await Promise.all(batchPromises)
-    results.push(...batchResults)
+
+    // Filter out null results (failed calculations) and add valid ones
+    for (const result of batchResults) {
+      if (result !== null) {
+        results.push(result)
+      }
+    }
   }
 
   if (errors > 0) {
-    console.log(`\n   ⚠️  ${errors} routes failed to fetch spread data`)
+    console.log(
+      `\n   ⚠️  ${errors} routes failed to fetch spread data (excluded from cache)`
+    )
   }
 
   return results

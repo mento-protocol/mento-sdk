@@ -7,8 +7,9 @@ import { Asset, TradablePair } from './mento'
  * ROUTE GENERATION UTILITIES
  * =============================================================================
  *
- * This module contains utilities for generating optimal trading routes in the
- * Mento protocol. The main workflow is:
+ * Utilities for generating optimal trading routes in the Mento protocol.
+ *
+ * The main workflow is:
  *
  * 1. Build connectivity structures from direct trading pairs
  * 2. Generate all possible routes (direct + two-hop)
@@ -24,21 +25,6 @@ import { Asset, TradablePair } from './mento'
 
 /**
  * Type guard to check if a TradablePair has spread data.
- *
- * Spread data contains information about trading costs and is used
- * to select the most efficient routes when multiple options exist.
- *
- * @param pair - The pair to check for spread data
- * @returns true if the pair has spread data, false otherwise
- *
- * @example
- * ```typescript
- * const pair = { id: 'cUSD-cEUR', assets: [...], path: [...] }
- * if (hasSpreadData(pair)) {
- *   // pair.spreadData is now available and type-safe
- *   console.log(`Spread: ${pair.spreadData.totalSpreadPercent}%`)
- * }
- * ```
  */
 export function hasSpreadData(
   pair: TradablePair | TradablePairWithSpread

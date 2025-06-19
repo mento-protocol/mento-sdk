@@ -75,7 +75,7 @@ describe('Utils', () => {
   describe('increaseAllowance', () => {
     it('should return a populated increaseAllowance tx object', async () => {
       const fakePopulatedTxObj = {
-        from: '0x123',
+        from: '0x1234567890123456789012345678901234567890',
         data: '0x789',
       }
       increaseAllowanceFn.mockReturnValueOnce(fakePopulatedTxObj)

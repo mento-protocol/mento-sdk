@@ -54,7 +54,7 @@ export function calculateStatistics(
 export function displayStatistics(statistics: RouteStatistics): void {
   console.log(`\n📊 \x1b[1mRoute Stats\x1b[0m`)
   console.log(
-    `   📊 ${statistics.totalRoutes} total routes covering ${statistics.uniquePairs} unique trading pairs with multiple route options`
+    `   ${statistics.totalRoutes} total routes covering ${statistics.uniquePairs} unique trading pairs with multiple route options`
   )
   console.log(`   Direct routes (1 hop): ${statistics.hopDistribution.oneHop}`)
   console.log(

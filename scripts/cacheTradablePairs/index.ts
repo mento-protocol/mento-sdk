@@ -25,12 +25,13 @@ async function generateAndCacheTradablePairs(
   })
 
   // Process pairs with controlled concurrency
+  console.log(`📊 Fetching spreads from pool configurations...`)
+  console.log(`   Using batch size of ${batchSize} concurrent requests`)
   const pairsWithSpread = await processPairsInBatches(
     pairs,
     provider,
     batchSize
   )
-
   console.log(`\n✅ Spread data fetched for all routes`)
 
   // Sort all routes by spread (best routes first) to provide fallback alternatives
@@ -45,7 +46,7 @@ async function generateAndCacheTradablePairs(
   const fileName = writeToFile(chainId, content, __dirname)
 
   console.log(
-    `\n✅ Successfully cached ${statistics.totalRoutes} total routes (covering ${statistics.uniquePairs} unique pairs) with spread data to ${fileName}`
+    `\n✅ Successfully cached ${statistics.totalRoutes} total routes (covering ${statistics.uniquePairs} unique pairs) with spread data to ${fileName}\n`
   )
 }
 

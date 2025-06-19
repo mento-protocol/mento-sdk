@@ -30,8 +30,8 @@ export function writeToFile(
   content: string,
   scriptDir: string
 ): string {
-  // Create the constants directory if it doesn't exist
-  const constantsDir = path.join(scriptDir, '..', 'src', 'constants')
+  // Create the constants directory if it doesn't exist - navigate to project root first
+  const constantsDir = path.join(scriptDir, '..', '..', 'src', 'constants')
   if (!fs.existsSync(constantsDir)) {
     fs.mkdirSync(constantsDir, { recursive: true })
   }
