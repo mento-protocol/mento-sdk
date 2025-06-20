@@ -1,9 +1,9 @@
 import chalk from 'chalk'
 import { ethers } from 'ethers'
 import { batchProcess } from '../../shared/batchProcessor'
+import { getSymbolFromTokenAddress } from '../../shared/tokenUtils'
 import { ExchangeData, Mento, TradingLimit } from '../types'
 import { TradingLimitsConfig } from './../../../src/interfaces/tradingLimitsConfig'
-import { getSymbolFromTokenAddress } from './getSymbolFromTokenAddress'
 // Import type extensions for Object.groupBy
 import { TradingLimitsState } from '../../../src/interfaces'
 import './typeExtensions'

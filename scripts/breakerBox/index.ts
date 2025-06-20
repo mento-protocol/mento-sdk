@@ -10,12 +10,12 @@ import chalk from 'chalk'
 import { BigNumber, ethers } from 'ethers'
 import ora from 'ora'
 import { batchProcess } from '../shared/batchProcessor'
-import { Mento } from './types'
-import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
 import {
   getSymbolFromTokenAddress,
-  prefetchTokenSymbols,
-} from './utils/prefetchTokenSymbols'
+  prefetchTokenSymbolsFromExchanges,
+} from '../shared/tokenUtils'
+import { Mento } from './types'
+import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
 
 interface BreakerBoxData {
   exchangeId: string
@@ -86,7 +86,7 @@ async function main(): Promise<void> {
 
     // Prefetch token symbols for better performance
     if (exchanges.length > 0) {
-      await prefetchTokenSymbols(exchanges, provider)
+      await prefetchTokenSymbolsFromExchanges(exchanges, provider)
     }
 
     // Process exchanges in parallel

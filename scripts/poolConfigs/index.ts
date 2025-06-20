@@ -4,15 +4,14 @@ import { BiPoolManager__factory } from '@mento-protocol/mento-core-ts'
 import chalk from 'chalk'
 import { ethers } from 'ethers'
 import ora from 'ora'
-import { Mento } from '../../src/mento'
 import { batchProcess } from '../shared/batchProcessor'
-import { displayPoolConfig } from './poolConfigOrchestrator'
-import { ExchangeData } from './types'
-import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
 import {
-  getTokenSymbol,
-  prefetchTokenSymbols,
-} from './utils/prefetchTokenSymbols'
+  getSymbolFromTokenAddress,
+  prefetchTokenSymbolsFromExchanges,
+} from '../shared/tokenUtils'
+import { displayPoolConfig } from './poolConfigOrchestrator'
+import { ExchangeData, Mento } from './types'
+import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
 
 /**
  * CLI tool to visualize all spread configurations for all exchanges in the Mento protocol.
@@ -65,12 +64,9 @@ async function main(): Promise<void> {
     )
 
     // Prefetch token symbols for better performance
-    const symbolsSpinner = ora({
-      text: 'Prefetching token symbols...',
-      color: 'cyan',
-    }).start()
-    await prefetchTokenSymbols(exchanges, provider)
-    symbolsSpinner.succeed('Token symbols cached')
+    if (exchanges.length > 0) {
+      await prefetchTokenSymbolsFromExchanges(exchanges, provider)
+    }
 
     // Process spreads for each exchange in batches
     const configSpinner = ora({
@@ -91,8 +87,14 @@ async function main(): Promise<void> {
           if (!poolExchange) return null
 
           // Use cached symbols instead of making additional RPC calls
-          const asset0Symbol = getTokenSymbol(poolExchange.asset0)
-          const asset1Symbol = getTokenSymbol(poolExchange.asset1)
+          const asset0Symbol = await getSymbolFromTokenAddress(
+            poolExchange.asset0,
+            provider
+          )
+          const asset1Symbol = await getSymbolFromTokenAddress(
+            poolExchange.asset1,
+            provider
+          )
 
           // Convert spread from FixidityLib.Fraction to percentage
           const spread = (Number(poolExchange.config.spread.value) / 1e24) * 100

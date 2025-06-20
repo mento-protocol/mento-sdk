@@ -13,7 +13,12 @@
 
 import { formatUnits, parseUnits } from 'ethers/lib/utils'
 import ora from 'ora'
-import { Mento } from '../../src/mento'
+import { Mento, TradablePair } from '../../src/mento'
+import {
+  buildConnectivityStructures,
+  generateAllRoutes,
+  selectOptimalRoutes,
+} from '../../src/routeUtils'
 import { calculateAllRouteQuotes, calculateSingleQuote } from './calculator'
 import { parseCommandLineArgs } from './cli'
 import { CHAIN_NAMES } from './config'
@@ -25,7 +30,6 @@ import {
   displayRouteDetails,
   prepareFormattedRoutes,
 } from './formatter'
-import { findAllRoutesForTokens } from './routeFinder'
 import { buildRouteDisplay, calculateCompoundSpread } from './spread'
 import { RouteInfo } from './types'
 import { cleanupProvider, createProvider } from './utils/provider'
@@ -34,6 +38,75 @@ import {
   roundToMaxDecimals,
   validateTokens,
 } from './utils/token'
+
+/**
+ * Finds all possible trading routes between two tokens, including direct and multi-hop paths.
+ * This is the main entry point for route discovery.
+ *
+ * OPTIMIZED VERSION: Uses src/routeUtils for efficient graph-based route finding
+ * with intelligent route selection and spread-based optimization.
+ *
+ * @param mento - Mento SDK instance for accessing trading pairs
+ * @param tokenIn - Source token address
+ * @param tokenOut - Destination token address
+ * @returns Array of all possible routes sorted by efficiency
+ */
+async function findAllRoutesForTokens(
+  mento: Mento,
+  tokenIn: string,
+  tokenOut: string
+): Promise<TradablePair[]> {
+  // Get direct pairs and build connectivity structures
+  const directPairs = await mento.getDirectPairs()
+  const connectivityData = buildConnectivityStructures(directPairs)
+
+  // Generate all possible routes using graph traversal
+  const allRoutes = generateAllRoutes(connectivityData)
+
+  // For --all flag, we want to return all possible routes, but deduplicated
+  // Get all routes with returnAllRoutes=true to see all possibilities
+  const allPossibleRoutes = selectOptimalRoutes(
+    allRoutes,
+    true,
+    connectivityData.addrToSymbol
+  )
+
+  // Filter to routes that match the specific token pair (tokenIn -> tokenOut)
+  const relevantRoutes = allPossibleRoutes.filter((route) => {
+    // Check if this route connects our tokens
+    const routeAddresses = route.assets.map((asset) => asset.address)
+    return routeAddresses.includes(tokenIn) && routeAddresses.includes(tokenOut)
+  })
+
+  // Deduplicate routes by path signature to avoid showing identical routes multiple times
+  const uniqueRoutes = deduplicateRoutes(relevantRoutes as TradablePair[])
+
+  return uniqueRoutes
+}
+
+/**
+ * Deduplicates routes by comparing their path signatures.
+ * Routes with identical exchange hops are considered duplicates.
+ */
+function deduplicateRoutes(routes: TradablePair[]): TradablePair[] {
+  const seenPathSignatures = new Set<string>()
+  const uniqueRoutes: TradablePair[] = []
+
+  for (const route of routes) {
+    // Create a signature based on the exchange hops
+    const pathSignature = route.path
+      .map((hop) => `${hop.id}:${hop.providerAddr}`)
+      .sort() // Sort to handle path direction differences
+      .join('|')
+
+    if (!seenPathSignatures.has(pathSignature)) {
+      seenPathSignatures.add(pathSignature)
+      uniqueRoutes.push(route)
+    }
+  }
+
+  return uniqueRoutes
+}
 
 /**
  * Handles the case when user wants to see all routes WITH quote calculations.
