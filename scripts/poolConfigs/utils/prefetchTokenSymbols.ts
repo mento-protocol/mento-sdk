@@ -29,7 +29,7 @@ export async function prefetchTokenSymbols(
   // Process tokens in batches to avoid overwhelming the RPC endpoint
   await batchProcess(
     tokensToFetch,
-    async (tokenAddress, index) => {
+    async (tokenAddress) => {
       try {
         const contract = new ethers.Contract(tokenAddress, erc20Abi, provider)
         const symbol = await contract.symbol()

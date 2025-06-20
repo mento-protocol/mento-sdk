@@ -1,5 +1,6 @@
 import { ethers } from 'ethers'
 import ora from 'ora'
+import { Exchange } from '../../../src/mento'
 import { batchProcess } from '../../shared/batchProcessor'
 
 const tokenSymbolCache: { [address: string]: string } = {}
@@ -12,7 +13,7 @@ const tokenSymbolCache: { [address: string]: string } = {}
  * @param provider - The ethers provider
  */
 export async function prefetchTokenSymbols(
-  exchanges: any[],
+  exchanges: Exchange[],
   provider: ethers.providers.Provider
 ): Promise<void> {
   const spinner = ora({
@@ -64,7 +65,7 @@ export async function prefetchTokenSymbols(
     // Fetch all token symbols in batches to avoid overwhelming RPC endpoint
     await batchProcess(
       Array.from(uniqueTokenAddresses),
-      async (address, index) => {
+      async (address) => {
         await getSymbolFromTokenAddress(address, provider)
       },
       15 // Process 15 tokens concurrently

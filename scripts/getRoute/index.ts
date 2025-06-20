@@ -3,6 +3,7 @@ import { formatUnits } from 'ethers/lib/utils'
 import yargsParser from 'yargs-parser'
 import { Asset, Mento, TradablePair } from '../../src/mento'
 import { findTokenBySymbol } from '../../src/utils'
+import { TradablePairWithSpread } from './../../dist/cjs/constants/tradablePairs44787.d'
 
 // ANSI color codes
 const colors = {
@@ -567,7 +568,7 @@ async function main() {
       )
 
       // Check if the route has spread data
-      const routeWithSpread = tradablePair as any
+      const routeWithSpread = tradablePair as TradablePairWithSpread
       if (routeWithSpread.spreadData) {
         console.log(
           `   ${colors.yellow}Total Spread:${colors.reset} ${
@@ -577,7 +578,7 @@ async function main() {
           } ${colors.green}(from pool configurations)${colors.reset}`
         )
         if (routeWithSpread.spreadData.hops) {
-          routeWithSpread.spreadData.hops.forEach((hop: any, idx: number) => {
+          routeWithSpread.spreadData.hops.forEach((hop, idx) => {
             console.log(
               `   ${colors.gray}Hop ${idx + 1}: ${hop.spreadPercent.toFixed(
                 2

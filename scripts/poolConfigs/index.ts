@@ -81,7 +81,7 @@ async function main(): Promise<void> {
     // Process exchanges in batches to avoid overwhelming the RPC endpoint
     const results = await batchProcess(
       exchanges,
-      async (exchange, index) => {
+      async (exchange) => {
         try {
           const biPoolManager = BiPoolManager__factory.connect(
             exchange.providerAddr,

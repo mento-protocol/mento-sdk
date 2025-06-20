@@ -48,8 +48,9 @@ export interface Asset {
   symbol: string
 }
 
+export type TradablePairID = `${Address}-${Address}`
 export interface TradablePair {
-  id: string
+  id: TradablePairID
   assets: [Asset, Asset]
   path: Array<{
     providerAddr: Address
@@ -165,7 +166,7 @@ export class Mento {
       ])
       // Determine canonical order by symbol
       let assets: [Asset, Asset]
-      let pairId: string
+      let pairId: TradablePairID
       if (symbol0 <= symbol1) {
         assets = [
           { address: token0, symbol: symbol0 },
@@ -227,7 +228,7 @@ export class Mento {
     return selectOptimalRoutes(
       allRoutes,
       returnAllRoutes,
-      connectivity.assetMap
+      connectivity.addrToSymbol
     )
   }
 

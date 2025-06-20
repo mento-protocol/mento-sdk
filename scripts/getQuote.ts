@@ -323,15 +323,11 @@ async function calculateQuotesForAllRoutes(
   amountIn: BigNumber,
   fromSymbol: string,
   toSymbol: string,
-  provider: providers.Provider,
   allPairs: readonly TradablePair[] | readonly TradablePairWithSpread[]
 ): Promise<RouteQuote[]> {
   const spinner = ora('Calculating quotes for all routes...').start()
 
   try {
-    // Get token decimals for proper display formatting
-    const toDecimals = await getTokenDecimals(tokenOut, provider)
-
     // Limit the number of routes to avoid excessive computation
     const limitedRoutes = routes.slice(0, 10) // Limit to first 10 routes
 
@@ -574,7 +570,6 @@ async function displaySingleQuote(
       tradablePair
     )
     // Get token decimals for proper calculation
-    const fromDecimals = await getTokenDecimals(fromAddress, provider)
     const toDecimals = await getTokenDecimals(toAddress, provider)
 
     const outputAmount = formatUnits(amountOut, toDecimals)
@@ -678,7 +673,6 @@ async function main() {
         amountIn,
         args.from,
         args.to,
-        provider,
         allPairs
       )
 
