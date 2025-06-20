@@ -1,0 +1,185 @@
+import { Asset, TradablePair } from '../../src/mento'
+import { TradablePairWithSpread } from '../cacheTradablePairs/config'
+import { DEFAULT_SPREAD_FALLBACK } from './config'
+
+/**
+ * Calculates the total spread for a trading route by compounding spreads across all hops.
+ *
+ * For multi-hop routes, spreads compound multiplicatively:
+ * - Single hop: spread = pairSpread
+ * - Multi-hop: spread = (1 - ((1 - spread1) * (1 - spread2) * ...))
+ *
+ * @param route - The route to calculate spread for
+ * @param allPairs - All available pairs with spread data
+ * @returns Total spread as a decimal (e.g., 0.005 = 0.5%)
+ */
+export function calculateCompoundSpread(
+  route: TradablePair,
+  allPairs: readonly TradablePair[] | readonly TradablePairWithSpread[]
+): number {
+  if (route.path.length === 1) {
+    return getFixedSpreadForRoute(route, allPairs)
+  }
+
+  // For multi-hop routes, calculate compound spread
+  let compoundRate = 1 // Start with 100% (no loss)
+
+  for (const hop of route.path) {
+    const hopSpreadPercent = getHopSpreadPercent(hop, allPairs)
+    // Convert spread percentage to rate multiplier
+    // If spread is 0.25%, rate multiplier is 0.9975 (1 - 0.0025)
+    const hopRate = 1 - hopSpreadPercent / 100
+    compoundRate *= hopRate
+  }
+
+  // Convert back to spread percentage
+  return (1 - compoundRate) * 100
+}
+
+/**
+ * Creates a human-readable display string for a trading route.
+ * Shows token symbols and route structure (e.g., "USDC → cUSD → cEUR").
+ *
+ * @param tradablePair - The route to display
+ * @param fromSymbol - Symbol of the input token
+ * @param toSymbol - Symbol of the output token
+ * @param allPairs - All pairs data for symbol resolution
+ * @returns Formatted route string
+ */
+export function buildRouteDisplay(
+  tradablePair: TradablePair,
+  fromSymbol: string,
+  toSymbol: string,
+  allPairs: readonly TradablePair[] | readonly TradablePairWithSpread[]
+): string {
+  if (tradablePair.path.length === 1) {
+    return `${fromSymbol} → ${toSymbol}`
+  }
+
+  const routeSymbols = buildRouteSymbols(
+    tradablePair,
+    fromSymbol,
+    toSymbol,
+    allPairs
+  )
+
+  return routeSymbols.length < tradablePair.path.length + 1
+    ? `${fromSymbol} → ${toSymbol} (${tradablePair.path.length} hops)`
+    : routeSymbols.join(' → ')
+}
+
+function getFixedSpreadForRoute(
+  route: TradablePair,
+  allPairs: readonly TradablePair[] | readonly TradablePairWithSpread[]
+): number {
+  const matchingPair = findMatchingPair(route, allPairs)
+
+  if (matchingPair && hasSpreadData(matchingPair)) {
+    return (matchingPair.spreadData as { totalSpreadPercent: number })
+      .totalSpreadPercent
+  }
+
+  return route.path.length * DEFAULT_SPREAD_FALLBACK
+}
+
+function getHopSpreadPercent(
+  hop: unknown,
+  allPairs: readonly TradablePair[] | readonly TradablePairWithSpread[]
+): number {
+  const directPair = allPairs.find(
+    (pair) =>
+      pair.path.length === 1 &&
+      // @ts-ignore - hop structure is known
+      pair.path[0].id === hop.id &&
+      // @ts-ignore - hop structure is known
+      pair.path[0].providerAddr === hop.providerAddr
+  )
+
+  if (directPair && hasSpreadData(directPair)) {
+    return (directPair.spreadData as { totalSpreadPercent: number })
+      .totalSpreadPercent
+  }
+
+  return DEFAULT_SPREAD_FALLBACK
+}
+
+function findMatchingPair(
+  route: TradablePair,
+  allPairs: readonly TradablePair[] | readonly TradablePairWithSpread[]
+): TradablePair | TradablePairWithSpread | undefined {
+  return allPairs.find((pair) => {
+    if (pair.path.length !== route.path.length) return false
+    return route.path.every((hop, index) => {
+      const pairHop = pair.path[index]
+      return (
+        hop.id === pairHop.id &&
+        hop.providerAddr === pairHop.providerAddr &&
+        hop.assets[0] === pairHop.assets[0] &&
+        hop.assets[1] === pairHop.assets[1]
+      )
+    })
+  })
+}
+
+function hasSpreadData(
+  pair: TradablePair | TradablePairWithSpread
+): pair is TradablePairWithSpread {
+  return (
+    'spreadData' in pair &&
+    pair.spreadData &&
+    typeof pair.spreadData === 'object' &&
+    'totalSpreadPercent' in pair.spreadData
+  )
+}
+
+function buildRouteSymbols(
+  tradablePair: TradablePair,
+  fromSymbol: string,
+  toSymbol: string,
+  allPairs: readonly TradablePair[] | readonly TradablePairWithSpread[]
+): string[] {
+  const routeSymbols = [fromSymbol]
+  const addressToSymbol = createAddressToSymbolMap(allPairs)
+
+  for (let i = 0; i < tradablePair.path.length; i++) {
+    const hop = tradablePair.path[i]
+
+    if (i === tradablePair.path.length - 1) {
+      routeSymbols.push(toSymbol)
+    } else {
+      const currentToken =
+        i === 0
+          ? tradablePair.assets[0].address.toLowerCase()
+          : routeSymbols[routeSymbols.length - 1]
+
+      const intermediateAddress = hop.assets.find(
+        (addr: string) => addr.toLowerCase() !== currentToken
+      )
+
+      if (intermediateAddress) {
+        const intermediateSymbol = addressToSymbol.get(
+          intermediateAddress.toLowerCase()
+        )
+        if (intermediateSymbol && !routeSymbols.includes(intermediateSymbol)) {
+          routeSymbols.push(intermediateSymbol)
+        }
+      }
+    }
+  }
+
+  return routeSymbols
+}
+
+function createAddressToSymbolMap(
+  allPairs: readonly TradablePair[] | readonly TradablePairWithSpread[]
+): Map<string, string> {
+  const addressToSymbol = new Map<string, string>()
+
+  allPairs.forEach((pair) => {
+    pair.assets.forEach((asset: Asset) => {
+      addressToSymbol.set(asset.address.toLowerCase(), asset.symbol)
+    })
+  })
+
+  return addressToSymbol
+}
