@@ -1,6 +1,14 @@
-import { TradablePairWithSpread } from './constants/tradablePairs'
+import { TradablePairWithSpread } from './constants'
 import { Address } from './interfaces'
-import { Asset, TradablePair } from './mento'
+import { Asset, TradablePair, TradablePairID } from './mento'
+
+type TokenSymbol = string
+
+interface ExchangeDetails {
+  providerAddr: Address
+  id: string
+  assets: [Address, Address]
+}
 
 /**
  * =============================================================================
@@ -24,24 +32,8 @@ import { Asset, TradablePair } from './mento'
  */
 
 /**
- * Type guard to check if a TradablePair has spread data.
- */
-export function hasSpreadData(
-  pair: TradablePair | TradablePairWithSpread
-): pair is TradablePairWithSpread {
-  return 'spreadData' in pair && pair.spreadData !== undefined
-}
-
-/**
- * Connectivity data structure that represents the trading graph.
- *
- * "Connectivity structures" are data representations that help us efficiently
- * answer the question: "How can I trade from token A to token B?"
- *
- * Think of it like a road map system:
- * - **Tokens are cities** (cUSD, CELO, cEUR, etc.)
- * - **Direct exchanges are roads** connecting two cities
- * - **We want to find paths** between any two cities
+ * Connectivity data structure that represents the token graph connecting all tokens.
+ * Helps to efficiently answer: "How can I trade from token A to token B?"
  *
  * CONCRETE EXAMPLE:
  * Given these direct trading pairs:
@@ -49,111 +41,91 @@ export function hasSpreadData(
  * - CELO ↔ cEUR (direct exchange exists)
  * - cUSD ↔ cREAL (direct exchange exists)
  *
- * We build these structures:
- *
- * 1. **assetMap**: Quick lookup of token details
- *    ```
- *    '0x765D...' → { address: '0x765D...', symbol: 'cUSD' }
- *    '0x471E...' → { address: '0x471E...', symbol: 'CELO' }
- *    '0xD876...' → { address: '0xD876...', symbol: 'cEUR' }
- *    ```
- *
- * 2. **directPathMap**: Quick lookup of exchange details between token pairs
- *    ```
- *    'celo_addr-cusd_addr' → { exchange details for cUSD↔CELO }
- *    'celo_addr-ceur_addr' → { exchange details for CELO↔cEUR }
- *    'cusd_addr-creal_addr' → { exchange details for cUSD↔cREAL }
- *    ```
- *
- * 3. **graph**: Adjacency list showing which tokens connect to which
- *    ```
- *    'cusd_addr' → Set(['celo_addr', 'creal_addr'])  // cUSD connects to CELO and cREAL
- *    'celo_addr' → Set(['cusd_addr', 'ceur_addr'])   // CELO connects to cUSD and cEUR
- *    'ceur_addr' → Set(['celo_addr'])                // cEUR connects to CELO
- *    'creal_addr' → Set(['cusd_addr'])               // cREAL connects to cUSD
- *    ```
- *
- * 4. **Visual representation of the connectivity graph**:
- *    ```
- *    cREAL ---- cUSD ---- CELO ---- cEUR
- *    ```
- *
- * **How this enables route finding**:
- * - **Direct route**: cUSD → cEUR? Check graph: cUSD connects to [CELO, cREAL], none is cEUR → No direct route
- * - **Two-hop route**: cUSD → ? → cEUR?
+ * How route finding works:
+ * - Direct route: cUSD → cEUR? Check token graph: cUSD connects to [CELO, cREAL], none is cEUR → No direct route
+ * - Two-hop route: cUSD → ? → cEUR?
  *   - cUSD connects to CELO, CELO connects to cEUR → Found route: cUSD → CELO → cEUR
  *   - cUSD connects to cREAL, cREAL connects to [cUSD] → No route via cREAL
  *
  * The "connectivity" part means we can quickly traverse the network of
  * token connections to find all possible trading paths.
  */
+
 export interface ConnectivityData {
-  /** Maps token address to Asset object with symbol and address */
-  assetMap: Map<string, Asset>
+  /** Maps token address to symbol for efficient lookups
+   *
+   *    ```
+   *    '0x765D...' → 'cUSD'
+   *    '0x471E...' → 'CELO'
+   *    '0xD876...' → 'cEUR'
+   *    ```
+   */
+  addrToSymbol: Map<Address, TokenSymbol>
 
-  /** Maps sorted token address pairs to their direct exchange hop details */
-  directPathMap: Map<
-    string,
-    { providerAddr: Address; id: string; assets: [Address, Address] }
-  >
+  /** Adjacency list mapping which tokens connect to which
+   * Used for finding two-hop routes by traversing token → neighbor → neighbor.
+   *
+   * Example for a cUSD => cEUR swap: First we find cUSD → [CELO, cKES, ...]
+   * Then we find CELO → [cUSD, cEUR, ...] = found route via cUSD → CELO → cEUR
+   *
+   *    ```
+   *    'cUSD_addr' → Set(['CELO_addr', 'cKES_addr'])  // cUSD connects to CELO and cKES
+   *    'CELO_addr' → Set(['cUSD_addr', 'cEUR_addr'])  // CELO connects to cUSD and cEUR
+   *    'cEUR_addr' → Set(['CELO_addr'])               // cEUR connects to CELO
+   *    'cKES_addr' → Set(['cUSD_addr'])               // cKES connects to cUSD
+   *    ```
+   */
+  tokenGraph: Map<Address, Set<Address>>
 
-  /** Adjacency list: maps each token address to its directly connected tokens */
-  graph: Map<string, Set<string>>
+  /** Maps sorted token address pairs to their direct exchange hop details
+   *    ```
+   *    'CELO_addr-cEUR_addr' → { exchange details for CELO ↔ cEUR }
+   *    'CELO_addr-cUSD_addr' → { exchange details for CELO ↔ cUSD }
+   *    'cUSD_addr-cKES_addr' → { exchange details for cUSD ↔ cKES }
+   *    ```
+   */
+  directPathMap: Map<TradablePairID, ExchangeDetails>
 
-  /** Original direct trading pairs for reference */
+  /** Original direct trading pairs from mento.getDirectPairs() for reference */
   directPairs: TradablePair[]
 }
 
 /**
  * Builds the connectivity data structures needed for route generation.
  *
- * This function transforms a list of direct trading pairs into efficient
- * data structures that allow us to quickly find trading routes.
- *
- * **Why do we need multiple data structures?**
- * Each structure serves a specific purpose in route finding:
- *
- * 1. **assetMap**: When we have a token address, quickly get its symbol
- *    - Used for: Creating canonical pair IDs (alphabetical symbol ordering)
- *    - Example: '0x765D...' → 'cUSD' (needed to create 'cEUR-cUSD' pair ID)
- *
- * 2. **directPathMap**: When we know two tokens connect, get exchange details
- *    - Used for: Building the actual trading path with exchange information
- *    - Example: Given tokens A and B, get { providerAddr, exchangeId, assets }
- *
- * 3. **graph**: When we want to explore connections, see all neighbors
- *    - Used for: Finding two-hop routes by traversing token → neighbor → neighbor
- *    - Example: cUSD → [CELO, cREAL], then CELO → [cUSD, cEUR] = found cUSD→CELO→cEUR
+ * Transforms a list of direct trading pairs into our ConnectivityData
+ * that allow us to quickly find trading routes.
  *
  * **Construction Process:**
+ *
  * ```
- * Input: [
- *   { id: 'cUSD-CELO', assets: [cUSD, CELO], path: [exchange1] },
- *   { id: 'CELO-cEUR', assets: [CELO, cEUR], path: [exchange2] }
+ * Input: TradablePairs = [
+ *   { id: 'cUSD-CELO', assets: [cUSD, CELO], path: [exchange1_CELO_cUSD] },
+ *   { id: 'CELO-cEUR', assets: [CELO, cEUR], path: [exchange2_CELO_cEUR] }
  * ]
  *
- * Step 1 - Build assetMap:
- *   cUSD.address → { address: cUSD.address, symbol: 'cUSD' }
- *   CELO.address → { address: CELO.address, symbol: 'CELO' }
- *   cEUR.address → { address: cEUR.address, symbol: 'cEUR' }
+ * Step 1 - Build addrToSymbol map:
+ *   cUSD.address → 'cUSD'
+ *   CELO.address → 'CELO'
+ *   cEUR.address → 'cEUR'
  *
- * Step 2 - Build directPathMap (sorted keys for consistency):
- *   'celo_addr-cusd_addr' → exchange1  // Note: sorted alphabetically
- *   'celo_addr-ceur_addr' → exchange2
+ * Step 2 - Build directPathMap (sorted alphabetically for consistency):
+ *   'CELO_addr-cEUR_addr' → exchange2_CELO_cEUR
+ *   'CELO_addr-cUSD_addr' → exchange1_CELO_cUSD
  *
- * Step 3 - Build bidirectional graph:
+ * Step 3 - Build bidirectional tokenGraph:
  *   cUSD.address → Set([CELO.address])
  *   CELO.address → Set([cUSD.address, cEUR.address])
  *   cEUR.address → Set([CELO.address])
  * ```
  *
  * **Result**: We can now efficiently answer:
- * - "What's the symbol for address X?" → assetMap.get(X)
- * - "What exchange connects tokens X and Y?" → directPathMap.get(sortedKey)
- * - "What tokens can I reach from token X?" → graph.get(X)
+ * - "What's the symbol for address X?" → addrToSymbol.get(addr)
+ * - "What exchange connects tokens X and Y?" → directPathMap.get(sortedAddressPairKey)
+ * - "What tokens can I reach from token X?" → tokenGraph.get(X)
  *
- * @param directPairs - Array of direct trading pairs from exchanges
- * @returns Connectivity data structures for efficient route generation
+ * @param directPairs - Array of direct trading pairs
+ * @returns Connectivity data structure for efficient route generation
  *
  * @example
  * ```typescript
@@ -162,69 +134,52 @@ export interface ConnectivityData {
  *   { id: 'CELO-cEUR', assets: [CELO, cEUR], path: [exchange2] }
  * ]
  *
- * const connectivity = buildConnectivityStructures(directPairs)
+ * const connectivityData = buildConnectivityStructures(directPairs)
  *
  * // Now we can efficiently find routes:
- * // 1. Check if cUSD connects to anything: connectivity.graph.get(cUSD.address) → [CELO.address]
- * // 2. Check if CELO connects to cEUR: connectivity.graph.get(CELO.address) → [cUSD.address, cEUR.address] ✓
- * // 3. Get exchange details: connectivity.directPathMap.get('celo_addr-ceur_addr') → exchange2
+ * // 1. Check if cUSD connects to anything: connectivityData.tokenGraph.get(cUSD.address) → [CELO.address]
+ * // 2. Check if CELO connects to cEUR: connectivityData.tokenGraph.get(CELO.address) → [cUSD.address, cEUR.address] ✓
+ * // 3. Get exchange details: connectivityData.directPathMap.get('CELO_addr-cEUR_addr') → exchange2_CELO_cEUR
  * // Result: Found route cUSD → CELO → cEUR with exchange details
  * ```
  */
 export function buildConnectivityStructures(
   directPairs: TradablePair[]
 ): ConnectivityData {
-  const assetMap = new Map<string, Asset>()
+  const addrToSymbol = new Map<Address, TokenSymbol>()
   const directPathMap = new Map<
-    string,
+    TradablePairID,
     { providerAddr: Address; id: string; assets: [Address, Address] }
   >()
-  const graph = new Map<string, Set<string>>()
+  const tokenGraph = new Map<string, Set<string>>()
 
   for (const pair of directPairs) {
     const [assetA, assetB] = pair.assets
 
-    // Build asset map for quick token address -> Asset lookup
-    assetMap.set(assetA.address, assetA)
-    assetMap.set(assetB.address, assetB)
+    // Build address-to-symbol map for quick symbol lookups
+    addrToSymbol.set(assetA.address, assetA.symbol)
+    addrToSymbol.set(assetB.address, assetB.symbol)
 
     // Build direct path map (sorted addresses as key for consistency)
-    // This allows quick lookup of exchange details for any token pair
-    const sortedAddresses = [assetA.address, assetB.address].sort().join('-')
+    // for quick lookup of exchange details for any token pair
+    const sortedAddresses = [assetA.address, assetB.address]
+      .sort()
+      .join('-') as TradablePairID
     if (!directPathMap.has(sortedAddresses)) {
       directPathMap.set(sortedAddresses, pair.path[0])
     }
 
     // Build bidirectional connectivity graph for route traversal
     // Each token can reach its directly connected tokens
-    if (!graph.has(assetA.address)) graph.set(assetA.address, new Set())
-    if (!graph.has(assetB.address)) graph.set(assetB.address, new Set())
-    graph.get(assetA.address)!.add(assetB.address)
-    graph.get(assetB.address)!.add(assetA.address)
+    if (!tokenGraph.has(assetA.address))
+      tokenGraph.set(assetA.address, new Set())
+    if (!tokenGraph.has(assetB.address))
+      tokenGraph.set(assetB.address, new Set())
+    tokenGraph.get(assetA.address)!.add(assetB.address)
+    tokenGraph.get(assetB.address)!.add(assetA.address)
   }
 
-  /*
-   * VISUAL WALKTHROUGH - How route finding works:
-   *
-   * 1. INPUT: Direct pairs [cUSD-CELO, CELO-cEUR, cUSD-cREAL]
-   *
-   * 2. GRAPH STRUCTURE BUILT:
-   *    cREAL ---- cUSD ---- CELO ---- cEUR
-   *
-   * 3. FIND ROUTE: cUSD → cEUR
-   *    a) Check graph.get('cusd_addr') → ['celo_addr', 'creal_addr']
-   *    b) For each neighbor, check their connections:
-   *       - CELO: graph.get('celo_addr') → ['cusd_addr', 'ceur_addr'] ✓ Found cEUR!
-   *       - cREAL: graph.get('creal_addr') → ['cusd_addr'] ✗ No cEUR
-   *    c) Route found: cUSD → CELO → cEUR
-   *    d) Get exchange details:
-   *       - Hop 1: directPathMap.get('celo_addr-cusd_addr') → exchange details
-   *       - Hop 2: directPathMap.get('celo_addr-ceur_addr') → exchange details
-   *
-   * 4. RESULT: Complete tradable pair with routing path
-   */
-
-  return { assetMap, directPathMap, graph, directPairs }
+  return { addrToSymbol, directPathMap, tokenGraph, directPairs }
 }
 
 /**
@@ -245,76 +200,87 @@ export function buildConnectivityStructures(
  * **Canonical Pair IDs**: All pairs use alphabetically sorted symbols
  * (e.g., 'cEUR-cUSD' not 'cUSD-cEUR') for consistent identification.
  *
- * @param connectivity - The connectivity data from buildConnectivityStructures
+ * @param connectivityData - The connectivity data from buildConnectivityStructures()
  * @returns Map of pair ID -> array of possible routes for that pair
  *
  * @example
  * ```typescript
- * // Given direct pairs: cUSD-CELO, CELO-cEUR, cUSD-cREAL
- * const allRoutes = generateAllRoutes(connectivity)
+ * // Given direct pairs: cUSD-CELO, CELO-cEUR, cUSD-USDC
+ * const allRoutes = generateAllRoutes(connectivityData)
  *
  * // Results might include:
- * // 'cEUR-cUSD' -> [
- * //   { path: [cUSD->CELO, CELO->cEUR] },  // two-hop via CELO
- * //   { path: [cUSD->cREAL, cREAL->cEUR] } // two-hop via cREAL (if exists)
- * // ]
  * // 'cUSD-CELO' -> [{ path: [cUSD->CELO] }] // direct route
+ * // 'cEUR-cUSD' -> [
+ * //   { path: [cUSD->USDC, USDC->cEUR] } // two-hop via USDC
+ * //   { path: [cUSD->CELO, CELO->cEUR] } // two-hop via CELO
+ * // ]
  * ```
  */
 export function generateAllRoutes(
-  connectivity: ConnectivityData
-): Map<string, TradablePair[]> {
-  const { assetMap, directPathMap, graph, directPairs } = connectivity
-  const allCandidates = new Map<string, TradablePair[]>()
+  connectivityData: ConnectivityData
+): Map<TradablePairID, TradablePair[]> {
+  const { addrToSymbol, directPathMap, tokenGraph, directPairs } =
+    connectivityData
+  const allRoutes = new Map<TradablePairID, TradablePair[]>()
 
   // Step 1: Add all direct pairs (single-hop routes)
   for (const pair of directPairs) {
-    if (!allCandidates.has(pair.id)) {
-      allCandidates.set(pair.id, [])
+    if (!allRoutes.has(pair.id)) {
+      allRoutes.set(pair.id, [])
     }
-    allCandidates.get(pair.id)!.push(pair)
+    allRoutes.get(pair.id)!.push(pair)
   }
 
   // Step 2: Generate two-hop pairs using graph traversal
   // Algorithm: For each token, explore all paths of length 2
-  for (const [start, neighbors] of graph.entries()) {
+
+  // OUTER LOOP: "For each starting token..." (e.g., cUSD, CELO, cEUR, etc.)
+  for (const [start, neighbors] of tokenGraph.entries()) {
+    // MIDDLE LOOP: "Where can I go from the starting token?" (first hop)
+    // Example: If start = cUSD, neighbors might be [CELO, USDC, cKES]
     for (const intermediate of neighbors) {
-      const secondHopNeighbors = graph.get(intermediate)
+      // Get all tokens reachable from this intermediate token (second hop destinations)
+      const secondHopNeighbors = tokenGraph.get(intermediate)
       if (!secondHopNeighbors) continue
 
+      // INNER LOOP: "From the intermediate token, where can I go?" (second hop)
+      // Example: If intermediate = CELO, secondHopNeighbors might be [cUSD, cEUR, cBRL]
       for (const end of secondHopNeighbors) {
-        if (end === start) continue // Prevent circular routes (A->B->A)
+        // Skip circular routes like cUSD → CELO → cUSD (pointless)
+        if (end === start) continue
 
-        // Attempt to create a two-hop route: start -> intermediate -> end
+        // At this point we have a potential route: start → intermediate → end
+        // Example: cUSD → CELO → cEUR
+
+        // Try to create a valid two-hop trading pair from this route
         const twoHopPair = createTwoHopPair(
           start,
           intermediate,
           end,
-          assetMap,
+          addrToSymbol,
           directPathMap
         )
 
+        // If we successfully created the pair, add it to our collection
         if (twoHopPair) {
-          if (!allCandidates.has(twoHopPair.id)) {
-            allCandidates.set(twoHopPair.id, [])
+          if (!allRoutes.has(twoHopPair.id)) {
+            allRoutes.set(twoHopPair.id, [])
           }
-          allCandidates.get(twoHopPair.id)!.push(twoHopPair)
+          allRoutes.get(twoHopPair.id)!.push(twoHopPair)
         }
       }
     }
   }
 
-  return allCandidates
+  return allRoutes
 }
 
 /**
  * Creates a two-hop tradable pair if valid exchange hops exist.
  *
- * This function validates and constructs a two-hop trading route by:
- *
- * 1. **Validating tokens exist** in the asset map
- * 2. **Finding exchange hops** for both segments of the route
- * 3. **Creating canonical pair structure** with sorted symbols
+ * 1. **Validates tokens exist** in the asset map
+ * 2. **Finds exchange hops** for both segments of the route
+ * 3. **Creates canonical pair structure** with sorted symbols
  *
  * **Route Structure**: The resulting pair represents trading from start->end
  * via intermediate token, but the assets are ordered alphabetically by symbol
@@ -323,12 +289,12 @@ export function generateAllRoutes(
  * **Path Representation**: The path array contains the actual exchange hops
  * needed to execute the trade, preserving the routing information.
  *
- * @param start - Starting token address
+ * @param startToken - Starting token address
  * @param intermediate - Intermediate token address for routing
  * @param end - Destination token address
  * @param assetMap - Map of token address -> Asset details
  * @param directPathMap - Map of token pairs -> exchange hop details
- * @returns TradablePair if valid route exists, null otherwise
+ * @returns Route if valid route exists, null otherwise
  *
  * @example
  * ```typescript
@@ -337,7 +303,7 @@ export function generateAllRoutes(
  *   '0x765D...', // cUSD address
  *   '0x471E...', // CELO address
  *   '0xD876...', // cEUR address
- *   assetMap,
+ *   addrToSymbol,
  *   directPathMap
  * )
  *
@@ -353,24 +319,28 @@ export function generateAllRoutes(
  * ```
  */
 export function createTwoHopPair(
-  start: Address,
-  intermediate: Address,
-  end: Address,
-  assetMap: Map<string, Asset>,
+  startToken: Address,
+  intermediateToken: Address,
+  endToken: Address,
+  addrToSymbol: Map<Address, TokenSymbol>,
   directPathMap: Map<
     string,
     { providerAddr: Address; id: string; assets: [Address, Address] }
   >
 ): TradablePair | null {
-  // Validate that both start and end tokens exist in our asset map
-  const assetStart = assetMap.get(start)
-  const assetEnd = assetMap.get(end)
-  if (!assetStart || !assetEnd) return null
+  // Validate that both start and end tokens exist in our address-to-symbol map
+  const startSymbol = addrToSymbol.get(startToken)
+  const endSymbol = addrToSymbol.get(endToken)
+  if (!startSymbol || !endSymbol) return null
+
+  // Create Asset objects from address and symbol
+  const startAsset: Asset = { address: startToken, symbol: startSymbol }
+  const endAsset: Asset = { address: endToken, symbol: endSymbol }
 
   // Find exchange hops for both segments of the two-hop route
   // Keys are sorted token addresses for consistent lookup
-  const hop1Key = [start, intermediate].sort().join('-')
-  const hop2Key = [intermediate, end].sort().join('-')
+  const hop1Key = [startToken, intermediateToken].sort().join('-')
+  const hop2Key = [intermediateToken, endToken].sort().join('-')
   const hop1 = directPathMap.get(hop1Key)
   const hop2 = directPathMap.get(hop2Key)
 
@@ -378,14 +348,12 @@ export function createTwoHopPair(
   if (!hop1 || !hop2) return null
 
   // Create canonical pair structure (alphabetical symbol ordering)
-  const sortedSymbols = [assetStart.symbol, assetEnd.symbol].sort()
-  const pairId = `${sortedSymbols[0]}-${sortedSymbols[1]}`
+  const sortedSymbols = [startSymbol, endSymbol].sort()
+  const pairId: TradablePairID = `${sortedSymbols[0]}-${sortedSymbols[1]}`
 
   // Assets array follows alphabetical ordering for consistency
   const assets: [Asset, Asset] =
-    assetStart.symbol <= assetEnd.symbol
-      ? [assetStart, assetEnd]
-      : [assetEnd, assetStart]
+    startSymbol <= endSymbol ? [startAsset, endAsset] : [endAsset, startAsset]
 
   return {
     id: pairId,
@@ -408,7 +376,7 @@ export function createTwoHopPair(
  * **Route Selection Strategy**: Delegates to `selectBestRoute()` which uses
  * a multi-tier approach prioritizing cost efficiency and reliability.
  *
- * @param allCandidates - Map of pair ID -> array of possible routes
+ * @param allRoutes - Map of pair ID -> array of possible routes
  * @param returnAllRoutes - Whether to return all routes or optimize selection
  * @param assetMap - Asset map for token symbol lookups during optimization
  * @returns Array of selected optimal routes
@@ -429,24 +397,24 @@ export function createTwoHopPair(
  * ```
  */
 export function selectOptimalRoutes(
-  allCandidates: Map<string, TradablePair[]>,
+  allRoutes: Map<TradablePairID, TradablePair[]>,
   returnAllRoutes: boolean,
-  assetMap: Map<string, Asset>
+  addrToSymbol: Map<Address, TokenSymbol>
 ): (TradablePair | TradablePairWithSpread)[] {
   const result = new Map<string, TradablePair | TradablePairWithSpread>()
 
-  for (const [pairId, candidates] of allCandidates) {
-    if (candidates.length === 1) {
+  for (const [pairId, routes] of allRoutes) {
+    if (routes.length === 1) {
       // Only one route available - use it directly
-      result.set(pairId, candidates[0])
+      result.set(pairId, routes[0])
     } else if (returnAllRoutes) {
       // Return all routes with unique keys (used for cache generation)
-      candidates.forEach((candidate, index) => {
-        result.set(`${pairId}_${index}`, candidate)
+      routes.forEach((route, index) => {
+        result.set(`${pairId}_${index}`, route)
       })
     } else {
       // Multiple routes - select the best one using optimization logic
-      const bestRoute = selectBestRoute(candidates, assetMap)
+      const bestRoute = selectBestRoute(routes, addrToSymbol)
       result.set(pairId, bestRoute)
     }
   }
@@ -469,10 +437,9 @@ export function selectOptimalRoutes(
  * - If no spread data available, prefer direct (single-hop) routes
  * - Direct routes have lower execution risk and gas costs
  *
- * **Tier 3 - Stablecoin Preference** (Final Fallback):
+ * **Tier 3 - Major Stablecoin Preference** (Final Fallback):
  * - For two-hop routes, prefer those going through major stablecoins
- * - Stablecoins (cUSD, cEUR, cREAL, eXOF) typically have better liquidity
- * - More reliable execution and tighter spreads
+ * - Major FX currencies like cUSD and cEUR typically have better liquidity
  *
  * **Tier 4 - First Available** (Last Resort):
  * - If no other heuristics apply, use the first route found
@@ -495,7 +462,7 @@ export function selectOptimalRoutes(
  */
 export function selectBestRoute(
   candidates: TradablePair[],
-  assetMap: Map<string, Asset>
+  addrToSymbol: Map<Address, TokenSymbol>
 ): TradablePair | TradablePairWithSpread {
   // Tier 1: Prefer routes with spread data (lowest spread wins)
   const candidatesWithSpread = candidates.filter(hasSpreadData)
@@ -512,11 +479,12 @@ export function selectBestRoute(
   if (directRoute) return directRoute
 
   // Tier 3: Prefer routes through major stablecoins (better liquidity)
-  const stablecoins = ['cUSD', 'cEUR', 'cREAL', 'eXOF']
+  const stablecoins = ['cUSD', 'cEUR', 'USDC', 'USDT']
   const routeWithStablecoin = candidates.find((candidate) => {
     const intermediateToken = getIntermediateToken(candidate)
-    const asset = assetMap.get(intermediateToken)
-    return asset && stablecoins.includes(asset.symbol)
+    if (!intermediateToken) return false
+    const symbol = addrToSymbol.get(intermediateToken)
+    return symbol && stablecoins.includes(symbol)
   })
 
   // Tier 4: Use first available route as last resort
@@ -525,37 +493,19 @@ export function selectBestRoute(
 
 /**
  * Extracts the intermediate token address from a two-hop route.
- *
  * In a two-hop route A->B->C, this function finds token B (the intermediate).
- * The intermediate token is the one that appears in both exchange hops.
- *
- * **Algorithm**: Find the token address that exists in both hop1.assets
- * and hop2.assets arrays.
- *
- * **Fallback**: If no common token found (shouldn't happen in valid routes),
- * returns the first token from the first hop.
- *
- * @param candidate - The two-hop tradable pair
- * @returns The intermediate token address
- *
- * @example
- * ```typescript
- * const twoHopRoute = {
- *   id: 'cEUR-cUSD',
- *   path: [
- *     { assets: ['0x765D...', '0x471E...'] }, // cUSD->CELO hop
- *     { assets: ['0x471E...', '0xD876...'] }  // CELO->cEUR hop
- *   ]
- * }
- *
- * const intermediate = getIntermediateToken(twoHopRoute)
- * // Returns '0x471E...' (CELO address - common to both hops)
- * ```
  */
-export function getIntermediateToken(candidate: TradablePair): Address {
+export function getIntermediateToken(route: TradablePair): Address | undefined {
   // Find the common token between the two hops
-  const [hop1, hop2] = candidate.path
-  return (
-    hop1.assets.find((addr) => hop2.assets.includes(addr)) || hop1.assets[0]
-  )
+  const [hop1, hop2] = route.path
+  return hop1.assets.find((addr) => hop2.assets.includes(addr))
+}
+
+/**
+ * Type guard to check if a Route has spread data.
+ */
+export function hasSpreadData(
+  pair: TradablePair | TradablePairWithSpread
+): pair is TradablePairWithSpread {
+  return 'spreadData' in pair && pair.spreadData !== undefined
 }
