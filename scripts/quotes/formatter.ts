@@ -1,7 +1,6 @@
 import chalk from 'chalk'
 import { formatUnits } from 'ethers/lib/utils'
 import { TradablePair } from '../../src/mento'
-import { TradablePairWithSpread } from '../cacheTradablePairs/config'
 import { FormattedRoute, RouteInfo, RouteQuote } from './types'
 import { roundToMaxDecimals } from './utils/token'
 
@@ -77,9 +76,7 @@ export function prepareFormattedRoutes(
 export function displayRouteDetails(
   route: TradablePair,
   routeNumber: number,
-  isOptimal: boolean,
-  prefix?: string,
-  label?: string
+  isOptimal: boolean
 ): void {
   const rankingBadge = isOptimal
     ? chalk.green('🏆 OPTIMAL')
@@ -152,8 +149,7 @@ export function displayAllRoutesWithQuotes(
   formattedRoutes: FormattedRoute[],
   failedRoutes: RouteQuote[],
   toSymbol: string,
-  verbose: boolean,
-  allPairs: readonly TradablePair[] | readonly TradablePairWithSpread[]
+  verbose: boolean
 ): void {
   console.log()
   console.log(chalk.bold('💱 All Routes with Quotes'))
@@ -179,8 +175,7 @@ export function displayAllRoutesWithQuotes(
  */
 export function displayAllRoutesWithoutQuotes(
   routeInfos: RouteInfo[],
-  verbose: boolean,
-  allPairs: readonly TradablePair[] | readonly TradablePairWithSpread[]
+  verbose: boolean
 ): void {
   console.log()
   console.log(chalk.bold('💱 All Available Routes'))
@@ -247,17 +242,6 @@ export function displayOptimalRoute(
           `(${routeType})`
         )} | Spread: ${spreadFormatted}`
     )
-  }
-}
-
-function padDecimalPlaces(amount: string, maxDecimalPlaces: number): string {
-  const decimalIndex = amount.indexOf('.')
-  if (decimalIndex === -1) {
-    return amount + '.' + '0'.repeat(maxDecimalPlaces)
-  } else {
-    const currentDecimalPlaces = amount.length - decimalIndex - 1
-    const paddingNeeded = maxDecimalPlaces - currentDecimalPlaces
-    return amount + '0'.repeat(paddingNeeded)
   }
 }
 

@@ -40,7 +40,7 @@ export async function prefetchTokenSymbols(
   // Fetch all token symbols in batches to avoid overwhelming RPC endpoint
   await batchProcess(
     Array.from(uniqueTokenAddresses),
-    async (address, index) => {
+    async (address) => {
       await getSymbolFromTokenAddress(address, provider)
     },
     15 // Process 15 tokens concurrently

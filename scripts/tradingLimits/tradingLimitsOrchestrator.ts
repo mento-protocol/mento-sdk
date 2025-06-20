@@ -1,8 +1,9 @@
 import { ethers } from 'ethers'
 import ora from 'ora'
 import { batchProcess } from '../shared/batchProcessor'
-import { ExchangeData, Mento, ScriptArgs } from './types'
+import { ExchangeData, Mento, ScriptArgs, TradingLimit } from './types'
 
+import { TradingLimitsConfig, TradingLimitsState } from '../../src/interfaces'
 import { ErrorType, handleError } from './utils/errorHandler'
 import { processExchangeWithLimits } from './utils/exchangeLimitProcessor'
 import {
@@ -15,12 +16,21 @@ import {
   handleExchangeWithNoLimits,
 } from './utils/tableFormatter'
 
+interface ExchangeDataResult {
+  allLimits: TradingLimit[]
+  limitConfigs: TradingLimitsConfig[]
+  limitStates: TradingLimitsState[]
+  configByAsset: Record<string, TradingLimitsConfig>
+  stateByAsset: Record<string, TradingLimitsState>
+  limitsByAsset: Record<string, TradingLimit[]>
+}
+
 interface ProcessedExchangeResult {
   success: boolean
   exchange: ExchangeData
   tokenAssets?: Array<{ address: string; symbol: string }>
   exchangeName?: string
-  exchangeData?: any
+  exchangeData?: ExchangeDataResult
   error?: Error
 }
 

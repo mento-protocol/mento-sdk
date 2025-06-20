@@ -83,8 +83,7 @@ async function handleAllRoutesWithQuotes(
     formattedRoutes,
     failedRoutes,
     args.to,
-    args.verbose || false,
-    allPairs
+    args.verbose || false
   )
 }
 
@@ -113,7 +112,7 @@ function handleAllRoutesWithoutQuotes(
     }))
     .sort((a, b) => a.spread - b.spread) // Sort by spread (lowest = best)
 
-  displayAllRoutesWithoutQuotes(routeInfos, args.verbose || false, allPairs)
+  displayAllRoutesWithoutQuotes(routeInfos, args.verbose || false)
 }
 
 /**

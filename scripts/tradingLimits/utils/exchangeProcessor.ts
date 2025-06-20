@@ -25,7 +25,7 @@ export async function filterExchangesByToken(
     // Process exchanges in batches to avoid overwhelming RPC endpoint
     const results = await batchProcess(
       exchanges,
-      async (exchange: ExchangeData, index: number) => {
+      async (exchange: ExchangeData) => {
         // Get token symbols for all assets in this exchange (already cached during prefetch)
         const tokenSymbols = await Promise.all(
           exchange.assets.map((addr: string) =>

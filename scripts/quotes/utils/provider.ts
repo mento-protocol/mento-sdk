@@ -16,6 +16,6 @@ export function createProvider(chainId: number): providers.JsonRpcProvider {
 export function cleanupProvider(provider: providers.Provider): void {
   provider.removeAllListeners()
   if ('polling' in provider) {
-    ;(provider as any).polling = false
+    ;(provider as unknown as { polling: boolean }).polling = false
   }
 }

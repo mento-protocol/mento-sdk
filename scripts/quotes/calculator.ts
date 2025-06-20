@@ -1,11 +1,7 @@
 import { BigNumber } from 'ethers'
 import { Mento, TradablePair } from '../../src/mento'
 import { TradablePairWithSpread } from '../cacheTradablePairs/config'
-import {
-  DEFAULT_BATCH_DELAY_MS,
-  DEFAULT_BATCH_SIZE,
-  QUOTE_TIMEOUT_MS,
-} from './config'
+import { DEFAULT_BATCH_DELAY_MS, DEFAULT_BATCH_SIZE } from './config'
 import { buildRouteDisplay, calculateCompoundSpread } from './spread'
 import { RouteQuote } from './types'
 
@@ -83,62 +79,6 @@ export async function calculateAllRouteQuotes(
 }
 
 /**
- * Calculates a quote for a single route with timeout protection.
- * Prevents individual route failures from blocking the entire operation.
- *
- * @param mento - Mento SDK instance
- * @param route - Trading route to calculate quote for
- * @param tokenIn - Input token address
- * @param tokenOut - Output token address
- * @param amountIn - Input amount in smallest units
- * @param index - Route index for result tracking
- * @returns Promise that resolves to RouteQuote or rejects on timeout/error
- */
-async function calculateQuoteWithTimeout(
-  mento: Mento,
-  route: TradablePair,
-  tokenIn: string,
-  tokenOut: string,
-  amountIn: BigNumber,
-  index: number
-): Promise<RouteQuote> {
-  return new Promise((resolve, reject) => {
-    // Set up timeout to prevent hanging
-    const timeout = setTimeout(() => {
-      reject(
-        new Error(`Quote calculation timed out after ${QUOTE_TIMEOUT_MS}ms`)
-      )
-    }, QUOTE_TIMEOUT_MS)
-
-    // Calculate the actual quote
-    mento
-      .getAmountOut(tokenIn, tokenOut, amountIn, route)
-      .then((outputAmount) => {
-        clearTimeout(timeout)
-        resolve({
-          route,
-          successful: true,
-          outputAmount,
-          routeDisplay: '',
-          fixedSpread: 0,
-          effectiveRate: 0,
-        })
-      })
-      .catch((error) => {
-        clearTimeout(timeout)
-        resolve({
-          route,
-          successful: false,
-          outputAmount: BigNumber.from(0),
-          routeDisplay: '',
-          fixedSpread: 0,
-          effectiveRate: 0,
-        })
-      })
-  })
-}
-
-/**
  * Calculates a quote for a single route without timeout handling.
  * Used for optimal route calculation where we want to handle errors at a higher level.
  *
@@ -170,31 +110,6 @@ export async function calculateSingleQuote(
       outputAmount: BigNumber.from(0),
       error: error instanceof Error ? error.message : 'Unknown error',
     }
-  }
-}
-
-async function executeWithTimeout<T>(
-  operation: () => Promise<T>,
-  timeoutMs: number
-): Promise<T> {
-  let timeoutId: NodeJS.Timeout
-
-  const timeoutPromise = new Promise<T>((_, reject) => {
-    timeoutId = setTimeout(() => reject(new Error('Timeout')), timeoutMs)
-  })
-
-  try {
-    const result = await Promise.race([operation(), timeoutPromise])
-    if (timeoutId!) {
-      clearTimeout(timeoutId)
-    }
-    return result
-  } catch {
-    return {
-      outputAmount: BigNumber.from(0),
-      effectiveRate: 0,
-      successful: false,
-    } as T
   }
 }
 
