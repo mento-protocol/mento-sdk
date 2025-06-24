@@ -10,6 +10,7 @@ import { createProvider } from './provider'
 /**
  * Validates that the provided token symbols exist in the available trading pairs.
  * Performs case-insensitive matching and returns the actual token addresses.
+ * Includes special handling for USDT to accept plain "USDT" without special characters.
  *
  * @param allPairs - All available trading pairs from Mento
  * @param fromSymbol - Input token symbol (case-insensitive)
@@ -29,6 +30,20 @@ export function validateTokens(
   for (const pair of allPairs) {
     for (const asset of pair.assets) {
       symbolToAddress.set(asset.symbol.toLowerCase(), asset.address)
+    }
+  }
+
+  // Special case: Allow plain "USDT" to map to any USDT variant (like "USD₮")
+  // This provides user-friendly access to USDT without requiring special characters
+  if (!symbolToAddress.has('usdt')) {
+    // Look for any USD + Tether symbol variant in the symbol map
+    for (const [symbol, address] of symbolToAddress.entries()) {
+      // Check for "USD₮" or other USDT variants
+      const normalizedSymbol = symbol.replace(/[^\w]/g, '').toLowerCase()
+      if (normalizedSymbol === 'usdt' || symbol === 'usd₮') {
+        symbolToAddress.set('usdt', address)
+        break
+      }
     }
   }
 

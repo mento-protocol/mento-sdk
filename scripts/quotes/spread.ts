@@ -140,12 +140,20 @@ function buildRouteSymbols(
 ): string[] {
   const addressToSymbol = createAddressToSymbolMap(allPairs)
 
-  // Get the addresses from tradablePair.assets
+  // Handle special case where user input might be different from actual symbol
+  // For example, user inputs "USDT" but actual symbol is "USD₮"
+  const actualFromSymbol = findActualSymbolForInput(
+    fromSymbol,
+    tradablePair.assets
+  )
+  const actualToSymbol = findActualSymbolForInput(toSymbol, tradablePair.assets)
+
+  // Get the addresses from tradablePair.assets using actual symbols
   const fromAddress = tradablePair.assets
-    .find((asset) => asset.symbol === fromSymbol)
+    .find((asset) => asset.symbol === actualFromSymbol)
     ?.address.toLowerCase()
   const toAddress = tradablePair.assets
-    .find((asset) => asset.symbol === toSymbol)
+    .find((asset) => asset.symbol === actualToSymbol)
     ?.address.toLowerCase()
 
   if (!fromAddress || !toAddress) {
@@ -184,6 +192,36 @@ function buildRouteSymbols(
   route.push(toSymbol)
 
   return route
+}
+
+/**
+ * Finds the actual symbol in the tradable pair assets for a given input symbol.
+ * Handles special cases like "USDT" mapping to "USD₮".
+ */
+function findActualSymbolForInput(
+  inputSymbol: string,
+  assets: readonly Asset[]
+): string {
+  // First try exact match
+  const exactMatch = assets.find((asset) => asset.symbol === inputSymbol)
+  if (exactMatch) {
+    return inputSymbol
+  }
+
+  // Handle USDT special case
+  if (inputSymbol.toLowerCase() === 'usdt') {
+    // Look for USD₮ or other USDT variants
+    const usdtVariant = assets.find((asset) => {
+      const normalizedSymbol = asset.symbol.replace(/[^\w]/g, '').toLowerCase()
+      return normalizedSymbol === 'usdt' || asset.symbol === 'USD₮'
+    })
+    if (usdtVariant) {
+      return usdtVariant.symbol
+    }
+  }
+
+  // Fallback to original input
+  return inputSymbol
 }
 
 function createAddressToSymbolMap(
