@@ -1,5 +1,6 @@
 import { providers } from 'ethers'
 import { Mento } from '../../src/mento'
+import { deduplicateRoutes } from '../shared/routeDeduplication'
 import { processPairsInBatches } from './batchProcessor'
 import { parseCommandLineArgs, printUsageTips } from './cli'
 import { rpcUrls, SupportedChainId } from './config'
@@ -34,8 +35,20 @@ async function generateAndCacheTradablePairs(
   )
   console.log(`\n✅ Spread data fetched for all routes`)
 
+  // Deduplicate routes to eliminate redundant symmetric pairs
+  console.log(`🔄 Deduplicating redundant routes...`)
+  const routesBeforeDedup = pairsWithSpread.length
+  const deduplicatedPairs = deduplicateRoutes(pairsWithSpread)
+  const routesAfterDedup = deduplicatedPairs.length
+  console.log(
+    `   Removed ${routesBeforeDedup - routesAfterDedup} redundant routes (${(
+      ((routesBeforeDedup - routesAfterDedup) / routesBeforeDedup) *
+      100
+    ).toFixed(1)}% reduction)`
+  )
+
   // Sort all routes by spread (best routes first) to provide fallback alternatives
-  const pairsToCache = sortPairsBySpread(pairsWithSpread)
+  const pairsToCache = sortPairsBySpread(deduplicatedPairs)
 
   // Calculate and display statistics
   const statistics = calculateStatistics(pairsToCache)

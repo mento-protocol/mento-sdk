@@ -19,6 +19,7 @@ import {
   generateAllRoutes,
   selectOptimalRoutes,
 } from '../../src/routeUtils'
+import { deduplicateRoutes } from '../shared/routeDeduplication'
 import { calculateAllRouteQuotes, calculateSingleQuote } from './calculator'
 import { parseCommandLineArgs } from './cli'
 import { CHAIN_NAMES } from './config'
@@ -80,30 +81,6 @@ async function findAllRoutesForTokens(
 
   // Deduplicate routes by path signature to avoid showing identical routes multiple times
   const uniqueRoutes = deduplicateRoutes(relevantRoutes as TradablePair[])
-
-  return uniqueRoutes
-}
-
-/**
- * Deduplicates routes by comparing their path signatures.
- * Routes with identical exchange hops are considered duplicates.
- */
-function deduplicateRoutes(routes: TradablePair[]): TradablePair[] {
-  const seenPathSignatures = new Set<string>()
-  const uniqueRoutes: TradablePair[] = []
-
-  for (const route of routes) {
-    // Create a signature based on the exchange hops
-    const pathSignature = route.path
-      .map((hop) => `${hop.id}:${hop.providerAddr}`)
-      .sort() // Sort to handle path direction differences
-      .join('|')
-
-    if (!seenPathSignatures.has(pathSignature)) {
-      seenPathSignatures.add(pathSignature)
-      uniqueRoutes.push(route)
-    }
-  }
 
   return uniqueRoutes
 }
