@@ -21,8 +21,6 @@ export function deduplicateRoutes<
   const uniqueRoutes: T[] = []
 
   for (const route of routes) {
-    // Create a signature based on the exchange hops
-    // Sort to handle path direction differences (A→B→C vs C→B→A)
     const pathSignature = createRouteSignature(route)
 
     if (!seenPathSignatures.has(pathSignature)) {
@@ -44,8 +42,11 @@ export function deduplicateRoutes<
 export function createRouteSignature(
   route: TradablePair | TradablePairWithSpread
 ): string {
-  return route.path
-    .map((hop) => `${hop.id}:${hop.providerAddr}`)
-    .sort()
-    .join('|')
+  return (
+    route.path
+      .map((hop) => `${hop.id}:${hop.providerAddr}`)
+      // Sort to handle path direction differences (A→B→C vs C→B→A)
+      .sort()
+      .join('|')
+  )
 }
