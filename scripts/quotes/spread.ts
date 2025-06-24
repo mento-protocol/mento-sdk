@@ -138,36 +138,52 @@ function buildRouteSymbols(
   toSymbol: string,
   allPairs: readonly TradablePair[] | readonly TradablePairWithSpread[]
 ): string[] {
-  const routeSymbols = [fromSymbol]
   const addressToSymbol = createAddressToSymbolMap(allPairs)
 
-  for (let i = 0; i < tradablePair.path.length; i++) {
-    const hop = tradablePair.path[i]
+  // Get the addresses from tradablePair.assets
+  const fromAddress = tradablePair.assets
+    .find((asset) => asset.symbol === fromSymbol)
+    ?.address.toLowerCase()
+  const toAddress = tradablePair.assets
+    .find((asset) => asset.symbol === toSymbol)
+    ?.address.toLowerCase()
 
-    if (i === tradablePair.path.length - 1) {
-      routeSymbols.push(toSymbol)
-    } else {
-      const currentToken =
-        i === 0
-          ? tradablePair.assets[0].address.toLowerCase()
-          : routeSymbols[routeSymbols.length - 1]
-
-      const intermediateAddress = hop.assets.find(
-        (addr: string) => addr.toLowerCase() !== currentToken
-      )
-
-      if (intermediateAddress) {
-        const intermediateSymbol = addressToSymbol.get(
-          intermediateAddress.toLowerCase()
-        )
-        if (intermediateSymbol && !routeSymbols.includes(intermediateSymbol)) {
-          routeSymbols.push(intermediateSymbol)
-        }
-      }
-    }
+  if (!fromAddress || !toAddress) {
+    return [fromSymbol, toSymbol]
   }
 
-  return routeSymbols
+  // For multi-hop routes, we need to find the common intermediate tokens
+  // First, collect all unique addresses in the path
+  const allAddresses = new Set<string>()
+  tradablePair.path.forEach((hop) => {
+    hop.assets.forEach((addr: string) => {
+      allAddresses.add(addr.toLowerCase())
+    })
+  })
+
+  // Remove our from and to addresses to find intermediates
+  allAddresses.delete(fromAddress)
+  allAddresses.delete(toAddress)
+
+  // Convert intermediate addresses to symbols
+  const intermediateTokens = Array.from(allAddresses)
+    .map((addr) => addressToSymbol.get(addr))
+    .filter((symbol) => symbol !== undefined) as string[]
+
+  // Build the route: from -> intermediates -> to
+  const route = [fromSymbol]
+
+  // Add intermediate tokens
+  intermediateTokens.forEach((token) => {
+    if (!route.includes(token)) {
+      route.push(token)
+    }
+  })
+
+  // Add destination
+  route.push(toSymbol)
+
+  return route
 }
 
 function createAddressToSymbolMap(

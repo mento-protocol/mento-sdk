@@ -11,6 +11,7 @@ import {
 } from '@mento-protocol/mento-core-ts'
 import { Contract, providers } from 'ethers'
 import { IMentoRouter__factory } from 'mento-router-ts'
+import { buildRouteDisplay } from '../scripts/quotes/spread'
 import { Mento, TradablePair } from './mento'
 import { findTokenBySymbol } from './utils'
 
@@ -97,6 +98,7 @@ const TOKENS = {
   axlUSDC: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
   USDT: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
   CELO: '0x471EcE3750Da237f93B8E339c536989b8978a438',
+  eXOF: '0x73F93dcc49cB8A239e2032663e9475dd5ef29A08',
 }
 
 // Simplified helper function for checking intermediate tokens
@@ -195,6 +197,72 @@ describe('Route Fetching Logic', () => {
       const fakeAddress = '0x1234567890123456789012345678901234567890'
       const result = findTokenBySymbol(allPairs, fakeAddress)
       expect(result).toBeNull()
+    })
+  })
+
+  describe('Route Display Functionality', () => {
+    it('should correctly display multi-hop route through CELO hub', async () => {
+      // Find the cUSD-eXOF route that goes through CELO
+      const cUsdToExof = await mento.findPairForTokens(TOKENS.cUSD, TOKENS.eXOF)
+
+      // Verify this is a multi-hop route
+      expect(cUsdToExof.path.length).toBe(2)
+
+      // Verify it goes through CELO as intermediate token
+      expect(hasIntermediateToken(cUsdToExof, TOKENS.CELO)).toBe(true)
+
+      // Test route display in both directions
+      const cUsdToExofDisplay = buildRouteDisplay(
+        cUsdToExof,
+        'cUSD',
+        'eXOF',
+        allPairs
+      )
+      const exofToCUsdDisplay = buildRouteDisplay(
+        cUsdToExof,
+        'eXOF',
+        'cUSD',
+        allPairs
+      )
+
+      // Both should show CELO as the intermediate token
+      expect(cUsdToExofDisplay).toBe('cUSD → CELO → eXOF')
+      expect(exofToCUsdDisplay).toBe('eXOF → CELO → cUSD')
+    })
+
+    it('should correctly display direct routes', async () => {
+      // Find a direct route (single hop)
+      const usdcToUsdt = await mento.findPairForTokens(TOKENS.USDC, TOKENS.USDT)
+
+      // If this is a direct route, it should display simply
+      if (usdcToUsdt.path.length === 1) {
+        const display = buildRouteDisplay(usdcToUsdt, 'USDC', 'USDT', allPairs)
+        expect(display).toBe('USDC → USDT')
+      }
+    })
+
+    it('should handle routes with multiple intermediate tokens', async () => {
+      // Find a route that might have multiple intermediates
+      const axlUsdcToUsdt = await mento.findPairForTokens(
+        TOKENS.axlUSDC,
+        TOKENS.USDT
+      )
+
+      const display = buildRouteDisplay(
+        axlUsdcToUsdt,
+        'axlUSDC',
+        'USD₮',
+        allPairs
+      )
+
+      // Should start with axlUSDC and end with USD₮ (the display symbol for USDT)
+      expect(display.startsWith('axlUSDC')).toBe(true)
+      expect(display.endsWith('USD₮')).toBe(true)
+
+      // Should contain arrows for multi-hop
+      if (axlUsdcToUsdt.path.length > 1) {
+        expect(display).toContain('→')
+      }
     })
   })
 })
