@@ -2307,7 +2307,7 @@ __metadata:
     "@size-limit/preset-small-lib": ^8.1.0
     "@tsconfig/recommended": ^1.0.1
     "@types/jest": ^29.4.0
-    "@types/node": ^18.13.0
+    "@types/node": ^22.13.0
     "@types/yargs-parser": ^21.0.3
     "@typescript-eslint/eslint-plugin": ^5.53.0
     "@typescript-eslint/parser": ^5.53.0
@@ -2573,10 +2573,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^18.13.0":
+"@types/node@npm:*":
   version: 18.13.0
   resolution: "@types/node@npm:18.13.0"
   checksum: 4ea10f8802848b01672bce938f678b6774ca2cee0c9774f12275ab064ae07818419c3e2e41d6257ce7ba846d1ea26c63214aa1dfa4166fa3746291752b8c6416
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22.13.0":
+  version: 22.15.32
+  resolution: "@types/node@npm:22.15.32"
+  dependencies:
+    undici-types: ~6.21.0
+  checksum: 0e26f227a91e0b50dc79d5b7ad2705060598da4a418ea1c612609e6a72fcdbcbcc5b285214619973dc509aeec9cdff5ca016e642efd09d572b877151e591c01a
   languageName: node
   linkType: hard
 
@@ -6542,6 +6551,13 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 8f6260acc86b56bfdda6004bc53f32ea548f543e8baef7071c8e34d29d292f3e375c8416556c8de10b24deef6933cd1c16a8233dc84a3dd43a13a13265d0faab
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~6.21.0":
+  version: 6.21.0
+  resolution: "undici-types@npm:6.21.0"
+  checksum: 46331c7d6016bf85b3e8f20c159d62f5ae471aba1eb3dc52fff35a0259d58dcc7d592d4cc4f00c5f9243fa738a11cfa48bd20203040d4a9e6bc25e807fab7ab3
   languageName: node
   linkType: hard
 
