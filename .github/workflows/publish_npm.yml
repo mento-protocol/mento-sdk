@@ -1,4 +1,4 @@
-name: 'publish npm package'
+name: publish npm package
 
 on: [workflow_dispatch]
 
@@ -7,23 +7,23 @@ jobs:
     name: publish
     runs-on: ubuntu-latest
     steps:
-      - name: 'Check out the repo'
-        uses: 'actions/checkout@v3'
-        
-      - name: 'Install Node.js'
-        uses: 'actions/setup-node@v3'
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
-          cache: 'yarn'
-          node-version: '18'
-          registry-url: 'https://registry.npmjs.org'
+          cache: yarn
+          node-version: '22'
+          registry-url: https://registry.npmjs.org
 
-      - name: 'Install the Node.js dependencies'
-        run: 'yarn install --immutable'
+      - name: Install the Node.js dependencies
+        run: yarn install --immutable
 
-      - name: 'Build the sdk'
-        run: 'yarn build'
+      - name: Build the sdk
+        run: yarn build
 
-      - name: 'publish'
+      - name: publish
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.SDK_NPM_AUTH_TOKEN}}
