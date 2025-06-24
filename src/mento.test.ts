@@ -188,6 +188,22 @@ describe('Mento', () => {
     provider.getNetwork = jest
       .fn()
       .mockResolvedValue({ chainId: 42220, name: 'celo' })
+
+    // Mock other provider methods that make HTTP requests
+    provider.getBlockNumber = jest.fn().mockResolvedValue(12345)
+    provider.getGasPrice = jest
+      .fn()
+      .mockResolvedValue(utils.parseUnits('20', 'gwei'))
+    provider.estimateGas = jest.fn().mockResolvedValue(21000)
+    provider.getTransactionCount = jest.fn().mockResolvedValue(1)
+    provider.call = jest.fn().mockResolvedValue('0x')
+    provider.getBlock = jest.fn().mockResolvedValue({
+      number: 12345,
+      timestamp: Math.floor(Date.now() / 1000),
+      gasLimit: utils.parseUnits('8000000', 'wei'),
+      gasUsed: utils.parseUnits('6000000', 'wei'),
+    })
+
     signer = new Wallet(pk, provider)
     signerWithoutProvider = new Wallet(pk)
   })
@@ -569,11 +585,14 @@ describe('Mento', () => {
         ],
       }
 
-      const fakeTxObj = { to: '0x1337', data: '0x345' }
-      const fakePopulatedTxObj = {
-        to: '0x1337',
+      const fakeTxObj = {
+        to: '0x1234567890123456789012345678901234567890',
         data: '0x345',
-        from: '0xad3',
+      }
+      const fakePopulatedTxObj = {
+        to: '0x1234567890123456789012345678901234567890',
+        data: '0x345',
+        from: '0xABCDEF1234567890123456789012345678901234',
         gasLimit: 2200,
       }
 
@@ -626,11 +645,14 @@ describe('Mento', () => {
         ],
       }
 
-      const fakeTxObj = { to: '0x1337', data: '0x345' }
-      const fakePopulatedTxObj = {
-        to: '0x1337',
+      const fakeTxObj = {
+        to: '0x1234567890123456789012345678901234567890',
         data: '0x345',
-        from: '0xad3',
+      }
+      const fakePopulatedTxObj = {
+        to: '0x1234567890123456789012345678901234567890',
+        data: '0x345',
+        from: '0xABCDEF1234567890123456789012345678901234',
         gasLimit: 2200,
       }
 
@@ -688,11 +710,14 @@ describe('Mento', () => {
             ],
           }
 
-          const fakeTxObj = { to: '0x1337', data: '0x345' }
+          const fakeTxObj = {
+            to: '0x1234567890123456789012345678901234567890',
+            data: '0x345',
+          }
           const fakePopulatedTxObj = {
-            to: '0x123',
+            to: '0x1234567890123456789012345678901234567890',
             data: '0x00456',
-            from: '0xad3',
+            from: '0xABCDEF1234567890123456789012345678901234',
             gasLimit: 2200,
           }
 
@@ -753,11 +778,14 @@ describe('Mento', () => {
         ],
       }
 
-      const fakeTxObj = { to: '0x1337', data: '0x345' }
+      const fakeTxObj = {
+        to: '0x1234567890123456789012345678901234567890',
+        data: '0x345',
+      }
       const fakePopulatedTxObj = {
-        to: '0x123',
+        to: '0x1234567890123456789012345678901234567890',
         data: '0x00456',
-        from: '0xad3',
+        from: '0xABCDEF1234567890123456789012345678901234',
         gasLimit: 2200,
       }
 
@@ -794,6 +822,7 @@ describe('Mento', () => {
         },
       ])
       expect(result).toBe(fakePopulatedTxObj)
+      expect(spy).toHaveBeenCalledWith(fakeTxObj)
     })
   })
 
@@ -828,11 +857,14 @@ describe('Mento', () => {
             ],
           }
 
-          const fakeTxObj = { to: '0x1337', data: '0x345' }
+          const fakeTxObj = {
+            to: '0x1234567890123456789012345678901234567890',
+            data: '0x345',
+          }
           const fakePopulatedTxObj = {
-            to: '0x123',
+            to: '0x1234567890123456789012345678901234567890',
             data: '0x00456',
-            from: '0xad3',
+            from: '0xABCDEF1234567890123456789012345678901234',
             gasLimit: 2200,
           }
 
@@ -893,11 +925,14 @@ describe('Mento', () => {
         ],
       }
 
-      const fakeTxObj = { to: '0x1337', data: '0x345' }
+      const fakeTxObj = {
+        to: '0x1234567890123456789012345678901234567890',
+        data: '0x345',
+      }
       const fakePopulatedTxObj = {
-        to: '0x123',
+        to: '0x1234567890123456789012345678901234567890',
         data: '0x00456',
-        from: '0xad3',
+        from: '0xABCDEF1234567890123456789012345678901234',
         gasLimit: 2200,
       }
 

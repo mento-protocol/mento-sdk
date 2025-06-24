@@ -1,6 +1,7 @@
 import { BigNumberish, constants, Contract, providers, Signer } from 'ethers'
 
 import { Address } from './interfaces'
+import { TradablePair } from './mento'
 
 /**
  * Gets the chain ID from a signer or provider
@@ -117,4 +118,24 @@ export async function increaseAllowance(
   const contract = new Contract(tokenAddr, abi, signerOrProvider)
 
   return await contract.populateTransaction.increaseAllowance(spender, amount)
+}
+
+/**
+ * Find a token address by its symbol from tradable pairs
+ * @param pairs array of tradable pairs to search through
+ * @param symbol the token symbol to find (case-insensitive)
+ * @returns the token address if found, null otherwise
+ */
+export function findTokenBySymbol(
+  pairs: readonly TradablePair[],
+  symbol: string
+): string | null {
+  for (const pair of pairs) {
+    for (const asset of pair.assets) {
+      if (asset.symbol.toLowerCase() === symbol.toLowerCase()) {
+        return asset.address
+      }
+    }
+  }
+  return null
 }

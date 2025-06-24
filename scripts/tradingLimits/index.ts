@@ -13,18 +13,27 @@ import { prefetchTokenSymbols } from './utils/prefetchTokenSymbols'
  * for all exchanges in the Mento protocol.
  */
 async function main(): Promise<void> {
+  const startTime = Date.now()
+
   try {
     // Parse command line arguments
     const args = parseCommandLineArgs()
 
-    // Set up provider - this assumes you're connecting to the network where Mento is deployed
-    const provider = new ethers.providers.JsonRpcProvider(
-      process.env.RPC_URL || 'https://forno.celo.org'
-    )
+    // Use RPC URL from command line args or fallback to environment variable
+    const rpcUrl =
+      args.rpcUrl || process.env.RPC_URL || 'https://forno.celo.org'
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
 
     console.log(chalk.gray('\n==============================='))
     console.log(chalk.bold.blue('Mento Trading Limits Visualizer'))
     console.log(chalk.gray('===============================\n'))
+    console.log(chalk.yellow(`Using RPC URL: ${rpcUrl}`))
+
+    if (args.chainId) {
+      console.log(chalk.yellow(`Network: Chain ID ${args.chainId}\n`))
+    } else {
+      console.log()
+    }
 
     if (args.token) {
       console.log(chalk.yellow(`Filtering by token: ${args.token}\n`))
@@ -68,10 +77,16 @@ async function main(): Promise<void> {
     }
 
     // Prefetch token symbols if needed (for better performance)
-    await prefetchTokenSymbols(filteredExchanges, provider)
+    if (filteredExchanges.length > 0) {
+      await prefetchTokenSymbols(filteredExchanges, provider)
+    }
 
     // Process all exchanges and display trading limits
     await processTradingLimits(filteredExchanges, mento, provider, args)
+
+    // Display performance summary
+    const totalTime = ((Date.now() - startTime) / 1000).toFixed(2)
+    console.log(chalk.gray(`\nCompleted in ${totalTime}s`))
 
     // Display legend
     console.log(chalk.bold('\nLegend:'))
@@ -93,8 +108,15 @@ async function main(): Promise<void> {
     // Display usage information
     console.log('\n' + chalk.bold('Usage:'))
     console.log(
-      '  yarn tradingLimits [--token|-t <symbol>] [--exchange|-e <exchangeId>]'
+      '  yarn tradingLimits [--token|-t <symbol>] [--exchange|-e <exchangeId>] [--network|-n <network>] [--chainId|-c <chainId>]'
     )
+    console.log('\n' + chalk.bold('Network options:'))
+    console.log('  --network celo       # Celo mainnet')
+    console.log('  --network alfajores  # Alfajores testnet')
+    console.log(
+      '  --chainId 42220      # Celo mainnet (same as --network celo)'
+    )
+    console.log('  --chainId 44787      # Alfajores testnet')
   } catch (error) {
     console.error(chalk.red('ERROR: An unexpected error occurred:'))
     console.error(error instanceof Error ? error.message : String(error))

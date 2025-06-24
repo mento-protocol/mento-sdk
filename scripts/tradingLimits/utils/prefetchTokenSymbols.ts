@@ -1,7 +1,6 @@
 import { ethers } from 'ethers'
-import ora from 'ora'
+import { prefetchTokenSymbols as sharedPrefetchTokenSymbols } from '../../shared/tokenUtils'
 import { ExchangeData } from '../types'
-import { getSymbolFromTokenAddress } from './getSymbolFromTokenAddress'
 
 /**
  * Pre-fetch token symbols for caching
@@ -14,11 +13,6 @@ export async function prefetchTokenSymbols(
   exchanges: ExchangeData[],
   provider: ethers.providers.Provider
 ): Promise<void> {
-  const spinner = ora({
-    text: 'Pre-fetching token symbols...',
-    color: 'cyan',
-  }).start()
-
   // Extract unique token addresses from all exchanges
   const uniqueTokenAddresses = new Set<string>()
 
@@ -28,15 +22,6 @@ export async function prefetchTokenSymbols(
     }
   }
 
-  const uniqueTokenCount = uniqueTokenAddresses.size
-  spinner.text = `Prefetching ${uniqueTokenCount} token symbols...`
-
-  // Fetch all token symbols in parallel
-  await Promise.all(
-    Array.from(uniqueTokenAddresses).map(async (address) => {
-      await getSymbolFromTokenAddress(address, provider)
-    })
-  )
-
-  spinner.succeed(`Prefetched ${uniqueTokenCount} token symbols`)
+  // Use the shared prefetch utility
+  await sharedPrefetchTokenSymbols(uniqueTokenAddresses, provider, true)
 }

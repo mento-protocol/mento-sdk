@@ -1,8 +1,11 @@
 import chalk from 'chalk'
 import { ethers } from 'ethers'
+import { batchProcess } from '../../shared/batchProcessor'
+import { getSymbolFromTokenAddress } from '../../shared/tokenUtils'
 import { ExchangeData, Mento, TradingLimit } from '../types'
-import { getSymbolFromTokenAddress } from './getSymbolFromTokenAddress'
+import { TradingLimitsConfig } from './../../../src/interfaces/tradingLimitsConfig'
 // Import type extensions for Object.groupBy
+import { TradingLimitsState } from '../../../src/interfaces'
 import './typeExtensions'
 
 /**
@@ -19,27 +22,30 @@ export async function filterExchangesByToken(
   provider: ethers.providers.Provider
 ): Promise<ExchangeData[]> {
   try {
-    const filteredExchanges: ExchangeData[] = []
-
-    for (const exchange of exchanges) {
-      // Get token symbols for all assets in this exchange (already cached during prefetch)
-      const tokenSymbols = await Promise.all(
-        exchange.assets.map((addr: string) =>
-          getSymbolFromTokenAddress(addr, provider)
+    // Process exchanges in batches to avoid overwhelming RPC endpoint
+    const results = await batchProcess(
+      exchanges,
+      async (exchange: ExchangeData) => {
+        // Get token symbols for all assets in this exchange (already cached during prefetch)
+        const tokenSymbols = await Promise.all(
+          exchange.assets.map((addr: string) =>
+            getSymbolFromTokenAddress(addr, provider)
+          )
         )
-      )
 
-      // Check if any token matches the filter
-      const hasMatchingToken = tokenSymbols.some((symbol) =>
-        symbol.toLowerCase().includes(tokenFilter.toLowerCase())
-      )
+        // Check if any token matches the filter
+        const hasMatchingToken = tokenSymbols.some((symbol) =>
+          symbol.toLowerCase().includes(tokenFilter.toLowerCase())
+        )
 
-      if (hasMatchingToken) {
-        filteredExchanges.push(exchange)
-      }
-    }
+        return hasMatchingToken ? exchange : null
+      },
+      10 // Process 10 exchanges concurrently
+    )
 
-    return filteredExchanges
+    return results.filter(
+      (exchange): exchange is ExchangeData => exchange !== null
+    )
   } catch (error) {
     console.error(
       chalk.red(`Error filtering exchanges by token: ${tokenFilter}`)
@@ -64,6 +70,7 @@ export async function prepareExchangeInfo(
   exchangeName: string
 }> {
   // Get token symbols for display and prepare asset info (using cached symbols)
+  // Since symbols are already cached, this should be very fast
   const tokenAssets = await Promise.all(
     exchange.assets.map(async (addr: string) => ({
       address: addr,
@@ -89,10 +96,10 @@ export async function fetchExchangeData(
   mento: Mento
 ): Promise<{
   allLimits: TradingLimit[]
-  limitConfigs: any[]
-  limitStates: any[]
-  configByAsset: Record<string, any>
-  stateByAsset: Record<string, any>
+  limitConfigs: TradingLimitsConfig[]
+  limitStates: TradingLimitsState[]
+  configByAsset: Record<string, TradingLimitsConfig>
+  stateByAsset: Record<string, TradingLimitsState>
   limitsByAsset: Record<string, TradingLimit[]>
 }> {
   // Get exchange data in parallel to reduce network calls
@@ -104,7 +111,7 @@ export async function fetchExchangeData(
 
   // Create maps for easy lookup by asset address
   const configByAsset = limitConfigs.reduce(
-    (map: Record<string, any>, cfg: any) => {
+    (map: Record<string, TradingLimitsConfig>, cfg: TradingLimitsConfig) => {
       map[cfg.asset] = cfg
       return map
     },
@@ -112,7 +119,7 @@ export async function fetchExchangeData(
   )
 
   const stateByAsset = limitStates.reduce(
-    (map: Record<string, any>, state: any) => {
+    (map: Record<string, TradingLimitsState>, state: TradingLimitsState) => {
       map[state.asset] = state
       return map
     },

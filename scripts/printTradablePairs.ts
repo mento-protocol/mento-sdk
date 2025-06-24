@@ -3,7 +3,6 @@ import { Mento } from '../src/mento'
 
 const rpcUrls: Record<number, string> = {
   42220: 'https://forno.celo.org',
-  62320: 'https://baklava-forno.celo-testnet.org',
   44787: 'https://alfajores-forno.celo-testnet.org',
 }
 

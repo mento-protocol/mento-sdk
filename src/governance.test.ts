@@ -111,11 +111,11 @@ describe('Governance', () => {
       const calldatas = ['0x']
       const description = 'test'
 
-      const fakeTxObj = { to: '0x1337', data: '0x345' }
+      const fakeTxObj = { to: '0x1234567890123456789012345678901234567890', data: '0x345' }
       const fakePopulatedTxObj = {
-        to: '0x123',
+        to: '0x1234567890123456789012345678901234567890',
         data: '0x00456',
-        from: '0xad3',
+        from: '0xABCDEF1234567890123456789012345678901234',
         gasLimit: 2200,
       }
 
@@ -159,11 +159,11 @@ describe('Governance', () => {
     it('should return a populated queue proposal transaction', async () => {
       const proposalId = 1
 
-      const fakeTxObj = { to: '0x1337', data: '0x345' }
+      const fakeTxObj = { to: '0x1234567890123456789012345678901234567890', data: '0x345' }
       const fakePopulatedTxObj = {
-        to: '0x123',
+        to: '0x1234567890123456789012345678901234567890',
         data: '0x00456',
-        from: '0xad3',
+        from: '0xABCDEF1234567890123456789012345678901234',
         gasLimit: 2200,
       }
 
@@ -198,11 +198,11 @@ describe('Governance', () => {
     it('should return a populated execute proposal transaction', async () => {
       const proposalId = 1
 
-      const fakeTxObj = { to: '0x1337', data: '0x345' }
+      const fakeTxObj = { to: '0x1234567890123456789012345678901234567890', data: '0x345' }
       const fakePopulatedTxObj = {
-        to: '0x123',
+        to: '0x1234567890123456789012345678901234567890',
         data: '0x00456',
-        from: '0xad3',
+        from: '0xABCDEF1234567890123456789012345678901234',
         gasLimit: 2200,
       }
 
@@ -238,11 +238,11 @@ describe('Governance', () => {
       const proposalId = 1
       const support = 1
 
-      const fakeTxObj = { to: '0x1337', data: '0x345' }
+      const fakeTxObj = { to: '0x1234567890123456789012345678901234567890', data: '0x345' }
       const fakePopulatedTxObj = {
-        to: '0x123',
+        to: '0x1234567890123456789012345678901234567890',
         data: '0x00456',
-        from: '0xad3',
+        from: '0xABCDEF1234567890123456789012345678901234',
         gasLimit: 2200,
       }
 
@@ -275,11 +275,11 @@ describe('Governance', () => {
     it('should return a populated cancel proposal transaction', async () => {
       const proposalId = 1
 
-      const fakeTxObj = { to: '0x1337', data: '0x345' }
+      const fakeTxObj = { to: '0x1234567890123456789012345678901234567890', data: '0x345' }
       const fakePopulatedTxObj = {
-        to: '0x123',
+        to: '0x1234567890123456789012345678901234567890',
         data: '0x00456',
-        from: '0xad3',
+        from: '0xABCDEF1234567890123456789012345678901234',
         gasLimit: 2200,
       }
 

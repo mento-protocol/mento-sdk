@@ -1,16 +1,14 @@
 import chalk from 'chalk'
 import Table from 'cli-table3'
-import { ScriptArgs } from '../types'
 
 /**
  * Create a table for displaying trading limits
  *
- * @param args - Script command line arguments (required parameter but not currently used)
  * @returns A configured table instance
  */
-export function createLimitsTable(args: ScriptArgs): Table.Table {
+export function createLimitsTable(): Table.Table {
   // Create table configuration with clean and properly aligned headers
-  const tableConfig: any = {
+  const tableConfig: Table.TableConstructorOptions = {
     head: [
       'Exchange',
       'Symbol',
@@ -63,13 +61,13 @@ export function handleExchangeWithNoLimits(
   tokenAssets: Array<{ address: string; symbol: string }>,
   exchangeName: string,
   limitsTable: Table.Table,
-  exchangeNameDisplayed: boolean = false
+  exchangeNameDisplayed = false
 ): void {
   // No limits for any assets in this exchange
   let isExchangeNameDisplayed = exchangeNameDisplayed
 
   for (const asset of tokenAssets) {
-    const row: any[] = []
+    const row: string[] = []
 
     // Show human-readable Exchange name only once per exchange
     row.push(!isExchangeNameDisplayed ? chalk.cyan(exchangeName) : '')

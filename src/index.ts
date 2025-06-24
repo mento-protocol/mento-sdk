@@ -1,7 +1,8 @@
 /* istanbul ignore file */
 
-export * from './mento'
-export * from './governance'
-export * from './utils'
 export * from './constants'
+export * from './governance'
+export * from './mento'
+export * from './routeUtils'
 export { ContractAddresses } from './types'
+export * from './utils'

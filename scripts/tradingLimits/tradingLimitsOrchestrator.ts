@@ -1,7 +1,9 @@
 import { ethers } from 'ethers'
 import ora from 'ora'
-import { ExchangeData, Mento, ScriptArgs } from './types'
+import { batchProcess } from '../shared/batchProcessor'
+import { ExchangeData, Mento, ScriptArgs, TradingLimit } from './types'
 
+import { TradingLimitsConfig, TradingLimitsState } from '../../src/interfaces'
 import { ErrorType, handleError } from './utils/errorHandler'
 import { processExchangeWithLimits } from './utils/exchangeLimitProcessor'
 import {
@@ -13,6 +15,24 @@ import {
   createLimitsTable,
   handleExchangeWithNoLimits,
 } from './utils/tableFormatter'
+
+interface ExchangeDataResult {
+  allLimits: TradingLimit[]
+  limitConfigs: TradingLimitsConfig[]
+  limitStates: TradingLimitsState[]
+  configByAsset: Record<string, TradingLimitsConfig>
+  stateByAsset: Record<string, TradingLimitsState>
+  limitsByAsset: Record<string, TradingLimit[]>
+}
+
+interface ProcessedExchangeResult {
+  success: boolean
+  exchange: ExchangeData
+  tokenAssets?: Array<{ address: string; symbol: string }>
+  exchangeName?: string
+  exchangeData?: ExchangeDataResult
+  error?: Error
+}
 
 /**
  * Process all exchanges and display their trading limits
@@ -29,68 +49,126 @@ export async function processTradingLimits(
   args: ScriptArgs
 ): Promise<void> {
   // Create table for displaying results
-  const limitsTable = createLimitsTable(args)
+  const limitsTable = createLimitsTable()
 
   // Filter exchanges if a token filter is provided
   let exchangesToProcess = exchanges
   if (args.token) {
+    const filterSpinner = ora({
+      text: 'Filtering exchanges by token...',
+      color: 'cyan',
+    }).start()
+
     exchangesToProcess = await filterExchangesByToken(
       exchanges,
       args.token,
       provider
     )
+
+    filterSpinner.succeed(
+      `Filtered to ${exchangesToProcess.length} exchanges matching "${args.token}"`
+    )
   }
 
   // Create a spinner to indicate processing
   const spinner = ora({
-    text: 'Fetching trading limit data for each exchange...',
+    text: `Processing ${exchangesToProcess.length} exchanges in parallel...`,
     color: 'cyan',
   }).start()
 
-  // Process each exchange and populate the table
-  for (let i = 0; i < exchangesToProcess.length; i++) {
-    const exchange = exchangesToProcess[i]
-    spinner.text = `Processing exchange ${i + 1}/${
-      exchangesToProcess.length
-    }: ${exchange.id}`
+  // Process exchanges in batches to avoid overwhelming the RPC endpoint
+  const results = await batchProcess(
+    exchangesToProcess,
+    async (
+      exchange: ExchangeData,
+      index: number
+    ): Promise<ProcessedExchangeResult> => {
+      try {
+        // Update spinner text periodically (for the first item in each batch)
+        if (index % 8 === 0) {
+          spinner.text = `Processing exchanges... (${index + 1}/${
+            exchangesToProcess.length
+          })`
+        }
 
-    try {
-      // Prepare exchange information
-      const { tokenAssets, exchangeName } = await prepareExchangeInfo(
-        exchange,
-        provider
-      )
+        // Prepare exchange information and fetch exchange data in parallel
+        const [{ tokenAssets, exchangeName }, exchangeData] = await Promise.all(
+          [
+            prepareExchangeInfo(exchange, provider),
+            fetchExchangeData(exchange, mento),
+          ]
+        )
 
-      // Fetch exchange data from Mento protocol
-      const exchangeData = await fetchExchangeData(exchange, mento)
-
-      // Check if this exchange has any trading limits
-      if (exchangeData.allLimits.length > 0) {
-        // Process exchange with trading limits
-        processExchangeWithLimits(
+        return {
+          success: true,
           exchange,
           tokenAssets,
           exchangeName,
           exchangeData,
+        }
+      } catch (error) {
+        return {
+          success: false,
+          exchange,
+          error: error instanceof Error ? error : new Error(String(error)),
+        }
+      }
+    },
+    8 // Process 8 exchanges concurrently
+  )
+
+  // Stop the spinner once processing is complete
+  spinner.succeed(`Processed ${exchangesToProcess.length} exchanges`)
+
+  // Process results and populate the table
+  let successCount = 0
+  let errorCount = 0
+
+  for (const result of results) {
+    if (
+      result.success &&
+      result.tokenAssets &&
+      result.exchangeName &&
+      result.exchangeData
+    ) {
+      successCount++
+
+      // Check if this exchange has any trading limits
+      if (result.exchangeData.allLimits.length > 0) {
+        // Process exchange with trading limits
+        processExchangeWithLimits(
+          result.exchange,
+          result.tokenAssets,
+          result.exchangeName,
+          result.exchangeData,
           args,
           limitsTable
         )
       } else {
         // Handle exchange with no trading limits
         handleExchangeWithNoLimits(
-          tokenAssets,
-          exchangeName,
+          result.tokenAssets,
+          result.exchangeName,
           limitsTable,
           false // Pass false to ensure the exchange name is displayed in the first row for this exchange
         )
       }
-    } catch (error) {
-      handleError(ErrorType.EXCHANGE_ERROR, { exchange }, error)
+    } else {
+      errorCount++
+      handleError(
+        ErrorType.EXCHANGE_ERROR,
+        { exchange: result.exchange },
+        result.error
+      )
     }
   }
 
-  // Stop the spinner once processing is complete
-  spinner.succeed('Processed all exchanges')
+  // Display processing summary
+  if (errorCount > 0) {
+    console.log(
+      `\nProcessing summary: ${successCount} successful, ${errorCount} failed`
+    )
+  }
 
   // Display the table
   console.log('\n' + limitsTable.toString())

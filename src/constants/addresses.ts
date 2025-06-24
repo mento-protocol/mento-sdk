@@ -1,5 +1,5 @@
-import { ChainId } from './../enums'
 import { ContractAddressMap } from '../types'
+import { ChainId } from './../enums'
 
 export const addresses: ContractAddressMap = {
   [ChainId.CELO]: {
@@ -47,29 +47,6 @@ export const addresses: ContractAddressMap = {
     StableTokenBRL: '0xE4D517785D091D3c54818832dB6094bcc2744545',
     StableTokenXOF: '0xB0FA15e002516d0301884059c0aaC0F0C72b019D',
     SortedOracles: '0xFdd8bD58115FfBf04e47411c1d228eCC45E93075',
-  },
-  [ChainId.BAKLAVA]: {
-    GovernanceFactory: '0xe23A28a92B95c743fC0F09c16a6b2E6D59F234Fa',
-    Airgrab: '0xNotDeployed',
-    Emission: '0xNotDeployed',
-    MentoGovernor: '0xf1873597aA9757f57BA8Ed84a3EDb2E3217EF09f',
-    MentoToken: '0x8942330eCB5A6c808aac3Aec3C6aab6D8CF436FE',
-    TimelockController: '0x8c045769087F9de69B70949ED7fC23c14Db71e20',
-    Locking: '0x1E15b108c51a0cAEAFf1a0E6f27A853Bde1AA2e6',
-    MentoRouter: '0xC5449dbB0aF89F5E3C8E0e1611966E1964F891b1',
-    Broker: '0x6723749339e320E1EFcd9f1B0D997ecb45587208',
-    BiPoolManager: '0xFF9a3da00F42839CD6D33AD7adf50bCc97B41411',
-    BreakerBox: '0x5Ea5A5F694F10de979BEeC7b8041E9f931F54bc7',
-    Reserve: '0x68Dd816611d3DE196FDeb87438B74A9c29fd649f',
-    ConstantSumPricingModule: '0x2901da88dd444a3c41AF51696548DEe3524Cf8Dc',
-    ConstantProductPricingModule: '0x7586680Dd2e4F977C33cDbd597fa2490e342CbA2',
-    MedianDeltaBreaker: '0x286a8137EE9EE6dE8B5e5be334706fA812400994',
-    ValueDeltaBreaker: '0xf631F58b1B51E99dF3Ad1CE18f5C42ab41e4A17a',
-    StableToken: '0x62492A644A588FD904270BeD06ad52B9abfEA1aE',
-    StableTokenEUR: '0xf9ecE301247aD2CE21894941830A2470f4E774ca',
-    StableTokenBRL: '0x6a0EEf2bed4C30Dc2CB42fe6c5f01F80f7EF16d1',
-    StableTokenXOF: '0x64c1D812673E93Bc036AdC3D547d9950696DA5Af',
-    SortedOracles: '0x88A187a876290E9843175027902B9f7f1B092c88',
   },
 }
 

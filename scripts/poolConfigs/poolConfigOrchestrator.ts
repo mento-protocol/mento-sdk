@@ -10,18 +10,21 @@ export function displayPoolConfig(exchangeData: ExchangeData[]) {
   // Define column widths
   const colWidths = {
     exchangeId: 66,
-    asset0: 10,
-    asset1: 10,
+    asset0: 12,
+    asset1: 12,
     spread: 12,
     refRateFeed: 42,
     resetFreq: 14,
     minReports: 12,
-    resetSize: 10
+    resetSize: 10,
   }
 
   // Calculate total table width
   const numColumns = Object.keys(colWidths).length
-  const totalWidth = Object.values(colWidths).reduce((a, b) => a + b, 0) + (numColumns - 1) * 3 + 1 // 3 for ' | ', 1 for initial space
+  const totalWidth =
+    Object.values(colWidths).reduce((a, b) => a + b, 0) +
+    (numColumns - 1) * 3 +
+    1 // 3 for ' | ', 1 for initial space
 
   // Create table header
   console.log('\nPool Configuration Details:')
@@ -52,7 +55,12 @@ export function displayPoolConfig(exchangeData: ExchangeData[]) {
   for (const exchange of sortedExchanges) {
     // Pad the spread string before coloring
     const spreadRaw = exchange.spread.toFixed(4).padEnd(colWidths.spread)
-    const spreadColor = exchange.spread > 1 ? chalk.red : exchange.spread > 0.5 ? chalk.yellow : chalk.green
+    const spreadColor =
+      exchange.spread > 1
+        ? chalk.red
+        : exchange.spread > 0.5
+        ? chalk.yellow
+        : chalk.green
     const spreadStr = spreadColor(spreadRaw)
 
     // Format reset size to be more readable (convert from e18 to actual number)
@@ -69,7 +77,9 @@ export function displayPoolConfig(exchangeData: ExchangeData[]) {
         ' | ' +
         exchange.referenceRateFeedID.padEnd(colWidths.refRateFeed) +
         ' | ' +
-        exchange.referenceRateResetFrequency.toFixed(1).padEnd(colWidths.resetFreq) +
+        exchange.referenceRateResetFrequency
+          .toFixed(1)
+          .padEnd(colWidths.resetFreq) +
         ' | ' +
         exchange.minimumReports.toString().padEnd(colWidths.minReports) +
         ' | ' +
@@ -79,4 +89,4 @@ export function displayPoolConfig(exchangeData: ExchangeData[]) {
 
   console.log('='.repeat(totalWidth))
   console.log(`Total exchanges: ${exchangeData.length}`)
-} 
+}

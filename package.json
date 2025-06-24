@@ -1,7 +1,7 @@
 {
   "name": "@mento-protocol/mento-sdk",
   "description": "Official SDK for interacting with the Mento Protocol",
-  "version": "1.0.9",
+  "version": "1.10",
   "license": "MIT",
   "author": "Mento Labs",
   "keywords": [
@@ -26,7 +26,8 @@
     "build:cjs": "tsc --project ./tsconfig.json",
     "build:esm": "tsc --project ./tsconfig.esm.json",
     "clean": "rm -rf ./dist",
-    "lint": "eslint --config ./.eslintrc.json src/**/*.ts",
+    "lint": "eslint --config ./.eslintrc.json 'src/**/*.ts' 'scripts/**/*.ts'",
+    "type-check": "tsc --noEmit --project ./tsconfig.eslint.json",
     "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",
     "size": "size-limit",
     "test": "jest --runInBand --verbose",
@@ -35,7 +36,9 @@
     "printTradablePairs": "ts-node scripts/printTradablePairs.ts",
     "tradingLimits": "ts-node scripts/printTradingLimits.ts",
     "poolConfigs": "ts-node scripts/printPoolConfigs.ts",
-    "breakerBox": "ts-node scripts/printBreakerBox.ts"
+    "breakerBox": "ts-node scripts/printBreakerBox.ts",
+    "quote": "ts-node scripts/quotes/index.ts",
+    "getTokenGraph": "ts-node scripts/visualizeTokenGraph.ts"
   },
   "husky": {
     "hooks": {
@@ -49,7 +52,7 @@
     ]
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=22"
   },
   "size-limit": [
     {

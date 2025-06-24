@@ -1,6 +1,10 @@
 import chalk from 'chalk'
 import Table from 'cli-table3'
 import { format, formatDistance, fromUnixTime } from 'date-fns'
+import {
+  TradingLimitsConfig,
+  TradingLimitsState,
+} from '../../../src/interfaces'
 import { ScriptArgs, TradingLimit } from '../types'
 
 /**
@@ -15,8 +19,8 @@ import { ScriptArgs, TradingLimit } from '../types'
 export function getLimitDetails(
   limit: TradingLimit,
   limitType: string,
-  config: any,
-  state: any
+  config: TradingLimitsConfig,
+  state: TradingLimitsState
 ): {
   limitValue: number
   netflowValue: number
@@ -92,7 +96,6 @@ export function getLimitDetails(
 /**
  * Process assets that have trading limits configured
  *
- * @param exchange - The exchange to process
  * @param asset - The token asset
  * @param exchangeName - Formatted exchange name
  * @param limits - Trading limits for this asset
@@ -104,12 +107,11 @@ export function getLimitDetails(
  * @returns Object containing blocking information
  */
 export function processAssetWithLimits(
-  exchange: any,
   asset: { address: string; symbol: string },
   exchangeName: string,
   limits: TradingLimit[],
-  configByAsset: Record<string, any>,
-  stateByAsset: Record<string, any>,
+  configByAsset: Record<string, TradingLimitsConfig>,
+  stateByAsset: Record<string, TradingLimitsState>,
   args: ScriptArgs,
   limitsTable: Table.Table,
   exchangeNameDisplayed: boolean
@@ -153,7 +155,6 @@ export function processAssetWithLimits(
 
       // Create row for this limit
       const row = createLimitRow(
-        exchange,
         asset,
         exchangeName,
         limit,
@@ -178,7 +179,6 @@ export function processAssetWithLimits(
     } else {
       // Create placeholder row for missing limit type
       const row = createPlaceholderLimitRow(
-        exchange,
         asset,
         exchangeName,
         limitType,
@@ -203,7 +203,6 @@ export function processAssetWithLimits(
 /**
  * Create a table row for a limit
  *
- * @param exchange - The exchange to process
  * @param asset - The token asset
  * @param exchangeName - Formatted exchange name
  * @param limit - The trading limit
@@ -220,7 +219,6 @@ export function processAssetWithLimits(
  * @returns Array representing a table row
  */
 export function createLimitRow(
-  exchange: any,
   asset: { address: string; symbol: string },
   exchangeName: string,
   limit: TradingLimit,
@@ -234,8 +232,8 @@ export function createLimitRow(
   args: ScriptArgs,
   skipExchangeName: boolean,
   skipSymbol: boolean
-): any[] {
-  const row: any[] = []
+): string[] {
+  const row: string[] = []
 
   // Show human-readable Exchange name only once per exchange
   row.push(!skipExchangeName ? chalk.cyan(exchangeName) : '')
@@ -298,7 +296,6 @@ export function createLimitRow(
 /**
  * Create a placeholder row for a non-existent limit type
  *
- * @param exchange - The exchange to process
  * @param asset - The token asset
  * @param exchangeName - Formatted exchange name
  * @param limitType - The limit type (L0, L1, LG)
@@ -309,7 +306,6 @@ export function createLimitRow(
  * @returns Array representing a table row
  */
 export function createPlaceholderLimitRow(
-  exchange: any,
   asset: { address: string; symbol: string },
   exchangeName: string,
   limitType: string,
@@ -317,8 +313,8 @@ export function createPlaceholderLimitRow(
   args: ScriptArgs,
   skipExchangeName: boolean,
   skipSymbol: boolean
-): any[] {
-  const row: any[] = []
+): string[] {
+  const row: string[] = []
 
   // Show human-readable Exchange name only once per exchange
   row.push(!skipExchangeName ? chalk.cyan(exchangeName) : '')
