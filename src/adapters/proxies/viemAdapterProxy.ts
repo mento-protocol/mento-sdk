@@ -1,5 +1,5 @@
-import type { PublicClient } from 'viem'
-import { ProviderAdapter } from '../../types'
+import type { PublicClient, WalletClient, Account } from 'viem'
+import { ProviderAdapter, TransactionResponse } from '../../types'
 
 /**
  * Proxy class that implements lazy loading for viem provider adapter.
@@ -19,14 +19,20 @@ export class ViemAdapterProxy implements ProviderAdapter {
   private adapter: ProviderAdapter | null = null
   private initPromise: Promise<void>
 
-  constructor(client: PublicClient) {
-    this.initPromise = this.initialize(client)
+  constructor(
+    client: PublicClient,
+    walletClientConfig?: { walletClient: WalletClient; account: Account }
+  ) {
+    this.initPromise = this.initialize(client, walletClientConfig)
   }
 
-  private async initialize(client: PublicClient) {
+  private async initialize(
+    client: PublicClient,
+    walletClientConfig?: { walletClient: WalletClient; account: Account }
+  ) {
     try {
       const { ViemAdapter } = await import('../implementations/viemAdapter')
-      this.adapter = new ViemAdapter(client)
+      this.adapter = new ViemAdapter(client, walletClientConfig)
     } catch (error) {
       throw new Error(
         'viem is not installed. Please install viem to use this adapter'
@@ -42,6 +48,16 @@ export class ViemAdapterProxy implements ProviderAdapter {
       )
     }
     return this.adapter.readContract(...args)
+  }
+  
+  async writeContract(...args: Parameters<ProviderAdapter['writeContract']>): Promise<TransactionResponse> {
+    await this.initPromise
+    if (!this.adapter) {
+      throw new Error(
+        'Adapter not initialized. Are you missing viem dependency?'
+      )
+    }
+    return this.adapter.writeContract(...args)
   }
 
   async getChainId() {

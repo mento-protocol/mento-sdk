@@ -1,0 +1,1 @@
+This directory contains detailed specifications or plans for features, modules, and large tasks. AI coding assistants will use these specs as a blueprint for implementation.
