@@ -24,9 +24,10 @@ export class DefaultCalculatorFactory implements CalculatorFactory {
   }
 
   createMultisigCalculator(provider: ProviderAdapter): ISupplyCalculator {
-    return new MultisigSupplyCalculator(
-      provider,
-      MENTO_ADDRESSES.PROTOCOL_MULTISIG
-    )
+    return new MultisigSupplyCalculator(provider, [
+      MENTO_ADDRESSES.PROTOCOL_MULTISIG,
+      MENTO_ADDRESSES.OPERATIONAL_WALLET,
+      MENTO_ADDRESSES.OPERATIONAL_WALLET_2,
+    ])
   }
 }
