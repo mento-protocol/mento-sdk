@@ -228,7 +228,7 @@ describe('Route Fetching Logic', () => {
         allPairs
       )
 
-      // Both should show CELO as the intermediate token
+      // Both should show cUSD as the intermediate token
       expect(cREALtoUSDCDisplay).toBe('cREAL → cUSD → USDC')
       expect(usdcToCREALDisplay).toBe('USDC → cUSD → cREAL')
     })
