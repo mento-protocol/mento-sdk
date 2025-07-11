@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-06-26T16:12:28.767Z
+// Generated on 2025-07-11T11:12:19.594Z
 
 import { TradablePairWithSpread } from './tradablePairs'
 
