@@ -201,6 +201,38 @@ describe('Route Fetching Logic', () => {
   })
 
   describe('Route Display Functionality', () => {
+    it('should correctly display multi-hop route through an intermediate hub', async () => {
+      // Find the cREAL-USDC route that goes through cUSD
+      const cREALtoUSDC = await mento.findPairForTokens(
+        TOKENS.cREAL,
+        TOKENS.USDC
+      )
+
+      // Verify this is a multi-hop route
+      expect(cREALtoUSDC.path.length).toBe(2)
+
+      // Verify it goes through cUSD as intermediate token
+      expect(hasIntermediateToken(cREALtoUSDC, TOKENS.cUSD)).toBe(true)
+
+      // Test route display in both directions
+      const cREALtoUSDCDisplay = buildRouteDisplay(
+        cREALtoUSDC,
+        'cREAL',
+        'USDC',
+        allPairs
+      )
+      const usdcToCREALDisplay = buildRouteDisplay(
+        cREALtoUSDC,
+        'USDC',
+        'cREAL',
+        allPairs
+      )
+
+      // Both should show CELO as the intermediate token
+      expect(cREALtoUSDCDisplay).toBe('cREAL → cUSD → USDC')
+      expect(usdcToCREALDisplay).toBe('USDC → cUSD → cREAL')
+    })
+
     it('should correctly display direct routes', async () => {
       // Find a direct route (single hop)
       const usdcToUsdt = await mento.findPairForTokens(TOKENS.USDC, TOKENS.USDT)
