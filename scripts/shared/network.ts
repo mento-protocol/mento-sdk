@@ -2,7 +2,7 @@
 export const NETWORK_MAP: Record<string, number> = {
   celo: 42220,
   alfajores: 44787,
-  celo_sepolia: 11142220,
+  ["celo-sepolia"]: 11142220,
   base: 8453
 }
 

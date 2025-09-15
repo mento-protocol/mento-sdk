@@ -76,7 +76,8 @@ async function main(): Promise<void> {
     const args = parseCommandLineArgs()
 
     // Set up provider - this assumes you're connecting to the network where Mento is deployed
-    const rpcUrl = process.env.RPC_URL || 'https://forno.celo.org'
+    const rpcUrl =
+      args.rpcUrl || process.env.RPC_URL || 'https://forno.celo.org'
     const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
 
     console.log(chalk.gray('\n==============================='))
@@ -289,8 +290,10 @@ async function main(): Promise<void> {
       6 // Process 6 exchanges concurrently
     )
 
-    const nonNullResults: ProcessedExchangeResult[] = results.filter(r => r !== null) as ProcessedExchangeResult[]
-    const sortedResults = nonNullResults.sort((a, b) => a.data?.rateFeed.localeCompare(b.data?.rateFeed))
+    const filteredResults = results.filter(r => r !== null && r.success === true)
+    // XXX: The usafe of "!" should be solved by the above line but I think we are using an old version
+    // of typescript that doesn't understand the implications of the filtering.
+    const sortedResults = filteredResults.sort((a, b) => a!.data!.rateFeed.localeCompare(b!.data!.rateFeed))
 
     processSpinner.succeed('Exchange data processed')
 
