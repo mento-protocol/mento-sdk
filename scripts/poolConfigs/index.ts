@@ -3,7 +3,7 @@
 import { BiPoolManager__factory } from '@mento-protocol/mento-core-ts'
 import chalk from 'chalk'
 import { ethers } from 'ethers'
-import ora from 'ora'
+// import ora from 'ora'
 import { batchProcess } from '../shared/batchProcessor'
 import {
   getSymbolFromTokenAddress,
@@ -17,6 +17,7 @@ import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
  * CLI tool to visualize all spread configurations for all exchanges in the Mento protocol.
  */
 async function main(): Promise<void> {
+  const ora = (await import('ora')).default;
   try {
     // Parse command line arguments
     const args = parseCommandLineArgs()
@@ -100,8 +101,8 @@ async function main(): Promise<void> {
           const spread = (Number(poolExchange.config.spread.value) / 1e24) * 100
 
           // Convert referenceRateResetFrequency from seconds to hours
-          const resetFrequencyHours =
-            Number(poolExchange.config.referenceRateResetFrequency) / 3600
+          const resetFrequencyMinutes =
+            Number(poolExchange.config.referenceRateResetFrequency) / 60
 
           const exchangeData: ExchangeData = {
             exchangeId: exchange.id,
@@ -115,7 +116,7 @@ async function main(): Promise<void> {
             },
             spread,
             referenceRateFeedID: poolExchange.config.referenceRateFeedID,
-            referenceRateResetFrequency: resetFrequencyHours,
+            referenceRateResetFrequency: resetFrequencyMinutes,
             minimumReports: Number(poolExchange.config.minimumReports),
             stablePoolResetSize: Number(
               poolExchange.config.stablePoolResetSize
@@ -146,10 +147,10 @@ async function main(): Promise<void> {
     // Filter by token symbol if specified
     let filteredData = args.token
       ? exchangeData.filter(
-          (data) =>
-            data.asset0.symbol.toLowerCase() === args.token?.toLowerCase() ||
-            data.asset1.symbol.toLowerCase() === args.token?.toLowerCase()
-        )
+        (data) =>
+          data.asset0.symbol.toLowerCase() === args.token?.toLowerCase() ||
+          data.asset1.symbol.toLowerCase() === args.token?.toLowerCase()
+      )
       : exchangeData
 
     // Filter by exchange ID if specified

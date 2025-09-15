@@ -1,4 +1,7 @@
 export enum ChainId {
   CELO = 42220,
+  CELO_SEPOLIA = 11142220,
   ALFAJORES = 44787,
+  BASE = 8453,
 }
+

@@ -91,11 +91,10 @@
     "yargs-parser": "^21.1.1"
   },
   "dependencies": {
-    "@mento-protocol/mento-core-ts": "^0.2.0",
+    "@mento-protocol/mento-core-ts": "2.6.5-rc3",
     "mento-router-ts": "^0.2.0"
   },
   "peerDependencies": {
     "ethers": "^5.7"
-  },
-  "packageManager": "yarn@3.3.1"
+  }
 }

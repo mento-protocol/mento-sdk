@@ -2290,10 +2290,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mento-protocol/mento-core-ts@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@mento-protocol/mento-core-ts@npm:0.2.0"
-  checksum: 796c08c4f14fee843d1dd6546c54318c2aadc4d5348b2f3097e2cb996b1c7bfc1880848e16f5003e88cc22b8522f3d17597c5741fd5073837fb84f44ecf4df32
+"@mento-protocol/mento-core-ts@npm:2.6.5-rc3":
+  version: 2.6.5-rc3
+  resolution: "@mento-protocol/mento-core-ts@npm:2.6.5-rc3"
+  checksum: ed83fb23f2c3a7255003d1fcbc98a8e713ddc38124bae5e00c4c8a919ea752fc53c73a52cdf699202e7b23d6771453bcf8829b10bc9199b4ec9d29ceeae15556
   languageName: node
   linkType: hard
 
@@ -2303,7 +2303,7 @@ __metadata:
   dependencies:
     "@babel/preset-env": ^7.20.2
     "@babel/preset-typescript": ^7.18.6
-    "@mento-protocol/mento-core-ts": ^0.2.0
+    "@mento-protocol/mento-core-ts": 2.6.5-rc3
     "@size-limit/preset-small-lib": ^8.1.0
     "@tsconfig/recommended": ^1.0.1
     "@types/jest": ^29.4.0

@@ -9,7 +9,10 @@ import {
 import chalk from 'chalk'
 import { BigNumber, ethers } from 'ethers'
 import ora from 'ora'
+import { getAddress } from '../../src/constants'
+import { getChainId } from '../../src/utils'
 import { batchProcess } from '../shared/batchProcessor'
+import { toRateFeedId } from '../shared/rateFeedUtils'
 import {
   getSymbolFromTokenAddress,
   prefetchTokenSymbolsFromExchanges,
@@ -17,19 +20,42 @@ import {
 import { Mento } from './types'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
 
+const CURRENCIES = ["AUD", "USD", "PHP", "ZAR", "CAD", "EUR", "BRL", "XOF", "COP", "GHS", "CHF", "NGN", "JPY", "CHF", "GBP", "KES", "CELO", "ETH", "EURC", "EUROC", "USDC", "USDT"];
+const RATEFEED_REVERSE_LOOKUP = CURRENCIES.reduce((acc, cur0) => {
+  return {
+    ...acc,
+    ...CURRENCIES.reduce((acc, cur1) => {
+      for (const rateFeed of [`${cur0}${cur1}`, `${cur0}/${cur1}`, `relayed:${cur0}/${cur1}`, `relayed:${cur0}${cur1}`]) {
+        acc[toRateFeedId(rateFeed).toLocaleLowerCase()] = rateFeed
+      }
+      return acc
+    }, {})
+  }
+}, {
+  ["0x765DE816845861e75A25fCA122bb6898B8B1282a".toLocaleLowerCase()]: "cUSD (CELOUSD)",
+  ["0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73".toLocaleLowerCase()]: "cEUR (CELOEUR)",
+  ["0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787".toLocaleLowerCase()]: "cREAL (CELOBRL)",
+  ["0x73F93dcc49cB8A239e2032663e9475dd5ef29A08".toLocaleLowerCase()]: "eXOF (CELOXOF)",
+})
+
+
 interface BreakerBoxData {
   exchangeId: string
   rateFeedId: string
+  rateFeed: string
+  dependencies: string[]
   asset0: string
   asset1: string
+  exchangePair: string
   status: string
   tradingMode: string
   medianThreshold: string
   medianSmoothingFactor: string
   medianEMA: string
+  medianCooldown: string
   valueThreshold: string
   valueReference: string
-  cooldown: string
+  valueCooldown: string
 }
 
 interface ProcessedExchangeResult {
@@ -75,11 +101,49 @@ async function main(): Promise<void> {
     connectSpinner.succeed('Connected to Mento protocol')
 
     // Fetch all exchanges
+    const rateFeedsSpinner = ora({
+      text: 'Fetching rate feeds...',
+      color: 'cyan',
+    }).start()
+
+    const breakerBox = IBreakerBox__factory.connect(
+      getAddress('BreakerBox', await getChainId(provider)),
+      provider
+    )
+
+    const rateFeedIds = await breakerBox.getRateFeeds()
+
+    rateFeedsSpinner.succeed(
+      `Fetched ${rateFeedIds.length} rate feeds from protocol`
+    )
+
     const exchangesSpinner = ora({
       text: 'Fetching exchanges...',
       color: 'cyan',
     }).start()
+
+
     const exchanges = await mento.getExchanges()
+
+    const biPoolManager = BiPoolManager__factory.connect(
+      // XXX: Currently (and for the future will be deprecated) all exchanges have the same provider
+      exchanges[0].providerAddr,
+      provider
+    )
+
+    const pools = await Promise.all(exchanges.map(async exchange => {
+      // Fetch exchange config and breaker box address in parallel
+      return {
+        id: exchange.id,
+        ...(await biPoolManager.getPoolExchange(exchange.id))
+      }
+    }))
+
+    const poolForRateFeed = pools.reduce((acc, pool) => {
+      acc[pool.config.referenceRateFeedID] = pool
+      return acc;
+    }, {})
+
     exchangesSpinner.succeed(
       `Fetched ${exchanges.length} exchanges from protocol`
     )
@@ -91,7 +155,7 @@ async function main(): Promise<void> {
 
     // Process exchanges in parallel
     const processSpinner = ora({
-      text: `Processing ${exchanges.length} exchanges in parallel...`,
+      text: `Processing ${rateFeedIds.length} rateFeeds in parallel...`,
       color: 'cyan',
     }).start()
 
@@ -106,65 +170,60 @@ async function main(): Promise<void> {
       return decimal.toFixed(6).replace(/\.?0+$/, '')
     }
 
+    const getRateFeedDependencies = async (rateFeed: string) => {
+      const deps: string[] = []
+      for (let index = 0; ; index++) {
+        try {
+          const dep = await breakerBox.rateFeedDependencies(rateFeed, index)
+          deps.push(dep)
+        } catch (e) {
+          // revert => no more items
+          break
+        }
+      }
+      return deps.map(d => RATEFEED_REVERSE_LOOKUP[d.toLocaleLowerCase()] ? RATEFEED_REVERSE_LOOKUP[d.toLocaleLowerCase()] : d)
+    }
+
+    const breakerAddressesOnChain = (await breakerBox.getBreakers()).map(b => b.toLowerCase())
+    const breakerAddressesConfig = [
+      await mento.getAddress("MedianDeltaBreaker"),
+      await mento.getAddress("ValueDeltaBreaker")
+    ].map(b => b.toLowerCase())
+
+    if (breakerAddressesConfig.length != breakerAddressesOnChain.length ||
+      breakerAddressesOnChain.find(bo => breakerAddressesConfig.find(bc => bo == bc) === undefined) ||
+      breakerAddressesConfig.find(bc => breakerAddressesOnChain.find(bo => bc == bo) === undefined)
+    ) {
+      processSpinner.fail("Breakers don't match on-chain config")
+
+      console.log("On-Chain: ", JSON.stringify(breakerAddressesOnChain))
+      console.log("Config: ", JSON.stringify(breakerAddressesConfig))
+
+      throw new Error(
+        `Breakers on-chain do not match breakers in config`
+      )
+    }
+
+    // Connect to both breakers
+    const medianBreaker = MedianDeltaBreaker__factory.connect(
+      await mento.getAddress("MedianDeltaBreaker"),
+      provider
+    )
+    const valueBreaker = ValueDeltaBreaker__factory.connect(
+      await mento.getAddress("ValueDeltaBreaker"),
+      provider
+    )
+
+
     // Process exchanges in batches to avoid overwhelming the RPC endpoint
     const results = await batchProcess(
-      exchanges,
-      async (exchange, index): Promise<ProcessedExchangeResult> => {
+      rateFeedIds,
+      async (rateFeed): Promise<ProcessedExchangeResult | null> => {
         try {
-          // Update spinner text periodically
-          if (index % 6 === 0) {
-            processSpinner.text = `Processing exchanges... (${index + 1}/${
-              exchanges.length
-            })`
-          }
-
-          const biPoolManager = BiPoolManager__factory.connect(
-            exchange.providerAddr,
-            provider
-          )
-
-          // Fetch exchange config and breaker box address in parallel
-          const [breakerBoxAddr, exchangeConfig] = await Promise.all([
-            biPoolManager.breakerBox(),
-            biPoolManager.getPoolExchange(exchange.id),
-          ])
-
-          const breakerBox = IBreakerBox__factory.connect(
-            breakerBoxAddr,
-            provider
-          )
-
-          // Get breaker parameters
-          const referenceRateFeedId = exchangeConfig.config.referenceRateFeedID
-
           // Get trading mode and breaker addresses in parallel
-          const [tradingMode, breakerAddresses] = await Promise.all([
-            breakerBox.getRateFeedTradingMode(referenceRateFeedId),
-            breakerBox.getBreakers(),
-          ])
+          const tradingMode = await breakerBox.getRateFeedTradingMode(rateFeed)
 
-          const status =
-            tradingMode === 0
-              ? 'active'
-              : tradingMode === 1
-              ? 'tripped'
-              : 'disabled'
-
-          if (breakerAddresses.length < 2) {
-            throw new Error(
-              `Insufficient breakers found for exchange ${exchange.id}`
-            )
-          }
-
-          // Connect to both breakers
-          const medianBreaker = MedianDeltaBreaker__factory.connect(
-            breakerAddresses[0],
-            provider
-          )
-          const valueBreaker = ValueDeltaBreaker__factory.connect(
-            breakerAddresses[1],
-            provider
-          )
+          const status = tradingMode === 0 ? 'active' : tradingMode === 1 ? 'tripped' : 'disabled'
 
           // Fetch all breaker parameters and token symbols in parallel
           const [
@@ -173,33 +232,50 @@ async function main(): Promise<void> {
             medianEMA,
             valueThreshold,
             valueReference,
-            cooldown,
-            asset0Symbol,
-            asset1Symbol,
+            medianCooldown,
+            valueCooldown,
+            medianEnabled,
+            valueEnabled
           ] = await Promise.all([
-            medianBreaker.rateChangeThreshold(referenceRateFeedId),
-            medianBreaker.getSmoothingFactor(referenceRateFeedId),
-            medianBreaker.medianRatesEMA(referenceRateFeedId),
-            valueBreaker.rateChangeThreshold(referenceRateFeedId),
-            valueBreaker.referenceValues(referenceRateFeedId),
-            medianBreaker.getCooldown(referenceRateFeedId),
-            getSymbolFromTokenAddress(exchangeConfig.asset0, provider),
-            getSymbolFromTokenAddress(exchangeConfig.asset1, provider),
+            medianBreaker.rateChangeThreshold(rateFeed),
+            medianBreaker.getSmoothingFactor(rateFeed),
+            medianBreaker.medianRatesEMA(rateFeed),
+            valueBreaker.rateChangeThreshold(rateFeed),
+            valueBreaker.referenceValues(rateFeed),
+            medianBreaker.getCooldown(rateFeed),
+            valueBreaker.getCooldown(rateFeed),
+            breakerBox.isBreakerEnabled(medianBreaker.address, rateFeed),
+            breakerBox.isBreakerEnabled(valueBreaker.address, rateFeed),
           ])
 
+          if (!medianEnabled && !valueEnabled) return null
+
+          let asset0Symbol = "n/a"
+          let asset1Symbol = "n/a"
+
+          const pool = poolForRateFeed[rateFeed];
+          if (pool != undefined) {
+            asset0Symbol = await getSymbolFromTokenAddress(pool.asset0, provider)
+            asset1Symbol = await getSymbolFromTokenAddress(pool.asset1, provider)
+          }
+
           const data: BreakerBoxData = {
-            exchangeId: exchange.id,
-            rateFeedId: referenceRateFeedId,
+            exchangeId: pool ? pool.id : "n/a",
+            rateFeedId: rateFeed,
+            rateFeed: RATEFEED_REVERSE_LOOKUP[rateFeed.toLocaleLowerCase()] || "n/a",
             asset0: asset0Symbol,
             asset1: asset1Symbol,
+            dependencies: await getRateFeedDependencies(rateFeed),
+            exchangePair: pool ? `${asset0Symbol}/${asset1Symbol}` : "n/a",
             status: status,
             tradingMode: tradingMode.toString(),
-            medianThreshold: formatNumber(medianThreshold),
-            medianSmoothingFactor: formatNumber(medianSmoothingFactor),
-            medianEMA: formatEMA(medianEMA),
-            valueThreshold: formatNumber(valueThreshold),
-            valueReference: formatNumber(valueReference),
-            cooldown: `${cooldown.div(60).toString()}m`,
+            medianThreshold: medianEnabled ? formatNumber(medianThreshold) : '-',
+            medianSmoothingFactor: medianEnabled ? formatNumber(medianSmoothingFactor) : '-',
+            medianEMA: medianEnabled ? formatEMA(medianEMA) : '-',
+            medianCooldown: medianEnabled ? `${medianCooldown.toString()}s` : '-',
+            valueThreshold: valueEnabled ? formatNumber(valueThreshold) : '-',
+            valueReference: valueEnabled ? formatNumber(valueReference) : '-',
+            valueCooldown: valueEnabled ? `${valueCooldown.toString()}s` : '-'
           }
 
           return { success: true, data }
@@ -213,14 +289,18 @@ async function main(): Promise<void> {
       6 // Process 6 exchanges concurrently
     )
 
+    const nonNullResults: ProcessedExchangeResult[] = results.filter(r => r !== null) as ProcessedExchangeResult[]
+    const sortedResults = nonNullResults.sort((a, b) => a.data?.rateFeed.localeCompare(b.data?.rateFeed))
+
     processSpinner.succeed('Exchange data processed')
+
 
     // Process results and collect successful data
     const tableData: BreakerBoxData[] = []
     let successCount = 0
     let errorCount = 0
 
-    for (const result of results) {
+    for (const result of sortedResults) {
       if (result.success && result.data) {
         tableData.push(result.data)
         successCount++
@@ -244,10 +324,10 @@ async function main(): Promise<void> {
     // Filter by token symbol if specified
     let filteredData = args.token
       ? tableData.filter(
-          (data) =>
-            data.asset0.toLowerCase() === args.token?.toLowerCase() ||
-            data.asset1.toLowerCase() === args.token?.toLowerCase()
-        )
+        (data) =>
+          data.asset0.toLowerCase() === args.token?.toLowerCase() ||
+          data.asset1.toLowerCase() === args.token?.toLowerCase()
+      )
       : tableData
 
     // Filter by exchange ID if specified
@@ -259,19 +339,22 @@ async function main(): Promise<void> {
 
     // Define column widths
     const colWidths = {
-      exchangeId: 66,
       rateFeedId: 42,
-      asset0: 9,
-      asset1: 9,
+      rateFeed: 15,
+      dependencies: 20,
+      exchangePair: 16,
       status: 7,
       tradingMode: 12,
-      medianThreshold: 13,
-      medianSmoothingFactor: 13,
-      medianEMA: 11,
-      valueThreshold: 12,
-      valueReference: 9,
-      cooldown: 7,
+      medianThreshold: 12,
+      medianSmoothingFactor: 10,
+      medianEMA: 10,
+      medianCooldown: 12,
+      valueThreshold: 10,
+      valueReference: 10,
+      valueCooldown: 12,
     }
+    const medianWidths = colWidths.medianSmoothingFactor + colWidths.medianThreshold + colWidths.medianEMA + colWidths.medianCooldown + 9
+    const valueWidths = colWidths.valueThreshold + colWidths.valueReference + colWidths.valueCooldown + 6
 
     // Calculate total table width
     const numColumns = Object.keys(colWidths).length
@@ -284,29 +367,78 @@ async function main(): Promise<void> {
     console.log('\nBreaker Box Configuration Details:')
     console.log('='.repeat(totalWidth))
     console.log(
-      'Exchange ID'.padEnd(colWidths.exchangeId) +
-        ' | ' +
-        'Rate Feed ID'.padEnd(colWidths.rateFeedId) +
-        ' | ' +
-        'Asset 0'.padEnd(colWidths.asset0) +
-        ' | ' +
-        'Asset 1'.padEnd(colWidths.asset1) +
-        ' | ' +
-        'Status'.padEnd(colWidths.status) +
-        ' | ' +
-        'Trading Mode'.padEnd(colWidths.tradingMode) +
-        ' | ' +
-        'Median Thresh'.padEnd(colWidths.medianThreshold) +
-        ' | ' +
-        'Median Smooth'.padEnd(colWidths.medianSmoothingFactor) +
-        ' | ' +
-        'Median EMA'.padEnd(colWidths.medianEMA) +
-        ' | ' +
-        'Value Thresh'.padEnd(colWidths.valueThreshold) +
-        ' | ' +
-        'Value Ref'.padEnd(colWidths.valueReference) +
-        ' | ' +
-        'Cooldown'.padEnd(colWidths.cooldown)
+      ''.padEnd(colWidths.rateFeedId) +
+      ' | ' +
+      ''.padEnd(colWidths.rateFeed) +
+      ' | ' +
+      ''.padEnd(colWidths.dependencies) +
+      ' | ' +
+      ''.padEnd(colWidths.exchangePair) +
+      ' | ' +
+      ''.padEnd(colWidths.status) +
+      ' | ' +
+      ''.padEnd(colWidths.tradingMode) +
+      ' | ' +
+      'Median Delta Breaker'.padEnd(medianWidths) +
+      ' | ' +
+      'Value Delta Breaker'.padEnd(valueWidths)
+      // 'M. Thresh'.padEnd(colWidths.medianThreshold) +
+      // ' | ' +
+      // 'M. Smooth'.padEnd(colWidths.medianSmoothingFactor) +
+      // ' | ' +
+      // 'M. EMA'.padEnd(colWidths.medianEMA) +
+      // ' | ' +
+      // 'M. Cooldown'.padEnd(colWidths.medianCooldown) +
+      // ' | ' +
+      // 'V. Thresh'.padEnd(colWidths.valueThreshold) +
+      // ' | ' +
+      // 'V. Ref'.padEnd(colWidths.valueReference) +
+      // ' | ' +
+      // 'V. Cooldown'.padEnd(colWidths.valueCooldown)
+    )
+    console.log(
+      'Rate Feed ID'.padEnd(colWidths.rateFeedId) +
+      ' | ' +
+      'Rate Feed'.padEnd(colWidths.rateFeed) +
+      ' | ' +
+      'Dependencies'.padEnd(colWidths.dependencies) +
+      ' | ' +
+      'Exchange Pair'.padEnd(colWidths.exchangePair) +
+      ' | ' +
+      'Status'.padEnd(colWidths.status) +
+      ' | ' +
+      'Trading Mode'.padEnd(colWidths.tradingMode) +
+      ' | ' +
+      '-'.repeat(medianWidths) +
+      ' | ' +
+      '-'.repeat(valueWidths)
+    )
+    console.log(
+      ''.padEnd(colWidths.rateFeedId) +
+      ' | ' +
+      ''.padEnd(colWidths.rateFeed) +
+      ' | ' +
+      ''.padEnd(colWidths.dependencies) +
+      ' | ' +
+      ''.padEnd(colWidths.exchangePair) +
+      ' | ' +
+      ''.padEnd(colWidths.status) +
+      ' | ' +
+      ''.padEnd(colWidths.tradingMode) +
+      ' | ' +
+      'Threshold'.padEnd(colWidths.medianThreshold) +
+      ' | ' +
+      'Smoothing'.padEnd(colWidths.medianSmoothingFactor) +
+      ' | ' +
+      'EMA'.padEnd(colWidths.medianEMA) +
+      ' | ' +
+      'Cooldown'.padEnd(colWidths.medianCooldown) +
+      ' | ' +
+      'Threshold'.padEnd(colWidths.valueThreshold) +
+      ' | ' +
+      'Reference'.padEnd(colWidths.valueReference) +
+      ' | ' +
+      'Cooldown'.padEnd(colWidths.valueCooldown)
     )
     console.log('-'.repeat(totalWidth))
 
@@ -317,39 +449,41 @@ async function main(): Promise<void> {
         data.status === 'active'
           ? chalk.green
           : data.status === 'tripped'
-          ? chalk.red
-          : chalk.yellow
+            ? chalk.red
+            : chalk.yellow
       const statusStr = statusColor(data.status.padEnd(colWidths.status))
 
       console.log(
-        data.exchangeId.padEnd(colWidths.exchangeId) +
-          ' | ' +
-          data.rateFeedId.padEnd(colWidths.rateFeedId) +
-          ' | ' +
-          data.asset0.padEnd(colWidths.asset0) +
-          ' | ' +
-          data.asset1.padEnd(colWidths.asset1) +
-          ' | ' +
-          statusStr +
-          ' | ' +
-          data.tradingMode.padEnd(colWidths.tradingMode) +
-          ' | ' +
-          data.medianThreshold.padEnd(colWidths.medianThreshold) +
-          ' | ' +
-          data.medianSmoothingFactor.padEnd(colWidths.medianSmoothingFactor) +
-          ' | ' +
-          data.medianEMA.padEnd(colWidths.medianEMA) +
-          ' | ' +
-          data.valueThreshold.padEnd(colWidths.valueThreshold) +
-          ' | ' +
-          data.valueReference.padEnd(colWidths.valueReference) +
-          ' | ' +
-          data.cooldown.padEnd(colWidths.cooldown)
+        data.rateFeedId.padEnd(colWidths.rateFeedId) +
+        ' | ' +
+        data.rateFeed.padEnd(colWidths.rateFeed) +
+        ' | ' +
+        data.dependencies.join(", ").padEnd(colWidths.dependencies) +
+        ' | ' +
+        data.exchangePair.padEnd(colWidths.exchangePair) +
+        ' | ' +
+        statusStr +
+        ' | ' +
+        data.tradingMode.padEnd(colWidths.tradingMode) +
+        ' | ' +
+        data.medianThreshold.padEnd(colWidths.medianThreshold) +
+        ' | ' +
+        data.medianSmoothingFactor.padEnd(colWidths.medianSmoothingFactor) +
+        ' | ' +
+        data.medianEMA.padEnd(colWidths.medianEMA) +
+        ' | ' +
+        data.medianCooldown.padEnd(colWidths.medianCooldown) +
+        ' | ' +
+        data.valueThreshold.padEnd(colWidths.valueThreshold) +
+        ' | ' +
+        data.valueReference.padEnd(colWidths.valueReference) +
+        ' | ' +
+        data.valueCooldown.padEnd(colWidths.valueCooldown)
       )
     }
 
     console.log('='.repeat(totalWidth))
-    console.log(`Total exchanges: ${filteredData.length}`)
+    console.log(`Total rate feeds: ${filteredData.length}`)
 
     // Display performance summary
     const totalTime = ((Date.now() - startTime) / 1000).toFixed(2)

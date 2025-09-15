@@ -39,7 +39,7 @@ export class Governance {
       )
     }
 
-    const mentoGovernorAddress = contracts.MentoGovernor
+    const mentoGovernorAddress = contracts.MentoGovernor!
 
     return MentoGovernor__factory.connect(
       mentoGovernorAddress,

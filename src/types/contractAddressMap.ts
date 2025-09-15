@@ -1,5 +1,5 @@
 import { ContractAddresses } from '.'
 
 export type ContractAddressMap = {
-  [chainId: number]: ContractAddresses
+  [chainId: number]: Partial<ContractAddresses>
 }
