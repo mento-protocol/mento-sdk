@@ -1,11 +1,11 @@
+import chalk from 'chalk'
 import { providers } from 'ethers'
+import ora from 'ora'
 import { Mento } from '../../src/mento'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
-import chalk from 'chalk'
 
 
 async function main() {
-  const ora = (await import('ora')).default;
   // Parse command line arguments
   const args = parseCommandLineArgs()
 

@@ -1,4 +1,5 @@
 import { ethers } from 'ethers'
+import ora from 'ora'
 import { getSymbolFromTokenAddress as sdkGetSymbol } from '../../src/utils'
 import { batchProcess } from './batchProcessor'
 
@@ -55,7 +56,6 @@ export async function prefetchTokenSymbols(
   if (uniqueTokenCount === 0) {
     return
   }
-  const ora = (await import('ora')).default;
 
   let spinner: ReturnType<typeof ora> | undefined
   if (showSpinner) {
@@ -116,7 +116,6 @@ export async function prefetchTokenSymbolsFromExchanges(
   exchanges: Array<{ providerAddr: string; id: string }>,
   provider: ethers.providers.Provider
 ): Promise<void> {
-  const ora = (await import('ora')).default;
   const spinner = ora({
     text: 'Pre-fetching token symbols...',
     color: 'cyan',
