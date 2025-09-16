@@ -4,7 +4,9 @@ import { BiPoolManager__factory } from '@mento-protocol/mento-core-ts'
 import chalk from 'chalk'
 import { ethers } from 'ethers'
 import ora from 'ora'
+import { capitalize } from '../../src/utils'
 import { batchProcess } from '../shared/batchProcessor'
+import { NETWORK_MAP } from '../shared/network'
 import {
   getSymbolFromTokenAddress,
   prefetchTokenSymbolsFromExchanges,
@@ -12,6 +14,22 @@ import {
 import { displayPoolConfig } from './poolConfigOrchestrator'
 import { ExchangeData, Mento } from './types'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
+
+/**
+ * Generate network options help text dynamically from NETWORK_MAP
+ */
+function generateNetworkOptionsHelp(): string {
+  const networkEntries = Object.entries(NETWORK_MAP)
+  const networkOptions = networkEntries
+    .map(([name, chainId]) => `  --network ${name.padEnd(12)} # Chain ID ${chainId}`)
+    .join('\n')
+
+  const chainIdOptions = networkEntries
+    .map(([name, chainId]) => `  --chainId ${chainId.toString().padEnd(12)} # ${capitalize(name)}`)
+    .join('\n')
+
+  return `${networkOptions}\n${chainIdOptions}`
+}
 
 /**
  * CLI tool to visualize all spread configurations for all exchanges in the Mento protocol.
@@ -168,12 +186,7 @@ async function main(): Promise<void> {
       '  yarn poolConfigs [--token|-t <symbol>] [--exchange|-e <exchangeId>] [--network|-n <network>] [--chainId|-c <chainId>]'
     )
     console.log('\n' + chalk.bold('Network options:'))
-    console.log('  --network celo       # Celo mainnet')
-    console.log('  --network alfajores  # Alfajores testnet')
-    console.log(
-      '  --chainId 42220      # Celo mainnet (same as --network celo)'
-    )
-    console.log('  --chainId 44787      # Alfajores testnet')
+    console.log(generateNetworkOptionsHelp())
   } catch (error) {
     console.error(chalk.red('ERROR: An unexpected error occurred:'))
     console.error(error instanceof Error ? error.message : String(error))
