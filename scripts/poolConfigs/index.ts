@@ -3,7 +3,7 @@
 import { BiPoolManager__factory } from '@mento-protocol/mento-core-ts'
 import chalk from 'chalk'
 import { ethers } from 'ethers'
-// import ora from 'ora'
+import ora from 'ora'
 import { batchProcess } from '../shared/batchProcessor'
 import {
   getSymbolFromTokenAddress,
@@ -17,7 +17,6 @@ import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
  * CLI tool to visualize all spread configurations for all exchanges in the Mento protocol.
  */
 async function main(): Promise<void> {
-  const ora = (await import('ora')).default;
   try {
     // Parse command line arguments
     const args = parseCommandLineArgs()
