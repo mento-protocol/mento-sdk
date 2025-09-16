@@ -1,13 +1,11 @@
 import {
   BiPoolManager__factory,
   Broker__factory,
-  IBreakerBox,
   IBreakerBox__factory,
   IBroker,
   IBroker__factory,
   IExchangeProvider,
   IExchangeProvider__factory,
-  ISortedOracles,
 } from '@mento-protocol/mento-core-ts'
 import { BigNumber, BigNumberish, providers, Signer } from 'ethers'
 import {
