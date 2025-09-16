@@ -23,7 +23,7 @@ async function main() {
   const network = await provider.getNetwork()
   if (!!args.chainId && network.chainId !== args.chainId) {
     console.warn(
-      `Warning: provider network chain id (${network.chainId}) does not match requested chain id (${chainId})`
+      `Warning: provider network chain id (${network.chainId}) does not match requested chain id (${args.chainId})`
     )
   }
   if (args.chainId) {

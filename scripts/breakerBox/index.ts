@@ -304,14 +304,14 @@ async function main(): Promise<void> {
     let errorCount = 0
 
     for (const result of sortedResults) {
-      if (result.success && result.data) {
+      if (result?.success && result.data) {
         tableData.push(result.data)
         successCount++
       } else {
         errorCount++
         console.log(
           chalk.yellow(
-            `Warning: Failed to process exchange - ${result.error?.message}`
+            `Warning: Failed to process exchange - ${result?.error?.message}`
           )
         )
       }
