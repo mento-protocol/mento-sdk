@@ -1,10 +1,10 @@
 #!/usr/bin/env ts-node
 
 import {
-  BiPoolManager__factory,
-  IBreakerBox__factory,
-  MedianDeltaBreaker__factory,
-  ValueDeltaBreaker__factory,
+    BiPoolManager__factory,
+    IBreakerBox__factory,
+    MedianDeltaBreaker__factory,
+    ValueDeltaBreaker__factory,
 } from '@mento-protocol/mento-core-ts'
 import chalk from 'chalk'
 import { BigNumber, ethers } from 'ethers'
@@ -14,14 +14,14 @@ import { getChainId } from '../../src/utils'
 import { batchProcess } from '../shared/batchProcessor'
 import { toRateFeedId } from '../shared/rateFeedUtils'
 import {
-  getSymbolFromTokenAddress,
-  prefetchTokenSymbolsFromExchanges,
+    getSymbolFromTokenAddress,
+    prefetchTokenSymbolsFromExchanges,
 } from '../shared/tokenUtils'
 import { Mento } from './types'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
 
 const CURRENCIES = ["AUD", "USD", "PHP", "ZAR", "CAD", "EUR", "BRL", "XOF", "COP", "GHS", "CHF", "NGN", "JPY", "CHF", "GBP", "KES", "CELO", "ETH", "EURC", "EUROC", "USDC", "USDT"];
-const RATEFEED_REVERSE_LOOKUP = CURRENCIES.reduce((acc, cur0) => {
+const RATEFEED_REVERSE_LOOKUP: Record<string, string> = CURRENCIES.reduce((acc, cur0) => {
   return {
     ...acc,
     ...CURRENCIES.reduce((acc, cur1) => {
@@ -29,7 +29,7 @@ const RATEFEED_REVERSE_LOOKUP = CURRENCIES.reduce((acc, cur0) => {
         acc[toRateFeedId(rateFeed).toLocaleLowerCase()] = rateFeed
       }
       return acc
-    }, {})
+    }, {} as Record<string, string>)
   }
 }, {
   ["0x765DE816845861e75A25fCA122bb6898B8B1282a".toLocaleLowerCase()]: "cUSD (CELOUSD)",
@@ -140,10 +140,10 @@ async function main(): Promise<void> {
       }
     }))
 
-    const poolForRateFeed = pools.reduce((acc, pool) => {
+    const poolForRateFeed: Record<string, typeof pools[0]> = pools.reduce((acc, pool) => {
       acc[pool.config.referenceRateFeedID] = pool
       return acc;
-    }, {})
+    }, {} as Record<string, typeof pools[0]>)
 
     exchangesSpinner.succeed(
       `Fetched ${exchanges.length} exchanges from protocol`
