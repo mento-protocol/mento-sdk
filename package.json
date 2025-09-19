@@ -35,9 +35,11 @@
     "cacheTradablePairs": "ts-node scripts/cacheTradablePairs.ts",
     "printTradablePairs": "ts-node scripts/printTradablePairs.ts",
     "tradingLimits": "ts-node scripts/printTradingLimits.ts",
+    "limits": "yarn tradingLimits",
     "poolConfigs": "ts-node scripts/printPoolConfigs.ts",
     "pools": "ts-node scripts/printPoolConfigs.ts",
     "breakerBox": "ts-node scripts/printBreakerBox.ts",
+    "breakers": "yarn breakerBox",
     "quote": "ts-node scripts/quotes/index.ts",
     "getTokenGraph": "ts-node scripts/visualizeTokenGraph.ts"
   },
