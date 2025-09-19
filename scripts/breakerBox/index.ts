@@ -1,26 +1,24 @@
 #!/usr/bin/env ts-node
 
 import {
-    BiPoolManager__factory,
-    IBreakerBox__factory,
-    MedianDeltaBreaker__factory,
-    ValueDeltaBreaker__factory,
+  BiPoolManager__factory,
+  IBreakerBox__factory,
+  MedianDeltaBreaker__factory,
+  ValueDeltaBreaker__factory,
 } from '@mento-protocol/mento-core-ts'
 import chalk from 'chalk'
 import { BigNumber, ethers } from 'ethers'
 import ora from 'ora'
-import { getAddress } from '../../src/constants'
+import { CURRENCIES, getAddress } from '../../src/constants'
 import { getChainId } from '../../src/utils'
 import { batchProcess } from '../shared/batchProcessor'
 import { toRateFeedId } from '../shared/rateFeedUtils'
 import {
-    getSymbolFromTokenAddress,
-    prefetchTokenSymbolsFromExchanges,
+  getSymbolFromTokenAddress,
+  prefetchTokenSymbolsFromExchanges,
 } from '../shared/tokenUtils'
 import { Mento } from './types'
 import { parseCommandLineArgs } from './utils/parseCommandLineArgs'
-
-const CURRENCIES = ["AUD", "USD", "PHP", "ZAR", "CAD", "EUR", "BRL", "XOF", "COP", "GHS", "CHF", "NGN", "JPY", "CHF", "GBP", "KES", "CELO", "ETH", "EURC", "EUROC", "USDC", "USDT"];
 const RATEFEED_REVERSE_LOOKUP: Record<string, string> = CURRENCIES.reduce((acc, cur0) => {
   return {
     ...acc,
