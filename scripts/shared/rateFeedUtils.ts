@@ -9,7 +9,7 @@ export function toRateFeedId(rateFeed: string): string {
   const hashAsBigInt = BigInt(hashedBytes);
 
   // 3. Mask to 160 bits (equivalent to uint160)
-  const maskedToUint160 = hashAsBigInt & ((1n << 160n) - 1n);
+  const maskedToUint160 = hashAsBigInt & ((BigInt(1) << BigInt(160)) - BigInt(1));
 
   // 4. Convert to address (hex string)
   const addressHex = "0x" + maskedToUint160.toString(16).padStart(40, "0");
