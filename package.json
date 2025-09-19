@@ -26,7 +26,7 @@
     "build:cjs": "tsc --project ./tsconfig.json",
     "build:esm": "tsc --project ./tsconfig.esm.json",
     "clean": "rm -rf ./dist",
-    "lint": "eslint --config ./.eslintrc.json 'src/**/*.ts' 'scripts/**/*.ts'",
+    "lint": "eslint --fix --config ./.eslintrc.json 'src/**/*.ts' 'scripts/**/*.ts'",
     "check:scripts": "tsc --project ./tsconfig.scripts.json",
     "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",
     "size": "size-limit",

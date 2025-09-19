@@ -810,9 +810,7 @@ export class Mento {
     )
   }
 
-  async getAddress(
-    identifier: Identifier
-  ): Promise<Address> {
+  async getAddress(identifier: Identifier): Promise<Address> {
     return getAddress(identifier, await this.chainId())
   }
 

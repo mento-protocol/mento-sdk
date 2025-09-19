@@ -4,4 +4,3 @@ export enum ChainId {
   ALFAJORES = 44787,
   BASE = 8453,
 }
-
