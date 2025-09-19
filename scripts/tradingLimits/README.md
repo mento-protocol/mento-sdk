@@ -56,26 +56,26 @@ Each limit has a maximum inflow and outflow value. When either is reached, tradi
 
 The script produces a table with the following columns:
 
-| Column | Description |
-|--------|-------------|
-| Exchange | The exchange pair (shown only once per exchange) |
-| Symbol | The token symbol |
-| Limit Type | L0 (short-term), L1 (medium-term), or LG (global) |
-| Timeframe | The time window for this limit |
-| Limit | The maximum configured limit value |
-| Netflow | Current usage (positive for inflows, negative for outflows) |
-| Utilization | Visual representation of limit usage |
-| Max In | Maximum allowed inflow remaining |
-| Max Out | Maximum allowed outflow remaining |
-| Resets In | Time until limit window resets |
-| Reset Time | Unix timestamp when limit resets |
-| Status | Current status (ACTIVE, INFLOWS BLOCKED, OUTFLOWS BLOCKED, or BLOCKED) |
+| Column      | Description                                                            |
+| ----------- | ---------------------------------------------------------------------- |
+| Exchange    | The exchange pair (shown only once per exchange)                       |
+| Symbol      | The token symbol                                                       |
+| Limit Type  | L0 (short-term), L1 (medium-term), or LG (global)                      |
+| Timeframe   | The time window for this limit                                         |
+| Limit       | The maximum configured limit value                                     |
+| Netflow     | Current usage (positive for inflows, negative for outflows)            |
+| Utilization | Visual representation of limit usage                                   |
+| Max In      | Maximum allowed inflow remaining                                       |
+| Max Out     | Maximum allowed outflow remaining                                      |
+| Resets In   | Time until limit window resets                                         |
+| Reset Time  | Unix timestamp when limit resets                                       |
+| Status      | Current status (ACTIVE, INFLOWS BLOCKED, OUTFLOWS BLOCKED, or BLOCKED) |
 
 The tool uses color-coded statuses to indicate the current state of each trading limit:
 
 - **ACTIVE** (green): Trading is fully enabled in both directions
 - **INFLOWS BLOCKED** (yellow): Deposits are blocked, but withdrawals are still allowed
-- **OUTFLOWS BLOCKED** (yellow): Withdrawals are blocked, but deposits are still allowed  
+- **OUTFLOWS BLOCKED** (yellow): Withdrawals are blocked, but deposits are still allowed
 - **BLOCKED** (red): All trading is blocked until the time window resets
 
 ## Project Structure

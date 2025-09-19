@@ -1,4 +1,4 @@
-import { BigNumberish, constants, Contract, providers, Signer } from 'ethers'
+import { BigNumberish, Contract, providers, Signer } from 'ethers'
 
 import { Address } from './interfaces'
 import { TradablePair } from './mento'
@@ -50,34 +50,6 @@ export function validateSignerOrProvider(
   if (isSigner && !providers.Provider.isProvider(signerOrProvider.provider)) {
     throw new Error('Signer must be connected to a provider')
   }
-}
-
-/**
- * Returns the broker address from the Celo registry
- * @param signerOrProvider an ethers provider or signer
- * @returns the broker address
- */
-export async function getBrokerAddressFromRegistry(
-  signerOrProvider: Signer | providers.Provider
-): Promise<Address> {
-  const celoRegistryAddress = '0x000000000000000000000000000000000000ce10'
-  const brokerIdentifier = 'Broker'
-
-  const registryAbi = [
-    'function getAddressForString(string calldata identifier) external view returns (address)',
-  ]
-  const contract = new Contract(
-    celoRegistryAddress,
-    registryAbi,
-    signerOrProvider
-  )
-
-  const brokerAddress = await contract.getAddressForString(brokerIdentifier)
-  if (brokerAddress === constants.AddressZero) {
-    throw Error('Broker address not found in the registry')
-  }
-
-  return brokerAddress
 }
 
 /**
@@ -138,4 +110,8 @@ export function findTokenBySymbol(
     }
   }
   return null
+}
+
+export function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }

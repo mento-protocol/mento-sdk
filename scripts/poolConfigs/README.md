@@ -2,6 +2,7 @@
 
 A CLI tool for visualizing all PoolConfig parameters (including spreads) across the Mento protocol's trading pairs.
 image.png
+
 ## Features
 
 - Displays all exchanges/pools and their PoolConfig parameters in a tabular format
@@ -41,18 +42,19 @@ In the Mento protocol, PoolConfig parameters determine the behavior and fees for
 
 The script produces a table with the following columns:
 
-| Column | Description |
-|--------|-------------|
-| Exchange ID | The unique identifier for the exchange |
-| Asset 0 | The first asset in the trading pair |
-| Asset 1 | The second asset in the trading pair |
-| Spread (%) | The fee percentage charged on each trade |
-| Ref Rate Feed | The oracle rateFeedID used as reference rate |
-| Reset Freq (h) | How often the buckets reset to reference rate (in hours) |
-| Min Reports | Minimum required oracle reports to trust reference rate |
-| Reset Size | Value that bucket0 resets to during bucket updates (converted from e18) |
+| Column         | Description                                                             |
+| -------------- | ----------------------------------------------------------------------- |
+| Exchange ID    | The unique identifier for the exchange                                  |
+| Asset 0        | The first asset in the trading pair                                     |
+| Asset 1        | The second asset in the trading pair                                    |
+| Spread (%)     | The fee percentage charged on each trade                                |
+| Ref Rate Feed  | The oracle rateFeedID used as reference rate                            |
+| Reset Freq (h) | How often the buckets reset to reference rate (in hours)                |
+| Min Reports    | Minimum required oracle reports to trust reference rate                 |
+| Reset Size     | Value that bucket0 resets to during bucket updates (converted from e18) |
 
 The tool uses color-coded spread values to make them easily distinguishable in the output:
+
 - Green: Spread ≤ 0.5%
 - Yellow: 0.5% < Spread ≤ 1%
 - Red: Spread > 1%
@@ -85,4 +87,4 @@ The script uses the following key components:
 1. **BiPoolManager Contract** - Directly interacts with the BiPoolManager contract to fetch PoolConfig parameters
 2. **FixidityLib** - Handles the conversion of spread values from the contract's format to percentages
 3. **Token Symbol Resolution** - Resolves token addresses to their human-readable symbols
-4. **Table Formatting** - Creates a clean, readable table output with proper column alignment and delimiters 
+4. **Table Formatting** - Creates a clean, readable table output with proper column alignment and delimiters

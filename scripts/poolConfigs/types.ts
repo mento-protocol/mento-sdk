@@ -16,4 +16,4 @@ export interface ExchangeData {
   stablePoolResetSize: number
 }
 
-export { Mento } 
+export { Mento }

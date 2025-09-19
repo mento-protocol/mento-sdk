@@ -1,7 +1,7 @@
 {
   "name": "@mento-protocol/mento-sdk",
   "description": "Official SDK for interacting with the Mento Protocol",
-  "version": "1.10.3",
+  "version": "1.11.0",
   "license": "MIT",
   "author": "Mento Labs",
   "keywords": [
@@ -22,12 +22,12 @@
   ],
   "scripts": {
     "analyze": "size-limit --why",
-    "build": "yarn build:cjs && yarn build:esm",
+    "build": "yarn build:cjs && yarn build:esm && yarn check:scripts",
     "build:cjs": "tsc --project ./tsconfig.json",
     "build:esm": "tsc --project ./tsconfig.esm.json",
     "clean": "rm -rf ./dist",
-    "lint": "eslint --config ./.eslintrc.json 'src/**/*.ts' 'scripts/**/*.ts'",
-    "type-check": "tsc --noEmit --project ./tsconfig.eslint.json",
+    "lint": "eslint --fix --config ./.eslintrc.json 'src/**/*.ts' 'scripts/**/*.ts'",
+    "check:scripts": "tsc --project ./tsconfig.scripts.json",
     "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",
     "size": "size-limit",
     "test": "jest --runInBand --verbose",
@@ -35,8 +35,11 @@
     "cacheTradablePairs": "ts-node scripts/cacheTradablePairs.ts",
     "printTradablePairs": "ts-node scripts/printTradablePairs.ts",
     "tradingLimits": "ts-node scripts/printTradingLimits.ts",
+    "limits": "yarn tradingLimits",
     "poolConfigs": "ts-node scripts/printPoolConfigs.ts",
+    "pools": "ts-node scripts/printPoolConfigs.ts",
     "breakerBox": "ts-node scripts/printBreakerBox.ts",
+    "breakers": "yarn breakerBox",
     "quote": "ts-node scripts/quotes/index.ts",
     "getTokenGraph": "ts-node scripts/visualizeTokenGraph.ts"
   },
@@ -54,6 +57,7 @@
   "engines": {
     "node": ">=22"
   },
+  "packageManager": "yarn@3",
   "size-limit": [
     {
       "path": "dist/sdk.cjs.production.min.js",
@@ -91,11 +95,10 @@
     "yargs-parser": "^21.1.1"
   },
   "dependencies": {
-    "@mento-protocol/mento-core-ts": "^0.2.0",
+    "@mento-protocol/mento-core-ts": "2.6.5-rc3",
     "mento-router-ts": "^0.2.0"
   },
   "peerDependencies": {
     "ethers": "^5.7"
-  },
-  "packageManager": "yarn@3.3.1"
+  }
 }

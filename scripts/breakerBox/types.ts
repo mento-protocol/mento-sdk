@@ -8,4 +8,4 @@ export interface ExchangeData {
 }
 
 // Export types from SDK to avoid importing from multiple places
-export { Mento } 
+export { Mento }

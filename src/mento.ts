@@ -16,7 +16,6 @@ import {
 } from './interfaces'
 import { getLimits, getLimitsConfig, getLimitsState } from './limits'
 import {
-  getBrokerAddressFromRegistry,
   getChainId,
   getSymbolFromTokenAddress,
   increaseAllowance,
@@ -26,7 +25,7 @@ import {
 
 import { strict as assert } from 'assert'
 import { IMentoRouter, IMentoRouter__factory } from 'mento-router-ts'
-import { getAddress } from './constants/addresses'
+import { getAddress, Identifier } from './constants/addresses'
 import {
   getCachedTradablePairs,
   TradablePairWithSpread,
@@ -64,6 +63,7 @@ export class Mento {
   private readonly broker: IBroker
   private readonly router: IMentoRouter
   private exchanges: Exchange[]
+  private cachedChainId: number | null = null
 
   /**
    * This constructor is private, use the static create or createWithParams methods
@@ -94,8 +94,8 @@ export class Mento {
     validateSignerOrProvider(signerOrProvider)
     return new Mento(
       signerOrProvider,
-      await getBrokerAddressFromRegistry(signerOrProvider),
-      await getAddress('MentoRouter', await getChainId(signerOrProvider))
+      getAddress('Broker', await getChainId(signerOrProvider)),
+      getAddress('MentoRouter', await getChainId(signerOrProvider))
     )
   }
 
@@ -808,5 +808,16 @@ export class Mento {
         async (cfg) => await getLimitsState(broker, exchangeId, cfg.asset)
       )
     )
+  }
+
+  async getAddress(identifier: Identifier): Promise<Address> {
+    return getAddress(identifier, await this.chainId())
+  }
+
+  async chainId(): Promise<number> {
+    if (this.cachedChainId == null) {
+      this.cachedChainId = await getChainId(this.signerOrProvider)
+    }
+    return this.cachedChainId
   }
 }

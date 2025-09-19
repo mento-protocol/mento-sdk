@@ -1,6 +1,5 @@
-import { Contract, Wallet, constants, providers, utils } from 'ethers'
+import { Contract, Wallet, providers, utils } from 'ethers'
 import {
-  getBrokerAddressFromRegistry,
   getChainId,
   getSymbolFromTokenAddress,
   increaseAllowance,
@@ -37,27 +36,6 @@ describe('Utils', () => {
   beforeAll(() => {
     provider = new providers.JsonRpcProvider()
     signer = new Wallet(Wallet.createRandom().privateKey, provider)
-  })
-
-  describe('getBrokerAddressFromRegistry', () => {
-    it('should return the broker address from the registry', async () => {
-      const expectedBrokerAddr = '0xFakeBrokerAddress'
-      getAddressForString.mockReturnValueOnce(expectedBrokerAddr)
-
-      expect(await getBrokerAddressFromRegistry(provider)).toBe(
-        expectedBrokerAddr
-      )
-      expect(getAddressForString).toHaveBeenCalledTimes(1)
-      expect(getAddressForString).toHaveBeenCalledWith('Broker')
-    })
-
-    it('should throw when the registry returns the null address 0x...00', async () => {
-      getAddressForString.mockReturnValueOnce(constants.AddressZero)
-
-      expect(async () => {
-        await getBrokerAddressFromRegistry(provider)
-      }).rejects.toThrow()
-    })
   })
 
   describe('getSymbolFromTokenAddress', () => {
