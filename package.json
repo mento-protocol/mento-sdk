@@ -55,6 +55,7 @@
   "engines": {
     "node": ">=22"
   },
+  "packageManager": "yarn@3",
   "size-limit": [
     {
       "path": "dist/sdk.cjs.production.min.js",
