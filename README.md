@@ -26,42 +26,40 @@ The `yarn cacheTradablePairs` script generates a TypeScript file containing a li
 yarn cacheTradablePairs
 ```
 
+
 ## Token Graph Visualization
 
-Current token connectivity on Celo Mainnet (last updated: 2025-06-19):
+Current token connectivity on Celo Mainnet (last updated: 2025-09-19):
 
 ```mermaid
 graph TD
     USDT["USD₮"]
     USDC --- cUSD
-    USDT --- cUSD
-    CELO --- cEUR
-    CELO --- cREAL
-    USDC --- cREAL
-    USDC --- cEUR
     axlUSDC --- cUSD
+    USDT --- cUSD
+    cAUD --- cUSD
+    cCAD --- cUSD
     CELO --- cUSD
+    cGBP --- cUSD
+    cUSD --- cZAR
+    cCHF --- cUSD
     PUSO --- cUSD
     cJPY --- cUSD
     cCOP --- cUSD
-    cGBP --- cUSD
-    cUSD --- cZAR
-    cCAD --- cUSD
-    cAUD --- cUSD
-    cCHF --- cUSD
-    axlUSDC --- cEUR
-    axlUSDC --- cREAL
+    cREAL --- cUSD
     axlEUROC --- cEUR
-    cKES --- cUSD
+    cEUR --- cUSD
     cGHS --- cUSD
     cNGN --- cUSD
-    CELO --- eXOF
-    axlEUROC --- eXOF
+    cKES --- cUSD
+    cUSD --- eXOF
 
 ```
 
-**Network Stats:** 20 tokens, 24 direct trading pairs
+**Network Stats:** 20 tokens, 19 direct trading pairs
 
 > 💡 This graph shows direct trading pairs only. The SDK automatically finds optimal routes including multi-hop paths.
->
+> 
 > To regenerate: `yarn getTokenGraph`
+
+
