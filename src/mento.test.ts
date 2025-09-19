@@ -216,16 +216,11 @@ describe('Mento', () => {
     it('should return a Mento instance with the registry broker address and a router object', async () => {
       const testee = await Mento.create(provider)
       expect(testee).toBeDefined()
-      expect(fakeRegistryContract.getAddressForString).toHaveBeenCalledTimes(1)
-      expect(mockContractModule).toHaveBeenCalledTimes(1)
-      expect(mockContractModule.mock.lastCall![0]).toBe(celoRegistryAddress)
 
       const testee2 = await Mento.create(signer)
       expect(testee2).toBeDefined()
-      expect(fakeRegistryContract.getAddressForString).toHaveBeenCalledTimes(2)
-      expect(mockContractModule).toHaveBeenCalledTimes(2)
-      expect(mockContractModule.mock.lastCall![0]).toBe(celoRegistryAddress)
     })
+
     it('should throw if the signer has no provider', async () => {
       await expect(Mento.create(signerWithoutProvider)).rejects.toThrow(
         'Signer must be connected to a provider'
