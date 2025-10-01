@@ -41,7 +41,8 @@
     "breakerBox": "ts-node scripts/printBreakerBox.ts",
     "breakers": "yarn breakerBox",
     "quote": "ts-node scripts/quotes/index.ts",
-    "getTokenGraph": "ts-node scripts/visualizeTokenGraph.ts"
+    "getTokenGraph": "ts-node scripts/visualizeTokenGraph.ts",
+    "tokens": "ts-node scripts/printTokens.ts"
   },
   "husky": {
     "hooks": {
