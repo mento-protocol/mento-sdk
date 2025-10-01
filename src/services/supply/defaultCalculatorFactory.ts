@@ -28,6 +28,7 @@ export class DefaultCalculatorFactory implements CalculatorFactory {
       MENTO_ADDRESSES.PROTOCOL_MULTISIG,
       MENTO_ADDRESSES.OPERATIONAL_WALLET,
       MENTO_ADDRESSES.OPERATIONAL_WALLET_2,
+      MENTO_ADDRESSES.REBALANCER_BOT,
     ])
   }
 }
