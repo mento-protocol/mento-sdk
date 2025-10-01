@@ -59,6 +59,18 @@ describe('Mento', () => {
     [fakecBRLTokenAddr]: 'cBRL',
     [fakeCeloTokenAddr]: 'CELO',
   }
+  const fakeNamesByTokenAddr: Record<string, string> = {
+    [fakecUSDTokenAddr]: 'Celo Dollar',
+    [fakecEURTokenAddr]: 'Celo Euro',
+    [fakecBRLTokenAddr]: 'Celo Brazilian Real',
+    [fakeCeloTokenAddr]: 'Celo',
+  }
+  const fakeDecimalsByTokenAddr: Record<string, number> = {
+    [fakecUSDTokenAddr]: 18,
+    [fakecEURTokenAddr]: 18,
+    [fakecBRLTokenAddr]: 18,
+    [fakeCeloTokenAddr]: 18,
+  }
 
   // fake exchange providers and exchanges
   const fakeUsdAndEurExchangeProvider = 'ExchangeProvider0'
@@ -165,6 +177,18 @@ describe('Mento', () => {
           () =>
             fakeSymbolsByTokenAddr[
               contractAddr as keyof typeof fakeSymbolsByTokenAddr
+            ]
+        ),
+        name: jest.fn(
+          () =>
+            fakeNamesByTokenAddr[
+              contractAddr as keyof typeof fakeNamesByTokenAddr
+            ]
+        ),
+        decimals: jest.fn(
+          () =>
+            fakeDecimalsByTokenAddr[
+              contractAddr as keyof typeof fakeDecimalsByTokenAddr
             ]
         ),
         populateTransaction: {
@@ -1005,6 +1029,49 @@ describe('Mento', () => {
       expect(
         await testee.isTradingEnabled(fakeCeloUSDExchange.exchangeId)
       ).toBe(false)
+    })
+  })
+
+  describe('getTokens', () => {
+    it('should return a list of unique tokens sorted by symbol', async () => {
+      const testee = await Mento.create(provider)
+
+      const tokens = await testee.getTokens({ cached: false })
+
+      // We should have exactly 4 unique tokens from our test data
+      expect(tokens.length).toBe(4)
+
+      // Check that tokens are sorted by symbol
+      const symbols = tokens.map((t) => t.symbol)
+      expect(symbols).toEqual(['cBRL', 'CELO', 'cEUR', 'cUSD'])
+
+      // Verify each token has the expected structure
+      tokens.forEach((token) => {
+        expect(token).toHaveProperty('address')
+        expect(token).toHaveProperty('symbol')
+        expect(token).toHaveProperty('name')
+        expect(token).toHaveProperty('decimals')
+        expect(typeof token.address).toBe('string')
+        expect(typeof token.symbol).toBe('string')
+        expect(typeof token.name).toBe('string')
+        expect(typeof token.decimals).toBe('number')
+      })
+    })
+
+    it('should not have duplicate tokens', async () => {
+      const testee = await Mento.create(provider)
+
+      const tokens = await testee.getTokens({ cached: false })
+
+      // Check that all addresses are unique
+      const addresses = tokens.map((t) => t.address)
+      const uniqueAddresses = new Set(addresses)
+      expect(addresses.length).toBe(uniqueAddresses.size)
+
+      // Check that all symbols are unique
+      const symbols = tokens.map((t) => t.symbol)
+      const uniqueSymbols = new Set(symbols)
+      expect(symbols.length).toBe(uniqueSymbols.size)
     })
   })
 })
