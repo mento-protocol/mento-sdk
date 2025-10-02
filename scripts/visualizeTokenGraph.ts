@@ -73,8 +73,8 @@ function getChainName(chainId: number): string {
       return 'Celo Mainnet'
     case 44787:
       return 'Alfajores Testnet'
-    case 62320:
-      return 'Baklava Testnet'
+    case 11142220:
+      return 'Celo Sepolia Testnet'
     default:
       return `Chain ${chainId}`
   }

@@ -23,7 +23,7 @@ async function fetchTokensForNetwork(
 ): Promise<TokenWithNetwork[]> {
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
   const mento = await Mento.create(provider)
-  const tokens = await mento.getTokens()
+  const tokens = await mento.getTokensAsync()
 
   return tokens.map((token) => ({
     ...token,
@@ -103,7 +103,7 @@ async function main(): Promise<void> {
         text: 'Fetching tokens...',
         color: 'cyan',
       }).start()
-      const tokens = await mento.getTokens()
+      const tokens = await mento.getTokensAsync()
       tokensSpinner.succeed(`Fetched ${tokens.length} unique tokens`)
 
       // Find network name from chainId

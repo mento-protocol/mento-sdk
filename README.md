@@ -16,19 +16,16 @@ yarn add @mento-protocol/mento-sdk
 
 You can find example usages of the SDK in the [mento-sdk-examples](https://github.com/mento-protocol/mento-sdk-examples) repository. For in-depth documentation and walk through explanations please see the [SDK section](https://docs.mento.org/mento/developers/mento-sdk) of the Mento docs.
 
-## Tradable Pairs Cache
+## Tokens & Tradable Pairs Cache
 
-Anytime we launch a new stable token, we need to update the tradable pairs cache.
+Anytime we launch a new stable token, we need to update the tokens & tradable pairs caches.
 
-The `yarn cacheTradablePairs` script generates a TypeScript file containing a list of all tradable pairs on the Mento protocol. This file is used to cache the tradable pairs in the SDK and avoid costly re-fetching from the network.
-
-```sh
-yarn cacheTradablePairs
-```
+- The `yarn cacheTokens` script generates a TypeScript file containing a list of all tradable Tokens on the Mento protocol. This cache can be used by UIs to avoid costly async token data lookups.
+- The `yarn cacheTradablePairs` script generates a TypeScript file containing a list of all tradable pairs on the Mento protocol. This file is used to cache the tradable pairs in the SDK and avoid costly re-fetching from the network.
 
 ## Token Graph Visualization
 
-Current token connectivity on Celo Mainnet (last updated: 2025-09-19):
+Current token connectivity on Celo Mainnet (last updated: 2025-10-02):
 
 ```mermaid
 graph TD
@@ -52,7 +49,6 @@ graph TD
     cNGN --- cUSD
     cKES --- cUSD
     cUSD --- eXOF
-
 ```
 
 **Network Stats:** 20 tokens, 19 direct trading pairs
