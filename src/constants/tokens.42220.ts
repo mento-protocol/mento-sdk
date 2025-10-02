@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-10-02T13:47:45.185Z
+// Generated on 2025-10-02T13:54:27.948Z
 
 import { Token } from '../mento'
 

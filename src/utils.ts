@@ -130,7 +130,7 @@ export async function increaseAllowance(
  * @param symbol the token symbol to find (case-insensitive)
  * @returns the token address if found, null otherwise
  */
-export function findTokenBySymbol(
+export function findTokenBySymbolInTradablePairs(
   pairs: readonly TradablePair[],
   symbol: string
 ): string | null {
