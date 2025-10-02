@@ -74,6 +74,7 @@ async function main(): Promise<void> {
             return await fetchTokensForNetwork(networkName, chainId, rpcUrl)
           } catch (error) {
             spinner.warn(`Failed to fetch tokens for ${networkName}`)
+            console.error(error)
             return []
           }
         })

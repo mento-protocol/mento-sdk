@@ -264,14 +264,10 @@ export class Mento {
     cached?: boolean
   } = {}): Promise<Token[]> {
     const tradablePairs = await this.getTradablePairsWithPath({ cached })
-    const uniqueAddresses = new Set<Address>()
-
     // Collect unique token addresses
-    for (const pair of tradablePairs) {
-      for (const asset of pair.assets) {
-        uniqueAddresses.add(asset.address)
-      }
-    }
+    const uniqueAddresses = new Set<Address>(
+      tradablePairs.flatMap(pair => pair.assets.map(asset => asset.address))
+    )
 
     // Fetch token metadata for each unique address
     const tokens = await Promise.all(
