@@ -164,26 +164,26 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
 
 /**
  * Helper function to get token address by symbol for a specific chain
- * @param chainId - The chain ID
  * @param symbol - The token symbol
+ * @param chainId - The chain ID
  * @returns The token address or undefined if not found
  */
 export function getTokenAddress(
-  chainId: number,
-  symbol: TokenSymbol
+  symbol: TokenSymbol,
+  chainId: number
 ): string | undefined {
   return TOKEN_ADDRESSES_BY_CHAIN[chainId]?.[symbol]
 }
 
 /**
  * Helper function to find a token by symbol in the cached tokens
- * @param chainId - The chain ID
  * @param symbol - The token symbol to search for
+ * @param chainId - The chain ID
  * @returns The token object or undefined if not found
  */
 export function findTokenBySymbol(
-  chainId: number,
-  symbol: string
+  symbol: string,
+  chainId: number
 ): Token | undefined {
   const tokens = getCachedTokensSync(chainId)
   return tokens.find((token) => token.symbol === symbol)
