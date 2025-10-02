@@ -33,6 +33,7 @@
     "test": "jest --runInBand --verbose",
     "coverage": "jest --coverage",
     "cacheTradablePairs": "ts-node scripts/cacheTradablePairs.ts",
+    "cacheTokens": "ts-node scripts/cacheTokens/index.ts",
     "printTradablePairs": "ts-node scripts/printTradablePairs.ts",
     "tradingLimits": "ts-node scripts/printTradingLimits.ts",
     "limits": "yarn tradingLimits",

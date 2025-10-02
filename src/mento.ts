@@ -101,11 +101,14 @@ export class Mento {
    */
   static async create(signerOrProvider: Signer | providers.Provider) {
     validateSignerOrProvider(signerOrProvider)
-    return new Mento(
+    const chainId = await getChainId(signerOrProvider)
+    const instance = new Mento(
       signerOrProvider,
-      getAddress('Broker', await getChainId(signerOrProvider)),
-      getAddress('MentoRouter', await getChainId(signerOrProvider))
+      getAddress('Broker', chainId),
+      getAddress('MentoRouter', chainId)
     )
+    instance.cachedChainId = chainId
+    return instance
   }
 
   /**
@@ -253,20 +256,54 @@ export class Mento {
 
   /**
    * Returns a list of all unique tokens available on the current chain.
-   * Each token includes its address, symbol, name, and decimals.
-   * @param options - Optional parameters
-   * @param options.cached - Whether to use cached data (default: true)
-   * @returns An array of unique Token objects.
+   * This method is synchronous and uses pre-cached token data.
+   * For runtime fetching from the blockchain, use getTokensAsync().
+   *
+   * @returns An array of unique Token objects from the static cache.
+   * @throws Error if no cached tokens are available for the current chain or if chainId is not yet initialized
    */
-  async getTokens({
+  getTokens(): Token[] {
+    if (this.cachedChainId === null) {
+      throw new Error(
+        'Chain ID not yet initialized. Use Mento.create() to initialize the SDK, or use getTokensAsync() instead.'
+      )
+    }
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { getCachedTokensSync } = require('./constants/tokens')
+    return Array.from(getCachedTokensSync(this.cachedChainId))
+  }
+
+  /**
+   * Fetches token metadata from the blockchain at runtime.
+   * This method is async and makes blockchain calls to get fresh token data.
+   * For synchronous access using cached data, use getTokens().
+   *
+   * @param options - Optional parameters
+   * @param options.cached - Whether to use cached data (default: true).
+   *                         If true, attempts to load from static cache first.
+   * @returns A Promise resolving to an array of unique Token objects.
+   */
+  async getTokensAsync({
     cached = true,
   }: {
     cached?: boolean
   } = {}): Promise<Token[]> {
-    const tradablePairs = await this.getTradablePairsWithPath({ cached })
+    // If cached is true, try to use the static cache first
+    if (cached) {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const { getCachedTokens } = require('./constants/tokens')
+      const chainId = await this.chainId()
+      const cachedTokens = await getCachedTokens(chainId)
+      if (cachedTokens) {
+        return Array.from(cachedTokens)
+      }
+    }
+
+    // Fall back to fetching from blockchain
+    const tradablePairs = await this.getTradablePairsWithPath({ cached: false })
     // Collect unique token addresses
     const uniqueAddresses = new Set<Address>(
-      tradablePairs.flatMap(pair => pair.assets.map(asset => asset.address))
+      tradablePairs.flatMap((pair) => pair.assets.map((asset) => asset.address))
     )
 
     // Fetch token metadata for each unique address
