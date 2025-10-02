@@ -17,6 +17,8 @@ import {
 import { getLimits, getLimitsConfig, getLimitsState } from './limits'
 import {
   getChainId,
+  getDecimalsFromTokenAddress,
+  getNameFromTokenAddress,
   getSymbolFromTokenAddress,
   increaseAllowance,
   validateSigner,
@@ -45,6 +47,13 @@ export interface Exchange {
 export interface Asset {
   address: Address
   symbol: string
+}
+
+export interface Token {
+  address: Address
+  symbol: string
+  name: string
+  decimals: number
 }
 
 export type TradablePairID = `${Address}-${Address}`
@@ -240,6 +249,46 @@ export class Mento {
   > {
     const chainId = await getChainId(this.signerOrProvider)
     return await getCachedTradablePairs(chainId)
+  }
+
+  /**
+   * Returns a list of all unique tokens available on the current chain.
+   * Each token includes its address, symbol, name, and decimals.
+   * @param options - Optional parameters
+   * @param options.cached - Whether to use cached data (default: true)
+   * @returns An array of unique Token objects.
+   */
+  async getTokens({
+    cached = true,
+  }: {
+    cached?: boolean
+  } = {}): Promise<Token[]> {
+    const tradablePairs = await this.getTradablePairsWithPath({ cached })
+    // Collect unique token addresses
+    const uniqueAddresses = new Set<Address>(
+      tradablePairs.flatMap(pair => pair.assets.map(asset => asset.address))
+    )
+
+    // Fetch token metadata for each unique address
+    const tokens = await Promise.all(
+      Array.from(uniqueAddresses).map(async (address) => {
+        const [symbol, name, decimals] = await Promise.all([
+          getSymbolFromTokenAddress(address, this.signerOrProvider),
+          getNameFromTokenAddress(address, this.signerOrProvider),
+          getDecimalsFromTokenAddress(address, this.signerOrProvider),
+        ])
+
+        return {
+          address,
+          symbol,
+          name,
+          decimals,
+        }
+      })
+    )
+
+    // Sort by symbol
+    return tokens.sort((a, b) => a.symbol.localeCompare(b.symbol))
   }
 
   /**

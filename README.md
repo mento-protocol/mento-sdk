@@ -26,7 +26,6 @@ The `yarn cacheTradablePairs` script generates a TypeScript file containing a li
 yarn cacheTradablePairs
 ```
 
-
 ## Token Graph Visualization
 
 Current token connectivity on Celo Mainnet (last updated: 2025-09-19):
@@ -59,7 +58,5 @@ graph TD
 **Network Stats:** 20 tokens, 19 direct trading pairs
 
 > 💡 This graph shows direct trading pairs only. The SDK automatically finds optimal routes including multi-hop paths.
-> 
+>
 > To regenerate: `yarn getTokenGraph`
-
-

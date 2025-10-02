@@ -69,6 +69,38 @@ export async function getSymbolFromTokenAddress(
 }
 
 /**
+ * Returns the name of an erc20 token
+ * @param tokenAddr the address of the erc20 token
+ * @param signerOrProvider an ethers provider or signer
+ * @returns the name of the erc20 token
+ */
+export async function getNameFromTokenAddress(
+  tokenAddr: Address,
+  signerOrProvider: Signer | providers.Provider
+): Promise<string> {
+  const erc20Abi = ['function name() external view returns (string memory)']
+  const contract = new Contract(tokenAddr, erc20Abi, signerOrProvider)
+
+  return contract.name()
+}
+
+/**
+ * Returns the decimals of an erc20 token
+ * @param tokenAddr the address of the erc20 token
+ * @param signerOrProvider an ethers provider or signer
+ * @returns the decimals of the erc20 token
+ */
+export async function getDecimalsFromTokenAddress(
+  tokenAddr: Address,
+  signerOrProvider: Signer | providers.Provider
+): Promise<number> {
+  const erc20Abi = ['function decimals() external view returns (uint8)']
+  const contract = new Contract(tokenAddr, erc20Abi, signerOrProvider)
+
+  return contract.decimals()
+}
+
+/**
  * Returns a populated tx obj for increasing the allowance of a spender for a given erc20 token by a given amount
  * @param tokenAddr the address of the erc20 token
  * @param spender the address of the spender
