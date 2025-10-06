@@ -1,6 +1,6 @@
 # Token Caching Script
 
-This script fetches token metadata from the blockchain for all unique tokens available on Mento Protocol and caches them in static TypeScript files. It dynamically generates type-safe enums, address mappings, and helper functions.
+This script fetches token metadata from the blockchain for all unique tokens available on Mento Protocol and caches them in static TypeScript files. It dynamically generates a type-safe TokenSymbol enum, address mappings, and helper functions.
 
 ## Purpose
 

@@ -28,6 +28,7 @@ import {
 import { strict as assert } from 'assert'
 import { IMentoRouter, IMentoRouter__factory } from 'mento-router-ts'
 import { getAddress, Identifier } from './constants/addresses'
+import { TokenSymbol } from './constants/tokens'
 import {
   getCachedTradablePairs,
   TradablePairWithSpread,
@@ -37,6 +38,9 @@ import {
   generateAllRoutes,
   selectOptimalRoutes,
 } from './routeUtils'
+
+// Re-export TokenSymbol for use in auto-generated files and consuming packages
+export { TokenSymbol } from './constants/tokens'
 
 export interface Exchange {
   providerAddr: Address
@@ -51,7 +55,7 @@ export interface Asset {
 
 export interface Token {
   address: Address
-  symbol: string
+  symbol: TokenSymbol
   name: string
   decimals: number
 }

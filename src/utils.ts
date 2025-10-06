@@ -1,5 +1,6 @@
 import { BigNumberish, Contract, providers, Signer } from 'ethers'
 
+import { TokenSymbol } from './constants'
 import { Address } from './interfaces'
 import { TradablePair } from './mento'
 
@@ -61,7 +62,7 @@ export function validateSignerOrProvider(
 export async function getSymbolFromTokenAddress(
   tokenAddr: Address,
   signerOrProvider: Signer | providers.Provider
-): Promise<string> {
+): Promise<TokenSymbol> {
   const erc20Abi = ['function symbol() external view returns (string memory)']
   const contract = new Contract(tokenAddr, erc20Abi, signerOrProvider)
 

@@ -12,12 +12,29 @@ export function generateFileContent(
 ): string {
   const now = new Date().toISOString()
 
+  // Generate token entries with TokenSymbol enum references
+  const tokenEntries = tokens
+    .map((token) => {
+      // Create a safe enum key (replace special characters)
+      const safeKey = token.symbol.replace(/[^a-zA-Z0-9_]/g, '_')
+
+      return `  {
+    address: '${token.address}',
+    symbol: TokenSymbol.${safeKey},
+    name: '${token.name}',
+    decimals: ${token.decimals},
+  }`
+    })
+    .join(',\n')
+
   const content = `// This file is auto-generated. Do not edit manually.
 // Generated on ${now}
 
-import { Token } from '../mento'
+import { Token, TokenSymbol } from '../mento'
 
-export const tokens${chainId}: readonly Token[] = ${JSON.stringify(tokens, null, 2)} as const
+export const tokens${chainId}: readonly Token[] = [
+${tokenEntries},
+] as const
 `
 
   return content

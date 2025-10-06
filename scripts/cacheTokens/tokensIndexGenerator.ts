@@ -32,10 +32,10 @@ export function generateTokensIndexFile(
   // Sort symbols alphabetically for consistent output
   const sortedSymbols = Array.from(allSymbols).sort()
 
-  // Generate enum entries with safe identifiers
+  // Generate enum entries
   const enumEntries = sortedSymbols
     .map((symbol) => {
-      // Create a safe enum key (replace special characters)
+      // Create a safe key for enum (replace special characters)
       const safeKey = symbol.replace(/[^a-zA-Z0-9_]/g, '_')
       return `  ${safeKey} = '${symbol}',`
     })
@@ -78,8 +78,10 @@ export function generateTokensIndexFile(
       const entries = Object.entries(tokens)
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([symbol, address]) => {
-          const safeKey = symbol.replace(/[^a-zA-Z0-9_]/g, '_')
-          return `    [TokenSymbol.${safeKey}]: '${address}',`
+          // Use quoted key if symbol contains special characters
+          const needsQuotes = /[^a-zA-Z0-9_$]/.test(symbol)
+          const key = needsQuotes ? `'${symbol}'` : symbol
+          return `    ${key}: '${address}',`
         })
         .join('\n')
 
@@ -130,7 +132,7 @@ ${getCachedTokensSyncCases}
 }
 
 /**
- * Type-safe token symbols available across all chains
+ * Token symbol enum for type-safe access across all chains
  * Note: Not all tokens are available on all chains - check TOKEN_ADDRESSES_BY_CHAIN
  */
 export enum TokenSymbol {
