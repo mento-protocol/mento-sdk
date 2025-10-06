@@ -49,7 +49,7 @@ export function writeToFile(
   scriptDir: string
 ): string {
   // Determine the output directory (src/constants/)
-  const outputDir = path.resolve(scriptDir, '../../src/constants')
+  const outputDir = path.resolve(scriptDir, `${process.cwd()}/src/constants`)
 
   // Ensure the output directory exists
   if (!fs.existsSync(outputDir)) {

@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-10-06T12:17:49.522Z
+// Generated on 2025-10-06T16:08:43.519Z
 
 import { Token } from '../mento'
 
@@ -160,31 +160,4 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     USDC: '0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9',
     USDT: '0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0',
   },
-}
-
-/**
- * Helper function to get token address by symbol for a specific chain
- * @param symbol - The token symbol
- * @param chainId - The chain ID
- * @returns The token address or undefined if not found
- */
-export function getTokenAddress(
-  symbol: TokenSymbol,
-  chainId: number
-): string | undefined {
-  return TOKEN_ADDRESSES_BY_CHAIN[chainId]?.[symbol]
-}
-
-/**
- * Helper function to find a token by symbol in the cached tokens
- * @param symbol - The token symbol to search for
- * @param chainId - The chain ID
- * @returns The token object or undefined if not found
- */
-export function findTokenBySymbol(
-  symbol: string,
-  chainId: number
-): Token | undefined {
-  const tokens = getCachedTokensSync(chainId)
-  return tokens.find((token) => token.symbol === symbol)
 }

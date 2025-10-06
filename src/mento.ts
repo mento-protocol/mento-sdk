@@ -267,7 +267,7 @@ export class Mento {
    * @throws Error if no cached tokens are available for the current chain or if chainId is not yet initialized
    */
   getTokens(): Token[] {
-    if (this.cachedChainId === null) {
+    if (!this.cachedChainId) {
       throw new Error(
         'Chain ID not yet initialized. Use Mento.create() to initialize the SDK, or use getTokensAsync() instead.'
       )
@@ -294,8 +294,7 @@ export class Mento {
   } = {}): Promise<Token[]> {
     // If cached is true, try to use the static cache first
     if (cached) {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { getCachedTokens } = require('./constants/tokens')
+      const { getCachedTokens } = await import('./constants/tokens')
       const chainId = await this.chainId()
       const cachedTokens = await getCachedTokens(chainId)
       if (cachedTokens) {
@@ -905,7 +904,7 @@ export class Mento {
   }
 
   async chainId(): Promise<number> {
-    if (this.cachedChainId == null) {
+    if (!this.cachedChainId) {
       this.cachedChainId = await getChainId(this.signerOrProvider)
     }
     return this.cachedChainId

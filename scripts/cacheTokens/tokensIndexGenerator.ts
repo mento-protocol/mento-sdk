@@ -148,37 +148,10 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
 } = {
 ${tokenAddressesMapping}
 }
-
-/**
- * Helper function to get token address by symbol for a specific chain
- * @param symbol - The token symbol
- * @param chainId - The chain ID
- * @returns The token address or undefined if not found
- */
-export function getTokenAddress(
-  symbol: TokenSymbol,
-  chainId: number
-): string | undefined {
-  return TOKEN_ADDRESSES_BY_CHAIN[chainId]?.[symbol]
-}
-
-/**
- * Helper function to find a token by symbol in the cached tokens
- * @param symbol - The token symbol to search for
- * @param chainId - The chain ID
- * @returns The token object or undefined if not found
- */
-export function findTokenBySymbol(
-  symbol: string,
-  chainId: number
-): Token | undefined {
-  const tokens = getCachedTokensSync(chainId)
-  return tokens.find((token) => token.symbol === symbol)
-}
 `
 
   // Write the tokens.ts file to src/constants/
-  const outputDir = path.resolve(scriptDir, '../../src/constants')
+  const outputDir = path.resolve(scriptDir, `${process.cwd()}/src/constants`)
   const filePath = path.join(outputDir, 'tokens.ts')
   fs.writeFileSync(filePath, content)
 

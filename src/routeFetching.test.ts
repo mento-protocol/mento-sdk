@@ -13,7 +13,7 @@ import { Contract, providers } from 'ethers'
 import { IMentoRouter__factory } from 'mento-router-ts'
 import { buildRouteDisplay } from '../scripts/quotes/spread'
 import { Mento, TradablePair } from './mento'
-import { findTokenBySymbolInTradablePairs } from './utils'
+import { findTokenAddressBySymbolInTradablePairs } from './utils'
 
 // Simplified mock setup - only what's actually needed
 jest.mock('@mento-protocol/mento-core-ts', () => ({
@@ -128,7 +128,7 @@ describe('Route Fetching Logic', () => {
 
       for (const [symbol, expectedAddress] of expectedTokens) {
         const displaySymbol = symbol === 'USDT' ? 'USD₮' : symbol
-        const foundAddress = findTokenBySymbolInTradablePairs(allPairs, displaySymbol)
+        const foundAddress = findTokenAddressBySymbolInTradablePairs(displaySymbol, allPairs)
 
         expect(foundAddress).toBe(expectedAddress)
       }
@@ -195,7 +195,7 @@ describe('Route Fetching Logic', () => {
   describe('Error Handling', () => {
     it('should handle non-existent token addresses', () => {
       const fakeAddress = '0x1234567890123456789012345678901234567890'
-      const result = findTokenBySymbolInTradablePairs(allPairs, fakeAddress)
+      const result = findTokenAddressBySymbolInTradablePairs(fakeAddress, allPairs)
       expect(result).toBeNull()
     })
   })
