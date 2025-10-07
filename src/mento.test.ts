@@ -1033,10 +1033,46 @@ describe('Mento', () => {
   })
 
   describe('getTokens', () => {
+    it('should return cached tokens synchronously after SDK is initialized', async () => {
+      const testee = await Mento.create(provider)
+
+      const tokens = testee.getTokens()
+
+      // Verify we get tokens from the cache
+      expect(tokens.length).toBeGreaterThan(0)
+
+      // Verify each token has the expected structure
+      tokens.forEach((token) => {
+        expect(token).toHaveProperty('address')
+        expect(token).toHaveProperty('symbol')
+        expect(token).toHaveProperty('name')
+        expect(token).toHaveProperty('decimals')
+        expect(typeof token.address).toBe('string')
+        expect(typeof token.symbol).toBe('string')
+        expect(typeof token.name).toBe('string')
+        expect(typeof token.decimals).toBe('number')
+      })
+    })
+
+    it('should throw when chainId is not initialized', () => {
+      // Create instance using createWithParams which doesn't initialize cachedChainId
+      const testee = Mento.createWithParams(
+        provider,
+        constants.AddressZero,
+        []
+      )
+
+      expect(() => testee.getTokens()).toThrow(
+        'Chain ID not yet initialized'
+      )
+    })
+  })
+
+  describe('getTokensAsync', () => {
     it('should return a list of unique tokens sorted by symbol', async () => {
       const testee = await Mento.create(provider)
 
-      const tokens = await testee.getTokens({ cached: false })
+      const tokens = await testee.getTokensAsync({ cached: false })
 
       // We should have exactly 4 unique tokens from our test data
       expect(tokens.length).toBe(4)
@@ -1061,7 +1097,7 @@ describe('Mento', () => {
     it('should not have duplicate tokens', async () => {
       const testee = await Mento.create(provider)
 
-      const tokens = await testee.getTokens({ cached: false })
+      const tokens = await testee.getTokensAsync({ cached: false })
 
       // Check that all addresses are unique
       const addresses = tokens.map((t) => t.address)
@@ -1072,6 +1108,21 @@ describe('Mento', () => {
       const symbols = tokens.map((t) => t.symbol)
       const uniqueSymbols = new Set(symbols)
       expect(symbols.length).toBe(uniqueSymbols.size)
+    })
+
+    it('should return cached tokens when cached is true', async () => {
+      const testee = await Mento.create(provider)
+
+      const tokens = await testee.getTokensAsync({ cached: true })
+
+      // Should return cached tokens
+      expect(tokens.length).toBeGreaterThan(0)
+      tokens.forEach((token) => {
+        expect(token).toHaveProperty('address')
+        expect(token).toHaveProperty('symbol')
+        expect(token).toHaveProperty('name')
+        expect(token).toHaveProperty('decimals')
+      })
     })
   })
 })

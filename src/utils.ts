@@ -1,7 +1,9 @@
 import { BigNumberish, Contract, providers, Signer } from 'ethers'
 
+import { TokenSymbol } from './constants'
+import { getCachedTokensSync, TOKEN_ADDRESSES_BY_CHAIN } from './constants/tokens'
 import { Address } from './interfaces'
-import { TradablePair } from './mento'
+import { Token, TradablePair } from './mento'
 
 /**
  * Gets the chain ID from a signer or provider
@@ -61,7 +63,7 @@ export function validateSignerOrProvider(
 export async function getSymbolFromTokenAddress(
   tokenAddr: Address,
   signerOrProvider: Signer | providers.Provider
-): Promise<string> {
+): Promise<TokenSymbol> {
   const erc20Abi = ['function symbol() external view returns (string memory)']
   const contract = new Contract(tokenAddr, erc20Abi, signerOrProvider)
 
@@ -130,20 +132,44 @@ export async function increaseAllowance(
  * @param symbol the token symbol to find (case-insensitive)
  * @returns the token address if found, null otherwise
  */
-export function findTokenBySymbol(
-  pairs: readonly TradablePair[],
-  symbol: string
-): string | null {
-  for (const pair of pairs) {
-    for (const asset of pair.assets) {
-      if (asset.symbol.toLowerCase() === symbol.toLowerCase()) {
-        return asset.address
-      }
-    }
-  }
-  return null
+export function findTokenAddressBySymbolInTradablePairs(
+  symbol: TokenSymbol,
+  pairs: readonly TradablePair[]
+): Address | null {
+  return (
+    pairs
+      .flatMap((pair) => pair.assets)
+      .find((asset) => asset.symbol.toLowerCase() === symbol.toLowerCase())
+      ?.address ?? null
+  )
 }
 
 export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1)
+}/**
+ * Helper function to get token address by symbol for a specific chain
+ * @param symbol - The token symbol
+ * @param chainId - The chain ID
+ * @returns The token address or undefined if not found
+ */
+
+export function getTokenAddress(
+  symbol: TokenSymbol,
+  chainId: number
+): string | undefined {
+  return TOKEN_ADDRESSES_BY_CHAIN[chainId]?.[symbol]
+}
+/**
+ * Helper function to find a token by symbol in the cached tokens
+ * @param symbol - The token symbol to search for
+ * @param chainId - The chain ID
+ * @returns The token object or undefined if not found
+ */
+
+export function findTokenBySymbol(
+  symbol: string,
+  chainId: number
+): Token | undefined {
+  const tokens = getCachedTokensSync(chainId)
+  return tokens.find((token) => token.symbol === symbol)
 }
