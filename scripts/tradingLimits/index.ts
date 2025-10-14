@@ -108,7 +108,7 @@ async function main(): Promise<void> {
     // Display usage information
     console.log('\n' + chalk.bold('Usage:'))
     console.log(
-      '  yarn tradingLimits [--token|-t <symbol>] [--exchange|-e <exchangeId>] [--network|-n <network>] [--chainId|-c <chainId>]'
+      '  yarn tradingLimits [--token|-t <symbol>] [--exchange|-e <exchangeId>] [--network|-n <network>] [--chainId|-c <chainId>] [--verbose|-v]'
     )
     console.log('\n' + chalk.bold('Network options:'))
     console.log('  --network celo       # Celo mainnet')

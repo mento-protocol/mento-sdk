@@ -26,8 +26,12 @@ yarn tradingLimits --exchange BiPoolManager
 yarn tradingLimits --exchange=BiPoolManager
 yarn tradingLimits -e BiPoolManager
 
+# Show verbose output with Limit IDs
+yarn tradingLimits --verbose
+yarn tradingLimits -v
+
 # Combine options
-yarn tradingLimits --token cUSD --exchange BiPoolManager
+yarn tradingLimits --token cUSD --exchange BiPoolManager --verbose
 
 # Connect to a specific RPC endpoint
 RPC_URL=https://your-rpc-url.com yarn tradingLimits
@@ -41,6 +45,18 @@ In normal mode, the tool shows a simplified view focused on usability:
 
 - Exchange column shows human-readable format (e.g., "cUSD <-> CELO")
 - Technical details like Exchange IDs, Asset addresses, and Limit IDs are hidden
+
+### Verbose Mode
+
+Use the `--verbose` or `-v` flag to enable verbose output:
+
+```bash
+yarn tradingLimits --verbose
+```
+
+In verbose mode, the tool displays additional technical information:
+
+- **Limit ID** column: Shows the unique identifier for each trading limit (a hex string generated from the exchange ID and asset address using XOR operation)
 
 ## Understanding Trading Limits
 
@@ -70,6 +86,7 @@ The script produces a table with the following columns:
 | Resets In   | Time until limit window resets                                         |
 | Reset Time  | Unix timestamp when limit resets                                       |
 | Status      | Current status (ACTIVE, INFLOWS BLOCKED, OUTFLOWS BLOCKED, or BLOCKED) |
+| Limit ID    | Unique identifier for the trading limit (visible in verbose mode only) |
 
 The tool uses color-coded statuses to indicate the current state of each trading limit:
 
@@ -80,7 +97,7 @@ The tool uses color-coded statuses to indicate the current state of each trading
 
 ## Project Structure
 
-```
+```text
 scripts/tradingLimits/
 ├── index.ts                   # Main script entry point
 ├── types.ts                   # Type definitions

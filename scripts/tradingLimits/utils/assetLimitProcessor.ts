@@ -5,6 +5,7 @@ import {
   TradingLimitsConfig,
   TradingLimitsState,
 } from '../../../src/interfaces'
+import { getLimitId } from '../../../src/limits'
 import { ScriptArgs, TradingLimit } from '../types'
 
 /**
@@ -98,6 +99,7 @@ export function getLimitDetails(
  *
  * @param asset - The token asset
  * @param exchangeName - Formatted exchange name
+ * @param exchangeId - The exchange ID
  * @param limits - Trading limits for this asset
  * @param configByAsset - Config by asset mapping
  * @param stateByAsset - State by asset mapping
@@ -109,6 +111,7 @@ export function getLimitDetails(
 export function processAssetWithLimits(
   asset: { address: string; symbol: string },
   exchangeName: string,
+  exchangeId: string,
   limits: TradingLimit[],
   configByAsset: Record<string, TradingLimitsConfig>,
   stateByAsset: Record<string, TradingLimitsState>,
@@ -157,6 +160,7 @@ export function processAssetWithLimits(
       const row = createLimitRow(
         asset,
         exchangeName,
+        exchangeId,
         limit,
         limitType,
         limitValue,
@@ -181,6 +185,7 @@ export function processAssetWithLimits(
       const row = createPlaceholderLimitRow(
         asset,
         exchangeName,
+        exchangeId,
         limitType,
         i,
         args,
@@ -205,6 +210,7 @@ export function processAssetWithLimits(
  *
  * @param asset - The token asset
  * @param exchangeName - Formatted exchange name
+ * @param exchangeId - The exchange ID
  * @param limit - The trading limit
  * @param limitType - The limit type (L0, L1, LG)
  * @param limitValue - The limit value
@@ -221,6 +227,7 @@ export function processAssetWithLimits(
 export function createLimitRow(
   asset: { address: string; symbol: string },
   exchangeName: string,
+  exchangeId: string,
   limit: TradingLimit,
   limitType: string,
   limitValue: number,
@@ -289,6 +296,12 @@ export function createLimitRow(
   // Status column
   row.push(status)
 
+  // Add limit ID column if verbose mode is enabled
+  if (args.verbose) {
+    const limitId = getLimitId(exchangeId, asset.address)
+    row.push(chalk.gray(limitId))
+  }
+
   // Return the completed row
   return row
 }
@@ -298,6 +311,7 @@ export function createLimitRow(
  *
  * @param asset - The token asset
  * @param exchangeName - Formatted exchange name
+ * @param exchangeId - The exchange ID
  * @param limitType - The limit type (L0, L1, LG)
  * @param limitIndex - The index of this limit
  * @param args - Script command line arguments (currently unused but passed through)
@@ -308,6 +322,7 @@ export function createLimitRow(
 export function createPlaceholderLimitRow(
   asset: { address: string; symbol: string },
   exchangeName: string,
+  exchangeId: string,
   limitType: string,
   limitIndex: number,
   args: ScriptArgs,
@@ -335,6 +350,12 @@ export function createPlaceholderLimitRow(
   row.push(chalk.gray('—')) // Max In
   row.push(chalk.gray('—')) // Max Out
   row.push(chalk.gray('NOT CONFIGURED')) // Status
+
+  // Add limit ID column if verbose mode is enabled
+  if (args.verbose) {
+    const limitId = getLimitId(exchangeId, asset.address)
+    row.push(chalk.gray(limitId))
+  }
 
   return row
 }

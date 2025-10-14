@@ -14,6 +14,7 @@ export interface ScriptArgs {
   exchange: string
   chainId?: number
   rpcUrl?: string
+  verbose?: boolean
 }
 
 // Export types from SDK to avoid importing from multiple places
