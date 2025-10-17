@@ -49,7 +49,7 @@ export async function processTradingLimits(
   args: ScriptArgs
 ): Promise<void> {
   // Create table for displaying results
-  const limitsTable = createLimitsTable()
+  const limitsTable = createLimitsTable(args.verbose)
 
   // Filter exchanges if a token filter is provided
   let exchangesToProcess = exchanges
@@ -150,7 +150,8 @@ export async function processTradingLimits(
           result.tokenAssets,
           result.exchangeName,
           limitsTable,
-          false // Pass false to ensure the exchange name is displayed in the first row for this exchange
+          false, // Pass false to ensure the exchange name is displayed in the first row for this exchange
+          args.verbose
         )
       }
     } else {

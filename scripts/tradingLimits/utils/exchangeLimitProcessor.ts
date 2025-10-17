@@ -42,6 +42,7 @@ export function processExchangeWithLimits(
       processAssetWithLimits(
         asset,
         exchangeName,
+        exchange.id,
         limits,
         exchangeData.configByAsset,
         exchangeData.stateByAsset,
@@ -57,7 +58,8 @@ export function processExchangeWithLimits(
         [asset],
         exchangeName,
         limitsTable,
-        exchangeNameDisplayed
+        exchangeNameDisplayed,
+        args.verbose
       )
 
       // Mark that we've displayed the exchange name

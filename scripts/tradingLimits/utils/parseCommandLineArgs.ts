@@ -14,15 +14,18 @@ import './typeExtensions'
 export function parseCommandLineArgs(): ScriptArgs {
   const argv = yargsParser(process.argv.slice(2), {
     string: ['token', 'exchange', 'chainId', 'network'],
+    boolean: ['verbose'],
     alias: {
       t: 'token',
       e: 'exchange',
       c: 'chainId',
       n: 'network',
+      v: 'verbose',
     },
     default: {
       token: '',
       exchange: '',
+      verbose: false,
     },
     configuration: {
       'short-option-groups': true,
@@ -38,5 +41,6 @@ export function parseCommandLineArgs(): ScriptArgs {
     exchange: argv.exchange,
     chainId: networkConfig.chainId,
     rpcUrl: networkConfig.rpcUrl,
+    verbose: argv.verbose,
   }
 }
