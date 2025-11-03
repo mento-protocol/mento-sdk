@@ -65,37 +65,37 @@
 
 **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T016 [P] [US1] Create shared test suite for write transactions in tests/integration/shared/writeTransactions.test.ts
-- [ ] T017 [P] [US1] Create Ethers v5 write operations integration tests in tests/integration/ethersV5/writeOperations.test.ts
-- [ ] T018 [P] [US1] Create Ethers v6 write operations integration tests in tests/integration/ethers/writeOperations.test.ts
-- [ ] T019 [P] [US1] Create Viem write operations integration tests in tests/integration/viem/writeOperations.test.ts
-- [ ] T020 [P] [US1] Create EthersV5Adapter unit tests for write methods in tests/unit/adapters/ethersV5Adapter.test.ts
-- [ ] T021 [P] [US1] Create EthersAdapter unit tests for write methods in tests/unit/adapters/ethersAdapter.test.ts
-- [ ] T022 [P] [US1] Create ViemAdapter unit tests for write methods in tests/unit/adapters/viemAdapter.test.ts
-- [ ] T023 [P] [US1] Create transaction error normalization unit tests in tests/unit/utils/transactionErrors.test.ts
+- [x] T016 [P] [US1] Create shared test suite for write transactions in tests/integration/shared/writeTransactions.test.ts
+- [x] T017 [P] [US1] Create Ethers v5 write operations integration tests in tests/integration/ethersV5/writeOperations.test.ts
+- [x] T018 [P] [US1] Create Ethers v6 write operations integration tests in tests/integration/ethers/writeOperations.test.ts
+- [x] T019 [P] [US1] Create Viem write operations integration tests in tests/integration/viem/writeOperations.test.ts
+- [x] T020 [P] [US1] Create EthersV5Adapter unit tests for write methods in tests/unit/adapters/ethersV5Adapter.test.ts
+- [x] T021 [P] [US1] Create EthersAdapter unit tests for write methods in tests/unit/adapters/ethersAdapter.test.ts
+- [x] T022 [P] [US1] Create ViemAdapter unit tests for write methods in tests/unit/adapters/viemAdapter.test.ts
+- [x] T023 [P] [US1] Create transaction error normalization unit tests in tests/unit/utils/transactionErrors.test.ts
 
 ### Implementation for User Story 1
 
-- [ ] T024 [P] [US1] Implement writeContract() method in EthersV5Adapter (src/adapters/implementations/ethersV5Adapter.ts)
-- [ ] T025 [P] [US1] Implement estimateGas() method in EthersV5Adapter (src/adapters/implementations/ethersV5Adapter.ts)
-- [ ] T026 [P] [US1] Implement getSignerAddress() method in EthersV5Adapter (src/adapters/implementations/ethersV5Adapter.ts)
-- [ ] T027 [P] [US1] Implement getTransactionCount() method in EthersV5Adapter (src/adapters/implementations/ethersV5Adapter.ts)
-- [ ] T028 [P] [US1] Implement writeContract() method in EthersAdapter (src/adapters/implementations/ethersAdapter.ts)
-- [ ] T029 [P] [US1] Implement estimateGas() method in EthersAdapter (src/adapters/implementations/ethersAdapter.ts)
-- [ ] T030 [P] [US1] Implement getSignerAddress() method in EthersAdapter (src/adapters/implementations/ethersAdapter.ts)
-- [ ] T031 [P] [US1] Implement getTransactionCount() method in EthersAdapter (src/adapters/implementations/ethersAdapter.ts)
-- [ ] T032 [P] [US1] Implement writeContract() method in ViemAdapter (src/adapters/implementations/viemAdapter.ts)
-- [ ] T033 [P] [US1] Implement estimateGas() method in ViemAdapter (src/adapters/implementations/viemAdapter.ts)
-- [ ] T034 [P] [US1] Implement getSignerAddress() method in ViemAdapter (src/adapters/implementations/viemAdapter.ts)
-- [ ] T035 [P] [US1] Implement getTransactionCount() method in ViemAdapter (src/adapters/implementations/viemAdapter.ts)
-- [ ] T036 [US1] Update EthersV5AdapterProxy to accept optional signer parameter in src/adapters/proxy/ethersV5AdapterProxy.ts
-- [ ] T037 [US1] Update EthersAdapterProxy to accept optional signer parameter in src/adapters/proxy/ethersAdapterProxy.ts
-- [ ] T038 [US1] Update ViemAdapterProxy to support WalletClient in src/adapters/proxy/viemAdapterProxy.ts
-- [ ] T039 [US1] Extend EthersV5AdapterProxy to proxy write methods to adapter in src/adapters/proxy/ethersV5AdapterProxy.ts
-- [ ] T040 [US1] Extend EthersAdapterProxy to proxy write methods to adapter in src/adapters/proxy/ethersAdapterProxy.ts
-- [ ] T041 [US1] Extend ViemAdapterProxy to proxy write methods to adapter in src/adapters/proxy/viemAdapterProxy.ts
-- [ ] T042 [US1] Add JSDoc documentation with examples to all write methods across all adapters
-- [ ] T043 [US1] Implement error normalization across providers in src/adapters/utils/transactionErrors.ts
+- [x] T024 [P] [US1] Implement writeContract() method in EthersV5Adapter (src/adapters/implementations/ethersV5Adapter.ts)
+- [x] T025 [P] [US1] Implement estimateGas() method in EthersV5Adapter (src/adapters/implementations/ethersV5Adapter.ts)
+- [x] T026 [P] [US1] Implement getSignerAddress() method in EthersV5Adapter (src/adapters/implementations/ethersV5Adapter.ts)
+- [x] T027 [P] [US1] Implement getTransactionCount() method in EthersV5Adapter (src/adapters/implementations/ethersV5Adapter.ts)
+- [x] T028 [P] [US1] Implement writeContract() method in EthersAdapter (src/adapters/implementations/ethersAdapter.ts)
+- [x] T029 [P] [US1] Implement estimateGas() method in EthersAdapter (src/adapters/implementations/ethersAdapter.ts)
+- [x] T030 [P] [US1] Implement getSignerAddress() method in EthersAdapter (src/adapters/implementations/ethersAdapter.ts)
+- [x] T031 [P] [US1] Implement getTransactionCount() method in EthersAdapter (src/adapters/implementations/ethersAdapter.ts)
+- [x] T032 [P] [US1] Implement writeContract() method in ViemAdapter (src/adapters/implementations/viemAdapter.ts)
+- [x] T033 [P] [US1] Implement estimateGas() method in ViemAdapter (src/adapters/implementations/viemAdapter.ts)
+- [x] T034 [P] [US1] Implement getSignerAddress() method in ViemAdapter (src/adapters/implementations/viemAdapter.ts)
+- [x] T035 [P] [US1] Implement getTransactionCount() method in ViemAdapter (src/adapters/implementations/viemAdapter.ts)
+- [x] T036 [US1] Update EthersV5AdapterProxy to accept optional signer parameter in src/adapters/proxy/ethersV5AdapterProxy.ts
+- [x] T037 [US1] Update EthersAdapterProxy to accept optional signer parameter in src/adapters/proxy/ethersAdapterProxy.ts
+- [x] T038 [US1] Update ViemAdapterProxy to support WalletClient in src/adapters/proxy/viemAdapterProxy.ts
+- [x] T039 [US1] Extend EthersV5AdapterProxy to proxy write methods to adapter in src/adapters/proxy/ethersV5AdapterProxy.ts
+- [x] T040 [US1] Extend EthersAdapterProxy to proxy write methods to adapter in src/adapters/proxy/ethersAdapterProxy.ts
+- [x] T041 [US1] Extend ViemAdapterProxy to proxy write methods to adapter in src/adapters/proxy/viemAdapterProxy.ts
+- [x] T042 [US1] Add JSDoc documentation with examples to all write methods across all adapters
+- [x] T043 [US1] Implement error normalization across providers in src/adapters/utils/transactionErrors.ts
 - [ ] T044 [US1] Add chain ID validation before transaction submission in all adapters
 - [ ] T045 [US1] Add address checksumming validation in all write methods
 - [ ] T046 [US1] Ensure all numeric transaction parameters use BigInt across all adapters

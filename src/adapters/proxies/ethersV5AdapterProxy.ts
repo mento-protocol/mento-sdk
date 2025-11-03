@@ -1,5 +1,5 @@
-import { ProviderAdapter } from '../../types'
-import type { providers as EthersV5Providers } from 'ethers-v5'
+import { ProviderAdapter } from '../../types';
+import type { providers as EthersV5Providers, Signer } from 'ethers-v5';
 
 /**
  * Proxy class that implements lazy loading for ethers v5 provider adapter.
@@ -16,43 +16,89 @@ import type { providers as EthersV5Providers } from 'ethers-v5'
  * ./adapters/proxies/README.md
  */
 export class EthersV5AdapterProxy implements ProviderAdapter {
-  private adapter: ProviderAdapter | null = null
-  private initPromise: Promise<void>
+	private adapter: ProviderAdapter | null = null;
+	private initPromise: Promise<void>;
 
-  constructor(provider: EthersV5Providers.Provider) {
-    this.initPromise = this.initialize(provider)
-  }
+	constructor(
+		provider: EthersV5Providers.Provider,
+		signer?: Signer,
+	) {
+		this.initPromise = this.initialize(provider, signer);
+	}
 
-  private async initialize(provider: EthersV5Providers.Provider) {
-    try {
-      const { EthersV5Adapter } = await import(
-        '../implementations/ethersV5Adapter'
-      )
-      this.adapter = new EthersV5Adapter(provider)
-    } catch (error) {
-      throw new Error(
-        'ethers v5 is not installed. Please install ethers@5 to use this adapter'
-      )
-    }
-  }
+	private async initialize(
+		provider: EthersV5Providers.Provider,
+		signer?: Signer,
+	) {
+		try {
+			const { EthersV5Adapter } = await import(
+				'../implementations/ethersV5Adapter'
+			);
+			this.adapter = new EthersV5Adapter(provider, signer);
+		} catch (error) {
+			throw new Error(
+				'ethers v5 is not installed. Please install ethers@5 to use this adapter',
+			);
+		}
+	}
 
-  async readContract(...args: Parameters<ProviderAdapter['readContract']>) {
-    await this.initPromise
-    if (!this.adapter) {
-      throw new Error(
-        'Adapter not initialized. Are you missing ethers v5 dependency?'
-      )
-    }
-    return this.adapter.readContract(...args)
-  }
+	async readContract(...args: Parameters<ProviderAdapter['readContract']>) {
+		await this.initPromise;
+		if (!this.adapter) {
+			throw new Error(
+				'Adapter not initialized. Are you missing ethers v5 dependency?',
+			);
+		}
+		return this.adapter.readContract(...args);
+	}
 
-  async getChainId() {
-    await this.initPromise
-    if (!this.adapter) {
-      throw new Error(
-        'Adapter not initialized. Are you missing ethers v5 dependency?'
-      )
-    }
-    return this.adapter.getChainId()
-  }
+	async getChainId() {
+		await this.initPromise;
+		if (!this.adapter) {
+			throw new Error(
+				'Adapter not initialized. Are you missing ethers v5 dependency?',
+			);
+		}
+		return this.adapter.getChainId();
+	}
+
+	async writeContract(...args: Parameters<ProviderAdapter['writeContract']>) {
+		await this.initPromise;
+		if (!this.adapter) {
+			throw new Error(
+				'Adapter not initialized. Are you missing ethers v5 dependency?',
+			);
+		}
+		return this.adapter.writeContract(...args);
+	}
+
+	async estimateGas(...args: Parameters<ProviderAdapter['estimateGas']>) {
+		await this.initPromise;
+		if (!this.adapter) {
+			throw new Error(
+				'Adapter not initialized. Are you missing ethers v5 dependency?',
+			);
+		}
+		return this.adapter.estimateGas(...args);
+	}
+
+	async getSignerAddress() {
+		await this.initPromise;
+		if (!this.adapter) {
+			throw new Error(
+				'Adapter not initialized. Are you missing ethers v5 dependency?',
+			);
+		}
+		return this.adapter.getSignerAddress();
+	}
+
+	async getTransactionCount() {
+		await this.initPromise;
+		if (!this.adapter) {
+			throw new Error(
+				'Adapter not initialized. Are you missing ethers v5 dependency?',
+			);
+		}
+		return this.adapter.getTransactionCount();
+	}
 }
