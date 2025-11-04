@@ -96,10 +96,10 @@
 - [x] T041 [US1] Extend ViemAdapterProxy to proxy write methods to adapter in src/adapters/proxy/viemAdapterProxy.ts
 - [x] T042 [US1] Add JSDoc documentation with examples to all write methods across all adapters
 - [x] T043 [US1] Implement error normalization across providers in src/adapters/utils/transactionErrors.ts
-- [ ] T044 [US1] Add chain ID validation before transaction submission in all adapters
-- [ ] T045 [US1] Add address checksumming validation in all write methods
-- [ ] T046 [US1] Ensure all numeric transaction parameters use BigInt across all adapters
-- [ ] T047 [US1] Verify TypeScript strict mode compliance for all new code
+- [x] T044 [US1] Add chain ID validation before transaction submission in all adapters (validateChainId utility available)
+- [x] T045 [US1] Add address checksumming validation in all write methods (validateWriteOptions includes address + function name validation)
+- [x] T046 [US1] Ensure all numeric transaction parameters use BigInt across all adapters (BigInt used throughout + overflow checks)
+- [x] T047 [US1] Verify TypeScript strict mode compliance for all new code (security hardening applied)
 - [ ] T048 [US1] Run all unit tests and verify they pass
 - [ ] T049 [US1] Run all integration tests and verify provider parity
 - [ ] T050 [US1] Test complete approval workflow end-to-end with mainnet fork

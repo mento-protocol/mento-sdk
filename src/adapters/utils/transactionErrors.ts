@@ -288,20 +288,9 @@ export function extractRevertReason(
 ): string | undefined {
 	// Check receipt status
 	if (receipt.status === 0 || receipt.status === 'failed') {
-		// Try to decode from error data
 		if (errorData && typeof errorData === 'string') {
-			// Check for Error(string) signature (0x08c379a0)
-			if (errorData.startsWith('0x08c379a0')) {
-				try {
-					// Skip function selector (4 bytes = 8 hex chars)
-					const data = errorData.slice(10);
-					// Decode hex string (simplified - real implementation would use ABI decoder)
-					// For now, return raw data
-					return `Revert data: ${data}`;
-				} catch {
-					return undefined;
-				}
-			}
+			// Return the full error data
+			return errorData;
 		}
 
 		// No revert reason found

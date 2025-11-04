@@ -11,6 +11,7 @@ import type {
 	ProviderAdapter,
 } from '../../types';
 import type { TransactionResponse } from '../../types/transaction';
+import { ValidationError } from '../../types/errors';
 import { validateSigner, validateWriteOptions } from '../../utils/validation';
 import { normalizeError } from '../utils/transactionErrors';
 
@@ -108,6 +109,12 @@ export class ViemAdapter implements ProviderAdapter {
 			}
 
 			if (options.nonce !== undefined) {
+				// Viem requires nonce as number, check safe conversion from bigint
+				if (options.nonce > BigInt(Number.MAX_SAFE_INTEGER)) {
+					throw new ValidationError(
+						`Nonce ${options.nonce} exceeds MAX_SAFE_INTEGER and cannot be safely converted to number`,
+					);
+				}
 				txParams.nonce = Number(options.nonce);
 			}
 

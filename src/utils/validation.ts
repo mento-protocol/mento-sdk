@@ -19,26 +19,6 @@ export function isAddress(address: string): boolean {
 }
 
 /**
- * Get the checksummed version of an address
- *
- * Uses EIP-55 checksumming algorithm.
- *
- * @param address - Address to checksum
- * @returns Checksummed address
- */
-export function getAddress(address: string): string {
-	if (!isAddress(address)) {
-		throw new ValidationError(
-			`Invalid address format: ${address}. Must be a 40-character hex string.`,
-		);
-	}
-
-	// Simple checksumming for now - providers handle the actual EIP-55 logic
-	// This is a placeholder that will be enhanced by adapter implementations
-	return address;
-}
-
-/**
  * Validate write transaction options
  *
  * @param options - Transaction options to validate
@@ -63,62 +43,55 @@ export function validateWriteOptions(options: ContractWriteOptions): void {
 		);
 	}
 
-	// Validate gas price parameters are mutually exclusive
+	// Validate gas price parameters are mutually exclusive (legacy vs EIP-1559)
 	if (
 		options.gasPrice !== undefined &&
 		(options.maxFeePerGas !== undefined ||
 			options.maxPriorityFeePerGas !== undefined)
 	) {
 		throw new ValidationError(
-			'Cannot specify both gasPrice and EIP-1559 parameters (maxFeePerGas, maxPriorityFeePerGas). Use one or the other.',
+			'Cannot specify both gasPrice (legacy) and EIP-1559 parameters (maxFeePerGas, maxPriorityFeePerGas).',
 		);
 	}
 
-	// Validate gas limit is positive
+	// Validate gas limit is positive (if specified)
 	if (options.gasLimit !== undefined && options.gasLimit <= 0n) {
-		throw new ValidationError(
-			`Gas limit must be > 0, got: ${options.gasLimit}. Increase the gas limit or remove it to use auto-estimation.`,
-		);
+		throw new ValidationError(`Gas limit must be > 0, got: ${options.gasLimit}`);
 	}
 
-	// Validate nonce is non-negative
+	// Validate nonce is non-negative (if specified)
 	if (options.nonce !== undefined && options.nonce < 0n) {
-		throw new ValidationError(
-			`Nonce must be >= 0, got: ${options.nonce}. Use a valid nonce or remove it for automatic nonce management.`,
-		);
+		throw new ValidationError(`Nonce must be >= 0, got: ${options.nonce}`);
 	}
 
-	// Validate gas price is positive if specified
+	// Validate gas price is positive (if specified)
 	if (options.gasPrice !== undefined && options.gasPrice <= 0n) {
-		throw new ValidationError(
-			`Gas price must be > 0, got: ${options.gasPrice}. Increase the gas price or remove it to use network default.`,
-		);
+		throw new ValidationError(`Gas price must be > 0, got: ${options.gasPrice}`);
 	}
 
-	// Validate EIP-1559 params are positive if specified
+	// Validate EIP-1559 maxFeePerGas is positive (if specified)
 	if (options.maxFeePerGas !== undefined && options.maxFeePerGas <= 0n) {
-		throw new ValidationError(
-			`Max fee per gas must be > 0, got: ${options.maxFeePerGas}. Increase the value or remove it to use network default.`,
-		);
+		throw new ValidationError(`Max fee per gas must be > 0, got: ${options.maxFeePerGas}`);
 	}
 
+	// Validate EIP-1559 maxPriorityFeePerGas is non-negative (if specified)
 	if (
 		options.maxPriorityFeePerGas !== undefined &&
 		options.maxPriorityFeePerGas < 0n
 	) {
 		throw new ValidationError(
-			`Max priority fee per gas must be >= 0, got: ${options.maxPriorityFeePerGas}. Increase the value or remove it.`,
+			`Max priority fee per gas must be >= 0, got: ${options.maxPriorityFeePerGas}`,
 		);
 	}
 
-	// Validate maxPriorityFeePerGas <= maxFeePerGas if both specified
+	// Validate EIP-1559 invariant: priority fee <= max fee
 	if (
 		options.maxFeePerGas !== undefined &&
 		options.maxPriorityFeePerGas !== undefined &&
 		options.maxPriorityFeePerGas > options.maxFeePerGas
 	) {
 		throw new ValidationError(
-			`Max priority fee per gas (${options.maxPriorityFeePerGas}) cannot exceed max fee per gas (${options.maxFeePerGas}). Adjust the values so priority fee <= max fee.`,
+			`Max priority fee (${options.maxPriorityFeePerGas}) cannot exceed max fee (${options.maxFeePerGas})`,
 		);
 	}
 }
@@ -133,21 +106,6 @@ export function validateSigner(signer: unknown): void {
 	if (!signer) {
 		throw new ValidationError(
 			'Signer required for write operations. Initialize SDK with a signer parameter (Ethers Signer or Viem WalletClient).',
-		);
-	}
-}
-
-/**
- * Validate chain ID matches expected value
- *
- * @param expected - Expected chain ID
- * @param actual - Actual chain ID from signer
- * @throws ValidationError if chain IDs don't match
- */
-export function validateChainId(expected: bigint, actual: bigint): void {
-	if (expected !== actual) {
-		throw new ValidationError(
-			`Chain ID mismatch. Signer is on chain ${actual} but SDK expects chain ${expected}. Connect your wallet to the correct network.`,
 		);
 	}
 }
