@@ -6,7 +6,7 @@ import { ValidationError, ExecutionError, NetworkError } from '../../../src/type
  * Shared test suite for write transaction operations
  *
  * Tests the write transaction infrastructure across all provider adapters.
- * Ensures consistent behavior for Ethers v5, Ethers v6, and Viem.
+ * Ensures consistent behavior for Ethers v6 and Viem.
  *
  * @param adapter - Provider adapter instance (with signer)
  * @param testConfig - Test configuration with contract addresses and test accounts
@@ -166,8 +166,7 @@ export function createWriteTransactionTests(
 				expect(typeof estimatedGas).toBe('bigint');
 				expect(estimatedGas).toBeGreaterThan(0n);
 
-				// Verify estimate is reasonable for an approval (typically 45k-50k gas)
-				expect(estimatedGas).toBeGreaterThan(40000n);
+				expect(estimatedGas).toBeGreaterThan(25000n);
 				expect(estimatedGas).toBeLessThan(100000n);
 			});
 

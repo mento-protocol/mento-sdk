@@ -1,9 +1,10 @@
-import { createPublicClient, createWalletClient, http } from 'viem';
-import { privateKeyToAccount } from 'viem/accounts';
-import { celo } from 'viem/chains';
-import { ViemAdapter } from '../../../src/adapters/implementations/viemAdapter';
-import { createWriteTransactionTests } from '../shared';
-import { TEST_CONFIG } from '../../config';
+import { createPublicClient, createWalletClient, http } from 'viem'
+import { privateKeyToAccount } from 'viem/accounts'
+import { celo } from 'viem/chains'
+import { ViemAdapter } from '../../../src/adapters/implementations/viemAdapter'
+import { createWriteTransactionTests } from '../shared'
+import { TEST_CONFIG } from '../../config'
+import { addresses, BROKER, ChainId, STABLETOKEN } from '../../../src/constants'
 
 /**
  * Integration tests for Viem write operations
@@ -11,46 +12,49 @@ import { TEST_CONFIG } from '../../config';
  * Tests write transaction functionality using Viem client.
  * Requires a funded test account with private key in TEST_SIGNER_PRIVATE_KEY env var.
  *
- * These tests will initially FAIL as write methods are not yet implemented.
  */
 describe('Viem Write Operations Integration Tests', () => {
-	// Skip tests if no private key provided
-	const privateKey = process.env.TEST_SIGNER_PRIVATE_KEY;
+  // Skip tests if no private key provided
+  const privateKey = process.env.TEST_SIGNER_PRIVATE_KEY
 
-	if (!privateKey) {
-		it.skip('skipping write tests - TEST_SIGNER_PRIVATE_KEY not set', () => {
-			// Tests require a funded test account
-		});
-		return;
-	}
+  if (!privateKey) {
+    it.skip('skipping write tests - TEST_SIGNER_PRIVATE_KEY not set', () => {
+      // Tests require a funded test account
+    })
+    return
+  }
 
-	// Setup public and wallet clients
-	const publicClient = createPublicClient({
-		chain: celo,
-		transport: http(TEST_CONFIG.rpcUrl),
-	});
+  // Ensure private key has 0x prefix for Viem
+  const formattedPrivateKey = privateKey.startsWith('0x')
+    ? privateKey
+    : `0x${privateKey}`
 
-	const account = privateKeyToAccount(privateKey as `0x${string}`);
+  // Setup public and wallet clients
+  const publicClient = createPublicClient({
+    chain: celo,
+    transport: http(TEST_CONFIG.rpcUrl),
+  })
 
-	const walletClient = createWalletClient({
-		account,
-		chain: celo,
-		transport: http(TEST_CONFIG.rpcUrl),
-	});
+  const account = privateKeyToAccount(formattedPrivateKey as `0x${string}`)
 
-	// Type assertion needed due to Viem's strict chain typing
-	const adapter = new ViemAdapter(publicClient as any, walletClient);
+  const walletClient = createWalletClient({
+    account,
+    chain: celo,
+    transport: http(TEST_CONFIG.rpcUrl),
+  })
 
-	// Test configuration
-	// Using USDC on Celo mainnet for testing
-	const testConfig = {
-		// USDC on Celo: 0x765DE816845861e75A25fCA122bb6898B8B1282a (6 decimals)
-		erc20TokenAddress: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
-		signerAddress: account.address,
-		// Use a known contract address as spender (e.g., Mento Broker)
-		spenderAddress: '0x0000000000000000000000000000000000000001',
-	};
+  // Type assertion needed due to Viem's strict chain typing
+  const adapter = new ViemAdapter(publicClient as any, walletClient)
+  const brokerAddress = addresses[ChainId.CELO][BROKER]
+  const cUSDAddress = addresses[ChainId.CELO][STABLETOKEN]
 
-	// Run shared test suite
-	createWriteTransactionTests(adapter, testConfig);
-});
+  // Test configuration
+  const testConfig = {
+    erc20TokenAddress: cUSDAddress,
+    signerAddress: account.address,
+    spenderAddress: brokerAddress,
+  }
+
+  // Run shared test suite
+  createWriteTransactionTests(adapter, testConfig)
+})

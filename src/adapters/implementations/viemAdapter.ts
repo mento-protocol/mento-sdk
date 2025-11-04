@@ -126,7 +126,7 @@ export class ViemAdapter implements ProviderAdapter {
 			const hash = await this.walletClient!.writeContract(txParams);
 
 			// Return normalized transaction response
-			return this.normalizeTransactionResponse(hash);
+			return await this.normalizeTransactionResponse(hash);
 		} catch (error) {
 			throw normalizeError(error, 'writeContract');
 		}
@@ -228,17 +228,42 @@ export class ViemAdapter implements ProviderAdapter {
 	/**
 	 * Normalize Viem transaction hash to our TransactionResponse interface
 	 */
-	private normalizeTransactionResponse(hash: Hash): TransactionResponse {
+	private async normalizeTransactionResponse(
+		hash: Hash,
+	): Promise<TransactionResponse> {
+		// Fetch transaction details to populate fields
+		// Retry a few times in case transaction is not yet in mempool
+		let tx;
+		let attempts = 0;
+		const maxAttempts = 10;
+
+		while (attempts < maxAttempts) {
+			try {
+				tx = await this.client.getTransaction({ hash });
+				break;
+			} catch (error) {
+				attempts++;
+				if (attempts >= maxAttempts) {
+					throw error;
+				}
+				// Wait 200ms before retrying (total max 2 seconds)
+				await new Promise((resolve) => setTimeout(resolve, 200));
+			}
+		}
+
+		if (!tx) {
+			throw new Error(`Transaction ${hash} not found after ${maxAttempts} attempts`);
+		}
+
 		return {
 			hash,
-			// These will be populated when we fetch the transaction
 			chainId: BigInt(this.client.chain?.id || 0),
-			from: this.walletClient?.account?.address || '',
-			to: '', // Will be populated from receipt
-			nonce: 0n, // Will be populated from receipt
-			gasLimit: 0n, // Will be populated from receipt
-			data: '0x', // Will be populated from receipt
-			value: 0n, // Will be populated from receipt
+			from: tx.from,
+			to: tx.to || '',
+			nonce: BigInt(tx.nonce),
+			gasLimit: tx.gas,
+			data: tx.input,
+			value: tx.value,
 			wait: async (confirmations?: number) => {
 				const receipt = await this.client.waitForTransactionReceipt({
 					hash,

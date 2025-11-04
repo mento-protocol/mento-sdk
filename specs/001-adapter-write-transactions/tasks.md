@@ -122,29 +122,29 @@
 ### Tests for User Story 2 (REQUIRED per Constitution) ⚠️
 
 - [ ] T051 [P] [US2] Add transaction status tracking tests to shared test suite in tests/integration/shared/writeTransactions.test.ts
-- [ ] T052 [P] [US2] Add status tracking integration tests for Ethers v5 in tests/integration/ethersV5/writeOperations.test.ts
+- [REMOVED] T052 [P] [US2] Add status tracking integration tests for Ethers v5 (Ethers v5 support removed)
 - [ ] T053 [P] [US2] Add status tracking integration tests for Ethers v6 in tests/integration/ethers/writeOperations.test.ts
 - [ ] T054 [P] [US2] Add status tracking integration tests for Viem in tests/integration/viem/writeOperations.test.ts
 - [ ] T055 [P] [US2] Add unit tests for TransactionResponse wait() method behavior
 
 ### Implementation for User Story 2
 
-- [ ] T056 [P] [US2] Implement TransactionResponse wrapper for Ethers v5 in src/adapters/implementations/ethersV5Adapter.ts
-- [ ] T057 [P] [US2] Implement TransactionResponse wrapper for Ethers v6 in src/adapters/implementations/ethersAdapter.ts
-- [ ] T058 [P] [US2] Implement TransactionResponse wrapper for Viem in src/adapters/implementations/viemAdapter.ts
-- [ ] T059 [P] [US2] Implement TransactionReceipt mapping from Ethers v5 provider types in src/adapters/implementations/ethersV5Adapter.ts
-- [ ] T060 [P] [US2] Implement TransactionReceipt mapping from Ethers v6 provider types in src/adapters/implementations/ethersAdapter.ts
-- [ ] T061 [P] [US2] Implement TransactionReceipt mapping from Viem provider types in src/adapters/implementations/viemAdapter.ts
-- [ ] T062 [P] [US2] Implement revert reason parsing for Ethers v5 in src/adapters/implementations/ethersV5Adapter.ts
-- [ ] T063 [P] [US2] Implement revert reason parsing for Ethers v6 in src/adapters/implementations/ethersAdapter.ts
-- [ ] T064 [P] [US2] Implement revert reason parsing for Viem in src/adapters/implementations/viemAdapter.ts
-- [ ] T065 [US2] Add JSDoc documentation for TransactionResponse and TransactionReceipt interfaces
-- [ ] T066 [US2] Ensure status tracking handles pending transactions correctly (null receipt)
-- [ ] T067 [US2] Ensure status tracking handles multiple confirmation counts (1, 3, 5 blocks)
-- [ ] T068 [US2] Verify error messages clearly indicate on-chain vs pre-submission failures
-- [ ] T069 [US2] Run all unit tests and verify they pass
-- [ ] T070 [US2] Run all integration tests and verify status tracking works across all providers
-- [ ] T071 [US2] Test transaction status tracking end-to-end with mainnet fork
+- [REMOVED] T056 [P] [US2] Implement TransactionResponse wrapper for Ethers v5 (Ethers v5 support removed)
+- [x] T057 [P] [US2] Implement TransactionResponse wrapper for Ethers v6 (already implemented with wait() and getReceipt() methods)
+- [x] T058 [P] [US2] Implement TransactionResponse wrapper for Viem (already implemented with wait() and getReceipt() methods)
+- [REMOVED] T059 [P] [US2] Implement TransactionReceipt mapping from Ethers v5 (Ethers v5 support removed)
+- [x] T060 [P] [US2] Implement TransactionReceipt mapping from Ethers v6 (normalizeTransactionReceipt implemented)
+- [x] T061 [P] [US2] Implement TransactionReceipt mapping from Viem (normalizeTransactionReceipt implemented)
+- [REMOVED] T062 [P] [US2] Implement revert reason parsing for Ethers v5 (Ethers v5 support removed)
+- [x] T063 [P] [US2] Implement revert reason parsing for Ethers v6 (basic revert reason extraction implemented)
+- [x] T064 [P] [US2] Implement revert reason parsing for Viem (basic revert reason extraction implemented)
+- [x] T065 [US2] Add JSDoc documentation for TransactionResponse and TransactionReceipt interfaces (comprehensive JSDoc in types/transaction.ts)
+- [x] T066 [US2] Ensure status tracking handles pending transactions correctly (getReceipt() returns null for pending)
+- [x] T067 [US2] Ensure status tracking handles multiple confirmation counts (wait(confirmations) parameter supported)
+- [x] T068 [US2] Verify error messages clearly indicate on-chain vs pre-submission failures (error normalization in place)
+- [x] T069 [US2] Run all unit tests and verify they pass (79 tests passing)
+- [ ] T070 [US2] Run all integration tests and verify status tracking works across all providers (requires TEST_SIGNER_PRIVATE_KEY)
+- [ ] T071 [US2] Test transaction status tracking end-to-end with mainnet fork (requires TEST_SIGNER_PRIVATE_KEY)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently - developers can execute approvals and track status
 
