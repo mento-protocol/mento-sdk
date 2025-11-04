@@ -51,14 +51,10 @@
   },
   "peerDependencies": {
     "ethers": "^6.13.4",
-    "ethers-v5": "npm:ethers@^5.7",
     "viem": "^2.21.44"
   },
   "peerDependenciesMeta": {
     "ethers": {
-      "optional": true
-    },
-    "ethers-v5": {
       "optional": true
     },
     "viem": {

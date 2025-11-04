@@ -1,8 +1,7 @@
 import type { PublicClient } from 'viem'
 import type { Provider as EthersV6Provider } from 'ethers'
-import type { providers as EthersV5Providers } from 'ethers-v5'
 
-import { EthersAdapter, EthersV5Adapter, ViemAdapter } from './adapters'
+import { EthersAdapter, ViemAdapter } from './adapters'
 import {
   CollateralAsset,
   ContractAddresses,
@@ -16,38 +15,22 @@ import { addresses } from './constants/addresses'
 export type SupportedProvider =
   | EthersV6Provider
   | PublicClient
-  | EthersV5Providers.Provider
 
 export interface MentoConfig {
   /** Provider can be one of:
    * - Ethers v6 Provider (from 'ethers')
-   * - Ethers v5 Provider (from 'ethers-v5')
    * - Viem PublicClient (from 'viem')
    */
   provider: SupportedProvider
 }
 
-/** Helper type guard for Ethers v5 Provider */
-function isEthersV5Provider(
-  provider: SupportedProvider
-): provider is EthersV5Providers.Provider {
-  // Check for v5 specific properties that don't exist in v6
-  return (
-    'getNetwork' in provider &&
-    '_network' in provider &&
-    // v5 specific internal property
-    'formatter' in provider
-  )
-}
-
 /** Helper type guard for Ethers v6 Provider */
-function isEthersV6Provider(
+function isEthersProvider(
   provider: SupportedProvider
 ): provider is EthersV6Provider {
-  // Check for v6 specific properties that don't exist in v5
+  // Check for Ethers provider properties
   return (
     'getNetwork' in provider &&
-    // v6 specific methods
     'broadcastTransaction' in provider
   )
 }
@@ -65,11 +48,6 @@ function isViemProvider(provider: SupportedProvider): provider is PublicClient {
  *              // Ethers v6
  *              const mento = await Mento.create({
  *                provider: new ethers.JsonRpcProvider("https://forno.celo.org")
- *              });
- *
- *              // Ethers v5
- *              const mento = await Mento.create({
- *                provider: new ethersV5.providers.JsonRpcProvider("https://forno.celo.org")
  *              });
  *
  *              // Viem
@@ -106,9 +84,7 @@ export class Mento {
     }
 
     let provider: ProviderAdapter
-    if (isEthersV5Provider(config.provider)) {
-      provider = new EthersV5Adapter(config.provider)
-    } else if (isEthersV6Provider(config.provider)) {
+    if (isEthersProvider(config.provider)) {
       provider = new EthersAdapter(config.provider)
     } else if (isViemProvider(config.provider)) {
       provider = new ViemAdapter(config.provider)

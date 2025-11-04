@@ -3,6 +3,11 @@
 **Input**: Design documents from `/specs/001-adapter-write-transactions/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
+**IMPORTANT CHANGE**: Ethers v5 support has been removed from the SDK. Only Ethers v6 and Viem are supported.
+- **Reason**: The `ethers-v5` peer dependency (using npm alias syntax) would not work for SDK consumers
+- **Impact**: All EthersV5Adapter tasks (T017, T020, T024-T027, T036, T039, and future v5 tasks) are marked as REMOVED
+- **Supported Providers**: Ethers v6 (`ethers` package) and Viem (`viem` package)
+
 **Tests**: Per the [Mento SDK Constitution](../.specify/memory/constitution.md), comprehensive testing is REQUIRED:
 - All adapter implementations MUST have unit tests
 - All provider integrations MUST have integration tests
@@ -59,27 +64,27 @@
 
 **Goal**: Enable developers to execute token approval transactions through any provider adapter with consistent API
 
-**Independent Test**: Execute an approval transaction using any provider (Ethers v5/v6, Viem), verify transaction hash is returned, wait for confirmation, verify allowance increased via readContract
+**Independent Test**: Execute an approval transaction using any provider (Ethers v6, Viem), verify transaction hash is returned, wait for confirmation, verify allowance increased via readContract
 
 ### Tests for User Story 1 (REQUIRED per Constitution) ⚠️
 
 **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
 - [x] T016 [P] [US1] Create shared test suite for write transactions in tests/integration/shared/writeTransactions.test.ts
-- [x] T017 [P] [US1] Create Ethers v5 write operations integration tests in tests/integration/ethersV5/writeOperations.test.ts
+- [REMOVED] T017 [P] [US1] Create Ethers v5 write operations integration tests (Ethers v5 support removed)
 - [x] T018 [P] [US1] Create Ethers v6 write operations integration tests in tests/integration/ethers/writeOperations.test.ts
 - [x] T019 [P] [US1] Create Viem write operations integration tests in tests/integration/viem/writeOperations.test.ts
-- [x] T020 [P] [US1] Create EthersV5Adapter unit tests for write methods in tests/unit/adapters/ethersV5Adapter.test.ts
+- [REMOVED] T020 [P] [US1] Create EthersV5Adapter unit tests (Ethers v5 support removed)
 - [x] T021 [P] [US1] Create EthersAdapter unit tests for write methods in tests/unit/adapters/ethersAdapter.test.ts
 - [x] T022 [P] [US1] Create ViemAdapter unit tests for write methods in tests/unit/adapters/viemAdapter.test.ts
 - [x] T023 [P] [US1] Create transaction error normalization unit tests in tests/unit/utils/transactionErrors.test.ts
 
 ### Implementation for User Story 1
 
-- [x] T024 [P] [US1] Implement writeContract() method in EthersV5Adapter (src/adapters/implementations/ethersV5Adapter.ts)
-- [x] T025 [P] [US1] Implement estimateGas() method in EthersV5Adapter (src/adapters/implementations/ethersV5Adapter.ts)
-- [x] T026 [P] [US1] Implement getSignerAddress() method in EthersV5Adapter (src/adapters/implementations/ethersV5Adapter.ts)
-- [x] T027 [P] [US1] Implement getTransactionCount() method in EthersV5Adapter (src/adapters/implementations/ethersV5Adapter.ts)
+- [REMOVED] T024 [P] [US1] Implement writeContract() method in EthersV5Adapter (Ethers v5 support removed)
+- [REMOVED] T025 [P] [US1] Implement estimateGas() method in EthersV5Adapter (Ethers v5 support removed)
+- [REMOVED] T026 [P] [US1] Implement getSignerAddress() method in EthersV5Adapter (Ethers v5 support removed)
+- [REMOVED] T027 [P] [US1] Implement getTransactionCount() method in EthersV5Adapter (Ethers v5 support removed)
 - [x] T028 [P] [US1] Implement writeContract() method in EthersAdapter (src/adapters/implementations/ethersAdapter.ts)
 - [x] T029 [P] [US1] Implement estimateGas() method in EthersAdapter (src/adapters/implementations/ethersAdapter.ts)
 - [x] T030 [P] [US1] Implement getSignerAddress() method in EthersAdapter (src/adapters/implementations/ethersAdapter.ts)
@@ -88,10 +93,10 @@
 - [x] T033 [P] [US1] Implement estimateGas() method in ViemAdapter (src/adapters/implementations/viemAdapter.ts)
 - [x] T034 [P] [US1] Implement getSignerAddress() method in ViemAdapter (src/adapters/implementations/viemAdapter.ts)
 - [x] T035 [P] [US1] Implement getTransactionCount() method in ViemAdapter (src/adapters/implementations/viemAdapter.ts)
-- [x] T036 [US1] Update EthersV5AdapterProxy to accept optional signer parameter in src/adapters/proxy/ethersV5AdapterProxy.ts
+- [REMOVED] T036 [US1] Update EthersV5AdapterProxy (Ethers v5 support removed)
 - [x] T037 [US1] Update EthersAdapterProxy to accept optional signer parameter in src/adapters/proxy/ethersAdapterProxy.ts
 - [x] T038 [US1] Update ViemAdapterProxy to support WalletClient in src/adapters/proxy/viemAdapterProxy.ts
-- [x] T039 [US1] Extend EthersV5AdapterProxy to proxy write methods to adapter in src/adapters/proxy/ethersV5AdapterProxy.ts
+- [REMOVED] T039 [US1] Extend EthersV5AdapterProxy (Ethers v5 support removed)
 - [x] T040 [US1] Extend EthersAdapterProxy to proxy write methods to adapter in src/adapters/proxy/ethersAdapterProxy.ts
 - [x] T041 [US1] Extend ViemAdapterProxy to proxy write methods to adapter in src/adapters/proxy/viemAdapterProxy.ts
 - [x] T042 [US1] Add JSDoc documentation with examples to all write methods across all adapters
