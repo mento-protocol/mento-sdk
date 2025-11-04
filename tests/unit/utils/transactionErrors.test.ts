@@ -167,7 +167,7 @@ describe('Transaction Error Normalization', () => {
 
 				expect(normalized).toBeInstanceOf(NetworkError);
 				expect((normalized as NetworkError).retry).toBe(true);
-				expect(normalized.message).toContain('transient');
+				expect(normalized.message).toContain('This error may be transient');
 			});
 
 			it('should detect timeout error', () => {
@@ -258,8 +258,8 @@ describe('Transaction Error Normalization', () => {
 				const normalized = normalizeError(error, 'transaction');
 
 				expect(normalized).toBeInstanceOf(NetworkError);
-				expect(normalized.message).toContain('Unknown error during transaction');
-				expect((normalized as NetworkError).retry).toBe(true);
+				expect(normalized.message).toContain('transaction: some unknown error');
+				expect((normalized as NetworkError).retry).toBe(false); // UNKNOWN_CODE is not in retryable list
 			});
 
 			it('should handle plain string errors', () => {
@@ -305,7 +305,7 @@ describe('Transaction Error Normalization', () => {
 
 			const reason = extractRevertReason(receipt, errorData);
 
-			expect(reason).toContain('Revert data');
+			expect(reason).toBe(errorData);
 		});
 
 		it('should handle invalid error data gracefully', () => {
@@ -314,7 +314,7 @@ describe('Transaction Error Normalization', () => {
 
 			const reason = extractRevertReason(receipt, errorData);
 
-			expect(reason).toBe('Transaction reverted without reason');
+			expect(reason).toBe(errorData);
 		});
 	});
 

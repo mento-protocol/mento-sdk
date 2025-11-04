@@ -1,4 +1,4 @@
-import { JsonRpcProvider, Wallet } from 'ethers-v5';
+import { providers, Wallet } from 'ethers-v5';
 import { EthersV5Adapter } from '../../../src/adapters/implementations/ethersV5Adapter';
 import { createWriteTransactionTests } from '../shared';
 import { TEST_CONFIG } from '../../config';
@@ -23,7 +23,7 @@ describe('EthersV5 Write Operations Integration Tests', () => {
 	}
 
 	// Setup provider and signer
-	const provider = new JsonRpcProvider(TEST_CONFIG.rpcUrl);
+	const provider = new providers.JsonRpcProvider(TEST_CONFIG.rpcUrl);
 	const signer = new Wallet(privateKey, provider);
 	const adapter = new EthersV5Adapter(provider, signer);
 

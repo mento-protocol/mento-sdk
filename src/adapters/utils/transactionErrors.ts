@@ -255,7 +255,13 @@ function isRetryableNetworkError(
 		return false;
 	}
 
-	// Retry-able patterns
+	// Retry-able codes
+	const retryableCodes = ['NETWORK_ERROR', 'TIMEOUT', 'SERVER_ERROR'];
+	if (code && retryableCodes.includes(code)) {
+		return true;
+	}
+
+	// Retry-able patterns in message
 	const retryable = [
 		'timeout',
 		'ETIMEDOUT',
@@ -266,6 +272,8 @@ function isRetryableNetworkError(
 		'504',
 		'rate limit',
 		'too many requests',
+		'network',
+		'connection',
 	];
 
 	return retryable.some((pattern) =>

@@ -1,4 +1,5 @@
-import { createPublicClient, createWalletClient, http, privateKeyToAccount } from 'viem';
+import { createPublicClient, createWalletClient, http } from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
 import { celo } from 'viem/chains';
 import { ViemAdapter } from '../../../src/adapters/implementations/viemAdapter';
 import { createWriteTransactionTests } from '../shared';
@@ -37,7 +38,8 @@ describe('Viem Write Operations Integration Tests', () => {
 		transport: http(TEST_CONFIG.rpcUrl),
 	});
 
-	const adapter = new ViemAdapter(publicClient, walletClient);
+	// Type assertion needed due to Viem's strict chain typing
+	const adapter = new ViemAdapter(publicClient as any, walletClient);
 
 	// Test configuration
 	// Using USDC on Celo mainnet for testing
