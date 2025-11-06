@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-10-06T16:08:43.517Z
+// Generated on 2025-11-06T15:50:12.595Z
 
 import { Token, TokenSymbol } from '../mento'
 
@@ -113,15 +113,15 @@ export const tokens11142220: readonly Token[] = [
     decimals: 18,
   },
   {
-    address: '0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9',
-    symbol: TokenSymbol.USDC,
-    name: 'Mento Mock USDC',
-    decimals: 18,
+    address: '0xd077A400968890Eacc75cdc901F0356c943e4fDb',
+    symbol: TokenSymbol.USD_,
+    name: 'Tether USD',
+    decimals: 6,
   },
   {
-    address: '0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0',
-    symbol: TokenSymbol.USDT,
-    name: 'Mento Mock USDT',
-    decimals: 18,
+    address: '0x01C5C0122039549AD1493B8220cABEdD739BC44E',
+    symbol: TokenSymbol.USDC,
+    name: 'USDC',
+    decimals: 6,
   },
 ] as const

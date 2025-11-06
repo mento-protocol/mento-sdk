@@ -1,41 +1,9 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-09-12T16:07:28.645Z
+// Generated on 2025-11-06T15:54:31.783Z
 
 import { TradablePairWithSpread } from './tradablePairs'
 
 export const tradablePairs11142220: TradablePairWithSpread[] = [
-  {
-    "id": "USDC-cUSD",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        }
-      ]
-    }
-  },
   {
     "id": "axlUSDC-cUSD",
     "assets": [
@@ -69,11 +37,11 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDT-cUSD",
+    "id": "USD₮-cUSD",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
@@ -83,10 +51,10 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -94,7 +62,83 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 0,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USDC-cUSD",
+    "assets": [
+      {
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+        "symbol": "cUSD"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0,
+      "hops": [
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USD₮-axlUSDC",
+    "assets": [
+      {
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
+      },
+      {
+        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+        "symbol": "axlUSDC"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0,
+      "hops": [
+        {
+          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "spreadPercent": 0
+        },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "spreadPercent": 0
         }
       ]
@@ -104,96 +148,8 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "id": "USDC-axlUSDC",
     "assets": [
       {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
-      },
-      {
-        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "axlUSDC"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x6285De9DA7C1d329C0451628638908915002d9d1"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDC-USDT",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDT-axlUSDC",
-    "assets": [
-      {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
       },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
@@ -211,10 +167,10 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
       }
     ],
@@ -226,7 +182,51 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
           "spreadPercent": 0
         },
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USDC-USD₮",
+    "assets": [
+      {
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0,
+      "hops": [
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "spreadPercent": 0
         }
       ]
@@ -289,94 +289,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "spreadData": {
       "totalSpreadPercent": 0.15,
       "hops": [
-        {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDC-cAUD",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDC-cCAD",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
         {
           "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "spreadPercent": 0.15
@@ -473,11 +385,11 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDT-cAUD",
+    "id": "USD₮-cAUD",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
@@ -487,18 +399,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -506,22 +418,66 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 0.15,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
-        },
-        {
           "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "spreadPercent": 0.15
+        },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
         }
       ]
     }
   },
   {
-    "id": "USDT-cCAD",
+    "id": "USDC-cAUD",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "cAUD"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.15,
+      "hops": [
+        {
+          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "spreadPercent": 0.15
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USD₮-cCAD",
+    "assets": [
+      {
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
@@ -531,18 +487,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -550,12 +506,56 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 0.15,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
+          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "spreadPercent": 0.15
         },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USDC-cCAD",
+    "assets": [
+      {
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.15,
+      "hops": [
         {
           "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "spreadPercent": 0.15
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
         }
       ]
     }
@@ -585,50 +585,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "spreadData": {
       "totalSpreadPercent": 0.25,
       "hops": [
-        {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
-        }
-      ]
-    }
-  },
-  {
-    "id": "CELO-USDC",
-    "assets": [
-      {
-        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
-      },
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x471EcE3750Da237f93B8E339c536989b8978a438"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.25,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
         {
           "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "spreadPercent": 0.25
@@ -681,26 +637,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-USDT",
+    "id": "CELO-USD₮",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
       },
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       }
     ],
     "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
@@ -708,18 +656,70 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        ]
       }
     ],
     "spreadData": {
       "totalSpreadPercent": 0.25,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
+          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "spreadPercent": 0.25
         },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "CELO-USDC",
+    "assets": [
+      {
+        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+        "symbol": "CELO"
+      },
+      {
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.25,
+      "hops": [
         {
           "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "spreadPercent": 0.25
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
         }
       ]
     }
@@ -764,6 +764,38 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
         {
           "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "spreadPercent": 0.15
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-cUSD",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+        "symbol": "cUSD"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.3,
+      "hops": [
+        {
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
         }
       ]
     }
@@ -961,15 +993,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cUSD",
+    "id": "PUSO-axlUSDC",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
       },
       {
-        "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+        "symbol": "axlUSDC"
       }
     ],
     "path": [
@@ -980,6 +1012,14 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        ]
       }
     ],
     "spreadData": {
@@ -988,37 +1028,41 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
         {
           "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "spreadPercent": 0
         }
       ]
     }
   },
   {
-    "id": "USDC-cGBP",
+    "id": "PUSO-USD₮",
     "assets": [
       {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
       },
       {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       }
     ],
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
       },
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -1026,232 +1070,12 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
         },
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDC-cZAR",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDC-cCHF",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDC-cJPY",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDC-cCOP",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDC-cREAL",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
         }
       ]
     }
@@ -1264,19 +1088,11 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
         "symbol": "PUSO"
       },
       {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
       }
     ],
     "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
@@ -1284,18 +1100,26 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
       }
     ],
     "spreadData": {
       "totalSpreadPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
           "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
         }
       ]
     }
@@ -1565,55 +1389,11 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-axlUSDC",
+    "id": "USD₮-cGBP",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "axlUSDC"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x6285De9DA7C1d329C0451628638908915002d9d1"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
-      "hops": [
-        {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDT-cGBP",
-    "assets": [
-      {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
@@ -1623,18 +1403,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -1642,22 +1422,66 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
-        },
-        {
           "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
         }
       ]
     }
   },
   {
-    "id": "USDT-cZAR",
+    "id": "USDC-cGBP",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "cGBP"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.3,
+      "hops": [
+        {
+          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USD₮-cZAR",
+    "assets": [
+      {
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
@@ -1667,18 +1491,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -1686,22 +1510,66 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
-        },
-        {
           "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
         }
       ]
     }
   },
   {
-    "id": "USDT-cCHF",
+    "id": "USDC-cZAR",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.3,
+      "hops": [
+        {
+          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USD₮-cCHF",
+    "assets": [
+      {
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
@@ -1711,18 +1579,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -1730,22 +1598,66 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
-        },
-        {
           "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
         }
       ]
     }
   },
   {
-    "id": "USDT-cJPY",
+    "id": "USDC-cCHF",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "cCHF"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.3,
+      "hops": [
+        {
+          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USD₮-cJPY",
+    "assets": [
+      {
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
@@ -1755,18 +1667,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -1774,22 +1686,66 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
-        },
-        {
           "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
         }
       ]
     }
   },
   {
-    "id": "USDT-cCOP",
+    "id": "USDC-cJPY",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "cJPY"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.3,
+      "hops": [
+        {
+          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USD₮-cCOP",
+    "assets": [
+      {
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
@@ -1799,18 +1755,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -1818,22 +1774,66 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
-        },
-        {
           "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
         }
       ]
     }
   },
   {
-    "id": "USDT-cREAL",
+    "id": "USDC-cCOP",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "cCOP"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.3,
+      "hops": [
+        {
+          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USD₮-cREAL",
+    "assets": [
+      {
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
@@ -1843,12 +1843,48 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
+        "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
+          "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
       },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.3,
+      "hops": [
+        {
+          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USDC-cREAL",
+    "assets": [
+      {
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
+      }
+    ],
+    "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
@@ -1856,62 +1892,26 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
       }
     ],
     "spreadData": {
       "totalSpreadPercent": 0.3,
       "hops": [
-        {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
-        },
         {
           "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
-    "id": "PUSO-USDT",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
-      "hops": [
-        {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
         },
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
         }
       ]
     }
@@ -1996,6 +1996,94 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
         {
           "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "spreadPercent": 0.25
+        },
+        {
+          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "spreadPercent": 0.15
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-cAUD",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "cAUD"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.44955,
+      "hops": [
+        {
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "spreadPercent": 0.15
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-cCAD",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.44955,
+      "hops": [
+        {
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
         },
         {
           "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
@@ -2269,50 +2357,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cAUD",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
-      "hops": [
-        {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
     "id": "cCAD-cGBP",
     "assets": [
       {
@@ -2577,50 +2621,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cCAD",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
-      "hops": [
-        {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
     "id": "axlEUROC-cEUR",
     "assets": [
       {
@@ -2685,50 +2685,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cEUR",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
-        }
-      ]
-    }
-  },
-  {
     "id": "axlUSDC-cEUR",
     "assets": [
       {
@@ -2773,11 +2729,11 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDT-cEUR",
+    "id": "USD₮-cEUR",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
@@ -2787,18 +2743,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -2806,12 +2762,100 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 0.5,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
+          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "spreadPercent": 0.5
         },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USDC-cEUR",
+    "assets": [
+      {
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "cEUR"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.5,
+      "hops": [
         {
           "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "spreadPercent": 0.5
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "CELO-PUSO",
+    "assets": [
+      {
+        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+        "symbol": "CELO"
+      },
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.54925,
+      "hops": [
+        {
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "spreadPercent": 0.25
         }
       ]
     }
@@ -3081,26 +3125,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-PUSO",
+    "id": "PUSO-cGBP",
     "assets": [
-      {
-        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
-      },
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
+      },
+      {
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "cGBP"
       }
     ],
     "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x471EcE3750Da237f93B8E339c536989b8978a438"
-        ]
-      },
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
@@ -3108,17 +3144,245 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        ]
       }
     ],
     "spreadData": {
-      "totalSpreadPercent": 0.54925,
+      "totalSpreadPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
         },
         {
+          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "spreadPercent": 0.3
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-cZAR",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.5991,
+      "hops": [
+        {
           "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "spreadPercent": 0.3
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-cCHF",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "cCHF"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.5991,
+      "hops": [
+        {
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "spreadPercent": 0.3
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-cJPY",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "cJPY"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.5991,
+      "hops": [
+        {
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "spreadPercent": 0.3
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-cCOP",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "cCOP"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.5991,
+      "hops": [
+        {
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "spreadPercent": 0.3
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-cREAL",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.5991,
+      "hops": [
+        {
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "spreadPercent": 0.3
         }
       ]
@@ -3345,50 +3609,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cGBP",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
-      "hops": [
-        {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
     "id": "cCHF-cZAR",
     "assets": [
       {
@@ -3565,50 +3785,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cZAR",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
-      "hops": [
-        {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
     "id": "cCHF-cJPY",
     "assets": [
       {
@@ -3741,50 +3917,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cCHF",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
-      "hops": [
-        {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
     "id": "cCOP-cJPY",
     "assets": [
       {
@@ -3873,50 +4005,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cJPY",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
-      "hops": [
-        {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
     "id": "cCOP-cREAL",
     "assets": [
       {
@@ -3955,94 +4043,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
         },
         {
           "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
-    "id": "PUSO-cCOP",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
-      "hops": [
-        {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
-    "id": "PUSO-cREAL",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
-      "hops": [
-        {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "spreadPercent": 0.3
         }
       ]
@@ -4172,6 +4172,50 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
         {
           "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "spreadPercent": 0.25
+        },
+        {
+          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "spreadPercent": 0.5
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-cEUR",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "cEUR"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.7985,
+      "hops": [
+        {
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
         },
         {
           "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
@@ -4445,50 +4489,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cEUR",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.7985,
-      "hops": [
-        {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
     "id": "axlEUROC-cUSD",
     "assets": [
       {
@@ -4629,138 +4629,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cGHS",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDC-cNGN",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDC-cKES",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
-        }
-      ]
-    }
-  },
-  {
     "id": "axlUSDC-cGHS",
     "assets": [
       {
@@ -4893,11 +4761,11 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDT-cGHS",
+    "id": "USD₮-cGHS",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
@@ -4907,18 +4775,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -4926,22 +4794,66 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
-        },
-        {
           "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "spreadPercent": 1
+        },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
         }
       ]
     }
   },
   {
-    "id": "USDT-cNGN",
+    "id": "USDC-cGHS",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "cGHS"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 1,
+      "hops": [
+        {
+          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "spreadPercent": 1
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USD₮-cNGN",
+    "assets": [
+      {
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
@@ -4951,18 +4863,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -4970,22 +4882,66 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
-        },
-        {
           "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "spreadPercent": 1
+        },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
         }
       ]
     }
   },
   {
-    "id": "USDT-cKES",
+    "id": "USDC-cNGN",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 1,
+      "hops": [
+        {
+          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "spreadPercent": 1
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USD₮-cKES",
+    "assets": [
+      {
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
@@ -4995,18 +4951,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -5014,12 +4970,56 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
+          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "spreadPercent": 1
         },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USDC-cKES",
+    "assets": [
+      {
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "cKES"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 1,
+      "hops": [
         {
           "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "spreadPercent": 1
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
         }
       ]
     }
@@ -5412,6 +5412,138 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
         {
           "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "spreadPercent": 0.25
+        },
+        {
+          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "spreadPercent": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-cGHS",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "cGHS"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 1.297,
+      "hops": [
+        {
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "spreadPercent": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-cNGN",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 1.297,
+      "hops": [
+        {
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
+        },
+        {
+          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "spreadPercent": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-cKES",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "cKES"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 1.297,
+      "hops": [
+        {
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
         },
         {
           "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
@@ -6213,138 +6345,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cGHS",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
-      "hops": [
-        {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
-    "id": "PUSO-cNGN",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
-      "hops": [
-        {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
-    "id": "PUSO-cKES",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
-      "hops": [
-        {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
-        }
-      ]
-    }
-  },
-  {
     "id": "cEUR-cGHS",
     "assets": [
       {
@@ -6641,50 +6641,6 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-eXOF",
-    "assets": [
-      {
-        "address": "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xBD63e46Be8eF8D89dFde3054E7b9ECAEb8Ad83e9"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 2,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
-        }
-      ]
-    }
-  },
-  {
     "id": "axlUSDC-eXOF",
     "assets": [
       {
@@ -6729,11 +6685,11 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDT-eXOF",
+    "id": "USD₮-eXOF",
     "assets": [
       {
-        "address": "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0",
-        "symbol": "USDT"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
@@ -6743,18 +6699,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xCA53d9b72646B254d29EBeEb4c5cde7BB4bb59e0"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
       }
     ],
@@ -6762,12 +6718,56 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 2,
       "hops": [
         {
-          "exchangeId": "0x36e12d20b7a59b463a1a113caf338cbad9d64ee017548d00a791681f2fbf0763",
-          "spreadPercent": 0
+          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "spreadPercent": 2
         },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "USDC-eXOF",
+    "assets": [
+      {
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 2,
+      "hops": [
         {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
         }
       ]
     }
@@ -6787,18 +6787,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
       }
     ],
@@ -6806,12 +6806,12 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 2.147,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
-        },
-        {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "spreadPercent": 0.15
         }
       ]
     }
@@ -6831,18 +6831,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
       }
     ],
@@ -6850,12 +6850,12 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 2.147,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
-        },
-        {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "spreadPercent": 0.15
         }
       ]
     }
@@ -6875,10 +6875,54 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 2.245,
+      "hops": [
+        {
+          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "spreadPercent": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "id": "PUSO-eXOF",
+    "assets": [
+      {
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
+      },
+      {
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
       },
       {
@@ -6891,11 +6935,11 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       }
     ],
     "spreadData": {
-      "totalSpreadPercent": 2.245,
+      "totalSpreadPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "spreadPercent": 0.3
         },
         {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
@@ -6919,18 +6963,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
       }
     ],
@@ -6938,12 +6982,12 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
-        },
-        {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "spreadPercent": 0.3
         }
       ]
     }
@@ -6963,18 +7007,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
       }
     ],
@@ -6982,12 +7026,12 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
-        },
-        {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "spreadPercent": 0.3
         }
       ]
     }
@@ -7007,18 +7051,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
       }
     ],
@@ -7026,12 +7070,12 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
-        },
-        {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "spreadPercent": 0.3
         }
       ]
     }
@@ -7051,18 +7095,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
       }
     ],
@@ -7070,12 +7114,12 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
-        },
-        {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "spreadPercent": 0.3
         }
       ]
     }
@@ -7095,18 +7139,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
       }
     ],
@@ -7114,12 +7158,12 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
-        },
-        {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "spreadPercent": 0.3
         }
       ]
     }
@@ -7139,74 +7183,30 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
-        ]
       }
     ],
     "spreadData": {
       "totalSpreadPercent": 2.294,
       "hops": [
+        {
+          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "spreadPercent": 2
+        },
         {
           "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
-        },
-        {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
-        }
-      ]
-    }
-  },
-  {
-    "id": "PUSO-eXOF",
-    "assets": [
-      {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
-      },
-      {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 2.294,
-      "hops": [
-        {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
-        },
-        {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "spreadPercent": 0.3
         }
       ]
@@ -7227,18 +7227,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
       }
     ],
@@ -7246,12 +7246,12 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 2.49,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
-        },
-        {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "spreadPercent": 0.5
         }
       ]
     }
@@ -7271,18 +7271,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
       }
     ],
@@ -7290,12 +7290,12 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 2.98,
       "hops": [
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
-        },
-        {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "spreadPercent": 1
         }
       ]
     }
@@ -7315,18 +7315,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
       }
     ],
@@ -7334,12 +7334,12 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 2.98,
       "hops": [
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
-        },
-        {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "spreadPercent": 1
         }
       ]
     }
@@ -7359,18 +7359,18 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     "path": [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
-        "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
-          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
-        ]
-      },
-      {
-        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
         "assets": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        ]
+      },
+      {
+        "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
+        "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+        "assets": [
+          "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
       }
     ],
@@ -7378,12 +7378,12 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       "totalSpreadPercent": 2.98,
       "hops": [
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
-        },
-        {
           "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "spreadPercent": 2
+        },
+        {
+          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "spreadPercent": 1
         }
       ]
     }
