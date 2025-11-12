@@ -8,7 +8,7 @@ import {
   ProviderAdapter,
   StableToken,
 } from './types'
-import { CollateralAssetService, StableTokenService } from './services'
+import { CollateralAssetService, StableTokenService, ExchangeService } from './services'
 import { ChainId } from './constants/chainId'
 import { addresses } from './constants/addresses'
 
@@ -58,24 +58,30 @@ function isViemProvider(provider: SupportedProvider): provider is PublicClient {
  *              });
  *
  *              // Get all stable tokens
- *              const stableTokens = await mento.getStableTokens();
+ *              const stableTokens = await mento.tokens.getStableTokens();
  *
  *              // Get all collateral assets
- *              const collateralAssets = await mento.getCollateralAssets();
+ *              const collateralAssets = await mento.collateral.getCollateralAssets();
+ *
+ *              // Get all exchanges
+ *              const exchanges = await mento.exchanges.getExchanges();
  */
 export class Mento {
   private provider: ProviderAdapter
-  private stableTokenService: StableTokenService
-  private collateralAssetService: CollateralAssetService
+  public tokens: StableTokenService
+  public collateral: CollateralAssetService
+  public exchanges: ExchangeService
 
   private constructor(
     provider: ProviderAdapter,
     stableTokenService: StableTokenService,
-    collateralAssetService: CollateralAssetService
+    collateralAssetService: CollateralAssetService,
+    exchangeService: ExchangeService
   ) {
     this.provider = provider
-    this.stableTokenService = stableTokenService
-    this.collateralAssetService = collateralAssetService
+    this.tokens = stableTokenService
+    this.collateral = collateralAssetService
+    this.exchanges = exchangeService
   }
 
   public static async create(config: MentoConfig): Promise<Mento> {
@@ -94,20 +100,9 @@ export class Mento {
 
     const stableTokenService = new StableTokenService(provider)
     const collateralAssetService = new CollateralAssetService(provider)
+    const exchangeService = new ExchangeService(provider)
 
-    return new Mento(provider, stableTokenService, collateralAssetService)
-  }
-
-  public async getStableTokens(): Promise<StableToken[]> {
-    return this.stableTokenService.getStableTokens()
-  }
-
-  /**
-   * Get all collateral assets that are available on the current chain.
-   * @returns An array of collateral assets
-   */
-  public async getCollateralAssets(): Promise<CollateralAsset[]> {
-    return this.collateralAssetService.getCollateralAssets()
+    return new Mento(provider, stableTokenService, collateralAssetService, exchangeService)
   }
 
   /**

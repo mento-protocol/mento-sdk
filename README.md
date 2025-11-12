@@ -31,7 +31,7 @@ const provider = createPublicClient({
 const mento = new Mento({ provider })
 
 // Use the SDK
-const stableTokens = await mento.stable.getStableTokens()
+const stableTokens = await mento.tokens.getStableTokens()
 console.log('Stable Tokens:', stableTokens)
 ```
 
@@ -110,7 +110,7 @@ Query Mento stable tokens:
 
 ```typescript
 // Get all stable tokens
-const tokens = await mento.getStableTokens()
+const tokens = await mento.tokens.getStableTokens()
 ```
 
 #### Collateral Assets
@@ -119,7 +119,22 @@ Retrieve collateral assets:
 
 ```typescript
 // Get all collateral assets
-const assets = await mento.getCollateralAssets()
+const assets = await mento.collateral.getCollateralAssets()
+```
+
+#### Exchanges
+
+Query exchanges and tradable pairs:
+
+```typescript
+// Get all exchanges
+const exchanges = await mento.exchanges.getExchanges()
+
+// Get tradable pairs (includes multi-hop routes)
+const pairs = await mento.exchanges.getTradablePairs()
+
+// Find specific pair
+const pair = await mento.exchanges.findPairForTokens(tokenInAddress, tokenOutAddress)
 ```
 
 ### Write Operations
