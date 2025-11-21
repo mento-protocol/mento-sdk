@@ -1128,7 +1128,9 @@ describe('Mento', () => {
   })
 
   describe('getRateFeedTradingMode', () => {
-    let mockBreakerBox: any
+    let mockBreakerBox: {
+      getRateFeedTradingMode: jest.Mock
+    }
     let testee: Mento
 
     beforeEach(async () => {
@@ -1188,8 +1190,12 @@ describe('Mento', () => {
   })
 
   describe('isPairTradable', () => {
-    let mockBreakerBox: any
-    let mockBiPoolManager: any
+    let mockBreakerBox: {
+      getRateFeedTradingMode: jest.Mock
+    }
+    let mockBiPoolManager: {
+      getPoolExchange: jest.Mock
+    }
     let testee: Mento
 
     beforeEach(async () => {
@@ -1207,6 +1213,45 @@ describe('Mento', () => {
       BiPoolManager__factory.connect.mockReturnValue(mockBiPoolManager)
 
       testee = await Mento.create(provider)
+
+      // Mock getTradablePairsWithPath to return pairs for testing
+      jest.spyOn(testee, 'getTradablePairsWithPath').mockResolvedValue([
+        // Direct pair: cUSD <-> CELO
+        {
+          id: `${fakecUSDTokenAddr}-${fakeCeloTokenAddr}` as TradablePair['id'],
+          assets: [
+            { address: fakecUSDTokenAddr, symbol: 'cUSD' },
+            { address: fakeCeloTokenAddr, symbol: 'CELO' },
+          ],
+          path: [
+            {
+              providerAddr: fakeUsdAndEurExchangeProvider,
+              id: fakeCeloUSDExchange.exchangeId,
+              assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+            },
+          ],
+        },
+        // Multi-hop pair: cEUR <-> cBRL (via CELO)
+        {
+          id: `${fakecEURTokenAddr}-${fakecBRLTokenAddr}` as TradablePair['id'],
+          assets: [
+            { address: fakecEURTokenAddr, symbol: 'cEUR' },
+            { address: fakecBRLTokenAddr, symbol: 'cBRL' },
+          ],
+          path: [
+            {
+              providerAddr: fakeUsdAndEurExchangeProvider,
+              id: fakeCeloEURExchange.exchangeId,
+              assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+            },
+            {
+              providerAddr: fakeBrlExchangeProvider,
+              id: fakeCeloBRLExchange.exchangeId,
+              assets: [fakeCeloTokenAddr, fakecBRLTokenAddr],
+            },
+          ],
+        },
+      ])
     })
 
     it('should return true when trading mode is BIDIRECTIONAL for direct pair', async () => {
