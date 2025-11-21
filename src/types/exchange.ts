@@ -98,5 +98,21 @@ export interface TradablePairWithSpread extends TradablePair {
      * Example: 0.3 means 0.3% spread cost
      */
     totalSpreadPercent: number
+
+    /**
+     * Per-hop spread breakdown
+     * Used for detailed cost analysis and debugging
+     */
+    hops: Array<{
+      /**
+       * Exchange ID for this hop
+       */
+      exchangeId: string
+
+      /**
+       * Spread percentage for this specific hop
+       */
+      spreadPercent: number
+    }>
   }
 }

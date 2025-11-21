@@ -19,4 +19,5 @@ export type ContractAddresses = {
   StableTokenBRL: string
   StableTokenXOF: string
   SortedOracles: string
+  MentoRouter: string
 }

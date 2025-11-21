@@ -16,9 +16,9 @@
 | Phase 5: US3 - Multi-Hop Routes  | 32        | 32      | ✅ 100%     |
 | Phase 6: US4 - Pair Lookup       | 14        | 14      | ✅ 100%     |
 | Phase 7: Provider Parity         | 6         | 6       | ✅ 100%     |
-| Phase 8: Static Cache (optional) | 0         | 10      | ⬜ Deferred |
+| Phase 8: Static Cache Generation | 0         | 38      | ⬜ 0%       |
 | Phase 9: Polish                  | 9         | 14      | 🟡 64%      |
-| **TOTAL**                        | **116**   | **134** | **87%**     |
+| **TOTAL**                        | **117**   | **162** | **72%**     |
 
 **Last Updated**: 2025-11-21
 
@@ -242,22 +242,84 @@
 
 ---
 
-## Phase 8: Static Cache Generation (Optional Enhancement)
+## Phase 8: Static Cache Generation
 
-**Purpose**: Create pre-generated cached pairs for instant query resolution
+**Purpose**: Create pre-generated cached pairs for instant query resolution with spread data
 
-**NOTE**: Deferred to post-MVP - not critical for initial release
+**NOTE**: This script should match the output format from main branch exactly, using the existing v3 types/services
 
-- [ ] T111 Create script scripts/generateCachedPairs.ts to generate cached pairs
-- [ ] T112 Script fetches all exchanges from Celo mainnet (chain ID 42220)
-- [ ] T113 Script generates all tradable pairs including 2-hop routes
-- [ ] T114 Script adds spread data (mock or from historical data source)
-- [ ] T115 Script writes output to src/constants/tradablePairs/42220.ts as TradablePairWithSpread[]
-- [ ] T116 [P] Repeat for Alfajores testnet (chain ID 44787) in src/constants/tradablePairs/44787.ts
-- [ ] T117 Create cache loader utility in src/constants/tradablePairs/index.ts
-- [ ] T118 Update getTradablePairs() to use real cache loader instead of placeholder
-- [ ] T119 Add cache files to git (committed as source code, not generated at build time)
-- [ ] T120 Test cached pair loading for both chains
+**Reference Implementation**: `scripts/cacheTradablePairs/` on main branch
+
+### Phase 8.1: Infrastructure Setup
+
+- [ ] T111 [P] Create scripts/cacheTradablePairs/ directory structure
+- [ ] T112 [P] Create scripts/shared/ directory if not exists for shared utilities
+- [ ] T113 [P] Create scripts/shared/network.ts with NETWORK_MAP, rpcUrls, SupportedChainId type, parseNetworkArgs() and getNetworkName() functions (copy from main)
+- [ ] T114 [P] Create scripts/shared/routeDeduplication.ts with deduplicateRoutes() and createRouteSignature() functions (copy from main)
+
+### Phase 8.2: Cache Script Configuration & CLI
+
+- [ ] T115 Create scripts/cacheTradablePairs/config.ts that re-exports network constants and TradablePairWithSpread type from src/types/exchange.ts
+- [ ] T116 Create scripts/cacheTradablePairs/cli.ts with CliArgs interface, parseCommandLineArgs() function supporting --network/-n, --chainId/-c, and --batchSize/-b options (use yargs-parser)
+- [ ] T117 Add printUsageTips() function to cli.ts showing network-specific cache generation examples
+
+### Phase 8.3: Spread Calculation Module
+
+- [ ] T118 Create scripts/cacheTradablePairs/spread.ts with calculateSpreadForPair(pair, provider) function
+- [ ] T119 Implement getExchangeSpread(exchangeId, providerAddr, provider) helper that calls BiPoolManager.getPoolExchange() and converts FixidityLib.Fraction spread to percentage
+- [ ] T120 Add sortPairsBySpread(pairs) function that sorts by totalSpreadPercent ascending (lowest spread first)
+- [ ] T121 Ensure spread calculation handles per-hop spreads and compounds them for multi-hop routes (totalEffectiveRate = product of hop rates)
+
+### Phase 8.4: Batch Processing Module
+
+- [ ] T122 Create scripts/cacheTradablePairs/batchProcessor.ts with processPairsInBatches(pairs, provider, batchSize) function
+- [ ] T123 Implement controlled concurrency: process pairs in batches of batchSize (default 10) using Promise.all()
+- [ ] T124 Add progress output showing processed/total count and error count
+- [ ] T125 Handle errors gracefully: catch errors per pair, return null for failed pairs, filter out nulls
+
+### Phase 8.5: Statistics Module
+
+- [ ] T126 Create scripts/cacheTradablePairs/statistics.ts with RouteStatistics interface (totalRoutes, uniquePairs, hopDistribution, topPairsWithMostRoutes)
+- [ ] T127 Implement calculateStatistics(pairs) function that computes route counts, unique pairs, hop distribution (1-hop vs 2-hop), and top 3 pairs by route count
+- [ ] T128 Implement displayStatistics(statistics) function with formatted console output
+
+### Phase 8.6: File Generation Module
+
+- [ ] T129 Create scripts/cacheTradablePairs/fileGenerator.ts with generateFileContent(chainId, pairs) function
+- [ ] T130 Generate TypeScript file content with format: auto-generated comment, generated timestamp, import TradablePairWithSpread, export const tradablePairs{chainId}
+- [ ] T131 Implement writeToFile(chainId, content, scriptDir) function that writes to src/constants/tradablePairs{chainId}.ts
+
+### Phase 8.7: Main Script Implementation
+
+- [ ] T132 Create scripts/cacheTradablePairs/index.ts with generateAndCacheTradablePairs(chainId, batchSize) async function
+- [ ] T133 Implement main workflow: create provider -> create ExchangeService -> get all tradable pairs (cached: false) -> process with spreads -> deduplicate -> sort -> calculate stats -> write file
+- [ ] T134 Create main() function that parses CLI args, determines chain IDs to process, runs generateAndCacheTradablePairs for each chain
+- [ ] T135 Add if (require.main === module) block to run main() when executed directly
+- [ ] T136 Add console output with emojis for progress steps matching main branch format
+
+### Phase 8.8: Type Updates for Spread Data
+
+- [ ] T137 Update TradablePairWithSpread interface in src/types/exchange.ts to include hops array: { exchangeId: string, spreadPercent: number }[]
+- [ ] T138 Ensure TradablePairWithSpread is exported from src/types/index.ts
+
+### Phase 8.9: Cache Loader Implementation
+
+- [ ] T139 Create src/constants/tradablePairs.ts as main type definition file with TradablePairWithSpread re-export and getCachedTradablePairs(chainId) async function
+- [ ] T140 Implement dynamic import in getCachedTradablePairs() for each supported chain (42220, 44787, 11142220) using switch statement
+- [ ] T141 Update ExchangeService.loadCachedPairs() to use getCachedTradablePairs() instead of returning empty array
+
+### Phase 8.10: Package.json & README
+
+- [ ] T142 Add "cacheTradablePairs" script to package.json: "ts-node scripts/cacheTradablePairs/index.ts"
+- [ ] T143 Create scripts/cacheTradablePairs/README.md with usage instructions (copy structure from main)
+
+### Phase 8.11: Generate Initial Cache Files
+
+- [ ] T144 Run cacheTradablePairs script for Celo mainnet (42220) and verify output format matches main branch
+- [ ] T145 [P] Run cacheTradablePairs script for Alfajores (44787)
+- [ ] T146 [P] Run cacheTradablePairs script for Celo Sepolia (11142220) if supported
+- [ ] T147 Verify generated cache files have identical structure to main branch output
+- [ ] T148 Add generated cache files to git (committed as source code)
 
 ---
 
@@ -345,7 +407,11 @@
 
 **Cache Generation (Phase 8)**:
 
-- T116 can run in parallel with T115 (different chain IDs)
+- T111, T112, T113, T114 can run in parallel (different files/directories)
+- T118, T119, T120, T121 form a logical group but different functions
+- T122-T125 (batch processor) sequential within module
+- T126-T128 (statistics) can run in parallel with T129-T131 (file generator)
+- T144, T145, T146 can run in parallel (different chain IDs)
 
 **Polish (Phase 9)**:
 
@@ -416,23 +482,23 @@ With multiple developers:
 
 ## Task Metrics
 
-**Total Tasks**: 134
+**Total Tasks**: 162
 
 - Setup: 4 tasks (3 completed)
 - Foundational: 8 tasks (8 completed)
-- User Story 1: 26 tasks (23 completed)
+- User Story 1: 26 tasks (25 completed)
 - User Story 2: 20 tasks (20 completed)
 - User Story 3: 32 tasks (32 completed)
 - User Story 4: 14 tasks (14 completed)
 - Integration: 6 tasks (6 completed)
-- Cache Generation: 10 tasks (0 completed - deferred)
-- Polish: 14 tasks (6 completed)
+- Cache Generation: 38 tasks (0 completed) - 11 sub-phases
+- Polish: 14 tasks (9 completed)
 
-**Completed**: 112/134 (84%)
+**Completed**: 117/162 (72%)
 
-**Parallel Opportunities**: ~40 tasks marked [P] can run in parallel within their phases
+**Parallel Opportunities**: ~50 tasks marked [P] can run in parallel within their phases
 
-**Suggested MVP Scope**: Phases 1-4, 7, 9 (User Stories 1-2 only) = ~70 tasks
+**Suggested MVP Scope**: Phases 1-7, 9 (without Cache Generation) = ~124 tasks
 
 **Independent Test Criteria**:
 
@@ -445,27 +511,26 @@ With multiple developers:
 
 ## Remaining Work
 
-### High Priority (MVP blockers)
+### High Priority (Cache Generation - Phase 8)
 
-- [ ] T017/T029: `getExchangesForProvider()` method (optional for MVP)
-- [ ] T031: Retry logic integration
-- [ ] T128: Verify code coverage >80%
+- Phase 8.1: Infrastructure Setup (T111-T114) - Create directory structure and shared utilities
+- Phase 8.2-8.3: Config, CLI, Spread (T115-T121) - Configuration, CLI parsing, spread calculation
+- Phase 8.4-8.6: Processing Modules (T122-T131) - Batch processing, statistics, file generation
+- Phase 8.7: Main Script (T132-T136) - Main index.ts with generateAndCacheTradablePairs workflow
+- Phase 8.8-8.9: Types & Cache Loading (T137-T141) - Update TradablePairWithSpread, implement cache loader
+- Phase 8.10-8.11: Package Setup & Generate (T142-T148) - Package.json script, README, generate cache files
 
 ### Medium Priority (Quality)
 
 - [ ] T003: ExchangeProvider ABI (may not be needed)
+- [ ] T031: Retry logic integration
 - [ ] T124: Address checksumming verification
-- [ ] T126/T127: Linting and formatting pass
 - [ ] T132: Security audit
 
 ### Low Priority (Documentation)
 
 - [ ] T122: README quickstart examples
 - [ ] T123: CLAUDE.md updates
-
-### Deferred (Post-MVP)
-
-- Phase 8: Static cache generation (T111-T120)
 
 ---
 

@@ -313,17 +313,17 @@ describe('routeUtils', () => {
       const candidatesWithSpread: TradablePairWithSpread[] = [
         {
           ...mockDirectPairs[0],
-          spreadData: { totalSpreadPercent: 0.8 },
+          spreadData: { totalSpreadPercent: 0.8, hops: [] },
         },
         {
           ...mockDirectPairs[0],
           id: 'CELO-cUSD-alt' as TradablePairID,
-          spreadData: { totalSpreadPercent: 0.3 }, // Lower spread
+          spreadData: { totalSpreadPercent: 0.3, hops: [] }, // Lower spread
         },
         {
           ...mockDirectPairs[0],
           id: 'CELO-cUSD-alt2' as TradablePairID,
-          spreadData: { totalSpreadPercent: 0.5 },
+          spreadData: { totalSpreadPercent: 0.5, hops: [] },
         },
       ]
 
@@ -493,7 +493,7 @@ describe('routeUtils', () => {
     it('should return true for TradablePairWithSpread', () => {
       const pairWithSpread: TradablePairWithSpread = {
         ...mockDirectPairs[0],
-        spreadData: { totalSpreadPercent: 0.5 },
+        spreadData: { totalSpreadPercent: 0.5, hops: [] },
       }
 
       expect(hasSpreadData(pairWithSpread)).toBe(true)

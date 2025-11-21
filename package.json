@@ -26,7 +26,8 @@
     "lint": "eslint --config ./.eslintrc.json src/**/*.ts",
     "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",
     "test": "jest --verbose",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "cacheTradablePairs": "ts-node scripts/cacheTradablePairs/index.ts"
   },
   "engines": {
     "node": ">=18",
@@ -38,6 +39,7 @@
     "@tsconfig/recommended": "^1.0.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^18.13.0",
+    "@types/yargs-parser": "^21.0.3",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
     "eslint": "^8.34.0",
@@ -47,7 +49,8 @@
     "prettier": "^2.8.4",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
-    "typescript": "5.6.3"
+    "typescript": "5.6.3",
+    "yargs-parser": "^21.1.1"
   },
   "peerDependencies": {
     "ethers": "^6.13.4",

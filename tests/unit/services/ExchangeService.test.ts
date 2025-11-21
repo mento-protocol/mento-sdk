@@ -532,7 +532,10 @@ describe('ExchangeService', () => {
       const token0 = mockExchanges[0].assets[0]
       const token1 = mockExchanges[0].assets[1]
 
-      const pair = await service.findPairForTokens(token0, token1)
+      // Use cached: false to use mocked exchanges instead of real cached pairs
+      const pair = await service.findPairForTokens(token0, token1, {
+        cached: false,
+      })
 
       expect(pair).toBeDefined()
       expect(pair.path.length).toBeGreaterThanOrEqual(1)
@@ -542,8 +545,13 @@ describe('ExchangeService', () => {
       const token0 = mockExchanges[0].assets[0]
       const token1 = mockExchanges[0].assets[1]
 
-      const pair1 = await service.findPairForTokens(token0, token1)
-      const pair2 = await service.findPairForTokens(token1, token0)
+      // Use cached: false to use mocked exchanges instead of real cached pairs
+      const pair1 = await service.findPairForTokens(token0, token1, {
+        cached: false,
+      })
+      const pair2 = await service.findPairForTokens(token1, token0, {
+        cached: false,
+      })
 
       // Should find same pair regardless of order
       expect(pair1.id).toBe(pair2.id)
@@ -551,11 +559,15 @@ describe('ExchangeService', () => {
 
     it('should throw PairNotFoundError if no route exists', async () => {
       await expect(
-        service.findPairForTokens('0xnonexistent1', '0xnonexistent2')
+        service.findPairForTokens('0xnonexistent1', '0xnonexistent2', {
+          cached: false,
+        })
       ).rejects.toThrow(PairNotFoundError)
 
       await expect(
-        service.findPairForTokens('0xnonexistent1', '0xnonexistent2')
+        service.findPairForTokens('0xnonexistent1', '0xnonexistent2', {
+          cached: false,
+        })
       ).rejects.toThrow(/No pair found for tokens/)
     })
 
@@ -565,7 +577,10 @@ describe('ExchangeService', () => {
       const token0 = mockExchanges[0].assets[0] // cUSD
       const token1 = mockExchanges[0].assets[1] // CELO
 
-      const pair = await service.findPairForTokens(token0, token1)
+      // Use cached: false to use mocked exchanges instead of real cached pairs
+      const pair = await service.findPairForTokens(token0, token1, {
+        cached: false,
+      })
 
       // Should return a valid pair (optimization happens in selectOptimalRoutes)
       expect(pair).toBeDefined()

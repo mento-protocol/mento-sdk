@@ -394,10 +394,12 @@ export class ExchangeService {
    * @private
    */
   private async loadCachedPairs(): Promise<TradablePairWithSpread[]> {
-    // TODO: Implement actual cache loading from static files
-    // For now, return empty array (cache not implemented yet)
-    // In Phase 8, we'll add: import cachedPairs from `../constants/tradablePairs/${chainId}`
-    return []
+    const chainId = await this.adapter.getChainId()
+    const { getCachedTradablePairs } = await import(
+      '../constants/tradablePairs'
+    )
+    const cachedPairs = await getCachedTradablePairs(chainId)
+    return (cachedPairs as TradablePairWithSpread[]) || []
   }
 
   /**
@@ -457,10 +459,11 @@ export class ExchangeService {
    */
   async findPairForTokens(
     tokenIn: string,
-    tokenOut: string
+    tokenOut: string,
+    options?: { cached?: boolean }
   ): Promise<TradablePair> {
     // Get all tradable pairs
-    const allPairs = await this.getTradablePairs()
+    const allPairs = await this.getTradablePairs(options)
 
     // Normalize addresses for comparison
     const t0 = tokenIn.toLowerCase()
