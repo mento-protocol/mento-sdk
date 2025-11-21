@@ -1209,9 +1209,9 @@ describe('Mento', () => {
       testee = await Mento.create(provider)
     })
 
-    it('should return true when trading mode is BIDIRECTIONAL', async () => {
+    it('should return true when trading mode is BIDIRECTIONAL for direct pair', async () => {
       const rateFeedId = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
-
+      
       mockBiPoolManager.getPoolExchange.mockResolvedValue({
         config: {
           referenceRateFeedID: rateFeedId,
@@ -1226,9 +1226,9 @@ describe('Mento', () => {
       expect(mockBreakerBox.getRateFeedTradingMode).toHaveBeenCalledWith(rateFeedId)
     })
 
-    it('should return false when trading mode is HALTED', async () => {
+    it('should return false when trading mode is HALTED for direct pair', async () => {
       const rateFeedId = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
-
+      
       mockBiPoolManager.getPoolExchange.mockResolvedValue({
         config: {
           referenceRateFeedID: rateFeedId,
@@ -1242,9 +1242,9 @@ describe('Mento', () => {
       expect(isTradable).toBe(false)
     })
 
-    it('should return false when trading mode is DISABLED', async () => {
+    it('should return false when trading mode is DISABLED for direct pair', async () => {
       const rateFeedId = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
-
+      
       mockBiPoolManager.getPoolExchange.mockResolvedValue({
         config: {
           referenceRateFeedID: rateFeedId,
@@ -1258,21 +1258,95 @@ describe('Mento', () => {
       expect(isTradable).toBe(false)
     })
 
-    it('should check the correct exchange for the token pair', async () => {
-      const rateFeedId = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+    it('should return true when all hops are BIDIRECTIONAL for multi-hop pair', async () => {
+      const rateFeedId1 = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+      const rateFeedId2 = '0xB2B8003936862E7a15092A91898D69fa8bCE290c'
+      
+      // Mock a two-hop route
+      mockBiPoolManager.getPoolExchange
+        .mockResolvedValueOnce({
+          config: { referenceRateFeedID: rateFeedId1 },
+        })
+        .mockResolvedValueOnce({
+          config: { referenceRateFeedID: rateFeedId2 },
+        })
 
-      mockBiPoolManager.getPoolExchange.mockResolvedValue({
-        config: {
-          referenceRateFeedID: rateFeedId,
-        },
-      })
+      // Both hops are tradable
+      mockBreakerBox.getRateFeedTradingMode
+        .mockResolvedValueOnce(0)
+        .mockResolvedValueOnce(0)
 
-      mockBreakerBox.getRateFeedTradingMode.mockResolvedValue(0)
+      const isTradable = await testee.isPairTradable(fakecEURTokenAddr, fakecBRLTokenAddr)
 
-      await testee.isPairTradable(fakecUSDTokenAddr, fakeCeloTokenAddr)
+      expect(isTradable).toBe(true)
+      expect(mockBreakerBox.getRateFeedTradingMode).toHaveBeenCalledTimes(2)
+    })
 
-      // Should have fetched the exchange for the correct token pair
-      expect(mockBiPoolManager.getPoolExchange).toHaveBeenCalledTimes(1)
+    it('should return false when first hop is not tradable in multi-hop pair', async () => {
+      const rateFeedId1 = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+      const rateFeedId2 = '0xB2B8003936862E7a15092A91898D69fa8bCE290c'
+      
+      mockBiPoolManager.getPoolExchange
+        .mockResolvedValueOnce({
+          config: { referenceRateFeedID: rateFeedId1 },
+        })
+        .mockResolvedValueOnce({
+          config: { referenceRateFeedID: rateFeedId2 },
+        })
+
+      // First hop is HALTED, second is BIDIRECTIONAL
+      mockBreakerBox.getRateFeedTradingMode
+        .mockResolvedValueOnce(1)
+        .mockResolvedValueOnce(0)
+
+      const isTradable = await testee.isPairTradable(fakecEURTokenAddr, fakecBRLTokenAddr)
+
+      expect(isTradable).toBe(false)
+    })
+
+    it('should return false when second hop is not tradable in multi-hop pair', async () => {
+      const rateFeedId1 = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+      const rateFeedId2 = '0xB2B8003936862E7a15092A91898D69fa8bCE290c'
+      
+      mockBiPoolManager.getPoolExchange
+        .mockResolvedValueOnce({
+          config: { referenceRateFeedID: rateFeedId1 },
+        })
+        .mockResolvedValueOnce({
+          config: { referenceRateFeedID: rateFeedId2 },
+        })
+
+      // First hop is BIDIRECTIONAL, second is DISABLED
+      mockBreakerBox.getRateFeedTradingMode
+        .mockResolvedValueOnce(0)
+        .mockResolvedValueOnce(2)
+
+      const isTradable = await testee.isPairTradable(fakecEURTokenAddr, fakecBRLTokenAddr)
+
+      expect(isTradable).toBe(false)
+    })
+
+    it('should check all exchanges in the path for multi-hop pair', async () => {
+      const rateFeedId1 = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+      const rateFeedId2 = '0xB2B8003936862E7a15092A91898D69fa8bCE290c'
+      
+      mockBiPoolManager.getPoolExchange
+        .mockResolvedValueOnce({
+          config: { referenceRateFeedID: rateFeedId1 },
+        })
+        .mockResolvedValueOnce({
+          config: { referenceRateFeedID: rateFeedId2 },
+        })
+
+      mockBreakerBox.getRateFeedTradingMode
+        .mockResolvedValueOnce(0)
+        .mockResolvedValueOnce(0)
+
+      await testee.isPairTradable(fakecEURTokenAddr, fakecBRLTokenAddr)
+
+      // Should have fetched config for both hops
+      expect(mockBiPoolManager.getPoolExchange).toHaveBeenCalledTimes(2)
+      expect(mockBreakerBox.getRateFeedTradingMode).toHaveBeenCalledTimes(2)
     })
 
     it('should throw error when pair does not exist', async () => {

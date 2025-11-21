@@ -847,23 +847,34 @@ export class Mento {
   }
 
   /**
-   * Checks if a trading pair is currently tradable (i.e., its rate feed trading mode is BIDIRECTIONAL)
+   * Checks if a trading pair is currently tradable (i.e., all rate feeds in the path are in BIDIRECTIONAL mode)
+   * For multi-hop routes (e.g., CELO → cUSD → USDT), checks that all intermediate rate feeds are tradable
    * @param tokenIn the address of the token to sell
    * @param tokenOut the address of the token to buy
-   * @returns true if the pair is tradable (trading mode is BIDIRECTIONAL), false otherwise
+   * @returns true if the pair is tradable (all rate feeds in BIDIRECTIONAL mode), false otherwise
    */
   async isPairTradable(tokenIn: Address, tokenOut: Address): Promise<boolean> {
-    const exchange = await this.getExchangeForTokens(tokenIn, tokenOut)
+    // Find the tradable pair (which includes the routing path)
+    const pair = await this.findPairForTokens(tokenIn, tokenOut)
+
+    // For each hop in the path, check if the rate feed is tradable
     const biPoolManager = BiPoolManager__factory.connect(
-      exchange.providerAddr,
+      pair.path[0].providerAddr,
       this.signerOrProvider
     )
 
-    const exchangeConfig = await biPoolManager.getPoolExchange(exchange.id)
-    const rateFeedId = exchangeConfig.config.referenceRateFeedID
+    // Get all rate feed IDs for each hop in the path
+    const rateFeedChecks = await Promise.all(
+      pair.path.map(async (hop) => {
+        const exchangeConfig = await biPoolManager.getPoolExchange(hop.id)
+        const rateFeedId = exchangeConfig.config.referenceRateFeedID
+        const tradingMode = await this.getRateFeedTradingMode(rateFeedId)
+        return tradingMode === TradingMode.BIDIRECTIONAL
+      })
+    )
 
-    const tradingMode = await this.getRateFeedTradingMode(rateFeedId)
-    return tradingMode === TradingMode.BIDIRECTIONAL
+    // All rate feeds must be in BIDIRECTIONAL mode for the pair to be tradable
+    return rateFeedChecks.every((isTradable) => isTradable)
   }
 
   /**

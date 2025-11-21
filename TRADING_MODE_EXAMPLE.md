@@ -117,12 +117,27 @@ This method:
 - `isTradingEnabled(exchangeId: string): Promise<boolean>` - Returns true only if the exchange's rate feed mode is BIDIRECTIONAL (operates at exchange level)
 - `getTradingLimits(exchangeId: string): Promise<TradingLimit[]>` - Get trading limits for an exchange
 
-## Note
+## Important Notes
 
-The `getRateFeedTradingMode()` method operates at the rate feed level, while `isTradingEnabled()` operates at the exchange level, and `isPairTradable()` operates at the token pair level. Multiple exchanges can share the same rate feed, so:
-- Use `isPairTradable()` when you have token addresses and want to check if trading is enabled
-- Use `getRateFeedTradingMode()` when you have a rate feed ID and need detailed mode information
-- Use `isTradingEnabled()` when you have an exchange ID
+### Multi-Hop Routes
+
+The `isPairTradable()` method intelligently handles multi-hop routes. For example, if you want to swap CELO → USDT but there's no direct exchange, the route might be:
+- CELO → cUSD (hop 1)
+- cUSD → USDT (hop 2)
+
+The method will check that **ALL** rate feeds in the path are in BIDIRECTIONAL mode. If any hop is HALTED or DISABLED, the entire pair is considered not tradable.
+
+```typescript
+// Example: Multi-hop route check
+const isTradable = await mento.isPairTradable(celoAddress, usdtAddress)
+// Returns true ONLY if both CELO/cUSD AND cUSD/USDT rate feeds are BIDIRECTIONAL
+```
+
+### Method Comparison
+
+- **`isPairTradable(tokenIn, tokenOut)`** - Operates at the token pair level. Checks all rate feeds in the routing path. **Use this for UI validation.**
+- **`getRateFeedTradingMode(rateFeedId)`** - Operates at the rate feed level. Returns the specific mode for a single rate feed.
+- **`isTradingEnabled(exchangeId)`** - Operates at the exchange level. Checks a single exchange by ID.
 
 ## UI Integration Example
 
