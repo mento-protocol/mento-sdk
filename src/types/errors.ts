@@ -172,7 +172,7 @@ export class NetworkError extends TransactionError {
    * @param retry - Whether retry is recommended (default: true)
    * @param reason - Optional technical details
    */
-  constructor(message: string, retry: boolean = true, reason?: string) {
+  constructor(message: string, retry = true, reason?: string) {
     super(message, 'NETWORK_ERROR', reason)
     this.retry = retry
   }
