@@ -3,6 +3,27 @@
 **Input**: Design documents from `/specs/002-exchange-pool-discovery/`
 **Prerequisites**: plan.md, spec.md, research.md, data-model.md, contracts/ExchangeService.md
 
+---
+
+## Progress Summary
+
+| Phase | Completed | Total | Status |
+|-------|-----------|-------|--------|
+| Phase 1: Setup | 3 | 4 | 🟡 75% |
+| Phase 2: Foundational | 8 | 8 | ✅ 100% |
+| Phase 3: US1 - Get Exchanges | 23 | 26 | 🟡 88% |
+| Phase 4: US2 - Direct Pairs | 20 | 20 | ✅ 100% |
+| Phase 5: US3 - Multi-Hop Routes | 32 | 32 | ✅ 100% |
+| Phase 6: US4 - Pair Lookup | 14 | 14 | ✅ 100% |
+| Phase 7: Provider Parity | 6 | 6 | ✅ 100% |
+| Phase 8: Static Cache (optional) | 0 | 10 | ⬜ Deferred |
+| Phase 9: Polish | 6 | 14 | 🟡 43% |
+| **TOTAL** | **112** | **134** | **84%** |
+
+**Last Updated**: 2025-11-21
+
+---
+
 **Tests**: Per the [Mento SDK Constitution](../../.specify/memory/constitution.md), comprehensive testing is REQUIRED:
 - All services MUST have unit tests
 - All provider integrations MUST have integration tests
@@ -22,10 +43,10 @@
 
 **Purpose**: Project initialization and basic structure needed for exchange discovery
 
-- [ ] T001 Verify existing adapter infrastructure is functional in src/adapters/
-- [ ] T002 [P] Verify Broker ABI exists or extend in src/abis/broker.ts with getExchangeProviders() method
+- [x] T001 Verify existing adapter infrastructure is functional in src/adapters/
+- [x] T002 [P] Verify Broker ABI exists or extend in src/abis/broker.ts with getExchangeProviders() method
 - [ ] T003 [P] Create ExchangeProvider ABI in src/abis/exchangeProvider.ts with getExchanges() method
-- [ ] T004 [P] Verify ERC-20 ABI in src/abis/erc20.ts includes symbol() method
+- [x] T004 [P] Verify ERC-20 ABI in src/abis/erc20.ts includes symbol() method
 
 ---
 
@@ -35,16 +56,16 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 [P] Create Exchange type definition in src/types/exchange.ts (providerAddr, id, assets[])
-- [ ] T006 [P] Create Asset type definition in src/types/exchange.ts (address, symbol)
-- [ ] T007 [P] Create TradablePair type definition in src/types/exchange.ts (id, assets, path)
-- [ ] T008 [P] Create TradablePairWithSpread type definition in src/types/exchange.ts (extends TradablePair with spreadData)
-- [ ] T009 [P] Create TradablePairID type alias in src/types/exchange.ts
-- [ ] T010 Export all new types from src/types/index.ts
-- [ ] T011 [P] Create internal ConnectivityData interface in src/utils/routeUtils.ts (not exported)
-- [ ] T012 [P] Create internal ExchangeDetails interface in src/utils/routeUtils.ts (not exported)
+- [x] T005 [P] Create Exchange type definition in src/types/exchange.ts (providerAddr, id, assets[])
+- [x] T006 [P] Create Asset type definition in src/types/exchange.ts (address, symbol)
+- [x] T007 [P] Create TradablePair type definition in src/types/exchange.ts (id, assets, path)
+- [x] T008 [P] Create TradablePairWithSpread type definition in src/types/exchange.ts (extends TradablePair with spreadData)
+- [x] T009 [P] Create TradablePairID type alias in src/types/exchange.ts
+- [x] T010 Export all new types from src/types/index.ts
+- [x] T011 [P] Create internal ConnectivityData interface in src/utils/routeUtils.ts (not exported)
+- [x] T012 [P] Create internal ExchangeDetails interface in src/utils/routeUtils.ts (not exported)
 
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+**Checkpoint**: ✅ Foundation ready - user story implementation can now begin in parallel
 
 ---
 
@@ -58,36 +79,36 @@
 
 **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T013 [P] [US1] Create unit test file tests/unit/services/ExchangeService.test.ts with test skeleton
-- [ ] T014 [P] [US1] Add unit test: getExchanges() returns cached results on second call
-- [ ] T015 [P] [US1] Add unit test: getExchanges() validates exchange has exactly 2 assets
-- [ ] T016 [P] [US1] Add unit test: getExchanges() skips invalid exchanges with warning
+- [x] T013 [P] [US1] Create unit test file tests/unit/services/ExchangeService.test.ts with test skeleton
+- [x] T014 [P] [US1] Add unit test: getExchanges() returns cached results on second call
+- [x] T015 [P] [US1] Add unit test: getExchanges() validates exchange has exactly 2 assets
+- [x] T016 [P] [US1] Add unit test: getExchanges() skips invalid exchanges with warning
 - [ ] T017 [P] [US1] Add unit test: getExchangesForProvider() filters by provider address
-- [ ] T018 [P] [US1] Add unit test: getExchangeById() returns exchange or throws ExchangeNotFoundError
-- [ ] T019 [P] [US1] Add unit test: getExchangeById() throws if multiple exchanges found (assertion)
-- [ ] T020 [P] [US1] Create integration test file tests/integration/adapters/ethersExchangeDiscovery.test.ts
-- [ ] T021 [P] [US1] Create integration test file tests/integration/adapters/viemExchangeDiscovery.test.ts
-- [ ] T022 [P] [US1] Create shared test suite tests/integration/shared/exchangeDiscovery.test.ts with getExchanges() test
-- [ ] T023 [US1] Run tests to confirm they FAIL (implementation doesn't exist yet)
+- [x] T018 [P] [US1] Add unit test: getExchangeById() returns exchange or throws ExchangeNotFoundError
+- [x] T019 [P] [US1] Add unit test: getExchangeById() throws if multiple exchanges found (assertion)
+- [x] T020 [P] [US1] Create integration test file tests/integration/adapters/ethersExchangeDiscovery.test.ts
+- [x] T021 [P] [US1] Create integration test file tests/integration/adapters/viemExchangeDiscovery.test.ts
+- [x] T022 [P] [US1] Create shared test suite tests/integration/shared/exchangeDiscovery.test.ts with getExchanges() test
+- [x] T023 [US1] Run tests to confirm they FAIL (implementation doesn't exist yet)
 
 ### Implementation for User Story 1
 
-- [ ] T024 [US1] Create ExchangeService class in src/services/ExchangeService.ts with constructor accepting ProviderAdapter
-- [ ] T025 [US1] Add private exchanges cache property to ExchangeService (Map or Array)
-- [ ] T026 [US1] Implement getExchanges() method: fetch providers from Broker, fetch exchanges from each provider, validate and cache
-- [ ] T027 [US1] Add address checksumming for all provider and asset addresses using adapter
-- [ ] T028 [US1] Add validation: assert each exchange has exactly 2 assets, skip invalid with warning log
+- [x] T024 [US1] Create ExchangeService class in src/services/ExchangeService.ts with constructor accepting ProviderAdapter
+- [x] T025 [US1] Add private exchanges cache property to ExchangeService (Map or Array)
+- [x] T026 [US1] Implement getExchanges() method: fetch providers from Broker, fetch exchanges from each provider, validate and cache
+- [x] T027 [US1] Add address checksumming for all provider and asset addresses using adapter
+- [x] T028 [US1] Add validation: assert each exchange has exactly 2 assets, skip invalid with warning log
 - [ ] T029 [US1] Implement getExchangesForProvider(providerAddr) method: filter cached exchanges by provider
-- [ ] T030 [US1] Implement getExchangeById(exchangeId) method: search cached exchanges, throw ExchangeNotFoundError if not found
+- [x] T030 [US1] Implement getExchangeById(exchangeId) method: search cached exchanges, throw ExchangeNotFoundError if not found
 - [ ] T031 [US1] Add retry logic using existing src/utils/retry.ts for adapter calls
-- [ ] T032 [US1] Add JSDoc comments to all public methods with @param, @returns, @throws, and usage examples
-- [ ] T033 [US1] Add error classes: ExchangeNotFoundError in src/types/errors.ts or inline
-- [ ] T034 [US1] Ensure TypeScript strict mode compliance across all new code
-- [ ] T035 [US1] Export ExchangeService from src/services/index.ts
-- [ ] T036 [US1] Export ExchangeService from src/index.ts
-- [ ] T037 [US1] Run tests to verify User Story 1 passes independently
+- [x] T032 [US1] Add JSDoc comments to all public methods with @param, @returns, @throws, and usage examples
+- [x] T033 [US1] Add error classes: ExchangeNotFoundError in src/types/errors.ts or inline
+- [x] T034 [US1] Ensure TypeScript strict mode compliance across all new code
+- [x] T035 [US1] Export ExchangeService from src/services/index.ts
+- [x] T036 [US1] Export ExchangeService from src/index.ts
+- [x] T037 [US1] Run tests to verify User Story 1 passes independently
 
-**Checkpoint**: At this point, User Story 1 should be fully functional - developers can discover all exchanges
+**Checkpoint**: ✅ User Story 1 functional - developers can discover all exchanges
 
 ---
 
@@ -99,31 +120,31 @@
 
 ### Tests for User Story 2 (REQUIRED per Constitution) ⚠️
 
-- [ ] T038 [P] [US2] Add unit test to tests/unit/services/ExchangeService.test.ts: getDirectPairs() returns TradablePair array
-- [ ] T039 [P] [US2] Add unit test: getDirectPairs() deduplicates multiple exchanges for same pair
-- [ ] T040 [P] [US2] Add unit test: getDirectPairs() sorts pair assets alphabetically by symbol
-- [ ] T041 [P] [US2] Add unit test: getDirectPairs() creates canonical pair IDs (symbol sorting)
-- [ ] T042 [P] [US2] Add unit test: getDirectPairs() fetches token symbols and caches them
-- [ ] T043 [P] [US2] Add unit test: getExchangeForTokens() returns exchange for direct pair or throws
-- [ ] T044 [P] [US2] Add unit test: getExchangeForTokens() handles bidirectional token order
-- [ ] T045 [P] [US2] Add shared test suite case: getDirectPairs() returns identical results across providers
-- [ ] T046 [P] [US2] Add shared test suite case: getExchangeForTokens() works identically across providers
-- [ ] T047 [US2] Run tests to confirm they FAIL
+- [x] T038 [P] [US2] Add unit test to tests/unit/services/ExchangeService.test.ts: getDirectPairs() returns TradablePair array
+- [x] T039 [P] [US2] Add unit test: getDirectPairs() deduplicates multiple exchanges for same pair
+- [x] T040 [P] [US2] Add unit test: getDirectPairs() sorts pair assets alphabetically by symbol
+- [x] T041 [P] [US2] Add unit test: getDirectPairs() creates canonical pair IDs (symbol sorting)
+- [x] T042 [P] [US2] Add unit test: getDirectPairs() fetches token symbols and caches them
+- [x] T043 [P] [US2] Add unit test: getExchangeForTokens() returns exchange for direct pair or throws
+- [x] T044 [P] [US2] Add unit test: getExchangeForTokens() handles bidirectional token order
+- [x] T045 [P] [US2] Add shared test suite case: getDirectPairs() returns identical results across providers
+- [x] T046 [P] [US2] Add shared test suite case: getExchangeForTokens() works identically across providers
+- [x] T047 [US2] Run tests to confirm they FAIL
 
 ### Implementation for User Story 2
 
-- [ ] T048 [US2] Add private token symbol cache to ExchangeService (Map<address, symbol>)
-- [ ] T049 [US2] Implement helper method: fetchTokenSymbol(address) using ERC-20 ABI, with fallback to address if fetch fails
-- [ ] T050 [US2] Implement getDirectPairs() method: get exchanges, fetch symbols in parallel, group by sorted pair ID, create TradablePair objects
-- [ ] T051 [US2] Implement pair ID generation: sort symbols alphabetically, join with hyphen
-- [ ] T052 [US2] Implement getExchangeForTokens(token0, token1): search exchanges for matching pair, throw ExchangeNotFoundError if none
-- [ ] T053 [US2] Add validation: throw if multiple exchanges found for same pair (assertion check)
-- [ ] T054 [US2] Add batch symbol fetching using Promise.all() for performance
-- [ ] T055 [US2] Add JSDoc comments to new methods with usage examples
-- [ ] T056 [US2] Handle symbol fetch failures gracefully: use address as fallback, log warning
-- [ ] T057 [US2] Run tests to verify User Story 2 passes independently
+- [x] T048 [US2] Add private token symbol cache to ExchangeService (Map<address, symbol>)
+- [x] T049 [US2] Implement helper method: fetchTokenSymbol(address) using ERC-20 ABI, with fallback to address if fetch fails
+- [x] T050 [US2] Implement getDirectPairs() method: get exchanges, fetch symbols in parallel, group by sorted pair ID, create TradablePair objects
+- [x] T051 [US2] Implement pair ID generation: sort symbols alphabetically, join with hyphen
+- [x] T052 [US2] Implement getExchangeForTokens(token0, token1): search exchanges for matching pair, throw ExchangeNotFoundError if none
+- [x] T053 [US2] Add validation: throw if multiple exchanges found for same pair (assertion check)
+- [x] T054 [US2] Add batch symbol fetching using Promise.all() for performance
+- [x] T055 [US2] Add JSDoc comments to new methods with usage examples
+- [x] T056 [US2] Handle symbol fetch failures gracefully: use address as fallback, log warning
+- [x] T057 [US2] Run tests to verify User Story 2 passes independently
 
-**Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
+**Checkpoint**: ✅ User Stories 1 AND 2 both work independently
 
 ---
 
@@ -135,44 +156,44 @@
 
 ### Tests for User Story 3 (REQUIRED per Constitution) ⚠️
 
-- [ ] T058 [P] [US3] Create unit test file tests/unit/utils/routeUtils.test.ts with test skeleton
-- [ ] T059 [P] [US3] Add unit test: buildConnectivityStructures() creates token graph and maps correctly
-- [ ] T060 [P] [US3] Add unit test: generateAllRoutes() finds all 2-hop routes via graph traversal
-- [ ] T061 [P] [US3] Add unit test: generateAllRoutes() prevents circular routes (A→B→A)
-- [ ] T062 [P] [US3] Add unit test: selectOptimalRoutes() prefers lowest spread when available
-- [ ] T063 [P] [US3] Add unit test: selectOptimalRoutes() prefers direct over multi-hop
-- [ ] T064 [P] [US3] Add unit test: selectOptimalRoutes() prefers major stablecoin routes
-- [ ] T065 [P] [US3] Add unit test: selectBestRoute() applies 4-tier heuristic correctly
-- [ ] T066 [P] [US3] Add unit test to ExchangeService.test.ts: getTradablePairs() returns both direct and 2-hop pairs
-- [ ] T067 [P] [US3] Add unit test: getTradablePairs({cached: true}) loads from static cache
-- [ ] T068 [P] [US3] Add unit test: getTradablePairs({cached: false}) generates fresh from blockchain
-- [ ] T069 [P] [US3] Add unit test: getTradablePairs() falls back to fresh if cache missing
-- [ ] T070 [P] [US3] Add shared test suite case: getTradablePairs() returns identical results across providers
-- [ ] T071 [US3] Run tests to confirm they FAIL
+- [x] T058 [P] [US3] Create unit test file tests/unit/utils/routeUtils.test.ts with test skeleton
+- [x] T059 [P] [US3] Add unit test: buildConnectivityStructures() creates token graph and maps correctly
+- [x] T060 [P] [US3] Add unit test: generateAllRoutes() finds all 2-hop routes via graph traversal
+- [x] T061 [P] [US3] Add unit test: generateAllRoutes() prevents circular routes (A→B→A)
+- [x] T062 [P] [US3] Add unit test: selectOptimalRoutes() prefers lowest spread when available
+- [x] T063 [P] [US3] Add unit test: selectOptimalRoutes() prefers direct over multi-hop
+- [x] T064 [P] [US3] Add unit test: selectOptimalRoutes() prefers major stablecoin routes
+- [x] T065 [P] [US3] Add unit test: selectBestRoute() applies 4-tier heuristic correctly
+- [x] T066 [P] [US3] Add unit test to ExchangeService.test.ts: getTradablePairs() returns both direct and 2-hop pairs
+- [x] T067 [P] [US3] Add unit test: getTradablePairs({cached: true}) loads from static cache
+- [x] T068 [P] [US3] Add unit test: getTradablePairs({cached: false}) generates fresh from blockchain
+- [x] T069 [P] [US3] Add unit test: getTradablePairs() falls back to fresh if cache missing
+- [x] T070 [P] [US3] Add shared test suite case: getTradablePairs() returns identical results across providers
+- [x] T071 [US3] Run tests to confirm they FAIL
 
 ### Implementation for User Story 3
 
-- [ ] T072 [P] [US3] Implement buildConnectivityStructures(directPairs) in src/utils/routeUtils.ts: create addrToSymbol map
-- [ ] T073 [P] [US3] Add tokenGraph creation (adjacency list with bidirectional edges) to buildConnectivityStructures()
-- [ ] T074 [P] [US3] Add directPathMap creation (sorted pair ID to exchange mapping) to buildConnectivityStructures()
-- [ ] T075 [US3] Implement generateAllRoutes(connectivity) in src/utils/routeUtils.ts: add all direct pairs
-- [ ] T076 [US3] Add 2-hop route discovery to generateAllRoutes(): for each token A, for each neighbor B, for each neighbor C (C ≠ A), create route A→B→C
-- [ ] T077 [US3] Add route grouping by canonical pair ID in generateAllRoutes()
-- [ ] T078 [P] [US3] Implement selectOptimalRoutes(allRoutes, returnAllRoutes, addrToSymbol) in src/utils/routeUtils.ts
-- [ ] T079 [P] [US3] Implement selectBestRoute(candidates) helper in src/utils/routeUtils.ts with 4-tier heuristic
-- [ ] T080 [US3] Add Tier 1 optimization: select lowest totalSpreadPercent if spreadData available
-- [ ] T081 [US3] Add Tier 2 optimization: prefer single-hop over multi-hop routes
-- [ ] T082 [US3] Add Tier 3 optimization: prefer routes through major stablecoins (cUSD, cEUR, USDC, USDT)
-- [ ] T083 [US3] Add Tier 4 fallback: use first available route
-- [ ] T084 [US3] Implement getTradablePairs(options) in src/services/ExchangeService.ts with cached option
-- [ ] T085 [US3] Add cache loading logic: try loadCachedPairs(chainId), fallback to fresh generation with warning
-- [ ] T086 [US3] Implement fresh pair generation: call getDirectPairs(), buildConnectivity, generateAllRoutes, selectOptimal
-- [ ] T087 [US3] Create placeholder cached pair loader (returns empty or throws for now - actual cache files come later)
-- [ ] T088 [US3] Add JSDoc comments to all route utility functions and getTradablePairs()
-- [ ] T089 [US3] Export route utility functions that need to be tested (or keep internal if only used by service)
-- [ ] T090 [US3] Run tests to verify User Story 3 passes independently
+- [x] T072 [P] [US3] Implement buildConnectivityStructures(directPairs) in src/utils/routeUtils.ts: create addrToSymbol map
+- [x] T073 [P] [US3] Add tokenGraph creation (adjacency list with bidirectional edges) to buildConnectivityStructures()
+- [x] T074 [P] [US3] Add directPathMap creation (sorted pair ID to exchange mapping) to buildConnectivityStructures()
+- [x] T075 [US3] Implement generateAllRoutes(connectivity) in src/utils/routeUtils.ts: add all direct pairs
+- [x] T076 [US3] Add 2-hop route discovery to generateAllRoutes(): for each token A, for each neighbor B, for each neighbor C (C ≠ A), create route A→B→C
+- [x] T077 [US3] Add route grouping by canonical pair ID in generateAllRoutes()
+- [x] T078 [P] [US3] Implement selectOptimalRoutes(allRoutes, returnAllRoutes, addrToSymbol) in src/utils/routeUtils.ts
+- [x] T079 [P] [US3] Implement selectBestRoute(candidates) helper in src/utils/routeUtils.ts with 4-tier heuristic
+- [x] T080 [US3] Add Tier 1 optimization: select lowest totalSpreadPercent if spreadData available
+- [x] T081 [US3] Add Tier 2 optimization: prefer single-hop over multi-hop routes
+- [x] T082 [US3] Add Tier 3 optimization: prefer routes through major stablecoins (cUSD, cEUR, USDC, USDT)
+- [x] T083 [US3] Add Tier 4 fallback: use first available route
+- [x] T084 [US3] Implement getTradablePairs(options) in src/services/ExchangeService.ts with cached option
+- [x] T085 [US3] Add cache loading logic: try loadCachedPairs(chainId), fallback to fresh generation with warning
+- [x] T086 [US3] Implement fresh pair generation: call getDirectPairs(), buildConnectivity, generateAllRoutes, selectOptimal
+- [x] T087 [US3] Create placeholder cached pair loader (returns empty or throws for now - actual cache files come later)
+- [x] T088 [US3] Add JSDoc comments to all route utility functions and getTradablePairs()
+- [x] T089 [US3] Export route utility functions that need to be tested (or keep internal if only used by service)
+- [x] T090 [US3] Run tests to verify User Story 3 passes independently
 
-**Checkpoint**: All core user stories should now be independently functional
+**Checkpoint**: ✅ All core user stories now independently functional
 
 ---
 
@@ -184,25 +205,25 @@
 
 ### Tests for User Story 4 (REQUIRED per Constitution) ⚠️
 
-- [ ] T091 [P] [US4] Add unit test to ExchangeService.test.ts: findPairForTokens() returns pair for valid tokens
-- [ ] T092 [P] [US4] Add unit test: findPairForTokens() throws PairNotFoundError if no route exists
-- [ ] T093 [P] [US4] Add unit test: findPairForTokens() handles bidirectional token order (A→B vs B→A)
-- [ ] T094 [P] [US4] Add unit test: findPairForTokens() returns optimal route when multiple exist
-- [ ] T095 [P] [US4] Add shared test suite case: findPairForTokens() works identically across providers
-- [ ] T096 [US4] Run tests to confirm they FAIL
+- [x] T091 [P] [US4] Add unit test to ExchangeService.test.ts: findPairForTokens() returns pair for valid tokens
+- [x] T092 [P] [US4] Add unit test: findPairForTokens() throws PairNotFoundError if no route exists
+- [x] T093 [P] [US4] Add unit test: findPairForTokens() handles bidirectional token order (A→B vs B→A)
+- [x] T094 [P] [US4] Add unit test: findPairForTokens() returns optimal route when multiple exist
+- [x] T095 [P] [US4] Add shared test suite case: findPairForTokens() works identically across providers
+- [x] T096 [US4] Run tests to confirm they FAIL
 
 ### Implementation for User Story 4
 
-- [ ] T097 [US4] Implement findPairForTokens(tokenIn, tokenOut) in src/services/ExchangeService.ts
-- [ ] T098 [US4] Call getTradablePairs() to get all routes
-- [ ] T099 [US4] Normalize token addresses (checksum and alphabetically sort)
-- [ ] T100 [US4] Filter pairs matching the token pair (bidirectional search)
-- [ ] T101 [US4] Throw PairNotFoundError with message "No pair found for tokens {tokenIn} and {tokenOut}. They may not have a tradable path." if not found
-- [ ] T102 [US4] Add PairNotFoundError class in src/types/errors.ts or inline
-- [ ] T103 [US4] Add JSDoc comments with usage example
-- [ ] T104 [US4] Run tests to verify User Story 4 passes independently
+- [x] T097 [US4] Implement findPairForTokens(tokenIn, tokenOut) in src/services/ExchangeService.ts
+- [x] T098 [US4] Call getTradablePairs() to get all routes
+- [x] T099 [US4] Normalize token addresses (checksum and alphabetically sort)
+- [x] T100 [US4] Filter pairs matching the token pair (bidirectional search)
+- [x] T101 [US4] Throw PairNotFoundError with message "No pair found for tokens {tokenIn} and {tokenOut}. They may not have a tradable path." if not found
+- [x] T102 [US4] Add PairNotFoundError class in src/types/errors.ts or inline
+- [x] T103 [US4] Add JSDoc comments with usage example
+- [x] T104 [US4] Run tests to verify User Story 4 passes independently
 
-**Checkpoint**: All user stories complete - full exchange discovery functionality available
+**Checkpoint**: ✅ All user stories complete - full exchange discovery functionality available
 
 ---
 
@@ -210,12 +231,12 @@
 
 **Purpose**: Ensure all providers (Ethers v6, Viem) work identically
 
-- [ ] T105 [P] Run Ethers v6 integration tests in tests/integration/adapters/ethersExchangeDiscovery.test.ts
-- [ ] T106 [P] Run Viem integration tests in tests/integration/adapters/viemExchangeDiscovery.test.ts
-- [ ] T107 Compare results from both providers for all methods (getExchanges, getDirectPairs, getTradablePairs, findPairForTokens)
-- [ ] T108 Verify identical exchange counts, pair IDs, and route structures across providers
-- [ ] T109 Fix any provider-specific discrepancies found
-- [ ] T110 [P] Run shared test suite against both providers to verify 100% parity
+- [x] T105 [P] Run Ethers v6 integration tests in tests/integration/adapters/ethersExchangeDiscovery.test.ts
+- [x] T106 [P] Run Viem integration tests in tests/integration/adapters/viemExchangeDiscovery.test.ts
+- [x] T107 Compare results from both providers for all methods (getExchanges, getDirectPairs, getTradablePairs, findPairForTokens)
+- [x] T108 Verify identical exchange counts, pair IDs, and route structures across providers
+- [x] T109 Fix any provider-specific discrepancies found
+- [x] T110 [P] Run shared test suite against both providers to verify 100% parity
 
 ---
 
@@ -223,7 +244,7 @@
 
 **Purpose**: Create pre-generated cached pairs for instant query resolution
 
-**NOTE**: Can be deferred to post-MVP if time-constrained
+**NOTE**: Deferred to post-MVP - not critical for initial release
 
 - [ ] T111 Create script scripts/generateCachedPairs.ts to generate cached pairs
 - [ ] T112 Script fetches all exchanges from Celo mainnet (chain ID 42220)
@@ -242,7 +263,7 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T121 [P] Add comprehensive JSDoc comments to ExchangeService with detailed examples in src/services/ExchangeService.ts
+- [x] T121 [P] Add comprehensive JSDoc comments to ExchangeService with detailed examples in src/services/ExchangeService.ts
 - [ ] T122 [P] Add quickstart examples to README.md showing common usage patterns
 - [ ] T123 [P] Update CLAUDE.md with new technologies and commands used in this feature
 - [ ] T124 Verify all addresses are checksummed using adapter normalization
@@ -250,12 +271,12 @@
 - [ ] T126 [P] Run ESLint across src/services/ExchangeService.ts and src/utils/routeUtils.ts
 - [ ] T127 [P] Run Prettier across all modified files
 - [ ] T128 Verify code coverage meets 80% threshold: run coverage report
-- [ ] T129 Performance optimization: verify Promise.all() used for parallel symbol fetching
-- [ ] T130 Performance optimization: verify no O(n²) operations except intentional route generation
-- [ ] T131 Constitution compliance review: verify all 6 principles followed
+- [x] T129 Performance optimization: verify Promise.all() used for parallel symbol fetching
+- [x] T130 Performance optimization: verify no O(n²) operations except intentional route generation
+- [x] T131 Constitution compliance review: verify all 6 principles followed
 - [ ] T132 Security audit: validate no injection vulnerabilities, addresses validated
-- [ ] T133 Error message review: ensure all errors have actionable messages
-- [ ] T134 [P] Create or update API documentation from JSDoc comments
+- [x] T133 Error message review: ensure all errors have actionable messages
+- [x] T134 [P] Create or update API documentation from JSDoc comments
 
 ---
 
@@ -385,15 +406,17 @@ With multiple developers:
 ## Task Metrics
 
 **Total Tasks**: 134
-- Setup: 4 tasks
-- Foundational: 8 tasks
-- User Story 1: 24 tasks (13 tests + 11 implementation)
-- User Story 2: 20 tasks (10 tests + 10 implementation)
-- User Story 3: 33 tasks (14 tests + 19 implementation)
-- User Story 4: 8 tasks (6 tests + 2 implementation)
-- Integration: 6 tasks
-- Cache Generation: 10 tasks (optional)
-- Polish: 14 tasks
+- Setup: 4 tasks (3 completed)
+- Foundational: 8 tasks (8 completed)
+- User Story 1: 26 tasks (23 completed)
+- User Story 2: 20 tasks (20 completed)
+- User Story 3: 32 tasks (32 completed)
+- User Story 4: 14 tasks (14 completed)
+- Integration: 6 tasks (6 completed)
+- Cache Generation: 10 tasks (0 completed - deferred)
+- Polish: 14 tasks (6 completed)
+
+**Completed**: 112/134 (84%)
 
 **Parallel Opportunities**: ~40 tasks marked [P] can run in parallel within their phases
 
@@ -404,6 +427,28 @@ With multiple developers:
 - US2: Can discover all direct trading pairs with deduplicated exchange groups ✅
 - US3: Can discover multi-hop routes and select optimal paths ✅
 - US4: Can lookup any token pair and get routing information ✅
+
+---
+
+## Remaining Work
+
+### High Priority (MVP blockers)
+- [ ] T017/T029: `getExchangesForProvider()` method (optional for MVP)
+- [ ] T031: Retry logic integration
+- [ ] T128: Verify code coverage >80%
+
+### Medium Priority (Quality)
+- [ ] T003: ExchangeProvider ABI (may not be needed)
+- [ ] T124: Address checksumming verification
+- [ ] T126/T127: Linting and formatting pass
+- [ ] T132: Security audit
+
+### Low Priority (Documentation)
+- [ ] T122: README quickstart examples
+- [ ] T123: CLAUDE.md updates
+
+### Deferred (Post-MVP)
+- Phase 8: Static cache generation (T111-T120)
 
 ---
 
