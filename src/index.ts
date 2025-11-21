@@ -14,7 +14,7 @@ import {
   ExchangeService,
 } from './services'
 import { ChainId } from './constants/chainId'
-import { addresses } from './constants/addresses'
+import { getContractAddress } from './constants/addresses'
 
 export type SupportedProvider = EthersV6Provider | PublicClient
 
@@ -118,7 +118,7 @@ export class Mento {
     contractName: keyof ContractAddresses
   ): Promise<string> {
     const chainId = (await this.provider.getChainId()) as ChainId
-    return addresses[chainId][contractName]
+    return getContractAddress(chainId, contractName)
   }
 }
 
