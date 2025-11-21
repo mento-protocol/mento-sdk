@@ -7,6 +7,7 @@ import {
 import { Contract, Wallet, constants, ethers, providers, utils } from 'ethers'
 
 import { IMentoRouter__factory } from 'mento-router-ts'
+import { TradingMode } from './enums'
 import { Mento, TradablePair } from './mento'
 
 jest.mock('@mento-protocol/mento-core-ts', () => {
@@ -1123,6 +1124,164 @@ describe('Mento', () => {
         expect(token).toHaveProperty('name')
         expect(token).toHaveProperty('decimals')
       })
+    })
+  })
+
+  describe('getRateFeedTradingMode', () => {
+    let mockBreakerBox: any
+    let testee: Mento
+
+    beforeEach(async () => {
+      mockBreakerBox = {
+        getRateFeedTradingMode: jest.fn(),
+      }
+
+      // @ts-ignore
+      IBreakerBox__factory.connect.mockReturnValue(mockBreakerBox)
+
+      testee = await Mento.create(provider)
+    })
+
+    it('should return BIDIRECTIONAL mode when trading is enabled', async () => {
+      const rateFeedId = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+      mockBreakerBox.getRateFeedTradingMode.mockResolvedValue(0)
+
+      const mode = await testee.getRateFeedTradingMode(rateFeedId)
+
+      expect(mode).toBe(TradingMode.BIDIRECTIONAL)
+      expect(mockBreakerBox.getRateFeedTradingMode).toHaveBeenCalledWith(rateFeedId)
+      expect(mockBreakerBox.getRateFeedTradingMode).toHaveBeenCalledTimes(1)
+    })
+
+    it('should return HALTED mode when circuit breaker is tripped', async () => {
+      const rateFeedId = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+      mockBreakerBox.getRateFeedTradingMode.mockResolvedValue(1)
+
+      const mode = await testee.getRateFeedTradingMode(rateFeedId)
+
+      expect(mode).toBe(TradingMode.HALTED)
+    })
+
+    it('should return DISABLED mode when trading is disabled', async () => {
+      const rateFeedId = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+      mockBreakerBox.getRateFeedTradingMode.mockResolvedValue(2)
+
+      const mode = await testee.getRateFeedTradingMode(rateFeedId)
+
+      expect(mode).toBe(TradingMode.DISABLED)
+    })
+
+    it('should handle different rate feed IDs', async () => {
+      const rateFeedId1 = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+      const rateFeedId2 = '0xF4f9bBdA9CD6841fCB9b1510f9269E2dB42a6e3a'
+
+      mockBreakerBox.getRateFeedTradingMode
+        .mockResolvedValueOnce(0)
+        .mockResolvedValueOnce(1)
+
+      const mode1 = await testee.getRateFeedTradingMode(rateFeedId1)
+      const mode2 = await testee.getRateFeedTradingMode(rateFeedId2)
+
+      expect(mode1).toBe(TradingMode.BIDIRECTIONAL)
+      expect(mode2).toBe(TradingMode.HALTED)
+    })
+  })
+
+  describe('isPairTradable', () => {
+    let mockBreakerBox: any
+    let mockBiPoolManager: any
+    let testee: Mento
+
+    beforeEach(async () => {
+      mockBreakerBox = {
+        getRateFeedTradingMode: jest.fn(),
+      }
+
+      mockBiPoolManager = {
+        getPoolExchange: jest.fn(),
+      }
+
+      // @ts-ignore
+      IBreakerBox__factory.connect.mockReturnValue(mockBreakerBox)
+      // @ts-ignore
+      BiPoolManager__factory.connect.mockReturnValue(mockBiPoolManager)
+
+      testee = await Mento.create(provider)
+    })
+
+    it('should return true when trading mode is BIDIRECTIONAL', async () => {
+      const rateFeedId = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+
+      mockBiPoolManager.getPoolExchange.mockResolvedValue({
+        config: {
+          referenceRateFeedID: rateFeedId,
+        },
+      })
+
+      mockBreakerBox.getRateFeedTradingMode.mockResolvedValue(0)
+
+      const isTradable = await testee.isPairTradable(fakecUSDTokenAddr, fakeCeloTokenAddr)
+
+      expect(isTradable).toBe(true)
+      expect(mockBreakerBox.getRateFeedTradingMode).toHaveBeenCalledWith(rateFeedId)
+    })
+
+    it('should return false when trading mode is HALTED', async () => {
+      const rateFeedId = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+
+      mockBiPoolManager.getPoolExchange.mockResolvedValue({
+        config: {
+          referenceRateFeedID: rateFeedId,
+        },
+      })
+
+      mockBreakerBox.getRateFeedTradingMode.mockResolvedValue(1)
+
+      const isTradable = await testee.isPairTradable(fakecUSDTokenAddr, fakeCeloTokenAddr)
+
+      expect(isTradable).toBe(false)
+    })
+
+    it('should return false when trading mode is DISABLED', async () => {
+      const rateFeedId = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+
+      mockBiPoolManager.getPoolExchange.mockResolvedValue({
+        config: {
+          referenceRateFeedID: rateFeedId,
+        },
+      })
+
+      mockBreakerBox.getRateFeedTradingMode.mockResolvedValue(2)
+
+      const isTradable = await testee.isPairTradable(fakecUSDTokenAddr, fakeCeloTokenAddr)
+
+      expect(isTradable).toBe(false)
+    })
+
+    it('should check the correct exchange for the token pair', async () => {
+      const rateFeedId = '0xA1A8003936862E7a15092A91898D69fa8bCE290c'
+
+      mockBiPoolManager.getPoolExchange.mockResolvedValue({
+        config: {
+          referenceRateFeedID: rateFeedId,
+        },
+      })
+
+      mockBreakerBox.getRateFeedTradingMode.mockResolvedValue(0)
+
+      await testee.isPairTradable(fakecUSDTokenAddr, fakeCeloTokenAddr)
+
+      // Should have fetched the exchange for the correct token pair
+      expect(mockBiPoolManager.getPoolExchange).toHaveBeenCalledTimes(1)
+    })
+
+    it('should throw error when pair does not exist', async () => {
+      const nonExistentToken1 = '0x1111111111111111111111111111111111111111'
+      const nonExistentToken2 = '0x2222222222222222222222222222222222222222'
+
+      await expect(
+        testee.isPairTradable(nonExistentToken1, nonExistentToken2)
+      ).rejects.toThrow()
     })
   })
 })

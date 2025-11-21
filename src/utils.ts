@@ -1,4 +1,4 @@
-import { BigNumberish, Contract, providers, Signer } from 'ethers'
+import { BigNumberish, Contract, ethers, providers, Signer } from 'ethers'
 
 import { TokenSymbol } from './constants'
 import { getCachedTokensSync, TOKEN_ADDRESSES_BY_CHAIN } from './constants/tokens'
@@ -172,4 +172,27 @@ export function findTokenBySymbol(
 ): Token | undefined {
   const tokens = getCachedTokensSync(chainId)
   return tokens.find((token) => token.symbol === symbol)
+}
+
+/**
+ * Computes the rate feed ID from a rate feed identifier string.
+ * This follows the Solidity formula: address(uint160(uint256(keccak256(abi.encodePacked(rateFeed)))))
+ * @param rateFeed the rate feed identifier string (e.g., "EURUSD", "relayed:COPUSD")
+ * @returns the computed rate feed address
+ */
+export function toRateFeedId(rateFeed: string): Address {
+  // 1. Calculate keccak256 hash
+  const hashedBytes = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(rateFeed))
+
+  // 2. Convert to BigInt (equivalent to uint256)
+  const hashAsBigInt = BigInt(hashedBytes)
+
+  // 3. Mask to 160 bits (equivalent to uint160)
+  const maskedToUint160 = hashAsBigInt & ((BigInt(1) << BigInt(160)) - BigInt(1))
+
+  // 4. Convert to address (hex string)
+  const addressHex = '0x' + maskedToUint160.toString(16).padStart(40, '0')
+
+  // 5. Return calculated rate feed ID
+  return addressHex
 }
