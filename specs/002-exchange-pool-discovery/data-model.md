@@ -37,6 +37,7 @@ interface Exchange {
 ```
 
 **Constraints**:
+
 - `providerAddr` MUST be a valid checksummed Ethereum address
 - `id` MUST be a non-empty string (typically bytes32 hex format)
 - `assets` MUST contain exactly 2 elements
@@ -44,6 +45,7 @@ interface Exchange {
 - No duplicate addresses in `assets` (token cannot trade with itself)
 
 **Example**:
+
 ```typescript
 {
   providerAddr: '0x1234567890123456789012345678901234567890',
@@ -56,11 +58,13 @@ interface Exchange {
 ```
 
 **Validation Rules**:
+
 1. On fetch from blockchain, assert `assets.length === 2`
 2. If validation fails, log warning and skip exchange (don't fail entire query)
 3. Checksum all addresses using adapter's address normalization
 
 **Relationships**:
+
 - Multiple `Exchange` entities can exist for same token pair (different providers)
 - Each `Exchange` belongs to one `ExchangeProvider` contract
 - Each `Exchange` references exactly 2 `Asset` entities
@@ -88,11 +92,13 @@ interface Asset {
 ```
 
 **Constraints**:
+
 - `address` MUST be a valid checksummed Ethereum address
 - `symbol` MUST be a non-empty string
 - `symbol` should be uppercase by convention (e.g., 'cUSD' not 'cusd')
 
 **Example**:
+
 ```typescript
 {
   address: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
@@ -101,12 +107,14 @@ interface Asset {
 ```
 
 **Validation Rules**:
+
 1. Always checksum address before creating Asset
 2. If symbol fetch fails, use `address` as fallback and log warning
 3. Trim whitespace from symbol
 4. Cache symbol lookups to avoid redundant RPC calls
 
 **Relationships**:
+
 - One `Asset` can appear in multiple `Exchange` and `TradablePair` entities
 - Assets are immutable once created (address + symbol pair)
 
@@ -160,6 +168,7 @@ interface TradablePair {
 ```
 
 **Constraints**:
+
 - `id` MUST use alphabetically sorted symbols (canonical form)
 - `assets` MUST be sorted alphabetically by symbol
 - `assets[0].symbol < assets[1].symbol` (strict alphabetical ordering)
@@ -168,6 +177,7 @@ interface TradablePair {
 - All addresses MUST be checksummed
 
 **Example - Direct Pair**:
+
 ```typescript
 {
   id: 'CELO-cUSD',
@@ -189,6 +199,7 @@ interface TradablePair {
 ```
 
 **Example - Two-Hop Pair**:
+
 ```typescript
 {
   id: 'cEUR-cUSD',
@@ -220,6 +231,7 @@ interface TradablePair {
 ```
 
 **Validation Rules**:
+
 1. Always create pair ID from sorted symbols: `[asset0.symbol, asset1.symbol].sort().join('-')`
 2. Always sort assets alphabetically before creating pair
 3. Validate path length is 1 or 2 only
@@ -227,6 +239,7 @@ interface TradablePair {
 5. Checksum all addresses in path
 
 **Relationships**:
+
 - One `TradablePair` references exactly 2 `Asset` entities
 - One `TradablePair` references 1 or 2 `Exchange` entities (via path)
 - Multiple routes can exist for same token pair (optimization selects best)
@@ -255,11 +268,13 @@ interface TradablePairWithSpread extends TradablePair {
 ```
 
 **Constraints**:
+
 - All `TradablePair` constraints apply
 - `totalSpreadPercent` MUST be a non-negative number
 - `totalSpreadPercent` typically ranges from 0.1 to 2.0 (0.1% to 2%)
 
 **Example**:
+
 ```typescript
 {
   id: 'cEUR-cUSD',
@@ -272,11 +287,13 @@ interface TradablePairWithSpread extends TradablePair {
 ```
 
 **Usage**:
+
 - Only present in pre-generated cached pairs
 - Not generated at runtime (requires historical spread data)
 - Used by route optimization (Tier 1 heuristic: select lowest spread)
 
 **Relationships**:
+
 - Same as `TradablePair`
 - Only exists in static cache files (`src/constants/tradablePairs`)
 
@@ -344,12 +361,14 @@ interface ExchangeDetails {
 ```
 
 **Purpose**:
+
 - Built once from direct pairs
 - Enables O(1) or O(n) route lookups instead of O(n²) brute force
 - Reused for all route queries
 - Internal only (not exposed in public API)
 
 **Construction** (see `buildConnectivityStructures` in route utils):
+
 1. Iterate through all direct pairs
 2. Extract all unique tokens → populate `addrToSymbol`
 3. For each pair, add bidirectional edges to `tokenGraph`
@@ -370,6 +389,7 @@ src/types/
 ### Type Exports
 
 Public types (exported from `src/types/index.ts`):
+
 - `Exchange`
 - `Asset`
 - `TradablePair`
@@ -377,6 +397,7 @@ Public types (exported from `src/types/index.ts`):
 - `TradablePairWithSpread`
 
 Internal types (not exported, used only within route utilities):
+
 - `ConnectivityData`
 - `ExchangeDetails`
 
@@ -448,20 +469,24 @@ Internal types (not exported, used only within route utilities):
 ## Validation Summary
 
 ### Address Validation
+
 - All addresses MUST be checksummed
 - Use adapter's built-in address normalization
 - Validate format before storage
 
 ### Exchange Validation
+
 - MUST have exactly 2 assets
 - Provider address MUST be valid
 - Exchange ID MUST be non-empty
 
 ### Asset Validation
+
 - Symbol fetch failure → fallback to address with warning
 - Symbols cached to avoid redundant queries
 
 ### Pair Validation
+
 - ID uses alphabetically sorted symbols
 - Assets sorted alphabetically
 - Path length 1 or 2 only
@@ -474,16 +499,19 @@ Internal types (not exported, used only within route utilities):
 ### Memory Usage
 
 **Exchange Cache**:
+
 - ~100-200 exchanges per chain (Celo mainnet)
 - ~200 bytes per exchange (addresses + ID)
 - Total: ~20-40 KB
 
 **Symbol Cache**:
+
 - ~50-100 unique tokens
 - ~100 bytes per entry (address + symbol)
 - Total: ~5-10 KB
 
 **Connectivity Structures**:
+
 - Token graph: ~100 nodes, ~200 edges
 - Direct path map: ~100 entries
 - Total: ~50-100 KB
@@ -493,11 +521,13 @@ Internal types (not exported, used only within route utilities):
 ### Query Performance
 
 **Cached Queries** (in-memory):
+
 - Exchange lookup by ID: O(n) where n = number of exchanges (~100)
 - Direct pair generation: O(e + s) where e = exchanges, s = symbol fetches
 - Multi-hop with cache: O(1) file load + parse
 
 **Fresh Queries** (blockchain):
+
 - Exchange fetch: O(p × e) where p = providers, e = exchanges per provider
 - Symbol fetch: O(t) where t = unique tokens
 - Route generation: O(t²) for two-hop discovery (graph traversal)
@@ -509,21 +539,25 @@ Internal types (not exported, used only within route utilities):
 ## Error Scenarios
 
 ### Invalid Exchange Data
+
 **Cause**: Exchange has ≠ 2 assets
 **Behavior**: Log warning, skip exchange, continue processing
 **Impact**: Some exchanges unavailable, others unaffected
 
 ### Symbol Fetch Failure
+
 **Cause**: Token contract doesn't implement symbol() or network error
 **Behavior**: Use address as symbol fallback, log warning
 **Impact**: Pair identified by address instead of human-readable symbol
 
 ### No Exchanges Found
+
 **Cause**: Broker has no registered providers or all providers return empty
 **Behavior**: Return empty array, log warning
 **Impact**: No trading available (expected on some testnets)
 
 ### Pair Not Found
+
 **Cause**: Requested token pair has no direct or two-hop route
 **Behavior**: Throw error with descriptive message
 **Impact**: Caller must handle (expected for disconnected tokens)

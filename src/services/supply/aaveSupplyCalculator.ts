@@ -11,7 +11,6 @@ import { AAVE_TOKEN_MAPPINGS } from '../../constants'
  * amount of the original token supplied to the protocol.
  */
 export class AAVESupplyCalculator implements ISupplyCalculator {
-
   constructor(
     private readonly provider: ProviderAdapter,
     private holderAddresses: string[]

@@ -8,13 +8,15 @@ import {
   ProviderAdapter,
   StableToken,
 } from './types'
-import { CollateralAssetService, StableTokenService, ExchangeService } from './services'
+import {
+  CollateralAssetService,
+  StableTokenService,
+  ExchangeService,
+} from './services'
 import { ChainId } from './constants/chainId'
 import { addresses } from './constants/addresses'
 
-export type SupportedProvider =
-  | EthersV6Provider
-  | PublicClient
+export type SupportedProvider = EthersV6Provider | PublicClient
 
 export interface MentoConfig {
   /** Provider can be one of:
@@ -29,10 +31,7 @@ function isEthersProvider(
   provider: SupportedProvider
 ): provider is EthersV6Provider {
   // Check for Ethers provider properties
-  return (
-    'getNetwork' in provider &&
-    'broadcastTransaction' in provider
-  )
+  return 'getNetwork' in provider && 'broadcastTransaction' in provider
 }
 
 /** Helper type guard for Viem Provider */
@@ -102,7 +101,12 @@ export class Mento {
     const collateralAssetService = new CollateralAssetService(provider)
     const exchangeService = new ExchangeService(provider)
 
-    return new Mento(provider, stableTokenService, collateralAssetService, exchangeService)
+    return new Mento(
+      provider,
+      stableTokenService,
+      collateralAssetService,
+      exchangeService
+    )
   }
 
   /**

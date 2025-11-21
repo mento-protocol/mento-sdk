@@ -10,6 +10,7 @@ This directory contains the formal API contracts for the Exchange & Pool Discove
 ## Purpose
 
 API contracts serve as:
+
 1. **Implementation specification** - Exact behavior developers must implement
 2. **Documentation source** - Basis for auto-generated API docs
 3. **Testing guide** - Defines test cases and expected outcomes
@@ -42,12 +43,14 @@ The complete API contract for the `ExchangeService` class, including:
 ### Stability Guarantees
 
 **MUST NOT change** (breaking):
+
 - Method signatures (name, parameters, return types)
 - Error types and conditions
 - Core behavior and semantics
 - Type definitions (removing fields, changing types)
 
 **CAN change** (non-breaking):
+
 - Internal implementation
 - Performance characteristics (if improved)
 - Error messages (wording improvements)
@@ -60,12 +63,14 @@ The complete API contract for the `ExchangeService` class, including:
 Changes to these contracts follow semantic versioning:
 
 - **MAJOR** (breaking changes):
+
   - Removing methods
   - Changing method signatures
   - Changing error behavior
   - Removing type fields
 
 - **MINOR** (backward-compatible additions):
+
   - Adding new methods
   - Adding optional parameters
   - Adding new error types
@@ -93,6 +98,7 @@ Every public method MUST have tests verifying:
 ### Provider Parity Tests
 
 All methods MUST produce identical results across supported providers:
+
 - Ethers v6
 - Viem
 
@@ -139,6 +145,7 @@ If a breaking change is absolutely necessary:
 ## Questions or Changes
 
 For questions about these contracts or to propose changes:
+
 1. Review constitution and feature spec first
 2. Check if change is breaking (semantic versioning)
 3. Document rationale and alternatives considered

@@ -17,11 +17,12 @@ class ExchangeService {
 
 ### Constructor Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `adapter` | `ProviderAdapter` | Yes | Provider adapter (Ethers v6 or Viem) for blockchain interactions |
+| Parameter | Type              | Required | Description                                                      |
+| --------- | ----------------- | -------- | ---------------------------------------------------------------- |
+| `adapter` | `ProviderAdapter` | Yes      | Provider adapter (Ethers v6 or Viem) for blockchain interactions |
 
 **Example**:
+
 ```typescript
 import { EthersAdapter } from '@mento-labs/mento-sdk/adapters'
 import { ExchangeService } from '@mento-labs/mento-sdk/services'
@@ -45,34 +46,40 @@ getExchanges(): Promise<Exchange[]>
 **Parameters**: None
 
 **Returns**: `Promise<Exchange[]>`
+
 - Array of all exchanges across all providers
 - Results are cached in memory for service instance lifetime
 - Subsequent calls return cached data without blockchain queries
 
 **Throws**:
+
 - `NetworkError` - If RPC call fails
 - `ValidationError` - If exchange data is invalid (logged as warning, not thrown)
 
 **Example**:
+
 ```typescript
 const exchanges = await exchangeService.getExchanges()
 console.log(`Found ${exchanges.length} exchanges`)
 
-exchanges.forEach(exchange => {
+exchanges.forEach((exchange) => {
   console.log(`${exchange.id}: ${exchange.assets[0]} ↔ ${exchange.assets[1]}`)
 })
 ```
 
 **Performance**:
+
 - First call: ~5-8 seconds (queries blockchain)
 - Cached calls: < 10ms
 
 **Caching Behavior**:
+
 - Exchanges cached after first successful query
 - Cache persists for service instance lifetime
 - Create new service instance to refresh cache
 
 **Error Scenarios**:
+
 - No providers registered → Returns empty array with warning log
 - Provider query fails → Skips provider, continues with others
 - Invalid exchange data (≠ 2 assets) → Skips exchange, logs warning
@@ -89,20 +96,23 @@ getExchangesForProvider(providerAddress: string): Promise<Exchange[]>
 
 **Parameters**:
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `providerAddress` | `string` | Yes | Checksummed address of the exchange provider contract |
+| Parameter         | Type     | Required | Description                                           |
+| ----------------- | -------- | -------- | ----------------------------------------------------- |
+| `providerAddress` | `string` | Yes      | Checksummed address of the exchange provider contract |
 
 **Returns**: `Promise<Exchange[]>`
+
 - Array of exchanges from the specified provider
 - Empty array if provider has no exchanges or doesn't exist
 
 **Throws**:
+
 - `ValidationError` - If provider address is invalid format
 - `NetworkError` - If RPC call fails
 - `ContractError` - If provider contract doesn't implement required interface
 
 **Example**:
+
 ```typescript
 const providerAddr = '0x1234567890123456789012345678901234567890'
 const exchanges = await exchangeService.getExchangesForProvider(providerAddr)
@@ -111,6 +121,7 @@ console.log(`Provider has ${exchanges.length} exchanges`)
 ```
 
 **Validation**:
+
 - Address MUST be valid Ethereum address format
 - Address will be checksummed automatically
 - Invalid exchange data (≠ 2 assets) logged as warning and skipped
@@ -127,21 +138,24 @@ getExchangeById(exchangeId: string): Promise<Exchange>
 
 **Parameters**:
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `exchangeId` | `string` | Yes | Unique exchange identifier (typically bytes32 hex string) |
+| Parameter    | Type     | Required | Description                                               |
+| ------------ | -------- | -------- | --------------------------------------------------------- |
+| `exchangeId` | `string` | Yes      | Unique exchange identifier (typically bytes32 hex string) |
 
 **Returns**: `Promise<Exchange>`
+
 - The exchange with the specified ID
 - Exactly one exchange (uniqueness guaranteed by protocol)
 
 **Throws**:
+
 - `ExchangeNotFoundError` - If no exchange with given ID exists
   - Message: `"No exchange found for id {exchangeId}"`
 - `ValidationError` - If multiple exchanges found (assertion failure)
   - Message: `"More than one exchange found with id {exchangeId}"`
 
 **Example**:
+
 ```typescript
 try {
   const exchange = await exchangeService.getExchangeById('0xabcd...')
@@ -154,6 +168,7 @@ try {
 ```
 
 **Notes**:
+
 - Queries cached exchanges first (no blockchain call if cache warm)
 - Exchange IDs are globally unique across all providers
 - Multiple exchanges can exist for same token pair (different IDs)
@@ -170,16 +185,18 @@ getExchangeForTokens(token0: string, token1: string): Promise<Exchange>
 
 **Parameters**:
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `token0` | `string` | Yes | Address of first token (order doesn't matter) |
-| `token1` | `string` | Yes | Address of second token (order doesn't matter) |
+| Parameter | Type     | Required | Description                                    |
+| --------- | -------- | -------- | ---------------------------------------------- |
+| `token0`  | `string` | Yes      | Address of first token (order doesn't matter)  |
+| `token1`  | `string` | Yes      | Address of second token (order doesn't matter) |
 
 **Returns**: `Promise<Exchange>`
+
 - The direct exchange between the two tokens
 - Exactly one exchange (multiple exchanges for same pair is assertion error)
 
 **Throws**:
+
 - `ExchangeNotFoundError` - If no direct exchange exists for the token pair
   - Message: `"No exchange found for {token0} and {token1}"`
 - `ValidationError` - If multiple exchanges found (assertion failure)
@@ -187,6 +204,7 @@ getExchangeForTokens(token0: string, token1: string): Promise<Exchange>
 - `ValidationError` - If token addresses are invalid format
 
 **Example**:
+
 ```typescript
 const cUSD = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
 const CELO = '0x471EcE3750Da237f93B8E339c536989b8978a438'
@@ -200,6 +218,7 @@ try {
 ```
 
 **Notes**:
+
 - Only finds DIRECT exchanges (single-hop)
 - Order of token0/token1 doesn't matter (bidirectional search)
 - For multi-hop routes, use `findPairForTokens()` instead
@@ -220,36 +239,42 @@ getDirectPairs(): Promise<TradablePair[]>
 **Parameters**: None
 
 **Returns**: `Promise<TradablePair[]>`
+
 - Array of direct trading pairs with single-hop paths
 - Pairs are deduplicated (multiple exchanges for same pair grouped)
 - Assets sorted alphabetically by symbol for canonical IDs
 
 **Throws**:
+
 - `NetworkError` - If RPC calls fail
 - `ValidationError` - If exchange data is invalid
 
 **Example**:
+
 ```typescript
 const directPairs = await exchangeService.getDirectPairs()
 
 console.log(`Found ${directPairs.length} direct pairs`)
 
-const directOnly = directPairs.filter(pair => pair.path.length === 1)
+const directOnly = directPairs.filter((pair) => pair.path.length === 1)
 console.log(`All pairs are direct: ${directOnly.length === directPairs.length}`)
 ```
 
 **Behavior**:
+
 - Fetches all exchanges (using cache if available)
 - Fetches token symbols on-chain for each unique token
 - Groups exchanges by canonical pair ID (sorted symbols)
 - Multiple exchanges for same pair included in path array
 
 **Performance**:
+
 - First call: ~6-9 seconds (fetches exchanges + symbols)
 - Cached exchanges: ~2-3 seconds (only symbols need fetching)
 - Symbol queries run in parallel for performance
 
 **Data Structure**:
+
 ```typescript
 {
   id: 'CELO-cUSD',  // Alphabetically sorted
@@ -282,23 +307,26 @@ getTradablePairs(options?: {
 
 **Parameters**:
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `options.cached` | `boolean` | No | `true` | Whether to use pre-generated cached pairs |
+| Parameter        | Type      | Required | Default | Description                               |
+| ---------------- | --------- | -------- | ------- | ----------------------------------------- |
+| `options.cached` | `boolean` | No       | `true`  | Whether to use pre-generated cached pairs |
 
 **Returns**: `Promise<readonly (TradablePair | TradablePairWithSpread)[]>`
+
 - Array of all tradable pairs (direct + two-hop routes)
 - Cached pairs include `TradablePairWithSpread` with spread data
 - Fresh pairs are basic `TradablePair` without spread data
 - Results are read-only (immutable array)
 
 **Throws**:
+
 - `NetworkError` - If RPC calls fail (cached: false only)
 - `CacheNotFoundError` - If cached data unavailable for current chain
   - Falls back to fresh generation automatically
   - Logs cache miss warning
 
 **Example**:
+
 ```typescript
 // Fast: use pre-generated cache
 const cachedPairs = await exchangeService.getTradablePairs({ cached: true })
@@ -317,11 +345,13 @@ console.log(`Generated ${freshPairs.length} pairs from live data`)
 **Behavior**:
 
 **When cached = true**:
+
 1. Attempts to load pre-generated pairs for current chain
 2. If cache hit: Returns cached pairs with spread data (~100-500ms)
 3. If cache miss: Falls back to fresh generation with warning
 
 **When cached = false**:
+
 1. Fetches direct pairs from blockchain
 2. Builds connectivity graph
 3. Generates all two-hop routes via graph traversal
@@ -329,6 +359,7 @@ console.log(`Generated ${freshPairs.length} pairs from live data`)
 5. Returns generated pairs without spread data (~8-10s)
 
 **Route Generation Algorithm**:
+
 1. Direct pairs (single-hop exchanges)
 2. Two-hop pairs discovered via graph traversal:
    - For each token A → neighbors B
@@ -336,17 +367,20 @@ console.log(`Generated ${freshPairs.length} pairs from live data`)
    - If C ≠ A, route A→B→C is valid
 
 **Route Optimization** (when multiple routes exist):
+
 - **Tier 1**: Lowest spread (cached data only)
 - **Tier 2**: Direct route over multi-hop
 - **Tier 3**: Route through major stablecoins (cUSD, cEUR, USDC, USDT)
 - **Tier 4**: First available route
 
 **Performance**:
+
 - Cached: 100-500ms (file load + parse)
 - Fresh: 8-10 seconds (blockchain queries + computation)
 - Cached is ~20-50x faster
 
 **Memory Usage**:
+
 - Cached: ~100-200 KB (JSON file)
 - Fresh: ~50-100 KB (in-memory structures)
 
@@ -362,23 +396,26 @@ findPairForTokens(tokenIn: string, tokenOut: string): Promise<TradablePair>
 
 **Parameters**:
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `tokenIn` | `string` | Yes | Input token address (direction matters for routing) |
-| `tokenOut` | `string` | Yes | Output token address (direction matters for routing) |
+| Parameter  | Type     | Required | Description                                          |
+| ---------- | -------- | -------- | ---------------------------------------------------- |
+| `tokenIn`  | `string` | Yes      | Input token address (direction matters for routing)  |
+| `tokenOut` | `string` | Yes      | Output token address (direction matters for routing) |
 
 **Returns**: `Promise<TradablePair>`
+
 - The optimal tradable pair connecting the two tokens
 - May be direct (1 hop) or two-hop route
 - Direction-aware: path optimized for tokenIn → tokenOut
 
 **Throws**:
+
 - `PairNotFoundError` - If no tradable route exists between tokens
   - Message: `"No pair found for tokens {tokenIn} and {tokenOut}. They may not have a tradable path."`
 - `ValidationError` - If token addresses are invalid format
 - `NetworkError` - If RPC calls fail
 
 **Example**:
+
 ```typescript
 const cUSD = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
 const cBRL = '0xE4D5...'
@@ -399,26 +436,29 @@ try {
 ```
 
 **Behavior**:
+
 - Queries all tradable pairs (uses cache by default)
 - Searches for matching token addresses (bidirectional)
 - Returns first matching pair found
 - Path order optimized for tokenIn → tokenOut direction
 
 **Direction Handling**:
+
 ```typescript
 // Both queries return the same pair (canonical ID)
 const pair1 = await findPairForTokens(tokenA, tokenB)
 const pair2 = await findPairForTokens(tokenB, tokenA)
 
 // But pair IDs are canonical (alphabetical)
-console.log(pair1.id === pair2.id)  // true: 'A-B' or 'B-A' depending on symbols
+console.log(pair1.id === pair2.id) // true: 'A-B' or 'B-A' depending on symbols
 
 // Path direction may differ for execution
-console.log(pair1.path[0].assets)  // Optimized for A → B
-console.log(pair2.path[0].assets)  // Optimized for B → A (may be reversed)
+console.log(pair1.path[0].assets) // Optimized for A → B
+console.log(pair2.path[0].assets) // Optimized for B → A (may be reversed)
 ```
 
 **Performance**:
+
 - Uses cached pairs: ~100-500ms
 - Fresh generation: ~8-10 seconds
 - Linear search through pairs: O(n) where n = ~50-100 pairs
@@ -431,9 +471,9 @@ console.log(pair2.path[0].assets)  // Optimized for B → A (may be reversed)
 
 ```typescript
 interface Exchange {
-  providerAddr: string  // Checksummed address of provider contract
-  id: string           // Unique exchange identifier (bytes32)
-  assets: string[]     // Exactly 2 token addresses (checksummed)
+  providerAddr: string // Checksummed address of provider contract
+  id: string // Unique exchange identifier (bytes32)
+  assets: string[] // Exactly 2 token addresses (checksummed)
 }
 ```
 
@@ -441,8 +481,8 @@ interface Exchange {
 
 ```typescript
 interface Asset {
-  address: string  // Checksummed token address
-  symbol: string   // Token symbol (e.g., 'cUSD', 'CELO')
+  address: string // Checksummed token address
+  symbol: string // Token symbol (e.g., 'cUSD', 'CELO')
 }
 ```
 
@@ -452,9 +492,10 @@ interface Asset {
 type TradablePairID = `${string}-${string}`
 
 interface TradablePair {
-  id: TradablePairID          // Canonical ID: sorted symbols (e.g., 'cEUR-cUSD')
-  assets: [Asset, Asset]       // Two tokens, alphabetically sorted by symbol
-  path: Array<{                // Exchange hops (length 1 or 2)
+  id: TradablePairID // Canonical ID: sorted symbols (e.g., 'cEUR-cUSD')
+  assets: [Asset, Asset] // Two tokens, alphabetically sorted by symbol
+  path: Array<{
+    // Exchange hops (length 1 or 2)
     providerAddr: string
     id: string
     assets: [string, string]
@@ -467,7 +508,7 @@ interface TradablePair {
 ```typescript
 interface TradablePairWithSpread extends TradablePair {
   spreadData: {
-    totalSpreadPercent: number  // Total spread cost (lower is better)
+    totalSpreadPercent: number // Total spread cost (lower is better)
   }
 }
 ```
@@ -521,23 +562,23 @@ All error messages are descriptive and actionable:
 
 ```typescript
 // Exchange not found
-"No exchange found for id 0xabcd1234..."
-"No exchange found for 0x765D... and 0x471E..."
+'No exchange found for id 0xabcd1234...'
+'No exchange found for 0x765D... and 0x471E...'
 
 // Pair not found
-"No pair found for tokens 0x765D... and 0xE4D5.... They may not have a tradable path."
+'No pair found for tokens 0x765D... and 0xE4D5.... They may not have a tradable path.'
 
 // Validation errors
-"Invalid address format: {address}"
-"Exchange must have exactly 2 assets, got {n}"
-"More than one exchange found for {token0} and {token1}"
+'Invalid address format: {address}'
+'Exchange must have exactly 2 assets, got {n}'
+'More than one exchange found for {token0} and {token1}'
 
 // Cache errors
-"No cached pairs available for chain ID {chainId}"
+'No cached pairs available for chain ID {chainId}'
 
 // Network errors
-"Failed to query Broker contract: {cause}"
-"Failed to fetch token symbol for {address}: {cause}"
+'Failed to query Broker contract: {cause}'
+'Failed to fetch token symbol for {address}: {cause}'
 ```
 
 ### Error Handling Examples
@@ -552,7 +593,7 @@ try {
   } else if (error instanceof NetworkError) {
     console.log('Network issue, retry later')
   } else {
-    throw error  // Unexpected error
+    throw error // Unexpected error
   }
 }
 
@@ -578,18 +619,19 @@ const pairs = await exchangeService.getTradablePairs({ cached: true })
 
 ### Time Complexity
 
-| Method | First Call | Cached | Complexity |
-|--------|------------|--------|------------|
-| `getExchanges()` | 5-8s | < 10ms | O(p × e) |
-| `getExchangesForProvider()` | 1-2s | N/A | O(e) |
-| `getExchangeById()` | < 10ms | < 1ms | O(n) |
-| `getExchangeForTokens()` | < 10ms | < 1ms | O(n) |
-| `getDirectPairs()` | 6-9s | 2-3s | O(e + t) |
-| `getTradablePairs()` cached | 100-500ms | N/A | O(1) |
-| `getTradablePairs()` fresh | 8-10s | N/A | O(t²) |
-| `findPairForTokens()` | 100-500ms | N/A | O(n) |
+| Method                      | First Call | Cached | Complexity |
+| --------------------------- | ---------- | ------ | ---------- |
+| `getExchanges()`            | 5-8s       | < 10ms | O(p × e)   |
+| `getExchangesForProvider()` | 1-2s       | N/A    | O(e)       |
+| `getExchangeById()`         | < 10ms     | < 1ms  | O(n)       |
+| `getExchangeForTokens()`    | < 10ms     | < 1ms  | O(n)       |
+| `getDirectPairs()`          | 6-9s       | 2-3s   | O(e + t)   |
+| `getTradablePairs()` cached | 100-500ms  | N/A    | O(1)       |
+| `getTradablePairs()` fresh  | 8-10s      | N/A    | O(t²)      |
+| `findPairForTokens()`       | 100-500ms  | N/A    | O(n)       |
 
 Where:
+
 - p = number of providers (~3-5)
 - e = exchanges per provider (~10-20)
 - t = unique tokens (~50-100)
@@ -597,27 +639,30 @@ Where:
 
 ### Space Complexity
 
-| Data Structure | Memory Usage |
-|----------------|--------------|
-| Exchange cache | ~20-40 KB |
-| Symbol cache | ~5-10 KB |
-| Connectivity graph | ~50-100 KB |
-| Cached pairs file | ~100-200 KB |
-| **Total** | **~200-400 KB** |
+| Data Structure     | Memory Usage    |
+| ------------------ | --------------- |
+| Exchange cache     | ~20-40 KB       |
+| Symbol cache       | ~5-10 KB        |
+| Connectivity graph | ~50-100 KB      |
+| Cached pairs file  | ~100-200 KB     |
+| **Total**          | **~200-400 KB** |
 
 ### Optimization Strategies
 
 1. **In-Memory Caching**:
+
    - Exchanges cached after first query
    - Eliminates redundant blockchain calls
    - Persists for service instance lifetime
 
 2. **Parallel Batching**:
+
    - Provider queries run in parallel
    - Symbol fetches batched with `Promise.all()`
    - Reduces wall-clock time significantly
 
 3. **Static Cache Files**:
+
    - Pre-generated pairs with spread data
    - Near-instant load (~100-500ms)
    - Fallback to fresh if unavailable
@@ -636,12 +681,12 @@ Where:
 ```typescript
 // ✅ Good: Reuse service instance
 const service = new ExchangeService(adapter)
-await service.getExchanges()  // Queries blockchain
-await service.getExchanges()  // Uses cache
+await service.getExchanges() // Queries blockchain
+await service.getExchanges() // Uses cache
 
 // ❌ Bad: Loses cache
-await new ExchangeService(adapter).getExchanges()  // Queries
-await new ExchangeService(adapter).getExchanges()  // Queries again
+await new ExchangeService(adapter).getExchanges() // Queries
+await new ExchangeService(adapter).getExchanges() // Queries again
 ```
 
 ### Cache Usage
@@ -681,12 +726,12 @@ const pair = await service.findPairForTokens(tokenA, tokenB).catch(() => null)
 // ✅ Good: Parallel independent queries
 const [exchanges, pairs] = await Promise.all([
   service.getExchanges(),
-  service.getDirectPairs()
+  service.getDirectPairs(),
 ])
 
 // ❌ Bad: Sequential queries
 const exchanges = await service.getExchanges()
-const pairs = await service.getDirectPairs()  // Could run in parallel
+const pairs = await service.getDirectPairs() // Could run in parallel
 ```
 
 ---
@@ -719,7 +764,7 @@ describe('ExchangeService', () => {
     expect(exchanges).toBeInstanceOf(Array)
     expect(exchanges.length).toBeGreaterThan(0)
 
-    exchanges.forEach(exchange => {
+    exchanges.forEach((exchange) => {
       expect(exchange.assets).toHaveLength(2)
       expect(exchange.providerAddr).toMatch(/^0x[a-fA-F0-9]{40}$/)
     })
@@ -729,9 +774,9 @@ describe('ExchangeService', () => {
     const service = new ExchangeService(adapter)
     const invalidToken = '0x0000000000000000000000000000000000000000'
 
-    await expect(
-      service.findPairForTokens(invalidToken, cUSD)
-    ).rejects.toThrow(PairNotFoundError)
+    await expect(service.findPairForTokens(invalidToken, cUSD)).rejects.toThrow(
+      PairNotFoundError
+    )
   })
 })
 ```

@@ -7,7 +7,7 @@
 
 **Migration Context**: This feature ports exchange and pool discovery functionality from v1 (main branch) to v3. The v3 implementation should mirror v1 behavior and data structures where possible, while leveraging the new adapter infrastructure. API improvements are acceptable where they enhance usability or align with v3 architectural patterns.
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Query All Available Exchanges (Priority: P1)
 
@@ -83,7 +83,7 @@ Developers need to look up the exchange details for a specific token pair to val
 - What happens when cached data doesn't exist for current chain? (Fall back to fresh blockchain queries, log cache miss)
 - What happens when developer queries exchange for reversed token pair (e.g., CELO-cUSD vs cUSD-CELO)? (Normalize to alphabetically sorted pair ID, return same exchange)
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -108,7 +108,7 @@ Developers need to look up the exchange details for a specific token pair to val
 
 ### Non-Functional Requirements (Per Constitution)
 
-*Reference: [Mento SDK Constitution](../.specify/memory/constitution.md)*
+_Reference: [Mento SDK Constitution](../.specify/memory/constitution.md)_
 
 - **NFR-001**: All public APIs MUST have TypeScript type definitions and comprehensive JSDoc comments
 - **NFR-002**: Feature MUST work with all supported providers (Ethers v6, Viem) using adapter pattern
@@ -121,20 +121,23 @@ Developers need to look up the exchange details for a specific token pair to val
 - **NFR-009**: Feature MUST maintain backward compatibility with v1 data structures where possible
 - **NFR-010**: All exchange and pair discovery methods MUST be read-only operations (no signer required)
 
-### Key Entities *(include if feature involves data)*
+### Key Entities _(include if feature involves data)_
 
 - **Exchange**: Represents a liquidity pool between two tokens
+
   - Provider address (contract managing this exchange)
   - Exchange ID (unique identifier within provider)
   - Asset pair (two token addresses)
 
 - **TradablePair**: Represents a tradable route between two tokens
+
   - Pair ID (canonical identifier using sorted symbols)
   - Assets (two token objects with address and symbol)
   - Path (array of exchange hops to execute the trade)
   - Each hop contains provider address, exchange ID, and asset pair
 
 - **Asset**: Represents a token in the protocol
+
   - Contract address
   - Token symbol (e.g., 'cUSD', 'CELO')
 
@@ -143,7 +146,7 @@ Developers need to look up the exchange details for a specific token pair to val
   - Token graph (adjacency list of direct connections)
   - Direct path map (token pair to exchange mapping)
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 

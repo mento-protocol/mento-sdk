@@ -48,7 +48,7 @@ import { celo } from 'viem/chains'
 // Connect to Celo mainnet
 const client = createPublicClient({
   chain: celo,
-  transport: http()
+  transport: http(),
 })
 
 // Create adapter
@@ -82,7 +82,7 @@ async function getAllExchanges() {
     console.log({
       provider: exchange.providerAddr,
       id: exchange.id,
-      pair: exchange.assets  // [token0, token1]
+      pair: exchange.assets, // [token0, token1]
     })
   })
 
@@ -93,7 +93,9 @@ async function getAllExchanges() {
  * Get exchanges for a specific provider
  */
 async function getProviderExchanges(providerAddress: string) {
-  const exchanges = await exchangeService.getExchangesForProvider(providerAddress)
+  const exchanges = await exchangeService.getExchangesForProvider(
+    providerAddress
+  )
 
   console.log(`Provider ${providerAddress} has ${exchanges.length} exchanges`)
   return exchanges
@@ -105,6 +107,7 @@ await getProviderExchanges('0x1234567890123456789012345678901234567890')
 ```
 
 **Output Example**:
+
 ```
 Found 47 exchanges
 {
@@ -121,6 +124,7 @@ Found 47 exchanges
 ```
 
 **Performance**:
+
 - First call: ~5-8 seconds (queries blockchain)
 - Cached calls: < 10 milliseconds
 
@@ -145,10 +149,10 @@ async function getDirectPairs() {
   // Display pairs with their symbols
   pairs.forEach((pair) => {
     console.log({
-      id: pair.id,  // e.g., 'cEUR-cUSD'
-      token0: pair.assets[0],  // { address, symbol }
-      token1: pair.assets[1],  // { address, symbol }
-      exchanges: pair.path.length  // Number of exchanges for this pair
+      id: pair.id, // e.g., 'cEUR-cUSD'
+      token0: pair.assets[0], // { address, symbol }
+      token1: pair.assets[1], // { address, symbol }
+      exchanges: pair.path.length, // Number of exchanges for this pair
     })
   })
 
@@ -161,9 +165,11 @@ async function getDirectPairs() {
 async function hasDirectPair(token0: string, token1: string): Promise<boolean> {
   const pairs = await exchangeService.getDirectPairs()
 
-  return pairs.some(pair =>
-    (pair.assets[0].address === token0 && pair.assets[1].address === token1) ||
-    (pair.assets[0].address === token1 && pair.assets[1].address === token0)
+  return pairs.some(
+    (pair) =>
+      (pair.assets[0].address === token0 &&
+        pair.assets[1].address === token1) ||
+      (pair.assets[0].address === token1 && pair.assets[1].address === token0)
   )
 }
 
@@ -177,6 +183,7 @@ console.log(`cUSD-CELO direct pair exists: ${hasDirectRoute}`)
 ```
 
 **Output Example**:
+
 ```
 Found 23 direct trading pairs
 {
@@ -208,11 +215,11 @@ Find all tradable pairs including two-hop routes through intermediate tokens.
  */
 async function getAllTradablePairs() {
   const pairs = await exchangeService.getTradablePairs({
-    cached: true  // Use pre-generated cached pairs (fast)
+    cached: true, // Use pre-generated cached pairs (fast)
   })
 
-  const directPairs = pairs.filter(p => p.path.length === 1)
-  const twoHopPairs = pairs.filter(p => p.path.length === 2)
+  const directPairs = pairs.filter((p) => p.path.length === 1)
+  const twoHopPairs = pairs.filter((p) => p.path.length === 2)
 
   console.log(`Found ${pairs.length} total tradable pairs`)
   console.log(`  - ${directPairs.length} direct pairs`)
@@ -227,7 +234,7 @@ async function getAllTradablePairs() {
  */
 async function getFreshTradablePairs() {
   const pairs = await exchangeService.getTradablePairs({
-    cached: false  // Generate from scratch
+    cached: false, // Generate from scratch
   })
 
   console.log(`Generated ${pairs.length} pairs from live data`)
@@ -239,7 +246,7 @@ async function getFreshTradablePairs() {
  */
 async function analyzeTwoHopRoute(pairId: string) {
   const pairs = await exchangeService.getTradablePairs()
-  const pair = pairs.find(p => p.id === pairId)
+  const pair = pairs.find((p) => p.id === pairId)
 
   if (!pair || pair.path.length !== 2) {
     console.log(`${pairId} is not a two-hop route`)
@@ -249,10 +256,14 @@ async function analyzeTwoHopRoute(pairId: string) {
   console.log(`Route for ${pairId}:`)
   console.log(`  Token A: ${pair.assets[0].symbol}`)
   console.log(`  Token B: ${pair.assets[1].symbol}`)
-  console.log(`\n  Hop 1: ${pair.path[0].assets[0]} → ${pair.path[0].assets[1]}`)
+  console.log(
+    `\n  Hop 1: ${pair.path[0].assets[0]} → ${pair.path[0].assets[1]}`
+  )
   console.log(`    Provider: ${pair.path[0].providerAddr}`)
   console.log(`    Exchange ID: ${pair.path[0].id}`)
-  console.log(`\n  Hop 2: ${pair.path[1].assets[0]} → ${pair.path[1].assets[1]}`)
+  console.log(
+    `\n  Hop 2: ${pair.path[1].assets[0]} → ${pair.path[1].assets[1]}`
+  )
   console.log(`    Provider: ${pair.path[1].providerAddr}`)
   console.log(`    Exchange ID: ${pair.path[1].id}`)
 
@@ -268,6 +279,7 @@ await analyzeTwoHopRoute('cBRL-cUSD')
 ```
 
 **Output Example**:
+
 ```
 Found 87 total tradable pairs
   - 23 direct pairs
@@ -289,6 +301,7 @@ Route for cBRL-cUSD:
 ```
 
 **Performance**:
+
 - Cached: < 500 milliseconds
 - Fresh: ~8-10 seconds
 
@@ -371,6 +384,7 @@ const exchange = await getExchangeById('0xabcd1234...')
 ```
 
 **Error Handling**:
+
 ```typescript
 try {
   const exchange = await exchangeService.getExchangeForTokens(tokenA, tokenB)
@@ -427,7 +441,7 @@ async function getLatestExchanges() {
  */
 async function smartPairQuery(requireLatest: boolean = false) {
   const pairs = await exchangeService.getTradablePairs({
-    cached: !requireLatest  // Cached by default
+    cached: !requireLatest, // Cached by default
   })
 
   return pairs
@@ -442,11 +456,13 @@ await comparePerformance()
 ```
 
 **When to use cached data**:
+
 - ✅ Price quotes and swaps (data rarely changes)
 - ✅ UI display of available pairs
 - ✅ Frequent queries in trading bots
 
 **When to use fresh data**:
+
 - ✅ After governance changes add new exchanges
 - ✅ When cached data returns unexpected results
 - ✅ First query on new/unknown chains
@@ -464,9 +480,10 @@ Find specific pairs that match criteria.
 async function getPairsForToken(tokenAddress: string) {
   const allPairs = await exchangeService.getTradablePairs()
 
-  const pairs = allPairs.filter(pair =>
-    pair.assets[0].address === tokenAddress ||
-    pair.assets[1].address === tokenAddress
+  const pairs = allPairs.filter(
+    (pair) =>
+      pair.assets[0].address === tokenAddress ||
+      pair.assets[1].address === tokenAddress
   )
 
   console.log(`Found ${pairs.length} pairs for token ${tokenAddress}`)
@@ -479,13 +496,13 @@ async function getPairsForToken(tokenAddress: string) {
 async function getPairsWithSymbol(symbol: string) {
   const allPairs = await exchangeService.getTradablePairs()
 
-  const pairs = allPairs.filter(pair =>
-    pair.assets[0].symbol === symbol ||
-    pair.assets[1].symbol === symbol
+  const pairs = allPairs.filter(
+    (pair) =>
+      pair.assets[0].symbol === symbol || pair.assets[1].symbol === symbol
   )
 
   console.log(`Found ${pairs.length} pairs involving ${symbol}`)
-  pairs.forEach(pair => console.log(`  - ${pair.id}`))
+  pairs.forEach((pair) => console.log(`  - ${pair.id}`))
 
   return pairs
 }
@@ -528,6 +545,7 @@ await getMostLiquidPairs(5)
 ```
 
 **Output Example**:
+
 ```
 Found 18 pairs for token 0x765D...
 Found 12 pairs involving CELO
@@ -571,7 +589,7 @@ async function compareRoutesForPair(token0: string, token1: string) {
     console.log(`  Selection reason: Direct route (Tier 2 optimization)`)
   } else {
     // Check if route goes through major stablecoin
-    const intermediateAddr = pair.path[0].assets.find(a =>
+    const intermediateAddr = pair.path[0].assets.find((a) =>
       pair.path[1].assets.includes(a)
     )
     // Note: Would need symbol lookup to confirm stablecoin
@@ -609,7 +627,7 @@ Route Selection Priorities (highest to lowest):
 
 // Example usage
 const cUSD = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
-const cBRL = '0xE4D5...'  // Example address
+const cBRL = '0xE4D5...' // Example address
 await compareRoutesForPair(cUSD, cBRL)
 explainRouteOptimization()
 ```
@@ -646,9 +664,10 @@ class MentoTradingBot {
     console.log(`Discovered ${pairs.length} tradable pairs`)
 
     // Filter to only pairs involving watched tokens
-    const relevantPairs = pairs.filter(pair =>
-      this.watchedTokens.has(pair.assets[0].address) ||
-      this.watchedTokens.has(pair.assets[1].address)
+    const relevantPairs = pairs.filter(
+      (pair) =>
+        this.watchedTokens.has(pair.assets[0].address) ||
+        this.watchedTokens.has(pair.assets[1].address)
     )
 
     console.log(`Watching ${relevantPairs.length} relevant pairs`)
@@ -661,18 +680,22 @@ class MentoTradingBot {
   async findBestRoute(tokenIn: string, tokenOut: string) {
     try {
       // SDK automatically selects optimal route
-      const pair = await this.exchangeService.findPairForTokens(tokenIn, tokenOut)
+      const pair = await this.exchangeService.findPairForTokens(
+        tokenIn,
+        tokenOut
+      )
 
       return {
         found: true,
         pair,
         routeType: pair.path.length === 1 ? 'direct' : 'two-hop',
-        spread: 'spreadData' in pair ? pair.spreadData.totalSpreadPercent : null
+        spread:
+          'spreadData' in pair ? pair.spreadData.totalSpreadPercent : null,
       }
     } catch (error) {
       return {
         found: false,
-        error: error.message
+        error: error.message,
       }
     }
   }
@@ -684,7 +707,7 @@ class MentoTradingBot {
     const allPairs = await this.exchangeService.getTradablePairs()
 
     const outputs = new Set<string>()
-    allPairs.forEach(pair => {
+    allPairs.forEach((pair) => {
       if (pair.assets[0].address === tokenIn) {
         outputs.add(pair.assets[1].address)
       } else if (pair.assets[1].address === tokenIn) {
@@ -701,9 +724,9 @@ async function runBot() {
   const provider = new ethers.JsonRpcProvider('https://forno.celo.org')
 
   const watchedTokens = [
-    '0x765DE816845861e75A25fCA122bb6898B8B1282a',  // cUSD
-    '0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73',  // cEUR
-    '0x471EcE3750Da237f93B8E339c536989b8978a438'   // CELO
+    '0x765DE816845861e75A25fCA122bb6898B8B1282a', // cUSD
+    '0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73', // cEUR
+    '0x471EcE3750Da237f93B8E339c536989b8978a438', // CELO
   ]
 
   const bot = new MentoTradingBot(provider, watchedTokens)
@@ -744,7 +767,7 @@ async function safeGetExchanges(): Promise<Exchange[]> {
       return await freshService.getExchanges()
     } catch (retryError) {
       console.error('Retry failed:', retryError)
-      return []  // Return empty array as fallback
+      return [] // Return empty array as fallback
     }
   }
 }
@@ -763,7 +786,7 @@ async function safeFindPair(
       console.log(`No route exists between tokens`)
       return null
     }
-    throw error  // Re-throw unexpected errors
+    throw error // Re-throw unexpected errors
   }
 }
 
@@ -791,6 +814,7 @@ async function validateAndQuery(token0: string, token1: string) {
 ## Performance Tips
 
 1. **Use cached data by default**:
+
    ```typescript
    // ✅ Fast (uses cache)
    const pairs = await exchangeService.getTradablePairs({ cached: true })
@@ -800,33 +824,36 @@ async function validateAndQuery(token0: string, token1: string) {
    ```
 
 2. **Reuse service instances**:
+
    ```typescript
    // ✅ Good - reuses cached exchanges
    const service = new ExchangeService(adapter)
-   await service.getExchanges()  // Queries blockchain
-   await service.getExchanges()  // Uses cache
+   await service.getExchanges() // Queries blockchain
+   await service.getExchanges() // Uses cache
 
    // ❌ Bad - loses cache
-   await new ExchangeService(adapter).getExchanges()  // Queries
-   await new ExchangeService(adapter).getExchanges()  // Queries again
+   await new ExchangeService(adapter).getExchanges() // Queries
+   await new ExchangeService(adapter).getExchanges() // Queries again
    ```
 
 3. **Use direct pairs when possible**:
+
    ```typescript
    // ✅ Fast - only direct pairs
    const directPairs = await exchangeService.getDirectPairs()
 
    // ❌ Slower - includes route generation
    const allPairs = await exchangeService.getTradablePairs()
-   const directOnly = allPairs.filter(p => p.path.length === 1)
+   const directOnly = allPairs.filter((p) => p.path.length === 1)
    ```
 
 4. **Batch similar operations**:
+
    ```typescript
    // ✅ Good - parallel queries
    const [exchanges, pairs] = await Promise.all([
      exchangeService.getExchanges(),
-     exchangeService.getDirectPairs()
+     exchangeService.getDirectPairs(),
    ])
 
    // ❌ Bad - sequential queries

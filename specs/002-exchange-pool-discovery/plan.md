@@ -23,7 +23,7 @@ This feature ports exchange and pool discovery functionality from v1 to v3, enab
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
 Review against [Mento SDK Constitution](../.specify/memory/constitution.md):
 
@@ -34,7 +34,7 @@ Review against [Mento SDK Constitution](../.specify/memory/constitution.md):
 - [x] **Developer Experience & Documentation** - JSDoc on all public methods with examples, README updated, descriptive error messages
 - [x] **Blockchain Best Practices** - Addresses checksummed via adapter, token symbols fetched on-chain, BigInt for numeric values (if applicable)
 
-*All principles met. No violations requiring justification.*
+_All principles met. No violations requiring justification._
 
 ## Project Structure
 
@@ -108,13 +108,14 @@ tests/
 
 ## Complexity Tracking
 
-*No Constitution violations to justify.*
+_No Constitution violations to justify._
 
 ## Architecture Overview
 
 ### Service Layer
 
 **ExchangeService** (new)
+
 - **Purpose**: Discover exchanges, trading pairs, and routing paths
 - **Dependencies**: ProviderAdapter (injected), Broker ABI, ExchangeProvider ABI, ERC-20 ABI
 - **State**: In-memory cache for exchanges and token symbols (instance lifetime)
@@ -130,6 +131,7 @@ tests/
 ### Utility Layer
 
 **routeUtils.ts** (new)
+
 - **Purpose**: Graph-based route finding and optimization
 - **Key Functions**:
   - `buildConnectivityStructures(directPairs)` - Build token graph
@@ -141,6 +143,7 @@ tests/
 ### Type Definitions
 
 **types/exchange.ts** (new)
+
 ```typescript
 // Core types
 export interface Exchange {
@@ -189,16 +192,19 @@ interface ConnectivityData {
 ### Contract Integration
 
 **Broker Contract**
+
 - **Purpose**: Registry of exchange providers
 - **Key Methods**: `getExchangeProviders()` returns address[]
 - **Usage**: Called once per SDK initialization to get provider list
 
 **ExchangeProvider Contract**
+
 - **Purpose**: Manages exchanges under one provider (e.g., BiPoolManager)
 - **Key Methods**: `getExchanges()` returns array of exchange data
 - **Usage**: Called once per provider to get all exchanges
 
 **ERC-20 Contract**
+
 - **Purpose**: Fetch token symbol for pair identification
 - **Key Methods**: `symbol()` returns string
 - **Usage**: Called once per unique token address, cached in-memory
@@ -208,6 +214,7 @@ interface ConnectivityData {
 **Two-Level Caching**:
 
 1. **Instance Cache** (in-memory)
+
    - Exchanges: Cached after first `getExchanges()` call
    - Token symbols: Cached as fetched, keyed by address
    - Lifetime: SDK instance lifetime
@@ -223,12 +230,14 @@ interface ConnectivityData {
 ### Route Optimization
 
 **Heuristic Order** (applied when multiple routes exist for same pair):
+
 1. **Spread-based** (if spread data available): Lowest total spread wins
 2. **Direct preference**: Single-hop routes preferred over 2-hop
 3. **Major stablecoin routing**: Routes through CELO, cUSD preferred
 4. **First available**: Fallback if no other criteria differentiate
 
 **Example**:
+
 ```
 Routes for cEUR-cREAL:
   A: cEUR → CELO → cREAL (spread: 0.15%)
@@ -328,6 +337,7 @@ Developer calls: mento.exchanges.findPairForTokens(tokenIn, tokenOut)
 ## Error Handling
 
 ### Exchange Not Found Errors
+
 ```typescript
 class ExchangeNotFoundError extends Error {
   constructor(exchangeId: string) {
@@ -338,6 +348,7 @@ class ExchangeNotFoundError extends Error {
 ```
 
 ### Pair Not Found Errors
+
 ```typescript
 class TradablePairNotFoundError extends Error {
   constructor(symbolA: string, symbolB: string) {
@@ -348,6 +359,7 @@ class TradablePairNotFoundError extends Error {
 ```
 
 ### Invalid Exchange Data Errors
+
 ```typescript
 class InvalidExchangeDataError extends Error {
   constructor(providerAddr: Address, reason: string) {
@@ -358,6 +370,7 @@ class InvalidExchangeDataError extends Error {
 ```
 
 **Handling Strategy**:
+
 - Invalid exchanges: Skip with warning log, continue processing others
 - Missing cache: Fall back to fresh generation, log cache miss
 - Symbol fetch failures: Use address as fallback, log warning
@@ -368,6 +381,7 @@ class InvalidExchangeDataError extends Error {
 ### Unit Tests (tests/unit/)
 
 **ExchangeService.test.ts**
+
 - Test exchange caching behavior
 - Test deduplication logic
 - Test pair ID normalization (alphabetical sorting)
@@ -375,6 +389,7 @@ class InvalidExchangeDataError extends Error {
 - Mock adapter to avoid blockchain calls
 
 **routeUtils.test.ts**
+
 - Test connectivity graph building
 - Test 2-hop route generation
 - Test route optimization heuristics
@@ -384,17 +399,20 @@ class InvalidExchangeDataError extends Error {
 ### Integration Tests (tests/integration/)
 
 **Shared Test Suite (shared/exchangeDiscovery.test.ts)**
+
 - Test all 7 public methods
 - Test with real Celo mainnet data
 - Verify performance targets (<500ms cached, <10s fresh)
 - Test edge cases (no providers, empty exchanges, missing symbols)
 
 **Provider-Specific Tests**
+
 - ethersExchangeDiscovery.test.ts: Run shared suite with Ethers v6 adapter
 - viemExchangeDiscovery.test.ts: Run shared suite with Viem adapter
 - Verify provider parity (identical results)
 
 **Coverage Targets**:
+
 - ExchangeService: >90% (high coverage for core logic)
 - routeUtils: >95% (critical for correctness)
 - Overall: >80% (constitution requirement)
@@ -404,6 +422,7 @@ class InvalidExchangeDataError extends Error {
 ### API Compatibility
 
 **V1 → V3 Method Mapping**:
+
 ```
 V1 Method                      → V3 Method
 mento.getExchanges()          → exchangeService.getExchanges()
@@ -425,18 +444,21 @@ All core types (Exchange, TradablePair, Asset) maintain v1 structure. No breakin
 ## Performance Considerations
 
 ### Time Complexity
+
 - `getExchanges()`: O(P × E) where P = providers, E = avg exchanges per provider
 - `getDirectPairs()`: O(E × S) where E = exchanges, S = symbol fetch time
 - `getTradablePairs()`: O(V²) where V = unique tokens (route generation)
 - `findPairForTokens()`: O(1) amortized (after initial pair generation)
 
 ### Space Complexity
+
 - Exchange cache: O(E) where E = total exchanges (~100-200 on Celo)
 - Symbol cache: O(T) where T = unique tokens (~50-100 on Celo)
 - Token graph: O(V + E) for adjacency list
 - Route storage: O(V²) for all 2-hop routes (~1000-2000 on Celo)
 
 ### Optimization Strategies
+
 1. **Lazy Loading**: Don't fetch exchanges until first call
 2. **Symbol Batching**: Consider batch symbol fetching (future enhancement)
 3. **Cache Preloading**: Static cache files avoid route generation
@@ -445,6 +467,7 @@ All core types (Exchange, TradablePair, Asset) maintain v1 structure. No breakin
 ## Implementation Phases
 
 ### Phase 0: Research & Architecture ✅ COMPLETE
+
 - [x] Analyze v1 implementation
 - [x] Design v3 adapter integration
 - [x] Define service structure
@@ -452,12 +475,14 @@ All core types (Exchange, TradablePair, Asset) maintain v1 structure. No breakin
 - [x] Create research.md
 
 ### Phase 1: Design & Contracts ✅ COMPLETE
+
 - [x] Define data model entities
 - [x] Create API contracts
 - [x] Write usage examples (quickstart.md)
 - [x] Update agent context
 
 ### Phase 2: Tasks & Implementation (Next Phase)
+
 - [ ] Generate detailed task breakdown (/speckit.tasks command)
 - [ ] Implement types and ABIs
 - [ ] Implement ExchangeService

@@ -125,6 +125,32 @@ export class ExchangeService {
   }
 
   /**
+   * Fetches exchanges for a specific provider address
+   * Returns only exchanges from the specified exchange provider
+   *
+   * @param providerAddr - The exchange provider contract address to filter by
+   * @returns Array of exchanges from the specified provider
+   * @throws {Error} If RPC call fails
+   *
+   * @example
+   * ```typescript
+   * const biPoolManagerAddr = '0x...'
+   * const exchanges = await exchangeService.getExchangesForProvider(biPoolManagerAddr)
+   * console.log(`Found ${exchanges.length} exchanges from BiPoolManager`)
+   * ```
+   */
+  async getExchangesForProvider(providerAddr: string): Promise<Exchange[]> {
+    const allExchanges = await this.getExchanges()
+
+    // Normalize address for comparison
+    const normalizedProvider = providerAddr.toLowerCase()
+
+    return allExchanges.filter(
+      (exchange) => exchange.providerAddr.toLowerCase() === normalizedProvider
+    )
+  }
+
+  /**
    * Looks up a specific exchange by its unique identifier
    *
    * @param exchangeId - Unique exchange identifier (typically bytes32 hex string)
@@ -141,7 +167,9 @@ export class ExchangeService {
   async getExchangeById(exchangeId: string): Promise<Exchange> {
     const allExchanges = await this.getExchanges()
 
-    const matchingExchanges = allExchanges.filter((exchange) => exchange.id === exchangeId)
+    const matchingExchanges = allExchanges.filter(
+      (exchange) => exchange.id === exchangeId
+    )
 
     if (matchingExchanges.length === 0) {
       throw new ExchangeNotFoundError(`No exchange found for id ${exchangeId}`)
@@ -170,7 +198,10 @@ export class ExchangeService {
    * const exchange = await exchangeService.getExchangeForTokens(cUSD, CELO)
    * ```
    */
-  async getExchangeForTokens(token0: string, token1: string): Promise<Exchange> {
+  async getExchangeForTokens(
+    token0: string,
+    token1: string
+  ): Promise<Exchange> {
     const allExchanges = await this.getExchanges()
 
     // Normalize addresses to lowercase for comparison
@@ -186,11 +217,15 @@ export class ExchangeService {
     })
 
     if (matchingExchanges.length === 0) {
-      throw new ExchangeNotFoundError(`No exchange found for ${token0} and ${token1}`)
+      throw new ExchangeNotFoundError(
+        `No exchange found for ${token0} and ${token1}`
+      )
     }
 
     if (matchingExchanges.length > 1) {
-      throw new Error(`More than one exchange found for ${token0} and ${token1}`)
+      throw new Error(
+        `More than one exchange found for ${token0} and ${token1}`
+      )
     }
 
     return matchingExchanges[0]
@@ -316,7 +351,9 @@ export class ExchangeService {
           return cachedPairs
         }
       } catch (error) {
-        console.warn('Failed to load cached pairs, falling back to fresh generation')
+        console.warn(
+          'Failed to load cached pairs, falling back to fresh generation'
+        )
       }
     }
 
@@ -343,7 +380,11 @@ export class ExchangeService {
     const allRoutes = generateAllRoutes(connectivity)
 
     // Select optimal routes (not returning all routes, just the best one per pair)
-    const selectedPairs = selectOptimalRoutes(allRoutes, false, connectivity.addrToSymbol)
+    const selectedPairs = selectOptimalRoutes(
+      allRoutes,
+      false,
+      connectivity.addrToSymbol
+    )
 
     return selectedPairs as TradablePair[]
   }
@@ -385,7 +426,9 @@ export class ExchangeService {
       return symbol
     } catch (error) {
       // Fallback to address if symbol fetch fails
-      console.warn(`Failed to fetch symbol for token ${address}, using address as fallback`)
+      console.warn(
+        `Failed to fetch symbol for token ${address}, using address as fallback`
+      )
       this.symbolCache.set(address, address)
       return address
     }
@@ -412,7 +455,10 @@ export class ExchangeService {
    * }
    * ```
    */
-  async findPairForTokens(tokenIn: string, tokenOut: string): Promise<TradablePair> {
+  async findPairForTokens(
+    tokenIn: string,
+    tokenOut: string
+  ): Promise<TradablePair> {
     // Get all tradable pairs
     const allPairs = await this.getTradablePairs()
 

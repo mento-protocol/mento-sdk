@@ -14,6 +14,7 @@ Defines the complete `ProviderAdapter` interface including:
 - **Response types**: `TransactionResponse`, `TransactionReceipt`, `TransactionLog`
 
 **Key Principles**:
+
 - Backward compatible with existing read-only usage
 - Provider-agnostic (same interface for Ethers v5/v6 and Viem)
 - Type-safe with explicit TypeScript types
@@ -29,6 +30,7 @@ Defines the error hierarchy for write transactions:
 - **`NetworkError`**: RPC/network errors (retry-able)
 
 **Key Principles**:
+
 - Consistent error types across all providers
 - Actionable error messages (explain problem + suggest fix)
 - Clear distinction between pre-submission and on-chain failures

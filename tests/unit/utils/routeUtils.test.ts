@@ -7,7 +7,12 @@ import {
   hasSpreadData,
   type ConnectivityData,
 } from '../../../src/utils/routeUtils'
-import type { TradablePair, TradablePairID, Asset, TradablePairWithSpread } from '../../../src/types'
+import type {
+  TradablePair,
+  TradablePairID,
+  Asset,
+  TradablePairWithSpread,
+} from '../../../src/types'
 
 /**
  * Unit tests for routeUtils
@@ -99,7 +104,9 @@ describe('routeUtils', () => {
       const connectivity = buildConnectivityStructures(mockDirectPairs)
 
       // Keys should be sorted alphabetically
-      const celoUsdKey = [CELO_ADDR, CUSD_ADDR].sort().join('-') as TradablePairID
+      const celoUsdKey = [CELO_ADDR, CUSD_ADDR]
+        .sort()
+        .join('-') as TradablePairID
       const exchange = connectivity.directPathMap.get(celoUsdKey)
 
       expect(exchange).toBeDefined()
@@ -135,7 +142,9 @@ describe('routeUtils', () => {
       expect(ceurUsdRoutes!.length).toBeGreaterThan(0)
 
       // Check that at least one route is 2-hop
-      const twoHopRoute = ceurUsdRoutes!.find(route => route.path.length === 2)
+      const twoHopRoute = ceurUsdRoutes!.find(
+        (route) => route.path.length === 2
+      )
       expect(twoHopRoute).toBeDefined()
     })
 
@@ -148,12 +157,16 @@ describe('routeUtils', () => {
         for (const route of routes) {
           if (route.path.length === 2) {
             const [hop1, hop2] = route.path
-            const start = hop1.assets[0] === hop2.assets[0] || hop1.assets[0] === hop2.assets[1]
-              ? hop1.assets[1]
-              : hop1.assets[0]
-            const end = hop2.assets[0] === hop1.assets[0] || hop2.assets[0] === hop1.assets[1]
-              ? hop2.assets[1]
-              : hop2.assets[0]
+            const start =
+              hop1.assets[0] === hop2.assets[0] ||
+              hop1.assets[0] === hop2.assets[1]
+                ? hop1.assets[1]
+                : hop1.assets[0]
+            const end =
+              hop2.assets[0] === hop1.assets[0] ||
+              hop2.assets[0] === hop1.assets[1]
+                ? hop2.assets[1]
+                : hop2.assets[0]
 
             // Start and end should be different (not circular)
             expect(start).not.toBe(end)
@@ -171,7 +184,13 @@ describe('routeUtils', () => {
             { address: CELO_ADDR, symbol: 'CELO' },
             { address: CUSD_ADDR, symbol: 'cUSD' },
           ],
-          path: [{ providerAddr: '0xProvider1', id: '0xex1', assets: [CELO_ADDR, CUSD_ADDR] }],
+          path: [
+            {
+              providerAddr: '0xProvider1',
+              id: '0xex1',
+              assets: [CELO_ADDR, CUSD_ADDR],
+            },
+          ],
         },
         {
           id: 'CELO-USDC' as TradablePairID,
@@ -179,7 +198,13 @@ describe('routeUtils', () => {
             { address: CELO_ADDR, symbol: 'CELO' },
             { address: USDC_ADDR, symbol: 'USDC' },
           ],
-          path: [{ providerAddr: '0xProvider2', id: '0xex2', assets: [CELO_ADDR, USDC_ADDR] }],
+          path: [
+            {
+              providerAddr: '0xProvider2',
+              id: '0xex2',
+              assets: [CELO_ADDR, USDC_ADDR],
+            },
+          ],
         },
         {
           id: 'USDC-cUSD' as TradablePairID,
@@ -187,7 +212,13 @@ describe('routeUtils', () => {
             { address: USDC_ADDR, symbol: 'USDC' },
             { address: CUSD_ADDR, symbol: 'cUSD' },
           ],
-          path: [{ providerAddr: '0xProvider3', id: '0xex3', assets: [USDC_ADDR, CUSD_ADDR] }],
+          path: [
+            {
+              providerAddr: '0xProvider3',
+              id: '0xex3',
+              assets: [USDC_ADDR, CUSD_ADDR],
+            },
+          ],
         },
       ]
 
@@ -222,7 +253,11 @@ describe('routeUtils', () => {
     })
 
     it('should return array of selected routes', () => {
-      const selected = selectOptimalRoutes(allRoutes, false, connectivity.addrToSymbol)
+      const selected = selectOptimalRoutes(
+        allRoutes,
+        false,
+        connectivity.addrToSymbol
+      )
 
       expect(Array.isArray(selected)).toBe(true)
       expect(selected.length).toBeGreaterThan(0)
@@ -234,14 +269,22 @@ describe('routeUtils', () => {
         ['CELO-cUSD' as TradablePairID, [mockDirectPairs[0]]],
       ])
 
-      const selected = selectOptimalRoutes(singleRouteMap, false, connectivity.addrToSymbol)
+      const selected = selectOptimalRoutes(
+        singleRouteMap,
+        false,
+        connectivity.addrToSymbol
+      )
 
       expect(selected.length).toBe(1)
       expect(selected[0]).toEqual(mockDirectPairs[0])
     })
 
     it('should return all routes when returnAllRoutes is true', () => {
-      const selected = selectOptimalRoutes(allRoutes, true, connectivity.addrToSymbol)
+      const selected = selectOptimalRoutes(
+        allRoutes,
+        true,
+        connectivity.addrToSymbol
+      )
 
       // Should return all routes (not just optimal ones)
       let totalRoutes = 0
@@ -253,10 +296,14 @@ describe('routeUtils', () => {
     })
 
     it('should apply optimization when returnAllRoutes is false', () => {
-      const selected = selectOptimalRoutes(allRoutes, false, connectivity.addrToSymbol)
+      const selected = selectOptimalRoutes(
+        allRoutes,
+        false,
+        connectivity.addrToSymbol
+      )
 
       // Should have one route per unique pair (optimized selection)
-      const uniquePairIds = new Set(selected.map(r => r.id))
+      const uniquePairIds = new Set(selected.map((r) => r.id))
       expect(selected.length).toBe(uniquePairIds.size)
     })
   })
@@ -287,7 +334,9 @@ describe('routeUtils', () => {
 
       const best = selectBestRoute(candidatesWithSpread, addrToSymbol)
 
-      expect((best as TradablePairWithSpread).spreadData.totalSpreadPercent).toBe(0.3)
+      expect(
+        (best as TradablePairWithSpread).spreadData.totalSpreadPercent
+      ).toBe(0.3)
     })
 
     it('should prefer direct route over multi-hop (Tier 2)', () => {
@@ -300,8 +349,16 @@ describe('routeUtils', () => {
             { address: CUSD_ADDR, symbol: 'cUSD' },
           ],
           path: [
-            { providerAddr: '0xP1', id: '0xex1', assets: [CEUR_ADDR, CELO_ADDR] },
-            { providerAddr: '0xP2', id: '0xex2', assets: [CELO_ADDR, CUSD_ADDR] },
+            {
+              providerAddr: '0xP1',
+              id: '0xex1',
+              assets: [CEUR_ADDR, CELO_ADDR],
+            },
+            {
+              providerAddr: '0xP2',
+              id: '0xex2',
+              assets: [CELO_ADDR, CUSD_ADDR],
+            },
           ],
         },
         {
@@ -311,7 +368,13 @@ describe('routeUtils', () => {
             { address: CEUR_ADDR, symbol: 'cEUR' },
             { address: CUSD_ADDR, symbol: 'cUSD' },
           ],
-          path: [{ providerAddr: '0xP3', id: '0xex3', assets: [CEUR_ADDR, CUSD_ADDR] }],
+          path: [
+            {
+              providerAddr: '0xP3',
+              id: '0xex3',
+              assets: [CEUR_ADDR, CUSD_ADDR],
+            },
+          ],
         },
       ]
 
@@ -336,8 +399,16 @@ describe('routeUtils', () => {
             { address: CREAL_ADDR, symbol: 'cREAL' },
           ],
           path: [
-            { providerAddr: '0xP1', id: '0xex1', assets: [CEUR_ADDR, CREAL_ADDR] },
-            { providerAddr: '0xP2', id: '0xex2', assets: [CREAL_ADDR, CREAL_ADDR] },
+            {
+              providerAddr: '0xP1',
+              id: '0xex1',
+              assets: [CEUR_ADDR, CREAL_ADDR],
+            },
+            {
+              providerAddr: '0xP2',
+              id: '0xex2',
+              assets: [CREAL_ADDR, CREAL_ADDR],
+            },
           ],
         },
         {
@@ -348,8 +419,16 @@ describe('routeUtils', () => {
             { address: CREAL_ADDR, symbol: 'cREAL' },
           ],
           path: [
-            { providerAddr: '0xP3', id: '0xex3', assets: [CEUR_ADDR, CUSD_ADDR] }, // cUSD intermediate
-            { providerAddr: '0xP4', id: '0xex4', assets: [CUSD_ADDR, CREAL_ADDR] },
+            {
+              providerAddr: '0xP3',
+              id: '0xex3',
+              assets: [CEUR_ADDR, CUSD_ADDR],
+            }, // cUSD intermediate
+            {
+              providerAddr: '0xP4',
+              id: '0xex4',
+              assets: [CUSD_ADDR, CREAL_ADDR],
+            },
           ],
         },
       ]
@@ -368,7 +447,10 @@ describe('routeUtils', () => {
     })
 
     it('should return first route if no better heuristic applies (Tier 4)', () => {
-      const candidates: TradablePair[] = [mockDirectPairs[0], mockDirectPairs[1]]
+      const candidates: TradablePair[] = [
+        mockDirectPairs[0],
+        mockDirectPairs[1],
+      ]
 
       const addrToSymbol = new Map([
         [CELO_ADDR, 'CELO'],

@@ -1,5 +1,13 @@
-import { ExchangeService, ExchangeNotFoundError, PairNotFoundError } from '../../../src/services/ExchangeService'
-import type { ProviderAdapter, Exchange, TradablePair } from '../../../src/types'
+import {
+  ExchangeService,
+  ExchangeNotFoundError,
+  PairNotFoundError,
+} from '../../../src/services/ExchangeService'
+import type {
+  ProviderAdapter,
+  Exchange,
+  TradablePair,
+} from '../../../src/types'
 
 /**
  * Unit tests for ExchangeService
@@ -16,17 +24,26 @@ describe('ExchangeService', () => {
     {
       providerAddr: '0xBiPoolManager000000000000000000000000000',
       id: '0xexchange1',
-      assets: ['0xcUSD0000000000000000000000000000000000', '0xCELO0000000000000000000000000000000000'],
+      assets: [
+        '0xcUSD0000000000000000000000000000000000',
+        '0xCELO0000000000000000000000000000000000',
+      ],
     },
     {
       providerAddr: '0xBiPoolManager000000000000000000000000000',
       id: '0xexchange2',
-      assets: ['0xCELO0000000000000000000000000000000000', '0xcEUR0000000000000000000000000000000000'],
+      assets: [
+        '0xCELO0000000000000000000000000000000000',
+        '0xcEUR0000000000000000000000000000000000',
+      ],
     },
     {
       providerAddr: '0xBiPoolManager000000000000000000000000000',
       id: '0xexchange3',
-      assets: ['0xcUSD0000000000000000000000000000000000', '0xcREAL000000000000000000000000000000000'],
+      assets: [
+        '0xcUSD0000000000000000000000000000000000',
+        '0xcREAL000000000000000000000000000000000',
+      ],
     },
   ]
 
@@ -89,7 +106,10 @@ describe('ExchangeService', () => {
       // Mock response with invalid exchange (3 assets)
       mockAdapter.readContract.mockResolvedValue([
         { exchangeId: '0xvalid', assets: ['0xtoken1', '0xtoken2'] },
-        { exchangeId: '0xinvalid', assets: ['0xtoken1', '0xtoken2', '0xtoken3'] }, // 3 assets
+        {
+          exchangeId: '0xinvalid',
+          assets: ['0xtoken1', '0xtoken2', '0xtoken3'],
+        }, // 3 assets
         { exchangeId: '0xvalid2', assets: ['0xtoken3', '0xtoken4'] },
       ])
 
@@ -98,7 +118,7 @@ describe('ExchangeService', () => {
       const exchanges = await service.getExchanges()
 
       expect(exchanges).toHaveLength(2) // Only 2 valid exchanges
-      expect(exchanges.find(ex => ex.id === '0xinvalid')).toBeUndefined()
+      expect(exchanges.find((ex) => ex.id === '0xinvalid')).toBeUndefined()
       expect(consoleSpy).toHaveBeenCalledWith(
         expect.stringContaining('Skipping invalid exchange 0xinvalid')
       )
@@ -124,9 +144,13 @@ describe('ExchangeService', () => {
     })
 
     it('should throw error if RPC call fails', async () => {
-      mockAdapter.readContract.mockRejectedValue(new Error('RPC connection failed'))
+      mockAdapter.readContract.mockRejectedValue(
+        new Error('RPC connection failed')
+      )
 
-      await expect(service.getExchanges()).rejects.toThrow('Failed to fetch exchanges')
+      await expect(service.getExchanges()).rejects.toThrow(
+        'Failed to fetch exchanges'
+      )
     })
   })
 
@@ -169,8 +193,53 @@ describe('ExchangeService', () => {
     })
   })
 
-  // NOTE: getExchangesForProvider() is planned (T029) but not yet implemented
-  // Removing tests until method is implemented
+  describe('getExchangesForProvider()', () => {
+    beforeEach(() => {
+      // Mock exchanges from multiple providers
+      mockAdapter.readContract.mockResolvedValue([
+        { exchangeId: '0xex1', assets: ['0xtoken1', '0xtoken2'] },
+        { exchangeId: '0xex2', assets: ['0xtoken3', '0xtoken4'] },
+        { exchangeId: '0xex3', assets: ['0xtoken5', '0xtoken6'] },
+      ])
+    })
+
+    it('should return exchanges filtered by provider address', async () => {
+      const exchanges = await service.getExchanges()
+      const providerAddr = exchanges[0].providerAddr
+
+      const filteredExchanges = await service.getExchangesForProvider(
+        providerAddr
+      )
+
+      // All exchanges should have the same provider (BiPoolManager)
+      expect(filteredExchanges.length).toBeGreaterThan(0)
+      filteredExchanges.forEach((ex) => {
+        expect(ex.providerAddr.toLowerCase()).toBe(providerAddr.toLowerCase())
+      })
+    })
+
+    it('should return empty array for non-existent provider', async () => {
+      const exchanges = await service.getExchangesForProvider('0xnonexistent')
+
+      expect(exchanges).toEqual([])
+    })
+
+    it('should handle case-insensitive provider address matching', async () => {
+      const exchanges = await service.getExchanges()
+      const providerAddr = exchanges[0].providerAddr
+
+      // Test lowercase
+      const lowerResult = await service.getExchangesForProvider(
+        providerAddr.toLowerCase()
+      )
+      // Test uppercase
+      const upperResult = await service.getExchangesForProvider(
+        providerAddr.toUpperCase()
+      )
+
+      expect(lowerResult.length).toBe(upperResult.length)
+    })
+  })
 
   // =========================================================================
   // USER STORY 2: Discover Direct Trading Pairs
@@ -178,19 +247,21 @@ describe('ExchangeService', () => {
 
   describe('getDirectPairs()', () => {
     beforeEach(() => {
-      mockAdapter.readContract.mockImplementation(async ({ functionName }: any) => {
-        if (functionName === 'getExchanges') {
-          return mockExchanges.map((ex) => ({
-            exchangeId: ex.id,
-            assets: ex.assets,
-          }))
+      mockAdapter.readContract.mockImplementation(
+        async ({ functionName }: any) => {
+          if (functionName === 'getExchanges') {
+            return mockExchanges.map((ex) => ({
+              exchangeId: ex.id,
+              assets: ex.assets,
+            }))
+          }
+          // Symbol fetching
+          if (functionName === 'symbol') {
+            return 'TOKEN'
+          }
+          return null
         }
-        // Symbol fetching
-        if (functionName === 'symbol') {
-          return 'TOKEN'
-        }
-        return null
-      })
+      )
     })
 
     it('should return array of TradablePair objects', async () => {
@@ -211,42 +282,46 @@ describe('ExchangeService', () => {
 
     it('should deduplicate multiple exchanges for same token pair', async () => {
       // Mock duplicate exchanges for same pair
-      mockAdapter.readContract.mockImplementation(async ({ functionName }: any) => {
-        if (functionName === 'getExchanges') {
-          return [
-            { exchangeId: '0xex1', assets: ['0xtoken1', '0xtoken2'] },
-            { exchangeId: '0xex2', assets: ['0xtoken1', '0xtoken2'] }, // Duplicate pair
-            { exchangeId: '0xex3', assets: ['0xtoken3', '0xtoken4'] },
-          ]
+      mockAdapter.readContract.mockImplementation(
+        async ({ functionName }: any) => {
+          if (functionName === 'getExchanges') {
+            return [
+              { exchangeId: '0xex1', assets: ['0xtoken1', '0xtoken2'] },
+              { exchangeId: '0xex2', assets: ['0xtoken1', '0xtoken2'] }, // Duplicate pair
+              { exchangeId: '0xex3', assets: ['0xtoken3', '0xtoken4'] },
+            ]
+          }
+          if (functionName === 'symbol') {
+            return 'TOKEN'
+          }
+          return null
         }
-        if (functionName === 'symbol') {
-          return 'TOKEN'
-        }
-        return null
-      })
+      )
 
       const pairs = await service.getDirectPairs()
 
       // Should only have 2 unique pairs (duplicates merged)
-      const pairIds = pairs.map(p => p.id)
+      const pairIds = pairs.map((p) => p.id)
       const uniquePairIds = new Set(pairIds)
       expect(uniquePairIds.size).toBe(pairIds.length) // No duplicate IDs
     })
 
     it('should sort pair assets alphabetically by symbol', async () => {
-      mockAdapter.readContract.mockImplementation(async ({ functionName, address }: any) => {
-        if (functionName === 'getExchanges') {
-          return [
-            { exchangeId: '0xex1', assets: ['0xZZZ', '0xAAA'] }, // Z comes before A in address
-          ]
+      mockAdapter.readContract.mockImplementation(
+        async ({ functionName, address }: any) => {
+          if (functionName === 'getExchanges') {
+            return [
+              { exchangeId: '0xex1', assets: ['0xZZZ', '0xAAA'] }, // Z comes before A in address
+            ]
+          }
+          if (functionName === 'symbol') {
+            // Return symbols based on address
+            if (address === '0xZZZ') return 'ZZZ'
+            if (address === '0xAAA') return 'AAA'
+          }
+          return null
         }
-        if (functionName === 'symbol') {
-          // Return symbols based on address
-          if (address === '0xZZZ') return 'ZZZ'
-          if (address === '0xAAA') return 'AAA'
-        }
-        return null
-      })
+      )
 
       const pairs = await service.getDirectPairs()
 
@@ -258,18 +333,18 @@ describe('ExchangeService', () => {
     })
 
     it('should create canonical pair IDs using alphabetically sorted symbols', async () => {
-      mockAdapter.readContract.mockImplementation(async ({ functionName, address }: any) => {
-        if (functionName === 'getExchanges') {
-          return [
-            { exchangeId: '0xex1', assets: ['0xtoken1', '0xtoken2'] },
-          ]
+      mockAdapter.readContract.mockImplementation(
+        async ({ functionName, address }: any) => {
+          if (functionName === 'getExchanges') {
+            return [{ exchangeId: '0xex1', assets: ['0xtoken1', '0xtoken2'] }]
+          }
+          if (functionName === 'symbol') {
+            if (address === '0xtoken1') return 'ZZZ'
+            if (address === '0xtoken2') return 'AAA'
+          }
+          return null
         }
-        if (functionName === 'symbol') {
-          if (address === '0xtoken1') return 'ZZZ'
-          if (address === '0xtoken2') return 'AAA'
-        }
-        return null
-      })
+      )
 
       const pairs = await service.getDirectPairs()
 
@@ -279,16 +354,21 @@ describe('ExchangeService', () => {
     it('should fetch and cache token symbols', async () => {
       const symbolCalls: string[] = []
 
-      mockAdapter.readContract.mockImplementation(async ({ functionName, address }: any) => {
-        if (functionName === 'getExchanges') {
-          return mockExchanges.map((ex) => ({ exchangeId: ex.id, assets: ex.assets }))
+      mockAdapter.readContract.mockImplementation(
+        async ({ functionName, address }: any) => {
+          if (functionName === 'getExchanges') {
+            return mockExchanges.map((ex) => ({
+              exchangeId: ex.id,
+              assets: ex.assets,
+            }))
+          }
+          if (functionName === 'symbol') {
+            symbolCalls.push(address)
+            return 'SYM'
+          }
+          return null
         }
-        if (functionName === 'symbol') {
-          symbolCalls.push(address)
-          return 'SYM'
-        }
-        return null
-      })
+      )
 
       // First call
       await service.getDirectPairs()
@@ -306,15 +386,17 @@ describe('ExchangeService', () => {
     it('should use address as fallback if symbol fetch fails', async () => {
       const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation()
 
-      mockAdapter.readContract.mockImplementation(async ({ functionName }: any) => {
-        if (functionName === 'getExchanges') {
-          return [{ exchangeId: '0xex1', assets: ['0xtoken1', '0xtoken2'] }]
+      mockAdapter.readContract.mockImplementation(
+        async ({ functionName }: any) => {
+          if (functionName === 'getExchanges') {
+            return [{ exchangeId: '0xex1', assets: ['0xtoken1', '0xtoken2'] }]
+          }
+          if (functionName === 'symbol') {
+            throw new Error('Symbol fetch failed')
+          }
+          return null
         }
-        if (functionName === 'symbol') {
-          throw new Error('Symbol fetch failed')
-        }
-        return null
-      })
+      )
 
       const pairs = await service.getDirectPairs()
 
@@ -370,18 +452,20 @@ describe('ExchangeService', () => {
 
   describe('getTradablePairs()', () => {
     beforeEach(() => {
-      mockAdapter.readContract.mockImplementation(async ({ functionName }: any) => {
-        if (functionName === 'getExchanges') {
-          return mockExchanges.map((ex) => ({
-            exchangeId: ex.id,
-            assets: ex.assets,
-          }))
+      mockAdapter.readContract.mockImplementation(
+        async ({ functionName }: any) => {
+          if (functionName === 'getExchanges') {
+            return mockExchanges.map((ex) => ({
+              exchangeId: ex.id,
+              assets: ex.assets,
+            }))
+          }
+          if (functionName === 'symbol') {
+            return 'TOKEN'
+          }
+          return null
         }
-        if (functionName === 'symbol') {
-          return 'TOKEN'
-        }
-        return null
-      })
+      )
     })
 
     it('should return both direct and 2-hop pairs', async () => {
@@ -391,7 +475,7 @@ describe('ExchangeService', () => {
 
       // Should have pairs with routing information
       // Note: path may contain multiple exchanges for same pair (grouped)
-      pairs.forEach(pair => {
+      pairs.forEach((pair) => {
         expect(pair.path.length).toBeGreaterThan(0)
       })
     })
@@ -423,23 +507,25 @@ describe('ExchangeService', () => {
 
   describe('findPairForTokens()', () => {
     beforeEach(() => {
-      mockAdapter.readContract.mockImplementation(async ({ functionName, address }: any) => {
-        if (functionName === 'getExchanges') {
-          return mockExchanges.map((ex) => ({
-            exchangeId: ex.id,
-            assets: ex.assets,
-          }))
+      mockAdapter.readContract.mockImplementation(
+        async ({ functionName, address }: any) => {
+          if (functionName === 'getExchanges') {
+            return mockExchanges.map((ex) => ({
+              exchangeId: ex.id,
+              assets: ex.assets,
+            }))
+          }
+          if (functionName === 'symbol') {
+            // Return different symbols for different tokens
+            if (address?.includes('cUSD')) return 'cUSD'
+            if (address?.includes('CELO')) return 'CELO'
+            if (address?.includes('cEUR')) return 'cEUR'
+            if (address?.includes('cREAL')) return 'cREAL'
+            return 'TOKEN'
+          }
+          return null
         }
-        if (functionName === 'symbol') {
-          // Return different symbols for different tokens
-          if (address?.includes('cUSD')) return 'cUSD'
-          if (address?.includes('CELO')) return 'CELO'
-          if (address?.includes('cEUR')) return 'cEUR'
-          if (address?.includes('cREAL')) return 'cREAL'
-          return 'TOKEN'
-        }
-        return null
-      })
+      )
     })
 
     it('should return pair for valid token combination', async () => {

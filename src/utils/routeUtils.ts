@@ -1,4 +1,9 @@
-import type { TradablePair, TradablePairID, Asset, TradablePairWithSpread } from '../types'
+import type {
+  TradablePair,
+  TradablePairID,
+  Asset,
+  TradablePairWithSpread,
+} from '../types'
 
 type TokenSymbol = string
 type Address = string

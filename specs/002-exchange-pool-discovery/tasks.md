@@ -7,24 +7,25 @@
 
 ## Progress Summary
 
-| Phase | Completed | Total | Status |
-|-------|-----------|-------|--------|
-| Phase 1: Setup | 3 | 4 | 🟡 75% |
-| Phase 2: Foundational | 8 | 8 | ✅ 100% |
-| Phase 3: US1 - Get Exchanges | 23 | 26 | 🟡 88% |
-| Phase 4: US2 - Direct Pairs | 20 | 20 | ✅ 100% |
-| Phase 5: US3 - Multi-Hop Routes | 32 | 32 | ✅ 100% |
-| Phase 6: US4 - Pair Lookup | 14 | 14 | ✅ 100% |
-| Phase 7: Provider Parity | 6 | 6 | ✅ 100% |
-| Phase 8: Static Cache (optional) | 0 | 10 | ⬜ Deferred |
-| Phase 9: Polish | 6 | 14 | 🟡 43% |
-| **TOTAL** | **112** | **134** | **84%** |
+| Phase                            | Completed | Total   | Status      |
+| -------------------------------- | --------- | ------- | ----------- |
+| Phase 1: Setup                   | 3         | 4       | 🟡 75%      |
+| Phase 2: Foundational            | 8         | 8       | ✅ 100%     |
+| Phase 3: US1 - Get Exchanges     | 25        | 26      | 🟡 96%      |
+| Phase 4: US2 - Direct Pairs      | 20        | 20      | ✅ 100%     |
+| Phase 5: US3 - Multi-Hop Routes  | 32        | 32      | ✅ 100%     |
+| Phase 6: US4 - Pair Lookup       | 14        | 14      | ✅ 100%     |
+| Phase 7: Provider Parity         | 6         | 6       | ✅ 100%     |
+| Phase 8: Static Cache (optional) | 0         | 10      | ⬜ Deferred |
+| Phase 9: Polish                  | 9         | 14      | 🟡 64%      |
+| **TOTAL**                        | **116**   | **134** | **87%**     |
 
 **Last Updated**: 2025-11-21
 
 ---
 
 **Tests**: Per the [Mento SDK Constitution](../../.specify/memory/constitution.md), comprehensive testing is REQUIRED:
+
 - All services MUST have unit tests
 - All provider integrations MUST have integration tests
 - Shared test suites MUST ensure provider parity
@@ -33,6 +34,7 @@
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
 ## Format: `[ID] [P?] [Story] Description`
+
 - **[P]**: Can run in parallel (different files, no dependencies)
 - **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
 - Include exact file paths in descriptions
@@ -83,7 +85,7 @@
 - [x] T014 [P] [US1] Add unit test: getExchanges() returns cached results on second call
 - [x] T015 [P] [US1] Add unit test: getExchanges() validates exchange has exactly 2 assets
 - [x] T016 [P] [US1] Add unit test: getExchanges() skips invalid exchanges with warning
-- [ ] T017 [P] [US1] Add unit test: getExchangesForProvider() filters by provider address
+- [x] T017 [P] [US1] Add unit test: getExchangesForProvider() filters by provider address
 - [x] T018 [P] [US1] Add unit test: getExchangeById() returns exchange or throws ExchangeNotFoundError
 - [x] T019 [P] [US1] Add unit test: getExchangeById() throws if multiple exchanges found (assertion)
 - [x] T020 [P] [US1] Create integration test file tests/integration/adapters/ethersExchangeDiscovery.test.ts
@@ -98,7 +100,7 @@
 - [x] T026 [US1] Implement getExchanges() method: fetch providers from Broker, fetch exchanges from each provider, validate and cache
 - [x] T027 [US1] Add address checksumming for all provider and asset addresses using adapter
 - [x] T028 [US1] Add validation: assert each exchange has exactly 2 assets, skip invalid with warning log
-- [ ] T029 [US1] Implement getExchangesForProvider(providerAddr) method: filter cached exchanges by provider
+- [x] T029 [US1] Implement getExchangesForProvider(providerAddr) method: filter cached exchanges by provider
 - [x] T030 [US1] Implement getExchangeById(exchangeId) method: search cached exchanges, throw ExchangeNotFoundError if not found
 - [ ] T031 [US1] Add retry logic using existing src/utils/retry.ts for adapter calls
 - [x] T032 [US1] Add JSDoc comments to all public methods with @param, @returns, @throws, and usage examples
@@ -268,9 +270,9 @@
 - [ ] T123 [P] Update CLAUDE.md with new technologies and commands used in this feature
 - [ ] T124 Verify all addresses are checksummed using adapter normalization
 - [ ] T125 Verify all numeric values use BigInt where applicable (may not apply to this feature)
-- [ ] T126 [P] Run ESLint across src/services/ExchangeService.ts and src/utils/routeUtils.ts
-- [ ] T127 [P] Run Prettier across all modified files
-- [ ] T128 Verify code coverage meets 80% threshold: run coverage report
+- [x] T126 [P] Run ESLint across src/services/ExchangeService.ts and src/utils/routeUtils.ts
+- [x] T127 [P] Run Prettier across all modified files
+- [x] T128 Verify code coverage meets 80% threshold: run coverage report
 - [x] T129 Performance optimization: verify Promise.all() used for parallel symbol fetching
 - [x] T130 Performance optimization: verify no O(n²) operations except intentional route generation
 - [x] T131 Constitution compliance review: verify all 6 principles followed
@@ -311,33 +313,42 @@
 ### Parallel Opportunities
 
 **Setup Phase (Phase 1)**:
+
 - T002, T003, T004 can all run in parallel (different ABI files)
 
 **Foundational Phase (Phase 2)**:
+
 - T005, T006, T007, T008, T009 can run in parallel (different type definitions)
 - T011, T012 can run in parallel (different interfaces in utils file)
 
 **User Story 1 Tests**:
+
 - T013-T019 can run in parallel (different test cases in same or different files)
 - T020, T021, T022 can run in parallel (different integration test files)
 
 **User Story 2 Tests**:
+
 - T038-T046 can run in parallel (different test cases)
 
 **User Story 3 Tests**:
+
 - T058-T071 can run in parallel (different test cases in different files)
 
 **User Story 3 Implementation**:
+
 - T072, T073, T074 can run in parallel if careful (same file but different functions)
 - T078, T079 can run in parallel (different functions)
 
 **User Story 4 Tests**:
+
 - T091-T095 can run in parallel (different test cases)
 
 **Cache Generation (Phase 8)**:
+
 - T116 can run in parallel with T115 (different chain IDs)
 
 **Polish (Phase 9)**:
+
 - T121, T122, T123 can run in parallel (different documentation files)
 - T126, T127 can run in parallel (different tools)
 
@@ -406,6 +417,7 @@ With multiple developers:
 ## Task Metrics
 
 **Total Tasks**: 134
+
 - Setup: 4 tasks (3 completed)
 - Foundational: 8 tasks (8 completed)
 - User Story 1: 26 tasks (23 completed)
@@ -423,6 +435,7 @@ With multiple developers:
 **Suggested MVP Scope**: Phases 1-4, 7, 9 (User Stories 1-2 only) = ~70 tasks
 
 **Independent Test Criteria**:
+
 - US1: Can fetch and display all exchanges from Mento protocol ✅
 - US2: Can discover all direct trading pairs with deduplicated exchange groups ✅
 - US3: Can discover multi-hop routes and select optimal paths ✅
@@ -433,21 +446,25 @@ With multiple developers:
 ## Remaining Work
 
 ### High Priority (MVP blockers)
+
 - [ ] T017/T029: `getExchangesForProvider()` method (optional for MVP)
 - [ ] T031: Retry logic integration
 - [ ] T128: Verify code coverage >80%
 
 ### Medium Priority (Quality)
+
 - [ ] T003: ExchangeProvider ABI (may not be needed)
 - [ ] T124: Address checksumming verification
 - [ ] T126/T127: Linting and formatting pass
 - [ ] T132: Security audit
 
 ### Low Priority (Documentation)
+
 - [ ] T122: README quickstart examples
 - [ ] T123: CLAUDE.md updates
 
 ### Deferred (Post-MVP)
+
 - Phase 8: Static cache generation (T111-T120)
 
 ---

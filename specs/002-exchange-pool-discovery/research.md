@@ -33,6 +33,7 @@ async getExchangeById(exchangeId: string): Promise<Exchange>
 ```
 
 **Implementation Details**:
+
 - Uses Broker contract's `getExchangeProviders()` to fetch all provider addresses
 - For each provider, connects to `IExchangeProvider` contract and calls `getExchanges()`
 - Validates each exchange has exactly 2 assets (assertion check)
@@ -42,9 +43,11 @@ async getExchangeById(exchangeId: string): Promise<Exchange>
 #### 2. Tradable Pair Discovery (`mento.ts`)
 
 **Direct Pairs**:
+
 ```typescript
 async getDirectPairs(): Promise<TradablePair[]>
 ```
+
 - Fetches all exchanges
 - Groups exchanges by token pair (alphabetically sorted symbols)
 - Fetches token symbols on-chain using `getSymbolFromTokenAddress()`
@@ -52,12 +55,14 @@ async getDirectPairs(): Promise<TradablePair[]>
 - Each pair includes canonical ID (sorted symbols) and path with exchange hops
 
 **Multi-Hop Pairs**:
+
 ```typescript
 async getTradablePairsWithPath({
   cached = true,
   returnAllRoutes = false
 }): Promise<readonly (TradablePair | TradablePairWithSpread)[]>
 ```
+
 - First attempts to load cached pairs if `cached=true`
 - Falls back to generating pairs from scratch:
   1. Gets direct pairs
@@ -66,9 +71,11 @@ async getTradablePairsWithPath({
   4. Selects optimal routes
 
 **Pair Lookup**:
+
 ```typescript
 async findPairForTokens(tokenIn: Address, tokenOut: Address): Promise<TradablePair>
 ```
+
 - Searches all tradable pairs for matching token addresses
 - Handles bidirectional matching (A→B or B→A)
 - Throws descriptive error if no pair found
@@ -78,18 +85,22 @@ async findPairForTokens(tokenIn: Address, tokenOut: Address): Promise<TradablePa
 The v1 implementation uses a sophisticated graph-based approach:
 
 **Step 1: Build Connectivity Structures**
+
 ```typescript
 buildConnectivityStructures(directPairs: TradablePair[]): ConnectivityData
 ```
+
 - Creates `addrToSymbol` map for fast symbol lookups
 - Creates `directPathMap` mapping sorted token pairs to exchange details
 - Creates `tokenGraph` adjacency list (bidirectional edges)
 - Preserves original `directPairs` for reference
 
 **Step 2: Generate All Routes**
+
 ```typescript
 generateAllRoutes(connectivityData: ConnectivityData): Map<TradablePairID, TradablePair[]>
 ```
+
 - Adds all direct pairs (single-hop)
 - Uses graph traversal to find 2-hop routes:
   - For each token A in graph
@@ -100,6 +111,7 @@ generateAllRoutes(connectivityData: ConnectivityData): Map<TradablePairID, Trada
 - Multiple routes for same pair collected in arrays
 
 **Step 3: Select Optimal Routes**
+
 ```typescript
 selectOptimalRoutes(
   allRoutes: Map<TradablePairID, TradablePair[]>,
@@ -107,11 +119,13 @@ selectOptimalRoutes(
   addrToSymbol: Map<Address, TokenSymbol>
 ): (TradablePair | TradablePairWithSpread)[]
 ```
+
 - Single route: use directly
 - Multiple routes + `returnAllRoutes=true`: return all with unique keys
 - Multiple routes + `returnAllRoutes=false`: apply optimization
 
 **Route Selection Heuristics** (multi-tier):
+
 1. **Tier 1 - Spread-based**: Prefer routes with lowest `totalSpreadPercent` (from cached data)
 2. **Tier 2 - Direct route**: Prefer single-hop over multi-hop (lower gas, less risk)
 3. **Tier 3 - Stablecoin routing**: Prefer routes through major stablecoins (cUSD, cEUR, USDC, USDT)
@@ -120,6 +134,7 @@ selectOptimalRoutes(
 ### Caching Strategy
 
 **Static Cache Files**:
+
 - Pre-generated cached pairs with spread data stored in `src/constants/tradablePairs`
 - Loaded via `getCachedTradablePairs(chainId)`
 - Contains `TradablePairWithSpread` objects including `spreadData.totalSpreadPercent`
@@ -127,6 +142,7 @@ selectOptimalRoutes(
 - Used for optimal route selection (Tier 1 heuristic)
 
 **In-Memory Cache**:
+
 - Exchanges cached in `this.exchanges` array for SDK instance lifetime
 - Prevents redundant blockchain queries
 - Cleared only when new Mento instance created
@@ -134,20 +150,27 @@ selectOptimalRoutes(
 ### Contract Interactions
 
 **V1 Contracts Used**:
+
 1. **Broker** (`IBroker`):
+
    - `getExchangeProviders()` → returns array of provider addresses
 
 2. **ExchangeProvider** (`IExchangeProvider`):
+
    - `getExchanges()` → returns array of exchanges with `{ exchangeId, assets[] }`
 
 3. **ERC-20 Token**:
    - `symbol()` → returns token symbol string
 
 **V1 Usage Pattern**:
+
 ```typescript
 // Direct factory usage (needs conversion to adapter pattern)
 const broker = IBroker__factory.connect(brokerAddress, signerOrProvider)
-const exchangeProvider = IExchangeProvider__factory.connect(providerAddr, signerOrProvider)
+const exchangeProvider = IExchangeProvider__factory.connect(
+  providerAddr,
+  signerOrProvider
+)
 ```
 
 ## V3 Adapter Integration Approach
@@ -155,6 +178,7 @@ const exchangeProvider = IExchangeProvider__factory.connect(providerAddr, signer
 ### Adapter Pattern Benefits
 
 The v3 adapter system (`src/adapters/`) provides:
+
 - **Provider agnostic**: Single interface for Ethers v6, Viem
 - **Type safety**: Strict TypeScript types
 - **Error handling**: Standardized error messages with retry logic
@@ -163,6 +187,7 @@ The v3 adapter system (`src/adapters/`) provides:
 ### Migration Strategy
 
 **Replace Direct Contract Calls**:
+
 ```typescript
 // V1 approach (direct Ethers v5)
 const broker = IBroker__factory.connect(address, provider)
@@ -173,16 +198,18 @@ const result = await this.adapter.readContract({
   address: brokerAddress,
   abi: BROKER_ABI,
   functionName: 'getExchangeProviders',
-  args: []
+  args: [],
 })
 ```
 
 **Contract Call Batching**:
+
 - Use `Promise.all()` to batch multiple adapter calls
 - Reduces RPC load (constitution requirement)
 - Example: Fetching symbols for multiple tokens simultaneously
 
 **Retry Logic**:
+
 - Leverage existing `retryOperation()` utility from `src/utils/retry.ts`
 - Wraps adapter calls for transient failure handling
 - Exponential backoff already implemented
@@ -192,6 +219,7 @@ const result = await this.adapter.readContract({
 **Chosen Approach**: Single `ExchangeService` class
 
 **Rationale**:
+
 - All exchange/pair operations are closely related
 - Share common state (cached exchanges)
 - Natural method grouping:
@@ -202,6 +230,7 @@ const result = await this.adapter.readContract({
 - Avoids service fragmentation and circular dependencies
 
 **Alternative Rejected**: Separate `ExchangeService` and `PairDiscoveryService`
+
 - Would require sharing exchange cache between services
 - Unnecessary complexity for closely related operations
 - Violates constitution principle of simplicity
@@ -215,7 +244,7 @@ const result = await this.adapter.readContract({
 export interface Exchange {
   providerAddr: string
   id: string
-  assets: string[]  // Will keep as string[] (v3 uses string for addresses)
+  assets: string[] // Will keep as string[] (v3 uses string for addresses)
 }
 
 export interface Asset {
@@ -243,6 +272,7 @@ export interface TradablePairWithSpread extends TradablePair {
 ```
 
 **Internal Types** (route utilities):
+
 ```typescript
 export interface ConnectivityData {
   addrToSymbol: Map<string, string>
@@ -263,6 +293,7 @@ interface ExchangeDetails {
 **New ABIs to Add** (in `src/abis/`):
 
 1. **`broker.ts`** (extend existing):
+
 ```typescript
 export const BROKER_ABI = [
   // existing...
@@ -271,6 +302,7 @@ export const BROKER_ABI = [
 ```
 
 2. **`exchangeProvider.ts`** (new file):
+
 ```typescript
 export const EXCHANGE_PROVIDER_ABI = [
   'function getExchanges() view returns (tuple(bytes32 exchangeId, address[] assets)[])',
@@ -278,6 +310,7 @@ export const EXCHANGE_PROVIDER_ABI = [
 ```
 
 3. **`erc20.ts`** (already exists, verify symbol method):
+
 ```typescript
 export const ERC20_ABI = [
   // existing...
@@ -295,16 +328,19 @@ export const ERC20_ABI = [
 ### Optimization Strategies
 
 1. **In-Memory Caching**:
+
    - Cache exchanges for instance lifetime
    - Cache token symbols for tokens already queried
    - Prevents redundant RPC calls
 
 2. **Batch Operations**:
+
    - Parallel provider queries: `Promise.all(providers.map(getExchangesForProvider))`
    - Parallel symbol fetching: `Promise.all(tokens.map(getSymbol))`
    - Reduces total query time
 
 3. **Static Cache Support**:
+
    - Pre-generated pairs with spread data
    - Near-instant results for supported chains
    - Fallback to fresh generation if cache miss
@@ -332,6 +368,7 @@ assert(exchange.assets.length === 2, 'Exchange must have 2 assets')
 ### Symbol Fallback
 
 If token symbol fetch fails:
+
 - Use address as fallback identifier
 - Log warning for debugging
 - Continue processing (graceful degradation)
@@ -345,10 +382,15 @@ If token symbol fetch fails:
 throw Error(`No exchange found for ${token0} and ${token1}`)
 
 // Multiple exchanges (assertion)
-assert(exchanges.length === 1, `More than one exchange found for ${token0} and ${token1}`)
+assert(
+  exchanges.length === 1,
+  `More than one exchange found for ${token0} and ${token1}`
+)
 
 // Pair not found
-throw new Error(`No pair found for tokens ${tokenIn} and ${tokenOut}. They may not have a tradable path.`)
+throw new Error(
+  `No pair found for tokens ${tokenIn} and ${tokenOut}. They may not have a tradable path.`
+)
 
 // No exchanges for ID
 throw Error(`No exchange found for id ${exchangeId}`)
@@ -365,6 +407,7 @@ throw Error(`No exchange found for id ${exchangeId}`)
 ### Unit Tests (route utilities)
 
 **Test Cases for Route Finding**:
+
 1. Direct pair generation from exchanges
 2. Two-hop route discovery via graph traversal
 3. Route deduplication (multiple routes for same pair)
@@ -373,6 +416,7 @@ throw Error(`No exchange found for id ${exchangeId}`)
 6. Symbol caching and reuse
 
 **Mock Data**:
+
 - Predefined exchange sets
 - Known token symbols
 - Expected route outputs
@@ -380,12 +424,14 @@ throw Error(`No exchange found for id ${exchangeId}`)
 ### Integration Tests (adapter usage)
 
 **Provider Parity Tests** (shared test suite):
+
 1. Fetch exchanges from broker (Ethers vs Viem)
 2. Query exchange providers
 3. Get token symbols
 4. Verify identical results across adapters
 
 **Blockchain Tests** (against testnet/fork):
+
 1. Real broker contract interaction
 2. Validate exchange structure
 3. Verify route finding with real liquidity
@@ -415,12 +461,15 @@ throw Error(`No exchange found for id ${exchangeId}`)
 ## Open Questions
 
 1. **Cache location**: Should static tradablePairs cache remain in `src/constants/` or move to separate cache directory?
+
    - **Decision**: Keep in `src/constants/tradablePairs` for consistency with v1
 
 2. **Symbol caching**: Should token symbols be cached globally or per-service instance?
+
    - **Decision**: Global cache (module-level) since token symbols are immutable once deployed. No risk of stale data, and more efficient than per-instance caching. Cache should be keyed by `chainId-address` to handle multi-chain scenarios.
 
 3. **Route utilities location**: Separate file `src/utils/routeUtils.ts` or inline in service?
+
    - **Decision**: Separate file for testability and reusability
 
 4. **Error types**: Create specific error classes (`ExchangeNotFoundError`, `PairNotFoundError`) or use generic?

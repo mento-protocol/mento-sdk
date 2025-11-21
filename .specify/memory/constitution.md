@@ -30,6 +30,7 @@ Sync Impact Report:
 The Mento SDK MUST maintain the highest standards of type safety and code quality to ensure reliability in blockchain interactions.
 
 **Non-negotiable rules:**
+
 - TypeScript strict mode MUST be enabled for all source code
 - All exported functions, classes, and methods MUST have explicit type annotations
 - No `any` types permitted in public APIs (internal use requires documented justification)
@@ -44,6 +45,7 @@ The Mento SDK MUST maintain the highest standards of type safety and code qualit
 The SDK MUST remain completely agnostic to the underlying provider implementation, supporting multiple provider ecosystems equally.
 
 **Non-negotiable rules:**
+
 - All blockchain interactions MUST go through the `ProviderAdapter` interface
 - Direct provider-specific calls MUST NOT appear in services or business logic
 - New provider support MUST be addable by implementing `ProviderAdapter` only
@@ -58,6 +60,7 @@ The SDK MUST remain completely agnostic to the underlying provider implementatio
 Testing MUST be comprehensive, covering all critical paths, provider integrations, and blockchain interactions.
 
 **Non-negotiable rules:**
+
 - All services MUST have unit tests covering core business logic
 - Each provider adapter MUST have integration tests verifying blockchain interactions
 - Shared test suites MUST be used to ensure consistent behavior across providers
@@ -67,6 +70,7 @@ Testing MUST be comprehensive, covering all critical paths, provider integration
 - Breaking changes MUST include test updates demonstrating the change
 
 **Test organization:**
+
 - `tests/unit/` - Fast, isolated tests for pure functions and business logic
 - `tests/integration/` - Provider-specific tests against real blockchain state
 - `tests/integration/shared/` - Reusable test suites ensuring provider parity
@@ -78,6 +82,7 @@ Testing MUST be comprehensive, covering all critical paths, provider integration
 The SDK MUST be performant and reliable, minimizing unnecessary blockchain calls and handling errors gracefully.
 
 **Non-negotiable rules:**
+
 - Blockchain calls MUST be batched when possible to reduce RPC load
 - Retry logic with exponential backoff MUST be implemented for transient failures
 - All async operations MUST have proper error handling with meaningful error messages
@@ -87,6 +92,7 @@ The SDK MUST be performant and reliable, minimizing unnecessary blockchain calls
 - Large data operations MUST be performed iteratively to avoid memory issues
 
 **Performance targets:**
+
 - SDK initialization: < 100ms (excluding network calls)
 - Single contract read: < 500ms on mainnet
 - Batch operations: Proportional to item count, no O(n²) operations
@@ -98,6 +104,7 @@ The SDK MUST be performant and reliable, minimizing unnecessary blockchain calls
 The SDK MUST provide an exceptional developer experience through clear APIs, comprehensive documentation, and helpful error messages.
 
 **Non-negotiable rules:**
+
 - All public APIs MUST have JSDoc comments with usage examples
 - README MUST include quick start guides for each supported provider
 - Breaking changes MUST be clearly documented with migration guides
@@ -106,6 +113,7 @@ The SDK MUST provide an exceptional developer experience through clear APIs, com
 - Examples MUST be tested and kept up-to-date with API changes
 
 **Documentation requirements:**
+
 - Each service MUST document its purpose and primary use cases
 - Complex functions MUST include `@dev` comments with implementation notes
 - Public types MUST have property-level documentation
@@ -118,6 +126,7 @@ The SDK MUST provide an exceptional developer experience through clear APIs, com
 The SDK MUST follow blockchain and Web3 best practices to ensure security and compatibility.
 
 **Non-negotiable rules:**
+
 - All contract addresses MUST be checksummed and validated
 - Chain IDs MUST be verified to prevent cross-chain replay attacks
 - ABIs MUST match deployed contracts (verified against on-chain bytecode when possible)
@@ -127,6 +136,7 @@ The SDK MUST follow blockchain and Web3 best practices to ensure security and co
 - Contract calls MUST specify exact function signatures to prevent ambiguity
 
 **Security considerations:**
+
 - Never trust user input - validate all addresses, amounts, and parameters
 - Never expose private keys or sensitive data in logs or errors
 - Follow principle of least privilege for contract interactions
@@ -136,6 +146,7 @@ The SDK MUST follow blockchain and Web3 best practices to ensure security and co
 ## Quality Standards
 
 ### Code Organization
+
 - One class per file, filename matches class name
 - Related functionality grouped in services
 - Shared types centralized in `@types/*`
@@ -143,12 +154,14 @@ The SDK MUST follow blockchain and Web3 best practices to ensure security and co
 - Constants organized by concern (addresses, chain IDs, etc.)
 
 ### Dependency Management
+
 - Peer dependencies for provider libraries (optional to allow user choice)
 - Minimal production dependencies (current: only BigNumber.js)
 - Dev dependencies pinned to prevent build inconsistencies
 - Node.js >= 18 and pnpm >= 9 required
 
 ### Version Management
+
 - Semantic versioning (MAJOR.MINOR.PATCH)
 - MAJOR: Breaking API changes, provider support changes
 - MINOR: New features, new chains, backward-compatible additions
@@ -157,6 +170,7 @@ The SDK MUST follow blockchain and Web3 best practices to ensure security and co
 ## Development Workflow
 
 ### Pull Request Requirements
+
 - All tests MUST pass (unit + integration)
 - ESLint and Prettier checks MUST pass
 - Code coverage MUST not decrease (exceptions require justification)
@@ -164,6 +178,7 @@ The SDK MUST follow blockchain and Web3 best practices to ensure security and co
 - Meaningful commit messages following conventional commits
 
 ### Testing Workflow
+
 1. Write tests first for new features (test-driven development encouraged)
 2. Ensure tests fail before implementation
 3. Implement feature
@@ -171,6 +186,7 @@ The SDK MUST follow blockchain and Web3 best practices to ensure security and co
 5. Check coverage report
 
 ### Review Checklist
+
 - [ ] TypeScript strict mode compliance
 - [ ] All provider adapters maintain feature parity
 - [ ] JSDoc comments on public APIs
@@ -183,9 +199,11 @@ The SDK MUST follow blockchain and Web3 best practices to ensure security and co
 ## Governance
 
 ### Constitution Authority
+
 This constitution supersedes all other development practices, guidelines, or preferences. When conflicts arise between this constitution and other documentation, the constitution takes precedence.
 
 ### Amendment Process
+
 1. Proposed changes MUST be documented with rationale
 2. Changes MUST have approval from at least 2 core maintainers
 3. Version MUST be bumped according to change significance:
@@ -196,13 +214,16 @@ This constitution supersedes all other development practices, guidelines, or pre
 5. A sync impact report MUST be included with the amendment
 
 ### Compliance Review
+
 - All PRs MUST verify alignment with these principles
 - New complexity or architectural patterns MUST be justified against simplicity
 - Violations require documented rationale and core maintainer approval
 - Constitution review recommended quarterly or after major features
 
 ### Conflict Resolution
+
 When principles conflict in practice:
+
 1. Security and correctness take precedence over performance
 2. User experience takes precedence over implementation simplicity
 3. Type safety takes precedence over brevity

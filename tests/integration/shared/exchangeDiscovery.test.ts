@@ -208,9 +208,9 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
         const fakeToken1 = '0x0000000000000000000000000000000000000001'
         const fakeToken2 = '0x0000000000000000000000000000000000000002'
 
-        await expect(service.findPairForTokens(fakeToken1, fakeToken2)).rejects.toThrow(
-          /No pair found for tokens/
-        )
+        await expect(
+          service.findPairForTokens(fakeToken1, fakeToken2)
+        ).rejects.toThrow(/No pair found for tokens/)
       })
     })
 
@@ -227,9 +227,12 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
       })
 
       it('should throw error for non-existent exchange ID', async () => {
-        const fakeId = '0x0000000000000000000000000000000000000000000000000000000000000000'
+        const fakeId =
+          '0x0000000000000000000000000000000000000000000000000000000000000000'
 
-        await expect(service.getExchangeById(fakeId)).rejects.toThrow(/No exchange found/)
+        await expect(service.getExchangeById(fakeId)).rejects.toThrow(
+          /No exchange found/
+        )
       })
     })
 
@@ -262,9 +265,9 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
         const fakeToken1 = '0x0000000000000000000000000000000000000001'
         const fakeToken2 = '0x0000000000000000000000000000000000000002'
 
-        await expect(service.getExchangeForTokens(fakeToken1, fakeToken2)).rejects.toThrow(
-          /No exchange found/
-        )
+        await expect(
+          service.getExchangeForTokens(fakeToken1, fakeToken2)
+        ).rejects.toThrow(/No exchange found/)
       })
     })
 
