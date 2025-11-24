@@ -94,7 +94,7 @@ const mento = await Mento.create({
 })
 
 // First call will trigger lazy loading
-const stableTokens = await mento.getStableTokens()
+const stableTokens = await mento.tokens.getStableTokens()
 ```
 
 ## Available Proxies

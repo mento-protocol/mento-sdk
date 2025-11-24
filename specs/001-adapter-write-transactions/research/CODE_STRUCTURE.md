@@ -173,7 +173,7 @@ Service Layer
     └─> readContract(options: ContractCallOptions)
             │
             ├─ address: "0x..."
-            ├─ abi: [...] 
+            ├─ abi: [...]
             ├─ functionName: "name"
             └─ args: [...]
                 │
@@ -212,8 +212,9 @@ Service Layer
 ## File Size Reference
 
 Adapter layer is surprisingly small (under 300 lines total):
+
 - 3 implementations: ~25 lines each = 75 lines
-- 3 proxies: ~56 lines each = 168 lines  
+- 3 proxies: ~56 lines each = 168 lines
 - Interface definition: ~12 lines
 - Index/exports: ~9 lines
 - **Total: ~264 lines**
@@ -232,6 +233,7 @@ This demonstrates the elegance of the adapter pattern - minimal code, maximum fl
 ## Future Write Transaction Impact
 
 Adding write transaction support would:
+
 - Extend ProviderAdapter interface (5-10 new methods)
 - Extend each adapter implementation (20-30 lines each)
 - Extend proxies to support Signer/WalletClient (10-15 lines each)
@@ -240,8 +242,8 @@ Adding write transaction support would:
 - **Estimated total addition: 800-1000+ lines**
 
 All while maintaining:
+
 - Provider parity (same interface)
 - Type safety (no `any` types)
 - Virtual proxy pattern (lazy loading)
 - Constitution compliance (documentation, testing, error handling)
-

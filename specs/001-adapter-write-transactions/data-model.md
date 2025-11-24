@@ -24,46 +24,48 @@ interface ContractWriteOptions extends ContractCallOptions {
    * Optional gas limit override
    * If not provided, will be estimated automatically
    */
-  gasLimit?: bigint;
+  gasLimit?: bigint
 
   /**
    * Legacy gas price (pre-EIP-1559)
    * Mutually exclusive with maxFeePerGas/maxPriorityFeePerGas
    */
-  gasPrice?: bigint;
+  gasPrice?: bigint
 
   /**
    * EIP-1559 maximum fee per gas unit
    * Used on networks that support EIP-1559
    */
-  maxFeePerGas?: bigint;
+  maxFeePerGas?: bigint
 
   /**
    * EIP-1559 priority fee (miner tip)
    * Used on networks that support EIP-1559
    */
-  maxPriorityFeePerGas?: bigint;
+  maxPriorityFeePerGas?: bigint
 
   /**
    * Explicit transaction nonce
    * If not provided, will be determined automatically by provider
    */
-  nonce?: bigint;
+  nonce?: bigint
 
   /**
    * Transaction value in wei
    * For payable functions only
    */
-  value?: bigint;
+  value?: bigint
 }
 ```
 
 **Relationships**:
+
 - Extends `ContractCallOptions` (existing type for read operations)
 - Used by `ProviderAdapter.writeContract()`
 - Used by `ProviderAdapter.estimateGas()`
 
 **Validation Rules**:
+
 - `gasPrice` and `maxFeePerGas` cannot both be specified
 - `gasLimit` must be > 0 if provided
 - `nonce` must be >= 0 if provided
@@ -84,42 +86,42 @@ interface TransactionResponse {
   /**
    * Transaction hash (unique identifier)
    */
-  readonly hash: string;
+  readonly hash: string
 
   /**
    * Chain ID where transaction was submitted
    */
-  readonly chainId: bigint;
+  readonly chainId: bigint
 
   /**
    * From address (signer address)
    */
-  readonly from: string;
+  readonly from: string
 
   /**
    * To address (contract address)
    */
-  readonly to: string;
+  readonly to: string
 
   /**
    * Transaction nonce
    */
-  readonly nonce: bigint;
+  readonly nonce: bigint
 
   /**
    * Gas limit for this transaction
    */
-  readonly gasLimit: bigint;
+  readonly gasLimit: bigint
 
   /**
    * Data payload (encoded function call)
    */
-  readonly data: string;
+  readonly data: string
 
   /**
    * Transaction value in wei
    */
-  readonly value: bigint;
+  readonly value: bigint
 
   /**
    * Wait for transaction to be confirmed
@@ -128,28 +130,31 @@ interface TransactionResponse {
    * @throws ExecutionError if transaction reverts
    * @throws NetworkError if RPC fails
    */
-  wait(confirmations?: number): Promise<TransactionReceipt>;
+  wait(confirmations?: number): Promise<TransactionReceipt>
 
   /**
    * Get current transaction receipt if available
    * @returns Receipt if transaction is mined, null if still pending
    * @throws NetworkError if RPC fails
    */
-  getReceipt(): Promise<TransactionReceipt | null>;
+  getReceipt(): Promise<TransactionReceipt | null>
 }
 ```
 
 **Relationships**:
+
 - Returned by `ProviderAdapter.writeContract()`
 - Contains methods that return `TransactionReceipt`
 - Normalized across all three providers (Ethers v5/v6, Viem)
 
 **Validation Rules**:
+
 - `hash` must be 66-character hex string (0x + 64 hex digits)
 - `confirmations` must be >= 1
 - All addresses must be checksummed
 
 **State Transitions**:
+
 - **Pending**: Transaction broadcast, not yet in block (`getReceipt()` returns null)
 - **Confirmed**: Transaction included in block (`getReceipt()` returns receipt)
 - **Failed**: Transaction reverted on-chain (`wait()` throws `ExecutionError`)
@@ -169,85 +174,88 @@ interface TransactionReceipt {
   /**
    * Transaction hash
    */
-  readonly hash: string;
+  readonly hash: string
 
   /**
    * Block number where transaction was included
    */
-  readonly blockNumber: bigint;
+  readonly blockNumber: bigint
 
   /**
    * Block hash where transaction was included
    */
-  readonly blockHash: string;
+  readonly blockHash: string
 
   /**
    * Transaction status
    * - 'success': Transaction executed successfully
    * - 'failed': Transaction reverted
    */
-  readonly status: 'success' | 'failed';
+  readonly status: 'success' | 'failed'
 
   /**
    * Actual gas used by transaction
    */
-  readonly gasUsed: bigint;
+  readonly gasUsed: bigint
 
   /**
    * Effective gas price paid (baseFee + priorityFee)
    */
-  readonly effectiveGasPrice: bigint;
+  readonly effectiveGasPrice: bigint
 
   /**
    * Cumulative gas used in block up to this transaction
    */
-  readonly cumulativeGasUsed: bigint;
+  readonly cumulativeGasUsed: bigint
 
   /**
    * Transaction index in block
    */
-  readonly transactionIndex: number;
+  readonly transactionIndex: number
 
   /**
    * From address (signer)
    */
-  readonly from: string;
+  readonly from: string
 
   /**
    * To address (contract)
    */
-  readonly to: string;
+  readonly to: string
 
   /**
    * Contract address if this was a deployment
    */
-  readonly contractAddress?: string;
+  readonly contractAddress?: string
 
   /**
    * Event logs emitted by transaction
    */
-  readonly logs: readonly TransactionLog[];
+  readonly logs: readonly TransactionLog[]
 
   /**
    * Revert reason if status === 'failed'
    * Extracted from error data or logs
    */
-  readonly revertReason?: string;
+  readonly revertReason?: string
 }
 ```
 
 **Relationships**:
+
 - Returned by `TransactionResponse.wait()` and `TransactionResponse.getReceipt()`
 - Contains array of `TransactionLog` entities
 - Normalized across all providers
 
 **Validation Rules**:
+
 - `status` is either 'success' or 'failed'
 - If `status === 'failed'`, `revertReason` should be populated when available
 - `gasUsed` <= gas limit from original transaction
 - All addresses must be checksummed
 
 **Derived Data**:
+
 - Total transaction cost: `gasUsed * effectiveGasPrice`
 - Successful execution: `status === 'success'`
 
@@ -266,56 +274,58 @@ interface TransactionLog {
   /**
    * Contract address that emitted the log
    */
-  readonly address: string;
+  readonly address: string
 
   /**
    * Indexed event topics
    * topics[0] is the event signature hash
    */
-  readonly topics: readonly string[];
+  readonly topics: readonly string[]
 
   /**
    * Non-indexed event data (hex-encoded)
    */
-  readonly data: string;
+  readonly data: string
 
   /**
    * Log index in transaction
    */
-  readonly logIndex: number;
+  readonly logIndex: number
 
   /**
    * Block number
    */
-  readonly blockNumber: bigint;
+  readonly blockNumber: bigint
 
   /**
    * Block hash
    */
-  readonly blockHash: string;
+  readonly blockHash: string
 
   /**
    * Transaction hash
    */
-  readonly transactionHash: string;
+  readonly transactionHash: string
 
   /**
    * Transaction index in block
    */
-  readonly transactionIndex: number;
+  readonly transactionIndex: number
 
   /**
    * Whether log was removed (chain reorganization)
    */
-  readonly removed: boolean;
+  readonly removed: boolean
 }
 ```
 
 **Relationships**:
+
 - Child of `TransactionReceipt` (array of logs)
 - Used to decode contract events (e.g., Transfer, Approval)
 
 **Validation Rules**:
+
 - `address` must be checksummed
 - `topics` array typically has 1-4 elements
 - `removed` should be false in normal cases (true only after reorg)
@@ -339,13 +349,13 @@ interface ProviderAdapter {
    * @param options Contract call configuration
    * @returns Decoded return value
    */
-  readContract(options: ContractCallOptions): Promise<unknown>;
+  readContract(options: ContractCallOptions): Promise<unknown>
 
   /**
    * Get the current chain ID
    * @returns Chain ID (1 = mainnet, 42220 = Celo, etc.)
    */
-  getChainId(): Promise<number>;
+  getChainId(): Promise<number>
 
   // ============ New Write Methods ============
 
@@ -356,7 +366,7 @@ interface ProviderAdapter {
    * @throws ValidationError if signer not available or parameters invalid
    * @throws NetworkError if RPC fails
    */
-  writeContract(options: ContractWriteOptions): Promise<TransactionResponse>;
+  writeContract(options: ContractWriteOptions): Promise<TransactionResponse>
 
   /**
    * Estimate gas required for a contract call
@@ -365,14 +375,14 @@ interface ProviderAdapter {
    * @throws ValidationError if call would revert or parameters invalid
    * @throws NetworkError if RPC fails
    */
-  estimateGas(options: ContractCallOptions): Promise<bigint>;
+  estimateGas(options: ContractCallOptions): Promise<bigint>
 
   /**
    * Get the connected signer address
    * @returns Signer address if available
    * @throws ValidationError if no signer connected
    */
-  getSignerAddress(): Promise<string>;
+  getSignerAddress(): Promise<string>
 
   /**
    * Get the current nonce for the signer
@@ -380,16 +390,18 @@ interface ProviderAdapter {
    * @throws ValidationError if no signer connected
    * @throws NetworkError if RPC fails
    */
-  getTransactionCount(): Promise<bigint>;
+  getTransactionCount(): Promise<bigint>
 }
 ```
 
 **Relationships**:
+
 - Implemented by `EthersV5Adapter`, `EthersAdapter`, `ViemAdapter`
 - Proxied by `EthersV5AdapterProxy`, `EthersAdapterProxy`, `ViemAdapterProxy`
 - Used by all SDK services
 
 **Validation Rules**:
+
 - Write methods require signer to be connected
 - Read methods work with or without signer
 - All methods must validate inputs before blockchain calls
@@ -409,14 +421,14 @@ interface ProviderAdapter {
  * Base class for all transaction-related errors
  */
 abstract class TransactionError extends Error {
-  readonly code: string;
-  readonly reason?: string;
+  readonly code: string
+  readonly reason?: string
 
   constructor(message: string, code: string, reason?: string) {
-    super(message);
-    this.name = this.constructor.name;
-    this.code = code;
-    this.reason = reason;
+    super(message)
+    this.name = this.constructor.name
+    this.code = code
+    this.reason = reason
   }
 }
 
@@ -426,7 +438,7 @@ abstract class TransactionError extends Error {
  */
 class ValidationError extends TransactionError {
   constructor(message: string, reason?: string) {
-    super(message, 'VALIDATION_ERROR', reason);
+    super(message, 'VALIDATION_ERROR', reason)
   }
 }
 
@@ -435,8 +447,8 @@ class ValidationError extends TransactionError {
  * Examples: transaction reverted, out of gas
  */
 class ExecutionError extends TransactionError {
-  readonly hash: string;
-  readonly receipt?: TransactionReceipt;
+  readonly hash: string
+  readonly receipt?: TransactionReceipt
 
   constructor(
     message: string,
@@ -444,9 +456,9 @@ class ExecutionError extends TransactionError {
     receipt?: TransactionReceipt,
     reason?: string
   ) {
-    super(message, 'EXECUTION_ERROR', reason);
-    this.hash = hash;
-    this.receipt = receipt;
+    super(message, 'EXECUTION_ERROR', reason)
+    this.hash = hash
+    this.receipt = receipt
   }
 }
 
@@ -455,21 +467,23 @@ class ExecutionError extends TransactionError {
  * Examples: timeout, connection refused, rate limited
  */
 class NetworkError extends TransactionError {
-  readonly retry: boolean;
+  readonly retry: boolean
 
   constructor(message: string, retry: boolean = true, reason?: string) {
-    super(message, 'NETWORK_ERROR', reason);
-    this.retry = retry;
+    super(message, 'NETWORK_ERROR', reason)
+    this.retry = retry
   }
 }
 ```
 
 **Relationships**:
+
 - Thrown by `ProviderAdapter` write methods
 - Used in error handling throughout SDK
 - Normalized from provider-specific errors
 
 **Validation Rules**:
+
 - All errors must have descriptive message
 - `ExecutionError` must include transaction hash
 - `NetworkError` indicates if retry is recommended
@@ -573,24 +587,27 @@ const response: TransactionResponse = {
 export function validateWriteOptions(options: ContractWriteOptions): void {
   // Validate address is checksummed
   if (!isAddress(options.address)) {
-    throw new ValidationError(`Invalid contract address: ${options.address}`);
+    throw new ValidationError(`Invalid contract address: ${options.address}`)
   }
 
   // Validate gas price parameters
-  if (options.gasPrice && (options.maxFeePerGas || options.maxPriorityFeePerGas)) {
+  if (
+    options.gasPrice &&
+    (options.maxFeePerGas || options.maxPriorityFeePerGas)
+  ) {
     throw new ValidationError(
       'Cannot specify both gasPrice and EIP-1559 parameters (maxFeePerGas, maxPriorityFeePerGas)'
-    );
+    )
   }
 
   // Validate gas limit
   if (options.gasLimit !== undefined && options.gasLimit <= 0n) {
-    throw new ValidationError(`Gas limit must be > 0, got: ${options.gasLimit}`);
+    throw new ValidationError(`Gas limit must be > 0, got: ${options.gasLimit}`)
   }
 
   // Validate nonce
   if (options.nonce !== undefined && options.nonce < 0n) {
-    throw new ValidationError(`Nonce must be >= 0, got: ${options.nonce}`);
+    throw new ValidationError(`Nonce must be >= 0, got: ${options.nonce}`)
   }
 }
 
@@ -602,7 +619,7 @@ export function validateSigner(signer: any): void {
   if (!signer) {
     throw new ValidationError(
       'Signer required for write operations. Initialize SDK with signer parameter.'
-    );
+    )
   }
 }
 
@@ -614,7 +631,7 @@ export function validateChainId(expected: bigint, actual: bigint): void {
   if (expected !== actual) {
     throw new ValidationError(
       `Chain ID mismatch. Signer is on chain ${actual} but SDK expects chain ${expected}.`
-    );
+    )
   }
 }
 ```
@@ -630,6 +647,7 @@ This data model provides:
 5. **Backward Compatibility**: Extends existing types without breaking changes
 
 All types follow the constitution principles:
+
 - ✅ Explicit TypeScript types (no `any`)
 - ✅ BigInt for numeric values (no precision loss)
 - ✅ Checksummed addresses

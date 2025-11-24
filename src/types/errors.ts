@@ -14,40 +14,40 @@
  * - `message`: Human-readable error message
  */
 export abstract class TransactionError extends Error {
-	/**
-	 * Machine-readable error code
-	 *
-	 * Examples:
-	 * - `VALIDATION_ERROR`
-	 * - `EXECUTION_ERROR`
-	 * - `NETWORK_ERROR`
-	 */
-	readonly code: string;
+  /**
+   * Machine-readable error code
+   *
+   * Examples:
+   * - `VALIDATION_ERROR`
+   * - `EXECUTION_ERROR`
+   * - `NETWORK_ERROR`
+   */
+  readonly code: string
 
-	/**
-	 * Optional additional context about the error
-	 *
-	 * May contain provider-specific details or technical information
-	 * for debugging.
-	 */
-	readonly reason?: string;
+  /**
+   * Optional additional context about the error
+   *
+   * May contain provider-specific details or technical information
+   * for debugging.
+   */
+  readonly reason?: string
 
-	/**
-	 * @param message - Human-readable error message
-	 * @param code - Machine-readable error code
-	 * @param reason - Optional additional context
-	 */
-	constructor(message: string, code: string, reason?: string) {
-		super(message);
-		this.name = this.constructor.name;
-		this.code = code;
-		this.reason = reason;
+  /**
+   * @param message - Human-readable error message
+   * @param code - Machine-readable error code
+   * @param reason - Optional additional context
+   */
+  constructor(message: string, code: string, reason?: string) {
+    super(message)
+    this.name = this.constructor.name
+    this.code = code
+    this.reason = reason
 
-		// Maintain proper stack trace for debugging
-		if (Error.captureStackTrace) {
-			Error.captureStackTrace(this, this.constructor);
-		}
-	}
+    // Maintain proper stack trace for debugging
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor)
+    }
+  }
 }
 
 /**
@@ -75,13 +75,13 @@ export abstract class TransactionError extends Error {
  * ```
  */
 export class ValidationError extends TransactionError {
-	/**
-	 * @param message - Human-readable error with suggested fix
-	 * @param reason - Optional technical details
-	 */
-	constructor(message: string, reason?: string) {
-		super(message, 'VALIDATION_ERROR', reason);
-	}
+  /**
+   * @param message - Human-readable error with suggested fix
+   * @param reason - Optional technical details
+   */
+  constructor(message: string, reason?: string) {
+    super(message, 'VALIDATION_ERROR', reason)
+  }
 }
 
 /**
@@ -111,26 +111,26 @@ export class ValidationError extends TransactionError {
  * ```
  */
 export class ExecutionError extends TransactionError {
-	/**
-	 * Transaction hash of the failed transaction
-	 */
-	readonly hash: string;
+  /**
+   * Transaction hash of the failed transaction
+   */
+  readonly hash: string
 
-	/**
-	 * Revert reason from contract (if available)
-	 */
-	readonly revertReason?: string;
+  /**
+   * Revert reason from contract (if available)
+   */
+  readonly revertReason?: string
 
-	/**
-	 * @param message - Human-readable error message
-	 * @param hash - Transaction hash of failed transaction
-	 * @param revertReason - Optional revert reason from contract
-	 */
-	constructor(message: string, hash: string, revertReason?: string) {
-		super(message, 'EXECUTION_ERROR', revertReason);
-		this.hash = hash;
-		this.revertReason = revertReason;
-	}
+  /**
+   * @param message - Human-readable error message
+   * @param hash - Transaction hash of failed transaction
+   * @param revertReason - Optional revert reason from contract
+   */
+  constructor(message: string, hash: string, revertReason?: string) {
+    super(message, 'EXECUTION_ERROR', revertReason)
+    this.hash = hash
+    this.revertReason = revertReason
+  }
 }
 
 /**
@@ -159,49 +159,49 @@ export class ExecutionError extends TransactionError {
  * ```
  */
 export class NetworkError extends TransactionError {
-	/**
-	 * Whether this error is retry-able
-	 *
-	 * - `true`: Transient error, retry recommended
-	 * - `false`: Permanent error (e.g., invalid RPC endpoint)
-	 */
-	readonly retry: boolean;
+  /**
+   * Whether this error is retry-able
+   *
+   * - `true`: Transient error, retry recommended
+   * - `false`: Permanent error (e.g., invalid RPC endpoint)
+   */
+  readonly retry: boolean
 
-	/**
-	 * @param message - Human-readable error message
-	 * @param retry - Whether retry is recommended (default: true)
-	 * @param reason - Optional technical details
-	 */
-	constructor(message: string, retry: boolean = true, reason?: string) {
-		super(message, 'NETWORK_ERROR', reason);
-		this.retry = retry;
-	}
+  /**
+   * @param message - Human-readable error message
+   * @param retry - Whether retry is recommended (default: true)
+   * @param reason - Optional technical details
+   */
+  constructor(message: string, retry = true, reason?: string) {
+    super(message, 'NETWORK_ERROR', reason)
+    this.retry = retry
+  }
 }
 
 /**
  * Type guard to check if error is a transaction error
  */
 export function isTransactionError(error: unknown): error is TransactionError {
-	return error instanceof TransactionError;
+  return error instanceof TransactionError
 }
 
 /**
  * Type guard to check if error is a validation error
  */
 export function isValidationError(error: unknown): error is ValidationError {
-	return error instanceof ValidationError;
+  return error instanceof ValidationError
 }
 
 /**
  * Type guard to check if error is an execution error
  */
 export function isExecutionError(error: unknown): error is ExecutionError {
-	return error instanceof ExecutionError;
+  return error instanceof ExecutionError
 }
 
 /**
  * Type guard to check if error is a network error
  */
 export function isNetworkError(error: unknown): error is NetworkError {
-	return error instanceof NetworkError;
+  return error instanceof NetworkError
 }

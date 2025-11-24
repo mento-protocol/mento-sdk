@@ -15,6 +15,7 @@ This research document consolidates technical decisions, provider-specific patte
 **Decision**: Support both read-only (Provider/PublicClient) and write-capable (Provider+Signer, WalletClient) initialization modes
 
 **Rationale**:
+
 - Ethers v5/v6 separate concerns: Provider (read) + Signer (write)
 - Viem unified approach: PublicClient (read) vs WalletClient (read+write)
 - Must maintain backward compatibility for existing read-only usage
@@ -26,33 +27,35 @@ This research document consolidates technical decisions, provider-specific patte
 
 ```typescript
 // Current (read-only)
-const sdk = Mento.create({ provider: ethersProvider });
+const sdk = Mento.create({ provider: ethersProvider })
 
 // New (write-capable)
 const sdk = Mento.create({
   provider: ethersProvider,
-  signer: ethersSigner  // Optional
-});
+  signer: ethersSigner, // Optional
+})
 ```
 
 **Viem**:
 
 ```typescript
 // Current (read-only)
-const sdk = Mento.create({ provider: publicClient });
+const sdk = Mento.create({ provider: publicClient })
 
 // New (write-capable)
 const sdk = Mento.create({
-  provider: walletClient  // Can do both read + write
-});
+  provider: walletClient, // Can do both read + write
+})
 ```
 
 **Key Considerations**:
+
 - Adapters must detect if signer/wallet is available before attempting writes
 - Clear error messages when write operations called without signer
 - Signer must be on same network as provider (chain ID validation)
 
 **Alternatives Considered**:
+
 - **Require signer upfront**: Rejected - breaks backward compatibility, forces all users to provide wallet even for read-only usage
 - **Separate adapter instances**: Rejected - creates confusing API where users need two SDK instances
 - **Dynamic signer injection**: Rejected - adds complexity, makes initialization unpredictable
@@ -64,6 +67,7 @@ const sdk = Mento.create({
 **Decision**: Return lightweight transaction response object that allows waiting for confirmation asynchronously
 
 **Rationale**:
+
 - Transaction submission and confirmation are separate concerns
 - Users need control over when/how they wait for confirmations
 - Must support both "fire and forget" and "wait for receipt" patterns
@@ -73,35 +77,38 @@ const sdk = Mento.create({
 
 ```typescript
 interface TransactionResponse {
-  hash: string;                    // Transaction hash
-  wait(confirmations?: number): Promise<TransactionReceipt>;  // Wait for inclusion
-  getReceipt(): Promise<TransactionReceipt | null>;          // Check current status
+  hash: string // Transaction hash
+  wait(confirmations?: number): Promise<TransactionReceipt> // Wait for inclusion
+  getReceipt(): Promise<TransactionReceipt | null> // Check current status
 }
 
 interface TransactionReceipt {
-  hash: string;
-  blockNumber: bigint;
-  blockHash: string;
-  status: 'success' | 'failed';
-  gasUsed: bigint;
-  effectiveGasPrice: bigint;
-  logs: Array<{ address: string; topics: string[]; data: string }>;
-  revertReason?: string;           // If status === 'failed'
+  hash: string
+  blockNumber: bigint
+  blockHash: string
+  status: 'success' | 'failed'
+  gasUsed: bigint
+  effectiveGasPrice: bigint
+  logs: Array<{ address: string; topics: string[]; data: string }>
+  revertReason?: string // If status === 'failed'
 }
 ```
 
 **Provider-Specific Mapping**:
+
 - **Ethers v5**: Wrap `TransactionResponse` and delegate `wait()` to provider's implementation
 - **Ethers v6**: Similar to v5 with updated types
 - **Viem**: Use `waitForTransactionReceipt()` and `getTransactionReceipt()`
 
 **Key Considerations**:
+
 - Normalize bigint vs BigNumber across providers
 - Parse revert reasons from receipt logs when available
 - Handle pending transactions (receipt not yet available)
 - Support multiple confirmation counts (1, 3, 5, etc.)
 
 **Alternatives Considered**:
+
 - **Immediate wait**: Rejected - blocks execution, doesn't allow "submit and continue"
 - **Callback-based**: Rejected - less composable than Promise-based, harder to test
 - **Event-based**: Rejected - overkill for simple transaction tracking, adds complexity
@@ -113,6 +120,7 @@ interface TransactionReceipt {
 **Decision**: Provide separate `estimateGas()` method that returns estimated gas units, allow optional gas overrides in write operations
 
 **Rationale**:
+
 - Users need gas estimates before submitting transactions (show cost to users)
 - Providers have different gas estimation APIs that need normalization
 - Some users want to customize gas limit/price for urgent transactions
@@ -124,32 +132,35 @@ interface TransactionReceipt {
 interface ProviderAdapter {
   // ... existing methods
 
-  estimateGas(options: ContractCallOptions): Promise<bigint>;
+  estimateGas(options: ContractCallOptions): Promise<bigint>
 
-  writeContract(options: ContractWriteOptions): Promise<TransactionResponse>;
+  writeContract(options: ContractWriteOptions): Promise<TransactionResponse>
 }
 
 interface ContractWriteOptions extends ContractCallOptions {
-  gasLimit?: bigint;      // Override estimated gas
-  gasPrice?: bigint;      // Legacy (EIP-1559 not used)
-  maxFeePerGas?: bigint;  // EIP-1559
-  maxPriorityFeePerGas?: bigint;  // EIP-1559
-  nonce?: bigint;         // Explicit nonce
+  gasLimit?: bigint // Override estimated gas
+  gasPrice?: bigint // Legacy (EIP-1559 not used)
+  maxFeePerGas?: bigint // EIP-1559
+  maxPriorityFeePerGas?: bigint // EIP-1559
+  nonce?: bigint // Explicit nonce
 }
 ```
 
 **Provider-Specific Implementation**:
+
 - **Ethers v5**: `contract.estimateGas.functionName()`
 - **Ethers v6**: `contract.functionName.estimateGas()`
 - **Viem**: `publicClient.estimateContractGas()`
 
 **Key Considerations**:
+
 - Estimation may fail if transaction would revert (surface error clearly)
 - Add buffer to estimation (e.g., 10-20% more) to account for state changes
 - Support both legacy (gasPrice) and EIP-1559 (maxFeePerGas) transactions
 - Validate gas parameters are reasonable (not 0, not absurdly high)
 
 **Alternatives Considered**:
+
 - **Auto-estimate on every write**: Rejected - extra RPC call, users may want to batch estimates
 - **No gas customization**: Rejected - advanced users need control for time-sensitive transactions
 - **Separate gas service**: Rejected - gas is transaction-specific, belongs in adapter
@@ -161,6 +172,7 @@ interface ContractWriteOptions extends ContractCallOptions {
 **Decision**: Normalize provider-specific errors into consistent error types, distinguish pre-submission vs on-chain failures
 
 **Rationale**:
+
 - Each provider throws different error types for same conditions
 - Users need to know if error occurred before submission (no gas cost) or on-chain (gas spent)
 - Error messages must be actionable (explain what happened + how to fix)
@@ -171,8 +183,8 @@ interface ContractWriteOptions extends ContractCallOptions {
 ```typescript
 // Error type hierarchy
 class TransactionError extends Error {
-  code: string;
-  reason?: string;
+  code: string
+  reason?: string
 }
 
 class ValidationError extends TransactionError {
@@ -182,34 +194,36 @@ class ValidationError extends TransactionError {
 
 class ExecutionError extends TransactionError {
   // On-chain errors (gas consumed)
-  hash: string;
-  revertReason?: string;
+  hash: string
+  revertReason?: string
 }
 
 class NetworkError extends TransactionError {
   // RPC/network issues (retry-able)
-  retry: boolean;
+  retry: boolean
 }
 ```
 
 **Error Normalization Map**:
 
-| Condition | Ethers Error | Viem Error | Normalized Error |
-|-----------|--------------|------------|------------------|
-| No signer | `missing provider` | `account required` | `ValidationError: "Signer required for write operations. Initialize SDK with signer parameter."` |
-| Wrong network | `network mismatch` | `chain mismatch` | `ValidationError: "Chain ID mismatch. Signer is on chain X but SDK expects chain Y."` |
-| Invalid address | `invalid address` | `address invalid` | `ValidationError: "Invalid contract address: must be checksummed Ethereum address."` |
-| Insufficient gas | `gas too low` | `gas too low` | `ValidationError: "Gas limit too low. Estimated: X, provided: Y."` |
-| Transaction reverted | `execution reverted` | `execution reverted` | `ExecutionError: "Transaction reverted: [reason]" (includes hash)` |
-| RPC timeout | `timeout` | `timeout` | `NetworkError: "RPC request timed out. Retry recommended."` |
+| Condition            | Ethers Error         | Viem Error           | Normalized Error                                                                                 |
+| -------------------- | -------------------- | -------------------- | ------------------------------------------------------------------------------------------------ |
+| No signer            | `missing provider`   | `account required`   | `ValidationError: "Signer required for write operations. Initialize SDK with signer parameter."` |
+| Wrong network        | `network mismatch`   | `chain mismatch`     | `ValidationError: "Chain ID mismatch. Signer is on chain X but SDK expects chain Y."`            |
+| Invalid address      | `invalid address`    | `address invalid`    | `ValidationError: "Invalid contract address: must be checksummed Ethereum address."`             |
+| Insufficient gas     | `gas too low`        | `gas too low`        | `ValidationError: "Gas limit too low. Estimated: X, provided: Y."`                               |
+| Transaction reverted | `execution reverted` | `execution reverted` | `ExecutionError: "Transaction reverted: [reason]" (includes hash)`                               |
+| RPC timeout          | `timeout`            | `timeout`            | `NetworkError: "RPC request timed out. Retry recommended."`                                      |
 
 **Key Considerations**:
+
 - Parse revert reasons from hex-encoded error data
 - Include transaction hash in all on-chain errors
 - Suggest fixes in error messages (e.g., "Increase gas limit to X")
 - Mark transient errors as retry-able
 
 **Alternatives Considered**:
+
 - **Pass through provider errors**: Rejected - inconsistent UX across providers
 - **Generic error wrapper**: Rejected - loses information, not actionable
 - **Error codes only**: Rejected - humans read messages, codes are secondary
@@ -221,6 +235,7 @@ class NetworkError extends TransactionError {
 **Decision**: Support both human-readable (string) and JSON ABI formats, same as existing read operations
 
 **Rationale**:
+
 - Existing `readContract()` supports both formats
 - Users have ABIs in different forms (Ethers uses strings, Viem uses JSON)
 - Consistency across read and write operations
@@ -254,11 +269,13 @@ writeContract({
 ```
 
 **Key Considerations**:
+
 - Validate function exists in ABI before calling
 - Support function overloading (multiple functions with same name, different parameters)
 - Use exact function signatures to avoid ambiguity
 
 **Alternatives Considered**:
+
 - **JSON only**: Rejected - breaks from existing pattern, less developer-friendly for simple cases
 - **String only**: Rejected - Viem ecosystem uses JSON, would require unnecessary conversion
 - **Separate methods**: Rejected - API bloat, confusing for users
@@ -270,6 +287,7 @@ writeContract({
 **Decision**: Extend existing virtual proxy classes to lazy-load both provider AND signer/wallet
 
 **Rationale**:
+
 - Existing pattern allows users to install only the providers they use
 - Write support should follow same pattern (no extra dependencies)
 - Initialization cost deferred until first use (read or write)
@@ -280,23 +298,23 @@ writeContract({
 
 ```typescript
 class EthersAdapterProxy implements ProviderAdapter {
-  private adapter: EthersAdapter | null = null;
-  private provider: any;
+  private adapter: EthersAdapter | null = null
+  private provider: any
 
   constructor(provider: any) {
-    this.provider = provider;
+    this.provider = provider
   }
 
   private ensureAdapter() {
     if (!this.adapter) {
-      const { EthersAdapter } = require('./implementations/ethersAdapter');
-      this.adapter = new EthersAdapter(this.provider);
+      const { EthersAdapter } = require('./implementations/ethersAdapter')
+      this.adapter = new EthersAdapter(this.provider)
     }
-    return this.adapter;
+    return this.adapter
   }
 
   readContract(options) {
-    return this.ensureAdapter().readContract(options);
+    return this.ensureAdapter().readContract(options)
   }
 }
 ```
@@ -305,45 +323,48 @@ class EthersAdapterProxy implements ProviderAdapter {
 
 ```typescript
 class EthersAdapterProxy implements ProviderAdapter {
-  private adapter: EthersAdapter | null = null;
-  private provider: any;
-  private signer?: any;  // NEW
+  private adapter: EthersAdapter | null = null
+  private provider: any
+  private signer?: any // NEW
 
-  constructor(provider: any, signer?: any) {  // NEW parameter
-    this.provider = provider;
-    this.signer = signer;
+  constructor(provider: any, signer?: any) {
+    // NEW parameter
+    this.provider = provider
+    this.signer = signer
   }
 
   private ensureAdapter() {
     if (!this.adapter) {
-      const { EthersAdapter } = require('./implementations/ethersAdapter');
-      this.adapter = new EthersAdapter(this.provider, this.signer);  // Pass signer
+      const { EthersAdapter } = require('./implementations/ethersAdapter')
+      this.adapter = new EthersAdapter(this.provider, this.signer) // Pass signer
     }
-    return this.adapter;
+    return this.adapter
   }
 
   // Existing
   readContract(options) {
-    return this.ensureAdapter().readContract(options);
+    return this.ensureAdapter().readContract(options)
   }
 
   // NEW
   writeContract(options) {
-    return this.ensureAdapter().writeContract(options);
+    return this.ensureAdapter().writeContract(options)
   }
 
   estimateGas(options) {
-    return this.ensureAdapter().estimateGas(options);
+    return this.ensureAdapter().estimateGas(options)
   }
 }
 ```
 
 **Key Considerations**:
+
 - Signer parameter is optional (backward compatibility)
 - Lazy loading still applies (ethers/viem not loaded until first use)
 - Error if write methods called without signer
 
 **Alternatives Considered**:
+
 - **Separate proxy for write**: Rejected - duplicates code, confusing API
 - **Eager loading with signer**: Rejected - breaks lazy loading benefit
 - **No proxy for write**: Rejected - forces users to install all providers
@@ -355,6 +376,7 @@ class EthersAdapterProxy implements ProviderAdapter {
 **Decision**: Shared test suite pattern to ensure provider parity, integration tests against forked mainnet
 
 **Rationale**:
+
 - Three providers must have identical behavior from user perspective
 - Shared tests prevent provider-specific bugs
 - Integration tests verify actual blockchain interactions
@@ -429,6 +451,7 @@ runWriteTransactionTests('Ethers v6', () => {
 ```
 
 **Test Coverage Requirements**:
+
 - ✅ Successful transaction submission and confirmation
 - ✅ Gas estimation accuracy
 - ✅ Error handling (no signer, wrong network, reverted transaction)
@@ -439,12 +462,14 @@ runWriteTransactionTests('Ethers v6', () => {
 - ✅ Both ABI formats (string and JSON)
 
 **Key Considerations**:
+
 - Use mainnet fork to avoid testnet faucet dependencies
 - Test with real Mento contracts (approvals, swaps when available)
 - Verify gas estimates within 20% of actual usage
 - Test error messages are actionable
 
 **Alternatives Considered**:
+
 - **Mock-based tests only**: Rejected - don't verify actual blockchain interaction
 - **Separate tests per provider**: Rejected - misses parity issues, duplicates code
 - **Testnet only**: Rejected - slow, requires faucets, less realistic state
@@ -453,15 +478,15 @@ runWriteTransactionTests('Ethers v6', () => {
 
 ## Summary of Key Decisions
 
-| Area | Decision | Rationale |
-|------|----------|-----------|
-| **Signer Integration** | Optional signer parameter in adapter constructors | Backward compatibility, supports both read-only and write modes |
-| **Transaction Response** | Lightweight response with async `wait()` method | Allows "submit and continue" or "submit and wait" patterns |
-| **Gas Estimation** | Separate `estimateGas()` method, optional gas overrides | Users control when to estimate, advanced users can customize |
-| **Error Handling** | Normalized error types (Validation, Execution, Network) | Consistent UX across providers, actionable messages |
-| **ABI Format** | Support both string and JSON, same as reads | Consistency, developer choice |
-| **Virtual Proxy** | Extend existing pattern to include signer | Maintains lazy loading benefit, no forced dependencies |
-| **Testing** | Shared test suites + forked mainnet | Ensures provider parity, realistic testing |
+| Area                     | Decision                                                | Rationale                                                       |
+| ------------------------ | ------------------------------------------------------- | --------------------------------------------------------------- |
+| **Signer Integration**   | Optional signer parameter in adapter constructors       | Backward compatibility, supports both read-only and write modes |
+| **Transaction Response** | Lightweight response with async `wait()` method         | Allows "submit and continue" or "submit and wait" patterns      |
+| **Gas Estimation**       | Separate `estimateGas()` method, optional gas overrides | Users control when to estimate, advanced users can customize    |
+| **Error Handling**       | Normalized error types (Validation, Execution, Network) | Consistent UX across providers, actionable messages             |
+| **ABI Format**           | Support both string and JSON, same as reads             | Consistency, developer choice                                   |
+| **Virtual Proxy**        | Extend existing pattern to include signer               | Maintains lazy loading benefit, no forced dependencies          |
+| **Testing**              | Shared test suites + forked mainnet                     | Ensures provider parity, realistic testing                      |
 
 ## Open Questions / Future Considerations
 

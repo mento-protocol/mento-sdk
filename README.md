@@ -31,7 +31,7 @@ const provider = createPublicClient({
 const mento = new Mento({ provider })
 
 // Use the SDK
-const stableTokens = await mento.stable.getStableTokens()
+const stableTokens = await mento.tokens.getStableTokens()
 console.log('Stable Tokens:', stableTokens)
 ```
 
@@ -110,7 +110,7 @@ Query Mento stable tokens:
 
 ```typescript
 // Get all stable tokens
-const tokens = await mento.getStableTokens()
+const tokens = await mento.tokens.getStableTokens()
 ```
 
 #### Collateral Assets
@@ -119,7 +119,25 @@ Retrieve collateral assets:
 
 ```typescript
 // Get all collateral assets
-const assets = await mento.getCollateralAssets()
+const assets = await mento.collateral.getCollateralAssets()
+```
+
+#### Exchanges
+
+Query exchanges and tradable pairs:
+
+```typescript
+// Get all exchanges
+const exchanges = await mento.exchanges.getExchanges()
+
+// Get tradable pairs (includes multi-hop routes)
+const pairs = await mento.exchanges.getTradablePairs()
+
+// Find specific pair
+const pair = await mento.exchanges.findPairForTokens(
+  tokenInAddress,
+  tokenOutAddress
+)
 ```
 
 ### Write Operations
@@ -154,7 +172,7 @@ const walletClient = createWalletClient({
 // Initialize SDK with write support
 const mento = await Mento.create({
   provider: publicClient,
-  signer: walletClient  // Add wallet client for write operations
+  signer: walletClient, // Add wallet client for write operations
 })
 ```
 
@@ -171,7 +189,7 @@ const signer = new Wallet('0x...', provider)
 // Initialize SDK with write support
 const mento = await Mento.create({
   provider,
-  signer  // Add signer for write operations
+  signer, // Add signer for write operations
 })
 ```
 
@@ -189,9 +207,9 @@ const tx = await adapter.writeContract({
   abi: ['function approve(address spender, uint256 amount) returns (bool)'],
   functionName: 'approve',
   args: [
-    '0x...',  // Spender address (e.g., Mento Broker)
-    1000000n  // Amount (1 USDC with 6 decimals)
-  ]
+    '0x...', // Spender address (e.g., Mento Broker)
+    1000000n, // Amount (1 USDC with 6 decimals)
+  ],
 })
 
 console.log('Transaction hash:', tx.hash)
@@ -233,10 +251,10 @@ const estimatedGas = await adapter.estimateGas({
   address: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
   abi: ['function approve(address spender, uint256 amount) returns (bool)'],
   functionName: 'approve',
-  args: ['0x...', 1000000n]
+  args: ['0x...', 1000000n],
 })
 
-console.log('Estimated gas:', estimatedGas)  // Returns BigInt
+console.log('Estimated gas:', estimatedGas) // Returns BigInt
 ```
 
 #### Custom Gas Parameters

@@ -4,11 +4,13 @@
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
 **IMPORTANT CHANGE**: Ethers v5 support has been removed from the SDK. Only Ethers v6 and Viem are supported.
+
 - **Reason**: The `ethers-v5` peer dependency (using npm alias syntax) would not work for SDK consumers
 - **Impact**: All EthersV5Adapter tasks (T017, T020, T024-T027, T036, T039, and future v5 tasks) are marked as REMOVED
 - **Supported Providers**: Ethers v6 (`ethers` package) and Viem (`viem` package)
 
 **Tests**: Per the [Mento SDK Constitution](../.specify/memory/constitution.md), comprehensive testing is REQUIRED:
+
 - All adapter implementations MUST have unit tests
 - All provider integrations MUST have integration tests
 - Shared test suites MUST ensure provider parity
@@ -17,11 +19,13 @@
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
 ## Format: `[ID] [P?] [Story] Description`
+
 - **[P]**: Can run in parallel (different files, no dependencies)
 - **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
 - Include exact file paths in descriptions
 
 ## Path Conventions
+
 - **Single project**: `src/`, `tests/` at repository root
 - Paths shown below follow existing Mento SDK structure
 
@@ -248,6 +252,7 @@
 **Phase 2 (Foundational)**: All type creation tasks (T004-T015) can run in parallel
 
 **Phase 3 (US1)**:
+
 - All test creation tasks (T016-T023) can run in parallel
 - All EthersV5Adapter tasks (T024-T027) can run in parallel
 - All EthersAdapter tasks (T028-T031) can run in parallel
@@ -255,12 +260,14 @@
 - Virtual proxy updates (T036-T041) can run in parallel after adapters complete
 
 **Phase 4 (US2)**:
+
 - All test tasks (T051-T055) can run in parallel
 - TransactionResponse wrappers (T056-T058) can run in parallel
 - TransactionReceipt mapping (T059-T061) can run in parallel
 - Revert reason parsing (T062-T064) can run in parallel
 
 **Phase 5 (US3)**:
+
 - All test tasks (T072-T076) can run in parallel
 - All gas limit support tasks (T079-T081) can run in parallel
 - All gasPrice support tasks (T082-T084) can run in parallel
@@ -340,6 +347,7 @@ With multiple developers:
 ## Task Summary
 
 **Total Tasks**: 110
+
 - Setup: 3 tasks
 - Foundational: 12 tasks (BLOCKING)
 - User Story 1 (P1): 35 tasks (8 test tasks, 27 implementation tasks)
@@ -352,12 +360,14 @@ With multiple developers:
 **Independent Test Criteria**: Defined for each user story
 
 **Suggested MVP Scope**: Phase 1 + Phase 2 + Phase 3 (User Story 1 only)
+
 - Delivers core write transaction capability
 - Enables token approvals through all providers
 - Provides foundation for future features (swaps, liquidity)
 - ~50 tasks total for MVP
 
 **Full Feature Scope**: All 6 phases
+
 - Complete write transaction infrastructure
 - Status tracking and gas customization
 - Production-ready with all polish tasks

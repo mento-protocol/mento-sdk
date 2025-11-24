@@ -26,7 +26,7 @@ export abstract class TransactionError extends Error {
    * - `EXECUTION_ERROR`
    * - `NETWORK_ERROR`
    */
-  readonly code: string;
+  readonly code: string
 
   /**
    * Optional additional context about the error
@@ -34,7 +34,7 @@ export abstract class TransactionError extends Error {
    * May contain provider-specific details or technical information
    * for debugging.
    */
-  readonly reason?: string;
+  readonly reason?: string
 
   /**
    * @param message - Human-readable error message
@@ -42,14 +42,14 @@ export abstract class TransactionError extends Error {
    * @param reason - Optional additional context
    */
   constructor(message: string, code: string, reason?: string) {
-    super(message);
-    this.name = this.constructor.name;
-    this.code = code;
-    this.reason = reason;
+    super(message)
+    this.name = this.constructor.name
+    this.code = code
+    this.reason = reason
 
     // Maintain proper stack trace for debugging
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, this.constructor);
+      Error.captureStackTrace(this, this.constructor)
     }
   }
 }
@@ -93,7 +93,7 @@ export class ValidationError extends TransactionError {
    * ```
    */
   constructor(message: string, reason?: string) {
-    super(message, 'VALIDATION_ERROR', reason);
+    super(message, 'VALIDATION_ERROR', reason)
   }
 }
 
@@ -130,7 +130,7 @@ export class ExecutionError extends TransactionError {
    *
    * Can be used to view transaction on block explorer
    */
-  readonly hash: string;
+  readonly hash: string
 
   /**
    * Transaction receipt (if available)
@@ -138,7 +138,7 @@ export class ExecutionError extends TransactionError {
    * Contains full details of the failed transaction including
    * gas used, block number, and logs.
    */
-  readonly receipt?: TransactionReceipt;
+  readonly receipt?: TransactionReceipt
 
   /**
    * Revert reason from contract (if available)
@@ -146,7 +146,7 @@ export class ExecutionError extends TransactionError {
    * Extracted from error data or transaction logs.
    * May be a custom error message from the contract.
    */
-  readonly revertReason?: string;
+  readonly revertReason?: string
 
   /**
    * @param message - Human-readable error message
@@ -170,10 +170,10 @@ export class ExecutionError extends TransactionError {
     receipt?: TransactionReceipt,
     revertReason?: string
   ) {
-    super(message, 'EXECUTION_ERROR', revertReason);
-    this.hash = hash;
-    this.receipt = receipt;
-    this.revertReason = revertReason;
+    super(message, 'EXECUTION_ERROR', revertReason)
+    this.hash = hash
+    this.receipt = receipt
+    this.revertReason = revertReason
   }
 }
 
@@ -210,7 +210,7 @@ export class NetworkError extends TransactionError {
    * - `true`: Transient error, retry recommended
    * - `false`: Permanent error (e.g., invalid RPC endpoint)
    */
-  readonly retry: boolean;
+  readonly retry: boolean
 
   /**
    * @param message - Human-readable error message
@@ -235,8 +235,8 @@ export class NetworkError extends TransactionError {
    * ```
    */
   constructor(message: string, retry: boolean = true, reason?: string) {
-    super(message, 'NETWORK_ERROR', reason);
-    this.retry = retry;
+    super(message, 'NETWORK_ERROR', reason)
+    this.retry = retry
   }
 }
 
@@ -244,28 +244,28 @@ export class NetworkError extends TransactionError {
  * Type guard to check if error is a transaction error
  */
 export function isTransactionError(error: unknown): error is TransactionError {
-  return error instanceof TransactionError;
+  return error instanceof TransactionError
 }
 
 /**
  * Type guard to check if error is a validation error
  */
 export function isValidationError(error: unknown): error is ValidationError {
-  return error instanceof ValidationError;
+  return error instanceof ValidationError
 }
 
 /**
  * Type guard to check if error is an execution error
  */
 export function isExecutionError(error: unknown): error is ExecutionError {
-  return error instanceof ExecutionError;
+  return error instanceof ExecutionError
 }
 
 /**
  * Type guard to check if error is a network error
  */
 export function isNetworkError(error: unknown): error is NetworkError {
-  return error instanceof NetworkError;
+  return error instanceof NetworkError
 }
 
 /**
@@ -275,7 +275,7 @@ export const ERROR_CODES = {
   VALIDATION_ERROR: 'VALIDATION_ERROR',
   EXECUTION_ERROR: 'EXECUTION_ERROR',
   NETWORK_ERROR: 'NETWORK_ERROR',
-} as const;
+} as const
 
 /**
  * Common validation error messages
@@ -283,20 +283,20 @@ export const ERROR_CODES = {
  * These provide consistent, actionable error messages across the SDK
  */
 export const VALIDATION_ERRORS = {
-  NO_SIGNER: 'Signer required for write operations. Initialize SDK with signer parameter.',
+  NO_SIGNER:
+    'Signer required for write operations. Initialize SDK with signer parameter.',
   INVALID_ADDRESS: (address: string) =>
     `Invalid contract address: ${address}. Address must be a checksummed Ethereum address.`,
   CHAIN_MISMATCH: (expected: bigint, actual: bigint) =>
     `Chain ID mismatch. Signer is on chain ${actual} but SDK expects chain ${expected}.`,
   INVALID_GAS_LIMIT: (gasLimit: bigint) =>
     `Gas limit must be > 0, got: ${gasLimit}.`,
-  INVALID_NONCE: (nonce: bigint) =>
-    `Nonce must be >= 0, got: ${nonce}.`,
+  INVALID_NONCE: (nonce: bigint) => `Nonce must be >= 0, got: ${nonce}.`,
   GAS_PRICE_CONFLICT:
     'Cannot specify both gasPrice and EIP-1559 parameters (maxFeePerGas, maxPriorityFeePerGas).',
   FUNCTION_NOT_FOUND: (functionName: string) =>
     `Function "${functionName}" not found in contract ABI.`,
-} as const;
+} as const
 
 /**
  * Common network error messages
@@ -306,21 +306,21 @@ export const NETWORK_ERRORS = {
   CONNECTION_REFUSED: 'RPC connection refused. Check provider endpoint.',
   RATE_LIMITED: 'RPC rate limit exceeded. Retry with backoff.',
   UNKNOWN: 'Unknown network error occurred.',
-} as const;
+} as const
 
 // Re-export TransactionReceipt type for error contract
 export interface TransactionReceipt {
-  readonly hash: string;
-  readonly blockNumber: bigint;
-  readonly blockHash: string;
-  readonly status: 'success' | 'failed';
-  readonly gasUsed: bigint;
-  readonly effectiveGasPrice: bigint;
-  readonly cumulativeGasUsed: bigint;
-  readonly transactionIndex: number;
-  readonly from: string;
-  readonly to: string;
-  readonly contractAddress?: string;
-  readonly logs: readonly any[];
-  readonly revertReason?: string;
+  readonly hash: string
+  readonly blockNumber: bigint
+  readonly blockHash: string
+  readonly status: 'success' | 'failed'
+  readonly gasUsed: bigint
+  readonly effectiveGasPrice: bigint
+  readonly cumulativeGasUsed: bigint
+  readonly transactionIndex: number
+  readonly from: string
+  readonly to: string
+  readonly contractAddress?: string
+  readonly logs: readonly any[]
+  readonly revertReason?: string
 }

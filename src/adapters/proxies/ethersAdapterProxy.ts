@@ -1,5 +1,5 @@
-import { ProviderAdapter } from '../../types';
-import type { Provider as EthersV6Provider, Signer } from 'ethers';
+import { ProviderAdapter } from '../../types'
+import type { Provider as EthersV6Provider, Signer } from 'ethers'
 
 /**
  * Proxy class that implements lazy loading for ethers provider adapter.
@@ -16,86 +16,81 @@ import type { Provider as EthersV6Provider, Signer } from 'ethers';
  * ./adapters/proxies/README.md
  */
 export class EthersAdapterProxy implements ProviderAdapter {
-	private adapter: ProviderAdapter | null = null;
-	private initPromise: Promise<void>;
+  private adapter: ProviderAdapter | null = null
+  private initPromise: Promise<void>
 
-	constructor(
-		provider: EthersV6Provider,
-		signer?: Signer,
-	) {
-		this.initPromise = this.initialize(provider, signer);
-	}
+  constructor(provider: EthersV6Provider, signer?: Signer) {
+    this.initPromise = this.initialize(provider, signer)
+  }
 
-	private async initialize(provider: EthersV6Provider, signer?: Signer) {
-		try {
-			const { EthersAdapter } = await import(
-				'../implementations/ethersAdapter'
-			);
-			this.adapter = new EthersAdapter(provider, signer);
-		} catch (error) {
-			throw new Error(
-				'ethers v6 is not installed. Please install ethers@6 to use this adapter',
-			);
-		}
-	}
+  private async initialize(provider: EthersV6Provider, signer?: Signer) {
+    try {
+      const { EthersAdapter } = await import('../implementations/ethersAdapter')
+      this.adapter = new EthersAdapter(provider, signer)
+    } catch (error) {
+      throw new Error(
+        'ethers v6 is not installed. Please install ethers@6 to use this adapter'
+      )
+    }
+  }
 
-	async readContract(...args: Parameters<ProviderAdapter['readContract']>) {
-		await this.initPromise;
-		if (!this.adapter) {
-			throw new Error(
-				'Adapter not initialized. Are you missing ethers v6 dependency?',
-			);
-		}
-		return this.adapter.readContract(...args);
-	}
+  async readContract(...args: Parameters<ProviderAdapter['readContract']>) {
+    await this.initPromise
+    if (!this.adapter) {
+      throw new Error(
+        'Adapter not initialized. Are you missing ethers v6 dependency?'
+      )
+    }
+    return this.adapter.readContract(...args)
+  }
 
-	async getChainId() {
-		await this.initPromise;
-		if (!this.adapter) {
-			throw new Error(
-				'Adapter not initialized. Are you missing ethers v6 dependency?',
-			);
-		}
-		return this.adapter.getChainId();
-	}
+  async getChainId() {
+    await this.initPromise
+    if (!this.adapter) {
+      throw new Error(
+        'Adapter not initialized. Are you missing ethers v6 dependency?'
+      )
+    }
+    return this.adapter.getChainId()
+  }
 
-	async writeContract(...args: Parameters<ProviderAdapter['writeContract']>) {
-		await this.initPromise;
-		if (!this.adapter) {
-			throw new Error(
-				'Adapter not initialized. Are you missing ethers v6 dependency?',
-			);
-		}
-		return this.adapter.writeContract(...args);
-	}
+  async writeContract(...args: Parameters<ProviderAdapter['writeContract']>) {
+    await this.initPromise
+    if (!this.adapter) {
+      throw new Error(
+        'Adapter not initialized. Are you missing ethers v6 dependency?'
+      )
+    }
+    return this.adapter.writeContract(...args)
+  }
 
-	async estimateGas(...args: Parameters<ProviderAdapter['estimateGas']>) {
-		await this.initPromise;
-		if (!this.adapter) {
-			throw new Error(
-				'Adapter not initialized. Are you missing ethers v6 dependency?',
-			);
-		}
-		return this.adapter.estimateGas(...args);
-	}
+  async estimateGas(...args: Parameters<ProviderAdapter['estimateGas']>) {
+    await this.initPromise
+    if (!this.adapter) {
+      throw new Error(
+        'Adapter not initialized. Are you missing ethers v6 dependency?'
+      )
+    }
+    return this.adapter.estimateGas(...args)
+  }
 
-	async getSignerAddress() {
-		await this.initPromise;
-		if (!this.adapter) {
-			throw new Error(
-				'Adapter not initialized. Are you missing ethers v6 dependency?',
-			);
-		}
-		return this.adapter.getSignerAddress();
-	}
+  async getSignerAddress() {
+    await this.initPromise
+    if (!this.adapter) {
+      throw new Error(
+        'Adapter not initialized. Are you missing ethers v6 dependency?'
+      )
+    }
+    return this.adapter.getSignerAddress()
+  }
 
-	async getTransactionCount() {
-		await this.initPromise;
-		if (!this.adapter) {
-			throw new Error(
-				'Adapter not initialized. Are you missing ethers v6 dependency?',
-			);
-		}
-		return this.adapter.getTransactionCount();
-	}
+  async getTransactionCount() {
+    await this.initPromise
+    if (!this.adapter) {
+      throw new Error(
+        'Adapter not initialized. Are you missing ethers v6 dependency?'
+      )
+    }
+    return this.adapter.getTransactionCount()
+  }
 }

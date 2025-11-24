@@ -5,7 +5,7 @@
 **Status**: Draft
 **Input**: User description: "implement write transactions on the adapter implementations"
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Token Approval for Protocol Interactions (Priority: P1)
 
@@ -69,7 +69,7 @@ A developer needs to provide users with accurate gas cost estimates before submi
 
 - **How are failed transactions handled regarding gas costs?** Users should be informed that even failed transactions consume gas fees, and error messages should clearly distinguish between validation errors (pre-submission, no gas cost) and on-chain failures (gas consumed).
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -94,7 +94,7 @@ A developer needs to provide users with accurate gas cost estimates before submi
 
 ### Non-Functional Requirements (Per Constitution)
 
-*Reference: [Mento SDK Constitution](../.specify/memory/constitution.md)*
+_Reference: [Mento SDK Constitution](../.specify/memory/constitution.md)_
 
 - **NFR-001**: All write transaction methods MUST have TypeScript type definitions and comprehensive JSDoc comments with usage examples
 - **NFR-002**: Write transaction support MUST work with all supported providers (Ethers v5, Ethers v6, Viem) with identical feature sets
@@ -108,7 +108,7 @@ A developer needs to provide users with accurate gas cost estimates before submi
 - **NFR-010**: Write transaction feature MUST maintain the virtual proxy pattern allowing users to install only the providers they use
 - **NFR-011**: Documentation MUST include migration examples showing how to add write transaction support to existing applications for each provider library
 
-### Key Entities *(include if feature involves data)*
+### Key Entities _(include if feature involves data)_
 
 - **Transaction Request**: Represents a write operation to be submitted to the blockchain, containing target contract address, function signature, parameters, and optional gas settings (limit, price, nonce)
 
@@ -120,7 +120,7 @@ A developer needs to provide users with accurate gas cost estimates before submi
 
 - **Write Options**: Configuration for a write contract call, including contract address, function name/signature, parameters, ABI format, and optional gas customization
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 

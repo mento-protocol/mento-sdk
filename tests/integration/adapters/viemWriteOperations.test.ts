@@ -48,6 +48,13 @@ describe('Viem Write Operations Integration Tests', () => {
   const brokerAddress = addresses[ChainId.CELO][BROKER]
   const cUSDAddress = addresses[ChainId.CELO][STABLETOKEN]
 
+  if (!brokerAddress) {
+    throw new Error('Broker address not found for CELO')
+  }
+  if (!cUSDAddress) {
+    throw new Error('StableToken address not found for CELO')
+  }
+
   // Test configuration
   const testConfig = {
     erc20TokenAddress: cUSDAddress,

@@ -12,13 +12,14 @@ The Mento SDK uses a **Virtual Proxy Pattern** for provider adapter management t
 
 The SDK supports three blockchain provider libraries with equal feature parity:
 
-| Adapter | Library | Source |
-|---------|---------|--------|
-| **EthersV5Adapter** | `ethers@^5.7` | `/src/adapters/implementations/ethersV5Adapter.ts` |
-| **EthersAdapter** | `ethers@^6.13.4` | `/src/adapters/implementations/ethersAdapter.ts` |
-| **ViemAdapter** | `viem@^2.21.44` | `/src/adapters/implementations/viemAdapter.ts` |
+| Adapter             | Library          | Source                                             |
+| ------------------- | ---------------- | -------------------------------------------------- |
+| **EthersV5Adapter** | `ethers@^5.7`    | `/src/adapters/implementations/ethersV5Adapter.ts` |
+| **EthersAdapter**   | `ethers@^6.13.4` | `/src/adapters/implementations/ethersAdapter.ts`   |
+| **ViemAdapter**     | `viem@^2.21.44`  | `/src/adapters/implementations/viemAdapter.ts`     |
 
 All adapters are wrapped with Virtual Proxy classes for lazy loading:
+
 - `EthersV5AdapterProxy` - `/src/adapters/proxies/ethersV5AdapterProxy.ts`
 - `EthersAdapterProxy` - `/src/adapters/proxies/ethersAdapterProxy.ts`
 - `ViemAdapterProxy` - `/src/adapters/proxies/viemAdapterProxy.ts`
@@ -52,15 +53,15 @@ This allows users to install only the provider they use, minimizing SDK footprin
 
 ```typescript
 export interface ContractCallOptions {
-  address: string;
-  abi: string[] | unknown[];
-  functionName: string;
-  args?: unknown[];
+  address: string
+  abi: string[] | unknown[]
+  functionName: string
+  args?: unknown[]
 }
 
 export interface ProviderAdapter {
-  readContract(options: ContractCallOptions): Promise<unknown>;
-  getChainId(): Promise<number>;
+  readContract(options: ContractCallOptions): Promise<unknown>
+  getChainId(): Promise<number>
 }
 ```
 
@@ -76,28 +77,31 @@ The adapters use the **Virtual Proxy pattern** for lazy loading. Key benefits:
 4. **Memory Efficiency**: Unused adapters don't consume memory
 
 **Example - EthersAdapterProxy**:
+
 ```typescript
 export class EthersAdapterProxy implements ProviderAdapter {
-  private adapter: ProviderAdapter | null = null;
-  private initPromise: Promise<void>;
+  private adapter: ProviderAdapter | null = null
+  private initPromise: Promise<void>
 
   constructor(provider: EthersV6Provider) {
-    this.initPromise = this.initialize(provider);
+    this.initPromise = this.initialize(provider)
   }
 
   private async initialize(provider: EthersV6Provider) {
     try {
-      const { EthersAdapter } = await import('../implementations/ethersAdapter');
-      this.adapter = new EthersAdapter(provider);
+      const { EthersAdapter } = await import('../implementations/ethersAdapter')
+      this.adapter = new EthersAdapter(provider)
     } catch (error) {
-      throw new Error('ethers v6 is not installed. Please install ethers@6 to use this adapter');
+      throw new Error(
+        'ethers v6 is not installed. Please install ethers@6 to use this adapter'
+      )
     }
   }
 
   async readContract(...args: Parameters<ProviderAdapter['readContract']>) {
-    await this.initPromise;
-    if (!this.adapter) throw new Error('Adapter not initialized...');
-    return this.adapter.readContract(...args);
+    await this.initPromise
+    if (!this.adapter) throw new Error('Adapter not initialized...')
+    return this.adapter.readContract(...args)
   }
 }
 ```
@@ -107,6 +111,7 @@ export class EthersAdapterProxy implements ProviderAdapter {
 Each adapter implements the same interface but delegates to provider-specific APIs:
 
 **EthersV5Adapter** (`ethers-v5`):
+
 ```typescript
 export class EthersV5Adapter implements ProviderAdapter {
   constructor(private provider: providers.Provider) {}
@@ -116,18 +121,19 @@ export class EthersV5Adapter implements ProviderAdapter {
       options.address,
       options.abi as string[] | ContractInterface,
       this.provider
-    );
-    return await contract[options.functionName](...(options.args || []));
+    )
+    return await contract[options.functionName](...(options.args || []))
   }
 
   async getChainId(): Promise<number> {
-    const network = await this.provider.getNetwork();
-    return Number(network.chainId);
+    const network = await this.provider.getNetwork()
+    return Number(network.chainId)
   }
 }
 ```
 
 **EthersAdapter** (`ethers@v6`):
+
 ```typescript
 export class EthersAdapter implements ProviderAdapter {
   constructor(private provider: EthersProvider) {}
@@ -137,38 +143,40 @@ export class EthersAdapter implements ProviderAdapter {
       options.address,
       options.abi as string[] | Interface,
       this.provider
-    );
-    return await contract[options.functionName](...(options.args || []));
+    )
+    return await contract[options.functionName](...(options.args || []))
   }
 
   async getChainId(): Promise<number> {
-    const network = await this.provider.getNetwork();
-    return Number(network.chainId);
+    const network = await this.provider.getNetwork()
+    return Number(network.chainId)
   }
 }
 ```
 
 **ViemAdapter** (`viem`):
+
 ```typescript
 export class ViemAdapter implements ProviderAdapter {
   constructor(private client: PublicClient) {}
 
   async readContract(options: ContractCallOptions): Promise<unknown> {
     // Handles both string array (human-readable) and object ABIs
-    const abi = Array.isArray(options.abi) && typeof options.abi[0] === 'string'
-      ? parseAbi(options.abi as string[])
-      : options.abi;
+    const abi =
+      Array.isArray(options.abi) && typeof options.abi[0] === 'string'
+        ? parseAbi(options.abi as string[])
+        : options.abi
 
     return await this.client.readContract({
       address: options.address as `0x${string}`,
       abi: abi,
       functionName: options.functionName,
       args: options.args,
-    });
+    })
   }
 
   async getChainId(): Promise<number> {
-    return await this.client.getChainId();
+    return await this.client.getChainId()
   }
 }
 ```
@@ -183,7 +191,7 @@ The adapters support:
 
 1. **Contract Reads**: `readContract(options)` - Calls view/pure functions
 2. **Chain Detection**: `getChainId()` - Identifies blockchain network
-3. **Multiple ABI Formats**: 
+3. **Multiple ABI Formats**:
    - Human-readable format (string array) - Viem special handling
    - JSON ABI format (object array)
 4. **Lazy Provider Loading**: Dependencies loaded on-demand
@@ -193,18 +201,21 @@ The adapters support:
 
 **Gap Analysis**: Write transactions currently require:
 
-1. **Signer/Wallet Client**: 
+1. **Signer/Wallet Client**:
+
    - Ethers v5/v6: Need `Signer` instance (e.g., `JsonRpcSigner`, `Wallet`)
    - Viem: Need `WalletClient` instance
    - Current SDK only accepts `Provider` / `PublicClient`
 
 2. **Transaction Building**: No support for:
+
    - Encoding contract call data
    - Building transaction objects
    - Gas estimation
    - Nonce management
 
 3. **Transaction Submission**: No support for:
+
    - Sending signed transactions
    - Awaiting transaction receipts
    - Handling transaction responses
@@ -219,17 +230,20 @@ The adapters support:
 Users would be able to:
 
 1. **Execute State-Changing Operations**:
+
    - Token transfers
    - Protocol interactions (swaps, deposits, withdrawals)
    - Governance voting
    - Smart contract function calls that modify state
 
 2. **Build Transaction Workflows**:
+
    - Multi-step transactions with dependencies
    - Batch operations
    - Gas estimation and optimization
 
 3. **Interact Fully with Mento Protocol**:
+
    - Currently limited to reading protocol state
    - Would enable trading, governance, and management operations
 
@@ -244,46 +258,50 @@ Users would be able to:
 
 ### 4.1 Public API
 
-| Method | Signature | Purpose |
-|--------|-----------|---------|
+| Method           | Signature                                            | Purpose                           |
+| ---------------- | ---------------------------------------------------- | --------------------------------- |
 | `readContract()` | `(options: ContractCallOptions) => Promise<unknown>` | Call view/pure contract functions |
-| `getChainId()` | `() => Promise<number>` | Get current blockchain network ID |
+| `getChainId()`   | `() => Promise<number>`                              | Get current blockchain network ID |
 
 ### 4.2 Adapter Usage in Services
 
 Adapters are used throughout the SDK by services that rely on contract reads:
 
 **StableTokenService** (`/src/services/stableTokenService.ts`):
+
 ```typescript
 // Uses readContract for: getTokens(), metadata, totalSupply
 const tokenAddresses = (await this.provider.readContract({
   address: reserveAddress,
   abi: RESERVE_ABI,
   functionName: 'getTokens',
-})) as string[];
+})) as string[]
 ```
 
 **TokenMetadataService** (`/src/services/tokenMetadataService.ts`):
+
 ```typescript
 // Uses readContract for: name(), symbol(), decimals(), balanceOf(), totalSupply()
 const name = await this.provider.readContract({
   address,
   abi: ERC20_ABI,
   functionName: 'name',
-});
+})
 ```
 
 **CollateralAssetService** (`/src/services/collateralAssetService.ts`):
+
 ```typescript
 // Uses readContract for: getExchanges(), isCollateralAsset()
 const exchanges = await this.provider.readContract({
   address: biPoolManagerAddress,
   abi: BIPOOL_MANAGER_ABI,
   functionName: 'getExchanges',
-});
+})
 ```
 
 **Supply Calculators** (Various supply calculation services):
+
 ```typescript
 // AAVESupplyCalculator uses readContract for: balanceOf()
 const balance = await this.provider.readContract({
@@ -291,7 +309,7 @@ const balance = await this.provider.readContract({
   abi: ERC20_ABI,
   functionName: 'balanceOf',
   args: [holderAddress],
-});
+})
 ```
 
 ---
@@ -317,6 +335,7 @@ Mento (Main Class)
 ### 5.2 Error Handling Patterns
 
 **Retry Logic**: `/src/utils/retry.ts` provides retry mechanisms for transient failures:
+
 ```typescript
 // Services use retryOperation for unreliable RPC calls
 const metadata = await retryOperation(() =>
@@ -335,14 +354,14 @@ const metadata = await retryOperation(() =>
 
 ABIs are centrally defined in `/src/abis/`:
 
-| ABI | Purpose | Functions |
-|-----|---------|-----------|
-| `ERC20_ABI` | Token interactions | name(), symbol(), decimals(), totalSupply(), balanceOf() |
-| `RESERVE_ABI` | Mento Reserve | getTokens(), isToken(), isCollateralAsset() |
-| `BIPOOL_MANAGER_ABI` | Mento Exchange Manager | getExchanges() |
-| `BROKER_ABI` | Trading limits | tradingLimitsConfig(), tradingLimitsState() |
-| `PRICING_MODULE_ABI` | Pricing | (minimal) |
-| `UNISWAP_V3_ABI` | Uniswap integration | (complex pool interactions) |
+| ABI                  | Purpose                | Functions                                                |
+| -------------------- | ---------------------- | -------------------------------------------------------- |
+| `ERC20_ABI`          | Token interactions     | name(), symbol(), decimals(), totalSupply(), balanceOf() |
+| `RESERVE_ABI`        | Mento Reserve          | getTokens(), isToken(), isCollateralAsset()              |
+| `BIPOOL_MANAGER_ABI` | Mento Exchange Manager | getExchanges()                                           |
+| `BROKER_ABI`         | Trading limits         | tradingLimitsConfig(), tradingLimitsState()              |
+| `PRICING_MODULE_ABI` | Pricing                | (minimal)                                                |
+| `UNISWAP_V3_ABI`     | Uniswap integration    | (complex pool interactions)                              |
 
 ---
 
@@ -399,28 +418,32 @@ The SDK auto-detects provider type and creates appropriate adapter:
 export type SupportedProvider =
   | EthersV6Provider
   | PublicClient
-  | EthersV5Providers.Provider;
+  | EthersV5Providers.Provider
 
 // Auto-detection logic
 function isEthersV5Provider(provider: SupportedProvider): boolean {
-  return 'getNetwork' in provider && '_network' in provider && 'formatter' in provider;
+  return (
+    'getNetwork' in provider &&
+    '_network' in provider &&
+    'formatter' in provider
+  )
 }
 
 function isEthersV6Provider(provider: SupportedProvider): boolean {
-  return 'getNetwork' in provider && 'broadcastTransaction' in provider;
+  return 'getNetwork' in provider && 'broadcastTransaction' in provider
 }
 
 function isViemProvider(provider: SupportedProvider): boolean {
-  return !('getNetwork' in provider);
+  return !('getNetwork' in provider)
 }
 
 // In Mento.create():
 if (isEthersV5Provider(config.provider)) {
-  provider = new EthersV5Adapter(config.provider);
+  provider = new EthersV5Adapter(config.provider)
 } else if (isEthersV6Provider(config.provider)) {
-  provider = new EthersAdapter(config.provider);
+  provider = new EthersAdapter(config.provider)
 } else if (isViemProvider(config.provider)) {
-  provider = new ViemAdapter(config.provider);
+  provider = new ViemAdapter(config.provider)
 }
 ```
 
@@ -431,35 +454,41 @@ if (isEthersV5Provider(config.provider)) {
 The Mento SDK Constitution defines requirements that write transactions must meet:
 
 ### 8.1 Type Safety & Code Quality
+
 - All public APIs must have TypeScript type definitions and JSDoc
 - No `any` types in public APIs
 - Strict mode TypeScript
 
 ### 8.2 Provider Agnostic Architecture
+
 - All blockchain interactions through ProviderAdapter interface
 - No provider-specific code in services
 - Equal feature parity across Ethers v5/v6 and Viem
 - Automatic provider detection and initialization
 
 ### 8.3 Comprehensive Testing
+
 - Unit tests for core logic
 - Integration tests for each adapter
 - Shared test suites ensuring provider parity
 - Code coverage > 80%
 
 ### 8.4 Performance & Reliability
+
 - Batch calls where possible
 - Retry logic with exponential backoff
 - Proper error handling
 - Configurable timeouts
 
 ### 8.5 Developer Experience & Documentation
+
 - JSDoc comments with examples
 - Clear error messages
 - Migration guides for breaking changes
 - Updated README
 
 ### 8.6 Blockchain Best Practices
+
 - Checksummed contract addresses
 - Chain ID verification
 - BigInt for numeric values
@@ -476,14 +505,14 @@ Tests demonstrate adapter usage:
 ```typescript
 // Tests use shared test suites for provider parity
 describe('EthersAdapter Integration Tests', () => {
-  const ethersProvider = new JsonRpcProvider(TEST_CONFIG.rpcUrl);
-  const adapter = new EthersAdapter(ethersProvider);
-  const stableTokenService = new StableTokenService(adapter);
-  const collateralAssetService = new CollateralAssetService(adapter);
+  const ethersProvider = new JsonRpcProvider(TEST_CONFIG.rpcUrl)
+  const adapter = new EthersAdapter(ethersProvider)
+  const stableTokenService = new StableTokenService(adapter)
+  const collateralAssetService = new CollateralAssetService(adapter)
 
-  createStableTokenTests(stableTokenService);
-  createCollateralAssetTests(collateralAssetService);
-});
+  createStableTokenTests(stableTokenService)
+  createCollateralAssetTests(collateralAssetService)
+})
 ```
 
 Same tests run with ViemAdapter to ensure provider parity.
@@ -495,36 +524,39 @@ Same tests run with ViemAdapter to ensure provider parity.
 ### 10.1 Core Infrastructure Changes
 
 1. **Extended ProviderAdapter Interface**:
+
    ```typescript
    interface ProviderAdapter {
      // Existing read-only methods
-     readContract(options: ContractCallOptions): Promise<unknown>;
-     getChainId(): Promise<number>;
-     
+     readContract(options: ContractCallOptions): Promise<unknown>
+     getChainId(): Promise<number>
+
      // New write transaction methods
-     writeContract(options: ContractWriteOptions): Promise<TransactionResponse>;
-     sendTransaction(tx: Transaction): Promise<TransactionResponse>;
-     getBalance(address: string): Promise<bigint>;
-     estimateGas(tx: Transaction): Promise<bigint>;
+     writeContract(options: ContractWriteOptions): Promise<TransactionResponse>
+     sendTransaction(tx: Transaction): Promise<TransactionResponse>
+     getBalance(address: string): Promise<bigint>
+     estimateGas(tx: Transaction): Promise<bigint>
    }
    ```
 
 2. **New Type Definitions**:
+
    ```typescript
    interface ContractWriteOptions extends ContractCallOptions {
-     account: string;
-     value?: bigint;
-     gas?: bigint;
-     gasPrice?: bigint;
+     account: string
+     value?: bigint
+     gas?: bigint
+     gasPrice?: bigint
    }
-   
+
    interface TransactionResponse {
-     hash: string;
-     wait(): Promise<TransactionReceipt>;
+     hash: string
+     wait(): Promise<TransactionReceipt>
    }
    ```
 
 3. **Signer/Wallet Support**:
+
    - Extend constructor to accept Signer (Ethers) or WalletClient (Viem)
    - Maintain lazy loading pattern
    - Support both read-only Provider and signing Signer
@@ -537,6 +569,7 @@ Same tests run with ViemAdapter to ensure provider parity.
 ### 10.2 Service Layer Changes
 
 Services would need methods for:
+
 - Token approvals (ERC20 approve)
 - Protocol interactions (swaps, trades)
 - Governance actions (voting)
@@ -561,6 +594,7 @@ Services would need methods for:
 ## 11. Architecture Summary
 
 ### Current State (Read-Only)
+
 - Virtual Proxy pattern for lazy adapter loading
 - Single interface for all providers: `ProviderAdapter`
 - Three implementations: EthersV5, EthersV6, Viem
@@ -569,6 +603,7 @@ Services would need methods for:
 - Comprehensive error handling and retry logic
 
 ### For Write Transactions
+
 - Same Virtual Proxy and provider detection patterns
 - Extended ProviderAdapter interface with write methods
 - Signer/WalletClient support alongside Provider/PublicClient
@@ -580,18 +615,18 @@ Services would need methods for:
 
 ## Key Files Reference
 
-| File | Purpose |
-|------|---------|
-| `/src/types/provider.ts` | ProviderAdapter interface definition |
-| `/src/adapters/index.ts` | Public adapter exports |
-| `/src/adapters/implementations/ethersAdapter.ts` | Ethers v6 adapter |
-| `/src/adapters/implementations/ethersV5Adapter.ts` | Ethers v5 adapter |
-| `/src/adapters/implementations/viemAdapter.ts` | Viem adapter |
-| `/src/adapters/proxies/*.ts` | Virtual proxy implementations |
-| `/src/adapters/proxies/README.md` | Virtual proxy pattern documentation |
-| `/src/index.ts` | Mento class with provider detection |
-| `/src/services/*.ts` | Services using adapters |
-| `/.specify/memory/constitution.md` | SDK development principles |
+| File                                               | Purpose                              |
+| -------------------------------------------------- | ------------------------------------ |
+| `/src/types/provider.ts`                           | ProviderAdapter interface definition |
+| `/src/adapters/index.ts`                           | Public adapter exports               |
+| `/src/adapters/implementations/ethersAdapter.ts`   | Ethers v6 adapter                    |
+| `/src/adapters/implementations/ethersV5Adapter.ts` | Ethers v5 adapter                    |
+| `/src/adapters/implementations/viemAdapter.ts`     | Viem adapter                         |
+| `/src/adapters/proxies/*.ts`                       | Virtual proxy implementations        |
+| `/src/adapters/proxies/README.md`                  | Virtual proxy pattern documentation  |
+| `/src/index.ts`                                    | Mento class with provider detection  |
+| `/src/services/*.ts`                               | Services using adapters              |
+| `/.specify/memory/constitution.md`                 | SDK development principles           |
 
 ---
 
@@ -607,4 +642,3 @@ Services would need methods for:
 6. **Error Handling**: Comprehensive error types and messages for blockchain failures
 7. **Testing**: Shared test suites for write operations across all adapters
 8. **Documentation**: Clear examples for each provider library
-

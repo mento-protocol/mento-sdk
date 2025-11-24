@@ -19,83 +19,83 @@ pnpm add viem      # For Viem
 ### With Ethers v6
 
 ```typescript
-import { Mento } from '@mento-protocol/mento-sdk';
-import { ethers } from 'ethers';
+import { Mento } from '@mento-protocol/mento-sdk'
+import { ethers } from 'ethers'
 
 // Setup provider and signer
-const provider = new ethers.JsonRpcProvider('https://forno.celo.org');
-const signer = new ethers.Wallet(privateKey, provider);
+const provider = new ethers.JsonRpcProvider('https://forno.celo.org')
+const signer = new ethers.Wallet(privateKey, provider)
 
 // Initialize SDK with write support
 const mento = Mento.create({
   provider,
-  signer  // Add signer for write operations
-});
+  signer, // Add signer for write operations
+})
 
 // Execute token approval
 const tx = await mento.writeContract({
-  address: '0x...',  // Token address
+  address: '0x...', // Token address
   abi: ['function approve(address spender, uint256 amount)'],
   functionName: 'approve',
-  args: [brokerAddress, ethers.parseUnits('100', 18)]
-});
+  args: [brokerAddress, ethers.parseUnits('100', 18)],
+})
 
-console.log('Transaction submitted:', tx.hash);
+console.log('Transaction submitted:', tx.hash)
 
 // Wait for confirmation
-const receipt = await tx.wait();
+const receipt = await tx.wait()
 if (receipt.status === 'success') {
-  console.log('Approval confirmed!');
+  console.log('Approval confirmed!')
 }
 ```
 
 ### With Ethers v5
 
 ```typescript
-import { Mento } from '@mento-protocol/mento-sdk';
-import { ethers } from 'ethers';
+import { Mento } from '@mento-protocol/mento-sdk'
+import { ethers } from 'ethers'
 
 // Setup provider and signer
-const provider = new ethers.providers.JsonRpcProvider('https://forno.celo.org');
-const signer = new ethers.Wallet(privateKey, provider);
+const provider = new ethers.providers.JsonRpcProvider('https://forno.celo.org')
+const signer = new ethers.Wallet(privateKey, provider)
 
 // Initialize SDK (same API as v6)
 const mento = Mento.create({
   provider,
-  signer
-});
+  signer,
+})
 
 // Execute approval (same API as v6)
 const tx = await mento.writeContract({
   address: tokenAddress,
   abi: ['function approve(address spender, uint256 amount)'],
   functionName: 'approve',
-  args: [brokerAddress, ethers.utils.parseUnits('100', 18)]
-});
+  args: [brokerAddress, ethers.utils.parseUnits('100', 18)],
+})
 
-const receipt = await tx.wait();
+const receipt = await tx.wait()
 ```
 
 ### With Viem
 
 ```typescript
-import { Mento } from '@mento-protocol/mento-sdk';
-import { createWalletClient, http } from 'viem';
-import { celoAlfajores } from 'viem/chains';
-import { privateKeyToAccount } from 'viem/accounts';
+import { Mento } from '@mento-protocol/mento-sdk'
+import { createWalletClient, http } from 'viem'
+import { celoAlfajores } from 'viem/chains'
+import { privateKeyToAccount } from 'viem/accounts'
 
 // Setup wallet client (combines provider + signer)
-const account = privateKeyToAccount(privateKey);
+const account = privateKeyToAccount(privateKey)
 const walletClient = createWalletClient({
   account,
   chain: celoAlfajores,
-  transport: http()
-});
+  transport: http(),
+})
 
 // Initialize SDK with wallet client
 const mento = Mento.create({
-  provider: walletClient  // WalletClient has both read and write
-});
+  provider: walletClient, // WalletClient has both read and write
+})
 
 // Execute approval
 const tx = await mento.writeContract({
@@ -106,15 +106,15 @@ const tx = await mento.writeContract({
       name: 'approve',
       inputs: [
         { name: 'spender', type: 'address' },
-        { name: 'amount', type: 'uint256' }
-      ]
-    }
+        { name: 'amount', type: 'uint256' },
+      ],
+    },
   ],
   functionName: 'approve',
-  args: [brokerAddress, 100000000000000000000n]  // 100 tokens (18 decimals)
-});
+  args: [brokerAddress, 100000000000000000000n], // 100 tokens (18 decimals)
+})
 
-const receipt = await tx.wait();
+const receipt = await tx.wait()
 ```
 
 ## Common Patterns
@@ -127,10 +127,10 @@ const estimatedGas = await mento.estimateGas({
   address: tokenAddress,
   abi: ['function approve(address spender, uint256 amount)'],
   functionName: 'approve',
-  args: [spenderAddress, amount]
-});
+  args: [spenderAddress, amount],
+})
 
-console.log(`Estimated gas: ${estimatedGas}`);
+console.log(`Estimated gas: ${estimatedGas}`)
 
 // Add 20% buffer and submit
 const tx = await mento.writeContract({
@@ -138,8 +138,8 @@ const tx = await mento.writeContract({
   abi: ['function approve(address spender, uint256 amount)'],
   functionName: 'approve',
   args: [spenderAddress, amount],
-  gasLimit: estimatedGas * 120n / 100n  // Add 20% buffer
-});
+  gasLimit: (estimatedGas * 120n) / 100n, // Add 20% buffer
+})
 ```
 
 ### 2. Custom Gas Parameters
@@ -151,8 +151,8 @@ const tx = await mento.writeContract({
   abi: ['function approve(address spender, uint256 amount)'],
   functionName: 'approve',
   args: [spenderAddress, amount],
-  gasPrice: 5000000000n  // 5 gwei
-});
+  gasPrice: 5000000000n, // 5 gwei
+})
 
 // EIP-1559 (Ethereum mainnet, Polygon, etc.)
 const tx = await mento.writeContract({
@@ -160,9 +160,9 @@ const tx = await mento.writeContract({
   abi: ['function approve(address spender, uint256 amount)'],
   functionName: 'approve',
   args: [spenderAddress, amount],
-  maxFeePerGas: 50000000000n,        // 50 gwei max
-  maxPriorityFeePerGas: 2000000000n  // 2 gwei tip
-});
+  maxFeePerGas: 50000000000n, // 50 gwei max
+  maxPriorityFeePerGas: 2000000000n, // 2 gwei tip
+})
 ```
 
 ### 3. Transaction Status Tracking
@@ -252,8 +252,12 @@ try {
 ## Complete Example: Token Approval Workflow
 
 ```typescript
-import { Mento, ValidationError, ExecutionError } from '@mento-protocol/mento-sdk';
-import { ethers } from 'ethers';
+import {
+  Mento,
+  ValidationError,
+  ExecutionError,
+} from '@mento-protocol/mento-sdk'
+import { ethers } from 'ethers'
 
 async function approveToken(
   tokenAddress: string,
@@ -261,63 +265,63 @@ async function approveToken(
   amount: bigint
 ) {
   // Setup
-  const provider = new ethers.JsonRpcProvider('https://forno.celo.org');
-  const signer = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
+  const provider = new ethers.JsonRpcProvider('https://forno.celo.org')
+  const signer = new ethers.Wallet(process.env.PRIVATE_KEY!, provider)
 
-  const mento = Mento.create({ provider, signer });
+  const mento = Mento.create({ provider, signer })
 
-  const abi = ['function approve(address spender, uint256 amount)'];
+  const abi = ['function approve(address spender, uint256 amount)']
 
   try {
     // Step 1: Estimate gas
-    console.log('Estimating gas...');
+    console.log('Estimating gas...')
     const estimatedGas = await mento.estimateGas({
       address: tokenAddress,
       abi,
       functionName: 'approve',
-      args: [spenderAddress, amount]
-    });
+      args: [spenderAddress, amount],
+    })
 
-    console.log(`Estimated gas: ${estimatedGas}`);
+    console.log(`Estimated gas: ${estimatedGas}`)
 
     // Step 2: Submit transaction with gas buffer
-    console.log('Submitting transaction...');
+    console.log('Submitting transaction...')
     const tx = await mento.writeContract({
       address: tokenAddress,
       abi,
       functionName: 'approve',
       args: [spenderAddress, amount],
-      gasLimit: estimatedGas * 120n / 100n  // 20% buffer
-    });
+      gasLimit: (estimatedGas * 120n) / 100n, // 20% buffer
+    })
 
-    console.log(`Transaction submitted: ${tx.hash}`);
-    console.log(`View on explorer: https://celoscan.io/tx/${tx.hash}`);
+    console.log(`Transaction submitted: ${tx.hash}`)
+    console.log(`View on explorer: https://celoscan.io/tx/${tx.hash}`)
 
     // Step 3: Wait for confirmation
-    console.log('Waiting for confirmation...');
-    const receipt = await tx.wait();
+    console.log('Waiting for confirmation...')
+    const receipt = await tx.wait()
 
     if (receipt.status === 'success') {
-      console.log('✅ Approval confirmed!');
-      console.log(`Block: ${receipt.blockNumber}`);
-      console.log(`Gas used: ${receipt.gasUsed}`);
-      console.log(`Cost: ${receipt.gasUsed * receipt.effectiveGasPrice} wei`);
-      return receipt;
+      console.log('✅ Approval confirmed!')
+      console.log(`Block: ${receipt.blockNumber}`)
+      console.log(`Gas used: ${receipt.gasUsed}`)
+      console.log(`Cost: ${receipt.gasUsed * receipt.effectiveGasPrice} wei`)
+      return receipt
     } else {
-      console.error('❌ Transaction failed:', receipt.revertReason);
-      throw new Error('Approval failed');
+      console.error('❌ Transaction failed:', receipt.revertReason)
+      throw new Error('Approval failed')
     }
   } catch (error) {
     if (error instanceof ValidationError) {
-      console.error('❌ Validation error:', error.message);
-      console.error('Suggestion:', error.reason);
+      console.error('❌ Validation error:', error.message)
+      console.error('Suggestion:', error.reason)
     } else if (error instanceof ExecutionError) {
-      console.error('❌ Transaction reverted:', error.revertReason);
-      console.error('Transaction hash:', error.hash);
+      console.error('❌ Transaction reverted:', error.revertReason)
+      console.error('Transaction hash:', error.hash)
     } else {
-      console.error('❌ Unexpected error:', error);
+      console.error('❌ Unexpected error:', error)
     }
-    throw error;
+    throw error
   }
 }
 
@@ -325,21 +329,21 @@ async function approveToken(
 approveToken(
   '0x...', // cUSD token address
   '0x...', // Broker contract address
-  ethers.parseUnits('100', 18)  // 100 tokens
-);
+  ethers.parseUnits('100', 18) // 100 tokens
+)
 ```
 
 ## Provider Comparison
 
-| Feature | Ethers v5 | Ethers v6 | Viem |
-|---------|-----------|-----------|------|
-| **Initialization** | Provider + Signer | Provider + Signer | WalletClient |
-| **BigInt Support** | BigNumber | BigInt (native) | BigInt (native) |
-| **ABI Format** | String or JSON | String or JSON | JSON preferred |
-| **Gas Estimation** | ✅ | ✅ | ✅ |
-| **Custom Gas** | ✅ | ✅ | ✅ |
-| **Transaction Tracking** | ✅ | ✅ | ✅ |
-| **Error Normalization** | ✅ | ✅ | ✅ |
+| Feature                  | Ethers v5         | Ethers v6         | Viem            |
+| ------------------------ | ----------------- | ----------------- | --------------- |
+| **Initialization**       | Provider + Signer | Provider + Signer | WalletClient    |
+| **BigInt Support**       | BigNumber         | BigInt (native)   | BigInt (native) |
+| **ABI Format**           | String or JSON    | String or JSON    | JSON preferred  |
+| **Gas Estimation**       | ✅                | ✅                | ✅              |
+| **Custom Gas**           | ✅                | ✅                | ✅              |
+| **Transaction Tracking** | ✅                | ✅                | ✅              |
+| **Error Normalization**  | ✅                | ✅                | ✅              |
 
 **All providers have identical SDK APIs** - switch providers by changing initialization code only!
 
@@ -380,19 +384,19 @@ const tx = await mento.writeContract({...});         // New capability
 
 ```typescript
 // Before (direct ethers usage)
-const contract = new ethers.Contract(address, abi, signer);
-const tx = await contract.approve(spender, amount);
-await tx.wait();
+const contract = new ethers.Contract(address, abi, signer)
+const tx = await contract.approve(spender, amount)
+await tx.wait()
 
 // After (Mento SDK)
-const mento = Mento.create({ provider, signer });
+const mento = Mento.create({ provider, signer })
 const tx = await mento.writeContract({
   address,
   abi,
   functionName: 'approve',
-  args: [spender, amount]
-});
-await tx.wait();
+  args: [spender, amount],
+})
+await tx.wait()
 
 // Benefits:
 // - Provider-agnostic (works with Ethers v5/v6, Viem)

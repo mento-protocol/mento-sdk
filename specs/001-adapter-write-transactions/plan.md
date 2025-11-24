@@ -58,7 +58,7 @@ This feature extends the Mento SDK's `ProviderAdapter` interface to support writ
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
 Review against [Mento SDK Constitution](../.specify/memory/constitution.md):
 
@@ -69,7 +69,7 @@ Review against [Mento SDK Constitution](../.specify/memory/constitution.md):
 - [x] **Developer Experience & Documentation** - All new methods will have JSDoc with usage examples. Error messages will distinguish pre-submission validation (no gas cost) from on-chain failures (gas consumed). README and migration guides will be updated.
 - [x] **Blockchain Best Practices** - Chain ID verification before transaction submission. Addresses checksummed and validated. BigInt for all numeric transaction parameters (amounts, gas, nonces). Transaction revert reasons surfaced to developers.
 
-*No violations. This feature aligns with all constitution principles.*
+_No violations. This feature aligns with all constitution principles._
 
 ## Project Structure
 
@@ -133,7 +133,6 @@ tests/
 
 ## Complexity Tracking
 
-*Fill ONLY if Constitution Check has violations that must be justified*
+_Fill ONLY if Constitution Check has violations that must be justified_
 
 **No violations identified.** This feature fully complies with all constitution principles.
-

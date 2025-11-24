@@ -14,7 +14,7 @@ import type {
   ContractWriteOptions,
   TransactionResponse,
   TransactionReceipt,
-} from '../types';
+} from '../types'
 
 /**
  * Unified interface for blockchain provider operations
@@ -50,7 +50,7 @@ export interface ProviderAdapter {
    * });
    * ```
    */
-  readContract(options: ContractCallOptions): Promise<unknown>;
+  readContract(options: ContractCallOptions): Promise<unknown>
 
   /**
    * Get the chain ID of the connected network
@@ -64,7 +64,7 @@ export interface ProviderAdapter {
    * // Returns: 42220 (for Celo mainnet)
    * ```
    */
-  getChainId(): Promise<number>;
+  getChainId(): Promise<number>
 
   // ==================== WRITE OPERATIONS (New) ====================
 
@@ -112,7 +112,7 @@ export interface ProviderAdapter {
    * });
    * ```
    */
-  writeContract(options: ContractWriteOptions): Promise<TransactionResponse>;
+  writeContract(options: ContractWriteOptions): Promise<TransactionResponse>
 
   /**
    * Estimate gas required for a contract call
@@ -142,7 +142,7 @@ export interface ProviderAdapter {
    * // Use with buffer: gasLimit = estimatedGas * 120n / 100n (add 20%)
    * ```
    */
-  estimateGas(options: ContractCallOptions): Promise<bigint>;
+  estimateGas(options: ContractCallOptions): Promise<bigint>
 
   /**
    * Get the address of the connected signer/wallet
@@ -157,7 +157,7 @@ export interface ProviderAdapter {
    * // Returns: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
    * ```
    */
-  getSignerAddress(): Promise<string>;
+  getSignerAddress(): Promise<string>
 
   /**
    * Get the current transaction count (nonce) for the signer
@@ -182,7 +182,7 @@ export interface ProviderAdapter {
    * });
    * ```
    */
-  getTransactionCount(): Promise<bigint>;
+  getTransactionCount(): Promise<bigint>
 }
 
 /**
@@ -199,7 +199,7 @@ export interface ProviderAdapterOptions {
    * - Ethers v6: `ethers.Provider`
    * - Viem: `PublicClient` or `WalletClient`
    */
-  provider: any;
+  provider: any
 
   /**
    * Signer for write operations (optional)
@@ -211,7 +211,7 @@ export interface ProviderAdapterOptions {
    * **Note**: Viem does not separate provider and signer. Use `WalletClient`
    * for both read and write operations.
    */
-  signer?: any;
+  signer?: any
 }
 
 /**
@@ -221,7 +221,7 @@ export interface ContractCallOptions {
   /**
    * Contract address (must be checksummed)
    */
-  address: string;
+  address: string
 
   /**
    * Contract ABI
@@ -230,17 +230,17 @@ export interface ContractCallOptions {
    * - String: `['function balanceOf(address) view returns (uint256)']`
    * - JSON: `[{ type: 'function', name: 'balanceOf', ... }]`
    */
-  abi: any[] | string[];
+  abi: any[] | string[]
 
   /**
    * Function name to call
    */
-  functionName: string;
+  functionName: string
 
   /**
    * Function arguments (in order)
    */
-  args?: any[];
+  args?: any[]
 }
 
 /**
@@ -253,7 +253,7 @@ export interface ContractWriteOptions extends ContractCallOptions {
    * If not provided, gas will be estimated automatically.
    * Recommended to add 10-20% buffer to estimated gas.
    */
-  gasLimit?: bigint;
+  gasLimit?: bigint
 
   /**
    * Legacy gas price (pre-EIP-1559)
@@ -261,7 +261,7 @@ export interface ContractWriteOptions extends ContractCallOptions {
    * **Mutually exclusive** with `maxFeePerGas` and `maxPriorityFeePerGas`.
    * Use this for networks that don't support EIP-1559.
    */
-  gasPrice?: bigint;
+  gasPrice?: bigint
 
   /**
    * EIP-1559 maximum fee per gas
@@ -269,7 +269,7 @@ export interface ContractWriteOptions extends ContractCallOptions {
    * Total fee per gas unit you're willing to pay.
    * Use on networks that support EIP-1559 (Ethereum mainnet, Polygon, etc.)
    */
-  maxFeePerGas?: bigint;
+  maxFeePerGas?: bigint
 
   /**
    * EIP-1559 priority fee (miner tip)
@@ -277,7 +277,7 @@ export interface ContractWriteOptions extends ContractCallOptions {
    * Additional fee per gas to incentivize miners/validators.
    * Use with `maxFeePerGas` on EIP-1559 networks.
    */
-  maxPriorityFeePerGas?: bigint;
+  maxPriorityFeePerGas?: bigint
 
   /**
    * Explicit transaction nonce
@@ -285,14 +285,14 @@ export interface ContractWriteOptions extends ContractCallOptions {
    * If not provided, will be determined automatically.
    * Use for transaction replacement or batching.
    */
-  nonce?: bigint;
+  nonce?: bigint
 
   /**
    * Transaction value in wei
    *
    * Only for payable functions. Default: 0
    */
-  value?: bigint;
+  value?: bigint
 }
 
 /**
@@ -302,42 +302,42 @@ export interface TransactionResponse {
   /**
    * Transaction hash (unique identifier)
    */
-  readonly hash: string;
+  readonly hash: string
 
   /**
    * Chain ID where transaction was submitted
    */
-  readonly chainId: bigint;
+  readonly chainId: bigint
 
   /**
    * From address (signer address)
    */
-  readonly from: string;
+  readonly from: string
 
   /**
    * To address (contract address)
    */
-  readonly to: string;
+  readonly to: string
 
   /**
    * Transaction nonce
    */
-  readonly nonce: bigint;
+  readonly nonce: bigint
 
   /**
    * Gas limit for this transaction
    */
-  readonly gasLimit: bigint;
+  readonly gasLimit: bigint
 
   /**
    * Data payload (encoded function call)
    */
-  readonly data: string;
+  readonly data: string
 
   /**
    * Transaction value in wei
    */
-  readonly value: bigint;
+  readonly value: bigint
 
   /**
    * Wait for transaction to be confirmed
@@ -347,7 +347,7 @@ export interface TransactionResponse {
    * @throws {ExecutionError} If transaction reverts on-chain
    * @throws {NetworkError} If RPC fails
    */
-  wait(confirmations?: number): Promise<TransactionReceipt>;
+  wait(confirmations?: number): Promise<TransactionReceipt>
 
   /**
    * Get current transaction receipt if available
@@ -355,7 +355,7 @@ export interface TransactionResponse {
    * @returns Receipt if transaction is mined, null if still pending
    * @throws {NetworkError} If RPC fails
    */
-  getReceipt(): Promise<TransactionReceipt | null>;
+  getReceipt(): Promise<TransactionReceipt | null>
 }
 
 /**
@@ -365,80 +365,80 @@ export interface TransactionReceipt {
   /**
    * Transaction hash
    */
-  readonly hash: string;
+  readonly hash: string
 
   /**
    * Block number where transaction was included
    */
-  readonly blockNumber: bigint;
+  readonly blockNumber: bigint
 
   /**
    * Block hash where transaction was included
    */
-  readonly blockHash: string;
+  readonly blockHash: string
 
   /**
    * Transaction execution status
    */
-  readonly status: 'success' | 'failed';
+  readonly status: 'success' | 'failed'
 
   /**
    * Actual gas used by transaction
    */
-  readonly gasUsed: bigint;
+  readonly gasUsed: bigint
 
   /**
    * Effective gas price paid
    */
-  readonly effectiveGasPrice: bigint;
+  readonly effectiveGasPrice: bigint
 
   /**
    * Cumulative gas used in block
    */
-  readonly cumulativeGasUsed: bigint;
+  readonly cumulativeGasUsed: bigint
 
   /**
    * Transaction index in block
    */
-  readonly transactionIndex: number;
+  readonly transactionIndex: number
 
   /**
    * From address (signer)
    */
-  readonly from: string;
+  readonly from: string
 
   /**
    * To address (contract)
    */
-  readonly to: string;
+  readonly to: string
 
   /**
    * Contract address if deployment
    */
-  readonly contractAddress?: string;
+  readonly contractAddress?: string
 
   /**
    * Event logs emitted
    */
-  readonly logs: readonly TransactionLog[];
+  readonly logs: readonly TransactionLog[]
 
   /**
    * Revert reason if status === 'failed'
    */
-  readonly revertReason?: string;
+  readonly revertReason?: string
 }
 
 /**
  * Transaction log (event)
  */
 export interface TransactionLog {
-  readonly address: string;
-  readonly topics: readonly string[];
-  readonly data: string;
-  readonly logIndex: number;
-  readonly blockNumber: bigint;
-  readonly blockHash: string;
-  readonly transactionHash: string;
-  readonly transactionIndex: number;
-  readonly removed: boolean;
+  readonly address: string
+  readonly topics: readonly string[]
+  readonly data: string
+  readonly logIndex: number
+  readonly blockNumber: bigint
+  readonly blockHash: string
+  readonly transactionHash: string
+  readonly transactionIndex: number
+  readonly removed: boolean
 }
