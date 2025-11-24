@@ -23,12 +23,17 @@ describe('SupplyAdjustmentService Integration Tests', () => {
   const tokenMetadataService = new TokenMetadataService(adapter)
   describe('adjustSupply()', () => {
     it(`should return the adjusted cUSD supply`, async function () {
+      const stableTokenAddress = addresses[ChainId.CELO].StableToken
+      if (!stableTokenAddress) {
+        throw new Error('StableToken address not found for CELO')
+      }
+
       const cusdOnChainSupply = await tokenMetadataService.getTotalSupply(
-        addresses[ChainId.CELO].StableToken
+        stableTokenAddress
       )
 
       const cusd: StableToken = {
-        address: addresses[ChainId.CELO].StableToken,
+        address: stableTokenAddress,
         symbol: STABLE_TOKEN_SYMBOLS.cUSD,
         totalSupply: cusdOnChainSupply,
         name: 'Celo Dollar',

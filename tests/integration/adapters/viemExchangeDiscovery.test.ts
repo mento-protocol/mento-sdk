@@ -1,7 +1,7 @@
 import { ViemAdapter } from '../../../src/adapters'
 import { createPublicClient, http } from 'viem'
 import { ExchangeService } from '../../../src/services/ExchangeService'
-import { createExchangeDiscoveryTests } from '../shared/exchangeDiscovery.test'
+import { createExchangeDiscoveryTests } from '../shared/exchangeDiscovery'
 import { TEST_CONFIG } from '../../config'
 
 /**

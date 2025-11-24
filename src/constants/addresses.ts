@@ -17,6 +17,9 @@ export const addresses: ContractAddressMap = {
     MentoRouter: '0xbe729350f8cdfc19db6866e8579841188ee57f67',
     Reserve: '0x9380fA34Fd9e4Fd14c06305fd7B6199089eD4eb9',
 
+    // Stable Tokens
+    StableToken: '0x765DE816845861e75A25fCA122bb6898B8B1282a', // cUSD
+
     // Governance
     Airgrab: '0x7D8E73deafDBAfc98fDBe7974168cFA6d8B9AE0C',
     Emission: '0x5C789592E2611df1873b46D394c69f75faB99778',
@@ -40,6 +43,9 @@ export const addresses: ContractAddressMap = {
     ConstantSumPricingModule: '0x474DBf1eDF845410bdaC6aeE97C3CC403651ba2E',
     MentoRouter: '0xe6101a457a69b53e298e35a7f6e3dcb0390df02a',
     Reserve: '0xa7ed835288Aa4524bB6C73DD23c0bF4315D9Fe3e',
+
+    // Stable Tokens
+    StableToken: '0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b', // cUSD
 
     // Governance
     Airgrab: '0x8dC9282F0a74A2a36F41440e009AA0EADFe490c5',

@@ -1,7 +1,7 @@
 import { EthersAdapter } from '../../../src/adapters'
 import { JsonRpcProvider } from 'ethers'
 import { ExchangeService } from '../../../src/services/ExchangeService'
-import { createExchangeDiscoveryTests } from '../shared/exchangeDiscovery.test'
+import { createExchangeDiscoveryTests } from '../shared/exchangeDiscovery'
 import { TEST_CONFIG } from '../../config'
 
 /**
