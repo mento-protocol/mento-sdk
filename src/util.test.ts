@@ -3,15 +3,19 @@ import {
   getChainId,
   getSymbolFromTokenAddress,
   increaseAllowance,
+  toRateFeedId,
 } from './utils'
 
 jest.mock('ethers', () => {
+  const actualEthers = jest.requireActual('ethers')
   return {
-    constants: jest.requireActual('ethers').constants,
-    providers: jest.requireActual('ethers').providers,
-    Signer: jest.requireActual('ethers').Signer,
-    utils: jest.requireActual('ethers').utils,
-    Wallet: jest.requireActual('ethers').Wallet,
+    ...actualEthers,
+    ethers: actualEthers,
+    constants: actualEthers.constants,
+    providers: actualEthers.providers,
+    Signer: actualEthers.Signer,
+    utils: actualEthers.utils,
+    Wallet: actualEthers.Wallet,
     Contract: jest.fn(),
   }
 })
@@ -78,6 +82,33 @@ describe('Utils', () => {
         .mockResolvedValue({ chainId: 42220, name: 'celo' })
       const chainId = await getChainId(provider)
       expect(chainId).toBe(42220)
+    })
+  })
+
+  describe('toRateFeedId', () => {
+    it('should compute correct rate feed ID for EURUSD', () => {
+      const rateFeedId = toRateFeedId('EURUSD')
+      // This is the actual on-chain rate feed ID for EURUSD
+      expect(rateFeedId).toBe('0x5d5a22116233bdb2a9c2977279cc348b8b8ce917')
+    })
+
+    it('should compute correct rate feed ID for CELOGBP', () => {
+      const rateFeedId = toRateFeedId('CELOGBP')
+      // Computed rate feed ID for CELOGBP
+      expect(rateFeedId).toBe('0x57d8b6da3057ce2a40f9501f9891bb7388048d98')
+    })
+
+    it('should compute correct rate feed ID for relayed rate feeds', () => {
+      const rateFeedId = toRateFeedId('relayed:COPUSD')
+      // This is the actual on-chain rate feed ID for relayed:COPUSD
+      expect(rateFeedId).toBe('0x0196d1f4fda21fa442e53eaf18bf31282f6139f1')
+    })
+
+    it('should be case sensitive', () => {
+      const id1 = toRateFeedId('EURUSD')
+      const id2 = toRateFeedId('eurusd')
+
+      expect(id1).not.toBe(id2)
     })
   })
 })

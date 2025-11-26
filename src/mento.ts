@@ -33,6 +33,7 @@ import {
   getCachedTradablePairs,
   TradablePairWithSpread,
 } from './constants/tradablePairs'
+import { TradingMode } from './enums'
 import {
   buildConnectivityStructures,
   generateAllRoutes,
@@ -827,6 +828,53 @@ export class Mento {
 
     const BI_DIRECTIONAL_TRADING_MODE = 0
     return currentMode == BI_DIRECTIONAL_TRADING_MODE
+  }
+
+  /**
+   * Returns the current trading mode for a given rate feed
+   * @param rateFeedId the address of the rate feed
+   * @returns the current trading mode (BIDIRECTIONAL, HALTED, or DISABLED)
+   */
+  async getRateFeedTradingMode(rateFeedId: Address): Promise<TradingMode> {
+    const breakerBoxAddr = await this.getAddress('BreakerBox')
+    const breakerBox = IBreakerBox__factory.connect(
+      breakerBoxAddr,
+      this.signerOrProvider
+    )
+    const currentMode = await breakerBox.getRateFeedTradingMode(rateFeedId)
+
+    return currentMode as TradingMode
+  }
+
+  /**
+   * Checks if a trading pair is currently tradable (i.e., all rate feeds in the path are in BIDIRECTIONAL mode)
+   * For multi-hop routes (e.g., CELO → cUSD → USDT), checks that all intermediate rate feeds are tradable
+   * @param tokenIn the address of the token to sell
+   * @param tokenOut the address of the token to buy
+   * @returns true if the pair is tradable (all rate feeds in BIDIRECTIONAL mode), false otherwise
+   */
+  async isPairTradable(tokenIn: Address, tokenOut: Address): Promise<boolean> {
+    // Find the tradable pair (which includes the routing path)
+    const pair = await this.findPairForTokens(tokenIn, tokenOut)
+
+    // For each hop in the path, check if the rate feed is tradable
+    const biPoolManager = BiPoolManager__factory.connect(
+      pair.path[0].providerAddr,
+      this.signerOrProvider
+    )
+
+    // Get all rate feed IDs for each hop in the path
+    const rateFeedChecks = await Promise.all(
+      pair.path.map(async (hop) => {
+        const exchangeConfig = await biPoolManager.getPoolExchange(hop.id)
+        const rateFeedId = exchangeConfig.config.referenceRateFeedID
+        const tradingMode = await this.getRateFeedTradingMode(rateFeedId)
+        return tradingMode === TradingMode.BIDIRECTIONAL
+      })
+    )
+
+    // All rate feeds must be in BIDIRECTIONAL mode for the pair to be tradable
+    return rateFeedChecks.every((isTradable) => isTradable)
   }
 
   /**
