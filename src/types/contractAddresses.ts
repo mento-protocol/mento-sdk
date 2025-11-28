@@ -1,4 +1,4 @@
-import type { ChainId } from '../constants/chainId'
+import type { ChainId } from '../core/constants/chainId'
 
 /**
  * All possible contract identifiers across all chains.
@@ -28,7 +28,7 @@ export type ContractAddresses = {
   MentoToken?: string
   TimelockController?: string
 
-  // Stable Tokens 
+  // Stable Tokens
   StableToken?: string
   StableTokenEUR?: string
   StableTokenBRL?: string

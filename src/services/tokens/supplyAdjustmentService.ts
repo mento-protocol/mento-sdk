@@ -1,10 +1,14 @@
 import { StableToken, TokenSupplyConfig } from '../../types'
-import { STABLE_TOKEN_SYMBOLS } from '../../constants'
-import { CalculatorFactory } from '../supply/calculatorFactory'
+import { CalculatorFactory } from './supply/calculatorFactory'
 import type { PublicClient } from 'viem'
 
 export class SupplyAdjustmentService {
   private readonly config: Readonly<TokenSupplyConfig>
+
+  STABLE_TOKEN_SYMBOLS = {
+    cUSD: 'cUSD',
+    cEUR: 'cEUR',
+  } as const
 
   constructor(
     publicClient: PublicClient,
@@ -31,12 +35,12 @@ export class SupplyAdjustmentService {
     const multisigCalculator = factory.createMultisigCalculator(publicClient)
 
     return Object.freeze({
-      [STABLE_TOKEN_SYMBOLS.cUSD]: Object.freeze([
+      [this.STABLE_TOKEN_SYMBOLS.cUSD]: Object.freeze([
         { calculator: uniV3Calculator },
         { calculator: multisigCalculator },
         { calculator: aaveCalculator },
       ]),
-      [STABLE_TOKEN_SYMBOLS.cEUR]: Object.freeze([
+      [this.STABLE_TOKEN_SYMBOLS.cEUR]: Object.freeze([
         { calculator: aaveCalculator },
       ]),
     })

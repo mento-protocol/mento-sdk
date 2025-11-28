@@ -1,4 +1,4 @@
-import type { TradablePair, TradablePairWithSpread } from '../types'
+import type { TradablePair, TradablePairWithSpread } from '../../types'
 
 // Re-export the type for convenience
 export type { TradablePairWithSpread }

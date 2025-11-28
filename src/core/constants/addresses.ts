@@ -1,5 +1,5 @@
 import { ChainId } from './chainId'
-import { ContractAddresses, ContractAddressMap } from '../types'
+import { ContractAddresses, ContractAddressMap } from '../../types'
 
 export const addresses: ContractAddressMap = {
   [ChainId.CELO]: {

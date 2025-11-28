@@ -6,8 +6,8 @@ import type {
   TradablePairWithSpread,
 } from '../types'
 import { BIPOOL_MANAGER_ABI, ERC20_ABI } from '../abis'
-import { getContractAddress } from '../constants/addresses'
-import { ChainId } from '../constants/chainId'
+import { getContractAddress } from '../core/constants/addresses'
+import { ChainId } from '../core/constants/chainId'
 import {
   buildConnectivityStructures,
   generateAllRoutes,
@@ -401,7 +401,7 @@ export class ExchangeService {
    */
   private async loadCachedPairs(): Promise<TradablePairWithSpread[]> {
     const { getCachedTradablePairs } = await import(
-      '../constants/tradablePairs'
+      '../core/constants/tradablePairs'
     )
     const cachedPairs = await getCachedTradablePairs(this.chainId)
     return (cachedPairs as TradablePairWithSpread[]) || []

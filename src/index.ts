@@ -17,8 +17,8 @@ import {
   StableTokenService,
   ExchangeService,
 } from './services'
-import { ChainId } from './constants/chainId'
-import { getContractAddress } from './constants/addresses'
+import { ChainId } from './core/constants/chainId'
+import { getContractAddress } from './core/constants/addresses'
 import { getDefaultRpcUrl, getChainConfig } from './utils/chainConfig'
 
 /**
@@ -167,7 +167,7 @@ export class Mento {
   }
 }
 
-export * from './constants'
+export * from './core/constants'
 export * from './types'
 export * from './services'
 export * from './abis'

@@ -1,6 +1,10 @@
 import { RESERVE_ABI, BIPOOL_MANAGER_ABI, ERC20_ABI } from '../../abis'
 import { BaseToken, StableToken, CollateralAsset, Exchange } from '../../types'
-import { getContractAddress, RESERVE, BIPOOLMANAGER } from '../../constants'
+import {
+  getContractAddress,
+  RESERVE,
+  BIPOOLMANAGER,
+} from '../../core/constants'
 import { retryOperation } from '../../utils'
 import { SupplyAdjustmentService } from './supplyAdjustmentService'
 import { DefaultCalculatorFactory } from '../supply'

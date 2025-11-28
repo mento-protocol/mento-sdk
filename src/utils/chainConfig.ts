@@ -1,6 +1,6 @@
 import { celo, type Chain } from 'viem/chains'
 import { defineChain } from 'viem'
-import { ChainId } from '../constants/chainId'
+import { ChainId } from '../core/constants/chainId'
 
 // Celo Sepolia chain definition (not available in viem/chains yet)
 const celoSepolia = defineChain({
