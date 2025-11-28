@@ -39,20 +39,21 @@ export interface Asset {
 }
 
 /**
- * Canonical pair identifier: sorted symbols joined with hyphen
+ * Route identifier: sorted symbols joined with hyphen
+ * Represents the two endpoint tokens regardless of the path taken
  */
-export type TradablePairID = `${string}-${string}`
+export type RouteID = `${string}-${string}`
 
 /**
  * Represents a tradable route between two tokens, including the exchange path needed to execute the trade
  */
-export interface TradablePair {
+export interface Route {
   /**
    * Canonical identifier: sorted symbols joined with hyphen
    * Always uses alphabetical order (e.g., 'cEUR-cUSD' not 'cUSD-cEUR')
    * Ensures consistent identification regardless of query direction
    */
-  id: TradablePairID
+  id: RouteID
 
   /**
    * The two tokens being traded, in alphabetical order by symbol
@@ -62,7 +63,7 @@ export interface TradablePair {
 
   /**
    * Array of exchange hops needed to execute the trade
-   * Length 1: Direct trade (single exchange)
+   * Length 1: Direct route (single exchange)
    * Length 2: Two-hop route via intermediate token
    * Order matters for execution
    */
@@ -79,16 +80,16 @@ export interface TradablePair {
 
     /**
      * The two token addresses for this hop
-     * Order may differ from pair assets (depends on routing direction)
+     * Order may differ from route assets (depends on routing direction)
      */
     assets: [string, string]
   }>
 }
 
 /**
- * Extended pair with spread cost data for route optimization
+ * Extended route with spread cost data for route optimization
  */
-export interface TradablePairWithSpread extends TradablePair {
+export interface RouteWithSpread extends Route {
   /**
    * Spread cost data for this route
    * Used to select optimal route when multiple options exist

@@ -1,8 +1,8 @@
 import type {
-  TradablePair,
-  TradablePairID,
+  Route,
+  RouteID,
   Asset,
-  TradablePairWithSpread,
+  RouteWithSpread,
 } from '../core/types'
 
 type TokenSymbol = string
@@ -88,10 +88,10 @@ export interface ConnectivityData {
    *    'cUSD_addr-cKES_addr' → { exchange details for cUSD ↔ cKES }
    *    ```
    */
-  directPathMap: Map<TradablePairID, ExchangeDetails>
+  directPathMap: Map<RouteID, ExchangeDetails>
 
-  /** Original direct trading pairs from mento.getDirectPairs() for reference */
-  directPairs: TradablePair[]
+  /** Original direct routes from mento.getDirectRoutes() for reference */
+  directPairs: Route[]
 }
 
 /**
@@ -148,11 +148,11 @@ export interface ConnectivityData {
  * ```
  */
 export function buildConnectivityStructures(
-  directPairs: TradablePair[]
+  directPairs: Route[]
 ): ConnectivityData {
   const addrToSymbol = new Map<Address, TokenSymbol>()
   const directPathMap = new Map<
-    TradablePairID,
+    RouteID,
     { providerAddr: Address; id: string; assets: [Address, Address] }
   >()
   const tokenGraph = new Map<string, Set<string>>()
@@ -168,7 +168,7 @@ export function buildConnectivityStructures(
     // for quick lookup of exchange details for any token pair
     const sortedAddresses = [assetA.address, assetB.address]
       .sort()
-      .join('-') as TradablePairID
+      .join('-') as RouteID
     if (!directPathMap.has(sortedAddresses)) {
       directPathMap.set(sortedAddresses, pair.path[0])
     }
@@ -222,10 +222,10 @@ export function buildConnectivityStructures(
  */
 export function generateAllRoutes(
   connectivityData: ConnectivityData
-): Map<TradablePairID, TradablePair[]> {
+): Map<RouteID, Route[]> {
   const { addrToSymbol, directPathMap, tokenGraph, directPairs } =
     connectivityData
-  const allRoutes = new Map<TradablePairID, TradablePair[]>()
+  const allRoutes = new Map<RouteID, Route[]>()
 
   // Step 1: Add all direct pairs (single-hop routes)
   for (const pair of directPairs) {
@@ -331,7 +331,7 @@ export function createTwoHopPair(
     string,
     { providerAddr: Address; id: string; assets: [Address, Address] }
   >
-): TradablePair | null {
+): Route | null {
   // Validate that both start and end tokens exist in our address-to-symbol map
   const startSymbol = addrToSymbol.get(startToken)
   const endSymbol = addrToSymbol.get(endToken)
@@ -353,7 +353,7 @@ export function createTwoHopPair(
 
   // Create canonical pair structure (alphabetical symbol ordering)
   const sortedSymbols = [startSymbol, endSymbol].sort()
-  const pairId: TradablePairID = `${sortedSymbols[0]}-${sortedSymbols[1]}`
+  const pairId: RouteID = `${sortedSymbols[0]}-${sortedSymbols[1]}`
 
   // Assets array follows alphabetical ordering for consistency
   const assets: [Asset, Asset] =
@@ -401,11 +401,11 @@ export function createTwoHopPair(
  * ```
  */
 export function selectOptimalRoutes(
-  allRoutes: Map<TradablePairID, TradablePair[]>,
+  allRoutes: Map<RouteID, Route[]>,
   returnAllRoutes: boolean,
   addrToSymbol: Map<Address, TokenSymbol>
-): (TradablePair | TradablePairWithSpread)[] {
-  const result = new Map<string, TradablePair | TradablePairWithSpread>()
+): (Route | RouteWithSpread)[] {
+  const result = new Map<string, Route | RouteWithSpread>()
 
   for (const [pairId, routes] of allRoutes) {
     if (routes.length === 1) {
@@ -465,9 +465,9 @@ export function selectOptimalRoutes(
  * ```
  */
 export function selectBestRoute(
-  candidates: TradablePair[],
+  candidates: Route[],
   addrToSymbol: Map<Address, TokenSymbol>
-): TradablePair | TradablePairWithSpread {
+): Route | RouteWithSpread {
   // Tier 1: Prefer routes with spread data (lowest spread wins)
   const candidatesWithSpread = candidates.filter(hasSpreadData)
   if (candidatesWithSpread.length > 0) {
@@ -499,7 +499,7 @@ export function selectBestRoute(
  * Extracts the intermediate token address from a two-hop route.
  * In a two-hop route A->B->C, this function finds token B (the intermediate).
  */
-export function getIntermediateToken(route: TradablePair): Address | undefined {
+export function getIntermediateToken(route: Route): Address | undefined {
   // Find the common token between the two hops
   const [hop1, hop2] = route.path
   return hop1.assets.find((addr) => hop2.assets.includes(addr))
@@ -509,7 +509,7 @@ export function getIntermediateToken(route: TradablePair): Address | undefined {
  * Type guard to check if a Route has spread data.
  */
 export function hasSpreadData(
-  pair: TradablePair | TradablePairWithSpread
-): pair is TradablePairWithSpread {
+  pair: Route | RouteWithSpread
+): pair is RouteWithSpread {
   return 'spreadData' in pair && pair.spreadData !== undefined
 }

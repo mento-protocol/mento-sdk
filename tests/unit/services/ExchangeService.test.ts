@@ -3,7 +3,7 @@ import {
   ExchangeNotFoundError,
   PairNotFoundError,
 } from '../../../src/services/ExchangeService'
-import type { Exchange, TradablePair } from '../../../src/types'
+import type { Exchange, Route } from '../../../src/types'
 import type { PublicClient } from 'viem'
 import { ChainId } from '../../../src/constants'
 
@@ -237,7 +237,7 @@ describe('ExchangeService', () => {
   // USER STORY 2: Discover Direct Trading Pairs
   // =========================================================================
 
-  describe('getDirectPairs()', () => {
+  describe('getDirectRoutes()', () => {
     beforeEach(() => {
       mockPublicClient.readContract.mockImplementation(
         async ({ functionName }: any) => {
@@ -256,8 +256,8 @@ describe('ExchangeService', () => {
       )
     })
 
-    it('should return array of TradablePair objects', async () => {
-      const pairs = await service.getDirectPairs()
+    it('should return array of Route objects', async () => {
+      const pairs = await service.getDirectRoutes()
 
       expect(Array.isArray(pairs)).toBe(true)
       expect(pairs.length).toBeGreaterThan(0)
@@ -290,7 +290,7 @@ describe('ExchangeService', () => {
         }
       )
 
-      const pairs = await service.getDirectPairs()
+      const pairs = await service.getDirectRoutes()
 
       // Should only have 2 unique pairs (duplicates merged)
       const pairIds = pairs.map((p) => p.id)
@@ -315,7 +315,7 @@ describe('ExchangeService', () => {
         }
       )
 
-      const pairs = await service.getDirectPairs()
+      const pairs = await service.getDirectRoutes()
 
       expect(pairs.length).toBeGreaterThan(0)
       const pair = pairs[0]
@@ -338,7 +338,7 @@ describe('ExchangeService', () => {
         }
       )
 
-      const pairs = await service.getDirectPairs()
+      const pairs = await service.getDirectRoutes()
 
       expect(pairs[0].id).toBe('AAA-ZZZ') // Alphabetically sorted
     })
@@ -363,12 +363,12 @@ describe('ExchangeService', () => {
       )
 
       // First call
-      await service.getDirectPairs()
+      await service.getDirectRoutes()
       const firstCallCount = symbolCalls.length
 
       // Second call - should use cached symbols
       symbolCalls.length = 0
-      await service.getDirectPairs()
+      await service.getDirectRoutes()
       const secondCallCount = symbolCalls.length
 
       // Second call should make fewer symbol fetches (cached)
@@ -390,7 +390,7 @@ describe('ExchangeService', () => {
         }
       )
 
-      const pairs = await service.getDirectPairs()
+      const pairs = await service.getDirectRoutes()
 
       // Should still work, using addresses as fallback
       expect(pairs.length).toBeGreaterThan(0)
@@ -442,7 +442,7 @@ describe('ExchangeService', () => {
   // USER STORY 3: Discover Multi-Hop Trading Paths
   // =========================================================================
 
-  describe('getTradablePairs()', () => {
+  describe('getRoutes()', () => {
     beforeEach(() => {
       mockPublicClient.readContract.mockImplementation(
         async ({ functionName }: any) => {
@@ -461,7 +461,7 @@ describe('ExchangeService', () => {
     })
 
     it('should return both direct and 2-hop pairs', async () => {
-      const pairs = await service.getTradablePairs()
+      const pairs = await service.getRoutes()
 
       expect(pairs.length).toBeGreaterThan(0)
 
@@ -473,21 +473,21 @@ describe('ExchangeService', () => {
     })
 
     it('should generate fresh pairs when cached option is false', async () => {
-      const pairs = await service.getTradablePairs({ cached: false })
+      const pairs = await service.getRoutes({ cached: false })
 
       // Should generate fresh pairs successfully
       expect(pairs.length).toBeGreaterThan(0)
     })
 
     it('should attempt to load from cache when cached option is true', async () => {
-      const pairs = await service.getTradablePairs({ cached: true })
+      const pairs = await service.getRoutes({ cached: true })
 
       // Cache doesn't exist, should fall back to fresh generation
       expect(pairs.length).toBeGreaterThan(0)
     })
 
     it('should default to fresh generation if cached option not specified', async () => {
-      const pairs = await service.getTradablePairs()
+      const pairs = await service.getRoutes()
 
       expect(pairs.length).toBeGreaterThan(0)
     })
@@ -497,7 +497,7 @@ describe('ExchangeService', () => {
   // USER STORY 4: Find Exchange for Specific Token Pair
   // =========================================================================
 
-  describe('findPairForTokens()', () => {
+  describe('findRoute()', () => {
     beforeEach(() => {
       mockPublicClient.readContract.mockImplementation(
         async ({ functionName, address }: any) => {
@@ -525,7 +525,7 @@ describe('ExchangeService', () => {
       const token1 = mockExchanges[0].assets[1]
 
       // Use cached: false to use mocked exchanges instead of real cached pairs
-      const pair = await service.findPairForTokens(token0, token1, {
+      const pair = await service.findRoute(token0, token1, {
         cached: false,
       })
 
@@ -538,10 +538,10 @@ describe('ExchangeService', () => {
       const token1 = mockExchanges[0].assets[1]
 
       // Use cached: false to use mocked exchanges instead of real cached pairs
-      const pair1 = await service.findPairForTokens(token0, token1, {
+      const pair1 = await service.findRoute(token0, token1, {
         cached: false,
       })
-      const pair2 = await service.findPairForTokens(token1, token0, {
+      const pair2 = await service.findRoute(token1, token0, {
         cached: false,
       })
 
@@ -551,13 +551,13 @@ describe('ExchangeService', () => {
 
     it('should throw PairNotFoundError if no route exists', async () => {
       await expect(
-        service.findPairForTokens('0xnonexistent1', '0xnonexistent2', {
+        service.findRoute('0xnonexistent1', '0xnonexistent2', {
           cached: false,
         })
       ).rejects.toThrow(PairNotFoundError)
 
       await expect(
-        service.findPairForTokens('0xnonexistent1', '0xnonexistent2', {
+        service.findRoute('0xnonexistent1', '0xnonexistent2', {
           cached: false,
         })
       ).rejects.toThrow(/No pair found for tokens/)
@@ -570,7 +570,7 @@ describe('ExchangeService', () => {
       const token1 = mockExchanges[0].assets[1] // CELO
 
       // Use cached: false to use mocked exchanges instead of real cached pairs
-      const pair = await service.findPairForTokens(token0, token1, {
+      const pair = await service.findRoute(token0, token1, {
         cached: false,
       })
 

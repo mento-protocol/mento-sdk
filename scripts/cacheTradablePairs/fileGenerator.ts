@@ -1,20 +1,20 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import type { TradablePairWithSpread } from '../../src/types'
+import type { RouteWithSpread } from '../../src/core/types'
 
 /**
  * Generate TypeScript file content for cached tradable pairs
  */
 export function generateFileContent(
   chainId: number,
-  pairs: TradablePairWithSpread[]
+  pairs: RouteWithSpread[]
 ): string {
   return `// This file is auto-generated. Do not edit manually.
 // Generated on ${new Date().toISOString()}
 
-import type { TradablePairWithSpread } from './tradablePairs'
+import type { RouteWithSpread } from './routes'
 
-export const tradablePairs${chainId}: TradablePairWithSpread[] = ${JSON.stringify(
+export const routes${chainId}: RouteWithSpread[] = ${JSON.stringify(
     pairs,
     null,
     2
@@ -37,7 +37,7 @@ export function writeToFile(
   }
 
   // Write the file
-  const fileName = `tradablePairs.${chainId}.ts`
+  const fileName = `routes.${chainId}.ts`
   const filePath = path.join(constantsDir, fileName)
   fs.writeFileSync(filePath, content)
 

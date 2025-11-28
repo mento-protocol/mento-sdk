@@ -1,19 +1,19 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-11-21T21:00:09.811Z
+// Generated on 2025-11-28T21:01:04.749Z
 
-import type { TradablePairWithSpread } from './tradablePairs'
+import type { RouteWithSpread } from './routes'
 
-export const tradablePairs42220: TradablePairWithSpread[] = [
+export const routes42220: RouteWithSpread[] = [
   {
-    "id": "USDC-cUSD",
+    "id": "0x765DE816845861e75A25fCA122bb6898B8B1282a-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       },
       {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -37,15 +37,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cUSD",
+    "id": "0x765DE816845861e75A25fCA122bb6898B8B1282a-0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "assets": [
       {
-        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       },
       {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       }
     ],
     "path": [
@@ -69,15 +69,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cUSD",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0x765DE816845861e75A25fCA122bb6898B8B1282a",
     "assets": [
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
         "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       }
     ],
     "path": [
@@ -101,15 +101,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-axlUSDC",
+    "id": "0xEB466342C4d449BC9f53A865D5Cb90586f405215-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       },
       {
-        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -145,15 +145,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-USD₮",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
-        "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -189,15 +189,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-axlUSDC",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "assets": [
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
         "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       }
     ],
     "path": [
@@ -233,15 +233,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cUSD",
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0x765DE816845861e75A25fCA122bb6898B8B1282a",
     "assets": [
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       },
       {
         "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       }
     ],
     "path": [
@@ -265,311 +265,311 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cUSD",
+    "id": "0x765DE816845861e75A25fCA122bb6898B8B1282a-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
+      },
+      {
         "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0xff4Ab19391af240c311c54200a492233052B6325"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.15,
+      "hops": [
+        {
+          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "spreadPercent": 0.15
+        }
+      ]
+    }
+  },
+  {
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+    "assets": [
+      {
+        "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
+      },
+      {
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0x7175504C455076F15c04A2F90a8e352281F492F9"
+        ]
+      },
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.15,
+      "hops": [
+        {
+          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "spreadPercent": 0.15
+        },
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+    "assets": [
+      {
+        "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
+      },
+      {
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0x7175504C455076F15c04A2F90a8e352281F492F9"
+        ]
+      },
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.15,
+      "hops": [
+        {
+          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "spreadPercent": 0.15
+        },
+        {
+          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0x7175504C455076F15c04A2F90a8e352281F492F9",
+    "assets": [
+      {
+        "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
+      },
+      {
+        "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0x7175504C455076F15c04A2F90a8e352281F492F9"
+        ]
+      },
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.15,
+      "hops": [
+        {
+          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "spreadPercent": 0.15
+        },
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C-0xff4Ab19391af240c311c54200a492233052B6325",
+    "assets": [
+      {
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
+      },
+      {
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
+        ]
+      },
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0xff4Ab19391af240c311c54200a492233052B6325"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.15,
+      "hops": [
+        {
+          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "spreadPercent": 0
+        },
+        {
+          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "spreadPercent": 0.15
+        }
+      ]
+    }
+  },
+  {
+    "id": "0xEB466342C4d449BC9f53A865D5Cb90586f405215-0xff4Ab19391af240c311c54200a492233052B6325",
+    "assets": [
+      {
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
+      },
+      {
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
+        ]
+      },
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0xff4Ab19391af240c311c54200a492233052B6325"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.15,
+      "hops": [
+        {
+          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "spreadPercent": 0
+        },
+        {
+          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "spreadPercent": 0.15
+        }
+      ]
+    }
+  },
+  {
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0xff4Ab19391af240c311c54200a492233052B6325",
+    "assets": [
+      {
+        "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
+      },
+      {
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
+      }
+    ],
+    "path": [
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
+        ]
+      },
+      {
+        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
+        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+        "assets": [
+          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "0xff4Ab19391af240c311c54200a492233052B6325"
+        ]
+      }
+    ],
+    "spreadData": {
+      "totalSpreadPercent": 0.15,
+      "hops": [
+        {
+          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "spreadPercent": 0
+        },
+        {
+          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "spreadPercent": 0.15
+        }
+      ]
+    }
+  },
+  {
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x765DE816845861e75A25fCA122bb6898B8B1282a",
+    "assets": [
+      {
+        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0xff4Ab19391af240c311c54200a492233052B6325"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
-      "hops": [
-        {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDC-cAUD",
-    "assets": [
-      {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0x7175504C455076F15c04A2F90a8e352281F492F9"
-        ]
-      },
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
-      "hops": [
-        {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
-        },
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        }
-      ]
-    }
-  },
-  {
-    "id": "axlUSDC-cAUD",
-    "assets": [
-      {
-        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
-      },
-      {
-        "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0x7175504C455076F15c04A2F90a8e352281F492F9"
-        ]
-      },
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
-      "hops": [
-        {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
-        },
-        {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
-        }
-      ]
-    }
-  },
-  {
-    "id": "USD₮-cAUD",
-    "assets": [
-      {
-        "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
-      },
-      {
-        "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0x7175504C455076F15c04A2F90a8e352281F492F9"
-        ]
-      },
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
-      "hops": [
-        {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
-        },
-        {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
-        }
-      ]
-    }
-  },
-  {
-    "id": "USDC-cCAD",
-    "assets": [
-      {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
-      },
-      {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
-        ]
-      },
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0xff4Ab19391af240c311c54200a492233052B6325"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
-      "hops": [
-        {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
-        }
-      ]
-    }
-  },
-  {
-    "id": "axlUSDC-cCAD",
-    "assets": [
-      {
-        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
-      },
-      {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
-        ]
-      },
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0xff4Ab19391af240c311c54200a492233052B6325"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
-      "hops": [
-        {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
-        }
-      ]
-    }
-  },
-  {
-    "id": "USD₮-cCAD",
-    "assets": [
-      {
-        "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
-      },
-      {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
-      }
-    ],
-    "path": [
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
-        ]
-      },
-      {
-        "providerAddr": "0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901",
-        "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
-          "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "0xff4Ab19391af240c311c54200a492233052B6325"
-        ]
-      }
-    ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
-      "hops": [
-        {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
-        },
-        {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
-        }
-      ]
-    }
-  },
-  {
-    "id": "CELO-cUSD",
-    "assets": [
-      {
-        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
-      },
-      {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       }
     ],
     "path": [
@@ -593,15 +593,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-USDC",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -637,15 +637,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-axlUSDC",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       }
     ],
     "path": [
@@ -681,15 +681,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-USD₮",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       }
     ],
     "path": [
@@ -725,15 +725,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cCAD",
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       },
       {
         "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -769,15 +769,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cUSD",
+    "id": "0x765DE816845861e75A25fCA122bb6898B8B1282a-0xCCF663b1fF11028f0b19058d0f7B674004a40746",
     "assets": [
       {
-        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       },
       {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       }
     ],
     "path": [
@@ -801,15 +801,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cUSD-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0x765DE816845861e75A25fCA122bb6898B8B1282a",
     "assets": [
       {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       }
     ],
     "path": [
@@ -833,15 +833,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cUSD",
+    "id": "0x765DE816845861e75A25fCA122bb6898B8B1282a-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
-        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       },
       {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -865,15 +865,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cUSD",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0x765DE816845861e75A25fCA122bb6898B8B1282a",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       }
     ],
     "path": [
@@ -897,15 +897,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cJPY-cUSD",
+    "id": "0x765DE816845861e75A25fCA122bb6898B8B1282a-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
-        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       },
       {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -929,15 +929,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cUSD",
+    "id": "0x765DE816845861e75A25fCA122bb6898B8B1282a-0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
     "assets": [
       {
-        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       },
       {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       }
     ],
     "path": [
@@ -961,15 +961,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cREAL-cUSD",
+    "id": "0x765DE816845861e75A25fCA122bb6898B8B1282a-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
-        "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       },
       {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -993,15 +993,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cGBP",
+    "id": "0xCCF663b1fF11028f0b19058d0f7B674004a40746-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       },
       {
-        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -1037,15 +1037,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cGBP",
+    "id": "0xCCF663b1fF11028f0b19058d0f7B674004a40746-0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "assets": [
       {
-        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       },
       {
-        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       }
     ],
     "path": [
@@ -1081,15 +1081,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cGBP",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0xCCF663b1fF11028f0b19058d0f7B674004a40746",
     "assets": [
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
         "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       }
     ],
     "path": [
@@ -1125,15 +1125,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -1169,15 +1169,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "assets": [
       {
-        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       }
     ],
     "path": [
@@ -1213,15 +1213,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cZAR",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
     "assets": [
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
         "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       }
     ],
     "path": [
@@ -1257,15 +1257,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cCHF",
+    "id": "0xb55a79F398E759E43C95b979163f30eC87Ee131D-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       },
       {
-        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -1301,15 +1301,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cCHF",
+    "id": "0xEB466342C4d449BC9f53A865D5Cb90586f405215-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
         "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       },
       {
         "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -1345,15 +1345,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cCHF",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
         "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -1389,15 +1389,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-USDC",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -1433,15 +1433,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cJPY",
+    "id": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       },
       {
-        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -1477,15 +1477,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cCOP",
+    "id": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       },
       {
-        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -1521,15 +1521,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cREAL",
+    "id": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -1565,15 +1565,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-axlUSDC",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       }
     ],
     "path": [
@@ -1609,15 +1609,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cJPY",
+    "id": "0xEB466342C4d449BC9f53A865D5Cb90586f405215-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
         "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       },
       {
         "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -1653,15 +1653,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cCOP",
+    "id": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA-0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "assets": [
       {
-        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       },
       {
-        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       }
     ],
     "path": [
@@ -1697,15 +1697,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cREAL",
+    "id": "0xEB466342C4d449BC9f53A865D5Cb90586f405215-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -1741,15 +1741,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-USD₮",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       }
     ],
     "path": [
@@ -1785,15 +1785,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cJPY",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
         "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -1829,15 +1829,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cCOP",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
     "assets": [
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
         "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       }
     ],
     "path": [
@@ -1873,15 +1873,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cREAL",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -1917,15 +1917,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cAUD",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x7175504C455076F15c04A2F90a8e352281F492F9",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       }
     ],
     "path": [
@@ -1961,15 +1961,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cCAD",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -2005,15 +2005,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cGBP",
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0xCCF663b1fF11028f0b19058d0f7B674004a40746",
     "assets": [
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       },
       {
         "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       }
     ],
     "path": [
@@ -2049,15 +2049,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cGBP",
+    "id": "0xCCF663b1fF11028f0b19058d0f7B674004a40746-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       },
       {
-        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -2093,15 +2093,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0x7175504C455076F15c04A2F90a8e352281F492F9",
     "assets": [
       {
-        "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       }
     ],
     "path": [
@@ -2137,15 +2137,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -2181,15 +2181,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cCHF",
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       },
       {
         "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -2225,15 +2225,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cAUD",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0x7175504C455076F15c04A2F90a8e352281F492F9",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       }
     ],
     "path": [
@@ -2269,15 +2269,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cJPY",
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       },
       {
         "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -2313,15 +2313,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cCOP",
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
     "assets": [
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       },
       {
         "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       }
     ],
     "path": [
@@ -2357,15 +2357,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cREAL",
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -2401,15 +2401,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cCHF",
+    "id": "0xb55a79F398E759E43C95b979163f30eC87Ee131D-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       },
       {
-        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -2445,15 +2445,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cCAD",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -2489,15 +2489,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cJPY",
+    "id": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       },
       {
-        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -2533,15 +2533,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cCOP",
+    "id": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       },
       {
-        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -2577,15 +2577,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cREAL",
+    "id": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       },
       {
-        "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -2621,15 +2621,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlEUROC-cEUR",
+    "id": "0x061cc5a2C863E0C1Cb404006D559dB18A34C762d-0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "assets": [
       {
         "address": "0x061cc5a2C863E0C1Cb404006D559dB18A34C762d",
-        "symbol": "axlEUROC"
+        "symbol": "0x061cc5a2C863E0C1Cb404006D559dB18A34C762d"
       },
       {
         "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       }
     ],
     "path": [
@@ -2653,15 +2653,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cUSD",
+    "id": "0x765DE816845861e75A25fCA122bb6898B8B1282a-0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "assets": [
       {
-        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       },
       {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       }
     ],
     "path": [
@@ -2685,15 +2685,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cEUR",
+    "id": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       },
       {
-        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -2729,15 +2729,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cEUR",
+    "id": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73-0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "assets": [
       {
-        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       },
       {
-        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       }
     ],
     "path": [
@@ -2773,15 +2773,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cEUR",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "assets": [
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
         "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       }
     ],
     "path": [
@@ -2817,15 +2817,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cGBP",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xCCF663b1fF11028f0b19058d0f7B674004a40746",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       }
     ],
     "path": [
@@ -2861,15 +2861,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cZAR",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       }
     ],
     "path": [
@@ -2905,15 +2905,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cCHF",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -2949,15 +2949,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-PUSO",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0x471EcE3750Da237f93B8E339c536989b8978a438",
     "assets": [
       {
-        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
-        "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       }
     ],
     "path": [
@@ -2993,15 +2993,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cJPY",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -3037,15 +3037,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cCOP",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       }
     ],
     "path": [
@@ -3081,15 +3081,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cREAL",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -3125,15 +3125,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0xCCF663b1fF11028f0b19058d0f7B674004a40746",
     "assets": [
       {
-        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       }
     ],
     "path": [
@@ -3169,15 +3169,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cGBP",
+    "id": "0xCCF663b1fF11028f0b19058d0f7B674004a40746-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
-        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       },
       {
-        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -3213,15 +3213,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cGBP",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0xCCF663b1fF11028f0b19058d0f7B674004a40746",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       }
     ],
     "path": [
@@ -3257,15 +3257,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cJPY",
+    "id": "0xCCF663b1fF11028f0b19058d0f7B674004a40746-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
         "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       },
       {
         "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -3301,15 +3301,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cGBP",
+    "id": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA-0xCCF663b1fF11028f0b19058d0f7B674004a40746",
     "assets": [
       {
         "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       },
       {
         "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       }
     ],
     "path": [
@@ -3345,15 +3345,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cREAL",
+    "id": "0xCCF663b1fF11028f0b19058d0f7B674004a40746-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -3389,15 +3389,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
-        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -3433,15 +3433,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cZAR",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       }
     ],
     "path": [
@@ -3477,15 +3477,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cJPY-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
-        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -3521,15 +3521,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
     "assets": [
       {
-        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       }
     ],
     "path": [
@@ -3565,15 +3565,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cREAL-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
-        "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -3609,15 +3609,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cCHF",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -3653,15 +3653,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cJPY",
+    "id": "0xb55a79F398E759E43C95b979163f30eC87Ee131D-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
         "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       },
       {
         "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -3697,15 +3697,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cCOP",
+    "id": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
-        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       },
       {
-        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -3741,15 +3741,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cREAL",
+    "id": "0xb55a79F398E759E43C95b979163f30eC87Ee131D-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -3785,15 +3785,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cJPY",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -3829,15 +3829,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cCOP",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       }
     ],
     "path": [
@@ -3873,15 +3873,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cREAL",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -3917,15 +3917,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cJPY",
+    "id": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
         "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       },
       {
         "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -3961,15 +3961,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cJPY-cREAL",
+    "id": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -4005,15 +4005,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cREAL",
+    "id": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -4049,15 +4049,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cEUR",
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "assets": [
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       },
       {
         "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       }
     ],
     "path": [
@@ -4093,15 +4093,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cEUR",
+    "id": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       },
       {
-        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -4137,15 +4137,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cEUR",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       }
     ],
     "path": [
@@ -4181,15 +4181,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cGBP",
+    "id": "0xCCF663b1fF11028f0b19058d0f7B674004a40746-0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "assets": [
       {
-        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       },
       {
-        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       }
     ],
     "path": [
@@ -4225,15 +4225,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "assets": [
       {
-        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       }
     ],
     "path": [
@@ -4269,15 +4269,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cEUR",
+    "id": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
-        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       },
       {
-        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -4313,15 +4313,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cEUR",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       }
     ],
     "path": [
@@ -4357,15 +4357,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cJPY",
+    "id": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
         "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       },
       {
         "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -4401,15 +4401,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cEUR",
+    "id": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA-0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "assets": [
       {
         "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       },
       {
         "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       }
     ],
     "path": [
@@ -4445,15 +4445,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cREAL",
+    "id": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -4489,15 +4489,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlEUROC-cUSD",
+    "id": "0x061cc5a2C863E0C1Cb404006D559dB18A34C762d-0x765DE816845861e75A25fCA122bb6898B8B1282a",
     "assets": [
       {
         "address": "0x061cc5a2C863E0C1Cb404006D559dB18A34C762d",
-        "symbol": "axlEUROC"
+        "symbol": "0x061cc5a2C863E0C1Cb404006D559dB18A34C762d"
       },
       {
         "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       }
     ],
     "path": [
@@ -4533,15 +4533,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-cUSD",
+    "id": "0x765DE816845861e75A25fCA122bb6898B8B1282a-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
-        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       },
       {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -4565,15 +4565,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cNGN-cUSD",
+    "id": "0x765DE816845861e75A25fCA122bb6898B8B1282a-0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
     "assets": [
       {
-        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       },
       {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       }
     ],
     "path": [
@@ -4597,15 +4597,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cKES-cUSD",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0x765DE816845861e75A25fCA122bb6898B8B1282a",
     "assets": [
       {
         "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
         "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       }
     ],
     "path": [
@@ -4629,15 +4629,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cGHS",
+    "id": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
         "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       },
       {
         "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -4673,15 +4673,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cGHS",
+    "id": "0xEB466342C4d449BC9f53A865D5Cb90586f405215-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
         "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       },
       {
         "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -4717,15 +4717,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cGHS",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
         "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -4761,15 +4761,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cNGN",
+    "id": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       },
       {
-        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -4805,15 +4805,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cNGN",
+    "id": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71-0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "assets": [
       {
-        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       },
       {
-        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       }
     ],
     "path": [
@@ -4849,15 +4849,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cNGN",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
     "assets": [
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
         "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       }
     ],
     "path": [
@@ -4893,15 +4893,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cKES",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
-        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -4937,15 +4937,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cKES",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "assets": [
       {
-        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
-        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       }
     ],
     "path": [
@@ -4981,15 +4981,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cKES",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
     "assets": [
       {
-        "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
-        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       }
     ],
     "path": [
@@ -5025,15 +5025,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cGHS",
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       },
       {
         "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -5069,15 +5069,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cGHS",
+    "id": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       },
       {
-        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -5113,15 +5113,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cNGN",
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
     "assets": [
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       },
       {
         "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       }
     ],
     "path": [
@@ -5157,15 +5157,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cKES",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0x7175504C455076F15c04A2F90a8e352281F492F9",
     "assets": [
       {
-        "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
-        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       }
     ],
     "path": [
@@ -5201,15 +5201,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cNGN",
+    "id": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       },
       {
-        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -5245,15 +5245,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cKES",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
-        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -5289,15 +5289,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cGHS",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -5333,15 +5333,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cNGN",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       }
     ],
     "path": [
@@ -5377,15 +5377,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cKES",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0x471EcE3750Da237f93B8E339c536989b8978a438",
     "assets": [
       {
-        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
-        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       }
     ],
     "path": [
@@ -5421,15 +5421,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cGHS",
+    "id": "0xCCF663b1fF11028f0b19058d0f7B674004a40746-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
         "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       },
       {
         "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -5465,15 +5465,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
-        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -5509,15 +5509,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cGHS",
+    "id": "0xb55a79F398E759E43C95b979163f30eC87Ee131D-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
         "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       },
       {
         "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -5553,15 +5553,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cGHS",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -5597,15 +5597,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-cJPY",
+    "id": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
-        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       },
       {
-        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -5641,15 +5641,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cGHS",
+    "id": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
         "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       },
       {
         "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -5685,15 +5685,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-cREAL",
+    "id": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
-        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       },
       {
-        "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -5729,15 +5729,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cNGN",
+    "id": "0xCCF663b1fF11028f0b19058d0f7B674004a40746-0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
     "assets": [
       {
         "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       },
       {
         "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       }
     ],
     "path": [
@@ -5773,15 +5773,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cKES",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0xCCF663b1fF11028f0b19058d0f7B674004a40746",
     "assets": [
       {
-        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
-        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       }
     ],
     "path": [
@@ -5817,15 +5817,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cNGN-cZAR",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
     "assets": [
       {
-        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
-        "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       }
     ],
     "path": [
@@ -5861,15 +5861,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cKES-cZAR",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
     "assets": [
       {
         "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
         "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       }
     ],
     "path": [
@@ -5905,15 +5905,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cNGN",
+    "id": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
-        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       },
       {
-        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -5949,15 +5949,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cKES",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
-        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
-        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -5993,15 +5993,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cNGN",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       }
     ],
     "path": [
@@ -6037,15 +6037,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cJPY-cNGN",
+    "id": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
-        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       },
       {
-        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -6081,15 +6081,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cNGN",
+    "id": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA-0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
     "assets": [
       {
         "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       },
       {
         "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       }
     ],
     "path": [
@@ -6125,15 +6125,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cNGN-cREAL",
+    "id": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -6169,15 +6169,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cKES",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       }
     ],
     "path": [
@@ -6213,15 +6213,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cJPY-cKES",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
-        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
-        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -6257,15 +6257,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cKES",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
     "assets": [
       {
-        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
-        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       }
     ],
     "path": [
@@ -6301,15 +6301,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cKES-cREAL",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
         "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
         "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -6345,15 +6345,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cGHS",
+    "id": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
         "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       },
       {
         "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -6389,15 +6389,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cNGN",
+    "id": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73-0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
     "assets": [
       {
         "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       },
       {
         "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       }
     ],
     "path": [
@@ -6433,15 +6433,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cKES",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "assets": [
       {
-        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
-        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       }
     ],
     "path": [
@@ -6477,15 +6477,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-cNGN",
+    "id": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
-        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       },
       {
-        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -6521,15 +6521,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-cKES",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
-        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
-        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -6565,15 +6565,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cKES-cNGN",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
     "assets": [
       {
         "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
         "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       }
     ],
     "path": [
@@ -6609,15 +6609,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cUSD-eXOF",
+    "id": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08-0x765DE816845861e75A25fCA122bb6898B8B1282a",
     "assets": [
-      {
-        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "symbol": "cUSD"
-      },
       {
         "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
+      },
+      {
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "symbol": "0x765DE816845861e75A25fCA122bb6898B8B1282a"
       }
     ],
     "path": [
@@ -6641,15 +6641,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-eXOF",
+    "id": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08-0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
     "assets": [
       {
-        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-        "symbol": "USDC"
+        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       },
       {
-        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "symbol": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C"
       }
     ],
     "path": [
@@ -6685,15 +6685,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-eXOF",
+    "id": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08-0xEB466342C4d449BC9f53A865D5Cb90586f405215",
     "assets": [
       {
-        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-        "symbol": "axlUSDC"
+        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       },
       {
-        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+        "symbol": "0xEB466342C4d449BC9f53A865D5Cb90586f405215"
       }
     ],
     "path": [
@@ -6729,15 +6729,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-eXOF",
+    "id": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e-0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
     "assets": [
       {
         "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "symbol": "USD₮"
+        "symbol": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e"
       },
       {
         "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       }
     ],
     "path": [
@@ -6773,15 +6773,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-eXOF",
+    "id": "0x7175504C455076F15c04A2F90a8e352281F492F9-0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
     "assets": [
       {
         "address": "0x7175504C455076F15c04A2F90a8e352281F492F9",
-        "symbol": "cAUD"
+        "symbol": "0x7175504C455076F15c04A2F90a8e352281F492F9"
       },
       {
         "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       }
     ],
     "path": [
@@ -6817,15 +6817,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-eXOF",
+    "id": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08-0xff4Ab19391af240c311c54200a492233052B6325",
     "assets": [
       {
-        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
-        "symbol": "cCAD"
+        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       },
       {
-        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "address": "0xff4Ab19391af240c311c54200a492233052B6325",
+        "symbol": "0xff4Ab19391af240c311c54200a492233052B6325"
       }
     ],
     "path": [
@@ -6861,15 +6861,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-eXOF",
+    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "CELO"
+        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
       },
       {
         "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       }
     ],
     "path": [
@@ -6905,15 +6905,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-eXOF",
+    "id": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08-0xCCF663b1fF11028f0b19058d0f7B674004a40746",
     "assets": [
       {
-        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
-        "symbol": "cGBP"
+        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       },
       {
-        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+        "symbol": "0xCCF663b1fF11028f0b19058d0f7B674004a40746"
       }
     ],
     "path": [
@@ -6949,15 +6949,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cZAR-eXOF",
+    "id": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6-0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
     "assets": [
       {
         "address": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6",
-        "symbol": "cZAR"
+        "symbol": "0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6"
       },
       {
         "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       }
     ],
     "path": [
@@ -6993,15 +6993,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-eXOF",
+    "id": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08-0xb55a79F398E759E43C95b979163f30eC87Ee131D",
     "assets": [
       {
-        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
-        "symbol": "cCHF"
+        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       },
       {
-        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "address": "0xb55a79F398E759E43C95b979163f30eC87Ee131D",
+        "symbol": "0xb55a79F398E759E43C95b979163f30eC87Ee131D"
       }
     ],
     "path": [
@@ -7037,15 +7037,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-eXOF",
+    "id": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B-0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
     "assets": [
       {
         "address": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B",
-        "symbol": "PUSO"
+        "symbol": "0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B"
       },
       {
         "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       }
     ],
     "path": [
@@ -7081,15 +7081,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cJPY-eXOF",
+    "id": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08-0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
     "assets": [
       {
-        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
-        "symbol": "cJPY"
+        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       },
       {
-        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "address": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20",
+        "symbol": "0xc45eCF20f3CD864B32D9794d6f76814aE8892e20"
       }
     ],
     "path": [
@@ -7125,15 +7125,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-eXOF",
+    "id": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08-0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
     "assets": [
       {
-        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
-        "symbol": "cCOP"
+        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       },
       {
-        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "address": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA",
+        "symbol": "0x8A567e2aE79CA692Bd748aB832081C45de4041eA"
       }
     ],
     "path": [
@@ -7169,15 +7169,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cREAL-eXOF",
+    "id": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08-0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
     "assets": [
       {
-        "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
-        "symbol": "cREAL"
+        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       },
       {
-        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
+        "symbol": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787"
       }
     ],
     "path": [
@@ -7213,15 +7213,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-eXOF",
+    "id": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08-0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
     "assets": [
       {
-        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "symbol": "cEUR"
+        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       },
       {
-        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+        "symbol": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73"
       }
     ],
     "path": [
@@ -7257,15 +7257,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-eXOF",
+    "id": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08-0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
     "assets": [
       {
-        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-        "symbol": "cGHS"
+        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       },
       {
-        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "address": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
+        "symbol": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313"
       }
     ],
     "path": [
@@ -7301,15 +7301,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cNGN-eXOF",
+    "id": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08-0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
     "assets": [
       {
-        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
-        "symbol": "cNGN"
+        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       },
       {
-        "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "address": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71",
+        "symbol": "0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71"
       }
     ],
     "path": [
@@ -7345,15 +7345,15 @@ export const tradablePairs42220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cKES-eXOF",
+    "id": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0-0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
     "assets": [
       {
         "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
-        "symbol": "cKES"
+        "symbol": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0"
       },
       {
         "address": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08",
-        "symbol": "eXOF"
+        "symbol": "0x73F93dcc49cB8A239e2032663e9475dd5ef29A08"
       }
     ],
     "path": [

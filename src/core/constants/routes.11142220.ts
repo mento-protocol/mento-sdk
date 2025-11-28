@@ -1,9 +1,9 @@
 // This file is auto-generated. Do not edit manually.
 // Generated on 2025-11-21T21:42:04.046Z
 
-import type { TradablePairWithSpread } from './tradablePairs'
+import type { RouteWithSpread } from './routes'
 
-export const tradablePairs11142220: TradablePairWithSpread[] = [
+export const routes11142220: RouteWithSpread[] = [
   {
     "id": "axlUSDC-cUSD",
     "assets": [
