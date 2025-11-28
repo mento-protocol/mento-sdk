@@ -31,7 +31,7 @@ export class TokenService {
    * @param address - Token contract address
    * @returns Token metadata
    */
-  async getTokenMetadata(
+  private async getTokenMetadata(
     address: string
   ): Promise<Pick<BaseToken, 'name' | 'symbol' | 'decimals'>> {
     const [name, symbol, decimals] = await Promise.all([
@@ -70,7 +70,7 @@ export class TokenService {
    * @param address - Token contract address
    * @returns Total supply as string
    */
-  async getTotalSupply(address: string): Promise<string> {
+  private async getTotalSupply(address: string): Promise<string> {
     const totalSupply = await retryOperation(() =>
       this.publicClient.readContract({
         address: address as `0x${string}`,
@@ -87,7 +87,7 @@ export class TokenService {
    * Includes supply adjustment calculations
    * @returns Array of stable tokens with adjusted supply
    */
-  async getStableTokens(): Promise<StableToken[]> {
+  public async getStableTokens(): Promise<StableToken[]> {
     const reserveAddress = getContractAddress(this.chainId, RESERVE)
 
     const tokenAddresses = (await this.publicClient.readContract({
@@ -125,7 +125,7 @@ export class TokenService {
    * Filters tokens that are marked as collateral in the Reserve contract
    * @returns Array of collateral assets
    */
-  async getCollateralAssets(): Promise<CollateralAsset[]> {
+  public async getCollateralAssets(): Promise<CollateralAsset[]> {
     const biPoolManagerAddress = getContractAddress(this.chainId, BIPOOLMANAGER)
     const reserveAddress = getContractAddress(this.chainId, RESERVE)
 

@@ -1,27 +1,14 @@
-import {
-  createPublicClient,
-  http,
-  type PublicClient,
-  encodeFunctionData,
-  parseAbi,
-} from 'viem'
-import {
-  CollateralAsset,
-  ContractAddresses,
-  StableToken,
-  CallParams,
-  ContractWriteOptions,
-} from './core/types'
-import {
-  ExchangeService,
-} from './services'
+import { createPublicClient, http, type PublicClient } from 'viem'
+import { ContractAddresses } from './core/types'
+import { ExchangeService } from './services'
 import { ChainId } from './core/constants/chainId'
 import { getContractAddress } from './core/constants/addresses'
 import { getDefaultRpcUrl, getChainConfig } from './utils/chainConfig'
+import { TokenService } from '@services/tokens'
 
 /**
  * @class Mento
- * @description The main class for the Mento SDK. It initializes a viem PublicClient internally
+ * @description The main class for the Mento SDK. Initializes a viem PublicClient internally
  *              and provides a public API for interacting with the Mento Protocol.
  * @dev         example usage:
  *              const mento = await Mento.create(ChainId.CELO);
@@ -32,38 +19,25 @@ import { getDefaultRpcUrl, getChainConfig } from './utils/chainConfig'
  *              const stableTokens = await mento.tokens.getStableTokens();
  *
  *              // Get all collateral assets
- *              const collateralAssets = await mento.collateral.getCollateralAssets();
+ *              const collateralAssets = await mento.tokens.getCollateralAssets();
  *
- *              // Get all exchanges
- *              const exchanges = await mento.exchanges.getExchanges();
- *
- *              // Build call parameters for a write operation
- *              const callParams = await mento.buildCallParams({
- *                address: '0x...',
- *                abi: ['function approve(address spender, uint256 amount)'],
- *                functionName: 'approve',
- *                args: [spenderAddress, amount]
- *              });
+ *              // Get all pools
+ *              const exchanges = await mento.pools.getPools();
  */
 export class Mento {
   private readonly chainId: number
   private readonly publicClient: PublicClient
-  public tokens: StableTokenService
-  public collateral: CollateralAssetService
-  public exchanges: ExchangeService
+  public readonly tokens: TokenService
 
   private constructor(
     chainId: number,
     publicClient: PublicClient,
-    stableTokenService: StableTokenService,
-    collateralAssetService: CollateralAssetService,
-    exchangeService: ExchangeService
+    tokenService: TokenService
   ) {
     this.chainId = chainId
     this.publicClient = publicClient
-    this.tokens = stableTokenService
-    this.collateral = collateralAssetService
-    this.exchanges = exchangeService
+
+    this.tokens = tokenService
   }
 
   /**
@@ -82,20 +56,10 @@ export class Mento {
       transport,
     })
 
-    const stableTokenService = new StableTokenService(publicClient, chainId)
-    const collateralAssetService = new CollateralAssetService(
-      publicClient,
-      chainId
-    )
-    const exchangeService = new ExchangeService(publicClient, chainId)
+    const tokenService = new TokenService(publicClient, chainId)
 
-    return new Mento(
-      chainId,
-      publicClient,
-      stableTokenService,
-      collateralAssetService,
-      exchangeService
-    )
+    // Return new mento
+    return new Mento(chainId, publicClient, tokenService)
   }
 
   /**
@@ -106,67 +70,9 @@ export class Mento {
   public getContractAddress(contractName: keyof ContractAddresses): string {
     return getContractAddress(this.chainId as ChainId, contractName)
   }
-
-  /**
-   * Build call parameters for a contract write operation
-   *
-   * Returns the transaction parameters that can be used by consumers to execute
-   * transactions themselves using their own wallet/signer.
-   *
-   * @param options - Contract write options
-   * @returns Call parameters including to, data, value, and optional gasLimit
-   *
-   * @example
-   * ```typescript
-   * const callParams = await mento.buildCallParams({
-   *   address: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
-   *   abi: ['function approve(address spender, uint256 amount)'],
-   *   functionName: 'approve',
-   *   args: ['0x1234...', 1000000n],
-   *   value: 0n
-   * });
-   *
-   * // Use callParams with your wallet
-   * const tx = await wallet.sendTransaction(callParams);
-   * ```
-   */
-  public async buildCallParams(
-    options: ContractWriteOptions
-  ): Promise<CallParams> {
-    // Parse ABI if needed (handle both string array and object array formats)
-    const abi =
-      Array.isArray(options.abi) && typeof options.abi[0] === 'string'
-        ? parseAbi(options.abi as string[])
-        : options.abi
-
-    // Encode function data
-    const data = encodeFunctionData({
-      abi: abi,
-      functionName: options.functionName,
-      args: options.args || [],
-    })
-
-    // Convert value to hex string
-    const value = `0x${(options.value || 0n).toString(16)}`
-
-    // Convert gasLimit to hex string if provided
-    // Use !== undefined to properly handle gasLimit: 0n case
-    const gasLimit =
-      options.gasLimit !== undefined
-        ? `0x${options.gasLimit.toString(16)}`
-        : undefined
-
-    return {
-      to: options.address,
-      data,
-      value,
-      gasLimit,
-    }
-  }
 }
 
 export * from './core/constants'
 export * from './core/types'
-export * from './services'
 export * from './core/abis'
-export * from './utils'
+export * from './services'
