@@ -1,6 +1,6 @@
 import { ISupplyCalculator } from './ISupplyCalculator'
-import { ERC20_ABI } from '../../abis'
-import { AAVE_TOKEN_MAPPINGS } from '../../constants'
+import { ERC20_ABI } from '../../../core/abis'
+import { AAVE_TOKEN_MAPPINGS } from '../../../core/constants'
 import type { PublicClient } from 'viem'
 
 /**

@@ -4,8 +4,8 @@ import type {
   TradablePair,
   TradablePairID,
   TradablePairWithSpread,
-} from '../types'
-import { BIPOOL_MANAGER_ABI, ERC20_ABI } from '../abis'
+} from '../core/types'
+import { BIPOOL_MANAGER_ABI, ERC20_ABI } from '../core/abis'
 import { getContractAddress } from '../core/constants/addresses'
 import { ChainId } from '../core/constants/chainId'
 import {

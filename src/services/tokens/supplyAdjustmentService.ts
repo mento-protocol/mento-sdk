@@ -1,4 +1,4 @@
-import { StableToken, TokenSupplyConfig } from '../../types'
+import { StableToken, TokenSupplyConfig } from '../../core/types'
 import { CalculatorFactory } from './supply/calculatorFactory'
 import type { PublicClient } from 'viem'
 

@@ -1,4 +1,4 @@
-import { ERC20_ABI } from '../../abis'
+import { ERC20_ABI } from '../../../core/abis'
 import { ISupplyCalculator } from './ISupplyCalculator'
 import type { PublicClient } from 'viem'
 

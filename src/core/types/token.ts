@@ -1,4 +1,4 @@
-import { ISupplyCalculator } from '../services'
+import { ISupplyCalculator } from '../../services'
 
 export interface BaseToken {
   name: string

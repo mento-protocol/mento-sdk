@@ -3,7 +3,7 @@ import type {
   TradablePairID,
   Asset,
   TradablePairWithSpread,
-} from '../types'
+} from '../core/types'
 
 type TokenSymbol = string
 type Address = string

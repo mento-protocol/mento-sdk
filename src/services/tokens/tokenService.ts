@@ -1,5 +1,10 @@
-import { RESERVE_ABI, BIPOOL_MANAGER_ABI, ERC20_ABI } from '../../abis'
-import { BaseToken, StableToken, CollateralAsset, Exchange } from '../../types'
+import { RESERVE_ABI, BIPOOL_MANAGER_ABI, ERC20_ABI } from '../../core/abis'
+import {
+  BaseToken,
+  StableToken,
+  CollateralAsset,
+  Exchange,
+} from '../../core/types'
 import {
   getContractAddress,
   RESERVE,
@@ -7,7 +12,7 @@ import {
 } from '../../core/constants'
 import { retryOperation } from '../../utils'
 import { SupplyAdjustmentService } from './supplyAdjustmentService'
-import { DefaultCalculatorFactory } from '../supply'
+import { DefaultCalculatorFactory } from './supply'
 import type { PublicClient } from 'viem'
 
 export class TokenService {

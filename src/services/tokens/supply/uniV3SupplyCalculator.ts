@@ -3,7 +3,7 @@ import {
   UNIV3_POOL_ABI,
   UNIV3_POSITION_MANAGER_ABI,
   ERC20_ABI,
-} from '../../../abis'
+} from '../../../core/abis'
 import { ISupplyCalculator } from './ISupplyCalculator'
 import BigNumber from 'bignumber.js'
 import { retryOperation } from '../../../utils'

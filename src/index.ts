@@ -11,10 +11,8 @@ import {
   StableToken,
   CallParams,
   ContractWriteOptions,
-} from './types'
+} from './core/types'
 import {
-  CollateralAssetService,
-  StableTokenService,
   ExchangeService,
 } from './services'
 import { ChainId } from './core/constants/chainId'
@@ -168,7 +166,7 @@ export class Mento {
 }
 
 export * from './core/constants'
-export * from './types'
+export * from './core/types'
 export * from './services'
-export * from './abis'
+export * from './core/abis'
 export * from './utils'

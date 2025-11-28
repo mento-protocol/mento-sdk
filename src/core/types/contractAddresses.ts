@@ -1,4 +1,4 @@
-import type { ChainId } from '../core/constants/chainId'
+import type { ChainId } from '../constants/chainId'
 
 /**
  * All possible contract identifiers across all chains.

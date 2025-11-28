@@ -1,4 +1,4 @@
-import { MENTO_ADDRESSES, PROTOCOL_ADDRESSES } from '../../constants'
+import { MENTO_ADDRESSES, PROTOCOL_ADDRESSES } from '../../../core/constants'
 import { AAVESupplyCalculator } from './aaveSupplyCalculator'
 import { CalculatorFactory } from './calculatorFactory'
 import { ISupplyCalculator } from './ISupplyCalculator'
