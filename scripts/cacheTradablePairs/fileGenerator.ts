@@ -12,7 +12,7 @@ export function generateFileContent(
   return `// This file is auto-generated. Do not edit manually.
 // Generated on ${new Date().toISOString()}
 
-import type { RouteWithSpread } from './routes'
+import type { RouteWithSpread } from '../core/types'
 
 export const routes${chainId}: RouteWithSpread[] = ${JSON.stringify(
     pairs,
@@ -30,15 +30,15 @@ export function writeToFile(
   content: string,
   scriptDir: string
 ): string {
-  // Create the constants directory if it doesn't exist - navigate to project root first
-  const constantsDir = path.join(scriptDir, '..', '..', 'src', 'constants')
-  if (!fs.existsSync(constantsDir)) {
-    fs.mkdirSync(constantsDir, { recursive: true })
+  // Create the cache directory if it doesn't exist - navigate to project root first
+  const cacheDir = path.join(scriptDir, '..', '..', 'src', 'cache')
+  if (!fs.existsSync(cacheDir)) {
+    fs.mkdirSync(cacheDir, { recursive: true })
   }
 
   // Write the file
   const fileName = `routes.${chainId}.ts`
-  const filePath = path.join(constantsDir, fileName)
+  const filePath = path.join(cacheDir, fileName)
   fs.writeFileSync(filePath, content)
 
   return fileName

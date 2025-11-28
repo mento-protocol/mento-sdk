@@ -400,9 +400,7 @@ export class ExchangeService {
    * @private
    */
   private async loadCachedRoutes(): Promise<RouteWithSpread[]> {
-    const { getCachedRoutes } = await import(
-      '../core/constants/routes'
-    )
+    const { getCachedRoutes } = await import('../utils/routes')
     const cachedRoutes = await getCachedRoutes(this.chainId)
     return (cachedRoutes as RouteWithSpread[]) || []
   }

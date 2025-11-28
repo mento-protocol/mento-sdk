@@ -1,4 +1,4 @@
-import type { Route, RouteWithSpread } from '../types'
+import type { Route, RouteWithSpread } from '../core/types'
 
 // Re-export the type for convenience
 export type { RouteWithSpread }
@@ -13,11 +13,11 @@ export async function getCachedRoutes(
 ): Promise<readonly (Route | RouteWithSpread)[] | undefined> {
   switch (chainId) {
     case 42220:
-      return await import('./routes.42220').then(
+      return await import('../cache/routes.42220').then(
         (module) => module.routes42220
       )
     case 11142220:
-      return await import('./routes.11142220').then(
+      return await import('../cache/routes.11142220').then(
         (module) => module.routes11142220
       )
     default:

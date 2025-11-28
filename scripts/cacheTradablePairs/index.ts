@@ -16,7 +16,6 @@ import { generateFileContent, writeToFile } from './fileGenerator'
 import { sortPairsBySpread } from './spread'
 import { calculateStatistics, displayStatistics } from './statistics'
 
-// Define Celo Sepolia chain (not in viem yet)
 const celoSepolia = defineChain({
   id: 11142220,
   name: 'Celo Sepolia',
@@ -127,6 +126,7 @@ async function generateAndCacheRoutes(
 
   // Generate and write the TypeScript file
   const content = generateFileContent(chainId, pairsToCache)
+  // Pass the script directory path
   const fileName = writeToFile(chainId, content, __dirname)
 
   console.log(
@@ -173,7 +173,5 @@ export async function main(): Promise<void> {
   }
 }
 
-// Only run main if this file is executed directly
-if (require.main === module) {
-  main().catch(console.error)
-}
+// Run main function (this file is designed to be executed directly)
+main().catch(console.error)

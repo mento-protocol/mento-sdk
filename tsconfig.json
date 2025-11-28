@@ -13,7 +13,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./src",
-    "types": ["jest"],
+    "types": ["jest", "node"],
     "paths": {
       "@adapters/*": ["adapters/*"],
       "@services/*": ["services/*"],
