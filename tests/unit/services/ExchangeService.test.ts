@@ -3,10 +3,7 @@ import {
   ExchangeNotFoundError,
   PairNotFoundError,
 } from '../../../src/services/ExchangeService'
-import type {
-  Exchange,
-  TradablePair,
-} from '../../../src/types'
+import type { Exchange, TradablePair } from '../../../src/types'
 import type { PublicClient } from 'viem'
 import { ChainId } from '../../../src/constants'
 
@@ -64,7 +61,7 @@ describe('ExchangeService', () => {
   describe('getExchanges()', () => {
     beforeEach(() => {
       // Mock BiPoolManager.getExchanges() response
-      mockAdapter.readContract.mockResolvedValue(
+      mockPublicClient.readContract.mockResolvedValue(
         mockExchanges.map((ex) => ({
           exchangeId: ex.id,
           assets: ex.assets,

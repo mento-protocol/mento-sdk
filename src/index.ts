@@ -152,9 +152,11 @@ export class Mento {
     const value = `0x${(options.value || 0n).toString(16)}`
 
     // Convert gasLimit to hex string if provided
-    const gasLimit = options.gasLimit
-      ? `0x${options.gasLimit.toString(16)}`
-      : undefined
+    // Use !== undefined to properly handle gasLimit: 0n case
+    const gasLimit =
+      options.gasLimit !== undefined
+        ? `0x${options.gasLimit.toString(16)}`
+        : undefined
 
     return {
       to: options.address,

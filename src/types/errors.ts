@@ -44,8 +44,12 @@ export abstract class TransactionError extends Error {
     this.reason = reason
 
     // Maintain proper stack trace for debugging
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, this.constructor)
+    if (
+      typeof Error !== 'undefined' &&
+      'captureStackTrace' in Error &&
+      typeof (Error as any).captureStackTrace === 'function'
+    ) {
+      ;(Error as any).captureStackTrace(this, this.constructor)
     }
   }
 }

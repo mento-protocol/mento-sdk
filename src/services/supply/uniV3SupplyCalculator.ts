@@ -275,7 +275,7 @@ export class UniV3SupplyCalculator implements ISupplyCalculator {
       address: options.address as `0x${string}`,
       abi: options.abi,
       functionName: options.functionName,
-      args: options.args,
+      args: options.args || [],
     })
   }
 

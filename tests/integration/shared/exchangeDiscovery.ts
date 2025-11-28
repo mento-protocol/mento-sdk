@@ -2,9 +2,8 @@ import type { ExchangeService } from '../../../src/services/ExchangeService'
 
 /**
  * Shared test suite for Exchange Discovery functionality
- * Ensures provider parity (Ethers v6 and Viem produce identical results)
  *
- * @param service - ExchangeService instance to test (with Ethers or Viem adapter)
+ * @param service - ExchangeService instance to test
  */
 export function createExchangeDiscoveryTests(service: ExchangeService) {
   describe('Exchange Discovery - Provider Parity', () => {

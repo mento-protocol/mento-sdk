@@ -1,3 +1,5 @@
+
+// TODO: V3 - Rename to Pool
 /**
  * Represents a liquidity pool between two tokens in the Mento protocol
  */

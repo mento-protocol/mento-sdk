@@ -1,5 +1,29 @@
-import { celo, celoSepolia, type Chain } from 'viem/chains'
+import { celo, type Chain } from 'viem/chains'
+import { defineChain } from 'viem'
 import { ChainId } from '../constants/chainId'
+
+// Celo Sepolia chain definition (not available in viem/chains yet)
+const celoSepolia = defineChain({
+  id: 11142220,
+  name: 'Celo Sepolia',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'CELO',
+    symbol: 'CELO',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://forno.celo-sepolia.celo-testnet.org'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Celo Explorer',
+      url: 'https://sepolia.celoscan.io',
+    },
+  },
+  testnet: true,
+})
 
 /**
  * Get the default RPC URL for a given chain ID
@@ -34,4 +58,3 @@ export function getChainConfig(chainId: number): Chain {
       throw new Error(`Unsupported chain ID: ${chainId}`)
   }
 }
-
