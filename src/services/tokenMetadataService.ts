@@ -1,31 +1,32 @@
-import { ProviderAdapter, BaseToken } from '../types'
+import { BaseToken } from '../types'
 import { ERC20_ABI } from '../abis'
 import { retryOperation } from '../utils'
+import type { PublicClient } from 'viem'
 
 export class TokenMetadataService {
-  constructor(private provider: ProviderAdapter) {}
+  constructor(private publicClient: PublicClient) {}
 
   async getTokenMetadata(
     address: string
   ): Promise<Pick<BaseToken, 'name' | 'symbol' | 'decimals'>> {
     const [name, symbol, decimals] = await Promise.all([
       retryOperation(() =>
-        this.provider.readContract({
-          address,
+        this.publicClient.readContract({
+          address: address as `0x${string}`,
           abi: ERC20_ABI,
           functionName: 'name',
         })
       ),
       retryOperation(() =>
-        this.provider.readContract({
-          address,
+        this.publicClient.readContract({
+          address: address as `0x${string}`,
           abi: ERC20_ABI,
           functionName: 'symbol',
         })
       ),
       retryOperation(() =>
-        this.provider.readContract({
-          address,
+        this.publicClient.readContract({
+          address: address as `0x${string}`,
           abi: ERC20_ABI,
           functionName: 'decimals',
         })
@@ -41,8 +42,8 @@ export class TokenMetadataService {
 
   async getTotalSupply(address: string): Promise<string> {
     const totalSupply = await retryOperation(() =>
-      this.provider.readContract({
-        address,
+      this.publicClient.readContract({
+        address: address as `0x${string}`,
         abi: ERC20_ABI,
         functionName: 'totalSupply',
       })

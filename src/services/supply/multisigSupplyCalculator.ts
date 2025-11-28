@@ -1,10 +1,10 @@
 import { ERC20_ABI } from '../../abis'
-import { ProviderAdapter } from '../../types'
 import { ISupplyCalculator } from './ISupplyCalculator'
+import type { PublicClient } from 'viem'
 
 export class MultisigSupplyCalculator implements ISupplyCalculator {
   constructor(
-    private provider: ProviderAdapter,
+    private publicClient: PublicClient,
     private multisigAddresses: string[]
   ) {}
 
@@ -12,8 +12,8 @@ export class MultisigSupplyCalculator implements ISupplyCalculator {
     const balancePromises = this.multisigAddresses.map(
       async (multisigAddress) => {
         try {
-          const balance = (await this.provider.readContract({
-            address: tokenAddress,
+          const balance = (await this.publicClient.readContract({
+            address: tokenAddress as `0x${string}`,
             abi: ERC20_ABI,
             functionName: 'balanceOf',
             args: [multisigAddress],

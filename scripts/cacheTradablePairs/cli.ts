@@ -52,6 +52,6 @@ export function printUsageTips(): void {
     '   pnpm cacheTradablePairs --chainId 42220       # Same as above'
   )
   console.log(
-    '   pnpm cacheTradablePairs -n alfajores          # Cache only Alfajores'
+    '   pnpm cacheTradablePairs -n celo-sepolia       # Cache only Celo Sepolia'
   )
 }

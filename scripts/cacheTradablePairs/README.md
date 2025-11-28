@@ -23,11 +23,11 @@ pnpm cacheTradablePairs
 ```bash
 # By network name
 pnpm cacheTradablePairs --network celo
-pnpm cacheTradablePairs -n alfajores
+pnpm cacheTradablePairs -n celo-sepolia
 
 # By chain ID
 pnpm cacheTradablePairs --chainId 42220
-pnpm cacheTradablePairs -c 44787
+pnpm cacheTradablePairs -c 11142220
 ```
 
 ### Control batch size
@@ -43,7 +43,6 @@ pnpm cacheTradablePairs -b 20
 | Network      | Chain ID   |
 | ------------ | ---------- |
 | Celo Mainnet | 42220      |
-| Alfajores    | 44787      |
 | Celo Sepolia | 11142220   |
 
 ## Output
@@ -51,7 +50,6 @@ pnpm cacheTradablePairs -b 20
 The script generates TypeScript files in `src/constants/`:
 
 - `tradablePairs.42220.ts` - Celo mainnet pairs
-- `tradablePairs.44787.ts` - Alfajores testnet pairs
 - `tradablePairs.11142220.ts` - Celo Sepolia testnet pairs
 
 Each file exports a `TradablePairWithSpread[]` array containing:

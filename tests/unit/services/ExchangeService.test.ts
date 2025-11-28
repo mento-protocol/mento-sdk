@@ -4,19 +4,20 @@ import {
   PairNotFoundError,
 } from '../../../src/services/ExchangeService'
 import type {
-  ProviderAdapter,
   Exchange,
   TradablePair,
 } from '../../../src/types'
+import type { PublicClient } from 'viem'
+import { ChainId } from '../../../src/constants'
 
 /**
  * Unit tests for ExchangeService
  *
- * Tests all exchange discovery methods in isolation using mocked adapter.
+ * Tests all exchange discovery methods in isolation using mocked PublicClient.
  * Tests cover User Stories 1-4: Exchange queries, direct pairs, multi-hop routes, and pair lookup.
  */
 describe('ExchangeService', () => {
-  let mockAdapter: jest.Mocked<ProviderAdapter>
+  let mockPublicClient: jest.Mocked<PublicClient>
   let service: ExchangeService
 
   // Mock exchange data
@@ -48,17 +49,12 @@ describe('ExchangeService', () => {
   ]
 
   beforeEach(() => {
-    // Mock ProviderAdapter
-    mockAdapter = {
+    // Mock PublicClient
+    mockPublicClient = {
       readContract: jest.fn(),
-      writeContract: jest.fn(),
-      getChainId: jest.fn().mockResolvedValue(42220),
-      estimateGas: jest.fn(),
-      getSignerAddress: jest.fn(),
-      getTransactionCount: jest.fn(),
-    } as jest.Mocked<ProviderAdapter>
+    } as unknown as jest.Mocked<PublicClient>
 
-    service = new ExchangeService(mockAdapter)
+    service = new ExchangeService(mockPublicClient, ChainId.CELO)
   })
 
   // =========================================================================
@@ -83,11 +79,10 @@ describe('ExchangeService', () => {
       expect(exchanges[0].id).toBe(mockExchanges[0].id)
       expect(exchanges[0].assets).toEqual(mockExchanges[0].assets)
       // providerAddr will be the actual BiPoolManager address, not mock
-      expect(mockAdapter.readContract).toHaveBeenCalledWith({
+      expect(mockPublicClient.readContract).toHaveBeenCalledWith({
         address: expect.any(String), // BiPoolManager address
         abi: expect.any(Array),
         functionName: 'getExchanges',
-        args: [],
       })
     })
 
@@ -99,12 +94,12 @@ describe('ExchangeService', () => {
       const secondResult = await service.getExchanges()
 
       expect(firstResult).toEqual(secondResult)
-      expect(mockAdapter.readContract).toHaveBeenCalledTimes(1) // Only called once
+      expect(mockPublicClient.readContract).toHaveBeenCalledTimes(1) // Only called once
     })
 
     it('should validate exchange has exactly 2 assets and skip invalid exchanges', async () => {
       // Mock response with invalid exchange (3 assets)
-      mockAdapter.readContract.mockResolvedValue([
+      mockPublicClient.readContract.mockResolvedValue([
         { exchangeId: '0xvalid', assets: ['0xtoken1', '0xtoken2'] },
         {
           exchangeId: '0xinvalid',
@@ -128,7 +123,7 @@ describe('ExchangeService', () => {
 
     it('should skip exchanges with less than 2 assets', async () => {
       // Mock response with invalid exchange (1 asset)
-      mockAdapter.readContract.mockResolvedValue([
+      mockPublicClient.readContract.mockResolvedValue([
         { exchangeId: '0xvalid', assets: ['0xtoken1', '0xtoken2'] },
         { exchangeId: '0xinvalid', assets: ['0xtoken1'] }, // 1 asset
       ])
@@ -144,7 +139,7 @@ describe('ExchangeService', () => {
     })
 
     it('should throw error if RPC call fails', async () => {
-      mockAdapter.readContract.mockRejectedValue(
+      mockPublicClient.readContract.mockRejectedValue(
         new Error('RPC connection failed')
       )
 
@@ -156,7 +151,7 @@ describe('ExchangeService', () => {
 
   describe('getExchangeById()', () => {
     beforeEach(() => {
-      mockAdapter.readContract.mockResolvedValue(
+      mockPublicClient.readContract.mockResolvedValue(
         mockExchanges.map((ex) => ({
           exchangeId: ex.id,
           assets: ex.assets,
@@ -182,7 +177,7 @@ describe('ExchangeService', () => {
 
     it('should throw error if multiple exchanges found with same ID (assertion failure)', async () => {
       // Mock duplicate exchanges
-      mockAdapter.readContract.mockResolvedValue([
+      mockPublicClient.readContract.mockResolvedValue([
         { exchangeId: '0xduplicate', assets: ['0xtoken1', '0xtoken2'] },
         { exchangeId: '0xduplicate', assets: ['0xtoken3', '0xtoken4'] },
       ])
@@ -196,7 +191,7 @@ describe('ExchangeService', () => {
   describe('getExchangesForProvider()', () => {
     beforeEach(() => {
       // Mock exchanges from multiple providers
-      mockAdapter.readContract.mockResolvedValue([
+      mockPublicClient.readContract.mockResolvedValue([
         { exchangeId: '0xex1', assets: ['0xtoken1', '0xtoken2'] },
         { exchangeId: '0xex2', assets: ['0xtoken3', '0xtoken4'] },
         { exchangeId: '0xex3', assets: ['0xtoken5', '0xtoken6'] },
@@ -247,7 +242,7 @@ describe('ExchangeService', () => {
 
   describe('getDirectPairs()', () => {
     beforeEach(() => {
-      mockAdapter.readContract.mockImplementation(
+      mockPublicClient.readContract.mockImplementation(
         async ({ functionName }: any) => {
           if (functionName === 'getExchanges') {
             return mockExchanges.map((ex) => ({
@@ -282,7 +277,7 @@ describe('ExchangeService', () => {
 
     it('should deduplicate multiple exchanges for same token pair', async () => {
       // Mock duplicate exchanges for same pair
-      mockAdapter.readContract.mockImplementation(
+      mockPublicClient.readContract.mockImplementation(
         async ({ functionName }: any) => {
           if (functionName === 'getExchanges') {
             return [
@@ -307,7 +302,7 @@ describe('ExchangeService', () => {
     })
 
     it('should sort pair assets alphabetically by symbol', async () => {
-      mockAdapter.readContract.mockImplementation(
+      mockPublicClient.readContract.mockImplementation(
         async ({ functionName, address }: any) => {
           if (functionName === 'getExchanges') {
             return [
@@ -333,7 +328,7 @@ describe('ExchangeService', () => {
     })
 
     it('should create canonical pair IDs using alphabetically sorted symbols', async () => {
-      mockAdapter.readContract.mockImplementation(
+      mockPublicClient.readContract.mockImplementation(
         async ({ functionName, address }: any) => {
           if (functionName === 'getExchanges') {
             return [{ exchangeId: '0xex1', assets: ['0xtoken1', '0xtoken2'] }]
@@ -354,7 +349,7 @@ describe('ExchangeService', () => {
     it('should fetch and cache token symbols', async () => {
       const symbolCalls: string[] = []
 
-      mockAdapter.readContract.mockImplementation(
+      mockPublicClient.readContract.mockImplementation(
         async ({ functionName, address }: any) => {
           if (functionName === 'getExchanges') {
             return mockExchanges.map((ex) => ({
@@ -386,7 +381,7 @@ describe('ExchangeService', () => {
     it('should use address as fallback if symbol fetch fails', async () => {
       const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation()
 
-      mockAdapter.readContract.mockImplementation(
+      mockPublicClient.readContract.mockImplementation(
         async ({ functionName }: any) => {
           if (functionName === 'getExchanges') {
             return [{ exchangeId: '0xex1', assets: ['0xtoken1', '0xtoken2'] }]
@@ -410,7 +405,7 @@ describe('ExchangeService', () => {
 
   describe('getExchangeForTokens()', () => {
     beforeEach(() => {
-      mockAdapter.readContract.mockResolvedValue(
+      mockPublicClient.readContract.mockResolvedValue(
         mockExchanges.map((ex) => ({
           exchangeId: ex.id,
           assets: ex.assets,
@@ -452,7 +447,7 @@ describe('ExchangeService', () => {
 
   describe('getTradablePairs()', () => {
     beforeEach(() => {
-      mockAdapter.readContract.mockImplementation(
+      mockPublicClient.readContract.mockImplementation(
         async ({ functionName }: any) => {
           if (functionName === 'getExchanges') {
             return mockExchanges.map((ex) => ({
@@ -507,7 +502,7 @@ describe('ExchangeService', () => {
 
   describe('findPairForTokens()', () => {
     beforeEach(() => {
-      mockAdapter.readContract.mockImplementation(
+      mockPublicClient.readContract.mockImplementation(
         async ({ functionName, address }: any) => {
           if (functionName === 'getExchanges') {
             return mockExchanges.map((ex) => ({

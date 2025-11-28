@@ -1,5 +1,4 @@
 import type {
-  ProviderAdapter,
   Exchange,
   Asset,
   TradablePair,
@@ -14,6 +13,7 @@ import {
   generateAllRoutes,
   selectOptimalRoutes,
 } from '../utils/routeUtils'
+import type { PublicClient } from 'viem'
 
 /**
  * Error thrown when an exchange is not found
@@ -41,28 +41,35 @@ export class PairNotFoundError extends Error {
  *
  * @example
  * ```typescript
- * import { EthersAdapter } from '@mento-labs/mento-sdk/adapters'
  * import { ExchangeService } from '@mento-labs/mento-sdk/services'
+ * import { createPublicClient, http } from 'viem'
+ * import { celo } from 'viem/chains'
  *
- * const adapter = new EthersAdapter(provider)
- * const exchangeService = new ExchangeService(adapter)
+ * const publicClient = createPublicClient({
+ *   chain: celo,
+ *   transport: http('https://forno.celo.org')
+ * })
+ * const exchangeService = new ExchangeService(publicClient, ChainId.CELO)
  *
  * // Get all exchanges
  * const exchanges = await exchangeService.getExchanges()
  * ```
  */
 export class ExchangeService {
-  private adapter: ProviderAdapter
+  private publicClient: PublicClient
+  private chainId: number
   private exchangesCache: Exchange[] | null = null
   private symbolCache: Map<string, string> = new Map()
 
   /**
    * Creates a new ExchangeService instance
    *
-   * @param adapter - Provider adapter (Ethers v6 or Viem) for blockchain interactions
+   * @param publicClient - Viem PublicClient for blockchain interactions
+   * @param chainId - The chain ID
    */
-  constructor(adapter: ProviderAdapter) {
-    this.adapter = adapter
+  constructor(publicClient: PublicClient, chainId: number) {
+    this.publicClient = publicClient
+    this.chainId = chainId
   }
 
   /**
@@ -86,14 +93,13 @@ export class ExchangeService {
 
     try {
       // Get BiPoolManager address from constants
-      const biPoolManagerAddress = await this.getBiPoolManagerAddress()
+      const biPoolManagerAddress = this.getBiPoolManagerAddress()
 
       // Fetch exchanges directly from BiPoolManager
-      const exchangesData = (await this.adapter.readContract({
-        address: biPoolManagerAddress,
+      const exchangesData = (await this.publicClient.readContract({
+        address: biPoolManagerAddress as `0x${string}`,
         abi: BIPOOL_MANAGER_ABI,
         functionName: 'getExchanges',
-        args: [],
       })) as Array<{ exchangeId: string; assets: string[] }>
 
       // Map to Exchange type with providerAddr set to BiPoolManager
@@ -394,11 +400,10 @@ export class ExchangeService {
    * @private
    */
   private async loadCachedPairs(): Promise<TradablePairWithSpread[]> {
-    const chainId = await this.adapter.getChainId()
     const { getCachedTradablePairs } = await import(
       '../constants/tradablePairs'
     )
-    const cachedPairs = await getCachedTradablePairs(chainId)
+    const cachedPairs = await getCachedTradablePairs(this.chainId)
     return (cachedPairs as TradablePairWithSpread[]) || []
   }
 
@@ -416,11 +421,10 @@ export class ExchangeService {
     }
 
     try {
-      const symbol = (await this.adapter.readContract({
-        address,
+      const symbol = (await this.publicClient.readContract({
+        address: address as `0x${string}`,
         abi: ERC20_ABI,
         functionName: 'symbol',
-        args: [],
       })) as string
 
       // Cache the symbol
@@ -491,8 +495,7 @@ export class ExchangeService {
    * Helper: Get BiPoolManager contract address for current chain
    * @private
    */
-  private async getBiPoolManagerAddress(): Promise<string> {
-    const chainId = (await this.adapter.getChainId()) as ChainId
-    return getContractAddress(chainId, 'BiPoolManager')
+  private getBiPoolManagerAddress(): string {
+    return getContractAddress(this.chainId as ChainId, 'BiPoolManager')
   }
 }

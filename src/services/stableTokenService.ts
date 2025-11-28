@@ -1,28 +1,29 @@
 import { RESERVE_ABI } from '../abis'
 import { getContractAddress, RESERVE } from '../constants'
-import { ProviderAdapter, StableToken } from '../types'
+import { StableToken } from '../types'
 import { DefaultCalculatorFactory } from './supply'
 import { SupplyAdjustmentService } from './supplyAdjustmentService'
 import { TokenMetadataService } from './tokenMetadataService'
+import type { PublicClient } from 'viem'
 
 export class StableTokenService {
   private tokenMetadataService: TokenMetadataService
   private supplyAdjustmentService: SupplyAdjustmentService
 
-  constructor(private provider: ProviderAdapter) {
-    this.tokenMetadataService = new TokenMetadataService(provider)
+  constructor(private publicClient: PublicClient, private chainId: number) {
+    this.tokenMetadataService = new TokenMetadataService(publicClient)
     this.supplyAdjustmentService = new SupplyAdjustmentService(
-      provider,
+      publicClient,
+      chainId,
       new DefaultCalculatorFactory()
     )
   }
 
   async getStableTokens(): Promise<StableToken[]> {
-    const chainId = await this.provider.getChainId()
-    const reserveAddress = getContractAddress(chainId, RESERVE)
+    const reserveAddress = getContractAddress(this.chainId, RESERVE)
 
-    const tokenAddresses = (await this.provider.readContract({
-      address: reserveAddress,
+    const tokenAddresses = (await this.publicClient.readContract({
+      address: reserveAddress as `0x${string}`,
       abi: RESERVE_ABI,
       functionName: 'getTokens',
     })) as string[]

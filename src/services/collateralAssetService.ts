@@ -1,24 +1,27 @@
 import { BIPOOL_MANAGER_ABI, RESERVE_ABI } from '../abis'
-import { CollateralAsset, Exchange, ProviderAdapter } from '../types'
+import { CollateralAsset, Exchange } from '../types'
 import { BIPOOLMANAGER, getContractAddress, RESERVE } from '../constants'
 import { retryOperation } from '../utils'
 import { TokenMetadataService } from './tokenMetadataService'
+import type { PublicClient } from 'viem'
 
 export class CollateralAssetService {
   private tokenMetadataService: TokenMetadataService
 
-  constructor(private provider: ProviderAdapter) {
-    this.tokenMetadataService = new TokenMetadataService(provider)
+  constructor(private publicClient: PublicClient, private chainId: number) {
+    this.tokenMetadataService = new TokenMetadataService(publicClient)
   }
 
   async getCollateralAssets(): Promise<CollateralAsset[]> {
-    const chainId = await this.provider.getChainId()
-    const biPoolManagerAddress = getContractAddress(chainId, BIPOOLMANAGER)
-    const reserveAddress = getContractAddress(chainId, RESERVE)
+    const biPoolManagerAddress = getContractAddress(
+      this.chainId,
+      BIPOOLMANAGER
+    )
+    const reserveAddress = getContractAddress(this.chainId, RESERVE)
 
     const exchanges = (await retryOperation(() =>
-      this.provider.readContract({
-        address: biPoolManagerAddress,
+      this.publicClient.readContract({
+        address: biPoolManagerAddress as `0x${string}`,
         abi: BIPOOL_MANAGER_ABI,
         functionName: 'getExchanges',
       })
@@ -33,8 +36,8 @@ export class CollateralAssetService {
     const assets: CollateralAsset[] = []
     for (const address of uniqueAddresses) {
       const isCollateral = (await retryOperation(() =>
-        this.provider.readContract({
-          address: reserveAddress,
+        this.publicClient.readContract({
+          address: reserveAddress as `0x${string}`,
           abi: RESERVE_ABI,
           functionName: 'isCollateralAsset',
           args: [address],

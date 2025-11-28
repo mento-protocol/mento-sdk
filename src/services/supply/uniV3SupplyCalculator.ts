@@ -4,10 +4,10 @@ import {
   UNIV3_POSITION_MANAGER_ABI,
   ERC20_ABI,
 } from '../../abis'
-import { ProviderAdapter, ContractCallOptions } from '../../types'
 import { ISupplyCalculator } from './ISupplyCalculator'
 import BigNumber from 'bignumber.js'
 import { retryOperation } from '../../utils'
+import type { PublicClient } from 'viem'
 
 const BATCH_SIZE = 5
 const BATCH_DELAY = 100
@@ -17,7 +17,7 @@ export class UniV3SupplyCalculator implements ISupplyCalculator {
   private readonly poolCache: Map<string, string> = new Map()
 
   constructor(
-    private provider: ProviderAdapter,
+    private publicClient: PublicClient,
     private positionManagerAddress: string,
     private factoryAddress: string,
     private governanceAddress: string
@@ -265,8 +265,18 @@ export class UniV3SupplyCalculator implements ISupplyCalculator {
     }
   }
 
-  private readContract(options: ContractCallOptions): Promise<unknown> {
-    return this.provider.readContract(options)
+  private async readContract(options: {
+    address: string
+    abi: any[]
+    functionName: string
+    args?: unknown[]
+  }): Promise<unknown> {
+    return this.publicClient.readContract({
+      address: options.address as `0x${string}`,
+      abi: options.abi,
+      functionName: options.functionName,
+      args: options.args,
+    })
   }
 
   private calculateAmounts(

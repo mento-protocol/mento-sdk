@@ -1,8 +1,15 @@
 import { ISupplyCalculator } from './ISupplyCalculator'
-import { ProviderAdapter } from '../../types'
+import type { PublicClient } from 'viem'
 
 export interface CalculatorFactory {
-  createUniV3Calculator(provider: ProviderAdapter): ISupplyCalculator
-  createAAVECalculator(provider: ProviderAdapter): ISupplyCalculator
-  createMultisigCalculator(provider: ProviderAdapter): ISupplyCalculator
+  createUniV3Calculator(
+    publicClient: PublicClient
+  ): ISupplyCalculator
+  createAAVECalculator(
+    publicClient: PublicClient,
+    chainId: number
+  ): ISupplyCalculator
+  createMultisigCalculator(
+    publicClient: PublicClient
+  ): ISupplyCalculator
 }

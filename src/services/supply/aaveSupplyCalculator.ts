@@ -1,7 +1,7 @@
 import { ISupplyCalculator } from './ISupplyCalculator'
-import { ProviderAdapter } from '../../types'
 import { ERC20_ABI } from '../../abis'
 import { AAVE_TOKEN_MAPPINGS } from '../../constants'
+import type { PublicClient } from 'viem'
 
 /**
  * Calculates the amount of tokens supplied to AAVE protocol.
@@ -12,7 +12,8 @@ import { AAVE_TOKEN_MAPPINGS } from '../../constants'
  */
 export class AAVESupplyCalculator implements ISupplyCalculator {
   constructor(
-    private readonly provider: ProviderAdapter,
+    private readonly publicClient: PublicClient,
+    private readonly chainId: number,
     private holderAddresses: string[]
   ) {}
 
@@ -22,9 +23,7 @@ export class AAVESupplyCalculator implements ISupplyCalculator {
    * @returns The balance of the corresponding aToken.
    */
   async getAmount(tokenAddress: string): Promise<bigint> {
-    const chainId = await this.provider.getChainId()
-
-    const chainMappings = AAVE_TOKEN_MAPPINGS[chainId]
+    const chainMappings = AAVE_TOKEN_MAPPINGS[this.chainId]
     if (!chainMappings) {
       return 0n // No mappings for this chain, return 0
     }
@@ -35,8 +34,8 @@ export class AAVESupplyCalculator implements ISupplyCalculator {
 
     const balances = await Promise.all(
       this.holderAddresses.map(async (holderAddress) => {
-        const balance = (await this.provider.readContract({
-          address: aTokenAddress,
+        const balance = (await this.publicClient.readContract({
+          address: aTokenAddress as `0x${string}`,
           abi: ERC20_ABI,
           functionName: 'balanceOf',
           args: [holderAddress],
