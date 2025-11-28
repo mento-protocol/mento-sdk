@@ -1,6 +1,6 @@
 export * from './collateralAssetService'
 export * from './stableTokenService'
-export * from './supplyAdjustmentService'
+export * from './tokens/supplyAdjustmentService'
 export * from './tokenMetadataService'
 export * from './supply'
 export * from './ExchangeService'

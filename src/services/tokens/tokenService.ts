@@ -2,10 +2,9 @@ import { RESERVE_ABI, BIPOOL_MANAGER_ABI, ERC20_ABI } from '../../abis'
 import { BaseToken, StableToken, CollateralAsset, Exchange } from '../../types'
 import { getContractAddress, RESERVE, BIPOOLMANAGER } from '../../constants'
 import { retryOperation } from '../../utils'
-import { SupplyAdjustmentService } from '../supplyAdjustmentService'
+import { SupplyAdjustmentService } from './supplyAdjustmentService'
 import { DefaultCalculatorFactory } from '../supply'
 import type { PublicClient } from 'viem'
-
 
 export class TokenService {
   private supplyAdjustmentService: SupplyAdjustmentService
@@ -111,7 +110,7 @@ export class TokenService {
     return tokens
   }
 
-  // TODO: V3 - How does USD.m fit in here? 
+  // TODO: V3 - How does USD.m fit in here?
   /**
    * Get all collateral assets from exchanges
    * Filters tokens that are marked as collateral in the Reserve contract

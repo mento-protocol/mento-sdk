@@ -1,6 +1,6 @@
-import { StableToken, TokenSupplyConfig } from '../types'
-import { STABLE_TOKEN_SYMBOLS } from '../constants'
-import { CalculatorFactory } from './supply/calculatorFactory'
+import { StableToken, TokenSupplyConfig } from '../../types'
+import { STABLE_TOKEN_SYMBOLS } from '../../constants'
+import { CalculatorFactory } from '../supply/calculatorFactory'
 import type { PublicClient } from 'viem'
 
 export class SupplyAdjustmentService {
@@ -14,7 +14,11 @@ export class SupplyAdjustmentService {
     if (!publicClient) throw new Error('PublicClient is required')
     if (!calculatorFactory) throw new Error('Calculator factory is required')
 
-    this.config = this.initializeConfig(publicClient, chainId, calculatorFactory)
+    this.config = this.initializeConfig(
+      publicClient,
+      chainId,
+      calculatorFactory
+    )
   }
 
   private initializeConfig(
