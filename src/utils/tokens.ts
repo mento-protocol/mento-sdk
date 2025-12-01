@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-12-01T19:37:28.177Z
+// Generated on 2025-12-01T22:44:47.618Z
 
 import type { BaseToken } from '../core/types'
 

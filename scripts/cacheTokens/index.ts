@@ -86,23 +86,26 @@ async function fetchTokensForChain(
 }
 
 /**
- * Generate and cache tokens for a specific chain
+ * Write per-chain cache files
  */
-async function generateAndCacheTokens(
-  chainId: SupportedChainId
-): Promise<BaseToken[]> {
-  const tokens = await fetchTokensForChain(chainId)
-
-  const content = generateFileContent(chainId, tokens)
-  const fileName = writeToFile(chainId, content, __dirname)
-
-  console.log(`\n✅ Successfully cached ${tokens.length} tokens to ${fileName}\n`)
-
-  return tokens
+function writeChainCacheFiles(tokensByChain: {
+  [chainId: number]: BaseToken[]
+}): void {
+  for (const [chainIdStr, tokens] of Object.entries(tokensByChain)) {
+    const chainId = Number(chainIdStr) as SupportedChainId
+    const content = generateFileContent(chainId, tokens)
+    const fileName = writeToFile(chainId, content, __dirname)
+    console.log(`✅ Successfully cached ${tokens.length} tokens to ${fileName}`)
+  }
 }
 
 /**
  * Main function
+ *
+ * Generation order is important:
+ * 1. Fetch tokens for all chains
+ * 2. Generate tokens.ts with TokenSymbol enum FIRST
+ * 3. Generate per-chain files that import TokenSymbol from tokens.ts
  */
 export async function main(): Promise<void> {
   const args = parseCommandLineArgs()
@@ -113,21 +116,28 @@ export async function main(): Promise<void> {
 
   console.log(`📡 Cache tokens for chain(s): ${chainIdsToProcess.join(', ')}`)
 
+  // Step 1: Fetch tokens for all chains first
   const tokensByChain: { [chainId: number]: BaseToken[] } = {}
 
   for (const chainId of chainIdsToProcess) {
-    console.log(`\n🔄 \x1b[1mGenerating tokens for chain ${chainId}...\x1b[0m`)
+    console.log(`\n🔄 \x1b[1mFetching tokens for chain ${chainId}...\x1b[0m`)
 
     try {
-      const tokens = await generateAndCacheTokens(chainId as SupportedChainId)
+      const tokens = await fetchTokensForChain(chainId as SupportedChainId)
       tokensByChain[chainId] = tokens
     } catch (error) {
-      console.error(`❌ Error generating tokens for chain ${chainId}:`, error)
+      console.error(`❌ Error fetching tokens for chain ${chainId}:`, error)
     }
   }
 
+  // Step 2: Generate tokens.ts with TokenSymbol enum FIRST
+  // This must happen before per-chain files since they import TokenSymbol
   console.log(`\n🔄 \x1b[1mGenerating tokens.ts index file...\x1b[0m`)
   generateTokensIndexFile(tokensByChain, __dirname)
+
+  // Step 3: Generate per-chain cache files that import TokenSymbol
+  console.log(`\n🔄 \x1b[1mGenerating per-chain cache files...\x1b[0m`)
+  writeChainCacheFiles(tokensByChain)
 
   console.log(`\nAll done!`)
   printUsageTips()

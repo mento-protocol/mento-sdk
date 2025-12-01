@@ -1,6 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import type { BaseToken } from '../../src/core/types'
+import type { SupportedChainId } from '../shared/network'
 
 /**
  * Sanitize token symbol for use in TypeScript enums
@@ -14,30 +15,30 @@ export function sanitizeSymbol(symbol: string): string {
  * Generate TypeScript file content for cached tokens
  */
 export function generateFileContent(
-  chainId: number,
+  chainId: SupportedChainId,
   tokens: BaseToken[]
 ): string {
   const tokenEntries = tokens.map((token) => {
-    const sanitizedSymbol = sanitizeSymbol(token.symbol)
+    const safeKey = sanitizeSymbol(token.symbol)
     return `  {
     address: '${token.address}',
-    symbol: '${token.symbol}',
+    symbol: TokenSymbol.${safeKey},
     name: '${token.name}',
     decimals: ${token.decimals},
-    _sanitizedSymbol: '${sanitizedSymbol}',
   }`
   })
 
   return `// This file is auto-generated. Do not edit manually.
 // Generated on ${new Date().toISOString()}
 
+import { TokenSymbol } from '../utils/tokens'
 import type { BaseToken } from '../core/types'
 
-export interface CachedToken extends BaseToken {
-  _sanitizedSymbol: string
+export interface Token extends BaseToken {
+  symbol: TokenSymbol
 }
 
-export const tokens${chainId}: readonly CachedToken[] = [
+export const tokens${chainId}: readonly Token[] = [
 ${tokenEntries.join(',\n')}
 ] as const
 `
@@ -47,7 +48,7 @@ ${tokenEntries.join(',\n')}
  * Write the generated content to the appropriate file
  */
 export function writeToFile(
-  chainId: number,
+  chainId: SupportedChainId,
   content: string,
   scriptDir: string
 ): string {

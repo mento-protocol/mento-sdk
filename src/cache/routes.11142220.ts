@@ -1,19 +1,19 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-11-28T21:30:19.790Z
+// Generated on 2025-12-01T23:05:19.523Z
 
 import type { RouteWithSpread } from '../core/types'
 
 export const routes11142220: RouteWithSpread[] = [
   {
-    "id": "0x6285De9DA7C1d329C0451628638908915002d9d1-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "axlUSDC-cUSD",
     "assets": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "symbol": "axlUSDC"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -37,15 +37,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0xd077A400968890Eacc75cdc901F0356c943e4fDb-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "USD₮-cUSD",
     "assets": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "symbol": "USD₮"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -69,15 +69,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "USDC-cUSD",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -101,15 +101,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x6285De9DA7C1d329C0451628638908915002d9d1-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-axlUSDC",
     "assets": [
       {
-        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+        "symbol": "axlUSDC"
       }
     ],
     "path": [
@@ -145,15 +145,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x6285De9DA7C1d329C0451628638908915002d9d1",
+    "id": "USDC-axlUSDC",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "symbol": "axlUSDC"
       }
     ],
     "path": [
@@ -189,15 +189,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USDC-USD₮",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "symbol": "USD₮"
       }
     ],
     "path": [
@@ -233,15 +233,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cAUD-cUSD",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "symbol": "cAUD"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -265,15 +265,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cCAD-cUSD",
     "assets": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "symbol": "cCAD"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -297,15 +297,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139-0x6285De9DA7C1d329C0451628638908915002d9d1",
+    "id": "axlUSDC-cAUD",
     "assets": [
       {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+        "symbol": "axlUSDC"
       },
       {
-        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "cAUD"
       }
     ],
     "path": [
@@ -341,15 +341,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x6285De9DA7C1d329C0451628638908915002d9d1-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "axlUSDC-cCAD",
     "assets": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "symbol": "axlUSDC"
       },
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "symbol": "cCAD"
       }
     ],
     "path": [
@@ -385,15 +385,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-cAUD",
     "assets": [
       {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "cAUD"
       }
     ],
     "path": [
@@ -429,15 +429,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+    "id": "USDC-cAUD",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "symbol": "cAUD"
       }
     ],
     "path": [
@@ -473,15 +473,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-cCAD",
     "assets": [
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
       }
     ],
     "path": [
@@ -517,15 +517,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "USDC-cCAD",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "symbol": "cCAD"
       }
     ],
     "path": [
@@ -561,15 +561,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "CELO-cUSD",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "symbol": "CELO"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -593,15 +593,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x6285De9DA7C1d329C0451628638908915002d9d1",
+    "id": "CELO-axlUSDC",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "symbol": "CELO"
       },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "symbol": "axlUSDC"
       }
     ],
     "path": [
@@ -637,15 +637,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "CELO-USD₮",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "symbol": "CELO"
       },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "symbol": "USD₮"
       }
     ],
     "path": [
@@ -681,15 +681,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x471EcE3750Da237f93B8E339c536989b8978a438",
+    "id": "CELO-USDC",
     "assets": [
       {
-        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+        "symbol": "CELO"
       },
       {
-        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
       }
     ],
     "path": [
@@ -725,15 +725,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "cAUD-cCAD",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "symbol": "cAUD"
       },
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "symbol": "cCAD"
       }
     ],
     "path": [
@@ -769,15 +769,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "PUSO-cUSD",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -801,15 +801,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cGBP-cUSD",
     "assets": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "symbol": "cGBP"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -833,15 +833,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cUSD-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+        "symbol": "cUSD"
       },
       {
-        "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -865,15 +865,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cCHF-cUSD",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "symbol": "cCHF"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -897,15 +897,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cJPY-cUSD",
     "assets": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "symbol": "cJPY"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -929,15 +929,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cCOP-cUSD",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "symbol": "cCOP"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -961,15 +961,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cREAL-cUSD",
     "assets": [
       {
         "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "symbol": "cREAL"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -993,15 +993,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0x6285De9DA7C1d329C0451628638908915002d9d1",
+    "id": "PUSO-axlUSDC",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "symbol": "axlUSDC"
       }
     ],
     "path": [
@@ -1037,15 +1037,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "PUSO-USD₮",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "symbol": "USD₮"
       }
     ],
     "path": [
@@ -1081,15 +1081,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+    "id": "PUSO-USDC",
     "assets": [
       {
-        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
       },
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+        "symbol": "USDC"
       }
     ],
     "path": [
@@ -1125,15 +1125,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x6285De9DA7C1d329C0451628638908915002d9d1-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "axlUSDC-cGBP",
     "assets": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "symbol": "axlUSDC"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -1169,15 +1169,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0x6285De9DA7C1d329C0451628638908915002d9d1",
+    "id": "axlUSDC-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+        "symbol": "axlUSDC"
       },
       {
-        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -1213,15 +1213,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0x6285De9DA7C1d329C0451628638908915002d9d1",
+    "id": "axlUSDC-cCHF",
     "assets": [
       {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+        "symbol": "axlUSDC"
       },
       {
-        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "cCHF"
       }
     ],
     "path": [
@@ -1257,15 +1257,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x6285De9DA7C1d329C0451628638908915002d9d1-0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+    "id": "axlUSDC-cJPY",
     "assets": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "symbol": "axlUSDC"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -1301,15 +1301,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67-0x6285De9DA7C1d329C0451628638908915002d9d1",
+    "id": "axlUSDC-cCOP",
     "assets": [
       {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+        "symbol": "axlUSDC"
       },
       {
-        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "cCOP"
       }
     ],
     "path": [
@@ -1345,15 +1345,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0x6285De9DA7C1d329C0451628638908915002d9d1",
+    "id": "axlUSDC-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+        "symbol": "axlUSDC"
       },
       {
-        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -1389,15 +1389,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-cGBP",
     "assets": [
       {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -1433,15 +1433,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "USDC-cGBP",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -1477,15 +1477,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -1521,15 +1521,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+    "id": "USDC-cZAR",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -1565,15 +1565,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-cCHF",
     "assets": [
       {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "cCHF"
       }
     ],
     "path": [
@@ -1609,15 +1609,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+    "id": "USDC-cCHF",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "symbol": "cCHF"
       }
     ],
     "path": [
@@ -1653,15 +1653,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-cJPY",
     "assets": [
       {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -1697,15 +1697,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+    "id": "USDC-cJPY",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -1741,15 +1741,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-cCOP",
     "assets": [
       {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "cCOP"
       }
     ],
     "path": [
@@ -1785,15 +1785,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+    "id": "USDC-cCOP",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "symbol": "cCOP"
       }
     ],
     "path": [
@@ -1829,15 +1829,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -1873,15 +1873,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+    "id": "USDC-cREAL",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -1917,15 +1917,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+    "id": "CELO-cAUD",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "symbol": "CELO"
       },
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "symbol": "cAUD"
       }
     ],
     "path": [
@@ -1961,15 +1961,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "CELO-cCAD",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "symbol": "CELO"
       },
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "symbol": "cCAD"
       }
     ],
     "path": [
@@ -2005,15 +2005,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+    "id": "PUSO-cAUD",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "symbol": "cAUD"
       }
     ],
     "path": [
@@ -2049,15 +2049,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "PUSO-cCAD",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "symbol": "cCAD"
       }
     ],
     "path": [
@@ -2093,15 +2093,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "cAUD-cGBP",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "symbol": "cAUD"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -2137,15 +2137,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+    "id": "cAUD-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "cAUD"
       },
       {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -2181,15 +2181,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+    "id": "cAUD-cCHF",
     "assets": [
       {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "cAUD"
       },
       {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "cCHF"
       }
     ],
     "path": [
@@ -2225,15 +2225,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139-0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+    "id": "cAUD-cJPY",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "symbol": "cAUD"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -2269,15 +2269,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139-0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+    "id": "cAUD-cCOP",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "symbol": "cAUD"
       },
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "symbol": "cCOP"
       }
     ],
     "path": [
@@ -2313,15 +2313,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+    "id": "cAUD-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "cAUD"
       },
       {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -2357,15 +2357,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "cCAD-cGBP",
     "assets": [
       {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
       },
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -2401,15 +2401,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "cCAD-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
       },
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -2445,15 +2445,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "cCAD-cCHF",
     "assets": [
       {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
       },
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "cCHF"
       }
     ],
     "path": [
@@ -2489,15 +2489,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "cCAD-cJPY",
     "assets": [
       {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
       },
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -2533,15 +2533,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "cCAD-cCOP",
     "assets": [
       {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
       },
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "cCOP"
       }
     ],
     "path": [
@@ -2577,15 +2577,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "cCAD-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
       },
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -2621,15 +2621,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x9883d788d40F1C7595a780ed881Ea833C7743B4B-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "axlEUROC-cEUR",
     "assets": [
       {
         "address": "0x9883d788d40F1C7595a780ed881Ea833C7743B4B",
-        "symbol": "0x9883d788d40F1C7595a780ed881Ea833C7743B4B"
+        "symbol": "axlEUROC"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -2653,15 +2653,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cEUR-cUSD",
     "assets": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "symbol": "cEUR"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -2685,15 +2685,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x6285De9DA7C1d329C0451628638908915002d9d1-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "axlUSDC-cEUR",
     "assets": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "symbol": "axlUSDC"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -2729,15 +2729,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-cEUR",
     "assets": [
       {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -2773,15 +2773,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "USDC-cEUR",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -2817,15 +2817,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0x471EcE3750Da237f93B8E339c536989b8978a438",
+    "id": "CELO-PUSO",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+        "symbol": "CELO"
       },
       {
-        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PUSO"
       }
     ],
     "path": [
@@ -2861,15 +2861,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "CELO-cGBP",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "symbol": "CELO"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -2905,15 +2905,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0x471EcE3750Da237f93B8E339c536989b8978a438",
+    "id": "CELO-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+        "symbol": "CELO"
       },
       {
-        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -2949,15 +2949,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0x471EcE3750Da237f93B8E339c536989b8978a438",
+    "id": "CELO-cCHF",
     "assets": [
       {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+        "symbol": "CELO"
       },
       {
-        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "cCHF"
       }
     ],
     "path": [
@@ -2993,15 +2993,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+    "id": "CELO-cJPY",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "symbol": "CELO"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -3037,15 +3037,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+    "id": "CELO-cCOP",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "symbol": "CELO"
       },
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "symbol": "cCOP"
       }
     ],
     "path": [
@@ -3081,15 +3081,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0x471EcE3750Da237f93B8E339c536989b8978a438",
+    "id": "CELO-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+        "symbol": "CELO"
       },
       {
-        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -3125,15 +3125,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "PUSO-cGBP",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -3169,15 +3169,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+    "id": "PUSO-cZAR",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -3213,15 +3213,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+    "id": "PUSO-cCHF",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "symbol": "cCHF"
       }
     ],
     "path": [
@@ -3257,15 +3257,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+    "id": "PUSO-cJPY",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -3301,15 +3301,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+    "id": "PUSO-cCOP",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "symbol": "cCOP"
       }
     ],
     "path": [
@@ -3345,15 +3345,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+    "id": "PUSO-cREAL",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -3389,15 +3389,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "cGBP-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "cGBP"
       },
       {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -3433,15 +3433,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "cCHF-cGBP",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "symbol": "cCHF"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -3477,15 +3477,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "cGBP-cJPY",
     "assets": [
       {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "cGBP"
       },
       {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -3521,15 +3521,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "cCOP-cGBP",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "symbol": "cCOP"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -3565,15 +3565,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "cGBP-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "cGBP"
       },
       {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -3609,15 +3609,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+    "id": "cCHF-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "cCHF"
       },
       {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -3653,15 +3653,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+    "id": "cJPY-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "cJPY"
       },
       {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -3697,15 +3697,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+    "id": "cCOP-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "cCOP"
       },
       {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -3741,15 +3741,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+    "id": "cREAL-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       },
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -3785,15 +3785,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+    "id": "cCHF-cJPY",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "symbol": "cCHF"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -3829,15 +3829,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+    "id": "cCHF-cCOP",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "symbol": "cCHF"
       },
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "symbol": "cCOP"
       }
     ],
     "path": [
@@ -3873,15 +3873,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+    "id": "cCHF-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "cCHF"
       },
       {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -3917,15 +3917,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67-0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+    "id": "cCOP-cJPY",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "symbol": "cCOP"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -3961,15 +3961,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+    "id": "cJPY-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "cJPY"
       },
       {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -4005,15 +4005,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+    "id": "cCOP-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "cCOP"
       },
       {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -4049,15 +4049,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "cAUD-cEUR",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "symbol": "cAUD"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -4093,15 +4093,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "cCAD-cEUR",
     "assets": [
       {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
       },
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -4137,15 +4137,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "CELO-cEUR",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "symbol": "CELO"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -4181,15 +4181,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "PUSO-cEUR",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -4225,15 +4225,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "cEUR-cGBP",
     "assets": [
       {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "cEUR"
       },
       {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -4269,15 +4269,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "cEUR-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "cEUR"
       },
       {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -4313,15 +4313,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "cCHF-cEUR",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "symbol": "cCHF"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -4357,15 +4357,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "cEUR-cJPY",
     "assets": [
       {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "cEUR"
       },
       {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -4401,15 +4401,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "cCOP-cEUR",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "symbol": "cCOP"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -4445,15 +4445,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "cEUR-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "cEUR"
       },
       {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -4489,15 +4489,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x9883d788d40F1C7595a780ed881Ea833C7743B4B-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "axlEUROC-cUSD",
     "assets": [
       {
         "address": "0x9883d788d40F1C7595a780ed881Ea833C7743B4B",
-        "symbol": "0x9883d788d40F1C7595a780ed881Ea833C7743B4B"
+        "symbol": "axlEUROC"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -4533,15 +4533,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cGHS-cUSD",
     "assets": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "symbol": "cGHS"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -4565,15 +4565,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cNGN-cUSD",
     "assets": [
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "symbol": "cNGN"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -4597,15 +4597,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cKES-cUSD",
     "assets": [
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "symbol": "cKES"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -4629,15 +4629,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C-0x6285De9DA7C1d329C0451628638908915002d9d1",
+    "id": "axlUSDC-cGHS",
     "assets": [
       {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+        "symbol": "axlUSDC"
       },
       {
-        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -4673,15 +4673,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0x6285De9DA7C1d329C0451628638908915002d9d1",
+    "id": "axlUSDC-cNGN",
     "assets": [
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+        "symbol": "axlUSDC"
       },
       {
-        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -4717,15 +4717,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x6285De9DA7C1d329C0451628638908915002d9d1-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "axlUSDC-cKES",
     "assets": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "symbol": "axlUSDC"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -4761,15 +4761,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-cGHS",
     "assets": [
       {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -4805,15 +4805,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+    "id": "USDC-cGHS",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -4849,15 +4849,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-cNGN",
     "assets": [
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -4893,15 +4893,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+    "id": "USDC-cNGN",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -4937,15 +4937,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-cKES",
     "assets": [
       {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -4981,15 +4981,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "USDC-cKES",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -5025,15 +5025,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139-0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+    "id": "cAUD-cGHS",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "symbol": "cAUD"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -5069,15 +5069,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+    "id": "cAUD-cNGN",
     "assets": [
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "cAUD"
       },
       {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -5113,15 +5113,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "cAUD-cKES",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "symbol": "cAUD"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -5157,15 +5157,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "cCAD-cGHS",
     "assets": [
       {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
       },
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -5201,15 +5201,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "cCAD-cNGN",
     "assets": [
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
       },
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -5245,15 +5245,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "cCAD-cKES",
     "assets": [
       {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
       },
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -5289,15 +5289,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+    "id": "CELO-cGHS",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "symbol": "CELO"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -5333,15 +5333,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0x471EcE3750Da237f93B8E339c536989b8978a438",
+    "id": "CELO-cNGN",
     "assets": [
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+        "symbol": "CELO"
       },
       {
-        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -5377,15 +5377,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "CELO-cKES",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "symbol": "CELO"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -5421,15 +5421,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+    "id": "PUSO-cGHS",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -5465,15 +5465,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+    "id": "PUSO-cNGN",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -5509,15 +5509,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "PUSO-cKES",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -5553,15 +5553,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "cGBP-cGHS",
     "assets": [
       {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "cGBP"
       },
       {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -5597,15 +5597,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "cGBP-cNGN",
     "assets": [
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "cGBP"
       },
       {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -5641,15 +5641,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "cGBP-cKES",
     "assets": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "symbol": "cGBP"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -5685,15 +5685,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+    "id": "cGHS-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "cGHS"
       },
       {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -5729,15 +5729,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+    "id": "cNGN-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       },
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -5773,15 +5773,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "cKES-cZAR",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "cKES"
       },
       {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -5817,15 +5817,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+    "id": "cCHF-cGHS",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "symbol": "cCHF"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -5861,15 +5861,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+    "id": "cCHF-cNGN",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "symbol": "cCHF"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -5905,15 +5905,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "cCHF-cKES",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "symbol": "cCHF"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -5949,15 +5949,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C-0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+    "id": "cGHS-cJPY",
     "assets": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "symbol": "cGHS"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -5993,15 +5993,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+    "id": "cJPY-cNGN",
     "assets": [
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "cJPY"
       },
       {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -6037,15 +6037,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "cJPY-cKES",
     "assets": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "symbol": "cJPY"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -6081,15 +6081,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67-0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+    "id": "cCOP-cGHS",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "symbol": "cCOP"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -6125,15 +6125,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+    "id": "cCOP-cNGN",
     "assets": [
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "cCOP"
       },
       {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -6169,15 +6169,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "cCOP-cKES",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "symbol": "cCOP"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -6213,15 +6213,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+    "id": "cGHS-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "cGHS"
       },
       {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -6257,15 +6257,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+    "id": "cNGN-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       },
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -6301,15 +6301,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "cKES-cREAL",
     "assets": [
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "cKES"
       },
       {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -6345,15 +6345,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "cEUR-cGHS",
     "assets": [
       {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "cEUR"
       },
       {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -6389,15 +6389,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "cEUR-cNGN",
     "assets": [
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "cEUR"
       },
       {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -6433,15 +6433,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "cEUR-cKES",
     "assets": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "symbol": "cEUR"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -6477,15 +6477,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+    "id": "cGHS-cNGN",
     "assets": [
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "cGHS"
       },
       {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -6521,15 +6521,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "cGHS-cKES",
     "assets": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "symbol": "cGHS"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "symbol": "cKES"
       }
     ],
     "path": [
@@ -6565,15 +6565,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "cKES-cNGN",
     "assets": [
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "cKES"
       },
       {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -6609,15 +6609,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082-0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+    "id": "cUSD-eXOF",
     "assets": [
-      {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
-      },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b"
+        "symbol": "cUSD"
+      },
+      {
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -6641,15 +6641,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082-0x6285De9DA7C1d329C0451628638908915002d9d1",
+    "id": "axlUSDC-eXOF",
     "assets": [
       {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+        "symbol": "axlUSDC"
       },
       {
-        "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-        "symbol": "0x6285De9DA7C1d329C0451628638908915002d9d1"
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -6685,15 +6685,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082-0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+    "id": "USD₮-eXOF",
     "assets": [
       {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+        "symbol": "USD₮"
       },
       {
-        "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-        "symbol": "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -6729,15 +6729,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x01C5C0122039549AD1493B8220cABEdD739BC44E-0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+    "id": "USDC-eXOF",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-        "symbol": "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
+        "symbol": "USDC"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -6773,15 +6773,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082-0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+    "id": "cAUD-eXOF",
     "assets": [
       {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "cAUD"
       },
       {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -6817,15 +6817,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082-0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+    "id": "cCAD-eXOF",
     "assets": [
       {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "cCAD"
       },
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -6861,15 +6861,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x471EcE3750Da237f93B8E339c536989b8978a438-0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+    "id": "CELO-eXOF",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
-        "symbol": "0x471EcE3750Da237f93B8E339c536989b8978a438"
+        "symbol": "CELO"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -6905,15 +6905,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E-0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+    "id": "PUSO-eXOF",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
+        "symbol": "PUSO"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -6949,15 +6949,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082-0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+    "id": "cGBP-eXOF",
     "assets": [
       {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "cGBP"
       },
       {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -6993,15 +6993,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e-0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+    "id": "cZAR-eXOF",
     "assets": [
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
+        "symbol": "cZAR"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -7037,15 +7037,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980-0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+    "id": "cCHF-eXOF",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
+        "symbol": "cCHF"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -7081,15 +7081,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082-0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+    "id": "cJPY-eXOF",
     "assets": [
       {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "cJPY"
       },
       {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -7125,15 +7125,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082-0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+    "id": "cCOP-eXOF",
     "assets": [
       {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "cCOP"
       },
       {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -7169,15 +7169,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x2294298942fdc79417DE9E0D740A4957E0e7783a-0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+    "id": "cREAL-eXOF",
     "assets": [
       {
         "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
+        "symbol": "cREAL"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -7213,15 +7213,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082-0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+    "id": "cEUR-eXOF",
     "assets": [
       {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "cEUR"
       },
       {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -7257,15 +7257,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082-0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+    "id": "cGHS-eXOF",
     "assets": [
       {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "cGHS"
       },
       {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -7301,15 +7301,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888-0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+    "id": "cNGN-eXOF",
     "assets": [
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
+        "symbol": "cNGN"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -7345,15 +7345,15 @@ export const routes11142220: RouteWithSpread[] = [
     }
   },
   {
-    "id": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082-0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+    "id": "cKES-eXOF",
     "assets": [
       {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "cKES"
       },
       {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "eXOF"
       }
     ],
     "path": [
