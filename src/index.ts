@@ -18,7 +18,7 @@ import { TokenService } from '@services/tokens'
  *              // Get all stable tokens
  *              const stableTokens = await mento.tokens.getStableTokens();
  *
- *              // Get all collateral assets
+ *              // Get all collateral assetsparseAbi
  *              const collateralAssets = await mento.tokens.getCollateralAssets();
  *
  *              // Get all pools

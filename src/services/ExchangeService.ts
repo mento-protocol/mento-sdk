@@ -423,6 +423,7 @@ export class ExchangeService {
         address: address as `0x${string}`,
         abi: ERC20_ABI,
         functionName: 'symbol',
+        args: [],
       })) as string
 
       // Cache the symbol

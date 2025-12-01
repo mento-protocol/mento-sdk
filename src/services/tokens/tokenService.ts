@@ -40,6 +40,7 @@ export class TokenService {
           address: address as `0x${string}`,
           abi: ERC20_ABI,
           functionName: 'name',
+          args: [],
         })
       ),
       retryOperation(() =>
@@ -47,6 +48,7 @@ export class TokenService {
           address: address as `0x${string}`,
           abi: ERC20_ABI,
           functionName: 'symbol',
+          args: [],
         })
       ),
       retryOperation(() =>
@@ -54,6 +56,7 @@ export class TokenService {
           address: address as `0x${string}`,
           abi: ERC20_ABI,
           functionName: 'decimals',
+          args: [],
         })
       ),
     ])
@@ -76,6 +79,7 @@ export class TokenService {
         address: address as `0x${string}`,
         abi: ERC20_ABI,
         functionName: 'totalSupply',
+        args: [],
       })
     )
 
@@ -84,23 +88,28 @@ export class TokenService {
 
   /**
    * Get all stable tokens from the Reserve contract
-   * Includes supply adjustment calculations
-   * @returns Array of stable tokens with adjusted supply
+   * @param includeSupply - Whether to fetch total supply and apply adjustments
+   * @returns Array of stable tokens
    */
-  public async getStableTokens(): Promise<StableToken[]> {
+  public async getStableTokens(includeSupply = true): Promise<StableToken[]> {
     const reserveAddress = getContractAddress(this.chainId, RESERVE)
 
     const tokenAddresses = (await this.publicClient.readContract({
       address: reserveAddress as `0x${string}`,
       abi: RESERVE_ABI,
       functionName: 'getTokens',
+      args: [],
     })) as string[]
 
     const tokens: StableToken[] = []
 
     for (const address of tokenAddresses) {
       const metadata = await this.getTokenMetadata(address)
-      const totalSupply = await this.getTotalSupply(address)
+
+      let totalSupply = '0'
+      if (includeSupply) {
+        totalSupply = await this.getTotalSupply(address)
+      }
 
       const token: StableToken = {
         address,
@@ -108,11 +117,12 @@ export class TokenService {
         totalSupply,
       }
 
-      // Apply supply adjustments
-      const adjustedSupply =
-        await this.supplyAdjustmentService.getAdjustedSupply(token)
+      if (includeSupply) {
+        const adjustedSupply =
+          await this.supplyAdjustmentService.getAdjustedSupply(token)
+        token.totalSupply = adjustedSupply
+      }
 
-      token.totalSupply = adjustedSupply
       tokens.push(token)
     }
 
@@ -153,7 +163,7 @@ export class TokenService {
           address: reserveAddress as `0x${string}`,
           abi: RESERVE_ABI,
           functionName: 'isCollateralAsset',
-          args: [address],
+          args: [address as `0x${string}`],
         })
       )) as boolean
 
