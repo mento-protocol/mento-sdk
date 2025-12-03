@@ -9,6 +9,10 @@ import {
 } from '../../core/abis'
 import { PublicClient } from 'viem'
 
+/**
+ * Service for discovering liquidity pools in the Mento protocol.
+ * Aggregates pools from multiple factory contracts (FPMM and VirtualPool).
+ */
 export class PoolService {
   private poolsCache: Pool[] | null = null
 
@@ -35,17 +39,14 @@ export class PoolService {
       return this.poolsCache
     }
 
-    // Note: The ideal implementation would use the router to dynamically discover factories:
-    // 1. Get router address -> 2. Get factoryRegistry -> 3. Get all poolFactories()
-    // But for now, we assume only two factories: FPMM and VirtualPool
-
+    // TODO: Use router.factoryRegistry.poolFactories() for dynamic factory discovery
     const pools: Pool[] = []
 
     // Fetch FPMM pools
     const fpmmPools = await this.fetchFPMMPools()
     pools.push(...fpmmPools)
 
-    // Fetch Virtual pools (derived from BiPoolManager exchanges)
+    // Fetch Virtual pools
     const virtualPools = await this.fetchVirtualPools()
     pools.push(...virtualPools)
 
@@ -79,7 +80,6 @@ export class PoolService {
         return []
       }
 
-      // Fetch token0 and token1 for each pool in parallel
       const poolDataPromises = poolAddresses.map(async (poolAddress) => {
         const [token0, token1] = await Promise.all([
           this.publicClient.readContract({
@@ -110,7 +110,9 @@ export class PoolService {
   }
 
   /**
-   * Fetches all Virtual pools by discovering them from BiPoolManager exchanges
+   * Fetches all Virtual pools by discovering them from BiPoolManager exchanges.
+   * VirtualPoolFactory doesn't have an enumeration method, 
+   * so we have to derive pools from BiPoolManager.
    */
   private async fetchVirtualPools(): Promise<Pool[]> {
     const virtualPoolFactoryAddress = getContractAddress(
@@ -141,7 +143,7 @@ export class PoolService {
         return []
       }
 
-      // For each exchange, check if a virtual pool exists
+      // For each exchange, check if a virtual pool exists, and if so, return the pool address.
       const poolPromises = exchangesData.map(async (exchange) => {
         if (exchange.assets.length !== 2) {
           console.warn(
@@ -150,13 +152,11 @@ export class PoolService {
           return null
         }
 
-        // Sort tokens (lower address first) to match VirtualPoolFactory's sorting
         const [token0, token1] = this.sortTokens(
           exchange.assets[0],
           exchange.assets[1]
         )
 
-        // Get the pool address (precomputed or existing)
         const poolAddress = (await this.publicClient.readContract({
           address: virtualPoolFactoryAddress as `0x${string}`,
           abi: VIRTUAL_POOL_FACTORY_ABI,
@@ -164,7 +164,6 @@ export class PoolService {
           args: [token0, token1],
         })) as `0x${string}`
 
-        // Check if the pool is actually deployed
         const isDeployed = (await this.publicClient.readContract({
           address: virtualPoolFactoryAddress as `0x${string}`,
           abi: VIRTUAL_POOL_FACTORY_ABI,
@@ -195,8 +194,7 @@ export class PoolService {
   }
 
   /**
-   * Sorts two token addresses (lower address first)
-   * This matches the sorting logic in VirtualPoolFactory
+   * Sorts two token addresses to match VirtualPoolFactory's sorting.
    */
   private sortTokens(
     tokenA: `0x${string}`,
