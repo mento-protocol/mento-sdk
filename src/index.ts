@@ -5,6 +5,7 @@ import { ChainId } from './core/constants/chainId'
 import { getContractAddress } from './core/constants/addresses'
 import { getDefaultRpcUrl, getChainConfig } from './utils/chainConfig'
 import { TokenService } from '@services/tokens'
+import { PoolService } from '@services/pools'
 
 /**
  * @class Mento
@@ -28,15 +29,18 @@ export class Mento {
   private readonly chainId: number
   private readonly publicClient: PublicClient
   public readonly tokens: TokenService
+  public readonly pools: PoolService
 
   private constructor(
     chainId: number,
     publicClient: PublicClient,
-    tokenService: TokenService
+    tokenService: TokenService,
+    poolService: PoolService
   ) {
     this.chainId = chainId
     this.publicClient = publicClient
 
+    this.pools = poolService
     this.tokens = tokenService
   }
 
