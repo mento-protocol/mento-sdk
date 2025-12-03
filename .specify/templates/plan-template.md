@@ -29,24 +29,15 @@
 
 ## Constitution Check
 
-_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
+*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-Review against [Mento SDK Constitution](../.specify/memory/constitution.md):
-
-- [ ] **Type Safety & Code Quality** - All code follows TypeScript strict mode, uses explicit types, follows ESLint/Prettier rules
-- [ ] **Provider Agnostic Architecture** - New features work through ProviderAdapter interface, no direct provider calls in business logic
-- [ ] **Comprehensive Testing** - Unit tests for services, integration tests for providers, >80% coverage maintained
-- [ ] **Performance & Reliability** - Blockchain calls batched, retry logic implemented, no O(n²) operations
-- [ ] **Developer Experience & Documentation** - JSDoc on public APIs, README updated, error messages actionable
-- [ ] **Blockchain Best Practices** - Addresses checksummed, chain IDs verified, BigNumber for numeric values
-
-_Any violations require documented justification in Complexity Tracking section below._
+[Gates determined based on constitution file]
 
 ## Project Structure
 
 ### Documentation (this feature)
 
-```
+```text
 specs/[###-feature]/
 ├── plan.md              # This file (/speckit.plan command output)
 ├── research.md          # Phase 0 output (/speckit.plan command)
@@ -57,7 +48,6 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
-
 <!--
   ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
   for this feature. Delete unused options and expand the chosen structure with
@@ -65,7 +55,7 @@ specs/[###-feature]/
   not include Option labels.
 -->
 
-```
+```text
 # [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
 src/
 ├── models/
@@ -106,9 +96,9 @@ directories captured above]
 
 ## Complexity Tracking
 
-_Fill ONLY if Constitution Check has violations that must be justified_
+> **Fill ONLY if Constitution Check has violations that must be justified**
 
-| Violation                  | Why Needed         | Simpler Alternative Rejected Because |
-| -------------------------- | ------------------ | ------------------------------------ |
-| [e.g., 4th project]        | [current need]     | [why 3 projects insufficient]        |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient]  |
+| Violation | Why Needed | Simpler Alternative Rejected Because |
+|-----------|------------|-------------------------------------|
+| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
+| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
