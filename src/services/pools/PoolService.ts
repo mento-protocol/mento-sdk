@@ -9,6 +9,8 @@ import {
 } from '../../core/abis'
 import { PublicClient } from 'viem'
 
+// TODO: Update to enrich pools with more data as needed. Use optional flag to include more data.
+
 /**
  * Service for discovering liquidity pools in the Mento protocol.
  * Aggregates pools from multiple factory contracts (FPMM and VirtualPool).
