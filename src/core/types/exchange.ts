@@ -1,4 +1,25 @@
 /**
+ * Represents an exchange (legacy v2 type - used by BiPoolManager)
+ * @deprecated Use Pool type for v3
+ */
+export interface Exchange {
+  /**
+   * Exchange provider contract address
+   */
+  providerAddr: string
+
+  /**
+   * Unique exchange identifier
+   */
+  id: string
+
+  /**
+   * The two token addresses for this exchange
+   */
+  assets: string[]
+}
+
+/**
  * Represents a token with its identifying information
  */
 export interface Asset {

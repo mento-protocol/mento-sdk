@@ -8,9 +8,9 @@ export interface Pool {
   factoryAddr: string
 
   /**
-   * Unique identifier for this pool
+   * The deployed pool contract address (serves as unique identifier)
    */
-  id: string
+  poolAddress: string
 
   /**
    * The address of the first token in the pool

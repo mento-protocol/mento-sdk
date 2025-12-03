@@ -65,10 +65,8 @@ export class Mento {
     })
 
     const tokenService = new TokenService(publicClient, chainId)
-
-    // TODO: Add proper initialization
-    const poolService = {}
-    const routerService = {}
+    const poolService = new PoolService(publicClient, chainId)
+    const routerService = new RouterService(publicClient, chainId, poolService)
 
     // Return new mento
     return new Mento(chainId, publicClient, tokenService, poolService, routerService)

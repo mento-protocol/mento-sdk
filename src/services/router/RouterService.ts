@@ -1,7 +1,7 @@
 import { PairNotFoundError } from '@services/ExchangeService'
 import { PoolService } from '@services/pools'
 import { ERC20_ABI } from 'core/abis'
-import { Route, Exchange, RouteID, Asset } from 'core/types'
+import { Route, RouteID, Asset, Pool } from 'core/types'
 import { RouteWithSpread } from 'utils'
 import {
   buildConnectivityStructures,
@@ -33,30 +33,30 @@ export class RouterService {
    * ```
    */
   async getDirectRoutes(): Promise<Route[]> {
-    // Get all exchanges
-    const exchanges = await this.poolService.getExchanges()
+    // Get all pools
+    const pools = await this.poolService.getPools()
 
-    if (exchanges.length === 0) {
+    if (pools.length === 0) {
       return []
     }
 
     // Fetch all unique token addresses
     const uniqueTokens = new Set<string>()
-    exchanges.forEach((exchange) => {
-      exchange.assets.forEach((asset) => uniqueTokens.add(asset))
+    pools.forEach((pool: Pool) => {
+      uniqueTokens.add(pool.token0)
+      uniqueTokens.add(pool.token1)
     })
 
     // Fetch symbols for all tokens in parallel
     const tokenAddresses = Array.from(uniqueTokens)
-    await Promise.all(tokenAddresses.map((addr) => this.fetchTokenSymbol(addr)))
+    await Promise.all(tokenAddresses.map((addr: string) => this.fetchTokenSymbol(addr)))
 
-    // Group exchanges by canonical pair ID
-    const pairMap = new Map<string, Exchange[]>()
+    // Group pools by canonical pair ID
+    const pairMap = new Map<string, Pool[]>()
 
-    for (const exchange of exchanges) {
-      const [addr0, addr1] = exchange.assets
-      const symbol0 = this.symbolCache.get(addr0) || addr0
-      const symbol1 = this.symbolCache.get(addr1) || addr1
+    for (const pool of pools) {
+      const symbol0 = this.symbolCache.get(pool.token0) || pool.token0
+      const symbol1 = this.symbolCache.get(pool.token1) || pool.token1
 
       // Create canonical pair ID (alphabetically sorted symbols)
       const pairId = [symbol0, symbol1].sort().join('-') as RouteID
@@ -64,35 +64,34 @@ export class RouterService {
       if (!pairMap.has(pairId)) {
         pairMap.set(pairId, [])
       }
-      pairMap.get(pairId)!.push(exchange)
+      pairMap.get(pairId)!.push(pool)
     }
 
     // Create Route objects
     const pairs: Route[] = []
 
-    for (const [pairId, pairExchanges] of pairMap.entries()) {
-      const firstExchange = pairExchanges[0]
-      const [addr0, addr1] = firstExchange.assets
+    for (const [pairId, pairPools] of pairMap.entries()) {
+      const firstPool = pairPools[0]
 
       const asset0: Asset = {
-        address: addr0,
-        symbol: this.symbolCache.get(addr0) || addr0,
+        address: firstPool.token0,
+        symbol: this.symbolCache.get(firstPool.token0) || firstPool.token0,
       }
 
       const asset1: Asset = {
-        address: addr1,
-        symbol: this.symbolCache.get(addr1) || addr1,
+        address: firstPool.token1,
+        symbol: this.symbolCache.get(firstPool.token1) || firstPool.token1,
       }
 
       // Sort assets alphabetically by symbol
       const sortedAssets: [Asset, Asset] =
         asset0.symbol < asset1.symbol ? [asset0, asset1] : [asset1, asset0]
 
-      // Create path with all exchanges for this pair
-      const path = pairExchanges.map((exchange) => ({
-        providerAddr: exchange.providerAddr,
-        id: exchange.id,
-        assets: [exchange.assets[0], exchange.assets[1]] as [string, string],
+      // Create path with all pools for this pair
+      const path = pairPools.map((pool: Pool) => ({
+        providerAddr: pool.factoryAddr,
+        id: pool.poolAddress,
+        assets: [pool.token0, pool.token1] as [string, string],
       }))
 
       pairs.push({
@@ -182,7 +181,7 @@ export class RouterService {
    * @private
    */
   private async loadCachedRoutes(): Promise<RouteWithSpread[]> {
-    const { getCachedRoutes } = await import('../utils/routes')
+    const { getCachedRoutes } = await import('../../utils/routes')
     const cachedRoutes = await getCachedRoutes(this.chainId)
     return (cachedRoutes as RouteWithSpread[]) || []
   }
