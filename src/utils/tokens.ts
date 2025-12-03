@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-12-01T22:44:47.618Z
+// Generated on 2025-12-03T19:52:12.955Z
 
 import type { BaseToken } from '../core/types'
 
@@ -38,6 +38,8 @@ export async function getCachedTokens(
   chainId: number
 ): Promise<readonly BaseToken[] | undefined> {
   switch (chainId) {
+    case 42220:
+      return await import('../cache/tokens.42220').then((module) => module.tokens42220)
     case 11142220:
       return await import('../cache/tokens.11142220').then((module) => module.tokens11142220)
     default:
@@ -53,6 +55,9 @@ export async function getCachedTokens(
  */
 export function getCachedTokensSync(chainId: number): readonly BaseToken[] {
   switch (chainId) {
+    case 42220:
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      return require('../cache/tokens.42220').tokens42220
     case 11142220:
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       return require('../cache/tokens.11142220').tokens11142220
@@ -68,6 +73,28 @@ export function getCachedTokensSync(chainId: number): readonly BaseToken[] {
 export const TOKEN_ADDRESSES_BY_CHAIN: {
   [chainId: number]: { [tokenSymbol in TokenSymbol]?: string }
 } = {
+  42220: {
+      [TokenSymbol.cUSD]: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+      [TokenSymbol.cEUR]: '0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73',
+      [TokenSymbol.cREAL]: '0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787',
+      [TokenSymbol.eXOF]: '0x73F93dcc49cB8A239e2032663e9475dd5ef29A08',
+      [TokenSymbol.cKES]: '0x456a3D042C0DbD3db53D5489e98dFb038553B0d0',
+      [TokenSymbol.PUSO]: '0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B',
+      [TokenSymbol.cCOP]: '0x8A567e2aE79CA692Bd748aB832081C45de4041eA',
+      [TokenSymbol.cGHS]: '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
+      [TokenSymbol.cGBP]: '0xCCF663b1fF11028f0b19058d0f7B674004a40746',
+      [TokenSymbol.cZAR]: '0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6',
+      [TokenSymbol.cCAD]: '0xff4Ab19391af240c311c54200a492233052B6325',
+      [TokenSymbol.cAUD]: '0x7175504C455076F15c04A2F90a8e352281F492F9',
+      [TokenSymbol.cCHF]: '0xb55a79F398E759E43C95b979163f30eC87Ee131D',
+      [TokenSymbol.cNGN]: '0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71',
+      [TokenSymbol.cJPY]: '0xc45eCF20f3CD864B32D9794d6f76814aE8892e20',
+      [TokenSymbol.CELO]: '0x471EcE3750Da237f93B8E339c536989b8978a438',
+      [TokenSymbol.axlEUROC]: '0x061cc5a2C863E0C1Cb404006D559dB18A34C762d',
+      [TokenSymbol.USDC]: '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
+      [TokenSymbol.axlUSDC]: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
+      [TokenSymbol.USD_]: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
+    },
   11142220: {
       [TokenSymbol.cUSD]: '0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b',
       [TokenSymbol.cEUR]: '0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a',
@@ -90,4 +117,31 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
       [TokenSymbol.USD_]: '0xd077A400968890Eacc75cdc901F0356c943e4fDb',
       [TokenSymbol.USDC]: '0x01C5C0122039549AD1493B8220cABEdD739BC44E',
     },
+}
+
+/**
+ * Get token address by chain ID and symbol
+ * @param chainId - The chain ID
+ * @param symbol - The token symbol
+ * @returns The token address or undefined if not found
+ */
+export function getTokenAddress(
+  chainId: number,
+  symbol: TokenSymbol
+): string | undefined {
+  return TOKEN_ADDRESSES_BY_CHAIN[chainId]?.[symbol]
+}
+
+/**
+ * Find a token by its symbol on a specific chain
+ * @param chainId - The chain ID
+ * @param symbol - The token symbol
+ * @returns The token object or undefined if not found
+ */
+export function findTokenBySymbol(
+  chainId: number,
+  symbol: TokenSymbol
+): BaseToken | undefined {
+  const tokens = getCachedTokensSync(chainId)
+  return tokens.find((t) => t.symbol === symbol)
 }

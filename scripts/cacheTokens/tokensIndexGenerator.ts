@@ -10,7 +10,9 @@ export function generateTokensIndexFile(
   tokensByChain: { [chainId: number]: BaseToken[] },
   scriptDir: string
 ): void {
-  const chainIds = Object.keys(tokensByChain).map(Number).sort((a, b) => a - b)
+  const chainIds = Object.keys(tokensByChain)
+    .map(Number)
+    .sort((a, b) => a - b)
 
   // Collect all unique token symbols across all chains
   const allSymbols = new Set<string>()
@@ -100,6 +102,37 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
 } = {
 ${tokenAddressesByChainEntries.join('\n')}
 }
+
+/**
+ * Get token address by chain ID and symbol
+ * @param chainId - The chain ID
+ * @param symbol - The token symbol
+ * @returns The token address or undefined if not found
+ */
+export function getTokenAddress(
+  chainId: number,
+  symbol: TokenSymbol
+): string | undefined {
+  return TOKEN_ADDRESSES_BY_CHAIN[chainId]?.[symbol]
+}
+
+/**
+ * Find a token by its symbol on a specific chain
+ * @param chainId - The chain ID
+ * @param symbol - The token symbol
+ * @returns The token object or undefined if not found
+ */
+export function findTokenBySymbol(
+  chainId: number,
+  symbol: TokenSymbol
+): BaseToken | undefined {
+  try {
+    const tokens = getCachedTokensSync(chainId)
+    return tokens.find((t) => t.symbol === symbol)
+  } catch {
+    return undefined
+  }
+}
 `
 
   // Write to src/utils/tokens.ts
@@ -111,5 +144,7 @@ ${tokenAddressesByChainEntries.join('\n')}
   const filePath = path.join(utilsDir, 'tokens.ts')
   fs.writeFileSync(filePath, content)
 
-  console.log(`\n✅ Successfully generated tokens index file at src/utils/tokens.ts`)
+  console.log(
+    `\n✅ Successfully generated tokens index file at src/utils/tokens.ts`
+  )
 }
