@@ -1,19 +1,16 @@
-import type {
-  ProviderAdapter,
-  TradablePair,
-  TradablePairWithSpread,
-} from '../../src/types'
+import type { Route, RouteWithSpread } from '../../src/core/types'
+import type { PublicClient } from 'viem'
 import { calculateSpreadForPair } from './spread'
 
 /**
  * Process pairs in batches with controlled concurrency
  */
 export async function processPairsInBatches(
-  pairs: readonly TradablePair[],
-  adapter: ProviderAdapter,
+  pairs: readonly Route[],
+  publicClient: PublicClient,
   batchSize = 10
-): Promise<TradablePairWithSpread[]> {
-  const results: TradablePairWithSpread[] = []
+): Promise<RouteWithSpread[]> {
+  const results: RouteWithSpread[] = []
   let processed = 0
   let errors = 0
 
@@ -23,7 +20,7 @@ export async function processPairsInBatches(
     // Process batch concurrently with error handling
     const batchPromises = batch.map(async (pair) => {
       try {
-        const result = await calculateSpreadForPair(pair, adapter)
+        const result = await calculateSpreadForPair(pair, publicClient)
         processed++
         process.stdout.write(
           `\r   Processing ${processed}/${pairs.length} routes... (${errors} errors)`

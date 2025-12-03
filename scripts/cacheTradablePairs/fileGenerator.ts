@@ -1,20 +1,20 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import type { TradablePairWithSpread } from '../../src/types'
+import type { RouteWithSpread } from '../../src/core/types'
 
 /**
  * Generate TypeScript file content for cached tradable pairs
  */
 export function generateFileContent(
   chainId: number,
-  pairs: TradablePairWithSpread[]
+  pairs: RouteWithSpread[]
 ): string {
   return `// This file is auto-generated. Do not edit manually.
 // Generated on ${new Date().toISOString()}
 
-import type { TradablePairWithSpread } from './tradablePairs'
+import type { RouteWithSpread } from '../core/types'
 
-export const tradablePairs${chainId}: TradablePairWithSpread[] = ${JSON.stringify(
+export const routes${chainId}: RouteWithSpread[] = ${JSON.stringify(
     pairs,
     null,
     2
@@ -30,15 +30,15 @@ export function writeToFile(
   content: string,
   scriptDir: string
 ): string {
-  // Create the constants directory if it doesn't exist - navigate to project root first
-  const constantsDir = path.join(scriptDir, '..', '..', 'src', 'constants')
-  if (!fs.existsSync(constantsDir)) {
-    fs.mkdirSync(constantsDir, { recursive: true })
+  // Create the cache directory if it doesn't exist - navigate to project root first
+  const cacheDir = path.join(scriptDir, '..', '..', 'src', 'cache')
+  if (!fs.existsSync(cacheDir)) {
+    fs.mkdirSync(cacheDir, { recursive: true })
   }
 
   // Write the file
-  const fileName = `tradablePairs.${chainId}.ts`
-  const filePath = path.join(constantsDir, fileName)
+  const fileName = `routes.${chainId}.ts`
+  const filePath = path.join(cacheDir, fileName)
   fs.writeFileSync(filePath, content)
 
   return fileName

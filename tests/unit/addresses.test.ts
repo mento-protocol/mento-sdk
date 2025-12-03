@@ -1,5 +1,5 @@
 import { addresses, getContractAddress, ChainId } from '../../src/constants/'
-import { isAddress } from 'ethers'
+import { isAddress } from 'viem'
 
 describe('Addresses Unit Tests', () => {
   it('should have address mappings for all supported chains', () => {
@@ -38,8 +38,8 @@ describe('Addresses Unit Tests', () => {
   it('should return different addresses for different chains', () => {
     // Test different chains return different addresses
     const celoAddress = getContractAddress(ChainId.CELO, 'Broker')
-    const alfajoresAddress = getContractAddress(ChainId.ALFAJORES, 'Broker')
-    expect(celoAddress).not.toEqual(alfajoresAddress)
+    const celoSepoliaAddress = getContractAddress(ChainId.CELO_SEPOLIA, 'Broker')
+    expect(celoAddress).not.toEqual(celoSepoliaAddress)
   })
 
   it('should validate all contract addresses follow correct format', () => {

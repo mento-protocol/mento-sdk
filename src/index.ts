@@ -1,112 +1,65 @@
-import type { PublicClient } from 'viem'
-import type { Provider as EthersV6Provider } from 'ethers'
-
-import { EthersAdapter, ViemAdapter } from './adapters'
-import {
-  CollateralAsset,
-  ContractAddresses,
-  ProviderAdapter,
-  StableToken,
-} from './types'
-import {
-  CollateralAssetService,
-  StableTokenService,
-  ExchangeService,
-} from './services'
-import { ChainId } from './constants/chainId'
-import { getContractAddress } from './constants/addresses'
-
-export type SupportedProvider = EthersV6Provider | PublicClient
-
-export interface MentoConfig {
-  /** Provider can be one of:
-   * - Ethers v6 Provider (from 'ethers')
-   * - Viem PublicClient (from 'viem')
-   */
-  provider: SupportedProvider
-}
-
-/** Helper type guard for Ethers v6 Provider */
-function isEthersProvider(
-  provider: SupportedProvider
-): provider is EthersV6Provider {
-  // Check for Ethers provider properties
-  return 'getNetwork' in provider && 'broadcastTransaction' in provider
-}
-
-/** Helper type guard for Viem Provider */
-function isViemProvider(provider: SupportedProvider): provider is PublicClient {
-  return !('getNetwork' in provider)
-}
+import { createPublicClient, http, type PublicClient } from 'viem'
+import { ContractAddresses } from './core/types'
+import { ExchangeService } from './services'
+import { ChainId } from './core/constants/chainId'
+import { getContractAddress } from './core/constants/addresses'
+import { getDefaultRpcUrl, getChainConfig } from './utils/chainConfig'
+import { TokenService } from '@services/tokens'
 
 /**
  * @class Mento
- * @description The main class for the Mento SDK. It initializes the provider and services,
+ * @description The main class for the Mento SDK. Initializes a viem PublicClient internally
  *              and provides a public API for interacting with the Mento Protocol.
  * @dev         example usage:
- *              // Ethers v6
- *              const mento = await Mento.create({
- *                provider: new ethers.JsonRpcProvider("https://forno.celo.org")
- *              });
- *
- *              // Viem
- *              const mento = await Mento.create({
- *                provider: createPublicClient({
- *                  transport: http("https://forno.celo.org")
- *                })
- *              });
+ *              const mento = await Mento.create(ChainId.CELO);
+ *              // or with custom RPC URL
+ *              const mento = await Mento.create(ChainId.CELO, 'https://custom-rpc-url.com');
  *
  *              // Get all stable tokens
  *              const stableTokens = await mento.tokens.getStableTokens();
  *
- *              // Get all collateral assets
- *              const collateralAssets = await mento.collateral.getCollateralAssets();
+ *              // Get all collateral assetsparseAbi
+ *              const collateralAssets = await mento.tokens.getCollateralAssets();
  *
- *              // Get all exchanges
- *              const exchanges = await mento.exchanges.getExchanges();
+ *              // Get all pools
+ *              const exchanges = await mento.pools.getPools();
  */
 export class Mento {
-  private provider: ProviderAdapter
-  public tokens: StableTokenService
-  public collateral: CollateralAssetService
-  public exchanges: ExchangeService
+  private readonly chainId: number
+  private readonly publicClient: PublicClient
+  public readonly tokens: TokenService
 
   private constructor(
-    provider: ProviderAdapter,
-    stableTokenService: StableTokenService,
-    collateralAssetService: CollateralAssetService,
-    exchangeService: ExchangeService
+    chainId: number,
+    publicClient: PublicClient,
+    tokenService: TokenService
   ) {
-    this.provider = provider
-    this.tokens = stableTokenService
-    this.collateral = collateralAssetService
-    this.exchanges = exchangeService
+    this.chainId = chainId
+    this.publicClient = publicClient
+
+    this.tokens = tokenService
   }
 
-  public static async create(config: MentoConfig): Promise<Mento> {
-    if (!config.provider) {
-      throw new Error('Provider is required to initialize Mento SDK')
-    }
+  /**
+   * Create a new Mento SDK instance
+   * @param chainId - The chain ID (e.g., ChainId.CELO, ChainId.CELO_SEPOLIA)
+   * @param rpcUrl - Optional RPC URL. If not provided, uses default for the chain
+   * @returns A new Mento instance
+   */
+  public static async create(chainId: number, rpcUrl?: string): Promise<Mento> {
+    // Use provided RPC URL or default for the chain
+    const transport = http(rpcUrl || getDefaultRpcUrl(chainId))
 
-    let provider: ProviderAdapter
-    if (isEthersProvider(config.provider)) {
-      provider = new EthersAdapter(config.provider)
-    } else if (isViemProvider(config.provider)) {
-      provider = new ViemAdapter(config.provider)
-    } else {
-      throw new Error('Unsupported provider type')
-    }
+    // Create viem PublicClient
+    const publicClient = createPublicClient({
+      chain: getChainConfig(chainId),
+      transport,
+    })
 
-    const stableTokenService = new StableTokenService(provider)
-    const collateralAssetService = new CollateralAssetService(provider)
-    const exchangeService = new ExchangeService(provider)
+    const tokenService = new TokenService(publicClient, chainId)
 
-    return new Mento(
-      provider,
-      stableTokenService,
-      collateralAssetService,
-      exchangeService
-    )
+    // Return new mento
+    return new Mento(chainId, publicClient, tokenService)
   }
 
   /**
@@ -114,17 +67,12 @@ export class Mento {
    * @param contractName - The contract name
    * @returns The contract address
    */
-  public async getContractAddress(
-    contractName: keyof ContractAddresses
-  ): Promise<string> {
-    const chainId = (await this.provider.getChainId()) as ChainId
-    return getContractAddress(chainId, contractName)
+  public getContractAddress(contractName: keyof ContractAddresses): string {
+    return getContractAddress(this.chainId as ChainId, contractName)
   }
 }
 
-export * from './constants'
-export * from './types'
-export * from './adapters'
+export * from './core/constants'
+export * from './core/types'
+export * from './core/abis'
 export * from './services'
-export * from './abis'
-export * from './utils'

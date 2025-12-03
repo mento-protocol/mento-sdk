@@ -1,9 +1,6 @@
-import { BIPOOL_MANAGER_ABI } from '../../src/abis/bipoolmanager'
-import type {
-  ProviderAdapter,
-  TradablePair,
-  TradablePairWithSpread,
-} from '../../src/types'
+import { BIPOOL_MANAGER_ABI } from '../../src/core/abis'
+import type { Route, RouteWithSpread } from '../../src/core/types'
+import type { PublicClient } from 'viem'
 
 // Type for the pool exchange result from getPoolExchange
 interface PoolExchangeResult {
@@ -30,12 +27,12 @@ interface PoolExchangeResult {
  * Calculate spread data for a tradable pair by fetching fixed spreads from pool configs
  */
 export async function calculateSpreadForPair(
-  pair: TradablePair,
-  adapter: ProviderAdapter
-): Promise<TradablePairWithSpread> {
+  pair: Route,
+  publicClient: PublicClient
+): Promise<RouteWithSpread> {
   // Fetch all exchange spreads concurrently
   const spreadPromises = pair.path.map(async (hop) => {
-    const spread = await getExchangeSpread(hop.id, hop.providerAddr, adapter)
+    const spread = await getExchangeSpread(hop.id, hop.providerAddr, publicClient)
     return {
       hop,
       spread,
@@ -79,16 +76,16 @@ export async function calculateSpreadForPair(
 }
 
 /**
- * Fetch spread for a specific exchange from the BiPoolManager using the adapter
+ * Fetch spread for a specific exchange from the BiPoolManager using viem
  */
 async function getExchangeSpread(
   exchangeId: string,
   providerAddr: string,
-  adapter: ProviderAdapter
+  publicClient: PublicClient
 ): Promise<number | null> {
   try {
-    const poolExchange = (await adapter.readContract({
-      address: providerAddr,
+    const poolExchange = (await publicClient.readContract({
+      address: providerAddr as `0x${string}`,
       abi: BIPOOL_MANAGER_ABI,
       functionName: 'getPoolExchange',
       args: [exchangeId],
@@ -113,8 +110,8 @@ async function getExchangeSpread(
  * Sort pairs by spread percentage (best routes first)
  */
 export function sortPairsBySpread(
-  pairs: TradablePairWithSpread[]
-): TradablePairWithSpread[] {
+  pairs: RouteWithSpread[]
+): RouteWithSpread[] {
   return pairs.sort((a, b) => {
     // Sort by total spread percentage (ascending - lower is better)
     // Routes without spread data go to the end

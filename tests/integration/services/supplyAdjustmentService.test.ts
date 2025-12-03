@@ -1,6 +1,4 @@
 import { StableToken } from './../../../dist/types/token.d'
-import { EthersAdapter } from '../../../src/adapters'
-import { JsonRpcProvider } from 'ethers'
 import {
   SupplyAdjustmentService,
   TokenMetadataService,
@@ -12,15 +10,21 @@ import {
 } from '../../../src/constants'
 import { TEST_CONFIG } from '../../config'
 import { DefaultCalculatorFactory } from '../../../src/services/supply'
+import { createPublicClient, http } from 'viem'
+import { celo } from 'viem/chains'
+
 describe('SupplyAdjustmentService Integration Tests', () => {
-  // Setup provider and adapter
-  const ethersProvider = new JsonRpcProvider(TEST_CONFIG.rpcUrl)
-  const adapter = new EthersAdapter(ethersProvider)
+  // Setup public client
+  const publicClient = createPublicClient({
+    chain: celo,
+    transport: http(TEST_CONFIG.rpcUrl),
+  })
   const supplyAdjustmentService = new SupplyAdjustmentService(
-    adapter,
+    publicClient,
+    ChainId.CELO,
     new DefaultCalculatorFactory()
   )
-  const tokenMetadataService = new TokenMetadataService(adapter)
+  const tokenMetadataService = new TokenMetadataService(publicClient)
   describe('adjustSupply()', () => {
     it(`should return the adjusted cUSD supply`, async function () {
       const stableTokenAddress = addresses[ChainId.CELO].StableToken

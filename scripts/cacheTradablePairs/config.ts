@@ -1,4 +1,4 @@
-import type { TradablePairWithSpread } from '../../src/types'
+import type { RouteWithSpread } from '../../src/core/types'
 import { NETWORK_MAP, rpcUrls } from '../shared/network'
 import type { SupportedChainId } from '../shared/network'
 
@@ -6,7 +6,7 @@ import type { SupportedChainId } from '../shared/network'
 export { NETWORK_MAP, rpcUrls }
 
 // Re-export the interface for backward compatibility
-export type { TradablePairWithSpread }
+export type { RouteWithSpread }
 
 // Type for supported chain IDs
 export type { SupportedChainId }

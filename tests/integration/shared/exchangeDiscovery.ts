@@ -2,9 +2,8 @@ import type { ExchangeService } from '../../../src/services/ExchangeService'
 
 /**
  * Shared test suite for Exchange Discovery functionality
- * Ensures provider parity (Ethers v6 and Viem produce identical results)
  *
- * @param service - ExchangeService instance to test (with Ethers or Viem adapter)
+ * @param service - ExchangeService instance to test
  */
 export function createExchangeDiscoveryTests(service: ExchangeService) {
   describe('Exchange Discovery - Provider Parity', () => {
@@ -51,16 +50,16 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
       })
     })
 
-    describe('getDirectPairs()', () => {
+    describe('getDirectRoutes()', () => {
       it('should return non-empty array of trading pairs', async () => {
-        const pairs = await service.getDirectPairs()
+        const pairs = await service.getDirectRoutes()
 
         expect(Array.isArray(pairs)).toBe(true)
         expect(pairs.length).toBeGreaterThan(0)
       })
 
       it('should return pairs with valid structure', async () => {
-        const pairs = await service.getDirectPairs()
+        const pairs = await service.getDirectRoutes()
 
         pairs.forEach((pair) => {
           expect(pair).toHaveProperty('id')
@@ -78,7 +77,7 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
       })
 
       it('should return pairs with alphabetically sorted symbols', async () => {
-        const pairs = await service.getDirectPairs()
+        const pairs = await service.getDirectRoutes()
 
         pairs.forEach((pair) => {
           const [asset0, asset1] = pair.assets
@@ -88,7 +87,7 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
       })
 
       it('should return pairs with canonical IDs (sorted symbols)', async () => {
-        const pairs = await service.getDirectPairs()
+        const pairs = await service.getDirectRoutes()
 
         pairs.forEach((pair) => {
           const [symbol0, symbol1] = pair.id.split('-')
@@ -98,7 +97,7 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
       })
 
       it('should not have duplicate pairs', async () => {
-        const pairs = await service.getDirectPairs()
+        const pairs = await service.getDirectRoutes()
 
         const pairIds = pairs.map((p) => p.id)
         const uniqueIds = new Set(pairIds)
@@ -107,7 +106,7 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
       })
 
       it('should fetch token symbols successfully', async () => {
-        const pairs = await service.getDirectPairs()
+        const pairs = await service.getDirectRoutes()
 
         pairs.forEach((pair) => {
           pair.assets.forEach((asset) => {
@@ -120,9 +119,9 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
       })
     })
 
-    describe('getTradablePairs()', () => {
+    describe('getRoutes()', () => {
       it('should return non-empty array including both direct and multi-hop pairs', async () => {
-        const pairs = await service.getTradablePairs()
+        const pairs = await service.getRoutes()
 
         expect(Array.isArray(pairs)).toBe(true)
         expect(pairs.length).toBeGreaterThan(0)
@@ -137,7 +136,7 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
       })
 
       it('should return pairs with valid structure', async () => {
-        const pairs = await service.getTradablePairs()
+        const pairs = await service.getRoutes()
 
         pairs.forEach((pair) => {
           expect(pair).toHaveProperty('id')
@@ -151,8 +150,8 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
       })
 
       it('should include all direct pairs', async () => {
-        const directPairs = await service.getDirectPairs()
-        const allPairs = await service.getTradablePairs()
+        const directPairs = await service.getDirectRoutes()
+        const allPairs = await service.getRoutes()
 
         // All direct pair IDs should be present in all pairs
         const allPairIds = new Set(allPairs.map((p) => p.id))
@@ -163,13 +162,13 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
       })
 
       it('should generate fresh pairs when cached=false', async () => {
-        const pairs = await service.getTradablePairs({ cached: false })
+        const pairs = await service.getRoutes({ cached: false })
 
         expect(pairs.length).toBeGreaterThan(0)
       })
     })
 
-    describe('findPairForTokens()', () => {
+    describe('findRoute()', () => {
       it('should find pair for tokens with direct exchange', async () => {
         // Get first exchange to find a valid pair
         const exchanges = await service.getExchanges()
@@ -177,7 +176,7 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
 
         const [token0, token1] = exchanges[0].assets
 
-        const pair = await service.findPairForTokens(token0, token1)
+        const pair = await service.findRoute(token0, token1)
 
         expect(pair).toBeDefined()
         expect(pair.path.length).toBeGreaterThan(0)
@@ -197,8 +196,8 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
 
         const [token0, token1] = exchanges[0].assets
 
-        const pair1 = await service.findPairForTokens(token0, token1)
-        const pair2 = await service.findPairForTokens(token1, token0)
+        const pair1 = await service.findRoute(token0, token1)
+        const pair2 = await service.findRoute(token1, token0)
 
         // Should find the same pair regardless of token order
         expect(pair1.id).toBe(pair2.id)
@@ -209,7 +208,7 @@ export function createExchangeDiscoveryTests(service: ExchangeService) {
         const fakeToken2 = '0x0000000000000000000000000000000000000002'
 
         await expect(
-          service.findPairForTokens(fakeToken1, fakeToken2)
+          service.findRoute(fakeToken1, fakeToken2)
         ).rejects.toThrow(/No pair found for tokens/)
       })
     })

@@ -1,7 +1,8 @@
-import { JsonRpcProvider } from 'ethers'
-import { EthersAdapter } from '../../src/adapters/implementations/ethersAdapter'
+import { createPublicClient, http } from 'viem'
+import { celo } from 'viem/chains'
+import { defineChain } from 'viem'
 import { ExchangeService } from '../../src/services/ExchangeService'
-import type { TradablePair } from '../../src/types'
+import type { Route } from '../../src/core/types'
 import {
   buildConnectivityStructures,
   generateAllRoutes,
@@ -15,14 +16,42 @@ import { generateFileContent, writeToFile } from './fileGenerator'
 import { sortPairsBySpread } from './spread'
 import { calculateStatistics, displayStatistics } from './statistics'
 
+const celoSepolia = defineChain({
+  id: 11142220,
+  name: 'Celo Sepolia',
+  nativeCurrency: {
+    name: 'CELO',
+    symbol: 'CELO',
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://forno.celo-sepolia.celo-testnet.org'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Celo Sepolia Explorer',
+      url: 'https://celo-sepolia.blockscout.com',
+    },
+  },
+  testnet: true,
+})
+
+// Map chain IDs to viem chain configs
+const chainConfigs = {
+  42220: celo,
+  11142220: celoSepolia,
+} as const
+
 /**
  * Generate all tradable pairs with ALL available routes (not just optimal)
  */
-async function getAllTradablePairsWithRoutes(
+async function getAllRoutesWithRoutes(
   exchangeService: ExchangeService
-): Promise<TradablePair[]> {
+): Promise<Route[]> {
   // Get direct pairs
-  const directPairs = await exchangeService.getDirectPairs()
+  const directPairs = await exchangeService.getDirectRoutes()
 
   if (directPairs.length === 0) {
     return []
@@ -41,31 +70,39 @@ async function getAllTradablePairsWithRoutes(
     connectivity.addrToSymbol
   )
 
-  return allPairs as TradablePair[]
+  return allPairs as Route[]
 }
 
 /**
  * Generate and cache tradable pairs for a specific chain
  */
-async function generateAndCacheTradablePairs(
+async function generateAndCacheRoutes(
   chainId: SupportedChainId,
   batchSize = 10
 ): Promise<void> {
   const rpcUrl = rpcUrls[chainId]
+  const chain = chainConfigs[chainId]
 
-  // Use ethers v6 provider with EthersAdapter
-  const provider = new JsonRpcProvider(rpcUrl)
-  const adapter = new EthersAdapter(provider)
-  const exchangeService = new ExchangeService(adapter)
+  if (!chain) {
+    throw new Error(`Unsupported chain ID: ${chainId}`)
+  }
+
+  // Create viem PublicClient
+  const publicClient = createPublicClient({
+    chain,
+    transport: http(rpcUrl),
+  }) as any
+
+  const exchangeService = new ExchangeService(publicClient, chainId)
 
   // Get all tradable pairs with all available routes - force fresh generation
   console.log(`Fetching all tradable pairs with all available routes...`)
-  const pairs = await getAllTradablePairsWithRoutes(exchangeService)
+  const pairs = await getAllRoutesWithRoutes(exchangeService)
 
-  // Process pairs with controlled concurrency using the adapter
+  // Process pairs with controlled concurrency using viem
   console.log(`Fetching spreads from pool configurations...`)
   console.log(`   Using batch size of ${batchSize} concurrent requests`)
-  const pairsWithSpread = await processPairsInBatches(pairs, adapter, batchSize)
+  const pairsWithSpread = await processPairsInBatches(pairs, publicClient as any, batchSize)
   console.log(`\nSpread data fetched for all routes`)
 
   // Deduplicate routes to eliminate redundant symmetric pairs
@@ -89,6 +126,7 @@ async function generateAndCacheTradablePairs(
 
   // Generate and write the TypeScript file
   const content = generateFileContent(chainId, pairsToCache)
+  // Pass the script directory path
   const fileName = writeToFile(chainId, content, __dirname)
 
   console.log(
@@ -122,7 +160,7 @@ export async function main(): Promise<void> {
       `\n\x1b[1mGenerating tradable pairs for chain ${chainId}...\x1b[0m`
     )
     try {
-      await generateAndCacheTradablePairs(chainId as SupportedChainId, batchSize)
+      await generateAndCacheRoutes(chainId as SupportedChainId, batchSize)
     } catch (error) {
       console.error(`Error generating pairs for chain ${chainId}:`, error)
     }
@@ -135,7 +173,5 @@ export async function main(): Promise<void> {
   }
 }
 
-// Only run main if this file is executed directly
-if (require.main === module) {
-  main().catch(console.error)
-}
+// Run main function (this file is designed to be executed directly)
+main().catch(console.error)

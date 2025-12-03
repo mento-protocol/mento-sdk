@@ -8,10 +8,10 @@ import {
   type ConnectivityData,
 } from '../../../src/utils/routeUtils'
 import type {
-  TradablePair,
-  TradablePairID,
+  Route,
+  RouteID,
   Asset,
-  TradablePairWithSpread,
+  RouteWithSpread,
 } from '../../../src/types'
 
 /**
@@ -29,9 +29,9 @@ describe('routeUtils', () => {
   const USDC_ADDR = '0xUSDC0000000000000000000000000000000000'
 
   // Mock direct pairs
-  const mockDirectPairs: TradablePair[] = [
+  const mockDirectPairs: Route[] = [
     {
-      id: 'CELO-cUSD' as TradablePairID,
+      id: 'CELO-cUSD' as RouteID,
       assets: [
         { address: CELO_ADDR, symbol: 'CELO' },
         { address: CUSD_ADDR, symbol: 'cUSD' },
@@ -45,7 +45,7 @@ describe('routeUtils', () => {
       ],
     },
     {
-      id: 'CELO-cEUR' as TradablePairID,
+      id: 'CELO-cEUR' as RouteID,
       assets: [
         { address: CELO_ADDR, symbol: 'CELO' },
         { address: CEUR_ADDR, symbol: 'cEUR' },
@@ -59,7 +59,7 @@ describe('routeUtils', () => {
       ],
     },
     {
-      id: 'cREAL-cUSD' as TradablePairID,
+      id: 'cREAL-cUSD' as RouteID,
       assets: [
         { address: CREAL_ADDR, symbol: 'cREAL' },
         { address: CUSD_ADDR, symbol: 'cUSD' },
@@ -106,7 +106,7 @@ describe('routeUtils', () => {
       // Keys should be sorted alphabetically
       const celoUsdKey = [CELO_ADDR, CUSD_ADDR]
         .sort()
-        .join('-') as TradablePairID
+        .join('-') as RouteID
       const exchange = connectivity.directPathMap.get(celoUsdKey)
 
       expect(exchange).toBeDefined()
@@ -177,9 +177,9 @@ describe('routeUtils', () => {
 
     it('should group multiple routes for same pair', () => {
       // Create test data with multiple possible routes between same tokens
-      const multiRoutePairs: TradablePair[] = [
+      const multiRoutePairs: Route[] = [
         {
-          id: 'CELO-cUSD' as TradablePairID,
+          id: 'CELO-cUSD' as RouteID,
           assets: [
             { address: CELO_ADDR, symbol: 'CELO' },
             { address: CUSD_ADDR, symbol: 'cUSD' },
@@ -193,7 +193,7 @@ describe('routeUtils', () => {
           ],
         },
         {
-          id: 'CELO-USDC' as TradablePairID,
+          id: 'CELO-USDC' as RouteID,
           assets: [
             { address: CELO_ADDR, symbol: 'CELO' },
             { address: USDC_ADDR, symbol: 'USDC' },
@@ -207,7 +207,7 @@ describe('routeUtils', () => {
           ],
         },
         {
-          id: 'USDC-cUSD' as TradablePairID,
+          id: 'USDC-cUSD' as RouteID,
           assets: [
             { address: USDC_ADDR, symbol: 'USDC' },
             { address: CUSD_ADDR, symbol: 'cUSD' },
@@ -245,7 +245,7 @@ describe('routeUtils', () => {
 
   describe('selectOptimalRoutes()', () => {
     let connectivity: ConnectivityData
-    let allRoutes: Map<TradablePairID, TradablePair[]>
+    let allRoutes: Map<RouteID, Route[]>
 
     beforeEach(() => {
       connectivity = buildConnectivityStructures(mockDirectPairs)
@@ -266,7 +266,7 @@ describe('routeUtils', () => {
     it('should select single route when only one available', () => {
       // Mock single route scenario
       const singleRouteMap = new Map([
-        ['CELO-cUSD' as TradablePairID, [mockDirectPairs[0]]],
+        ['CELO-cUSD' as RouteID, [mockDirectPairs[0]]],
       ])
 
       const selected = selectOptimalRoutes(
@@ -310,19 +310,19 @@ describe('routeUtils', () => {
 
   describe('selectBestRoute()', () => {
     it('should prefer route with lowest spread (Tier 1)', () => {
-      const candidatesWithSpread: TradablePairWithSpread[] = [
+      const candidatesWithSpread: RouteWithSpread[] = [
         {
           ...mockDirectPairs[0],
           spreadData: { totalSpreadPercent: 0.8, hops: [] },
         },
         {
           ...mockDirectPairs[0],
-          id: 'CELO-cUSD-alt' as TradablePairID,
+          id: 'CELO-cUSD-alt' as RouteID,
           spreadData: { totalSpreadPercent: 0.3, hops: [] }, // Lower spread
         },
         {
           ...mockDirectPairs[0],
-          id: 'CELO-cUSD-alt2' as TradablePairID,
+          id: 'CELO-cUSD-alt2' as RouteID,
           spreadData: { totalSpreadPercent: 0.5, hops: [] },
         },
       ]
@@ -335,15 +335,15 @@ describe('routeUtils', () => {
       const best = selectBestRoute(candidatesWithSpread, addrToSymbol)
 
       expect(
-        (best as TradablePairWithSpread).spreadData.totalSpreadPercent
+        (best as RouteWithSpread).spreadData.totalSpreadPercent
       ).toBe(0.3)
     })
 
     it('should prefer direct route over multi-hop (Tier 2)', () => {
-      const candidates: TradablePair[] = [
+      const candidates: Route[] = [
         {
           // 2-hop route
-          id: 'cEUR-cUSD' as TradablePairID,
+          id: 'cEUR-cUSD' as RouteID,
           assets: [
             { address: CEUR_ADDR, symbol: 'cEUR' },
             { address: CUSD_ADDR, symbol: 'cUSD' },
@@ -363,7 +363,7 @@ describe('routeUtils', () => {
         },
         {
           // Direct route
-          id: 'cEUR-cUSD' as TradablePairID,
+          id: 'cEUR-cUSD' as RouteID,
           assets: [
             { address: CEUR_ADDR, symbol: 'cEUR' },
             { address: CUSD_ADDR, symbol: 'cUSD' },
@@ -390,10 +390,10 @@ describe('routeUtils', () => {
     })
 
     it('should prefer route through major stablecoin (Tier 3)', () => {
-      const candidates: TradablePair[] = [
+      const candidates: Route[] = [
         {
           // Route through minor token
-          id: 'cEUR-cREAL' as TradablePairID,
+          id: 'cEUR-cREAL' as RouteID,
           assets: [
             { address: CEUR_ADDR, symbol: 'cEUR' },
             { address: CREAL_ADDR, symbol: 'cREAL' },
@@ -413,7 +413,7 @@ describe('routeUtils', () => {
         },
         {
           // Route through cUSD (major stablecoin)
-          id: 'cEUR-cREAL' as TradablePairID,
+          id: 'cEUR-cREAL' as RouteID,
           assets: [
             { address: CEUR_ADDR, symbol: 'cEUR' },
             { address: CREAL_ADDR, symbol: 'cREAL' },
@@ -447,7 +447,7 @@ describe('routeUtils', () => {
     })
 
     it('should return first route if no better heuristic applies (Tier 4)', () => {
-      const candidates: TradablePair[] = [
+      const candidates: Route[] = [
         mockDirectPairs[0],
         mockDirectPairs[1],
       ]
@@ -467,8 +467,8 @@ describe('routeUtils', () => {
 
   describe('getIntermediateToken()', () => {
     it('should extract intermediate token from 2-hop route', () => {
-      const twoHopRoute: TradablePair = {
-        id: 'cEUR-cUSD' as TradablePairID,
+      const twoHopRoute: Route = {
+        id: 'cEUR-cUSD' as RouteID,
         assets: [
           { address: CEUR_ADDR, symbol: 'cEUR' },
           { address: CUSD_ADDR, symbol: 'cUSD' },
@@ -490,8 +490,8 @@ describe('routeUtils', () => {
   })
 
   describe('hasSpreadData()', () => {
-    it('should return true for TradablePairWithSpread', () => {
-      const pairWithSpread: TradablePairWithSpread = {
+    it('should return true for RouteWithSpread', () => {
+      const pairWithSpread: RouteWithSpread = {
         ...mockDirectPairs[0],
         spreadData: { totalSpreadPercent: 0.5, hops: [] },
       }
@@ -499,18 +499,18 @@ describe('routeUtils', () => {
       expect(hasSpreadData(pairWithSpread)).toBe(true)
     })
 
-    it('should return false for TradablePair without spread data', () => {
+    it('should return false for Route without spread data', () => {
       expect(hasSpreadData(mockDirectPairs[0])).toBe(false)
     })
 
     it('should act as type guard for TypeScript', () => {
-      const pair: TradablePair | TradablePairWithSpread = mockDirectPairs[0]
+      const pair: Route | RouteWithSpread = mockDirectPairs[0]
 
       if (hasSpreadData(pair)) {
-        // TypeScript should know this is TradablePairWithSpread
+        // TypeScript should know this is RouteWithSpread
         expect(pair.spreadData).toBeDefined()
       } else {
-        // TypeScript should know this is TradablePair
+        // TypeScript should know this is Route
         expect('spreadData' in pair).toBe(false)
       }
     })

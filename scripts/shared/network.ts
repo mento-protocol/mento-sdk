@@ -21,8 +21,8 @@ export interface NetworkConfig {
 
 /**
  * Parse network arguments and return network configuration
- * @param networkArg - The network name argument (e.g., 'celo', 'alfajores')
- * @param chainIdArg - The chainId argument (e.g., '42220', '44787')
+ * @param networkArg - The network name argument (e.g., 'celo', 'celo-sepolia')
+ * @param chainIdArg - The chainId argument (e.g., '42220', '11142220')
  * @returns NetworkConfig with chainId and rpcUrl
  */
 export function parseNetworkArgs(

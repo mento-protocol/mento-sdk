@@ -46,12 +46,12 @@ export function parseCommandLineArgs(): CliArgs {
 export function printUsageTips(): void {
   console.log('\nTip: You can cache specific networks only:')
   console.log(
-    '   pnpm cacheTradablePairs --network celo        # Cache only Celo mainnet'
+    '   pnpm cacheRoutes --network celo        # Cache only Celo mainnet'
   )
   console.log(
-    '   pnpm cacheTradablePairs --chainId 42220       # Same as above'
+    '   pnpm cacheRoutes --chainId 42220       # Same as above'
   )
   console.log(
-    '   pnpm cacheTradablePairs -n alfajores          # Cache only Alfajores'
+    '   pnpm cacheRoutes -n celo-sepolia       # Cache only Celo Sepolia'
   )
 }

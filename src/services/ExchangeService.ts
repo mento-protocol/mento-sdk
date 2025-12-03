@@ -1,19 +1,19 @@
 import type {
-  ProviderAdapter,
   Exchange,
   Asset,
-  TradablePair,
-  TradablePairID,
-  TradablePairWithSpread,
-} from '../types'
-import { BIPOOL_MANAGER_ABI, ERC20_ABI } from '../abis'
-import { getContractAddress } from '../constants/addresses'
-import { ChainId } from '../constants/chainId'
+  Route,
+  RouteID,
+  RouteWithSpread,
+} from '../core/types'
+import { BIPOOL_MANAGER_ABI, ERC20_ABI } from '../core/abis'
+import { getContractAddress } from '../core/constants/addresses'
+import { ChainId } from '../core/constants/chainId'
 import {
   buildConnectivityStructures,
   generateAllRoutes,
   selectOptimalRoutes,
 } from '../utils/routeUtils'
+import type { PublicClient } from 'viem'
 
 /**
  * Error thrown when an exchange is not found
@@ -41,28 +41,35 @@ export class PairNotFoundError extends Error {
  *
  * @example
  * ```typescript
- * import { EthersAdapter } from '@mento-labs/mento-sdk/adapters'
  * import { ExchangeService } from '@mento-labs/mento-sdk/services'
+ * import { createPublicClient, http } from 'viem'
+ * import { celo } from 'viem/chains'
  *
- * const adapter = new EthersAdapter(provider)
- * const exchangeService = new ExchangeService(adapter)
+ * const publicClient = createPublicClient({
+ *   chain: celo,
+ *   transport: http('https://forno.celo.org')
+ * })
+ * const exchangeService = new ExchangeService(publicClient, ChainId.CELO)
  *
  * // Get all exchanges
  * const exchanges = await exchangeService.getExchanges()
  * ```
  */
 export class ExchangeService {
-  private adapter: ProviderAdapter
+  private publicClient: PublicClient
+  private chainId: number
   private exchangesCache: Exchange[] | null = null
   private symbolCache: Map<string, string> = new Map()
 
   /**
    * Creates a new ExchangeService instance
    *
-   * @param adapter - Provider adapter (Ethers v6 or Viem) for blockchain interactions
+   * @param publicClient - Viem PublicClient for blockchain interactions
+   * @param chainId - The chain ID
    */
-  constructor(adapter: ProviderAdapter) {
-    this.adapter = adapter
+  constructor(publicClient: PublicClient, chainId: number) {
+    this.publicClient = publicClient
+    this.chainId = chainId
   }
 
   /**
@@ -86,14 +93,13 @@ export class ExchangeService {
 
     try {
       // Get BiPoolManager address from constants
-      const biPoolManagerAddress = await this.getBiPoolManagerAddress()
+      const biPoolManagerAddress = this.getBiPoolManagerAddress()
 
       // Fetch exchanges directly from BiPoolManager
-      const exchangesData = (await this.adapter.readContract({
-        address: biPoolManagerAddress,
+      const exchangesData = (await this.publicClient.readContract({
+        address: biPoolManagerAddress as `0x${string}`,
         abi: BIPOOL_MANAGER_ABI,
         functionName: 'getExchanges',
-        args: [],
       })) as Array<{ exchangeId: string; assets: string[] }>
 
       // Map to Exchange type with providerAddr set to BiPoolManager
@@ -232,19 +238,19 @@ export class ExchangeService {
   }
 
   /**
-   * Generates all direct (single-hop) trading pairs from available exchanges
-   * Pairs are deduplicated and assets are sorted alphabetically by symbol
+   * Generates all direct (single-hop) routes from available exchanges
+   * Routes are deduplicated and assets are sorted alphabetically by symbol
    *
-   * @returns Array of direct trading pairs with single-hop paths
+   * @returns Array of direct routes with single-hop paths
    * @throws {Error} If RPC calls fail
    *
    * @example
    * ```typescript
-   * const directPairs = await exchangeService.getDirectPairs()
-   * console.log(`Found ${directPairs.length} direct pairs`)
+   * const directRoutes = await exchangeService.getDirectRoutes()
+   * console.log(`Found ${directRoutes.length} direct routes`)
    * ```
    */
-  async getDirectPairs(): Promise<TradablePair[]> {
+  async getDirectRoutes(): Promise<Route[]> {
     // Get all exchanges
     const exchanges = await this.getExchanges()
 
@@ -271,7 +277,7 @@ export class ExchangeService {
       const symbol1 = this.symbolCache.get(addr1) || addr1
 
       // Create canonical pair ID (alphabetically sorted symbols)
-      const pairId = [symbol0, symbol1].sort().join('-') as TradablePairID
+      const pairId = [symbol0, symbol1].sort().join('-') as RouteID
 
       if (!pairMap.has(pairId)) {
         pairMap.set(pairId, [])
@@ -279,8 +285,8 @@ export class ExchangeService {
       pairMap.get(pairId)!.push(exchange)
     }
 
-    // Create TradablePair objects
-    const pairs: TradablePair[] = []
+    // Create Route objects
+    const pairs: Route[] = []
 
     for (const [pairId, pairExchanges] of pairMap.entries()) {
       const firstExchange = pairExchanges[0]
@@ -308,7 +314,7 @@ export class ExchangeService {
       }))
 
       pairs.push({
-        id: pairId as TradablePairID,
+        id: pairId as RouteID,
         assets: sortedAssets,
         path,
       })
@@ -318,56 +324,56 @@ export class ExchangeService {
   }
 
   /**
-   * Discovers all tradable pairs including multi-hop routes (up to 2 hops)
+   * Discovers all tradable routes including multi-hop routes (up to 2 hops)
    * Uses cached data by default for instant results, or generates fresh from blockchain
    *
    * @param options - Configuration options
-   * @param options.cached - Whether to use pre-generated cached pairs (default: true)
-   * @returns Array of all tradable pairs (direct + multi-hop routes)
+   * @param options.cached - Whether to use pre-generated cached routes (default: true)
+   * @returns Array of all tradable routes (direct + multi-hop routes)
    *
    * @example
    * ```typescript
    * // Fast: use pre-generated cache
-   * const cachedPairs = await exchangeService.getTradablePairs({ cached: true })
+   * const cachedRoutes = await exchangeService.getRoutes({ cached: true })
    *
    * // Slow but fresh: generate from blockchain
-   * const freshPairs = await exchangeService.getTradablePairs({ cached: false })
+   * const freshRoutes = await exchangeService.getRoutes({ cached: false })
    * ```
    */
-  async getTradablePairs(options?: {
+  async getRoutes(options?: {
     cached?: boolean
-  }): Promise<readonly (TradablePair | TradablePairWithSpread)[]> {
+  }): Promise<readonly (Route | RouteWithSpread)[]> {
     const cached = options?.cached ?? true
 
     // TODO: Implement cache loading
     // For now, always generate fresh
-    // In the future, this would load from src/constants/tradablePairs/{chainId}.ts
+    // In the future, this would load from src/constants/routes/{chainId}.ts
 
     if (cached) {
       // Try to load from static cache
       try {
-        const cachedPairs = await this.loadCachedPairs()
-        if (cachedPairs.length > 0) {
-          return cachedPairs
+        const cachedRoutes = await this.loadCachedRoutes()
+        if (cachedRoutes.length > 0) {
+          return cachedRoutes
         }
       } catch (error) {
         console.warn(
-          'Failed to load cached pairs, falling back to fresh generation'
+          'Failed to load cached routes, falling back to fresh generation'
         )
       }
     }
 
-    // Generate fresh pairs from blockchain
-    return this.generateFreshPairs()
+    // Generate fresh routes from blockchain
+    return this.generateFreshRoutes()
   }
 
   /**
-   * Generate fresh tradable pairs from blockchain data
+   * Generate fresh tradable routes from blockchain data
    * @private
    */
-  private async generateFreshPairs(): Promise<TradablePair[]> {
-    // Get direct pairs
-    const directPairs = await this.getDirectPairs()
+  private async generateFreshRoutes(): Promise<Route[]> {
+    // Get direct routes
+    const directPairs = await this.getDirectRoutes()
 
     if (directPairs.length === 0) {
       return []
@@ -386,20 +392,17 @@ export class ExchangeService {
       connectivity.addrToSymbol
     )
 
-    return selectedPairs as TradablePair[]
+    return selectedPairs as Route[]
   }
 
   /**
-   * Load cached tradable pairs for current chain
+   * Load cached tradable routes for current chain
    * @private
    */
-  private async loadCachedPairs(): Promise<TradablePairWithSpread[]> {
-    const chainId = await this.adapter.getChainId()
-    const { getCachedTradablePairs } = await import(
-      '../constants/tradablePairs'
-    )
-    const cachedPairs = await getCachedTradablePairs(chainId)
-    return (cachedPairs as TradablePairWithSpread[]) || []
+  private async loadCachedRoutes(): Promise<RouteWithSpread[]> {
+    const { getCachedRoutes } = await import('../utils/routes')
+    const cachedRoutes = await getCachedRoutes(this.chainId)
+    return (cachedRoutes as RouteWithSpread[]) || []
   }
 
   /**
@@ -416,8 +419,8 @@ export class ExchangeService {
     }
 
     try {
-      const symbol = (await this.adapter.readContract({
-        address,
+      const symbol = (await this.publicClient.readContract({
+        address: address as `0x${string}`,
         abi: ERC20_ABI,
         functionName: 'symbol',
         args: [],
@@ -437,33 +440,33 @@ export class ExchangeService {
   }
 
   /**
-   * Looks up the tradable pair between two tokens (direct or multi-hop)
+   * Looks up the tradable route between two tokens (direct or multi-hop)
    *
    * @param tokenIn - Input token address (direction matters for routing)
    * @param tokenOut - Output token address (direction matters for routing)
-   * @returns The optimal tradable pair connecting the two tokens
+   * @returns The optimal tradable route connecting the two tokens
    * @throws {PairNotFoundError} If no tradable route exists between tokens
    *
    * @example
    * ```typescript
    * const cUSD = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
    * const cBRL = '0xE4D5...'
-   * const pair = await exchangeService.findPairForTokens(cUSD, cBRL)
+   * const route = await exchangeService.findRoute(cUSD, cBRL)
    *
-   * if (pair.path.length === 1) {
+   * if (route.path.length === 1) {
    *   console.log('Direct route available')
    * } else {
-   *   console.log('Two-hop route:', pair.path)
+   *   console.log('Two-hop route:', route.path)
    * }
    * ```
    */
-  async findPairForTokens(
+  async findRoute(
     tokenIn: string,
     tokenOut: string,
     options?: { cached?: boolean }
-  ): Promise<TradablePair> {
-    // Get all tradable pairs
-    const allPairs = await this.getTradablePairs(options)
+  ): Promise<Route> {
+    // Get all tradable routes
+    const allPairs = await this.getRoutes(options)
 
     // Normalize addresses for comparison
     const t0 = tokenIn.toLowerCase()
@@ -484,15 +487,14 @@ export class ExchangeService {
       )
     }
 
-    return matchingPair as TradablePair
+    return matchingPair as Route
   }
 
   /**
    * Helper: Get BiPoolManager contract address for current chain
    * @private
    */
-  private async getBiPoolManagerAddress(): Promise<string> {
-    const chainId = (await this.adapter.getChainId()) as ChainId
-    return getContractAddress(chainId, 'BiPoolManager')
+  private getBiPoolManagerAddress(): string {
+    return getContractAddress(this.chainId as ChainId, 'BiPoolManager')
   }
 }
