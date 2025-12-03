@@ -6,6 +6,7 @@ import { getContractAddress } from './core/constants/addresses'
 import { getDefaultRpcUrl, getChainConfig } from './utils/chainConfig'
 import { TokenService } from '@services/tokens'
 import { PoolService } from '@services/pools'
+import { RouterService } from '@services/router'
 
 /**
  * @class Mento
@@ -30,18 +31,21 @@ export class Mento {
   private readonly publicClient: PublicClient
   public readonly tokens: TokenService
   public readonly pools: PoolService
+  public readonly router: RouterService
 
   private constructor(
     chainId: number,
     publicClient: PublicClient,
     tokenService: TokenService,
-    poolService: PoolService
+    poolService: PoolService,
+    routerService: RouterService
   ) {
     this.chainId = chainId
     this.publicClient = publicClient
 
-    this.pools = poolService
     this.tokens = tokenService
+    this.pools = poolService
+    this.router = routerService
   }
 
   /**
@@ -62,8 +66,12 @@ export class Mento {
 
     const tokenService = new TokenService(publicClient, chainId)
 
+    // TODO: Add proper initialization
+    const poolService = {}
+    const routerService = {}
+
     // Return new mento
-    return new Mento(chainId, publicClient, tokenService)
+    return new Mento(chainId, publicClient, tokenService, poolService, routerService)
   }
 
   /**

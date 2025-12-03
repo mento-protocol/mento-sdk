@@ -5,6 +5,9 @@ import type { ChainId } from '../constants/chainId'
  * Not all chains have all contracts deployed.
  */
 export type ContractAddresses = {
+  FPMMFactory?: string
+  VirtualPoolFactory?: string
+
   // Oracles & Breakers
   BreakerBox?: string
   MedianDeltaBreaker?: string
