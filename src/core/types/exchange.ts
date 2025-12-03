@@ -43,7 +43,7 @@ export interface Asset {
 export type RouteID = `${string}-${string}`
 
 /**
- * Represents a tradable route between two tokens, including the exchange path needed to execute the trade
+ * Represents a tradable route between two tokens, including the pool path needed to execute the trade
  */
 export interface Route {
   /**
