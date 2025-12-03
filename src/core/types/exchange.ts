@@ -1,22 +1,20 @@
-
-// TODO: V3 - Rename to Pool
 /**
- * Represents a liquidity pool between two tokens in the Mento protocol
+ * Represents an exchange (legacy v2 type - used by BiPoolManager)
+ * @deprecated Use Pool type for v3
  */
 export interface Exchange {
   /**
-   * The address of the exchange provider contract managing this pool
+   * Exchange provider contract address
    */
   providerAddr: string
 
   /**
-   * Unique identifier for this exchange within the provider
+   * Unique exchange identifier
    */
   id: string
 
   /**
-   * Array of exactly 2 token addresses forming the trading pair
-   * Order is not guaranteed (could be [tokenA, tokenB] or [tokenB, tokenA])
+   * The two token addresses for this exchange
    */
   assets: string[]
 }
@@ -68,6 +66,7 @@ export interface Route {
    * Order matters for execution
    */
   path: Array<{
+    // TODO: Rename to factory address
     /**
      * Exchange provider contract address
      */
