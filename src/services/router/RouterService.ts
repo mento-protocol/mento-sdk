@@ -265,7 +265,6 @@ export class RouterService {
     // Get all tradable routes
     const allRoutes = await this.getRoutes(options)
 
-    // Normalize addresses for comparison
     const t0 = tokenIn.toLowerCase()
     const t1 = tokenOut.toLowerCase()
 
