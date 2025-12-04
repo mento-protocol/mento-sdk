@@ -1,4 +1,4 @@
-import type { Route, RouteWithSpread } from '../../src/core/types'
+import type { Route, RouteWithCost } from '../../src/core/types'
 
 /**
  * Deduplicates routes by comparing their path signatures.
@@ -14,7 +14,7 @@ import type { Route, RouteWithSpread } from '../../src/core/types'
  * @returns Array of unique routes with duplicates removed
  */
 export function deduplicateRoutes<
-  T extends Route | RouteWithSpread,
+  T extends Route | RouteWithCost,
 >(routes: T[]): T[] {
   const seenPathSignatures = new Set<string>()
   const uniqueRoutes: T[] = []
@@ -39,7 +39,7 @@ export function deduplicateRoutes<
  * @returns A string signature representing the route's exchange pattern
  */
 export function createRouteSignature(
-  route: Route | RouteWithSpread
+  route: Route | RouteWithCost
 ): string {
   return (
     route.path

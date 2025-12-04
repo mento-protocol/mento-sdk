@@ -1,20 +1,20 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import type { RouteWithSpread } from '../../src/core/types'
+import type { RouteWithCost } from '../../src/core/types'
 
 /**
  * Generate TypeScript file content for cached tradable pairs
  */
 export function generateFileContent(
   chainId: number,
-  pairs: RouteWithSpread[]
+  pairs: RouteWithCost[]
 ): string {
   return `// This file is auto-generated. Do not edit manually.
 // Generated on ${new Date().toISOString()}
 
-import type { RouteWithSpread } from '../core/types'
+import type { RouteWithCost } from '../core/types'
 
-export const routes${chainId}: RouteWithSpread[] = ${JSON.stringify(
+export const routes${chainId}: RouteWithCost[] = ${JSON.stringify(
     pairs,
     null,
     2

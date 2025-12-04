@@ -1,4 +1,4 @@
-import type { RouteWithSpread } from '../../src/core/types'
+import type { RouteWithCost } from '../../src/core/types'
 
 export interface RouteStatistics {
   totalRoutes: number
@@ -17,7 +17,7 @@ export interface RouteStatistics {
  * Calculate route distribution and pairing statistics
  */
 export function calculateStatistics(
-  pairs: RouteWithSpread[]
+  pairs: RouteWithCost[]
 ): RouteStatistics {
   // Count unique trading pairs for reference
   const uniquePairIds = new Set(pairs.map((pair) => pair.id))

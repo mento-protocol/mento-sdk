@@ -1,6 +1,5 @@
 import { createPublicClient, http, type PublicClient } from 'viem'
 import { ContractAddresses } from './core/types'
-import { ExchangeService } from './services'
 import { ChainId } from './core/constants/chainId'
 import { getContractAddress } from './core/constants/addresses'
 import { getDefaultRpcUrl, getChainConfig } from './utils/chainConfig'

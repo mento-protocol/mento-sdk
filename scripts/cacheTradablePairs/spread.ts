@@ -1,5 +1,5 @@
 import { BIPOOL_MANAGER_ABI } from '../../src/core/abis'
-import type { Route, RouteWithSpread } from '../../src/core/types'
+import type { Route, RouteWithCost } from '../../src/core/types'
 import type { PublicClient } from 'viem'
 
 // Type for the pool exchange result from getPoolExchange
@@ -29,7 +29,7 @@ interface PoolExchangeResult {
 export async function calculateSpreadForPair(
   pair: Route,
   publicClient: PublicClient
-): Promise<RouteWithSpread> {
+): Promise<RouteWithCost> {
   // Fetch all exchange spreads concurrently
   const spreadPromises = pair.path.map(async (hop) => {
     const spread = await getExchangeSpread(hop.id, hop.providerAddr, publicClient)
@@ -41,15 +41,15 @@ export async function calculateSpreadForPair(
 
   const spreadResults = await Promise.all(spreadPromises)
 
-  const hops: Array<{ exchangeId: string; spreadPercent: number }> = []
+  const hops: Array<{ poolId: string; costPercent: number }> = []
   let totalEffectiveRate = 1 // Start with 100% (no loss)
 
   // Process the results in order to maintain path integrity
   for (const { hop, spread } of spreadResults) {
     if (spread !== null) {
       hops.push({
-        exchangeId: hop.id,
-        spreadPercent: spread,
+        poolId: hop.id,
+        costPercent: spread,
       })
 
       // Compound the effective rate
@@ -63,13 +63,13 @@ export async function calculateSpreadForPair(
 
   // Calculate total spread from compounded effective rate
   // Round to 8 decimal places to eliminate floating-point precision errors
-  const totalSpreadPercent =
+  const totalCostPercent =
     Math.round((1 - totalEffectiveRate) * 100 * 1e8) / 1e8
 
   return {
     ...pair,
-    spreadData: {
-      totalSpreadPercent,
+    costData: {
+      totalCostPercent,
       hops,
     },
   }
@@ -96,10 +96,10 @@ async function getExchangeSpread(
     // Convert spread from FixidityLib.Fraction to percentage
     // FixidityLib uses 24 decimal places (1e24 = 100%)
     // Round to 8 decimal places to eliminate floating-point precision errors
-    const spreadPercent =
+    const costPercent =
       Math.round((Number(poolExchange.config.spread.value) / 1e24) * 100 * 1e8) /
       1e8
-    return spreadPercent
+    return costPercent
   } catch (error) {
     console.error(`Error fetching spread for exchange ${exchangeId}:`, error)
     return null
@@ -110,14 +110,14 @@ async function getExchangeSpread(
  * Sort pairs by spread percentage (best routes first)
  */
 export function sortPairsBySpread(
-  pairs: RouteWithSpread[]
-): RouteWithSpread[] {
+  pairs: RouteWithCost[]
+): RouteWithCost[] {
   return pairs.sort((a, b) => {
     // Sort by total spread percentage (ascending - lower is better)
     // Routes without spread data go to the end
-    if (!a.spreadData && !b.spreadData) return 0
-    if (!a.spreadData) return 1
-    if (!b.spreadData) return -1
-    return a.spreadData.totalSpreadPercent - b.spreadData.totalSpreadPercent
+    if (!a.costData && !b.costData) return 0
+    if (!a.costData) return 1
+    if (!b.costData) return -1
+    return a.costData.totalCostPercent - b.costData.totalCostPercent
   })
 }

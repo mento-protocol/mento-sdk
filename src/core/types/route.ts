@@ -1,25 +1,4 @@
 /**
- * Represents an exchange (legacy v2 type - used by BiPoolManager)
- * @deprecated Use Pool type for v3
- */
-export interface Exchange {
-  /**
-   * Exchange provider contract address
-   */
-  providerAddr: string
-
-  /**
-   * Unique exchange identifier
-   */
-  id: string
-
-  /**
-   * The two token addresses for this exchange
-   */
-  assets: string[]
-}
-
-/**
  * Represents a token with its identifying information
  */
 export interface Asset {
@@ -86,35 +65,35 @@ export interface Route {
 }
 
 /**
- * Extended route with spread cost data for route optimization
+ * Extended route with cost data for route optimization
  */
-export interface RouteWithSpread extends Route {
+export interface RouteWithCost extends Route {
   /**
-   * Spread cost data for this route
+   * Cost data for this route
    * Used to select optimal route when multiple options exist
    */
-  spreadData: {
+  costData: {
     /**
      * Total cost percentage for this route
      * Lower is better (more cost-efficient)
-     * Example: 0.3 means 0.3% spread cost
+     * Example: 0.3 means 0.3% cost
      */
-    totalSpreadPercent: number
+    totalCostPercent: number
 
     /**
-     * Per-hop spread breakdown
+     * Per-hop cost breakdown
      * Used for detailed cost analysis and debugging
      */
     hops: Array<{
       /**
-       * Exchange ID for this hop
+       * Pool ID for this hop
        */
-      exchangeId: string
+      poolId: string
 
       /**
-       * Spread percentage for this specific hop
+       * Cost percentage for this specific hop
        */
-      spreadPercent: number
+      costPercent: number
     }>
   }
 }

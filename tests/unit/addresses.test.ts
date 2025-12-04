@@ -1,4 +1,4 @@
-import { addresses, getContractAddress, ChainId } from '../../src/constants/'
+import { addresses, getContractAddress, ChainId } from '../../src/core/constants'
 import { isAddress } from 'viem'
 
 describe('Addresses Unit Tests', () => {

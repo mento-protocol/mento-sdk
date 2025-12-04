@@ -1,4 +1,4 @@
-import type { Route, RouteWithSpread } from '../../src/core/types'
+import type { Route, RouteWithCost } from '../../src/core/types'
 import type { PublicClient } from 'viem'
 import { calculateSpreadForPair } from './spread'
 
@@ -9,8 +9,8 @@ export async function processPairsInBatches(
   pairs: readonly Route[],
   publicClient: PublicClient,
   batchSize = 10
-): Promise<RouteWithSpread[]> {
-  const results: RouteWithSpread[] = []
+): Promise<RouteWithCost[]> {
+  const results: RouteWithCost[] = []
   let processed = 0
   let errors = 0
 

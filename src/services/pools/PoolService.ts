@@ -1,6 +1,6 @@
 import { getContractAddress } from '../../core/constants'
 import { ChainId } from '../../core/constants/chainId'
-import { Pool } from '../../core/types/pool'
+import { Pool, PoolType } from '../../core/types/pool'
 import {
   FPMM_FACTORY_ABI,
   FPMM_ABI,
@@ -101,6 +101,7 @@ export class PoolService {
           poolAddress: poolAddress as string,
           token0: token0 as string,
           token1: token1 as string,
+          poolType: PoolType.FPMM,
         }
       })
 
@@ -182,6 +183,7 @@ export class PoolService {
           poolAddress: poolAddress as string,
           token0: token0 as string,
           token1: token1 as string,
+          poolType: PoolType.Virtual,
         }
       })
 

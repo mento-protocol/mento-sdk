@@ -1,13 +1,12 @@
-import { PoolService } from '@services/pools'
-import { ERC20_ABI } from 'core/abis'
-import { RouteNotFoundError } from 'core/errors'
-import { Route, RouteID, Asset, Pool } from 'core/types'
-import { RouteWithSpread } from 'utils'
+import { PoolService } from '../pools'
+import { ERC20_ABI } from '../../core/abis'
+import { RouteNotFoundError } from '../../core/errors'
+import { Route, RouteID, Asset, Pool, RouteWithCost } from '../../core/types'
 import {
   buildConnectivityStructures,
   generateAllRoutes,
   selectOptimalRoutes,
-} from 'utils/routeUtils'
+} from '../../utils/routeUtils'
 import { PublicClient } from 'viem'
 
 /**
@@ -135,7 +134,7 @@ export class RouterService {
   async getRoutes(options?: {
     cached?: boolean
     returnAllRoutes?: boolean
-  }): Promise<readonly (Route | RouteWithSpread)[]> {
+  }): Promise<readonly (Route | RouteWithCost)[]> {
     const cached = options?.cached ?? true
     const returnAllRoutes = options?.returnAllRoutes ?? false
 
@@ -196,10 +195,10 @@ export class RouterService {
    * Load cached tradable routes for current chain
    * @private
    */
-  private async loadCachedRoutes(): Promise<RouteWithSpread[]> {
+  private async loadCachedRoutes(): Promise<RouteWithCost[]> {
     const { getCachedRoutes } = await import('../../utils/routes')
     const cachedRoutes = await getCachedRoutes(this.chainId)
-    return (cachedRoutes as RouteWithSpread[]) || []
+    return (cachedRoutes as RouteWithCost[]) || []
   }
 
   /**

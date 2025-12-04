@@ -4,15 +4,15 @@ import {
   selectOptimalRoutes,
   selectBestRoute,
   getIntermediateToken,
-  hasSpreadData,
+  hasCostData,
   type ConnectivityData,
 } from '../../../src/utils/routeUtils'
 import type {
   Route,
   RouteID,
   Asset,
-  RouteWithSpread,
-} from '../../../src/types'
+  RouteWithCost,
+} from '../../../src/core/types'
 
 /**
  * Unit tests for routeUtils
@@ -309,21 +309,21 @@ describe('routeUtils', () => {
   })
 
   describe('selectBestRoute()', () => {
-    it('should prefer route with lowest spread (Tier 1)', () => {
-      const candidatesWithSpread: RouteWithSpread[] = [
+    it('should prefer route with lowest cost (Tier 1)', () => {
+      const candidatesWithCost: RouteWithCost[] = [
         {
           ...mockDirectPairs[0],
-          spreadData: { totalSpreadPercent: 0.8, hops: [] },
+          costData: { totalCostPercent: 0.8, hops: [] },
         },
         {
           ...mockDirectPairs[0],
           id: 'CELO-cUSD-alt' as RouteID,
-          spreadData: { totalSpreadPercent: 0.3, hops: [] }, // Lower spread
+          costData: { totalCostPercent: 0.3, hops: [] }, // Lower cost
         },
         {
           ...mockDirectPairs[0],
           id: 'CELO-cUSD-alt2' as RouteID,
-          spreadData: { totalSpreadPercent: 0.5, hops: [] },
+          costData: { totalCostPercent: 0.5, hops: [] },
         },
       ]
 
@@ -332,10 +332,10 @@ describe('routeUtils', () => {
         [CUSD_ADDR, 'cUSD'],
       ])
 
-      const best = selectBestRoute(candidatesWithSpread, addrToSymbol)
+      const best = selectBestRoute(candidatesWithCost, addrToSymbol)
 
       expect(
-        (best as RouteWithSpread).spreadData.totalSpreadPercent
+        (best as RouteWithCost).costData.totalCostPercent
       ).toBe(0.3)
     })
 
@@ -489,29 +489,29 @@ describe('routeUtils', () => {
     // This is expected behavior - the function is only used on multi-hop routes
   })
 
-  describe('hasSpreadData()', () => {
-    it('should return true for RouteWithSpread', () => {
-      const pairWithSpread: RouteWithSpread = {
+  describe('hasCostData()', () => {
+    it('should return true for RouteWithCost', () => {
+      const pairWithCost: RouteWithCost = {
         ...mockDirectPairs[0],
-        spreadData: { totalSpreadPercent: 0.5, hops: [] },
+        costData: { totalCostPercent: 0.5, hops: [] },
       }
 
-      expect(hasSpreadData(pairWithSpread)).toBe(true)
+      expect(hasCostData(pairWithCost)).toBe(true)
     })
 
-    it('should return false for Route without spread data', () => {
-      expect(hasSpreadData(mockDirectPairs[0])).toBe(false)
+    it('should return false for Route without cost data', () => {
+      expect(hasCostData(mockDirectPairs[0])).toBe(false)
     })
 
     it('should act as type guard for TypeScript', () => {
-      const pair: Route | RouteWithSpread = mockDirectPairs[0]
+      const pair: Route | RouteWithCost = mockDirectPairs[0]
 
-      if (hasSpreadData(pair)) {
-        // TypeScript should know this is RouteWithSpread
-        expect(pair.spreadData).toBeDefined()
+      if (hasCostData(pair)) {
+        // TypeScript should know this is RouteWithCost
+        expect(pair.costData).toBeDefined()
       } else {
         // TypeScript should know this is Route
-        expect('spreadData' in pair).toBe(false)
+        expect('costData' in pair).toBe(false)
       }
     })
   })

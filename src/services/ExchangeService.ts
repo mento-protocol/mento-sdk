@@ -1,19 +1,12 @@
-import type {
-  Exchange,
-  Asset,
-  Route,
-  RouteID,
-  RouteWithSpread,
-} from '../core/types'
-import { BIPOOL_MANAGER_ABI, ERC20_ABI } from '../core/abis'
 import { getContractAddress } from '../core/constants/addresses'
 import { ChainId } from '../core/constants/chainId'
-import {
-  buildConnectivityStructures,
-  generateAllRoutes,
-  selectOptimalRoutes,
-} from '../utils/routeUtils'
 import type { PublicClient } from 'viem'
+
+interface Exchange {
+  providerAddr: string
+  id: string
+  assets: string[]
+}
 
 /**
  * Error thrown when an exchange is not found

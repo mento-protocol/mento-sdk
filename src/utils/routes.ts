@@ -1,7 +1,7 @@
-import type { Route, RouteWithSpread } from '../core/types'
+import type { Route, RouteWithCost } from '../core/types'
 
 // Re-export the type for convenience
-export type { RouteWithSpread }
+export type { RouteWithCost }
 
 /**
  * Gets cached routes for a specific chain ID
@@ -10,7 +10,7 @@ export type { RouteWithSpread }
  */
 export async function getCachedRoutes(
   chainId: number
-): Promise<readonly (Route | RouteWithSpread)[] | undefined> {
+): Promise<readonly (Route | RouteWithCost)[] | undefined> {
   try {
     switch (chainId) {
       case 42220:
