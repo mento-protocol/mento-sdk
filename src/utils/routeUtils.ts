@@ -2,7 +2,7 @@ import type {
   Route,
   RouteID,
   Asset,
-  RouteWithSpread,
+  RouteWithCost,
 } from '../core/types'
 
 type TokenSymbol = string
@@ -25,12 +25,12 @@ interface ExchangeDetails {
  *
  * 1. Build connectivity structures from direct trading pairs
  * 2. Generate all possible routes (direct + two-hop)
- * 3. Select optimal routes using spread data or heuristics
+ * 3. Select optimal routes using cost data or heuristics
  *
  * ALGORITHM OVERVIEW:
  * - Creates a graph where tokens are nodes and direct exchanges are edges
  * - Uses graph traversal to find two-hop routes through intermediate tokens
- * - Optimizes route selection based on spread costs when available
+ * - Optimizes route selection based on cost data when available
  * - Falls back to heuristics (prefer direct routes, major stablecoins)
  * =============================================================================
  */
@@ -199,7 +199,7 @@ export function buildConnectivityStructures(
  *
  * **Route Deduplication**: Multiple routes between the same token pair
  * are collected in arrays, allowing the selection algorithm to choose
- * the best one based on spread data or heuristics.
+ * the best one based on cost data or heuristics.
  *
  * **Canonical Pair IDs**: All pairs use alphabetically sorted symbols
  * (e.g., 'cEUR-cUSD' not 'cUSD-cEUR') for consistent identification.
@@ -390,22 +390,22 @@ export function createTwoHopPair(
  * // Multiple routes for cUSD-cEUR pair
  * const candidates = new Map([
  *   ['cEUR-cUSD', [
- *     { path: [cUSD->CELO->cEUR], spreadData: { totalSpreadPercent: 0.5 } },
- *     { path: [cUSD->cREAL->cEUR], spreadData: { totalSpreadPercent: 0.3 } },
- *     { path: [cUSD->cEUR] } // direct route, no spread data
+ *     { path: [cUSD->CELO->cEUR], costData: { totalCostPercent: 0.5 } },
+ *     { path: [cUSD->cREAL->cEUR], costData: { totalCostPercent: 0.3 } },
+ *     { path: [cUSD->cEUR] } // direct route, no cost data
  *   ]]
  * ])
  *
  * const optimal = selectOptimalRoutes(candidates, false, assetMap)
- * // Returns the cUSD->cREAL->cEUR route (lowest spread: 0.3%)
+ * // Returns the cUSD->cREAL->cEUR route (lowest cost: 0.3%)
  * ```
  */
 export function selectOptimalRoutes(
   allRoutes: Map<RouteID, Route[]>,
   returnAllRoutes: boolean,
   addrToSymbol: Map<Address, TokenSymbol>
-): (Route | RouteWithSpread)[] {
-  const result = new Map<string, Route | RouteWithSpread>()
+): (Route | RouteWithCost)[] {
+  const result = new Map<string, Route | RouteWithCost>()
 
   for (const [pairId, routes] of allRoutes) {
     if (routes.length === 1) {
@@ -427,18 +427,18 @@ export function selectOptimalRoutes(
 }
 
 /**
- * Selects the best route from candidates using spread data or fallback heuristics.
+ * Selects the best route from candidates using cost data or fallback heuristics.
  *
  * This function implements a sophisticated route selection algorithm with
  * multiple optimization tiers:
  *
- * **Tier 1 - Spread-Based Optimization** (Preferred):
- * - Use routes with spread data (actual cost information)
- * - Select route with lowest `totalSpreadPercent`
+ * **Tier 1 - Cost-Based Optimization** (Preferred):
+ * - Use routes with cost data (actual cost information)
+ * - Select route with lowest `totalCostPercent`
  * - This provides the most cost-efficient trading
  *
  * **Tier 2 - Direct Route Preference** (Fallback):
- * - If no spread data available, prefer direct (single-hop) routes
+ * - If no cost data available, prefer direct (single-hop) routes
  * - Direct routes have lower execution risk and gas costs
  *
  * **Tier 3 - Major Stablecoin Preference** (Final Fallback):
@@ -455,24 +455,24 @@ export function selectOptimalRoutes(
  * @example
  * ```typescript
  * const candidates = [
- *   { path: [A->B->C], spreadData: { totalSpreadPercent: 0.8 } },
- *   { path: [A->D->C], spreadData: { totalSpreadPercent: 0.4 } }, // Winner: lowest spread
- *   { path: [A->C] }, // direct route, no spread data
+ *   { path: [A->B->C], costData: { totalCostPercent: 0.8 } },
+ *   { path: [A->D->C], costData: { totalCostPercent: 0.4 } }, // Winner: lowest cost
+ *   { path: [A->C] }, // direct route, no cost data
  * ]
  *
  * const best = selectBestRoute(candidates, assetMap)
- * // Returns the A->D->C route (0.4% spread)
+ * // Returns the A->D->C route (0.4% cost)
  * ```
  */
 export function selectBestRoute(
   candidates: Route[],
   addrToSymbol: Map<Address, TokenSymbol>
-): Route | RouteWithSpread {
-  // Tier 1: Prefer routes with spread data (lowest spread wins)
-  const candidatesWithSpread = candidates.filter(hasSpreadData)
-  if (candidatesWithSpread.length > 0) {
-    return candidatesWithSpread.reduce((best, current) =>
-      current.spreadData.totalSpreadPercent < best.spreadData.totalSpreadPercent
+): Route | RouteWithCost {
+  // Tier 1: Prefer routes with cost data (lowest cost wins)
+  const candidatesWithCost = candidates.filter(hasCostData)
+  if (candidatesWithCost.length > 0) {
+    return candidatesWithCost.reduce((best, current) =>
+      current.costData.totalCostPercent < best.costData.totalCostPercent
         ? current
         : best
     )
@@ -506,10 +506,10 @@ export function getIntermediateToken(route: Route): Address | undefined {
 }
 
 /**
- * Type guard to check if a Route has spread data.
+ * Type guard to check if a Route has cost data.
  */
-export function hasSpreadData(
-  pair: Route | RouteWithSpread
-): pair is RouteWithSpread {
-  return 'spreadData' in pair && pair.spreadData !== undefined
+export function hasCostData(
+  pair: Route | RouteWithCost
+): pair is RouteWithCost {
+  return 'costData' in pair && pair.costData !== undefined
 }

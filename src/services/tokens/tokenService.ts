@@ -3,8 +3,13 @@ import {
   BaseToken,
   StableToken,
   CollateralAsset,
-  Exchange,
 } from '../../core/types'
+
+// Legacy Exchange type for BiPoolManager v2 responses
+interface Exchange {
+  exchangeId: string
+  assets: readonly `0x${string}`[]
+}
 import {
   getContractAddress,
   RESERVE,
@@ -152,7 +157,7 @@ export class TokenService {
     // Extract unique token addresses from exchanges
     const uniqueAddresses = new Set<string>()
     for (const exchange of exchanges) {
-      exchange.assets.forEach((address) => uniqueAddresses.add(address))
+      exchange.assets.forEach((address: string) => uniqueAddresses.add(address))
     }
 
     // Check which tokens are collateral assets and get their metadata

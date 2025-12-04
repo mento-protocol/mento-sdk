@@ -1,9 +1,9 @@
 // This file is auto-generated. Do not edit manually.
 // Generated on 2025-12-01T23:05:19.523Z
 
-import type { RouteWithSpread } from '../core/types'
+import type { RouteWithCost } from '../core/types'
 
-export const routes11142220: RouteWithSpread[] = [
+export const routes11142220: RouteWithCost[] = [
   {
     "id": "axlUSDC-cUSD",
     "assets": [
@@ -26,12 +26,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0,
+    "costData": {
+      "totalCostPercent": 0,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         }
       ]
     }
@@ -58,12 +58,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0,
+    "costData": {
+      "totalCostPercent": 0,
       "hops": [
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -90,12 +90,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0,
+    "costData": {
+      "totalCostPercent": 0,
       "hops": [
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -130,16 +130,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0,
+    "costData": {
+      "totalCostPercent": 0,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -174,16 +174,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0,
+    "costData": {
+      "totalCostPercent": 0,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -218,16 +218,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0,
+    "costData": {
+      "totalCostPercent": 0,
       "hops": [
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -254,12 +254,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
+    "costData": {
+      "totalCostPercent": 0.15,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         }
       ]
     }
@@ -286,12 +286,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
+    "costData": {
+      "totalCostPercent": 0.15,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         }
       ]
     }
@@ -326,16 +326,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
+    "costData": {
+      "totalCostPercent": 0.15,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         }
       ]
     }
@@ -370,16 +370,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
+    "costData": {
+      "totalCostPercent": 0.15,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         }
       ]
     }
@@ -414,16 +414,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
+    "costData": {
+      "totalCostPercent": 0.15,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -458,16 +458,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
+    "costData": {
+      "totalCostPercent": 0.15,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -502,16 +502,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
+    "costData": {
+      "totalCostPercent": 0.15,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -546,16 +546,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.15,
+    "costData": {
+      "totalCostPercent": 0.15,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -582,12 +582,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.25,
+    "costData": {
+      "totalCostPercent": 0.25,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         }
       ]
     }
@@ -622,16 +622,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.25,
+    "costData": {
+      "totalCostPercent": 0.25,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         }
       ]
     }
@@ -666,16 +666,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.25,
+    "costData": {
+      "totalCostPercent": 0.25,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -710,16 +710,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.25,
+    "costData": {
+      "totalCostPercent": 0.25,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -754,16 +754,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.299775,
+    "costData": {
+      "totalCostPercent": 0.299775,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         }
       ]
     }
@@ -790,12 +790,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         }
       ]
     }
@@ -822,12 +822,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         }
       ]
     }
@@ -854,12 +854,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         }
       ]
     }
@@ -886,12 +886,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         }
       ]
     }
@@ -918,12 +918,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         }
       ]
     }
@@ -950,12 +950,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         }
       ]
     }
@@ -982,12 +982,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -1022,16 +1022,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         }
       ]
     }
@@ -1066,16 +1066,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -1110,16 +1110,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -1154,16 +1154,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         }
       ]
     }
@@ -1198,16 +1198,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         }
       ]
     }
@@ -1242,16 +1242,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         }
       ]
     }
@@ -1286,16 +1286,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         }
       ]
     }
@@ -1330,16 +1330,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         }
       ]
     }
@@ -1374,16 +1374,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -1418,16 +1418,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -1462,16 +1462,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -1506,16 +1506,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -1550,16 +1550,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -1594,16 +1594,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -1638,16 +1638,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -1682,16 +1682,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -1726,16 +1726,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -1770,16 +1770,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -1814,16 +1814,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -1858,16 +1858,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -1902,16 +1902,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.3,
+    "costData": {
+      "totalCostPercent": 0.3,
       "hops": [
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -1946,16 +1946,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.399625,
+    "costData": {
+      "totalCostPercent": 0.399625,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         }
       ]
     }
@@ -1990,16 +1990,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.399625,
+    "costData": {
+      "totalCostPercent": 0.399625,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         }
       ]
     }
@@ -2034,16 +2034,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         }
       ]
     }
@@ -2078,16 +2078,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         }
       ]
     }
@@ -2122,16 +2122,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2166,16 +2166,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2210,16 +2210,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2254,16 +2254,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2298,16 +2298,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2342,16 +2342,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2386,16 +2386,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2430,16 +2430,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2474,16 +2474,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2518,16 +2518,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2562,16 +2562,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2606,16 +2606,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.44955,
+    "costData": {
+      "totalCostPercent": 0.44955,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2642,12 +2642,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5,
+    "costData": {
+      "totalCostPercent": 0.5,
       "hops": [
         {
-          "exchangeId": "0xfca6d94b46122eb9a4b86cf9d3e1e856fea8a826d0fc26c5baf17c43fbaf0f48",
-          "spreadPercent": 0.5
+          "poolId": "0xfca6d94b46122eb9a4b86cf9d3e1e856fea8a826d0fc26c5baf17c43fbaf0f48",
+          "costPercent": 0.5
         }
       ]
     }
@@ -2674,12 +2674,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5,
+    "costData": {
+      "totalCostPercent": 0.5,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         }
       ]
     }
@@ -2714,16 +2714,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5,
+    "costData": {
+      "totalCostPercent": 0.5,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         }
       ]
     }
@@ -2758,16 +2758,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5,
+    "costData": {
+      "totalCostPercent": 0.5,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -2802,16 +2802,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5,
+    "costData": {
+      "totalCostPercent": 0.5,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -2846,16 +2846,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.54925,
+    "costData": {
+      "totalCostPercent": 0.54925,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         }
       ]
     }
@@ -2890,16 +2890,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.54925,
+    "costData": {
+      "totalCostPercent": 0.54925,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2934,16 +2934,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.54925,
+    "costData": {
+      "totalCostPercent": 0.54925,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         }
       ]
     }
@@ -2978,16 +2978,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.54925,
+    "costData": {
+      "totalCostPercent": 0.54925,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3022,16 +3022,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.54925,
+    "costData": {
+      "totalCostPercent": 0.54925,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3066,16 +3066,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.54925,
+    "costData": {
+      "totalCostPercent": 0.54925,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3110,16 +3110,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.54925,
+    "costData": {
+      "totalCostPercent": 0.54925,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3154,16 +3154,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3198,16 +3198,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3242,16 +3242,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3286,16 +3286,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3330,16 +3330,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3374,16 +3374,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3418,16 +3418,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3462,16 +3462,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3506,16 +3506,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3550,16 +3550,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3594,16 +3594,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3638,16 +3638,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3682,16 +3682,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3726,16 +3726,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3770,16 +3770,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3814,16 +3814,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3858,16 +3858,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3902,16 +3902,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3946,16 +3946,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         }
       ]
     }
@@ -3990,16 +3990,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -4034,16 +4034,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.5991,
+    "costData": {
+      "totalCostPercent": 0.5991,
       "hops": [
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -4078,16 +4078,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.64925,
+    "costData": {
+      "totalCostPercent": 0.64925,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         }
       ]
     }
@@ -4122,16 +4122,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.64925,
+    "costData": {
+      "totalCostPercent": 0.64925,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         }
       ]
     }
@@ -4166,16 +4166,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.74875,
+    "costData": {
+      "totalCostPercent": 0.74875,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         }
       ]
     }
@@ -4210,16 +4210,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.7985,
+    "costData": {
+      "totalCostPercent": 0.7985,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         }
       ]
     }
@@ -4254,16 +4254,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.7985,
+    "costData": {
+      "totalCostPercent": 0.7985,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         }
       ]
     }
@@ -4298,16 +4298,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.7985,
+    "costData": {
+      "totalCostPercent": 0.7985,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         }
       ]
     }
@@ -4342,16 +4342,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.7985,
+    "costData": {
+      "totalCostPercent": 0.7985,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         }
       ]
     }
@@ -4386,16 +4386,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.7985,
+    "costData": {
+      "totalCostPercent": 0.7985,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         }
       ]
     }
@@ -4430,16 +4430,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.7985,
+    "costData": {
+      "totalCostPercent": 0.7985,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         }
       ]
     }
@@ -4474,16 +4474,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.7985,
+    "costData": {
+      "totalCostPercent": 0.7985,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -4518,16 +4518,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 0.9975,
+    "costData": {
+      "totalCostPercent": 0.9975,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0xfca6d94b46122eb9a4b86cf9d3e1e856fea8a826d0fc26c5baf17c43fbaf0f48",
-          "spreadPercent": 0.5
+          "poolId": "0xfca6d94b46122eb9a4b86cf9d3e1e856fea8a826d0fc26c5baf17c43fbaf0f48",
+          "costPercent": 0.5
         }
       ]
     }
@@ -4554,12 +4554,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
+    "costData": {
+      "totalCostPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -4586,12 +4586,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
+    "costData": {
+      "totalCostPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -4618,12 +4618,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
+    "costData": {
+      "totalCostPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -4658,16 +4658,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
+    "costData": {
+      "totalCostPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -4702,16 +4702,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
+    "costData": {
+      "totalCostPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -4746,16 +4746,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
+    "costData": {
+      "totalCostPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -4790,16 +4790,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
+    "costData": {
+      "totalCostPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -4834,16 +4834,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
+    "costData": {
+      "totalCostPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -4878,16 +4878,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
+    "costData": {
+      "totalCostPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -4922,16 +4922,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
+    "costData": {
+      "totalCostPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -4966,16 +4966,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
+    "costData": {
+      "totalCostPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -5010,16 +5010,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1,
+    "costData": {
+      "totalCostPercent": 1,
       "hops": [
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -5054,16 +5054,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.1485,
+    "costData": {
+      "totalCostPercent": 1.1485,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -5098,16 +5098,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.1485,
+    "costData": {
+      "totalCostPercent": 1.1485,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -5142,16 +5142,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.1485,
+    "costData": {
+      "totalCostPercent": 1.1485,
       "hops": [
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -5186,16 +5186,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.1485,
+    "costData": {
+      "totalCostPercent": 1.1485,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -5230,16 +5230,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.1485,
+    "costData": {
+      "totalCostPercent": 1.1485,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -5274,16 +5274,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.1485,
+    "costData": {
+      "totalCostPercent": 1.1485,
       "hops": [
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -5318,16 +5318,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.2475,
+    "costData": {
+      "totalCostPercent": 1.2475,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -5362,16 +5362,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.2475,
+    "costData": {
+      "totalCostPercent": 1.2475,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -5406,16 +5406,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.2475,
+    "costData": {
+      "totalCostPercent": 1.2475,
       "hops": [
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -5450,16 +5450,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -5494,16 +5494,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -5538,16 +5538,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -5582,16 +5582,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -5626,16 +5626,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -5670,16 +5670,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -5714,16 +5714,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -5758,16 +5758,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -5802,16 +5802,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -5846,16 +5846,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -5890,16 +5890,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -5934,16 +5934,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -5978,16 +5978,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -6022,16 +6022,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -6066,16 +6066,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -6110,16 +6110,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -6154,16 +6154,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -6198,16 +6198,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -6242,16 +6242,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -6286,16 +6286,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -6330,16 +6330,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.297,
+    "costData": {
+      "totalCostPercent": 1.297,
       "hops": [
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -6374,16 +6374,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.495,
+    "costData": {
+      "totalCostPercent": 1.495,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -6418,16 +6418,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.495,
+    "costData": {
+      "totalCostPercent": 1.495,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -6462,16 +6462,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.495,
+    "costData": {
+      "totalCostPercent": 1.495,
       "hops": [
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -6506,16 +6506,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.99,
+    "costData": {
+      "totalCostPercent": 1.99,
       "hops": [
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -6550,16 +6550,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.99,
+    "costData": {
+      "totalCostPercent": 1.99,
       "hops": [
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -6594,16 +6594,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 1.99,
+    "costData": {
+      "totalCostPercent": 1.99,
       "hops": [
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }
@@ -6630,12 +6630,12 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2,
+    "costData": {
+      "totalCostPercent": 2,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         }
       ]
     }
@@ -6670,16 +6670,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2,
+    "costData": {
+      "totalCostPercent": 2,
       "hops": [
         {
-          "exchangeId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-          "spreadPercent": 0
+          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "costPercent": 0
         },
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         }
       ]
     }
@@ -6714,16 +6714,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2,
+    "costData": {
+      "totalCostPercent": 2,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-          "spreadPercent": 0
+          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "costPercent": 0
         }
       ]
     }
@@ -6758,16 +6758,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2,
+    "costData": {
+      "totalCostPercent": 2,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-          "spreadPercent": 0
+          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "costPercent": 0
         }
       ]
     }
@@ -6802,16 +6802,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.147,
+    "costData": {
+      "totalCostPercent": 2.147,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-          "spreadPercent": 0.15
+          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "costPercent": 0.15
         }
       ]
     }
@@ -6846,16 +6846,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.147,
+    "costData": {
+      "totalCostPercent": 2.147,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-          "spreadPercent": 0.15
+          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "costPercent": 0.15
         }
       ]
     }
@@ -6890,16 +6890,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.245,
+    "costData": {
+      "totalCostPercent": 2.245,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-          "spreadPercent": 0.25
+          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "costPercent": 0.25
         }
       ]
     }
@@ -6934,16 +6934,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.294,
+    "costData": {
+      "totalCostPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-          "spreadPercent": 0.3
+          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "costPercent": 0.3
         },
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         }
       ]
     }
@@ -6978,16 +6978,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.294,
+    "costData": {
+      "totalCostPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-          "spreadPercent": 0.3
+          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "costPercent": 0.3
         }
       ]
     }
@@ -7022,16 +7022,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.294,
+    "costData": {
+      "totalCostPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-          "spreadPercent": 0.3
+          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "costPercent": 0.3
         }
       ]
     }
@@ -7066,16 +7066,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.294,
+    "costData": {
+      "totalCostPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-          "spreadPercent": 0.3
+          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "costPercent": 0.3
         }
       ]
     }
@@ -7110,16 +7110,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.294,
+    "costData": {
+      "totalCostPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-          "spreadPercent": 0.3
+          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "costPercent": 0.3
         }
       ]
     }
@@ -7154,16 +7154,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.294,
+    "costData": {
+      "totalCostPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-          "spreadPercent": 0.3
+          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "costPercent": 0.3
         }
       ]
     }
@@ -7198,16 +7198,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.294,
+    "costData": {
+      "totalCostPercent": 2.294,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-          "spreadPercent": 0.3
+          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "costPercent": 0.3
         }
       ]
     }
@@ -7242,16 +7242,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.49,
+    "costData": {
+      "totalCostPercent": 2.49,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-          "spreadPercent": 0.5
+          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "costPercent": 0.5
         }
       ]
     }
@@ -7286,16 +7286,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.98,
+    "costData": {
+      "totalCostPercent": 2.98,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-          "spreadPercent": 1
+          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "costPercent": 1
         }
       ]
     }
@@ -7330,16 +7330,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.98,
+    "costData": {
+      "totalCostPercent": 2.98,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-          "spreadPercent": 1
+          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "costPercent": 1
         }
       ]
     }
@@ -7374,16 +7374,16 @@ export const routes11142220: RouteWithSpread[] = [
         ]
       }
     ],
-    "spreadData": {
-      "totalSpreadPercent": 2.98,
+    "costData": {
+      "totalCostPercent": 2.98,
       "hops": [
         {
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-          "spreadPercent": 2
+          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "costPercent": 2
         },
         {
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-          "spreadPercent": 1
+          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "costPercent": 1
         }
       ]
     }

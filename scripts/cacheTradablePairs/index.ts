@@ -15,6 +15,7 @@ import { rpcUrls, type SupportedChainId } from './config'
 import { generateFileContent, writeToFile } from './fileGenerator'
 import { sortPairsBySpread } from './spread'
 import { calculateStatistics, displayStatistics } from './statistics'
+import { PoolService, RouterService } from '../../src/services'
 
 const celoSepolia = defineChain({
   id: 11142220,
@@ -48,10 +49,10 @@ const chainConfigs = {
  * Generate all tradable pairs with ALL available routes (not just optimal)
  */
 async function getAllRoutesWithRoutes(
-  exchangeService: ExchangeService
+  routerService: RouterService
 ): Promise<Route[]> {
   // Get direct pairs
-  const directPairs = await exchangeService.getDirectRoutes()
+  const directPairs = await routerService.getDirectRoutes()
 
   if (directPairs.length === 0) {
     return []
@@ -93,11 +94,12 @@ async function generateAndCacheRoutes(
     transport: http(rpcUrl),
   }) as any
 
-  const exchangeService = new ExchangeService(publicClient, chainId)
+  const poolService = new PoolService(publicClient, chainId)
+  const routerService = new RouterService(publicClient, chainId, poolService)
 
   // Get all tradable pairs with all available routes - force fresh generation
   console.log(`Fetching all tradable pairs with all available routes...`)
-  const pairs = await getAllRoutesWithRoutes(exchangeService)
+  const pairs = await getAllRoutesWithRoutes(routerService)
 
   // Process pairs with controlled concurrency using viem
   console.log(`Fetching spreads from pool configurations...`)

@@ -1,5 +1,5 @@
 export * from './contractAddresses'
 export * from './provider'
 export * from './token'
-export * from './exchange'
+export * from './route'
 export * from './pool'

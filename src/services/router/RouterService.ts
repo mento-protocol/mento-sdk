@@ -1,15 +1,22 @@
-import { PairNotFoundError } from '@services/ExchangeService'
-import { PoolService } from '@services/pools'
-import { ERC20_ABI } from 'core/abis'
-import { Route, RouteID, Asset, Pool } from 'core/types'
-import { RouteWithSpread } from 'utils'
+import { PoolService } from '../pools'
+import { ERC20_ABI } from '../../core/abis'
+import { RouteNotFoundError } from '../../core/errors'
+import { Route, RouteID, Asset, Pool, RouteWithCost } from '../../core/types'
 import {
   buildConnectivityStructures,
   generateAllRoutes,
   selectOptimalRoutes,
-} from 'utils/routeUtils'
+} from '../../utils/routeUtils'
 import { PublicClient } from 'viem'
 
+/**
+ * Service for discovering and managing trading routes in the Mento protocol.
+ * Handles route discovery for both direct (single-hop) and multi-hop trading paths.
+ *
+ * Routes are identified by their token pair and include the path of pools
+ * needed to execute the trade. Multi-hop routes (up to 2 hops) are automatically
+ * discovered when no direct route exists between two tokens.
+ */
 export class RouterService {
   private symbolCache: Map<string, string> = new Map()
 
@@ -20,7 +27,7 @@ export class RouterService {
   ) {}
 
   /**
-   * Generates all direct (single-hop) routes from available exchanges
+   * Generates all direct (single-hop) routes from available pools
    * Routes are deduplicated and assets are sorted alphabetically by symbol
    *
    * @returns Array of direct routes with single-hop paths
@@ -28,12 +35,11 @@ export class RouterService {
    *
    * @example
    * ```typescript
-   * const directRoutes = await exchangeService.getDirectRoutes()
+   * const directRoutes = await routerService.getDirectRoutes()
    * console.log(`Found ${directRoutes.length} direct routes`)
    * ```
    */
   async getDirectRoutes(): Promise<Route[]> {
-    // Get all pools
     const pools = await this.poolService.getPools()
 
     if (pools.length === 0) {
@@ -51,27 +57,27 @@ export class RouterService {
     const tokenAddresses = Array.from(uniqueTokens)
     await Promise.all(tokenAddresses.map((addr: string) => this.fetchTokenSymbol(addr)))
 
-    // Group pools by canonical pair ID
-    const pairMap = new Map<string, Pool[]>()
+    // Group pools by canonical route ID
+    const routeMap = new Map<string, Pool[]>()
 
     for (const pool of pools) {
       const symbol0 = this.symbolCache.get(pool.token0) || pool.token0
       const symbol1 = this.symbolCache.get(pool.token1) || pool.token1
 
-      // Create canonical pair ID (alphabetically sorted symbols)
-      const pairId = [symbol0, symbol1].sort().join('-') as RouteID
+      // Create canonical route ID (alphabetically sorted symbols)
+      const routeId = [symbol0, symbol1].sort().join('-') as RouteID
 
-      if (!pairMap.has(pairId)) {
-        pairMap.set(pairId, [])
+      if (!routeMap.has(routeId)) {
+        routeMap.set(routeId, [])
       }
-      pairMap.get(pairId)!.push(pool)
+      routeMap.get(routeId)!.push(pool)
     }
 
     // Create Route objects
-    const pairs: Route[] = []
+    const routes: Route[] = []
 
-    for (const [pairId, pairPools] of pairMap.entries()) {
-      const firstPool = pairPools[0]
+    for (const [routeId, routePools] of routeMap.entries()) {
+      const firstPool = routePools[0]
 
       const asset0: Asset = {
         address: firstPool.token0,
@@ -87,21 +93,21 @@ export class RouterService {
       const sortedAssets: [Asset, Asset] =
         asset0.symbol < asset1.symbol ? [asset0, asset1] : [asset1, asset0]
 
-      // Create path with all pools for this pair
-      const path = pairPools.map((pool: Pool) => ({
+      // Create path with all pools for this route
+      const path = routePools.map((pool: Pool) => ({
         providerAddr: pool.factoryAddr,
         id: pool.poolAddress,
         assets: [pool.token0, pool.token1] as [string, string],
       }))
 
-      pairs.push({
-        id: pairId as RouteID,
+      routes.push({
+        id: routeId as RouteID,
         assets: sortedAssets,
         path,
       })
     }
 
-    return pairs
+    return routes
   }
 
   /**
@@ -110,21 +116,27 @@ export class RouterService {
    *
    * @param options - Configuration options
    * @param options.cached - Whether to use pre-generated cached routes (default: true)
+   * @param options.returnAllRoutes - Whether to return all possible routes or just the optimal one per pair (default: false)
    * @returns Array of all tradable routes (direct + multi-hop routes)
    *
    * @example
    * ```typescript
    * // Fast: use pre-generated cache
-   * const cachedRoutes = await exchangeService.getRoutes({ cached: true })
+   * const cachedRoutes = await routerService.getRoutes({ cached: true })
    *
    * // Slow but fresh: generate from blockchain
-   * const freshRoutes = await exchangeService.getRoutes({ cached: false })
+   * const freshRoutes = await routerService.getRoutes({ cached: false })
+   *
+   * // Get all route variants (useful for cache generation)
+   * const allRoutes = await routerService.getRoutes({ cached: false, returnAllRoutes: true })
    * ```
    */
   async getRoutes(options?: {
     cached?: boolean
-  }): Promise<readonly (Route | RouteWithSpread)[]> {
+    returnAllRoutes?: boolean
+  }): Promise<readonly (Route | RouteWithCost)[]> {
     const cached = options?.cached ?? true
+    const returnAllRoutes = options?.returnAllRoutes ?? false
 
     // TODO: Implement cache loading
     // For now, always generate fresh
@@ -145,45 +157,48 @@ export class RouterService {
     }
 
     // Generate fresh routes from blockchain
-    return this.generateFreshRoutes()
+    return this.generateFreshRoutes(returnAllRoutes)
   }
 
   /**
    * Generate fresh tradable routes from blockchain data
+   * @param returnAllRoutes - Whether to return all routes or just optimal ones per pair
    * @private
    */
-  private async generateFreshRoutes(): Promise<Route[]> {
+  private async generateFreshRoutes(
+    returnAllRoutes: boolean = false
+  ): Promise<Route[]> {
     // Get direct routes
-    const directPairs = await this.getDirectRoutes()
+    const directRoutes = await this.getDirectRoutes()
 
-    if (directPairs.length === 0) {
+    if (directRoutes.length === 0) {
       return []
     }
 
     // Build connectivity structures for route finding
-    const connectivity = buildConnectivityStructures(directPairs)
+    const connectivity = buildConnectivityStructures(directRoutes)
 
     // Generate all possible routes (direct + 2-hop)
     const allRoutes = generateAllRoutes(connectivity)
 
-    // Select optimal routes (not returning all routes, just the best one per pair)
-    const selectedPairs = selectOptimalRoutes(
+    // Select routes based on returnAllRoutes flag
+    const selectedRoutes = selectOptimalRoutes(
       allRoutes,
-      false,
+      returnAllRoutes,
       connectivity.addrToSymbol
     )
 
-    return selectedPairs as Route[]
+    return selectedRoutes as Route[]
   }
 
   /**
    * Load cached tradable routes for current chain
    * @private
    */
-  private async loadCachedRoutes(): Promise<RouteWithSpread[]> {
+  private async loadCachedRoutes(): Promise<RouteWithCost[]> {
     const { getCachedRoutes } = await import('../../utils/routes')
     const cachedRoutes = await getCachedRoutes(this.chainId)
-    return (cachedRoutes as RouteWithSpread[]) || []
+    return (cachedRoutes as RouteWithCost[]) || []
   }
 
   /**
@@ -226,13 +241,13 @@ export class RouterService {
    * @param tokenIn - Input token address (direction matters for routing)
    * @param tokenOut - Output token address (direction matters for routing)
    * @returns The optimal tradable route connecting the two tokens
-   * @throws {PairNotFoundError} If no tradable route exists between tokens
+   * @throws {RouteNotFoundError} If no route exists between the token pair
    *
    * @example
    * ```typescript
    * const cUSD = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
    * const cBRL = '0xE4D5...'
-   * const route = await exchangeService.findRoute(cUSD, cBRL)
+   * const route = await routerService.findRoute(cUSD, cBRL)
    *
    * if (route.path.length === 1) {
    *   console.log('Direct route available')
@@ -247,27 +262,24 @@ export class RouterService {
     options?: { cached?: boolean }
   ): Promise<Route> {
     // Get all tradable routes
-    const allPairs = await this.getRoutes(options)
+    const allRoutes = await this.getRoutes(options)
 
-    // Normalize addresses for comparison
     const t0 = tokenIn.toLowerCase()
     const t1 = tokenOut.toLowerCase()
 
-    // Search for matching pair (bidirectional)
-    const matchingPair = allPairs.find((pair) => {
-      const a0 = pair.assets[0].address.toLowerCase()
-      const a1 = pair.assets[1].address.toLowerCase()
+    // Search for matching route (bidirectional)
+    const matchingRoute = allRoutes.find((route) => {
+      const a0 = route.assets[0].address.toLowerCase()
+      const a1 = route.assets[1].address.toLowerCase()
 
       // Match either direction: (t0,t1) or (t1,t0)
       return (a0 === t0 && a1 === t1) || (a0 === t1 && a1 === t0)
     })
 
-    if (!matchingPair) {
-      throw new PairNotFoundError(
-        `No pair found for tokens ${tokenIn} and ${tokenOut}. They may not have a tradable path.`
-      )
+    if (!matchingRoute) {
+      throw new RouteNotFoundError(tokenIn, tokenOut)
     }
 
-    return matchingPair as Route
+    return matchingRoute as Route
   }
 }

@@ -1,5 +1,5 @@
-import { MultisigSupplyCalculator } from '../../../../src/services/supply/multisigSupplyCalculator'
-import { ERC20_ABI } from '../../../../src/abis'
+import { MultisigSupplyCalculator } from '../../../../src/services/tokens/supply/multisigSupplyCalculator'
+import { ERC20_ABI } from '../../../../src/core/abis'
 import type { PublicClient } from 'viem'
 
 describe('MultisigSupplyCalculator', () => {
