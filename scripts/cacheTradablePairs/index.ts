@@ -1,7 +1,6 @@
 import { createPublicClient, http } from 'viem'
 import { celo } from 'viem/chains'
 import { defineChain } from 'viem'
-import { ExchangeService } from '../../src/services/ExchangeService'
 import type { Route } from '../../src/core/types'
 import {
   buildConnectivityStructures,
