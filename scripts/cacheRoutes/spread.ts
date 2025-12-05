@@ -26,12 +26,12 @@ interface PoolExchangeResult {
 /**
  * Calculate spread data for a tradable pair by fetching fixed spreads from pool configs
  */
-export async function calculateSpreadForPair(
-  pair: Route,
+export async function calculateSpreadForRoute(
+  route: Route,
   publicClient: PublicClient
 ): Promise<RouteWithCost> {
   // Fetch all exchange spreads concurrently
-  const spreadPromises = pair.path.map(async (hop) => {
+  const spreadPromises = route.path.map(async (hop) => {
     const spread = await getExchangeSpread(hop.id, hop.providerAddr, publicClient)
     return {
       hop,
@@ -67,7 +67,7 @@ export async function calculateSpreadForPair(
     Math.round((1 - totalEffectiveRate) * 100 * 1e8) / 1e8
 
   return {
-    ...pair,
+    ...route,
     costData: {
       totalCostPercent,
       hops,
@@ -107,12 +107,12 @@ async function getExchangeSpread(
 }
 
 /**
- * Sort pairs by spread percentage (best routes first)
+ * Sort routes by spread percentage (best routes first)
  */
-export function sortPairsBySpread(
-  pairs: RouteWithCost[]
+export function sortRoutesBySpread(
+  routes: RouteWithCost[]
 ): RouteWithCost[] {
-  return pairs.sort((a, b) => {
+  return routes.sort((a, b) => {
     // Sort by total spread percentage (ascending - lower is better)
     // Routes without spread data go to the end
     if (!a.costData && !b.costData) return 0
