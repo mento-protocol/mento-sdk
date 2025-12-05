@@ -55,7 +55,9 @@ export class RouterService {
 
     // Fetch symbols for all tokens in parallel
     const tokenAddresses = Array.from(uniqueTokens)
-    await Promise.all(tokenAddresses.map((addr: string) => this.fetchTokenSymbol(addr)))
+    await Promise.all(
+      tokenAddresses.map((addr: string) => this.fetchTokenSymbol(addr))
+    )
 
     // Group pools by canonical route ID
     const routeMap = new Map<string, Pool[]>()
@@ -282,4 +284,18 @@ export class RouterService {
 
     return matchingRoute as Route
   }
+
+  //  await mento.getAmountOut(
+  //           fromTokenAddr,
+  //           toTokenAddr,
+  //           amountWeiBN,
+  //           tradablePair,
+
+  // Needs to call router
+  // - getAmountsOut(uint256 amountIn, Route[] memory routes) public view returns (uint256[] memory amounts) {
+  // Route looks like this: {from, to, factory}
+  // What should the factory be when calling getAmountsOut?
+  // It can be null, but if it is null then the default factory in the router is used
+  // 
+  // TODO: Confirm the default factory
 }

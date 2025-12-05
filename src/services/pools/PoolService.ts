@@ -1,13 +1,12 @@
-import { getContractAddress } from '../../core/constants'
-import { ChainId } from '../../core/constants/chainId'
-import { Pool, PoolType } from '../../core/types/pool'
+import { getContractAddress, ChainId } from '../../core/constants'
+import { Pool, PoolType } from '../../core/types'
 import {
   FPMM_FACTORY_ABI,
   FPMM_ABI,
   VIRTUAL_POOL_FACTORY_ABI,
   BIPOOL_MANAGER_ABI,
 } from '../../core/abis'
-import { PublicClient } from 'viem'
+import { PublicClient, Address } from 'viem'
 
 // TODO: Update to enrich pools with more data as needed. Use optional flag to include more data.
 
@@ -73,10 +72,10 @@ export class PoolService {
     try {
       // Get all deployed FPMM pool addresses
       const poolAddresses = (await this.publicClient.readContract({
-        address: fpmmFactoryAddress as `0x${string}`,
+        address: fpmmFactoryAddress as Address,
         abi: FPMM_FACTORY_ABI,
         functionName: 'deployedFPMMAddresses',
-      })) as `0x${string}`[]
+      })) as Address[]
 
       if (poolAddresses.length === 0) {
         return []
@@ -88,12 +87,12 @@ export class PoolService {
             address: poolAddress,
             abi: FPMM_ABI,
             functionName: 'token0',
-          }) as Promise<`0x${string}`>,
+          }) as Promise<Address>,
           this.publicClient.readContract({
             address: poolAddress,
             abi: FPMM_ABI,
             functionName: 'token1',
-          }) as Promise<`0x${string}`>,
+          }) as Promise<Address>,
         ])
 
         return {
@@ -137,10 +136,10 @@ export class PoolService {
     try {
       // Get all exchanges from BiPoolManager
       const exchangesData = (await this.publicClient.readContract({
-        address: biPoolManagerAddress as `0x${string}`,
+        address: biPoolManagerAddress as Address,
         abi: BIPOOL_MANAGER_ABI,
         functionName: 'getExchanges',
-      })) as Array<{ exchangeId: string; assets: readonly `0x${string}`[] }>
+      })) as Array<{ exchangeId: string; assets: readonly Address[] }>
 
       if (exchangesData.length === 0) {
         return []
@@ -161,14 +160,14 @@ export class PoolService {
         )
 
         const poolAddress = (await this.publicClient.readContract({
-          address: virtualPoolFactoryAddress as `0x${string}`,
+          address: virtualPoolFactoryAddress as Address,
           abi: VIRTUAL_POOL_FACTORY_ABI,
           functionName: 'getOrPrecomputeProxyAddress',
           args: [token0, token1],
-        })) as `0x${string}`
+        })) as Address
 
         const isDeployed = (await this.publicClient.readContract({
-          address: virtualPoolFactoryAddress as `0x${string}`,
+          address: virtualPoolFactoryAddress as Address,
           abi: VIRTUAL_POOL_FACTORY_ABI,
           functionName: 'isPool',
           args: [poolAddress],
@@ -201,9 +200,9 @@ export class PoolService {
    * Sorts two token addresses to match VirtualPoolFactory's sorting.
    */
   private sortTokens(
-    tokenA: `0x${string}`,
-    tokenB: `0x${string}`
-  ): [`0x${string}`, `0x${string}`] {
+    tokenA: Address,
+    tokenB: Address
+  ): [Address, Address] {
     return tokenA.toLowerCase() < tokenB.toLowerCase()
       ? [tokenA, tokenB]
       : [tokenB, tokenA]
