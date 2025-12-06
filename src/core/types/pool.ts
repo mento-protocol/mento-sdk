@@ -20,7 +20,7 @@ export interface Pool {
   /**
    * The deployed pool contract address (serves as unique identifier)
    */
-  poolAddress: string
+  poolAddr: string
 
   /**
    * The address of the first token in the pool
