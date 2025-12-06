@@ -8,11 +8,11 @@ import {
   selectOptimalRoutes,
 } from '../../src/utils/routeUtils'
 import { deduplicateRoutes } from '../shared/routeDeduplication'
-import { processPairsInBatches } from './batchProcessor'
+import { processRoutesInBatches } from './batchProcessor'
 import { parseCommandLineArgs, printUsageTips } from './cli'
 import { rpcUrls, type SupportedChainId } from './config'
 import { generateFileContent, writeToFile } from './fileGenerator'
-import { sortPairsBySpread } from './spread'
+import { sortRoutesBySpread } from './spread'
 import { calculateStatistics, displayStatistics } from './statistics'
 import { PoolService, RouterService } from '../../src/services'
 
@@ -103,14 +103,14 @@ async function generateAndCacheRoutes(
   // Process pairs with controlled concurrency using viem
   console.log(`Fetching spreads from pool configurations...`)
   console.log(`   Using batch size of ${batchSize} concurrent requests`)
-  const pairsWithSpread = await processPairsInBatches(pairs, publicClient as any, batchSize)
+  const pairsWithSpread = await processRoutesInBatches(pairs, publicClient as any, batchSize)
   console.log(`\nSpread data fetched for all routes`)
 
   // Deduplicate routes to eliminate redundant symmetric pairs
   console.log(`Deduplicating redundant routes...`)
   const routesBeforeDedup = pairsWithSpread.length
-  const deduplicatedPairs = deduplicateRoutes(pairsWithSpread)
-  const routesAfterDedup = deduplicatedPairs.length
+  const deduplicatedRoutes = deduplicateRoutes(pairsWithSpread)
+  const routesAfterDedup = deduplicatedRoutes.length
   console.log(
     `   Removed ${routesBeforeDedup - routesAfterDedup} redundant routes (${(
       ((routesBeforeDedup - routesAfterDedup) / routesBeforeDedup) *
@@ -119,7 +119,7 @@ async function generateAndCacheRoutes(
   )
 
   // Sort all routes by spread (best routes first) to provide fallback alternatives
-  const pairsToCache = sortPairsBySpread(deduplicatedPairs)
+  const pairsToCache = sortRoutesBySpread(deduplicatedRoutes)
 
   // Calculate and display statistics
   const statistics = calculateStatistics(pairsToCache)
