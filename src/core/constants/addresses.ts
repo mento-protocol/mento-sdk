@@ -29,7 +29,7 @@ export const addresses: ContractAddressMap = {
     TimelockController: '0x890DB8A597940165901372Dd7DB61C9f246e2147',
 
     FPMMFactory: '0xd1C677e35EC813851C56438A92227C521A96331D',
-    VirtualPoolFactory: '0x0000000000000000000000000000000000000000',
+    VirtualPoolFactory: '0x295B66bE7714458Af45E6A6Ea142A5358A6cA375',
   },
 
   [ChainId.CELO_SEPOLIA]: {
