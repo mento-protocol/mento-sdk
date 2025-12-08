@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-12-08T15:56:23.065Z
+// Generated on 2025-12-08T16:07:26.510Z
 
 import { TokenSymbol } from '../utils/tokens'
 import type { Token } from '../core/types'
