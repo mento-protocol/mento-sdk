@@ -1,9 +1,5 @@
 import { RESERVE_ABI, BIPOOL_MANAGER_ABI, ERC20_ABI } from '../../core/abis'
-import {
-  BaseToken,
-  StableToken,
-  CollateralAsset,
-} from '../../core/types'
+import { Token, StableToken, CollateralAsset } from '../../core/types'
 
 // Legacy Exchange type for BiPoolManager v2 responses
 interface Exchange {
@@ -38,7 +34,7 @@ export class TokenService {
    */
   private async getTokenMetadata(
     address: string
-  ): Promise<Pick<BaseToken, 'name' | 'symbol' | 'decimals'>> {
+  ): Promise<Pick<Token, 'name' | 'symbol' | 'decimals'>> {
     const [name, symbol, decimals] = await Promise.all([
       retryOperation(() =>
         this.publicClient.readContract({

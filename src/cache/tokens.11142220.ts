@@ -2,9 +2,9 @@
 // Generated on 2025-12-03T19:52:12.970Z
 
 import { TokenSymbol } from '../utils/tokens'
-import type { BaseToken } from '../core/types'
+import type { Token } from '../core/types'
 
-export interface Token extends BaseToken {
+export interface Token extends Token {
   symbol: TokenSymbol
 }
 

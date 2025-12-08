@@ -1,12 +1,13 @@
 import { PoolService } from '../pools'
 import { ERC20_ABI } from '../../core/abis'
 import { RouteNotFoundError } from '../../core/errors'
-import { Route, RouteID, Asset, Pool, RouteWithCost } from '../../core/types'
+import { Route, RouteID, Pool, RouteWithCost, Token } from '../../core/types'
 import {
   buildConnectivityStructures,
   generateAllRoutes,
   selectOptimalRoutes,
 } from '../../utils/routeUtils'
+import { canonicalSymbolKey } from '../../utils/sortUtils'
 import { PublicClient } from 'viem'
 
 /**
@@ -53,61 +54,69 @@ export class RouterService {
       uniqueTokens.add(pool.token1)
     })
 
-    // Fetch symbols for all tokens in parallel
+    // Fetch symbols for all tokens in parallel. Used for the route ids
     const tokenAddresses = Array.from(uniqueTokens)
     await Promise.all(
       tokenAddresses.map((addr: string) => this.fetchTokenSymbol(addr))
     )
 
     // Group pools by canonical route ID
-    const routeMap = new Map<string, Pool[]>()
+    const directRouteMap = new Map<string, Pool[]>()
 
+    // Loop all pools
     for (const pool of pools) {
-      const symbol0 = this.symbolCache.get(pool.token0) || pool.token0
-      const symbol1 = this.symbolCache.get(pool.token1) || pool.token1
+      const [token0, token1] = [pool.token0, pool.token1];
+      const symbol0 = this.symbolCache.get(token0)
+      const symbol1 = this.symbolCache.get(token1)
 
       // Create canonical route ID (alphabetically sorted symbols)
-      const routeId = [symbol0, symbol1].sort().join('-') as RouteID
+      const routeId = canonicalSymbolKey(symbol0!, symbol1!) as RouteID
+      let route 
 
-      if (!routeMap.has(routeId)) {
-        routeMap.set(routeId, [])
+      // Now create path entry for this pool. Path == pool, so nothing to do heer
+
+      // Check if the route map has this route ID
+      
+      // TODO: Why bro
+      if (!directRouteMap.has(routeId)) {
+        directRouteMap.set(routeId, [])
       }
-      routeMap.get(routeId)!.push(pool)
+      directRouteMap.get(routeId)!.push(pool)
     }
 
     // Create Route objects
     const routes: Route[] = []
 
-    for (const [routeId, routePools] of routeMap.entries()) {
-      const firstPool = routePools[0]
+    // for (const [routeId, routePools] of directRouteMap.entries()) {
+    //   const firstPool = routePools[0]
 
-      const asset0: Asset = {
-        address: firstPool.token0,
-        symbol: this.symbolCache.get(firstPool.token0) || firstPool.token0,
-      }
+    //   const token0: Token = {
+    //     address: firstPool.token0,
+    //     symbol: this.symbolCache.get(firstPool.token0),
+    //   }
 
-      const asset1: Asset = {
-        address: firstPool.token1,
-        symbol: this.symbolCache.get(firstPool.token1) || firstPool.token1,
-      }
+    //   const token1: Token = {
+    //     address: firstPool.token1,
+    //     symbol: this.symbolCache.get(firstPool.token1) || firstPool.token1,
+    //   }
 
-      // Sort assets alphabetically by symbol
-      const sortedAssets: [Asset, Asset] =
-        asset0.symbol < asset1.symbol ? [asset0, asset1] : [asset1, asset0]
+    //   // Sort assets alphabetically by symbol
+    //   const sortedAssets: [Token, Token] =
+    //     token0.symbol < asset1.symbol ? [token0, asset1] : [asset1, token0]
 
-      // Create path with all pools for this route
-      const path = routePools.map((pool: Pool) => ({
-        providerAddr: pool.factoryAddr,
-        id: pool.poolAddress,
-        assets: [pool.token0, pool.token1] as [string, string],
-      }))
+    //   // Create path with all pools for this route
+    //   const path = routePools.map((pool: Pool) => ({
+    //     providerAddr: pool.factoryAddr,
+    //     id: pool.poolAddr,
+    //     assets: [pool.token0, pool.token1] as [string, string],
+    //   }))
 
-      routes.push({
-        id: routeId as RouteID,
-        assets: sortedAssets,
-        path,
-      })
-    }
+    //   routes.push({
+    //     id: routeId as RouteID,
+    //     tokens: sortedAssets,
+    //     path,
+    //   })
+    // }
 
     return routes
   }
@@ -271,8 +280,8 @@ export class RouterService {
 
     // Search for matching route (bidirectional)
     const matchingRoute = allRoutes.find((route) => {
-      const a0 = route.assets[0].address.toLowerCase()
-      const a1 = route.assets[1].address.toLowerCase()
+      const a0 = route.tokens[0].address.toLowerCase()
+      const a1 = route.tokens[1].address.toLowerCase()
 
       // Match either direction: (t0,t1) or (t1,t0)
       return (a0 === t0 && a1 === t1) || (a0 === t1 && a1 === t0)
@@ -296,6 +305,6 @@ export class RouterService {
   // Route looks like this: {from, to, factory}
   // What should the factory be when calling getAmountsOut?
   // It can be null, but if it is null then the default factory in the router is used
-  // 
+  //
   // TODO: Confirm the default factory
 }

@@ -17,7 +17,7 @@ export async function getPoolCostPercent(
   exchangeId?: string
 ): Promise<number> {
   if (pool.poolType === PoolType.FPMM) {
-    return getFPMMCostPercent(pool.poolAddress, publicClient)
+    return getFPMMCostPercent(pool.poolAddr, publicClient)
   } else {
     if (!exchangeId) {
       throw new Error('exchangeId required for Virtual pools')
@@ -69,7 +69,8 @@ async function getVirtualPoolCostPercent(
   })
 
   // Convert from FixidityLib to percentage (1e24 = 100%)
-  const spreadValue = (poolExchange as { config: { spread: { value: bigint } } })
-    .config.spread.value
+  const spreadValue = (
+    poolExchange as { config: { spread: { value: bigint } } }
+  ).config.spread.value
   return (Number(spreadValue) / 1e24) * 100
 }

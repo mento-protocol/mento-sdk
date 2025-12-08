@@ -1,13 +1,15 @@
-import type {
-  Route,
-  RouteID,
-  Asset,
-  RouteWithCost,
-} from '../core/types'
+import type { Route, RouteID, Asset, RouteWithCost } from '../core/types'
+import { canonicalAddressKey, canonicalSymbolKey } from './sortUtils'
+import type { Address as ViemAddress } from 'viem'
 
 type TokenSymbol = string
 type Address = string
 
+// TODO: Refactor
+//       - Change to pool details.
+//       - Provider addr can change to factory address
+//       - id should change to pool address
+//       - Consider just using types/pool.ts
 interface ExchangeDetails {
   providerAddr: Address
   id: string
@@ -158,7 +160,7 @@ export function buildConnectivityStructures(
   const tokenGraph = new Map<string, Set<string>>()
 
   for (const pair of directPairs) {
-    const [assetA, assetB] = pair.assets
+    const [assetA, assetB] = pair.tokens
 
     // Build address-to-symbol map for quick symbol lookups
     addrToSymbol.set(assetA.address, assetA.symbol)
@@ -166,9 +168,10 @@ export function buildConnectivityStructures(
 
     // Build direct path map (sorted addresses as key for consistency)
     // for quick lookup of exchange details for any token pair
-    const sortedAddresses = [assetA.address, assetB.address]
-      .sort()
-      .join('-') as RouteID
+    const sortedAddresses = canonicalAddressKey(
+      assetA.address as ViemAddress,
+      assetB.address as ViemAddress
+    ) as RouteID
     if (!directPathMap.has(sortedAddresses)) {
       directPathMap.set(sortedAddresses, pair.path[0])
     }
@@ -343,8 +346,14 @@ export function createTwoHopPair(
 
   // Find exchange hops for both segments of the two-hop route
   // Keys are sorted token addresses for consistent lookup
-  const hop1Key = [startToken, intermediateToken].sort().join('-')
-  const hop2Key = [intermediateToken, endToken].sort().join('-')
+  const hop1Key = canonicalAddressKey(
+    startToken as ViemAddress,
+    intermediateToken as ViemAddress
+  )
+  const hop2Key = canonicalAddressKey(
+    intermediateToken as ViemAddress,
+    endToken as ViemAddress
+  )
   const hop1 = directPathMap.get(hop1Key)
   const hop2 = directPathMap.get(hop2Key)
 
@@ -352,8 +361,7 @@ export function createTwoHopPair(
   if (!hop1 || !hop2) return null
 
   // Create canonical pair structure (alphabetical symbol ordering)
-  const sortedSymbols = [startSymbol, endSymbol].sort()
-  const pairId: RouteID = `${sortedSymbols[0]}-${sortedSymbols[1]}`
+  const pairId = canonicalSymbolKey(startSymbol, endSymbol) as RouteID
 
   // Assets array follows alphabetical ordering for consistency
   const assets: [Asset, Asset] =
@@ -361,7 +369,7 @@ export function createTwoHopPair(
 
   return {
     id: pairId,
-    assets,
+    tokens: assets,
     path: [hop1, hop2], // Preserves actual routing path for execution
   }
 }
@@ -502,7 +510,7 @@ export function selectBestRoute(
 export function getIntermediateToken(route: Route): Address | undefined {
   // Find the common token between the two hops
   const [hop1, hop2] = route.path
-  return hop1.assets.find((addr) => hop2.assets.includes(addr))
+  return hop1.tokens.find((addr) => hop2.tokens.includes(addr))
 }
 
 /**

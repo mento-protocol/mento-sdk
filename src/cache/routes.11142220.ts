@@ -6,7 +6,7 @@ import type { RouteWithCost } from '../core/types'
 export const routes11142220: RouteWithCost[] = [
   {
     "id": "axlUSDC-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -20,7 +20,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -30,7 +30,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         }
       ]
@@ -38,7 +38,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -52,7 +52,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -62,7 +62,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0,
       "hops": [
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -70,7 +70,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -84,7 +84,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -94,7 +94,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0,
       "hops": [
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -102,7 +102,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-axlUSDC",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -116,7 +116,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -124,7 +124,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -134,11 +134,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -146,7 +146,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-axlUSDC",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -160,7 +160,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -168,7 +168,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -178,11 +178,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -190,7 +190,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-USD₮",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -204,7 +204,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -212,7 +212,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -222,11 +222,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0,
       "hops": [
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -234,7 +234,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -248,7 +248,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -258,7 +258,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.15,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         }
       ]
@@ -266,7 +266,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCAD-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
         "symbol": "cCAD"
@@ -280,7 +280,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -290,7 +290,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.15,
       "hops": [
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         }
       ]
@@ -298,7 +298,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-cAUD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -312,7 +312,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -320,7 +320,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -330,11 +330,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.15,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         }
       ]
@@ -342,7 +342,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-cCAD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -356,7 +356,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -364,7 +364,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -374,11 +374,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.15,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         }
       ]
@@ -386,7 +386,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cAUD",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -400,7 +400,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -408,7 +408,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -418,11 +418,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.15,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -430,7 +430,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cAUD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -444,7 +444,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -452,7 +452,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -462,11 +462,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.15,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -474,7 +474,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cCAD",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -488,7 +488,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -496,7 +496,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -506,11 +506,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.15,
       "hops": [
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -518,7 +518,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cCAD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -532,7 +532,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -540,7 +540,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -550,11 +550,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.15,
       "hops": [
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -562,7 +562,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -576,7 +576,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -586,7 +586,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.25,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         }
       ]
@@ -594,7 +594,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-axlUSDC",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -608,7 +608,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -616,7 +616,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -626,11 +626,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.25,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         }
       ]
@@ -638,7 +638,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-USD₮",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -652,7 +652,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -660,7 +660,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -670,11 +670,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.25,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -682,7 +682,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-USDC",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -696,7 +696,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -704,7 +704,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -714,11 +714,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.25,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -726,7 +726,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-cCAD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -740,7 +740,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -748,7 +748,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -758,11 +758,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.299775,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         }
       ]
@@ -770,7 +770,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -784,7 +784,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -794,7 +794,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         }
       ]
@@ -802,7 +802,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGBP-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
         "symbol": "cGBP"
@@ -816,7 +816,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -826,7 +826,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         }
       ]
@@ -834,7 +834,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cUSD-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
         "symbol": "cUSD"
@@ -848,7 +848,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -858,7 +858,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         }
       ]
@@ -866,7 +866,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCHF-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
         "symbol": "cCHF"
@@ -880,7 +880,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -890,7 +890,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         }
       ]
@@ -898,7 +898,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cJPY-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
         "symbol": "cJPY"
@@ -912,7 +912,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -922,7 +922,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         }
       ]
@@ -930,7 +930,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCOP-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
         "symbol": "cCOP"
@@ -944,7 +944,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -954,7 +954,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         }
       ]
@@ -962,7 +962,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cREAL-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
         "symbol": "cREAL"
@@ -976,7 +976,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -986,7 +986,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -994,7 +994,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-axlUSDC",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -1008,7 +1008,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -1016,7 +1016,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -1026,11 +1026,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         }
       ]
@@ -1038,7 +1038,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-USD₮",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -1052,7 +1052,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -1060,7 +1060,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -1070,11 +1070,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -1082,7 +1082,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-USDC",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -1096,7 +1096,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -1104,7 +1104,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -1114,11 +1114,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -1126,7 +1126,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-cGBP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -1140,7 +1140,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -1148,7 +1148,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -1158,11 +1158,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         }
       ]
@@ -1170,7 +1170,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -1184,7 +1184,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -1192,7 +1192,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -1202,11 +1202,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         }
       ]
@@ -1214,7 +1214,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-cCHF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -1228,7 +1228,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -1236,7 +1236,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -1246,11 +1246,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         }
       ]
@@ -1258,7 +1258,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-cJPY",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -1272,7 +1272,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -1280,7 +1280,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -1290,11 +1290,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         }
       ]
@@ -1302,7 +1302,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-cCOP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -1316,7 +1316,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -1324,7 +1324,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -1334,11 +1334,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         }
       ]
@@ -1346,7 +1346,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -1360,7 +1360,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -1368,7 +1368,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -1378,11 +1378,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -1390,7 +1390,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cGBP",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -1404,7 +1404,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -1412,7 +1412,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -1422,11 +1422,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -1434,7 +1434,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cGBP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -1448,7 +1448,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -1456,7 +1456,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -1466,11 +1466,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -1478,7 +1478,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -1492,7 +1492,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -1500,7 +1500,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -1510,11 +1510,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -1522,7 +1522,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -1536,7 +1536,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -1544,7 +1544,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -1554,11 +1554,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -1566,7 +1566,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cCHF",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -1580,7 +1580,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -1588,7 +1588,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -1598,11 +1598,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -1610,7 +1610,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cCHF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -1624,7 +1624,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -1632,7 +1632,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -1642,11 +1642,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -1654,7 +1654,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cJPY",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -1668,7 +1668,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -1676,7 +1676,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -1686,11 +1686,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -1698,7 +1698,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cJPY",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -1712,7 +1712,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -1720,7 +1720,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -1730,11 +1730,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -1742,7 +1742,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cCOP",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -1756,7 +1756,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -1764,7 +1764,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -1774,11 +1774,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -1786,7 +1786,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cCOP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -1800,7 +1800,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -1808,7 +1808,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -1818,11 +1818,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -1830,7 +1830,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -1844,7 +1844,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -1852,7 +1852,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -1862,11 +1862,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -1874,7 +1874,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -1888,7 +1888,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -1896,7 +1896,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -1906,11 +1906,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.3,
       "hops": [
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -1918,7 +1918,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cAUD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -1932,7 +1932,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -1940,7 +1940,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -1950,11 +1950,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.399625,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         }
       ]
@@ -1962,7 +1962,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cCAD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -1976,7 +1976,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -1984,7 +1984,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -1994,11 +1994,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.399625,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         }
       ]
@@ -2006,7 +2006,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cAUD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -2020,7 +2020,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -2028,7 +2028,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -2038,11 +2038,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         }
       ]
@@ -2050,7 +2050,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cCAD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -2064,7 +2064,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -2072,7 +2072,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -2082,11 +2082,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         }
       ]
@@ -2094,7 +2094,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-cGBP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -2108,7 +2108,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -2116,7 +2116,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -2126,11 +2126,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         }
       ]
@@ -2138,7 +2138,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -2152,7 +2152,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -2160,7 +2160,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -2170,11 +2170,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         }
       ]
@@ -2182,7 +2182,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-cCHF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -2196,7 +2196,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -2204,7 +2204,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -2214,11 +2214,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         }
       ]
@@ -2226,7 +2226,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-cJPY",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -2240,7 +2240,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -2248,7 +2248,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -2258,11 +2258,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         }
       ]
@@ -2270,7 +2270,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-cCOP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -2284,7 +2284,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -2292,7 +2292,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -2302,11 +2302,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         }
       ]
@@ -2314,7 +2314,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -2328,7 +2328,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -2336,7 +2336,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -2346,11 +2346,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         },
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -2358,7 +2358,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCAD-cGBP",
-    "assets": [
+    "tokens": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
         "symbol": "cCAD"
@@ -2372,7 +2372,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -2380,7 +2380,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -2390,11 +2390,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         }
       ]
@@ -2402,7 +2402,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCAD-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
         "symbol": "cCAD"
@@ -2416,7 +2416,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -2424,7 +2424,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -2434,11 +2434,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         }
       ]
@@ -2446,7 +2446,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCAD-cCHF",
-    "assets": [
+    "tokens": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
         "symbol": "cCAD"
@@ -2460,7 +2460,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -2468,7 +2468,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -2478,11 +2478,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         }
       ]
@@ -2490,7 +2490,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCAD-cJPY",
-    "assets": [
+    "tokens": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
         "symbol": "cCAD"
@@ -2504,7 +2504,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -2512,7 +2512,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -2522,11 +2522,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         }
       ]
@@ -2534,7 +2534,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCAD-cCOP",
-    "assets": [
+    "tokens": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
         "symbol": "cCAD"
@@ -2548,7 +2548,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -2556,7 +2556,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -2566,11 +2566,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         }
       ]
@@ -2578,7 +2578,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCAD-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
         "symbol": "cCAD"
@@ -2592,7 +2592,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -2600,7 +2600,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -2610,11 +2610,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.44955,
       "hops": [
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         },
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -2622,7 +2622,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlEUROC-cEUR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x9883d788d40F1C7595a780ed881Ea833C7743B4B",
         "symbol": "axlEUROC"
@@ -2636,7 +2636,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xfca6d94b46122eb9a4b86cf9d3e1e856fea8a826d0fc26c5baf17c43fbaf0f48",
-        "assets": [
+        "tokens": [
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
           "0x9883d788d40F1C7595a780ed881Ea833C7743B4B"
         ]
@@ -2646,7 +2646,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5,
       "hops": [
         {
-          "poolId": "0xfca6d94b46122eb9a4b86cf9d3e1e856fea8a826d0fc26c5baf17c43fbaf0f48",
+          "poolAddress": "0xfca6d94b46122eb9a4b86cf9d3e1e856fea8a826d0fc26c5baf17c43fbaf0f48",
           "costPercent": 0.5
         }
       ]
@@ -2654,7 +2654,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cEUR-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
         "symbol": "cEUR"
@@ -2668,7 +2668,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -2678,7 +2678,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         }
       ]
@@ -2686,7 +2686,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-cEUR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -2700,7 +2700,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -2708,7 +2708,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -2718,11 +2718,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         }
       ]
@@ -2730,7 +2730,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cEUR",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -2744,7 +2744,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -2752,7 +2752,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -2762,11 +2762,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -2774,7 +2774,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cEUR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -2788,7 +2788,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -2796,7 +2796,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -2806,11 +2806,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -2818,7 +2818,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-PUSO",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -2832,7 +2832,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -2840,7 +2840,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -2850,11 +2850,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.54925,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         }
       ]
@@ -2862,7 +2862,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cGBP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -2876,7 +2876,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -2884,7 +2884,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -2894,11 +2894,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.54925,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         }
       ]
@@ -2906,7 +2906,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -2920,7 +2920,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -2928,7 +2928,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -2938,11 +2938,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.54925,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         }
       ]
@@ -2950,7 +2950,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cCHF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -2964,7 +2964,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -2972,7 +2972,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -2982,11 +2982,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.54925,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         }
       ]
@@ -2994,7 +2994,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cJPY",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -3008,7 +3008,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -3016,7 +3016,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -3026,11 +3026,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.54925,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         }
       ]
@@ -3038,7 +3038,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cCOP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -3052,7 +3052,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -3060,7 +3060,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -3070,11 +3070,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.54925,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         }
       ]
@@ -3082,7 +3082,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -3096,7 +3096,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -3104,7 +3104,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -3114,11 +3114,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.54925,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -3126,7 +3126,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cGBP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -3140,7 +3140,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -3148,7 +3148,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -3158,11 +3158,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         }
       ]
@@ -3170,7 +3170,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -3184,7 +3184,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -3192,7 +3192,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -3202,11 +3202,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         }
       ]
@@ -3214,7 +3214,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cCHF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -3228,7 +3228,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -3236,7 +3236,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -3246,11 +3246,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         }
       ]
@@ -3258,7 +3258,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cJPY",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -3272,7 +3272,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -3280,7 +3280,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -3290,11 +3290,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         }
       ]
@@ -3302,7 +3302,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cCOP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -3316,7 +3316,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -3324,7 +3324,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -3334,11 +3334,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         }
       ]
@@ -3346,7 +3346,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -3360,7 +3360,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -3368,7 +3368,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -3378,11 +3378,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -3390,7 +3390,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGBP-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
         "symbol": "cGBP"
@@ -3404,7 +3404,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -3412,7 +3412,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -3422,11 +3422,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         }
       ]
@@ -3434,7 +3434,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCHF-cGBP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
         "symbol": "cCHF"
@@ -3448,7 +3448,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -3456,7 +3456,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -3466,11 +3466,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         }
       ]
@@ -3478,7 +3478,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGBP-cJPY",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
         "symbol": "cGBP"
@@ -3492,7 +3492,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -3500,7 +3500,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -3510,11 +3510,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         }
       ]
@@ -3522,7 +3522,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCOP-cGBP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
         "symbol": "cCOP"
@@ -3536,7 +3536,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -3544,7 +3544,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -3554,11 +3554,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         }
       ]
@@ -3566,7 +3566,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGBP-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
         "symbol": "cGBP"
@@ -3580,7 +3580,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -3588,7 +3588,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -3598,11 +3598,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -3610,7 +3610,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCHF-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
         "symbol": "cCHF"
@@ -3624,7 +3624,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -3632,7 +3632,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -3642,11 +3642,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         }
       ]
@@ -3654,7 +3654,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cJPY-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
         "symbol": "cJPY"
@@ -3668,7 +3668,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -3676,7 +3676,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -3686,11 +3686,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         }
       ]
@@ -3698,7 +3698,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCOP-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
         "symbol": "cCOP"
@@ -3712,7 +3712,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -3720,7 +3720,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -3730,11 +3730,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         }
       ]
@@ -3742,7 +3742,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cREAL-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
         "symbol": "cREAL"
@@ -3756,7 +3756,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -3764,7 +3764,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -3774,11 +3774,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -3786,7 +3786,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCHF-cJPY",
-    "assets": [
+    "tokens": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
         "symbol": "cCHF"
@@ -3800,7 +3800,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -3808,7 +3808,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -3818,11 +3818,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         }
       ]
@@ -3830,7 +3830,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCHF-cCOP",
-    "assets": [
+    "tokens": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
         "symbol": "cCHF"
@@ -3844,7 +3844,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -3852,7 +3852,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -3862,11 +3862,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         }
       ]
@@ -3874,7 +3874,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCHF-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
         "symbol": "cCHF"
@@ -3888,7 +3888,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -3896,7 +3896,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -3906,11 +3906,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -3918,7 +3918,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCOP-cJPY",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
         "symbol": "cCOP"
@@ -3932,7 +3932,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -3940,7 +3940,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -3950,11 +3950,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         }
       ]
@@ -3962,7 +3962,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cJPY-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
         "symbol": "cJPY"
@@ -3976,7 +3976,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -3984,7 +3984,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -3994,11 +3994,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -4006,7 +4006,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCOP-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
         "symbol": "cCOP"
@@ -4020,7 +4020,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -4028,7 +4028,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -4038,11 +4038,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.5991,
       "hops": [
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -4050,7 +4050,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-cEUR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -4064,7 +4064,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -4072,7 +4072,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -4082,11 +4082,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.64925,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         }
       ]
@@ -4094,7 +4094,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCAD-cEUR",
-    "assets": [
+    "tokens": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
         "symbol": "cCAD"
@@ -4108,7 +4108,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -4116,7 +4116,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -4126,11 +4126,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.64925,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         }
       ]
@@ -4138,7 +4138,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cEUR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -4152,7 +4152,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -4160,7 +4160,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -4170,11 +4170,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.74875,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         }
       ]
@@ -4182,7 +4182,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cEUR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -4196,7 +4196,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -4204,7 +4204,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -4214,11 +4214,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.7985,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         }
       ]
@@ -4226,7 +4226,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cEUR-cGBP",
-    "assets": [
+    "tokens": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
         "symbol": "cEUR"
@@ -4240,7 +4240,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -4248,7 +4248,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -4258,11 +4258,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.7985,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         }
       ]
@@ -4270,7 +4270,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cEUR-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
         "symbol": "cEUR"
@@ -4284,7 +4284,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -4292,7 +4292,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -4302,11 +4302,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.7985,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         }
       ]
@@ -4314,7 +4314,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCHF-cEUR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
         "symbol": "cCHF"
@@ -4328,7 +4328,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -4336,7 +4336,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -4346,11 +4346,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.7985,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         }
       ]
@@ -4358,7 +4358,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cEUR-cJPY",
-    "assets": [
+    "tokens": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
         "symbol": "cEUR"
@@ -4372,7 +4372,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -4380,7 +4380,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -4390,11 +4390,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.7985,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         }
       ]
@@ -4402,7 +4402,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCOP-cEUR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
         "symbol": "cCOP"
@@ -4416,7 +4416,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -4424,7 +4424,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -4434,11 +4434,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.7985,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         }
       ]
@@ -4446,7 +4446,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cEUR-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
         "symbol": "cEUR"
@@ -4460,7 +4460,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -4468,7 +4468,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -4478,11 +4478,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.7985,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -4490,7 +4490,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlEUROC-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x9883d788d40F1C7595a780ed881Ea833C7743B4B",
         "symbol": "axlEUROC"
@@ -4504,7 +4504,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -4512,7 +4512,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xfca6d94b46122eb9a4b86cf9d3e1e856fea8a826d0fc26c5baf17c43fbaf0f48",
-        "assets": [
+        "tokens": [
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
           "0x9883d788d40F1C7595a780ed881Ea833C7743B4B"
         ]
@@ -4522,11 +4522,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 0.9975,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0xfca6d94b46122eb9a4b86cf9d3e1e856fea8a826d0fc26c5baf17c43fbaf0f48",
+          "poolAddress": "0xfca6d94b46122eb9a4b86cf9d3e1e856fea8a826d0fc26c5baf17c43fbaf0f48",
           "costPercent": 0.5
         }
       ]
@@ -4534,7 +4534,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGHS-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
         "symbol": "cGHS"
@@ -4548,7 +4548,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -4558,7 +4558,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1,
       "hops": [
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -4566,7 +4566,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cNGN-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
         "symbol": "cNGN"
@@ -4580,7 +4580,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -4590,7 +4590,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1,
       "hops": [
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -4598,7 +4598,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cKES-cUSD",
-    "assets": [
+    "tokens": [
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
         "symbol": "cKES"
@@ -4612,7 +4612,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -4622,7 +4622,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1,
       "hops": [
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -4630,7 +4630,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-cGHS",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -4644,7 +4644,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -4652,7 +4652,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -4662,11 +4662,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -4674,7 +4674,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -4688,7 +4688,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -4696,7 +4696,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -4706,11 +4706,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -4718,7 +4718,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -4732,7 +4732,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -4740,7 +4740,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -4750,11 +4750,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -4762,7 +4762,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cGHS",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -4776,7 +4776,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -4784,7 +4784,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -4794,11 +4794,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1,
       "hops": [
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -4806,7 +4806,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cGHS",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -4820,7 +4820,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -4828,7 +4828,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -4838,11 +4838,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1,
       "hops": [
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -4850,7 +4850,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -4864,7 +4864,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -4872,7 +4872,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -4882,11 +4882,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1,
       "hops": [
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -4894,7 +4894,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -4908,7 +4908,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -4916,7 +4916,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -4926,11 +4926,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1,
       "hops": [
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -4938,7 +4938,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -4952,7 +4952,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -4960,7 +4960,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -4970,11 +4970,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1,
       "hops": [
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -4982,7 +4982,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -4996,7 +4996,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -5004,7 +5004,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -5014,11 +5014,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1,
       "hops": [
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -5026,7 +5026,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-cGHS",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -5040,7 +5040,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -5048,7 +5048,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -5058,11 +5058,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.1485,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -5070,7 +5070,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -5084,7 +5084,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -5092,7 +5092,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -5102,11 +5102,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.1485,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -5114,7 +5114,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -5128,7 +5128,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -5136,7 +5136,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -5146,11 +5146,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.1485,
       "hops": [
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -5158,7 +5158,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCAD-cGHS",
-    "assets": [
+    "tokens": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
         "symbol": "cCAD"
@@ -5172,7 +5172,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -5180,7 +5180,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -5190,11 +5190,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.1485,
       "hops": [
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -5202,7 +5202,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCAD-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
         "symbol": "cCAD"
@@ -5216,7 +5216,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -5224,7 +5224,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -5234,11 +5234,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.1485,
       "hops": [
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -5246,7 +5246,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCAD-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
         "symbol": "cCAD"
@@ -5260,7 +5260,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -5268,7 +5268,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -5278,11 +5278,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.1485,
       "hops": [
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -5290,7 +5290,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cGHS",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -5304,7 +5304,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -5312,7 +5312,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -5322,11 +5322,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.2475,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -5334,7 +5334,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -5348,7 +5348,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -5356,7 +5356,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -5366,11 +5366,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.2475,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -5378,7 +5378,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -5392,7 +5392,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -5400,7 +5400,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -5410,11 +5410,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.2475,
       "hops": [
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -5422,7 +5422,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cGHS",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -5436,7 +5436,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -5444,7 +5444,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -5454,11 +5454,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -5466,7 +5466,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -5480,7 +5480,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -5488,7 +5488,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -5498,11 +5498,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -5510,7 +5510,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -5524,7 +5524,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -5532,7 +5532,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -5542,11 +5542,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -5554,7 +5554,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGBP-cGHS",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
         "symbol": "cGBP"
@@ -5568,7 +5568,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -5576,7 +5576,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -5586,11 +5586,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -5598,7 +5598,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGBP-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
         "symbol": "cGBP"
@@ -5612,7 +5612,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -5620,7 +5620,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -5630,11 +5630,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -5642,7 +5642,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGBP-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
         "symbol": "cGBP"
@@ -5656,7 +5656,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -5664,7 +5664,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -5674,11 +5674,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -5686,7 +5686,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGHS-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
         "symbol": "cGHS"
@@ -5700,7 +5700,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -5708,7 +5708,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -5718,11 +5718,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -5730,7 +5730,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cNGN-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
         "symbol": "cNGN"
@@ -5744,7 +5744,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -5752,7 +5752,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -5762,11 +5762,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -5774,7 +5774,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cKES-cZAR",
-    "assets": [
+    "tokens": [
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
         "symbol": "cKES"
@@ -5788,7 +5788,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -5796,7 +5796,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -5806,11 +5806,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -5818,7 +5818,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCHF-cGHS",
-    "assets": [
+    "tokens": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
         "symbol": "cCHF"
@@ -5832,7 +5832,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -5840,7 +5840,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -5850,11 +5850,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -5862,7 +5862,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCHF-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
         "symbol": "cCHF"
@@ -5876,7 +5876,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -5884,7 +5884,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -5894,11 +5894,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -5906,7 +5906,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCHF-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
         "symbol": "cCHF"
@@ -5920,7 +5920,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -5928,7 +5928,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -5938,11 +5938,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -5950,7 +5950,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGHS-cJPY",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
         "symbol": "cGHS"
@@ -5964,7 +5964,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -5972,7 +5972,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -5982,11 +5982,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -5994,7 +5994,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cJPY-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
         "symbol": "cJPY"
@@ -6008,7 +6008,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -6016,7 +6016,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -6026,11 +6026,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -6038,7 +6038,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cJPY-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
         "symbol": "cJPY"
@@ -6052,7 +6052,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -6060,7 +6060,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -6070,11 +6070,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -6082,7 +6082,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCOP-cGHS",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
         "symbol": "cCOP"
@@ -6096,7 +6096,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -6104,7 +6104,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -6114,11 +6114,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -6126,7 +6126,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCOP-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
         "symbol": "cCOP"
@@ -6140,7 +6140,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -6148,7 +6148,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -6158,11 +6158,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -6170,7 +6170,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCOP-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
         "symbol": "cCOP"
@@ -6184,7 +6184,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -6192,7 +6192,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -6202,11 +6202,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -6214,7 +6214,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGHS-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
         "symbol": "cGHS"
@@ -6228,7 +6228,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -6236,7 +6236,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -6246,11 +6246,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -6258,7 +6258,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cNGN-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
         "symbol": "cNGN"
@@ -6272,7 +6272,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -6280,7 +6280,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -6290,11 +6290,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -6302,7 +6302,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cKES-cREAL",
-    "assets": [
+    "tokens": [
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
         "symbol": "cKES"
@@ -6316,7 +6316,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -6324,7 +6324,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -6334,11 +6334,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.297,
       "hops": [
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -6346,7 +6346,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cEUR-cGHS",
-    "assets": [
+    "tokens": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
         "symbol": "cEUR"
@@ -6360,7 +6360,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -6368,7 +6368,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -6378,11 +6378,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.495,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -6390,7 +6390,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cEUR-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
         "symbol": "cEUR"
@@ -6404,7 +6404,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -6412,7 +6412,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -6422,11 +6422,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.495,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -6434,7 +6434,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cEUR-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
         "symbol": "cEUR"
@@ -6448,7 +6448,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -6456,7 +6456,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -6466,11 +6466,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.495,
       "hops": [
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -6478,7 +6478,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGHS-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
         "symbol": "cGHS"
@@ -6492,7 +6492,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -6500,7 +6500,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -6510,11 +6510,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.99,
       "hops": [
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -6522,7 +6522,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGHS-cKES",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
         "symbol": "cGHS"
@@ -6536,7 +6536,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -6544,7 +6544,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -6554,11 +6554,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.99,
       "hops": [
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -6566,7 +6566,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cKES-cNGN",
-    "assets": [
+    "tokens": [
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
         "symbol": "cKES"
@@ -6580,7 +6580,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -6588,7 +6588,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -6598,11 +6598,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 1.99,
       "hops": [
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]
@@ -6610,7 +6610,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cUSD-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
         "symbol": "cUSD"
@@ -6624,7 +6624,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -6634,7 +6634,7 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         }
       ]
@@ -6642,7 +6642,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "axlUSDC-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
@@ -6656,7 +6656,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x6285De9DA7C1d329C0451628638908915002d9d1"
         ]
@@ -6664,7 +6664,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -6674,11 +6674,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2,
       "hops": [
         {
-          "poolId": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
+          "poolAddress": "0x0d739efbfc30f303e8d1976c213b4040850d1af40f174f4169b846f6fd3d2f20",
           "costPercent": 0
         },
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         }
       ]
@@ -6686,7 +6686,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USD₮-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
@@ -6700,7 +6700,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -6708,7 +6708,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xd077A400968890Eacc75cdc901F0356c943e4fDb"
         ]
@@ -6718,11 +6718,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
+          "poolAddress": "0x773bcec109cee923b5e04706044fd9d6a5121b1a6a4c059c36fdbe5b845d4e9b",
           "costPercent": 0
         }
       ]
@@ -6730,7 +6730,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "USDC-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
@@ -6744,7 +6744,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -6752,7 +6752,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x01C5C0122039549AD1493B8220cABEdD739BC44E"
         ]
@@ -6762,11 +6762,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
+          "poolAddress": "0xacc988382b66ee5456086643dcfd9a5ca43dd8f428f6ef22503d8b8013bcffd7",
           "costPercent": 0
         }
       ]
@@ -6774,7 +6774,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cAUD-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
         "symbol": "cAUD"
@@ -6788,7 +6788,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -6796,7 +6796,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139"
         ]
@@ -6806,11 +6806,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.147,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
+          "poolAddress": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7",
           "costPercent": 0.15
         }
       ]
@@ -6818,7 +6818,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCAD-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
         "symbol": "cCAD"
@@ -6832,7 +6832,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -6840,7 +6840,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60"
         ]
@@ -6850,11 +6850,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.147,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
+          "poolAddress": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee",
           "costPercent": 0.15
         }
       ]
@@ -6862,7 +6862,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "CELO-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
@@ -6876,7 +6876,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -6884,7 +6884,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x471EcE3750Da237f93B8E339c536989b8978a438"
         ]
@@ -6894,11 +6894,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.245,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
+          "poolAddress": "0x3135b662c38265d0655177091f1b647b4fef511103d06c016efdf18b46930d2c",
           "costPercent": 0.25
         }
       ]
@@ -6906,7 +6906,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "PUSO-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
         "symbol": "PUSO"
@@ -6920,7 +6920,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x0352976d940a2C3FBa0C3623198947Ee1d17869E"
         ]
@@ -6928,7 +6928,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -6938,11 +6938,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.294,
       "hops": [
         {
-          "poolId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
+          "poolAddress": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413",
           "costPercent": 0.3
         },
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         }
       ]
@@ -6950,7 +6950,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGBP-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
         "symbol": "cGBP"
@@ -6964,7 +6964,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -6972,7 +6972,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3"
         ]
@@ -6982,11 +6982,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.294,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
+          "poolAddress": "0x6c369bfb1598b2f7718671221bc524c84874ad1ed7ba02a61121e7a06722e2ce",
           "costPercent": 0.3
         }
       ]
@@ -6994,7 +6994,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cZAR-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
         "symbol": "cZAR"
@@ -7008,7 +7008,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -7016,7 +7016,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e"
         ]
@@ -7026,11 +7026,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.294,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
+          "poolAddress": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb",
           "costPercent": 0.3
         }
       ]
@@ -7038,7 +7038,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCHF-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
         "symbol": "cCHF"
@@ -7052,7 +7052,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -7060,7 +7060,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980"
         ]
@@ -7070,11 +7070,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.294,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
+          "poolAddress": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc",
           "costPercent": 0.3
         }
       ]
@@ -7082,7 +7082,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cJPY-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
         "symbol": "cJPY"
@@ -7096,7 +7096,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -7104,7 +7104,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426"
         ]
@@ -7114,11 +7114,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.294,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
+          "poolAddress": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c",
           "costPercent": 0.3
         }
       ]
@@ -7126,7 +7126,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cCOP-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
         "symbol": "cCOP"
@@ -7140,7 +7140,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -7148,7 +7148,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67"
         ]
@@ -7158,11 +7158,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.294,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
+          "poolAddress": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b",
           "costPercent": 0.3
         }
       ]
@@ -7170,7 +7170,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cREAL-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
         "symbol": "cREAL"
@@ -7184,7 +7184,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -7192,7 +7192,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x2294298942fdc79417DE9E0D740A4957E0e7783a"
         ]
@@ -7202,11 +7202,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.294,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
+          "poolAddress": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05",
           "costPercent": 0.3
         }
       ]
@@ -7214,7 +7214,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cEUR-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
         "symbol": "cEUR"
@@ -7228,7 +7228,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -7236,7 +7236,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a"
         ]
@@ -7246,11 +7246,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.49,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
+          "poolAddress": "0x746455363e8f55d04e0a2cc040d1b348a6c031b336ba6af6ae91515c194929c8",
           "costPercent": 0.5
         }
       ]
@@ -7258,7 +7258,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cGHS-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
         "symbol": "cGHS"
@@ -7272,7 +7272,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -7280,7 +7280,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C"
         ]
@@ -7290,11 +7290,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.98,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
+          "poolAddress": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187",
           "costPercent": 1
         }
       ]
@@ -7302,7 +7302,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cNGN-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
         "symbol": "cNGN"
@@ -7316,7 +7316,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -7324,7 +7324,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x3d5ae86F34E2a82771496D140daFAEf3789dF888"
         ]
@@ -7334,11 +7334,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.98,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
+          "poolAddress": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc",
           "costPercent": 1
         }
       ]
@@ -7346,7 +7346,7 @@ export const routes11142220: RouteWithCost[] = [
   },
   {
     "id": "cKES-eXOF",
-    "assets": [
+    "tokens": [
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
         "symbol": "cKES"
@@ -7360,7 +7360,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0x5505b70207aE3B826c1A7607F19F3Bf73444A082"
         ]
@@ -7368,7 +7368,7 @@ export const routes11142220: RouteWithCost[] = [
       {
         "providerAddr": "0xeCB3C656C131fCd9bB8D1d80898716bD684feb78",
         "id": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
-        "assets": [
+        "tokens": [
           "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
           "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF"
         ]
@@ -7378,11 +7378,11 @@ export const routes11142220: RouteWithCost[] = [
       "totalCostPercent": 2.98,
       "hops": [
         {
-          "poolId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
+          "poolAddress": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b",
           "costPercent": 2
         },
         {
-          "poolId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
+          "poolAddress": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b",
           "costPercent": 1
         }
       ]

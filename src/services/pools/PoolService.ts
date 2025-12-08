@@ -7,6 +7,7 @@ import {
   BIPOOL_MANAGER_ABI,
 } from '../../core/abis'
 import { PublicClient, Address } from 'viem'
+import { sortTokenAddresses } from '../../utils/sortUtils'
 
 // TODO: Update to enrich pools with more data as needed. Use optional flag to include more data.
 
@@ -97,7 +98,7 @@ export class PoolService {
 
         return {
           factoryAddr: fpmmFactoryAddress,
-          poolAddress: poolAddress as string,
+          poolAddr: poolAddress as string,
           token0: token0 as string,
           token1: token1 as string,
           poolType: PoolType.FPMM,
@@ -154,7 +155,7 @@ export class PoolService {
           return null
         }
 
-        const [token0, token1] = this.sortTokens(
+        const [token0, token1] = sortTokenAddresses(
           exchange.assets[0],
           exchange.assets[1]
         )
@@ -179,7 +180,7 @@ export class PoolService {
 
         return {
           factoryAddr: virtualPoolFactoryAddress,
-          poolAddress: poolAddress as string,
+          poolAddr: poolAddress as string,
           token0: token0 as string,
           token1: token1 as string,
           poolType: PoolType.Virtual,
@@ -196,15 +197,4 @@ export class PoolService {
     }
   }
 
-  /**
-   * Sorts two token addresses to match VirtualPoolFactory's sorting.
-   */
-  private sortTokens(
-    tokenA: Address,
-    tokenB: Address
-  ): [Address, Address] {
-    return tokenA.toLowerCase() < tokenB.toLowerCase()
-      ? [tokenA, tokenB]
-      : [tokenB, tokenA]
-  }
 }
