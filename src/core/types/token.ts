@@ -2,7 +2,7 @@ import { ISupplyCalculator } from '../../services'
 
 export interface Token {
   address: string
-  symbol: string
+  symbol: string // TODO: Consider making this strongly typed with TokenSymbol enum
   name?: string
   decimals?: number
 }

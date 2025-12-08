@@ -1,13 +1,13 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import type { BaseToken } from '../../src/core/types'
+import type { Token } from '../../src/core/types'
 import { sanitizeSymbol } from './fileGenerator'
 
 /**
  * Generate the main tokens.ts file with enums and helper functions
  */
 export function generateTokensIndexFile(
-  tokensByChain: { [chainId: number]: BaseToken[] },
+  tokensByChain: { [chainId: number]: Token[] },
   scriptDir: string
 ): void {
   const chainIds = Object.keys(tokensByChain)
@@ -55,7 +55,7 @@ ${tokenEntries.join('\n')}
   const content = `// This file is auto-generated. Do not edit manually.
 // Generated on ${new Date().toISOString()}
 
-import type { BaseToken } from '../core/types'
+import type { Token } from '../core/types'
 
 /**
  * Enum of all token symbols across all supported chains
@@ -71,7 +71,7 @@ ${enumEntries.join('\n')}
  */
 export async function getCachedTokens(
   chainId: number
-): Promise<readonly BaseToken[] | undefined> {
+): Promise<readonly Token[] | undefined> {
   switch (chainId) {
 ${getCachedTokensCases.join('\n')}
     default:
@@ -85,7 +85,7 @@ ${getCachedTokensCases.join('\n')}
  * @returns The cached tokens array
  * @throws Error if tokens are not available for the chain
  */
-export function getCachedTokensSync(chainId: number): readonly BaseToken[] {
+export function getCachedTokensSync(chainId: number): readonly Token[] {
   switch (chainId) {
 ${getCachedTokensSyncCases.join('\n')}
     default:
@@ -125,7 +125,7 @@ export function getTokenAddress(
 export function findTokenBySymbol(
   chainId: number,
   symbol: TokenSymbol
-): BaseToken | undefined {
+): Token | undefined {
   try {
     const tokens = getCachedTokensSync(chainId)
     return tokens.find((t) => t.symbol === symbol)

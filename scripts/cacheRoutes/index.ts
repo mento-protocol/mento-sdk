@@ -45,12 +45,12 @@ const chainConfigs = {
 } as const
 
 /**
- * Generate all tradable pairs with ALL available routes (not just optimal)
+ * Generate all available routes (not just optimal)
  */
-async function getAllRoutesWithRoutes(
+async function getAllRoutes(
   routerService: RouterService
 ): Promise<Route[]> {
-  // Get direct pairs
+  // Get direct routes
   const directPairs = await routerService.getDirectRoutes()
 
   if (directPairs.length === 0) {
@@ -98,7 +98,7 @@ async function generateAndCacheRoutes(
 
   // Get all tradable pairs with all available routes - force fresh generation
   console.log(`Fetching all tradable pairs with all available routes...`)
-  const pairs = await getAllRoutesWithRoutes(routerService)
+  const pairs = await getAllRoutes(routerService)
 
   // Process pairs with controlled concurrency using viem
   console.log(`Fetching spreads from pool configurations...`)
