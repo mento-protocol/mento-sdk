@@ -41,14 +41,14 @@ export class PoolService {
       return this.poolsCache
     }
 
-    // TODO: Use router.factoryRegistry.poolFactories() for dynamic factory discovery
+    // TODO: Update to use router.factoryRegistry.poolFactories() 
+    //       for dynamic factory discovery. For now we will use
+    //       the hardcoded factory addresses for the chain for v1.
     const pools: Pool[] = []
 
-    // Fetch FPMM pools
     const fpmmPools = await this.fetchFPMMPools()
     pools.push(...fpmmPools)
 
-    // Fetch Virtual pools
     const virtualPools = await this.fetchVirtualPools()
     pools.push(...virtualPools)
 
