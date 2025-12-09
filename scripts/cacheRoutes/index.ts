@@ -51,26 +51,25 @@ async function getAllRoutes(
   routerService: RouterService
 ): Promise<Route[]> {
   // Get direct routes
-  const directPairs = await routerService.getDirectRoutes()
+  const directRoutes = await routerService.getDirectRoutes()
 
-  if (directPairs.length === 0) {
+  if (directRoutes.length === 0) {
     return []
   }
 
   // Build connectivity structures for route finding
-  const connectivity = buildConnectivityStructures(directPairs)
+  const connectivity = buildConnectivityStructures(directRoutes)
 
   // Generate all possible routes (direct + 2-hop)
   const allRoutes = generateAllRoutes(connectivity)
 
-  // Return ALL routes (returnAllRoutes = true) for cache generation
-  const allPairs = selectOptimalRoutes(
+  const optimalRoutes = selectOptimalRoutes(
     allRoutes,
     true,
     connectivity.addrToSymbol
   )
 
-  return allPairs as Route[]
+  return optimalRoutes as Route[]
 }
 
 /**

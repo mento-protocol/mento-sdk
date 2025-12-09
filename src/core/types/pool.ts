@@ -35,5 +35,5 @@ export interface Pool {
   /**
    * The type of pool (FPMM or Virtual)
    */
-  poolType: PoolType
+  poolType: `${PoolType}`
 }

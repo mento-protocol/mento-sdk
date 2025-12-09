@@ -21,7 +21,7 @@ export function sortTokenAddresses(
 }
 
 /**
- * Creates a canonical pair key from two addresses.
+ * Creates a canonical route ID from two addresses.
  * Uses numeric address comparison to match contract behavior.
  */
 export function canonicalAddressKey(

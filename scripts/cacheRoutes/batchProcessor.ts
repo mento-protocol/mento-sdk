@@ -1,6 +1,6 @@
 import type { Route, RouteWithCost } from '../../src/core/types'
 import type { PublicClient } from 'viem'
-import { calculateSpreadForRoute } from './spread'
+import { calculateCostForRoute } from './spread'
 
 /**
  * Process routes in batches with controlled concurrency
@@ -20,17 +20,13 @@ export async function processRoutesInBatches(
     // Process batch concurrently with error handling
     const batchPromises = batch.map(async (route) => {
       try {
-        const result = await calculateSpreadForRoute(route, publicClient)
+        const result = await calculateCostForRoute(route, publicClient)
         processed++
-        process.stdout.write(
-          `\r   Processing ${processed}/${routes.length} routes... (${errors} errors)`
-        )
+        process.stdout.write(`\r   Processing ${processed}/${routes.length} routes... (${errors} errors)`)
         return result
       } catch (error) {
         errors++
-        process.stdout.write(
-          `\r   Processing ${processed}/${routes.length} routes... (${errors} errors)`
-        )
+        process.stdout.write(`\r   Processing ${processed}/${routes.length} routes... (${errors} errors)`)
 
         // Return null for failed routes - we'll filter them out later
         return null
@@ -48,9 +44,7 @@ export async function processRoutesInBatches(
   }
 
   if (errors > 0) {
-    console.log(
-      `\n   ${errors} routes failed to fetch spread data (excluded from cache)`
-    )
+    console.log(`\n   ${errors} routes failed to fetch spread data (excluded from cache)`)
   }
 
   return results
