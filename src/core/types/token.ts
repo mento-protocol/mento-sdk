@@ -1,17 +1,17 @@
 import { ISupplyCalculator } from '../../services'
 
-export interface BaseToken {
-  name: string
-  symbol: string
+export interface Token {
   address: string
-  decimals: number
+  symbol: string // TODO: Consider making this strongly typed with TokenSymbol enum
+  name?: string
+  decimals?: number
 }
 
-export interface StableToken extends BaseToken {
+export interface StableToken extends Token {
   totalSupply: string
 }
 
-export type CollateralAsset = BaseToken
+export type CollateralAsset = Token
 
 /**
  * A supply adjustment is a calculator that is used to adjust the supply of a token.

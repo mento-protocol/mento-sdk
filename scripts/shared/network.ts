@@ -4,9 +4,11 @@ export const NETWORK_MAP: Record<string, number> = {
   ['celo-sepolia']: 11142220,
 }
 
+// TODO: Remove the local rpc
 // RPC URLs for different networks
 export const rpcUrls = {
-  42220: 'https://forno.celo.org',
+  // 42220: 'https://forno.celo.org',
+  42220: 'http://localhost:8545',
   11142220: 'https://forno.celo-sepolia.celo-testnet.org',
 } as const
 

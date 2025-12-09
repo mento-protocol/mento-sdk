@@ -1,12 +1,9 @@
 import { PoolService } from '../pools'
 import { ERC20_ABI } from '../../core/abis'
 import { RouteNotFoundError } from '../../core/errors'
-import { Route, RouteID, Asset, Pool, RouteWithCost } from '../../core/types'
-import {
-  buildConnectivityStructures,
-  generateAllRoutes,
-  selectOptimalRoutes,
-} from '../../utils/routeUtils'
+import { Route, RouteID, Pool, RouteWithCost, Token } from '../../core/types'
+import { buildConnectivityStructures, generateAllRoutes, selectOptimalRoutes } from '../../utils/routeUtils'
+import { canonicalSymbolKey, sortTokenAddresses } from '../../utils/sortUtils'
 import { PublicClient } from 'viem'
 
 /**
@@ -20,11 +17,7 @@ import { PublicClient } from 'viem'
 export class RouterService {
   private symbolCache: Map<string, string> = new Map()
 
-  constructor(
-    private publicClient: PublicClient,
-    private chainId: number,
-    private poolService: PoolService
-  ) {}
+  constructor(private publicClient: PublicClient, private chainId: number, private poolService: PoolService) {}
 
   /**
    * Generates all direct (single-hop) routes from available pools
@@ -53,57 +46,41 @@ export class RouterService {
       uniqueTokens.add(pool.token1)
     })
 
-    // Fetch symbols for all tokens in parallel
+    // Fetch symbols for all tokens in parallel. Used for the route ids
     const tokenAddresses = Array.from(uniqueTokens)
     await Promise.all(tokenAddresses.map((addr: string) => this.fetchTokenSymbol(addr)))
 
-    // Group pools by canonical route ID
-    const routeMap = new Map<string, Pool[]>()
-
-    for (const pool of pools) {
-      const symbol0 = this.symbolCache.get(pool.token0) || pool.token0
-      const symbol1 = this.symbolCache.get(pool.token1) || pool.token1
-
-      // Create canonical route ID (alphabetically sorted symbols)
-      const routeId = [symbol0, symbol1].sort().join('-') as RouteID
-
-      if (!routeMap.has(routeId)) {
-        routeMap.set(routeId, [])
-      }
-      routeMap.get(routeId)!.push(pool)
-    }
-
-    // Create Route objects
     const routes: Route[] = []
 
-    for (const [routeId, routePools] of routeMap.entries()) {
-      const firstPool = routePools[0]
+    // Loop all pools
+    for (const pool of pools) {
+      const symbol0 = this.symbolCache.get(pool.token0)
+      const symbol1 = this.symbolCache.get(pool.token1)
 
-      const asset0: Asset = {
-        address: firstPool.token0,
-        symbol: this.symbolCache.get(firstPool.token0) || firstPool.token0,
+      if (!symbol0 || !symbol1) {
+        // TODO: Consider error handling across the codebase for better consumer experience.
+        throw new Error(`Symbol not found for token ${pool.token0} or ${pool.token1}`)
       }
 
-      const asset1: Asset = {
-        address: firstPool.token1,
-        symbol: this.symbolCache.get(firstPool.token1) || firstPool.token1,
-      }
+      // Create canonical route ID (alphabetically sorted symbols)
+      const routeId = canonicalSymbolKey(symbol0, symbol1) as RouteID
 
-      // Sort assets alphabetically by symbol
-      const sortedAssets: [Asset, Asset] =
-        asset0.symbol < asset1.symbol ? [asset0, asset1] : [asset1, asset0]
-
-      // Create path with all pools for this route
-      const path = routePools.map((pool: Pool) => ({
-        providerAddr: pool.factoryAddr,
-        id: pool.poolAddress,
-        assets: [pool.token0, pool.token1] as [string, string],
-      }))
+      // Sort tokens to match the canonical route ID order (alphabetical by symbol)
+      const sortedTokens: [Token, Token] =
+        symbol0 < symbol1
+          ? [
+              { address: pool.token0, symbol: symbol0 },
+              { address: pool.token1, symbol: symbol1 },
+            ]
+          : [
+              { address: pool.token1, symbol: symbol1 },
+              { address: pool.token0, symbol: symbol0 },
+            ]
 
       routes.push({
-        id: routeId as RouteID,
-        assets: sortedAssets,
-        path,
+        id: routeId,
+        tokens: sortedTokens,
+        path: [pool],
       })
     }
 
@@ -150,9 +127,7 @@ export class RouterService {
           return cachedRoutes
         }
       } catch (error) {
-        console.warn(
-          'Failed to load cached routes, falling back to fresh generation'
-        )
+        console.warn('Failed to load cached routes, falling back to fresh generation')
       }
     }
 
@@ -165,9 +140,7 @@ export class RouterService {
    * @param returnAllRoutes - Whether to return all routes or just optimal ones per pair
    * @private
    */
-  private async generateFreshRoutes(
-    returnAllRoutes: boolean = false
-  ): Promise<Route[]> {
+  private async generateFreshRoutes(returnAllRoutes: boolean = false): Promise<Route[]> {
     // Get direct routes
     const directRoutes = await this.getDirectRoutes()
 
@@ -182,11 +155,7 @@ export class RouterService {
     const allRoutes = generateAllRoutes(connectivity)
 
     // Select routes based on returnAllRoutes flag
-    const selectedRoutes = selectOptimalRoutes(
-      allRoutes,
-      returnAllRoutes,
-      connectivity.addrToSymbol
-    )
+    const selectedRoutes = selectOptimalRoutes(allRoutes, returnAllRoutes, connectivity.addrToSymbol)
 
     return selectedRoutes as Route[]
   }
@@ -227,9 +196,7 @@ export class RouterService {
       return symbol
     } catch (error) {
       // Fallback to address if symbol fetch fails
-      console.warn(
-        `Failed to fetch symbol for token ${address}, using address as fallback`
-      )
+      console.warn(`Failed to fetch symbol for token ${address}, using address as fallback`)
       this.symbolCache.set(address, address)
       return address
     }
@@ -256,11 +223,7 @@ export class RouterService {
    * }
    * ```
    */
-  async findRoute(
-    tokenIn: string,
-    tokenOut: string,
-    options?: { cached?: boolean }
-  ): Promise<Route> {
+  async findRoute(tokenIn: string, tokenOut: string, options?: { cached?: boolean }): Promise<Route> {
     // Get all tradable routes
     const allRoutes = await this.getRoutes(options)
 
@@ -269,8 +232,8 @@ export class RouterService {
 
     // Search for matching route (bidirectional)
     const matchingRoute = allRoutes.find((route) => {
-      const a0 = route.assets[0].address.toLowerCase()
-      const a1 = route.assets[1].address.toLowerCase()
+      const a0 = route.tokens[0].address.toLowerCase()
+      const a1 = route.tokens[1].address.toLowerCase()
 
       // Match either direction: (t0,t1) or (t1,t0)
       return (a0 === t0 && a1 === t1) || (a0 === t1 && a1 === t0)
@@ -282,4 +245,18 @@ export class RouterService {
 
     return matchingRoute as Route
   }
+
+  //  await mento.getAmountOut(
+  //           fromTokenAddr,
+  //           toTokenAddr,
+  //           amountWeiBN,
+  //           tradablePair,
+
+  // Needs to call router
+  // - getAmountsOut(uint256 amountIn, Route[] memory routes) public view returns (uint256[] memory amounts) {
+  // Route looks like this: {from, to, factory}
+  // What should the factory be when calling getAmountsOut?
+  // It can be null, but if it is null then the default factory in the router is used
+  //
+  // TODO: Confirm the default factory
 }

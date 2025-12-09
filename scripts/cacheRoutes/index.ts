@@ -8,11 +8,11 @@ import {
   selectOptimalRoutes,
 } from '../../src/utils/routeUtils'
 import { deduplicateRoutes } from '../shared/routeDeduplication'
-import { processPairsInBatches } from './batchProcessor'
+import { processRoutesInBatches } from './batchProcessor'
 import { parseCommandLineArgs, printUsageTips } from './cli'
 import { rpcUrls, type SupportedChainId } from './config'
 import { generateFileContent, writeToFile } from './fileGenerator'
-import { sortPairsBySpread } from './spread'
+import { sortRoutesBySpread } from './spread'
 import { calculateStatistics, displayStatistics } from './statistics'
 import { PoolService, RouterService } from '../../src/services'
 
@@ -45,32 +45,31 @@ const chainConfigs = {
 } as const
 
 /**
- * Generate all tradable pairs with ALL available routes (not just optimal)
+ * Generate all available routes (not just optimal)
  */
-async function getAllRoutesWithRoutes(
+async function getAllRoutes(
   routerService: RouterService
 ): Promise<Route[]> {
-  // Get direct pairs
-  const directPairs = await routerService.getDirectRoutes()
+  // Get direct routes
+  const directRoutes = await routerService.getDirectRoutes()
 
-  if (directPairs.length === 0) {
+  if (directRoutes.length === 0) {
     return []
   }
 
   // Build connectivity structures for route finding
-  const connectivity = buildConnectivityStructures(directPairs)
+  const connectivity = buildConnectivityStructures(directRoutes)
 
   // Generate all possible routes (direct + 2-hop)
   const allRoutes = generateAllRoutes(connectivity)
 
-  // Return ALL routes (returnAllRoutes = true) for cache generation
-  const allPairs = selectOptimalRoutes(
+  const optimalRoutes = selectOptimalRoutes(
     allRoutes,
     true,
     connectivity.addrToSymbol
   )
 
-  return allPairs as Route[]
+  return optimalRoutes as Route[]
 }
 
 /**
@@ -98,19 +97,19 @@ async function generateAndCacheRoutes(
 
   // Get all tradable pairs with all available routes - force fresh generation
   console.log(`Fetching all tradable pairs with all available routes...`)
-  const pairs = await getAllRoutesWithRoutes(routerService)
+  const pairs = await getAllRoutes(routerService)
 
   // Process pairs with controlled concurrency using viem
   console.log(`Fetching spreads from pool configurations...`)
   console.log(`   Using batch size of ${batchSize} concurrent requests`)
-  const pairsWithSpread = await processPairsInBatches(pairs, publicClient as any, batchSize)
+  const pairsWithSpread = await processRoutesInBatches(pairs, publicClient as any, batchSize)
   console.log(`\nSpread data fetched for all routes`)
 
   // Deduplicate routes to eliminate redundant symmetric pairs
   console.log(`Deduplicating redundant routes...`)
   const routesBeforeDedup = pairsWithSpread.length
-  const deduplicatedPairs = deduplicateRoutes(pairsWithSpread)
-  const routesAfterDedup = deduplicatedPairs.length
+  const deduplicatedRoutes = deduplicateRoutes(pairsWithSpread)
+  const routesAfterDedup = deduplicatedRoutes.length
   console.log(
     `   Removed ${routesBeforeDedup - routesAfterDedup} redundant routes (${(
       ((routesBeforeDedup - routesAfterDedup) / routesBeforeDedup) *
@@ -119,7 +118,7 @@ async function generateAndCacheRoutes(
   )
 
   // Sort all routes by spread (best routes first) to provide fallback alternatives
-  const pairsToCache = sortPairsBySpread(deduplicatedPairs)
+  const pairsToCache = sortRoutesBySpread(deduplicatedRoutes)
 
   // Calculate and display statistics
   const statistics = calculateStatistics(pairsToCache)

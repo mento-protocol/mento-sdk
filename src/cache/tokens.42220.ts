@@ -1,12 +1,8 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-12-03T19:52:12.970Z
+// Generated on 2025-12-09T10:58:06.350Z
 
 import { TokenSymbol } from '../utils/tokens'
-import type { BaseToken } from '../core/types'
-
-export interface Token extends BaseToken {
-  symbol: TokenSymbol
-}
+import type { Token } from '../core/types'
 
 export const tokens42220: readonly Token[] = [
   {

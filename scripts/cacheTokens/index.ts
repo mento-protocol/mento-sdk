@@ -2,7 +2,7 @@ import { createPublicClient, http } from 'viem'
 import { celo } from 'viem/chains'
 import { defineChain } from 'viem'
 import { TokenService } from '../../src/services/tokens/tokenService'
-import type { BaseToken } from '../../src/core/types'
+import type { Token } from '../../src/core/types'
 import { rpcUrls, type SupportedChainId } from '../shared/network'
 import { parseCommandLineArgs, printUsageTips } from './cli'
 import { generateFileContent, writeToFile } from './fileGenerator'
@@ -38,7 +38,7 @@ const chainConfigs = {
  */
 async function fetchTokensForChain(
   chainId: SupportedChainId
-): Promise<BaseToken[]> {
+): Promise<Token[]> {
   const chain = chainConfigs[chainId]
   const rpcUrl = rpcUrls[chainId]
 
@@ -59,11 +59,11 @@ async function fetchTokensForChain(
   ])
 
   // Combine and deduplicate by address
-  const tokenMap = new Map<string, BaseToken>()
+  const tokenMap = new Map<string, Token>()
 
   // Add stable tokens
   stableTokens.forEach((token) => {
-    const baseToken: BaseToken = {
+    const baseToken: Token = {
       address: token.address,
       name: token.name,
       symbol: token.symbol,
@@ -89,7 +89,7 @@ async function fetchTokensForChain(
  * Write per-chain cache files
  */
 function writeChainCacheFiles(tokensByChain: {
-  [chainId: number]: BaseToken[]
+  [chainId: number]: Token[]
 }): void {
   for (const [chainIdStr, tokens] of Object.entries(tokensByChain)) {
     const chainId = Number(chainIdStr) as SupportedChainId
@@ -117,7 +117,7 @@ export async function main(): Promise<void> {
   console.log(`📡 Cache tokens for chain(s): ${chainIdsToProcess.join(', ')}`)
 
   // Step 1: Fetch tokens for all chains first
-  const tokensByChain: { [chainId: number]: BaseToken[] } = {}
+  const tokensByChain: { [chainId: number]: Token[] } = {}
 
   for (const chainId of chainIdsToProcess) {
     console.log(`\n🔄 \x1b[1mFetching tokens for chain ${chainId}...\x1b[0m`)

@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import type { BaseToken } from '../../src/core/types'
+import type { Token } from '../../src/core/types'
 import type { SupportedChainId } from '../shared/network'
 
 /**
@@ -16,7 +16,7 @@ export function sanitizeSymbol(symbol: string): string {
  */
 export function generateFileContent(
   chainId: SupportedChainId,
-  tokens: BaseToken[]
+  tokens: Token[]
 ): string {
   const tokenEntries = tokens.map((token) => {
     const safeKey = sanitizeSymbol(token.symbol)
@@ -32,11 +32,7 @@ export function generateFileContent(
 // Generated on ${new Date().toISOString()}
 
 import { TokenSymbol } from '../utils/tokens'
-import type { BaseToken } from '../core/types'
-
-export interface Token extends BaseToken {
-  symbol: TokenSymbol
-}
+import type { Token } from '../core/types'
 
 export const tokens${chainId}: readonly Token[] = [
 ${tokenEntries.join(',\n')}

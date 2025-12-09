@@ -1,12 +1,12 @@
 import type { Route, RouteWithCost } from '../../src/core/types'
 import type { PublicClient } from 'viem'
-import { calculateSpreadForPair } from './spread'
+import { calculateCostForRoute } from './spread'
 
 /**
- * Process pairs in batches with controlled concurrency
+ * Process routes in batches with controlled concurrency
  */
-export async function processPairsInBatches(
-  pairs: readonly Route[],
+export async function processRoutesInBatches(
+  routes: readonly Route[],
   publicClient: PublicClient,
   batchSize = 10
 ): Promise<RouteWithCost[]> {
@@ -14,25 +14,21 @@ export async function processPairsInBatches(
   let processed = 0
   let errors = 0
 
-  for (let i = 0; i < pairs.length; i += batchSize) {
-    const batch = pairs.slice(i, i + batchSize)
+  for (let i = 0; i < routes.length; i += batchSize) {
+    const batch = routes.slice(i, i + batchSize)
 
     // Process batch concurrently with error handling
-    const batchPromises = batch.map(async (pair) => {
+    const batchPromises = batch.map(async (route) => {
       try {
-        const result = await calculateSpreadForPair(pair, publicClient)
+        const result = await calculateCostForRoute(route, publicClient)
         processed++
-        process.stdout.write(
-          `\r   Processing ${processed}/${pairs.length} routes... (${errors} errors)`
-        )
+        process.stdout.write(`\r   Processing ${processed}/${routes.length} routes... (${errors} errors)`)
         return result
       } catch (error) {
         errors++
-        process.stdout.write(
-          `\r   Processing ${processed}/${pairs.length} routes... (${errors} errors)`
-        )
+        process.stdout.write(`\r   Processing ${processed}/${routes.length} routes... (${errors} errors)`)
 
-        // Return null for failed pairs - we'll filter them out later
+        // Return null for failed routes - we'll filter them out later
         return null
       }
     })
@@ -48,9 +44,7 @@ export async function processPairsInBatches(
   }
 
   if (errors > 0) {
-    console.log(
-      `\n   ${errors} routes failed to fetch spread data (excluded from cache)`
-    )
+    console.log(`\n   ${errors} routes failed to fetch spread data (excluded from cache)`)
   }
 
   return results

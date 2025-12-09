@@ -27,7 +27,7 @@
     "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",
     "test": "jest --verbose",
     "coverage": "jest --coverage",
-    "cacheTradablePairs": "ts-node scripts/cacheTradablePairs/index.ts",
+    "cacheRoutes": "ts-node scripts/cacheRoutes/index.ts",
     "cacheTokens": "ts-node scripts/cacheTokens/index.ts"
   },
   "engines": {
@@ -50,6 +50,7 @@
     "prettier": "^2.8.4",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "5.6.3",
     "yargs-parser": "^21.1.1"
   },

@@ -26,26 +26,12 @@ import { RouterService } from '@services/router'
  *              const exchanges = await mento.pools.getPools();
  */
 export class Mento {
-  private readonly chainId: number
-  private readonly publicClient: PublicClient
-  public readonly tokens: TokenService
-  public readonly pools: PoolService
-  public readonly router: RouterService
-
   private constructor(
-    chainId: number,
-    publicClient: PublicClient,
-    tokenService: TokenService,
-    poolService: PoolService,
-    routerService: RouterService
-  ) {
-    this.chainId = chainId
-    this.publicClient = publicClient
-
-    this.tokens = tokenService
-    this.pools = poolService
-    this.router = routerService
-  }
+    private chainId: number,
+    public tokens: TokenService,
+    public pools: PoolService,
+    public router: RouterService
+  ) {}
 
   /**
    * Create a new Mento SDK instance
@@ -68,7 +54,12 @@ export class Mento {
     const routerService = new RouterService(publicClient, chainId, poolService)
 
     // Return new mento
-    return new Mento(chainId, publicClient, tokenService, poolService, routerService)
+    return new Mento(
+      chainId,
+      tokenService,
+      poolService,
+      routerService
+    )
   }
 
   /**
@@ -80,6 +71,13 @@ export class Mento {
     return getContractAddress(this.chainId as ChainId, contractName)
   }
 }
+
+const mento = Mento.create(ChainId.CELO).then(async (m) => {
+  const pools = await m.pools.getPools()
+  const tokens = await m.tokens.getStableTokens()
+  const routes = await m.router.getRoutes()
+})
+
 
 export * from './core/constants'
 export * from './core/types'

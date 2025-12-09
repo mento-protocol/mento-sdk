@@ -1,13 +1,8 @@
-import { getContractAddress } from '../../core/constants'
-import { ChainId } from '../../core/constants/chainId'
-import { Pool, PoolType } from '../../core/types/pool'
-import {
-  FPMM_FACTORY_ABI,
-  FPMM_ABI,
-  VIRTUAL_POOL_FACTORY_ABI,
-  BIPOOL_MANAGER_ABI,
-} from '../../core/abis'
-import { PublicClient } from 'viem'
+import { getContractAddress, ChainId } from '../../core/constants'
+import { Pool, PoolType } from '../../core/types'
+import { FPMM_FACTORY_ABI, FPMM_ABI, VIRTUAL_POOL_FACTORY_ABI, BIPOOL_MANAGER_ABI } from '../../core/abis'
+import { PublicClient, Address } from 'viem'
+import { sortTokenAddresses } from '../../utils/sortUtils'
 
 // TODO: Update to enrich pools with more data as needed. Use optional flag to include more data.
 
@@ -18,10 +13,7 @@ import { PublicClient } from 'viem'
 export class PoolService {
   private poolsCache: Pool[] | null = null
 
-  constructor(
-    private publicClient: PublicClient,
-    private chainId: number
-  ) {}
+  constructor(private publicClient: PublicClient, private chainId: number) {}
 
   /**
    * Fetches all pools available in the protocol from both FPMM and Virtual pool factories
@@ -41,14 +33,14 @@ export class PoolService {
       return this.poolsCache
     }
 
-    // TODO: Use router.factoryRegistry.poolFactories() for dynamic factory discovery
+    // TODO: Update to use router.factoryRegistry.poolFactories()
+    //       for dynamic factory discovery. For now we will use
+    //       the hardcoded factory addresses for the chain for v1.
     const pools: Pool[] = []
 
-    // Fetch FPMM pools
     const fpmmPools = await this.fetchFPMMPools()
     pools.push(...fpmmPools)
 
-    // Fetch Virtual pools
     const virtualPools = await this.fetchVirtualPools()
     pools.push(...virtualPools)
 
@@ -60,10 +52,7 @@ export class PoolService {
    * Fetches all FPMM pools from the FPMM Factory
    */
   private async fetchFPMMPools(): Promise<Pool[]> {
-    const fpmmFactoryAddress = getContractAddress(
-      this.chainId as ChainId,
-      'FPMMFactory'
-    )
+    const fpmmFactoryAddress = getContractAddress(this.chainId as ChainId, 'FPMMFactory')
 
     if (!fpmmFactoryAddress) {
       console.warn('FPMM Factory address not found for this chain')
@@ -73,10 +62,10 @@ export class PoolService {
     try {
       // Get all deployed FPMM pool addresses
       const poolAddresses = (await this.publicClient.readContract({
-        address: fpmmFactoryAddress as `0x${string}`,
+        address: fpmmFactoryAddress as Address,
         abi: FPMM_FACTORY_ABI,
         functionName: 'deployedFPMMAddresses',
-      })) as `0x${string}`[]
+      })) as Address[]
 
       if (poolAddresses.length === 0) {
         return []
@@ -88,20 +77,20 @@ export class PoolService {
             address: poolAddress,
             abi: FPMM_ABI,
             functionName: 'token0',
-          }) as Promise<`0x${string}`>,
+          }) as Promise<Address>,
           this.publicClient.readContract({
             address: poolAddress,
             abi: FPMM_ABI,
             functionName: 'token1',
-          }) as Promise<`0x${string}`>,
+          }) as Promise<Address>,
         ])
 
         return {
           factoryAddr: fpmmFactoryAddress,
-          poolAddress: poolAddress as string,
+          poolAddr: poolAddress as string,
           token0: token0 as string,
           token1: token1 as string,
-          poolType: PoolType.FPMM,
+          poolType: PoolType.FPMM as `${PoolType}`,
         }
       })
 
@@ -114,33 +103,28 @@ export class PoolService {
 
   /**
    * Fetches all Virtual pools by discovering them from BiPoolManager exchanges.
-   * VirtualPoolFactory doesn't have an enumeration method, 
+   * VirtualPoolFactory doesn't have an enumeration method,
    * so we have to derive pools from BiPoolManager.
    */
   private async fetchVirtualPools(): Promise<Pool[]> {
-    const virtualPoolFactoryAddress = getContractAddress(
-      this.chainId as ChainId,
-      'VirtualPoolFactory'
-    )
-    const biPoolManagerAddress = getContractAddress(
-      this.chainId as ChainId,
-      'BiPoolManager'
-    )
+    const virtualPoolFactoryAddress = getContractAddress(this.chainId as ChainId, 'VirtualPoolFactory')
+    const biPoolManagerAddress = getContractAddress(this.chainId as ChainId, 'BiPoolManager')
 
     if (!virtualPoolFactoryAddress || !biPoolManagerAddress) {
-      console.warn(
-        'VirtualPoolFactory or BiPoolManager address not found for this chain'
-      )
+      console.warn('VirtualPoolFactory or BiPoolManager address not found for this chain')
       return []
     }
 
     try {
+      // TODO: When new virtual pool factory is deployed
+      //       we can simplify this by using VirtualPoolFactory.getAllPools() returns(address[])
+
       // Get all exchanges from BiPoolManager
       const exchangesData = (await this.publicClient.readContract({
-        address: biPoolManagerAddress as `0x${string}`,
+        address: biPoolManagerAddress as Address,
         abi: BIPOOL_MANAGER_ABI,
         functionName: 'getExchanges',
-      })) as Array<{ exchangeId: string; assets: readonly `0x${string}`[] }>
+      })) as Array<{ exchangeId: string; assets: readonly Address[] }>
 
       if (exchangesData.length === 0) {
         return []
@@ -149,26 +133,21 @@ export class PoolService {
       // For each exchange, check if a virtual pool exists, and if so, return the pool address.
       const poolPromises = exchangesData.map(async (exchange) => {
         if (exchange.assets.length !== 2) {
-          console.warn(
-            `Skipping invalid exchange ${exchange.exchangeId}: expected 2 assets`
-          )
+          console.warn(`Skipping invalid exchange ${exchange.exchangeId}: expected 2 assets`)
           return null
         }
 
-        const [token0, token1] = this.sortTokens(
-          exchange.assets[0],
-          exchange.assets[1]
-        )
+        const [token0, token1] = sortTokenAddresses(exchange.assets[0], exchange.assets[1])
 
         const poolAddress = (await this.publicClient.readContract({
-          address: virtualPoolFactoryAddress as `0x${string}`,
+          address: virtualPoolFactoryAddress as Address,
           abi: VIRTUAL_POOL_FACTORY_ABI,
           functionName: 'getOrPrecomputeProxyAddress',
           args: [token0, token1],
-        })) as `0x${string}`
+        })) as Address
 
         const isDeployed = (await this.publicClient.readContract({
-          address: virtualPoolFactoryAddress as `0x${string}`,
+          address: virtualPoolFactoryAddress as Address,
           abi: VIRTUAL_POOL_FACTORY_ABI,
           functionName: 'isPool',
           args: [poolAddress],
@@ -180,10 +159,10 @@ export class PoolService {
 
         return {
           factoryAddr: virtualPoolFactoryAddress,
-          poolAddress: poolAddress as string,
+          poolAddr: poolAddress as string,
           token0: token0 as string,
           token1: token1 as string,
-          poolType: PoolType.Virtual,
+          poolType: PoolType.Virtual as `${PoolType}`,
         }
       })
 
@@ -191,21 +170,7 @@ export class PoolService {
       return results.filter((pool): pool is Pool => pool !== null)
     } catch (error) {
       console.error('Failed to fetch Virtual pools:', error)
-      throw new Error(
-        `Failed to fetch Virtual pools: ${(error as Error).message}`
-      )
+      throw new Error(`Failed to fetch Virtual pools: ${(error as Error).message}`)
     }
-  }
-
-  /**
-   * Sorts two token addresses to match VirtualPoolFactory's sorting.
-   */
-  private sortTokens(
-    tokenA: `0x${string}`,
-    tokenB: `0x${string}`
-  ): [`0x${string}`, `0x${string}`] {
-    return tokenA.toLowerCase() < tokenB.toLowerCase()
-      ? [tokenA, tokenB]
-      : [tokenB, tokenA]
   }
 }

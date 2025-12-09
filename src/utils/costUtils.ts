@@ -1,6 +1,7 @@
 import { PoolType, Pool } from '../core/types'
-import { FPMM_ABI, BIPOOL_MANAGER_ABI } from '../core/abis'
+import { FPMM_ABI } from '../core/abis'
 import type { PublicClient } from 'viem'
+import { VIRTUAL_POOL_ABI } from '../core/abis/virtualPool'
 
 /**
  * Calculate cost percentage for a pool based on its type
@@ -8,21 +9,15 @@ import type { PublicClient } from 'viem'
  *
  * @param pool - The pool to calculate cost for
  * @param publicClient - Viem public client for RPC calls
- * @param exchangeId - Required for Virtual pools (BiPoolManager exchange ID)
  * @returns Cost percentage for the pool
  */
-export async function getPoolCostPercent(
-  pool: Pool,
-  publicClient: PublicClient,
-  exchangeId?: string
-): Promise<number> {
+export async function getPoolCostPercent(pool: Pool, publicClient: PublicClient): Promise<number> {
   if (pool.poolType === PoolType.FPMM) {
-    return getFPMMCostPercent(pool.poolAddress, publicClient)
+    return getFPMMCostPercent(pool.poolAddr, publicClient)
+  } else if (pool.poolType === PoolType.Virtual) {
+    return getVirtualPoolCostPercent(pool.poolAddr, publicClient)
   } else {
-    if (!exchangeId) {
-      throw new Error('exchangeId required for Virtual pools')
-    }
-    return getVirtualPoolCostPercent(exchangeId, pool.factoryAddr, publicClient)
+    throw new Error('Invalid pool type')
   }
 }
 
@@ -30,10 +25,7 @@ export async function getPoolCostPercent(
  * Calculate cost for FPMM pools
  * FPMM pools use lpFee + protocolFee in basis points (10000 = 100%)
  */
-async function getFPMMCostPercent(
-  poolAddress: string,
-  publicClient: PublicClient
-): Promise<number> {
+async function getFPMMCostPercent(poolAddress: string, publicClient: PublicClient): Promise<number> {
   const [lpFee, protocolFee] = await Promise.all([
     publicClient.readContract({
       address: poolAddress as `0x${string}`,
@@ -54,22 +46,14 @@ async function getFPMMCostPercent(
 
 /**
  * Calculate cost for Virtual pools
- * Virtual pools use spread from BiPoolManager in FixidityLib format (1e24 = 100%)
  */
-async function getVirtualPoolCostPercent(
-  exchangeId: string,
-  biPoolManagerAddr: string,
-  publicClient: PublicClient
-): Promise<number> {
-  const poolExchange = await publicClient.readContract({
-    address: biPoolManagerAddr as `0x${string}`,
-    abi: BIPOOL_MANAGER_ABI,
-    functionName: 'getPoolExchange',
-    args: [exchangeId],
+async function getVirtualPoolCostPercent(poolAddress: string, publicClient: PublicClient): Promise<number> {
+  const protocolFee = await publicClient.readContract({
+    address: poolAddress as `0x${string}`,
+    abi: VIRTUAL_POOL_ABI,
+    functionName: 'protocolFee',
   })
 
-  // Convert from FixidityLib to percentage (1e24 = 100%)
-  const spreadValue = (poolExchange as { config: { spread: { value: bigint } } })
-    .config.spread.value
-  return (Number(spreadValue) / 1e24) * 100
+  //TODO: Confirim calculation
+  return Number(protocolFee) / 100
 }

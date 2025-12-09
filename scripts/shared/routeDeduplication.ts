@@ -43,7 +43,7 @@ export function createRouteSignature(
 ): string {
   return (
     route.path
-      .map((hop) => `${hop.id}:${hop.providerAddr}`)
+      .map((pool) => `${pool.poolAddr}:${pool.factoryAddr}`)
       // Sort to handle path direction differences (A->B->C vs C->B->A)
       .sort()
       .join('|')
