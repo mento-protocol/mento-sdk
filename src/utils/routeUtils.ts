@@ -152,9 +152,9 @@ export function buildConnectivityStructures(directRoutes: Route[]): Connectivity
 
     // Build direct path map (sorted addresses as key for consistency)
     // for quick lookup of exchange details for any token pair
-    const sortedAddresses = canonicalAddressKey(tokenA.address as ViemAddress, tokenB.address as ViemAddress) as RouteID
-    if (!directRouteMap.has(sortedAddresses)) {
-      directRouteMap.set(sortedAddresses, route.path[0])
+    const routeId = canonicalSymbolKey(tokenA.symbol, tokenB.symbol) as RouteID
+    if (!directRouteMap.has(routeId)) {
+      directRouteMap.set(routeId, route.path[0])
     }
 
     // Build bidirectional connectivity graph for route traversal
