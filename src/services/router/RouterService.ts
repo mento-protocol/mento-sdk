@@ -258,6 +258,32 @@ export class RouterService {
     return matchingRoute as Route
   }
 
+  /**
+   * Calculates the expected output amount for a swap between two tokens.
+   *
+   * @param tokenIn - The address of the input token
+   * @param tokenOut - The address of the output token
+   * @param amountIn - The amount of input tokens (in wei/smallest unit)
+   * @param route - Optional pre-fetched route. If not provided, the optimal route will be found automatically.
+   * @returns The expected output amount (in wei/smallest unit)
+   * @throws {RouteNotFoundError} If no route exists between the token pair
+   * @throws {Error} If the Router contract call fails
+   *
+   * @example
+   * ```typescript
+   * const cUSD = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
+   * const CELO = '0x471EcE3750Da237f93B8E339c536989b8978a438'
+   *
+   * // Calculate output for 100 cUSD
+   * const amountIn = BigInt(100) * BigInt(10 ** 18) // 100 cUSD in wei
+   * const expectedOut = await routerService.getAmountOut(cUSD, CELO, amountIn)
+   * console.log(`Expected CELO output: ${expectedOut}`)
+   *
+   * // Or provide a pre-fetched route for better performance
+   * const route = await routerService.findRoute(cUSD, CELO)
+   * const expectedOut2 = await routerService.getAmountOut(cUSD, CELO, amountIn, route)
+   * ```
+   */
   async getAmountOut(tokenIn: Address, tokenOut: Address, amountIn: bigint, route?: Route): Promise<bigint> {
     // If the consumer does not provide a route then we find the best route.
     if (!route) {
