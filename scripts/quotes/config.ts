@@ -1,16 +1,13 @@
 export const RPC_URLS: Record<number, string> = {
   42220: 'https://forno.celo.org',
-  44787: 'https://alfajores-forno.celo-testnet.org',
 }
 
 export const CHAIN_NAMES: Record<number, string> = {
   42220: 'Celo',
-  44787: 'Alfajores',
 }
 
 export const CHAIN_NAME_TO_ID: Record<string, number> = {
   celo: 42220,
-  alfajores: 44787,
 }
 
 export const DEFAULT_CHAIN_ID = 42220

@@ -48,7 +48,7 @@ export function parseCommandLineArgs(): SwapInfoArgs {
 
 /**
  * Resolves chain identifier to numeric chain ID.
- * Supports both chain names ('celo', 'alfajores') and direct chain IDs.
+ * Supports both chain names ('celo') and direct chain IDs.
  *
  * @param chainArg - Chain name argument
  * @param chainIdArg - Direct chain ID argument
@@ -111,7 +111,7 @@ Options:
   -f, --from <token>     From token symbol (required)
   -t, --to <token>       To token symbol (required)
   -a, --amount <amount>  Amount to swap (optional, for quote calculation)
-  -c, --chain <chain>    Chain name (celo, alfajores) [default: celo]
+  -c, --chain <chain>    Chain name (celo) [default: celo]
   -A, --all              Show all routes instead of just the optimal one
   -v, --verbose          Show detailed route information
 

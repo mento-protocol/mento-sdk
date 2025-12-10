@@ -71,8 +71,6 @@ function getChainName(chainId: number): string {
   switch (chainId) {
     case 42220:
       return 'Celo Mainnet'
-    case 44787:
-      return 'Alfajores Testnet'
     case 11142220:
       return 'Celo Sepolia Testnet'
     default:

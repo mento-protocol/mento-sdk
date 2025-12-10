@@ -32,7 +32,6 @@ The script can be run via the original entry point for backward compatibility:
 yarn cacheTradablePairs
 
 # Cache specific network
-yarn cacheTradablePairs --network alfajores
 yarn cacheTradablePairs --network celo
 
 # Cache specific chain ID
@@ -42,7 +41,7 @@ yarn cacheTradablePairs --chainId 42220
 Or directly via the modular entry point:
 
 ```bash
-npx ts-node scripts/cacheTradablePairs/index.ts --network alfajores
+npx ts-node scripts/cacheTradablePairs/index.ts --network celo
 ```
 
 ## Output
@@ -50,7 +49,6 @@ npx ts-node scripts/cacheTradablePairs/index.ts --network alfajores
 The script generates TypeScript files in `src/constants/` with the format:
 
 - `tradablePairs.42220.ts` (Celo mainnet)
-- `tradablePairs.44787.ts` (Alfajores testnet)
 
 Each file contains:
 

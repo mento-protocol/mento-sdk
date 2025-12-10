@@ -65,7 +65,6 @@ export function generateTokensIndexFile(
     .map((chainId) => {
       const names: { [key: string]: string } = {
         '42220': 'Celo',
-        '44787': 'Alfajores',
         '11142220': 'Celo Sepolia',
       }
       return `${chainId} (${names[chainId] || 'Unknown'})`
