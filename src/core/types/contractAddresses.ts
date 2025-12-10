@@ -36,6 +36,9 @@ export type ContractAddresses = {
   StableTokenEUR?: string
   StableTokenBRL?: string
   StableTokenXOF?: string
+
+  // V3
+  Router?: string
 }
 
 /**
