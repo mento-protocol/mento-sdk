@@ -1,19 +1,19 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-11-06T15:54:31.783Z
+// Generated on 2025-12-10T14:47:59.410Z
 
 import { TradablePairWithSpread } from './tradablePairs'
 
 export const tradablePairs11142220: TradablePairWithSpread[] = [
   {
-    "id": "axlUSDC-cUSD",
+    "id": "USDm-axlUSDC",
     "assets": [
+      {
+        "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+        "symbol": "USDm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -37,15 +37,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cUSD",
+    "id": "USDm-USD₮",
     "assets": [
+      {
+        "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+        "symbol": "USDm"
+      },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
-      },
-      {
-        "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -69,7 +69,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cUSD",
+    "id": "USDC-USDm",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
@@ -77,7 +77,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -233,15 +233,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cUSD",
+    "id": "AUDm-USDm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -265,15 +265,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cUSD",
+    "id": "CADm-USDm",
     "assets": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "symbol": "CADm"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -297,15 +297,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cAUD",
+    "id": "AUDm-axlUSDC",
     "assets": [
+      {
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "AUDm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
       }
     ],
     "path": [
@@ -341,15 +341,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cCAD",
+    "id": "CADm-axlUSDC",
     "assets": [
+      {
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "CADm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
       }
     ],
     "path": [
@@ -385,15 +385,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cAUD",
+    "id": "AUDm-USD₮",
     "assets": [
+      {
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "AUDm"
+      },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
-      },
-      {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
       }
     ],
     "path": [
@@ -429,15 +429,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cAUD",
+    "id": "AUDm-USDC",
     "assets": [
+      {
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "AUDm"
+      },
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
-      },
-      {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
       }
     ],
     "path": [
@@ -473,15 +473,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cCAD",
+    "id": "CADm-USD₮",
     "assets": [
+      {
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "CADm"
+      },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
-      },
-      {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
       }
     ],
     "path": [
@@ -517,15 +517,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cCAD",
+    "id": "CADm-USDC",
     "assets": [
+      {
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "CADm"
+      },
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
-      },
-      {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
       }
     ],
     "path": [
@@ -561,7 +561,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cUSD",
+    "id": "CELO-USDm",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
@@ -569,7 +569,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -725,15 +725,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cCAD",
+    "id": "AUDm-CADm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "symbol": "CADm"
       }
     ],
     "path": [
@@ -769,15 +769,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cUSD",
+    "id": "PHPm-USDm",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "symbol": "PHPm"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -801,15 +801,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cUSD",
+    "id": "GBPm-USDm",
     "assets": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -833,15 +833,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cUSD-cZAR",
+    "id": "USDm-ZARm",
     "assets": [
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -865,15 +865,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cUSD",
+    "id": "CHFm-USDm",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -897,15 +897,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cJPY-cUSD",
+    "id": "JPYm-USDm",
     "assets": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -929,15 +929,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cUSD",
+    "id": "COPm-USDm",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -961,15 +961,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cREAL-cUSD",
+    "id": "BRLm-USDm",
     "assets": [
       {
         "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "symbol": "BRLm"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -993,11 +993,11 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-axlUSDC",
+    "id": "PHPm-axlUSDC",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "symbol": "PHPm"
       },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
@@ -1037,11 +1037,11 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-USD₮",
+    "id": "PHPm-USD₮",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "symbol": "PHPm"
       },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
@@ -1081,11 +1081,11 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-USDC",
+    "id": "PHPm-USDC",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "symbol": "PHPm"
       },
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
@@ -1125,15 +1125,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cGBP",
+    "id": "GBPm-axlUSDC",
     "assets": [
+      {
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "GBPm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -1169,15 +1169,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cZAR",
+    "id": "ZARm-axlUSDC",
     "assets": [
+      {
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "ZARm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
       }
     ],
     "path": [
@@ -1213,15 +1213,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cCHF",
+    "id": "CHFm-axlUSDC",
     "assets": [
+      {
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "CHFm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
       }
     ],
     "path": [
@@ -1257,15 +1257,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cJPY",
+    "id": "JPYm-axlUSDC",
     "assets": [
+      {
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "JPYm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -1301,15 +1301,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cCOP",
+    "id": "COPm-axlUSDC",
     "assets": [
+      {
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "COPm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
       }
     ],
     "path": [
@@ -1345,15 +1345,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cREAL",
+    "id": "BRLm-axlUSDC",
     "assets": [
+      {
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -1389,15 +1389,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cGBP",
+    "id": "GBPm-USD₮",
     "assets": [
+      {
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "GBPm"
+      },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
-      },
-      {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -1433,15 +1433,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cGBP",
+    "id": "GBPm-USDC",
     "assets": [
+      {
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "GBPm"
+      },
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
-      },
-      {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
       }
     ],
     "path": [
@@ -1477,7 +1477,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cZAR",
+    "id": "USD₮-ZARm",
     "assets": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
@@ -1485,7 +1485,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -1521,7 +1521,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cZAR",
+    "id": "USDC-ZARm",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
@@ -1529,7 +1529,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -1565,15 +1565,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cCHF",
+    "id": "CHFm-USD₮",
     "assets": [
+      {
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "CHFm"
+      },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
-      },
-      {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
       }
     ],
     "path": [
@@ -1609,15 +1609,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cCHF",
+    "id": "CHFm-USDC",
     "assets": [
+      {
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "CHFm"
+      },
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
-      },
-      {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
       }
     ],
     "path": [
@@ -1653,15 +1653,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cJPY",
+    "id": "JPYm-USD₮",
     "assets": [
+      {
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "JPYm"
+      },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
-      },
-      {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -1697,15 +1697,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cJPY",
+    "id": "JPYm-USDC",
     "assets": [
+      {
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "JPYm"
+      },
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
-      },
-      {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
       }
     ],
     "path": [
@@ -1741,15 +1741,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cCOP",
+    "id": "COPm-USD₮",
     "assets": [
+      {
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "COPm"
+      },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
-      },
-      {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
       }
     ],
     "path": [
@@ -1785,15 +1785,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cCOP",
+    "id": "COPm-USDC",
     "assets": [
+      {
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "COPm"
+      },
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
-      },
-      {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
       }
     ],
     "path": [
@@ -1829,15 +1829,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cREAL",
+    "id": "BRLm-USD₮",
     "assets": [
+      {
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
+      },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
-      },
-      {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -1873,15 +1873,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cREAL",
+    "id": "BRLm-USDC",
     "assets": [
+      {
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
+      },
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
-      },
-      {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -1917,15 +1917,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cAUD",
+    "id": "AUDm-CELO",
     "assets": [
+      {
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "AUDm"
+      },
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
-      },
-      {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
       }
     ],
     "path": [
@@ -1961,15 +1961,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cCAD",
+    "id": "CADm-CELO",
     "assets": [
+      {
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "CADm"
+      },
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
-      },
-      {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
       }
     ],
     "path": [
@@ -2005,15 +2005,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cAUD",
+    "id": "AUDm-PHPm",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+        "symbol": "AUDm"
       },
       {
-        "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PHPm"
       }
     ],
     "path": [
@@ -2049,15 +2049,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cCAD",
+    "id": "CADm-PHPm",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "CADm"
       },
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PHPm"
       }
     ],
     "path": [
@@ -2093,15 +2093,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cGBP",
+    "id": "AUDm-GBPm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       }
     ],
     "path": [
@@ -2137,15 +2137,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cZAR",
+    "id": "AUDm-ZARm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -2181,15 +2181,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cCHF",
+    "id": "AUDm-CHFm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       }
     ],
     "path": [
@@ -2225,15 +2225,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cJPY",
+    "id": "AUDm-JPYm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       }
     ],
     "path": [
@@ -2269,15 +2269,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cCOP",
+    "id": "AUDm-COPm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       }
     ],
     "path": [
@@ -2313,15 +2313,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cREAL",
+    "id": "AUDm-BRLm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "symbol": "BRLm"
       }
     ],
     "path": [
@@ -2357,15 +2357,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cGBP",
+    "id": "CADm-GBPm",
     "assets": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "symbol": "CADm"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       }
     ],
     "path": [
@@ -2401,15 +2401,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cZAR",
+    "id": "CADm-ZARm",
     "assets": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "symbol": "CADm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -2445,15 +2445,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cCHF",
+    "id": "CADm-CHFm",
     "assets": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "symbol": "CADm"
       },
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       }
     ],
     "path": [
@@ -2489,15 +2489,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cJPY",
+    "id": "CADm-JPYm",
     "assets": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "symbol": "CADm"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       }
     ],
     "path": [
@@ -2533,15 +2533,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cCOP",
+    "id": "CADm-COPm",
     "assets": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "symbol": "CADm"
       },
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       }
     ],
     "path": [
@@ -2577,15 +2577,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cREAL",
+    "id": "BRLm-CADm",
     "assets": [
       {
-        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
       },
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+        "symbol": "CADm"
       }
     ],
     "path": [
@@ -2621,15 +2621,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlEUROC-cEUR",
+    "id": "EURm-axlEUROC",
     "assets": [
+      {
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "EURm"
+      },
       {
         "address": "0x9883d788d40F1C7595a780ed881Ea833C7743B4B",
         "symbol": "axlEUROC"
-      },
-      {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -2653,15 +2653,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cUSD",
+    "id": "EURm-USDm",
     "assets": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -2685,15 +2685,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cEUR",
+    "id": "EURm-axlUSDC",
     "assets": [
+      {
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "EURm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -2729,15 +2729,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cEUR",
+    "id": "EURm-USD₮",
     "assets": [
+      {
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "EURm"
+      },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
-      },
-      {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -2773,15 +2773,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cEUR",
+    "id": "EURm-USDC",
     "assets": [
+      {
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "EURm"
+      },
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
-      },
-      {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
       }
     ],
     "path": [
@@ -2817,7 +2817,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-PUSO",
+    "id": "CELO-PHPm",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
@@ -2825,7 +2825,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "symbol": "PHPm"
       }
     ],
     "path": [
@@ -2861,7 +2861,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cGBP",
+    "id": "CELO-GBPm",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
@@ -2869,7 +2869,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       }
     ],
     "path": [
@@ -2905,7 +2905,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cZAR",
+    "id": "CELO-ZARm",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
@@ -2913,7 +2913,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -2949,7 +2949,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cCHF",
+    "id": "CELO-CHFm",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
@@ -2957,7 +2957,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       }
     ],
     "path": [
@@ -2993,7 +2993,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cJPY",
+    "id": "CELO-JPYm",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
@@ -3001,7 +3001,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       }
     ],
     "path": [
@@ -3037,7 +3037,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cCOP",
+    "id": "CELO-COPm",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
@@ -3045,7 +3045,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       }
     ],
     "path": [
@@ -3081,15 +3081,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cREAL",
+    "id": "BRLm-CELO",
     "assets": [
+      {
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
+      },
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
         "symbol": "CELO"
-      },
-      {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
       }
     ],
     "path": [
@@ -3125,15 +3125,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cGBP",
+    "id": "GBPm-PHPm",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "GBPm"
       },
       {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PHPm"
       }
     ],
     "path": [
@@ -3169,15 +3169,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cZAR",
+    "id": "PHPm-ZARm",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "symbol": "PHPm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -3213,15 +3213,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cCHF",
+    "id": "CHFm-PHPm",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "CHFm"
       },
       {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PHPm"
       }
     ],
     "path": [
@@ -3257,15 +3257,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cJPY",
+    "id": "JPYm-PHPm",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "JPYm"
       },
       {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PHPm"
       }
     ],
     "path": [
@@ -3301,15 +3301,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cCOP",
+    "id": "COPm-PHPm",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "COPm"
       },
       {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PHPm"
       }
     ],
     "path": [
@@ -3345,15 +3345,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cREAL",
+    "id": "BRLm-PHPm",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
       },
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PHPm"
       }
     ],
     "path": [
@@ -3389,15 +3389,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cZAR",
+    "id": "GBPm-ZARm",
     "assets": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -3433,15 +3433,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cGBP",
+    "id": "CHFm-GBPm",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       }
     ],
     "path": [
@@ -3477,15 +3477,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cJPY",
+    "id": "GBPm-JPYm",
     "assets": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       }
     ],
     "path": [
@@ -3521,15 +3521,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cGBP",
+    "id": "COPm-GBPm",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       }
     ],
     "path": [
@@ -3565,15 +3565,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cREAL",
+    "id": "BRLm-GBPm",
     "assets": [
       {
-        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
       },
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+        "symbol": "GBPm"
       }
     ],
     "path": [
@@ -3609,15 +3609,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cZAR",
+    "id": "CHFm-ZARm",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -3653,15 +3653,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cJPY-cZAR",
+    "id": "JPYm-ZARm",
     "assets": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -3697,15 +3697,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cZAR",
+    "id": "COPm-ZARm",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -3741,15 +3741,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cREAL-cZAR",
+    "id": "BRLm-ZARm",
     "assets": [
       {
         "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "symbol": "BRLm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -3785,15 +3785,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cJPY",
+    "id": "CHFm-JPYm",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       }
     ],
     "path": [
@@ -3829,15 +3829,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cCOP",
+    "id": "CHFm-COPm",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       },
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       }
     ],
     "path": [
@@ -3873,15 +3873,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cREAL",
+    "id": "BRLm-CHFm",
     "assets": [
       {
-        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
       },
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+        "symbol": "CHFm"
       }
     ],
     "path": [
@@ -3917,15 +3917,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cJPY",
+    "id": "COPm-JPYm",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       }
     ],
     "path": [
@@ -3961,15 +3961,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cJPY-cREAL",
+    "id": "BRLm-JPYm",
     "assets": [
       {
-        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
       },
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+        "symbol": "JPYm"
       }
     ],
     "path": [
@@ -4005,15 +4005,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cREAL",
+    "id": "BRLm-COPm",
     "assets": [
       {
-        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
       },
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+        "symbol": "COPm"
       }
     ],
     "path": [
@@ -4049,15 +4049,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cEUR",
+    "id": "AUDm-EURm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       }
     ],
     "path": [
@@ -4093,15 +4093,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cEUR",
+    "id": "CADm-EURm",
     "assets": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "symbol": "CADm"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       }
     ],
     "path": [
@@ -4137,7 +4137,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cEUR",
+    "id": "CELO-EURm",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
@@ -4145,7 +4145,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       }
     ],
     "path": [
@@ -4181,15 +4181,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cEUR",
+    "id": "EURm-PHPm",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "EURm"
       },
       {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PHPm"
       }
     ],
     "path": [
@@ -4225,15 +4225,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cGBP",
+    "id": "EURm-GBPm",
     "assets": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       },
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       }
     ],
     "path": [
@@ -4269,15 +4269,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cZAR",
+    "id": "EURm-ZARm",
     "assets": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -4313,15 +4313,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cEUR",
+    "id": "CHFm-EURm",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       }
     ],
     "path": [
@@ -4357,15 +4357,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cJPY",
+    "id": "EURm-JPYm",
     "assets": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       }
     ],
     "path": [
@@ -4401,15 +4401,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cEUR",
+    "id": "COPm-EURm",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       },
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       }
     ],
     "path": [
@@ -4445,15 +4445,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cREAL",
+    "id": "BRLm-EURm",
     "assets": [
       {
-        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
       },
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+        "symbol": "EURm"
       }
     ],
     "path": [
@@ -4489,15 +4489,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlEUROC-cUSD",
+    "id": "USDm-axlEUROC",
     "assets": [
+      {
+        "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+        "symbol": "USDm"
+      },
       {
         "address": "0x9883d788d40F1C7595a780ed881Ea833C7743B4B",
         "symbol": "axlEUROC"
-      },
-      {
-        "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
       }
     ],
     "path": [
@@ -4533,15 +4533,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-cUSD",
+    "id": "GHSm-USDm",
     "assets": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -4565,15 +4565,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cNGN-cUSD",
+    "id": "NGNm-USDm",
     "assets": [
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -4597,15 +4597,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cKES-cUSD",
+    "id": "KESm-USDm",
     "assets": [
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       },
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       }
     ],
     "path": [
@@ -4629,15 +4629,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cGHS",
+    "id": "GHSm-axlUSDC",
     "assets": [
+      {
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "GHSm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -4673,15 +4673,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cNGN",
+    "id": "NGNm-axlUSDC",
     "assets": [
+      {
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "NGNm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -4717,15 +4717,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-cKES",
+    "id": "KESm-axlUSDC",
     "assets": [
+      {
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "KESm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
       }
     ],
     "path": [
@@ -4761,15 +4761,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cGHS",
+    "id": "GHSm-USD₮",
     "assets": [
+      {
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "GHSm"
+      },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
-      },
-      {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -4805,15 +4805,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cGHS",
+    "id": "GHSm-USDC",
     "assets": [
+      {
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "GHSm"
+      },
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
-      },
-      {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
       }
     ],
     "path": [
@@ -4849,15 +4849,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cNGN",
+    "id": "NGNm-USD₮",
     "assets": [
+      {
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "NGNm"
+      },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
-      },
-      {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -4893,15 +4893,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cNGN",
+    "id": "NGNm-USDC",
     "assets": [
+      {
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "NGNm"
+      },
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
-      },
-      {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
       }
     ],
     "path": [
@@ -4937,15 +4937,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-cKES",
+    "id": "KESm-USD₮",
     "assets": [
+      {
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "KESm"
+      },
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
         "symbol": "USD₮"
-      },
-      {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
       }
     ],
     "path": [
@@ -4981,15 +4981,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-cKES",
+    "id": "KESm-USDC",
     "assets": [
+      {
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "KESm"
+      },
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
         "symbol": "USDC"
-      },
-      {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
       }
     ],
     "path": [
@@ -5025,15 +5025,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cGHS",
+    "id": "AUDm-GHSm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       }
     ],
     "path": [
@@ -5069,15 +5069,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cNGN",
+    "id": "AUDm-NGNm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       }
     ],
     "path": [
@@ -5113,15 +5113,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-cKES",
+    "id": "AUDm-KESm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       }
     ],
     "path": [
@@ -5157,15 +5157,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cGHS",
+    "id": "CADm-GHSm",
     "assets": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "symbol": "CADm"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       }
     ],
     "path": [
@@ -5201,15 +5201,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cNGN",
+    "id": "CADm-NGNm",
     "assets": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "symbol": "CADm"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       }
     ],
     "path": [
@@ -5245,15 +5245,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-cKES",
+    "id": "CADm-KESm",
     "assets": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "symbol": "CADm"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       }
     ],
     "path": [
@@ -5289,7 +5289,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cGHS",
+    "id": "CELO-GHSm",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
@@ -5297,7 +5297,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       }
     ],
     "path": [
@@ -5333,7 +5333,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cNGN",
+    "id": "CELO-NGNm",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
@@ -5341,7 +5341,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       }
     ],
     "path": [
@@ -5377,7 +5377,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-cKES",
+    "id": "CELO-KESm",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
@@ -5385,7 +5385,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       }
     ],
     "path": [
@@ -5421,15 +5421,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cGHS",
+    "id": "GHSm-PHPm",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "GHSm"
       },
       {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PHPm"
       }
     ],
     "path": [
@@ -5465,15 +5465,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cNGN",
+    "id": "NGNm-PHPm",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "NGNm"
       },
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PHPm"
       }
     ],
     "path": [
@@ -5509,15 +5509,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-cKES",
+    "id": "KESm-PHPm",
     "assets": [
       {
-        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "KESm"
       },
       {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+        "symbol": "PHPm"
       }
     ],
     "path": [
@@ -5553,15 +5553,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cGHS",
+    "id": "GBPm-GHSm",
     "assets": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       }
     ],
     "path": [
@@ -5597,15 +5597,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cNGN",
+    "id": "GBPm-NGNm",
     "assets": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       }
     ],
     "path": [
@@ -5641,15 +5641,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-cKES",
+    "id": "GBPm-KESm",
     "assets": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       }
     ],
     "path": [
@@ -5685,15 +5685,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-cZAR",
+    "id": "GHSm-ZARm",
     "assets": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -5729,15 +5729,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cNGN-cZAR",
+    "id": "NGNm-ZARm",
     "assets": [
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -5773,15 +5773,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cKES-cZAR",
+    "id": "KESm-ZARm",
     "assets": [
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       },
       {
         "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -5817,15 +5817,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cGHS",
+    "id": "CHFm-GHSm",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       }
     ],
     "path": [
@@ -5861,15 +5861,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cNGN",
+    "id": "CHFm-NGNm",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       }
     ],
     "path": [
@@ -5905,15 +5905,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-cKES",
+    "id": "CHFm-KESm",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       }
     ],
     "path": [
@@ -5949,15 +5949,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-cJPY",
+    "id": "GHSm-JPYm",
     "assets": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       },
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       }
     ],
     "path": [
@@ -5993,15 +5993,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cJPY-cNGN",
+    "id": "JPYm-NGNm",
     "assets": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       }
     ],
     "path": [
@@ -6037,15 +6037,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cJPY-cKES",
+    "id": "JPYm-KESm",
     "assets": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       }
     ],
     "path": [
@@ -6081,15 +6081,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cGHS",
+    "id": "COPm-GHSm",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       }
     ],
     "path": [
@@ -6125,15 +6125,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cNGN",
+    "id": "COPm-NGNm",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       }
     ],
     "path": [
@@ -6169,15 +6169,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-cKES",
+    "id": "COPm-KESm",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       }
     ],
     "path": [
@@ -6213,15 +6213,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-cREAL",
+    "id": "BRLm-GHSm",
     "assets": [
       {
-        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
       },
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+        "symbol": "GHSm"
       }
     ],
     "path": [
@@ -6257,15 +6257,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cNGN-cREAL",
+    "id": "BRLm-NGNm",
     "assets": [
       {
-        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
       },
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+        "symbol": "NGNm"
       }
     ],
     "path": [
@@ -6301,15 +6301,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cKES-cREAL",
+    "id": "BRLm-KESm",
     "assets": [
       {
-        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+        "symbol": "BRLm"
       },
       {
-        "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+        "symbol": "KESm"
       }
     ],
     "path": [
@@ -6345,15 +6345,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cGHS",
+    "id": "EURm-GHSm",
     "assets": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       },
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       }
     ],
     "path": [
@@ -6389,15 +6389,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cNGN",
+    "id": "EURm-NGNm",
     "assets": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       }
     ],
     "path": [
@@ -6433,15 +6433,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-cKES",
+    "id": "EURm-KESm",
     "assets": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       }
     ],
     "path": [
@@ -6477,15 +6477,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-cNGN",
+    "id": "GHSm-NGNm",
     "assets": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       }
     ],
     "path": [
@@ -6521,15 +6521,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-cKES",
+    "id": "GHSm-KESm",
     "assets": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       },
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       }
     ],
     "path": [
@@ -6565,15 +6565,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cKES-cNGN",
+    "id": "KESm-NGNm",
     "assets": [
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       },
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       }
     ],
     "path": [
@@ -6609,15 +6609,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cUSD-eXOF",
+    "id": "USDm-XOFm",
     "assets": [
       {
         "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-        "symbol": "cUSD"
+        "symbol": "USDm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -6641,15 +6641,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "axlUSDC-eXOF",
+    "id": "XOFm-axlUSDC",
     "assets": [
+      {
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "XOFm"
+      },
       {
         "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
         "symbol": "axlUSDC"
-      },
-      {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
       }
     ],
     "path": [
@@ -6685,7 +6685,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USD₮-eXOF",
+    "id": "USD₮-XOFm",
     "assets": [
       {
         "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
@@ -6693,7 +6693,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -6729,7 +6729,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "USDC-eXOF",
+    "id": "USDC-XOFm",
     "assets": [
       {
         "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
@@ -6737,7 +6737,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -6773,15 +6773,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cAUD-eXOF",
+    "id": "AUDm-XOFm",
     "assets": [
       {
         "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-        "symbol": "cAUD"
+        "symbol": "AUDm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -6817,15 +6817,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCAD-eXOF",
+    "id": "CADm-XOFm",
     "assets": [
       {
         "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-        "symbol": "cCAD"
+        "symbol": "CADm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -6861,7 +6861,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "CELO-eXOF",
+    "id": "CELO-XOFm",
     "assets": [
       {
         "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
@@ -6869,7 +6869,7 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -6905,15 +6905,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "PUSO-eXOF",
+    "id": "PHPm-XOFm",
     "assets": [
       {
         "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-        "symbol": "PUSO"
+        "symbol": "PHPm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -6949,15 +6949,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGBP-eXOF",
+    "id": "GBPm-XOFm",
     "assets": [
       {
         "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-        "symbol": "cGBP"
+        "symbol": "GBPm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -6993,15 +6993,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cZAR-eXOF",
+    "id": "XOFm-ZARm",
     "assets": [
       {
-        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-        "symbol": "cZAR"
+        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+        "symbol": "XOFm"
       },
       {
-        "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+        "symbol": "ZARm"
       }
     ],
     "path": [
@@ -7037,15 +7037,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCHF-eXOF",
+    "id": "CHFm-XOFm",
     "assets": [
       {
         "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-        "symbol": "cCHF"
+        "symbol": "CHFm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -7081,15 +7081,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cJPY-eXOF",
+    "id": "JPYm-XOFm",
     "assets": [
       {
         "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-        "symbol": "cJPY"
+        "symbol": "JPYm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -7125,15 +7125,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cCOP-eXOF",
+    "id": "COPm-XOFm",
     "assets": [
       {
         "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-        "symbol": "cCOP"
+        "symbol": "COPm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -7169,15 +7169,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cREAL-eXOF",
+    "id": "BRLm-XOFm",
     "assets": [
       {
         "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-        "symbol": "cREAL"
+        "symbol": "BRLm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -7213,15 +7213,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cEUR-eXOF",
+    "id": "EURm-XOFm",
     "assets": [
       {
         "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-        "symbol": "cEUR"
+        "symbol": "EURm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -7257,15 +7257,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cGHS-eXOF",
+    "id": "GHSm-XOFm",
     "assets": [
       {
         "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-        "symbol": "cGHS"
+        "symbol": "GHSm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -7301,15 +7301,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cNGN-eXOF",
+    "id": "NGNm-XOFm",
     "assets": [
       {
         "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-        "symbol": "cNGN"
+        "symbol": "NGNm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
@@ -7345,15 +7345,15 @@ export const tradablePairs11142220: TradablePairWithSpread[] = [
     }
   },
   {
-    "id": "cKES-eXOF",
+    "id": "KESm-XOFm",
     "assets": [
       {
         "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-        "symbol": "cKES"
+        "symbol": "KESm"
       },
       {
         "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-        "symbol": "eXOF"
+        "symbol": "XOFm"
       }
     ],
     "path": [
