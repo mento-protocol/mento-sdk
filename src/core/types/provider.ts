@@ -48,9 +48,4 @@ export interface CallParams {
    * Transaction value in wei (hex string with 0x prefix)
    */
   value: string
-
-  /**
-   * Optional gas limit (hex string with 0x prefix)
-   */
-  gasLimit?: string
 }

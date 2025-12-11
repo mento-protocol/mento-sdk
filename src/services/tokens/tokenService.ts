@@ -1,6 +1,9 @@
 import { RESERVE_ABI, BIPOOL_MANAGER_ABI, ERC20_ABI } from '../../core/abis'
 import { Token, StableToken, CollateralAsset } from '../../core/types'
 
+// TODO: Really need to think about how FPMM & CDP assets fit in here.
+//       This service is mainly used to drive data in the analytics API.
+
 // Legacy Exchange type for BiPoolManager v2 responses
 interface Exchange {
   exchangeId: string
