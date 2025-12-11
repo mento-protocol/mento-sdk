@@ -5,7 +5,9 @@ import { getContractAddress } from './core/constants/addresses'
 import { getDefaultRpcUrl, getChainConfig } from './utils/chainConfig'
 import { TokenService } from '@services/tokens'
 import { PoolService } from '@services/pools'
-import { RouterService } from '@services/router'
+import { RouteService } from '@services/routes'
+import { QuoteService } from '@services/quotes'
+import { SwapService } from '@services/swap'
 
 /**
  * @class Mento
@@ -19,18 +21,29 @@ import { RouterService } from '@services/router'
  *              // Get all stable tokens
  *              const stableTokens = await mento.tokens.getStableTokens();
  *
- *              // Get all collateral assetsparseAbi
+ *              // Get all collateral assets
  *              const collateralAssets = await mento.tokens.getCollateralAssets();
  *
  *              // Get all pools
- *              const exchanges = await mento.pools.getPools();
+ *              const pools = await mento.pools.getPools();
+ *
+ *              // Find a route between tokens
+ *              const route = await mento.routes.findRoute(cUSD, CELO);
+ *
+ *              // Get a quote for a swap
+ *              const amountOut = await mento.quotes.getAmountOut(cUSD, CELO, amountIn);
+ *
+ *              // Build swap parameters
+ *              const swapDetails = await mento.swap.buildSwapParams(cUSD, CELO, amountIn, { slippageTolerance: 0.5 });
  */
 export class Mento {
   private constructor(
     private chainId: number,
     public tokens: TokenService,
     public pools: PoolService,
-    public router: RouterService
+    public routes: RouteService,
+    public quotes: QuoteService,
+    public swap: SwapService
   ) {}
 
   /**
@@ -51,15 +64,12 @@ export class Mento {
 
     const tokenService = new TokenService(publicClient, chainId)
     const poolService = new PoolService(publicClient, chainId)
-    const routerService = new RouterService(publicClient, chainId, poolService)
+    const routeService = new RouteService(publicClient, chainId, poolService)
+    const quoteService = new QuoteService(publicClient, chainId, routeService)
+    const swapService = new SwapService(publicClient, chainId, routeService, quoteService)
 
     // Return new mento
-    return new Mento(
-      chainId,
-      tokenService,
-      poolService,
-      routerService
-    )
+    return new Mento(chainId, tokenService, poolService, routeService, quoteService, swapService)
   }
 
   /**
@@ -71,13 +81,6 @@ export class Mento {
     return getContractAddress(this.chainId as ChainId, contractName)
   }
 }
-
-const mento = Mento.create(ChainId.CELO).then(async (m) => {
-  const pools = await m.pools.getPools()
-  const tokens = await m.tokens.getStableTokens()
-  const routes = await m.router.getRoutes()
-})
-
 
 export * from './core/constants'
 export * from './core/types'
