@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-12-10T10:41:50.046Z
+// Generated on 2025-12-10T14:59:18.735Z
 
 import type { RouteWithCost } from '../core/types'
 
