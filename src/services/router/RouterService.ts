@@ -1,10 +1,22 @@
 import { PoolService } from '../pools'
-import { ERC20_ABI } from '../../core/abis'
+import { ERC20_ABI, ROUTER_ABI } from '../../core/abis'
 import { RouteNotFoundError } from '../../core/errors'
 import { Route, RouteID, Pool, RouteWithCost, Token } from '../../core/types'
 import { buildConnectivityStructures, generateAllRoutes, selectOptimalRoutes } from '../../utils/routeUtils'
-import { canonicalSymbolKey, sortTokenAddresses } from '../../utils/sortUtils'
-import { PublicClient } from 'viem'
+import { canonicalSymbolKey } from '../../utils/sortUtils'
+import { Address, PublicClient } from 'viem'
+import { getContractAddress, ChainId } from '../../core/constants'
+
+/**
+ * Route structure expected by the Router contract's getAmountsOut function
+ */
+interface RouterRoute {
+  from: Address
+  to: Address
+  factory: Address
+}
+
+// TODO: Consider separating out quotes and swap execition from this
 
 /**
  * Service for discovering and managing trading routes in the Mento protocol.
@@ -246,17 +258,104 @@ export class RouterService {
     return matchingRoute as Route
   }
 
-  //  await mento.getAmountOut(
-  //           fromTokenAddr,
-  //           toTokenAddr,
-  //           amountWeiBN,
-  //           tradablePair,
+  /**
+   * Calculates the expected output amount for a swap between two tokens.
+   *
+   * @param tokenIn - The address of the input token
+   * @param tokenOut - The address of the output token
+   * @param amountIn - The amount of input tokens (in wei/smallest unit)
+   * @param route - Optional pre-fetched route. If not provided, the optimal route will be found automatically.
+   * @returns The expected output amount (in wei/smallest unit)
+   * @throws {RouteNotFoundError} If no route exists between the token pair
+   * @throws {Error} If the Router contract call fails
+   *
+   * @example
+   * ```typescript
+   * const cUSD = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
+   * const CELO = '0x471EcE3750Da237f93B8E339c536989b8978a438'
+   *
+   * // Calculate output for 100 cUSD
+   * const amountIn = BigInt(100) * BigInt(10 ** 18) // 100 cUSD in wei
+   * const expectedOut = await routerService.getAmountOut(cUSD, CELO, amountIn)
+   * console.log(`Expected CELO output: ${expectedOut}`)
+   *
+   * // Or provide a pre-fetched route for better performance
+   * const route = await routerService.findRoute(cUSD, CELO)
+   * const expectedOut2 = await routerService.getAmountOut(cUSD, CELO, amountIn, route)
+   * ```
+   */
+  async getAmountOut(tokenIn: Address, tokenOut: Address, amountIn: bigint, route?: Route): Promise<bigint> {
+    // If the consumer does not provide a route then we find the best route.
+    if (!route) {
+      route = await this.findRoute(tokenIn, tokenOut)
+    }
 
-  // Needs to call router
-  // - getAmountsOut(uint256 amountIn, Route[] memory routes) public view returns (uint256[] memory amounts) {
-  // Route looks like this: {from, to, factory}
-  // What should the factory be when calling getAmountsOut?
-  // It can be null, but if it is null then the default factory in the router is used
-  //
-  // TODO: Confirm the default factory
+    // Convert route.path to Router contract's Route[] format
+    const routerRoutes = this.pathToRouterRoutes(route.path, tokenIn, tokenOut)
+    const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
+
+    const amounts = await this.publicClient.readContract({
+      address: routerAddress as `0x${string}`,
+      abi: ROUTER_ABI,
+      functionName: 'getAmountsOut',
+      args: [amountIn, routerRoutes],
+    }) as bigint[]
+    
+    return amounts[amounts.length - 1]
+  }
+
+  /**
+   * Converts a route path to the format expected by the Router contract's getAmountsOut
+   *
+   * @param path - The route path (array of pools)
+   * @param tokenIn - The input token address (determines swap direction)
+   * @param tokenOut - The output token address
+   * @returns Array of RouterRoute objects for the contract call
+   * @private
+   */
+  private pathToRouterRoutes(path: Pool[], tokenIn: Address, _tokenOut: Address): RouterRoute[] {
+    const routes: RouterRoute[] = []
+    const tokenInLower = tokenIn.toLowerCase()
+
+    // Check if we need to reverse the path
+    // The path is stored in canonical order, but we may need to traverse it backwards
+    const firstPool = path[0]
+    const startsWithTokenIn =
+      firstPool.token0.toLowerCase() === tokenInLower || firstPool.token1.toLowerCase() === tokenInLower
+
+    // If tokenIn isn't in the first pool, reverse the path
+    const orderedPath = startsWithTokenIn ? path : [...path].reverse()
+
+    let currentTokenIn = tokenInLower
+
+    for (const pool of orderedPath) {
+      const token0 = pool.token0.toLowerCase()
+      const token1 = pool.token1.toLowerCase()
+
+      // Determine direction: which token is the input for this hop?
+      let from: Address
+      let to: Address
+
+      if (currentTokenIn === token0) {
+        from = pool.token0 as Address
+        to = pool.token1 as Address
+      } else if (currentTokenIn === token1) {
+        from = pool.token1 as Address
+        to = pool.token0 as Address
+      } else {
+        throw new Error(`Token ${currentTokenIn} not found in pool ${pool.poolAddr}`)
+      }
+
+      routes.push({
+        from,
+        to,
+        factory: pool.factoryAddr as Address,
+      })
+
+      // The output of this hop becomes the input of the next hop
+      currentTokenIn = to.toLowerCase()
+    }
+
+    return routes
+  }
 }
