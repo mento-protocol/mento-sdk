@@ -11,7 +11,7 @@ describe('Local Deployment tests', () => {
     transport: http('http://localhost:8545'),
   })
 
-  const account = privateKeyToAccount('0x2b6b3680d06e4dcbf90889f639d71d405a9ffd195e839c15cb28b595a90ca478')
+  const account = privateKeyToAccount('0x')
 
   const walletClient = createWalletClient({
     account,
