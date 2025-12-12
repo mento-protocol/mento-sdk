@@ -4,7 +4,6 @@ import { Mento } from '../src/mento'
 // Start Generation Here
 const rpcUrls: Record<number, string> = {
   42220: 'https://forno.celo.org',
-  44787: 'https://alfajores-forno.celo-testnet.org',
 }
 
 async function main() {
