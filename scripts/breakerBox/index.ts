@@ -30,10 +30,10 @@ const RATEFEED_REVERSE_LOOKUP: Record<string, string> = CURRENCIES.reduce((acc, 
     }, {} as Record<string, string>)
   }
 }, {
-  ["0x765DE816845861e75A25fCA122bb6898B8B1282a".toLocaleLowerCase()]: "cUSD (CELOUSD)",
-  ["0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73".toLocaleLowerCase()]: "cEUR (CELOEUR)",
-  ["0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787".toLocaleLowerCase()]: "cREAL (CELOBRL)",
-  ["0x73F93dcc49cB8A239e2032663e9475dd5ef29A08".toLocaleLowerCase()]: "eXOF (CELOXOF)",
+  ["0x765DE816845861e75A25fCA122bb6898B8B1282a".toLocaleLowerCase()]: "USDm (CELOUSD)",
+  ["0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73".toLocaleLowerCase()]: "EURm (CELOEUR)",
+  ["0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787".toLocaleLowerCase()]: "BRLm (CELOBRL)",
+  ["0x73F93dcc49cB8A239e2032663e9475dd5ef29A08".toLocaleLowerCase()]: "XOFm (CELOXOF)",
 })
 
 

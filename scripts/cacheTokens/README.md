@@ -47,7 +47,7 @@ The script generates TypeScript files in `src/constants/`:
 
 Everything is computed dynamically from blockchain data:
 
-✅ **Token enum** - Unique symbols across all chains (e.g., `TokenSymbol.CELO`, `TokenSymbol.cUSD`)  
+✅ **Token enum** - Unique symbols across all chains (e.g., `TokenSymbol.CELO`, `TokenSymbol.USDm`)  
 ✅ **Address mappings** - Complete `TOKEN_ADDRESSES_BY_CHAIN` for all chains  
 ✅ **Helper functions** - Type-safe address lookups and token search  
 ✅ **Chain support** - Auto-detects supported chains from network config  

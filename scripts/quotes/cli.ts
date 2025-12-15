@@ -82,9 +82,9 @@ function transformTokenSymbol(symbol: string): string {
   // Convert common variations to standard format
   // This helps with user experience for common tokens
   const transforms: Record<string, string> = {
-    cusd: 'cUSD',
-    ceur: 'cEUR',
-    creal: 'cREAL',
+    cusd: 'USDm',
+    ceur: 'EURm',
+    creal: 'BRLm',
     usdc: 'USDC',
     usdt: 'USDT',
     weth: 'WETH',
@@ -116,10 +116,10 @@ Options:
   -v, --verbose          Show detailed route information
 
 Examples:
-  yarn quote -f USDC -t cUSD                    # Find optimal route
-  yarn quote -f USDC -t cUSD -a 1000           # Get quote for 1000 USDC
-  yarn quote -f USDC -t cUSD --all             # Show all available routes
-  yarn quote -f USDC -t cUSD -a 1000 --all     # Show all routes with quotes
-  yarn quote -f USDC -t cUSD --verbose         # Show detailed route info
+  yarn quote -f USDC -t USDm                    # Find optimal route
+  yarn quote -f USDC -t USDm -a 1000           # Get quote for 1000 USDC
+  yarn quote -f USDC -t USDm --all             # Show all available routes
+  yarn quote -f USDC -t USDm -a 1000 --all     # Show all routes with quotes
+  yarn quote -f USDC -t USDm --verbose         # Show detailed route info
   `)
 }

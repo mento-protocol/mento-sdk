@@ -17,9 +17,9 @@ A CLI tool for visualizing all trading limit configurations and their current st
 yarn tradingLimits
 
 # Filter by token symbol
-yarn tradingLimits --token cUSD
-yarn tradingLimits --token=cUSD
-yarn tradingLimits -t cUSD
+yarn tradingLimits --token USDm
+yarn tradingLimits --token=USDm
+yarn tradingLimits -t USDm
 
 # Filter by exchange ID
 yarn tradingLimits --exchange BiPoolManager
@@ -31,7 +31,7 @@ yarn tradingLimits --verbose
 yarn tradingLimits -v
 
 # Combine options
-yarn tradingLimits --token cUSD --exchange BiPoolManager --verbose
+yarn tradingLimits --token USDm --exchange BiPoolManager --verbose
 
 # Connect to a specific RPC endpoint
 RPC_URL=https://your-rpc-url.com yarn tradingLimits
@@ -43,7 +43,7 @@ RPC_URL=https://your-rpc-url.com yarn tradingLimits
 
 In normal mode, the tool shows a simplified view focused on usability:
 
-- Exchange column shows human-readable format (e.g., "cUSD <-> CELO")
+- Exchange column shows human-readable format (e.g., "USDm <-> CELO")
 - Technical details like Exchange IDs, Asset addresses, and Limit IDs are hidden
 
 ### Verbose Mode
