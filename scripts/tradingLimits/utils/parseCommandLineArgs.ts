@@ -6,7 +6,7 @@ import './typeExtensions'
 
 /**
  * Parse command line arguments using yargs-parser
- * Supports both "--token=cGHS" and "--token cGHS" formats, as well as short flags (-t, -e)
+ * Supports both "--token=GHSm" and "--token GHSm" formats, as well as short flags (-t, -e)
  * Also supports network selection via --network/-n and --chainId/-c flags
  *
  * @returns Object containing parsed arguments

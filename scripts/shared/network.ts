@@ -1,15 +1,13 @@
 // Network name to chainId mapping
 export const NETWORK_MAP: Record<string, number> = {
   celo: 42220,
-  alfajores: 44787,
-  ["celo-sepolia"]: 11142220,
+  ['celo-sepolia']: 11142220,
 }
 
 // RPC URLs for different networks
 export const rpcUrls = {
   42220: 'https://forno.celo.org',
-  44787: 'https://alfajores-forno.celo-testnet.org',
-  11142220: 'https://forno.celo-sepolia.celo-testnet.org'
+  11142220: 'https://forno.celo-sepolia.celo-testnet.org',
 } as const
 
 // Type for supported chain IDs
@@ -23,8 +21,8 @@ export interface NetworkConfig {
 
 /**
  * Parse network arguments and return network configuration
- * @param networkArg - The network name argument (e.g., 'celo', 'alfajores')
- * @param chainIdArg - The chainId argument (e.g., '42220', '44787')
+ * @param networkArg - The network name argument (e.g., 'celo')
+ * @param chainIdArg - The chainId argument (e.g., '42220')
  * @returns NetworkConfig with chainId and rpcUrl
  */
 export function parseNetworkArgs(

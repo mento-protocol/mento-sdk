@@ -50,26 +50,26 @@ describe('Mento', () => {
   const twoInWei = utils.parseUnits('2', 18)
 
   // fake tokens and symbols
-  const fakecUSDTokenAddr = 'cUSDTokenAddr'
-  const fakecEURTokenAddr = 'cEURTokenAddr'
-  const fakecBRLTokenAddr = 'cBRLTokenAddr'
+  const fakeUSDmTokenAddr = 'USDmTokenAddr'
+  const fakeEURmTokenAddr = 'EURmTokenAddr'
+  const fakeBRLmTokenAddr = 'BRLmTokenAddr'
   const fakeCeloTokenAddr = 'celoTokenAddr'
   const fakeSymbolsByTokenAddr: Record<string, string> = {
-    [fakecUSDTokenAddr]: 'cUSD',
-    [fakecEURTokenAddr]: 'cEUR',
-    [fakecBRLTokenAddr]: 'cBRL',
+    [fakeUSDmTokenAddr]: 'USDm',
+    [fakeEURmTokenAddr]: 'EURm',
+    [fakeBRLmTokenAddr]: 'BRLm',
     [fakeCeloTokenAddr]: 'CELO',
   }
   const fakeNamesByTokenAddr: Record<string, string> = {
-    [fakecUSDTokenAddr]: 'Celo Dollar',
-    [fakecEURTokenAddr]: 'Celo Euro',
-    [fakecBRLTokenAddr]: 'Celo Brazilian Real',
+    [fakeUSDmTokenAddr]: 'Celo Dollar',
+    [fakeEURmTokenAddr]: 'Celo Euro',
+    [fakeBRLmTokenAddr]: 'Celo Brazilian Real',
     [fakeCeloTokenAddr]: 'Celo',
   }
   const fakeDecimalsByTokenAddr: Record<string, number> = {
-    [fakecUSDTokenAddr]: 18,
-    [fakecEURTokenAddr]: 18,
-    [fakecBRLTokenAddr]: 18,
+    [fakeUSDmTokenAddr]: 18,
+    [fakeEURmTokenAddr]: 18,
+    [fakeBRLmTokenAddr]: 18,
     [fakeCeloTokenAddr]: 18,
   }
 
@@ -78,15 +78,15 @@ describe('Mento', () => {
   const fakeBrlExchangeProvider = 'ExchangeProvider1'
   const fakeCeloUSDExchange = {
     exchangeId: 'ExchangeCeloCUSDAddr',
-    assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+    assets: [fakeUSDmTokenAddr, fakeCeloTokenAddr],
   }
   const fakeCeloEURExchange = {
     exchangeId: 'ExchangeCeloCEURAddr',
-    assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+    assets: [fakeEURmTokenAddr, fakeCeloTokenAddr],
   }
   const fakeCeloBRLExchange = {
     exchangeId: 'ExchangeCeloCBRLAddr',
-    assets: [fakecBRLTokenAddr, fakeCeloTokenAddr],
+    assets: [fakeBRLmTokenAddr, fakeCeloTokenAddr],
   }
   const fakeExchangesByProviders = {
     [fakeUsdAndEurExchangeProvider]: [fakeCeloUSDExchange, fakeCeloEURExchange],
@@ -349,29 +349,29 @@ describe('Mento', () => {
       // Check that at least one routed (one-hop) pair is included (length > 2)
       const routedPairs = pairs.filter((p: TradablePair) => p.path.length == 2)
       expect(routedPairs.length).toBeGreaterThan(0)
-      // For example, expect cUSD -> cEUR via CELO to be present
+      // For example, expect USDm -> EURm via CELO to be present
       expect(pairs).toContainEqual({
-        id: 'cEUR-cUSD',
+        id: 'EURm-USDm',
         assets: [
           {
-            address: fakecEURTokenAddr,
-            symbol: 'cEUR',
+            address: fakeEURmTokenAddr,
+            symbol: 'EURm',
           },
           {
-            address: fakecUSDTokenAddr,
-            symbol: 'cUSD',
+            address: fakeUSDmTokenAddr,
+            symbol: 'USDm',
           },
         ],
         path: [
           {
             providerAddr: fakeUsdAndEurExchangeProvider,
             id: fakeCeloUSDExchange.exchangeId,
-            assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+            assets: [fakeUSDmTokenAddr, fakeCeloTokenAddr],
           },
           {
             providerAddr: fakeUsdAndEurExchangeProvider,
             id: fakeCeloEURExchange.exchangeId,
-            assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+            assets: [fakeEURmTokenAddr, fakeCeloTokenAddr],
           },
         ],
       })
@@ -426,27 +426,27 @@ describe('Mento', () => {
     it('should call router.getAmountIn with the right parameters for a routed swap', async () => {
       const testee = await Mento.create(provider)
       const routedPair: TradablePair = {
-        id: 'cEUR-cUSD',
+        id: 'EURm-USDm',
         assets: [
           {
-            address: fakecEURTokenAddr,
-            symbol: 'cEUR',
+            address: fakeEURmTokenAddr,
+            symbol: 'EURm',
           },
           {
-            address: fakecUSDTokenAddr,
-            symbol: 'cUSD',
+            address: fakeUSDmTokenAddr,
+            symbol: 'USDm',
           },
         ],
         path: [
           {
             providerAddr: fakeUsdAndEurExchangeProvider,
             id: fakeCeloUSDExchange.exchangeId,
-            assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+            assets: [fakeUSDmTokenAddr, fakeCeloTokenAddr],
           },
           {
             providerAddr: fakeUsdAndEurExchangeProvider,
             id: fakeCeloEURExchange.exchangeId,
-            assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+            assets: [fakeEURmTokenAddr, fakeCeloTokenAddr],
           },
         ],
       }
@@ -454,8 +454,8 @@ describe('Mento', () => {
       mockRouter.getAmountIn.mockResolvedValue('routedAmountIn')
 
       const result = await testee.getAmountIn(
-        fakecUSDTokenAddr,
-        fakecEURTokenAddr,
+        fakeUSDmTokenAddr,
+        fakeEURmTokenAddr,
         oneInWei,
         routedPair
       )
@@ -464,14 +464,14 @@ describe('Mento', () => {
         {
           exchangeProvider: fakeUsdAndEurExchangeProvider,
           exchangeId: fakeCeloUSDExchange.exchangeId,
-          assetIn: fakecUSDTokenAddr,
+          assetIn: fakeUSDmTokenAddr,
           assetOut: fakeCeloTokenAddr,
         },
         {
           exchangeProvider: fakeUsdAndEurExchangeProvider,
           exchangeId: fakeCeloEURExchange.exchangeId,
           assetIn: fakeCeloTokenAddr,
-          assetOut: fakecEURTokenAddr,
+          assetOut: fakeEURmTokenAddr,
         },
       ])
       expect(result).toBe('routedAmountIn')
@@ -527,27 +527,27 @@ describe('Mento', () => {
     it('should call router.getAmountOut with the right parameters for a routed swap', async () => {
       const testee = await Mento.create(provider)
       const routedPair: TradablePair = {
-        id: 'cEUR-cUSD',
+        id: 'EURm-USDm',
         assets: [
           {
-            address: fakecEURTokenAddr,
-            symbol: 'cEUR',
+            address: fakeEURmTokenAddr,
+            symbol: 'EURm',
           },
           {
-            address: fakecUSDTokenAddr,
-            symbol: 'cUSD',
+            address: fakeUSDmTokenAddr,
+            symbol: 'USDm',
           },
         ],
         path: [
           {
             providerAddr: fakeUsdAndEurExchangeProvider,
             id: fakeCeloEURExchange.exchangeId,
-            assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+            assets: [fakeEURmTokenAddr, fakeCeloTokenAddr],
           },
           {
             providerAddr: fakeUsdAndEurExchangeProvider,
             id: fakeCeloUSDExchange.exchangeId,
-            assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+            assets: [fakeUSDmTokenAddr, fakeCeloTokenAddr],
           },
         ],
       }
@@ -555,8 +555,8 @@ describe('Mento', () => {
       mockRouter.getAmountOut.mockResolvedValue('routedAmountOut')
 
       const result = await testee.getAmountOut(
-        fakecEURTokenAddr,
-        fakecUSDTokenAddr,
+        fakeEURmTokenAddr,
+        fakeUSDmTokenAddr,
         oneInWei,
         routedPair
       )
@@ -565,14 +565,14 @@ describe('Mento', () => {
         {
           exchangeProvider: fakeUsdAndEurExchangeProvider,
           exchangeId: fakeCeloEURExchange.exchangeId,
-          assetIn: fakecEURTokenAddr,
+          assetIn: fakeEURmTokenAddr,
           assetOut: fakeCeloTokenAddr,
         },
         {
           exchangeProvider: fakeUsdAndEurExchangeProvider,
           exchangeId: fakeCeloUSDExchange.exchangeId,
           assetIn: fakeCeloTokenAddr,
-          assetOut: fakecUSDTokenAddr,
+          assetOut: fakeUSDmTokenAddr,
         },
       ])
       expect(result).toBe('routedAmountOut')
@@ -585,22 +585,22 @@ describe('Mento', () => {
       const token = fakeCeloBRLExchange.assets[0]
       const amount = twoInWei
       const directPair: TradablePair = {
-        id: 'CELO-cBRL',
+        id: 'CELO-BRLm',
         assets: [
           {
             address: fakeCeloTokenAddr,
             symbol: 'CELO',
           },
           {
-            address: fakecBRLTokenAddr,
-            symbol: 'cBRL',
+            address: fakeBRLmTokenAddr,
+            symbol: 'BRLm',
           },
         ],
         path: [
           {
             providerAddr: fakeBrlExchangeProvider,
             id: fakeCeloBRLExchange.exchangeId,
-            assets: [fakeCeloTokenAddr, fakecBRLTokenAddr],
+            assets: [fakeCeloTokenAddr, fakeBRLmTokenAddr],
           },
         ],
       }
@@ -637,30 +637,30 @@ describe('Mento', () => {
 
     it('should return a populated increaseAllowance tx object for a routed pair', async () => {
       const testee = await Mento.create(signer)
-      const token = fakecUSDTokenAddr
+      const token = fakeUSDmTokenAddr
       const amount = twoInWei
       const routedPair: TradablePair = {
-        id: 'cEUR-cUSD',
+        id: 'EURm-USDm',
         assets: [
           {
-            address: fakecEURTokenAddr,
-            symbol: 'cEUR',
+            address: fakeEURmTokenAddr,
+            symbol: 'EURm',
           },
           {
-            address: fakecUSDTokenAddr,
-            symbol: 'cUSD',
+            address: fakeUSDmTokenAddr,
+            symbol: 'USDm',
           },
         ],
         path: [
           {
             providerAddr: fakeUsdAndEurExchangeProvider,
             id: fakeCeloUSDExchange.exchangeId,
-            assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+            assets: [fakeUSDmTokenAddr, fakeCeloTokenAddr],
           },
           {
             providerAddr: fakeUsdAndEurExchangeProvider,
             id: fakeCeloEURExchange.exchangeId,
-            assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+            assets: [fakeEURmTokenAddr, fakeCeloTokenAddr],
           },
         ],
       }
@@ -773,27 +773,27 @@ describe('Mento', () => {
     it('should call router.swapIn with the right parameters for a routed swap', async () => {
       const testee = await Mento.create(signer)
       const routedPair: TradablePair = {
-        id: 'cEUR-cUSD',
+        id: 'EURm-USDm',
         assets: [
           {
-            address: fakecEURTokenAddr,
-            symbol: 'cEUR',
+            address: fakeEURmTokenAddr,
+            symbol: 'EURm',
           },
           {
-            address: fakecUSDTokenAddr,
-            symbol: 'cUSD',
+            address: fakeUSDmTokenAddr,
+            symbol: 'USDm',
           },
         ],
         path: [
           {
             providerAddr: fakeUsdAndEurExchangeProvider,
             id: fakeCeloUSDExchange.exchangeId,
-            assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+            assets: [fakeUSDmTokenAddr, fakeCeloTokenAddr],
           },
           {
             providerAddr: fakeUsdAndEurExchangeProvider,
             id: fakeCeloEURExchange.exchangeId,
-            assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+            assets: [fakeEURmTokenAddr, fakeCeloTokenAddr],
           },
         ],
       }
@@ -818,8 +818,8 @@ describe('Mento', () => {
         .mockReturnValueOnce(fakePopulatedTxObj)
 
       const result = await testee.swapIn(
-        fakecUSDTokenAddr,
-        fakecEURTokenAddr,
+        fakeUSDmTokenAddr,
+        fakeEURmTokenAddr,
         oneInWei,
         twoInWei,
         routedPair
@@ -831,14 +831,14 @@ describe('Mento', () => {
         {
           exchangeProvider: fakeUsdAndEurExchangeProvider,
           exchangeId: fakeCeloUSDExchange.exchangeId,
-          assetIn: fakecUSDTokenAddr,
+          assetIn: fakeUSDmTokenAddr,
           assetOut: fakeCeloTokenAddr,
         },
         {
           exchangeProvider: fakeUsdAndEurExchangeProvider,
           exchangeId: fakeCeloEURExchange.exchangeId,
           assetIn: fakeCeloTokenAddr,
-          assetOut: fakecEURTokenAddr,
+          assetOut: fakeEURmTokenAddr,
         },
       ])
       expect(result).toBe(fakePopulatedTxObj)
@@ -920,27 +920,27 @@ describe('Mento', () => {
     it('should call router.swapOut with the right parameters for a routed swap', async () => {
       const testee = await Mento.create(signer)
       const routedPair: TradablePair = {
-        id: 'cUSD-cEUR',
+        id: 'USDm-EURm',
         assets: [
           {
-            address: fakecUSDTokenAddr,
-            symbol: fakeSymbolsByTokenAddr[fakecUSDTokenAddr],
+            address: fakeUSDmTokenAddr,
+            symbol: fakeSymbolsByTokenAddr[fakeUSDmTokenAddr],
           },
           {
-            address: fakecEURTokenAddr,
-            symbol: fakeSymbolsByTokenAddr[fakecEURTokenAddr],
+            address: fakeEURmTokenAddr,
+            symbol: fakeSymbolsByTokenAddr[fakeEURmTokenAddr],
           },
         ],
         path: [
           {
             providerAddr: fakeUsdAndEurExchangeProvider,
             id: fakeCeloUSDExchange.exchangeId,
-            assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+            assets: [fakeUSDmTokenAddr, fakeCeloTokenAddr],
           },
           {
             providerAddr: fakeUsdAndEurExchangeProvider,
             id: fakeCeloEURExchange.exchangeId,
-            assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+            assets: [fakeEURmTokenAddr, fakeCeloTokenAddr],
           },
         ],
       }
@@ -965,8 +965,8 @@ describe('Mento', () => {
         .mockReturnValueOnce(fakePopulatedTxObj)
 
       const result = await testee.swapOut(
-        fakecUSDTokenAddr,
-        fakecEURTokenAddr,
+        fakeUSDmTokenAddr,
+        fakeEURmTokenAddr,
         oneInWei,
         twoInWei,
         routedPair
@@ -978,14 +978,14 @@ describe('Mento', () => {
         {
           exchangeProvider: fakeUsdAndEurExchangeProvider,
           exchangeId: fakeCeloUSDExchange.exchangeId,
-          assetIn: fakecUSDTokenAddr,
+          assetIn: fakeUSDmTokenAddr,
           assetOut: fakeCeloTokenAddr,
         },
         {
           exchangeProvider: fakeUsdAndEurExchangeProvider,
           exchangeId: fakeCeloEURExchange.exchangeId,
           assetIn: fakeCeloTokenAddr,
-          assetOut: fakecEURTokenAddr,
+          assetOut: fakeEURmTokenAddr,
         },
       ])
       expect(result).toBe(fakePopulatedTxObj)
@@ -1080,7 +1080,7 @@ describe('Mento', () => {
 
       // Check that tokens are sorted by symbol
       const symbols = tokens.map((t) => t.symbol)
-      expect(symbols).toEqual(['cBRL', 'CELO', 'cEUR', 'cUSD'])
+      expect(symbols).toEqual(['BRLm', 'CELO', 'EURm', 'USDm'])
 
       // Verify each token has the expected structure
       tokens.forEach((token) => {
@@ -1216,38 +1216,38 @@ describe('Mento', () => {
 
       // Mock getTradablePairsWithPath to return pairs for testing
       jest.spyOn(testee, 'getTradablePairsWithPath').mockResolvedValue([
-        // Direct pair: cUSD <-> CELO
+        // Direct pair: USDm <-> CELO
         {
-          id: `${fakecUSDTokenAddr}-${fakeCeloTokenAddr}` as TradablePair['id'],
+          id: `${fakeUSDmTokenAddr}-${fakeCeloTokenAddr}` as TradablePair['id'],
           assets: [
-            { address: fakecUSDTokenAddr, symbol: 'cUSD' },
+            { address: fakeUSDmTokenAddr, symbol: 'USDm' },
             { address: fakeCeloTokenAddr, symbol: 'CELO' },
           ],
           path: [
             {
               providerAddr: fakeUsdAndEurExchangeProvider,
               id: fakeCeloUSDExchange.exchangeId,
-              assets: [fakecUSDTokenAddr, fakeCeloTokenAddr],
+              assets: [fakeUSDmTokenAddr, fakeCeloTokenAddr],
             },
           ],
         },
-        // Multi-hop pair: cEUR <-> cBRL (via CELO)
+        // Multi-hop pair: EURm <-> BRLm (via CELO)
         {
-          id: `${fakecEURTokenAddr}-${fakecBRLTokenAddr}` as TradablePair['id'],
+          id: `${fakeEURmTokenAddr}-${fakeBRLmTokenAddr}` as TradablePair['id'],
           assets: [
-            { address: fakecEURTokenAddr, symbol: 'cEUR' },
-            { address: fakecBRLTokenAddr, symbol: 'cBRL' },
+            { address: fakeEURmTokenAddr, symbol: 'EURm' },
+            { address: fakeBRLmTokenAddr, symbol: 'BRLm' },
           ],
           path: [
             {
               providerAddr: fakeUsdAndEurExchangeProvider,
               id: fakeCeloEURExchange.exchangeId,
-              assets: [fakecEURTokenAddr, fakeCeloTokenAddr],
+              assets: [fakeEURmTokenAddr, fakeCeloTokenAddr],
             },
             {
               providerAddr: fakeBrlExchangeProvider,
               id: fakeCeloBRLExchange.exchangeId,
-              assets: [fakeCeloTokenAddr, fakecBRLTokenAddr],
+              assets: [fakeCeloTokenAddr, fakeBRLmTokenAddr],
             },
           ],
         },
@@ -1265,7 +1265,7 @@ describe('Mento', () => {
 
       mockBreakerBox.getRateFeedTradingMode.mockResolvedValue(0)
 
-      const isTradable = await testee.isPairTradable(fakecUSDTokenAddr, fakeCeloTokenAddr)
+      const isTradable = await testee.isPairTradable(fakeUSDmTokenAddr, fakeCeloTokenAddr)
 
       expect(isTradable).toBe(true)
       expect(mockBreakerBox.getRateFeedTradingMode).toHaveBeenCalledWith(rateFeedId)
@@ -1282,7 +1282,7 @@ describe('Mento', () => {
 
       mockBreakerBox.getRateFeedTradingMode.mockResolvedValue(1)
 
-      const isTradable = await testee.isPairTradable(fakecUSDTokenAddr, fakeCeloTokenAddr)
+      const isTradable = await testee.isPairTradable(fakeUSDmTokenAddr, fakeCeloTokenAddr)
 
       expect(isTradable).toBe(false)
     })
@@ -1298,7 +1298,7 @@ describe('Mento', () => {
 
       mockBreakerBox.getRateFeedTradingMode.mockResolvedValue(2)
 
-      const isTradable = await testee.isPairTradable(fakecUSDTokenAddr, fakeCeloTokenAddr)
+      const isTradable = await testee.isPairTradable(fakeUSDmTokenAddr, fakeCeloTokenAddr)
 
       expect(isTradable).toBe(false)
     })
@@ -1321,7 +1321,7 @@ describe('Mento', () => {
         .mockResolvedValueOnce(0)
         .mockResolvedValueOnce(0)
 
-      const isTradable = await testee.isPairTradable(fakecEURTokenAddr, fakecBRLTokenAddr)
+      const isTradable = await testee.isPairTradable(fakeEURmTokenAddr, fakeBRLmTokenAddr)
 
       expect(isTradable).toBe(true)
       expect(mockBreakerBox.getRateFeedTradingMode).toHaveBeenCalledTimes(2)
@@ -1344,7 +1344,7 @@ describe('Mento', () => {
         .mockResolvedValueOnce(1)
         .mockResolvedValueOnce(0)
 
-      const isTradable = await testee.isPairTradable(fakecEURTokenAddr, fakecBRLTokenAddr)
+      const isTradable = await testee.isPairTradable(fakeEURmTokenAddr, fakeBRLmTokenAddr)
 
       expect(isTradable).toBe(false)
     })
@@ -1366,7 +1366,7 @@ describe('Mento', () => {
         .mockResolvedValueOnce(0)
         .mockResolvedValueOnce(2)
 
-      const isTradable = await testee.isPairTradable(fakecEURTokenAddr, fakecBRLTokenAddr)
+      const isTradable = await testee.isPairTradable(fakeEURmTokenAddr, fakeBRLmTokenAddr)
 
       expect(isTradable).toBe(false)
     })
@@ -1387,7 +1387,7 @@ describe('Mento', () => {
         .mockResolvedValueOnce(0)
         .mockResolvedValueOnce(0)
 
-      await testee.isPairTradable(fakecEURTokenAddr, fakecBRLTokenAddr)
+      await testee.isPairTradable(fakeEURmTokenAddr, fakeBRLmTokenAddr)
 
       // Should have fetched config for both hops
       expect(mockBiPoolManager.getPoolExchange).toHaveBeenCalledTimes(2)

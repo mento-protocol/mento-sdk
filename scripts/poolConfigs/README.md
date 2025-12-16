@@ -24,9 +24,9 @@ image.png
 yarn poolConfigs
 
 # Filter by token symbol
-yarn poolConfigs --token cUSD
-yarn poolConfigs --token=cUSD
-yarn poolConfigs -t cUSD
+yarn poolConfigs --token USDm
+yarn poolConfigs --token=USDm
+yarn poolConfigs -t USDm
 
 # Connect to a specific RPC endpoint
 RPC_URL=https://your-rpc-url.com yarn poolConfigs

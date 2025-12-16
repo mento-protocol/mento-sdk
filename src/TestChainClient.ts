@@ -8,7 +8,7 @@ export class TestChainClient implements IChainClient {
   }
 
   public async getChainId(): Promise<number> {
-    return 44787
+    return 11142220
   }
 
   public async populateTransaction(

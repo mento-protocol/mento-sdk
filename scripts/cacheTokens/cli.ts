@@ -28,7 +28,7 @@ export function parseCommandLineArgs(): CommandLineArgs {
 export function printUsageTips(): void {
   console.log('\n💡 Usage tips:')
   console.log('   - To cache tokens for specific chains:')
-  console.log('     yarn cacheTokens --chain-ids=42220,44787')
+  console.log('     yarn cacheTokens --chain-ids=42220,11142220')
   console.log('   - To cache tokens for all chains:')
   console.log('     yarn cacheTokens')
 }

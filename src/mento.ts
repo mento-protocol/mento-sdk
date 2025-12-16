@@ -848,7 +848,7 @@ export class Mento {
 
   /**
    * Checks if a trading pair is currently tradable (i.e., all rate feeds in the path are in BIDIRECTIONAL mode)
-   * For multi-hop routes (e.g., CELO → cUSD → USDT), checks that all intermediate rate feeds are tradable
+   * For multi-hop routes (e.g., CELO → USDm → USDT), checks that all intermediate rate feeds are tradable
    * @param tokenIn the address of the token to sell
    * @param tokenOut the address of the token to buy
    * @returns true if the pair is tradable (all rate feeds in BIDIRECTIONAL mode), false otherwise

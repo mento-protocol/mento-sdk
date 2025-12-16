@@ -38,7 +38,7 @@ export function calculateCompoundSpread(
 
 /**
  * Creates a human-readable display string for a trading route.
- * Shows token symbols and route structure (e.g., "USDC → cUSD → cEUR").
+ * Shows token symbols and route structure (e.g., "USDC → USDm → EURm").
  *
  * @param tradablePair - The route to display
  * @param fromSymbol - Symbol of the input token

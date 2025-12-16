@@ -44,7 +44,7 @@ describe('Utils', () => {
 
   describe('getSymbolFromTokenAddress', () => {
     it('should return the symbol of the erc20 contract address', async () => {
-      const fakecUsdAddress = '0xcUSDAddress'
+      const fakecUsdAddress = '0xUSDmAddress'
       symbol.mockReturnValueOnce('fakeSymbol')
 
       expect(await getSymbolFromTokenAddress(fakecUsdAddress, provider)).toBe(

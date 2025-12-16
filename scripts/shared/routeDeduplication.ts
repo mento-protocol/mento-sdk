@@ -6,8 +6,8 @@ import { TradablePairWithSpread } from '../cacheTradablePairs/config'
  * Routes with identical exchange hops are considered duplicates regardless of direction.
  *
  * This eliminates redundant symmetric routes like:
- * - USDC → cUSD → USD₮
- * - USD₮ → cUSD → USDC
+ * - USDC → USDm → USD₮
+ * - USD₮ → USDm → USDC
  *
  * Which use the same exchanges and have identical spreads.
  *
