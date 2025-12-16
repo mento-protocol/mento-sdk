@@ -1,9 +1,15 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-12-15T00:00:00.000Z
+// Generated on 2025-12-16T15:12:19.767Z
 
 import { Token, TokenSymbol } from '../mento'
 
 export const tokens42220: readonly Token[] = [
+  {
+    address: '0x7175504C455076F15c04A2F90a8e352281F492F9',
+    symbol: TokenSymbol.AUDm,
+    name: 'Mento Australian Dollar',
+    decimals: 18,
+  },
   {
     address: '0x061cc5a2C863E0C1Cb404006D559dB18A34C762d',
     symbol: TokenSymbol.axlEUROC,
@@ -17,15 +23,21 @@ export const tokens42220: readonly Token[] = [
     decimals: 6,
   },
   {
-    address: '0x7175504C455076F15c04A2F90a8e352281F492F9',
-    symbol: TokenSymbol.AUDm,
-    name: 'Mento Australian Dollar',
+    address: '0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787',
+    symbol: TokenSymbol.BRLm,
+    name: 'Mento Brazilian Real',
     decimals: 18,
   },
   {
     address: '0xff4Ab19391af240c311c54200a492233052B6325',
     symbol: TokenSymbol.CADm,
     name: 'Mento Canadian Dollar',
+    decimals: 18,
+  },
+  {
+    address: '0x471EcE3750Da237f93B8E339c536989b8978a438',
+    symbol: TokenSymbol.CELO,
+    name: 'Celo native asset',
     decimals: 18,
   },
   {
@@ -38,12 +50,6 @@ export const tokens42220: readonly Token[] = [
     address: '0x8A567e2aE79CA692Bd748aB832081C45de4041eA',
     symbol: TokenSymbol.COPm,
     name: 'Mento Colombian Peso',
-    decimals: 18,
-  },
-  {
-    address: '0x471EcE3750Da237f93B8E339c536989b8978a438',
-    symbol: TokenSymbol.CELO,
-    name: 'Celo native asset',
     decimals: 18,
   },
   {
@@ -83,30 +89,6 @@ export const tokens42220: readonly Token[] = [
     decimals: 18,
   },
   {
-    address: '0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787',
-    symbol: TokenSymbol.BRLm,
-    name: 'Mento Brazilian Real',
-    decimals: 18,
-  },
-  {
-    address: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
-    symbol: TokenSymbol.USDm,
-    name: 'Mento Dollar',
-    decimals: 18,
-  },
-  {
-    address: '0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6',
-    symbol: TokenSymbol.ZARm,
-    name: 'Mento South African Rand',
-    decimals: 18,
-  },
-  {
-    address: '0x73F93dcc49cB8A239e2032663e9475dd5ef29A08',
-    symbol: TokenSymbol.XOFm,
-    name: 'Mento West African CFA franc',
-    decimals: 18,
-  },
-  {
     address: '0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B',
     symbol: TokenSymbol.PHPm,
     name: 'Mento Philippine Peso',
@@ -123,5 +105,23 @@ export const tokens42220: readonly Token[] = [
     symbol: TokenSymbol.USDC,
     name: 'USDC',
     decimals: 6,
+  },
+  {
+    address: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+    symbol: TokenSymbol.USDm,
+    name: 'Mento Dollar',
+    decimals: 18,
+  },
+  {
+    address: '0x73F93dcc49cB8A239e2032663e9475dd5ef29A08',
+    symbol: TokenSymbol.XOFm,
+    name: 'Mento West African CFA franc',
+    decimals: 18,
+  },
+  {
+    address: '0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6',
+    symbol: TokenSymbol.ZARm,
+    name: 'Mento South African Rand',
+    decimals: 18,
   },
 ] as const
