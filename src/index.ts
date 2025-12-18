@@ -3,11 +3,11 @@ import { ContractAddresses } from './core/types'
 import { ChainId } from './core/constants/chainId'
 import { getContractAddress } from './core/constants/addresses'
 import { getDefaultRpcUrl, getChainConfig } from './utils/chainConfig'
-import { TokenService } from '@services/tokens'
-import { PoolService } from '@services/pools'
-import { RouteService } from '@services/routes'
-import { QuoteService } from '@services/quotes'
-import { SwapService } from '@services/swap'
+import { TokenService } from './services/tokens'
+import { PoolService } from './services/pools'
+import { RouteService } from './services/routes'
+import { QuoteService } from './services/quotes'
+import { SwapService } from './services/swap'
 
 /**
  * @class Mento
