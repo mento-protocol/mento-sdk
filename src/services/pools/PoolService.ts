@@ -157,13 +157,15 @@ export class PoolService {
           return null
         }
 
-        return {
+        const pool: Pool = {
           factoryAddr: virtualPoolFactoryAddress,
           poolAddr: poolAddress as string,
           token0: token0 as string,
           token1: token1 as string,
           poolType: PoolType.Virtual as `${PoolType}`,
+          exchangeId: exchange.exchangeId,
         }
+        return pool
       })
 
       const results = await Promise.all(poolPromises)

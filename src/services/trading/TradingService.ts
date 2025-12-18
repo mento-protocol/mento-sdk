@@ -1,22 +1,31 @@
 import { PublicClient } from 'viem'
-import { TradingMode, isTradingEnabled, Route, Pool } from '../../core/types'
+import {
+  isTradingEnabled,
+  Route,
+  Pool,
+  TradingLimit,
+  PoolTradabilityStatus,
+} from '../../core/types'
 import { RouteService } from '../routes'
+import { TradingLimitsService } from './TradingLimitsService'
 import { BREAKERBOX_ABI, FPMM_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
-
-// TODO: Could be expanded to include trading limit checks
 
 /**
  * Service for checking trading status and circuit breaker state in the Mento protocol.
  * Provides methods to query whether trading is enabled for specific rate feeds,
- * token pairs, or routes.
+ * token pairs, or routes. Also integrates trading limit checks.
  */
 export class TradingService {
+  private tradingLimitsService: TradingLimitsService
+
   constructor(
     private publicClient: PublicClient,
     private chainId: number,
     private routeService: RouteService
-  ) {}
+  ) {
+    this.tradingLimitsService = new TradingLimitsService(publicClient, chainId)
+  }
 
   /**
    * Returns the current trading mode for a given rate feed.
@@ -100,14 +109,70 @@ export class TradingService {
   }
 
   /**
+   * Get trading limits for a pool.
+   *
+   * @param pool - The pool to get trading limits for
+   * @returns Array of TradingLimit objects with maxIn/maxOut/until
+   *
+   * @example
+   * ```typescript
+   * const limits = await tradingService.getPoolTradingLimits(pool)
+   * limits.forEach(limit => {
+   *   console.log(`${limit.asset}: maxIn=${limit.maxIn}, maxOut=${limit.maxOut}`)
+   * })
+   * ```
+   */
+  async getPoolTradingLimits(pool: Pool): Promise<TradingLimit[]> {
+    return this.tradingLimitsService.getPoolTradingLimits(pool)
+  }
+
+  /**
+   * Get complete tradability status for a pool.
+   * Returns separate flags for circuit breaker and trading limits,
+   * allowing frontends to show different messages for each condition.
+   *
+   * @param pool - The pool to check
+   * @returns PoolTradabilityStatus with tradable, circuitBreakerOk, limitsOk, and limits
+   *
+   * @example
+   * ```typescript
+   * const status = await tradingService.getPoolTradabilityStatus(pool)
+   * if (!status.circuitBreakerOk) {
+   *   showModal("Trading temporarily suspended (circuit breaker)")
+   * } else if (!status.limitsOk) {
+   *   showModal("Trading limit reached", status.limits)
+   * }
+   * ```
+   */
+  async getPoolTradabilityStatus(pool: Pool): Promise<PoolTradabilityStatus> {
+    const [rateFeedId, limits] = await Promise.all([
+      this.getPoolRateFeedId(pool),
+      this.tradingLimitsService.getPoolTradingLimits(pool),
+    ])
+
+    const tradingMode = await this.getRateFeedTradingMode(rateFeedId)
+    const circuitBreakerOk = isTradingEnabled(tradingMode)
+
+    // Limits are OK if no limits configured OR all limits have capacity
+    const limitsOk = limits.length === 0 || limits.every((l) => l.maxIn > 0n && l.maxOut > 0n)
+
+    return {
+      tradable: circuitBreakerOk && limitsOk,
+      circuitBreakerOk,
+      tradingMode,
+      limitsOk,
+      limits,
+    }
+  }
+
+  /**
    * Get the reference rate feed ID for a pool.
    * Both FPMM and Virtual pools expose this via the referenceRateFeedID() view function.
    *
    * @param pool - The pool to get rate feed ID for
    * @returns The rate feed ID address
-   * @private
    */
-  private async getPoolRateFeedId(pool: Pool): Promise<string> {
+  async getPoolRateFeedId(pool: Pool): Promise<string> {
     const rateFeedId = await this.publicClient.readContract({
       address: pool.poolAddr as `0x${string}`,
       abi: FPMM_ABI,

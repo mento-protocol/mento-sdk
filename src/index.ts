@@ -39,6 +39,12 @@ import { TradingService } from './services/trading'
  *
  *              // Check if a pair is tradable (circuit breaker check)
  *              const isTradable = await mento.trading.isPairTradable(cUSD, CELO);
+ *
+ *              // Get trading limits for a pool
+ *              const limits = await mento.trading.getPoolTradingLimits(pool);
+ *
+ *              // Get full tradability status (circuit breaker + limits)
+ *              const status = await mento.trading.getPoolTradabilityStatus(pool);
  */
 export class Mento {
   private constructor(

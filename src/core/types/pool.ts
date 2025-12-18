@@ -36,4 +36,9 @@ export interface Pool {
    * The type of pool (FPMM or Virtual)
    */
   poolType: `${PoolType}`
+
+  /**
+   * The exchange ID from BiPoolManager (Virtual pools only).
+   */
+  exchangeId?: string
 }
