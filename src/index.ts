@@ -8,6 +8,7 @@ import { PoolService } from './services/pools'
 import { RouteService } from './services/routes'
 import { QuoteService } from './services/quotes'
 import { SwapService } from './services/swap'
+import { TradingService } from './services/trading'
 
 /**
  * @class Mento
@@ -35,6 +36,9 @@ import { SwapService } from './services/swap'
  *
  *              // Build swap parameters
  *              const swapDetails = await mento.swap.buildSwapParams(cUSD, CELO, amountIn, { slippageTolerance: 0.5 });
+ *
+ *              // Check if a pair is tradable (circuit breaker check)
+ *              const isTradable = await mento.trading.isPairTradable(cUSD, CELO);
  */
 export class Mento {
   private constructor(
@@ -43,7 +47,8 @@ export class Mento {
     public pools: PoolService,
     public routes: RouteService,
     public quotes: QuoteService,
-    public swap: SwapService
+    public swap: SwapService,
+    public trading: TradingService
   ) {}
 
   /**
@@ -67,9 +72,10 @@ export class Mento {
     const routeService = new RouteService(publicClient, chainId, poolService)
     const quoteService = new QuoteService(publicClient, chainId, routeService)
     const swapService = new SwapService(publicClient, chainId, routeService, quoteService)
+    const tradingService = new TradingService(publicClient, chainId, routeService)
 
     // Return new mento
-    return new Mento(chainId, tokenService, poolService, routeService, quoteService, swapService)
+    return new Mento(chainId, tokenService, poolService, routeService, quoteService, swapService, tradingService)
   }
 
   /**

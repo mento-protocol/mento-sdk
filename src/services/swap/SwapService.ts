@@ -133,6 +133,10 @@ export class SwapService {
     return { approval, swap }
   }
 
+  // TODO: Do not use viem.Address on public interface functions. 
+  // Instead use a string and validate it is a valid address.
+  // This prevents consumers from having to do any weird casting or importing viem.address
+
   /**
    * Builds swap transaction parameters without executing the transaction.
    * Does NOT check or handle token approval - use buildSwapTransaction for that.
