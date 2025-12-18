@@ -1,7 +1,5 @@
 import { ISupplyCalculator } from '../../services'
 
-// TODO: Merge Token.ts and tokens.ts
-
 export interface Token {
   address: string
   symbol: string // TODO: Consider making this strongly typed with TokenSymbol enum
