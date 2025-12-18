@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-12-18T14:21:57.284Z
+// Generated on 2025-12-18T17:44:38.856Z
 
 import type { RouteWithCost } from '../core/types'
 
@@ -59,7 +59,8 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           "poolAddr": "0x21243E9F64815D86Eeb38d80a212295a39634e70",
           "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
           "token1": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-          "poolType": "Virtual"
+          "poolType": "Virtual",
+          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187"
         }
       ],
       "costData": {
@@ -97,11 +98,12 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           "poolAddr": "0x21243E9F64815D86Eeb38d80a212295a39634e70",
           "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
           "token1": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
-          "poolType": "Virtual"
+          "poolType": "Virtual",
+          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187"
         }
       ],
       "costData": {
-        "totalCostPercent": 1.297,
+        "totalCostPercent": 1.3,
         "hops": [
           {
             "poolAddress": "0x5c3919258a040D203260880401E3201a82d224c4",
@@ -115,6 +117,8 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     }
   ],
+  // Chain 11142220
+  11142220: [],
 }
 
 /**

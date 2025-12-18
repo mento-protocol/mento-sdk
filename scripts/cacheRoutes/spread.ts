@@ -2,8 +2,6 @@ import type { Route, RouteWithCost } from '../../src/core/types'
 import type { PublicClient } from 'viem'
 import { getPoolCostPercent } from '../../src/utils/costUtils'
 
-//TODO: Hops.costPercent rounding is incorrect
-
 /**
  * Calculate cost data for a route by fetching data from the individual pools
  */
@@ -39,8 +37,8 @@ export async function calculateCostForRoute(route: Route, publicClient: PublicCl
   }
 
   // Calculate total spread from compounded effective rate
-  // Round to 8 decimal places to eliminate floating-point precision errors
-  const totalCostPercent = Math.round((1 - totalEffectiveRate) * 100 * 1e8) / 1e8
+  // Round to 2 decimal places
+  const totalCostPercent = Math.round((1 - totalEffectiveRate) * 100 * 100) / 100
 
   return {
     ...route,
