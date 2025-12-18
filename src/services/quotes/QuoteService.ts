@@ -16,6 +16,7 @@ export class QuoteService {
     private routeService: RouteService
   ) {}
 
+  // TODO: Go through codebase and update token/symbol/name references to the old ones.
   /**
    * Calculates the expected output amount for a swap between two tokens.
    *
@@ -26,7 +27,7 @@ export class QuoteService {
    * @returns The expected output amount (in wei/smallest unit)
    * @throws {RouteNotFoundError} If no route exists between the token pair
    * @throws {Error} If the Router contract call fails
-   *
+   * 
    * @example
    * ```typescript
    * const cUSD = '0x765DE816845861e75A25fCA122bb6898B8B1282a'

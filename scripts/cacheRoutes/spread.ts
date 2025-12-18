@@ -2,6 +2,8 @@ import type { Route, RouteWithCost } from '../../src/core/types'
 import type { PublicClient } from 'viem'
 import { getPoolCostPercent } from '../../src/utils/costUtils'
 
+//TODO: Hops.costPercent rounding is incorrect
+
 /**
  * Calculate cost data for a route by fetching data from the individual pools
  */
