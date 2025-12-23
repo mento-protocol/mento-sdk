@@ -27,6 +27,10 @@ export interface RouterRoute {
  * ```
  */
 export function encodeRoutePath(path: Pool[], tokenIn: Address, _tokenOut: Address): RouterRoute[] {
+  if (!path || path.length === 0) {
+    return []
+  }
+
   const routes: RouterRoute[] = []
   const tokenInLower = tokenIn.toLowerCase()
 
