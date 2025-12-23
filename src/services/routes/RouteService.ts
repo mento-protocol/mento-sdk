@@ -150,9 +150,9 @@ export class RouteService {
    *
    * @example
    * ```typescript
-   * const cUSD = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
-   * const cBRL = '0xE4D5...'
-   * const route = await routeService.findRoute(cUSD, cBRL)
+   * const USDm = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
+   * const BRLm = '0xE4D5...'
+   * const route = await routeService.findRoute(USDm, BRLm)
    *
    * if (route.path.length === 1) {
    *   console.log('Direct route available')

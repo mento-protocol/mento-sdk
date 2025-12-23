@@ -29,16 +29,16 @@ import { TradingService } from './services/trading'
  *              const pools = await mento.pools.getPools();
  *
  *              // Find a route between tokens
- *              const route = await mento.routes.findRoute(cUSD, CELO);
+ *              const route = await mento.routes.findRoute(USDm, CELO);
  *
  *              // Get a quote for a swap
- *              const amountOut = await mento.quotes.getAmountOut(cUSD, CELO, amountIn);
+ *              const amountOut = await mento.quotes.getAmountOut(USDm, CELO, amountIn);
  *
  *              // Build swap parameters
- *              const swapDetails = await mento.swap.buildSwapParams(cUSD, CELO, amountIn, { slippageTolerance: 0.5 });
+ *              const swapDetails = await mento.swap.buildSwapParams(USDm, CELO, amountIn, { slippageTolerance: 0.5 });
  *
  *              // Check if a pair is tradable (circuit breaker check)
- *              const isTradable = await mento.trading.isPairTradable(cUSD, CELO);
+ *              const isTradable = await mento.trading.isPairTradable(USDm, CELO);
  *
  *              // Get trading limits for a pool
  *              const limits = await mento.trading.getPoolTradingLimits(pool);

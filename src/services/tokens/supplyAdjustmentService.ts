@@ -6,8 +6,8 @@ export class SupplyAdjustmentService {
   private readonly config: Readonly<TokenSupplyConfig>
 
   STABLE_TOKEN_SYMBOLS = {
-    cUSD: 'cUSD',
-    cEUR: 'cEUR',
+    USDm: 'USDm',
+    EURm: 'EURm',
   } as const
 
   constructor(
@@ -35,12 +35,12 @@ export class SupplyAdjustmentService {
     const multisigCalculator = factory.createMultisigCalculator(publicClient)
 
     return Object.freeze({
-      [this.STABLE_TOKEN_SYMBOLS.cUSD]: Object.freeze([
+      [this.STABLE_TOKEN_SYMBOLS.USDm]: Object.freeze([
         { calculator: uniV3Calculator },
         { calculator: multisigCalculator },
         { calculator: aaveCalculator },
       ]),
-      [this.STABLE_TOKEN_SYMBOLS.cEUR]: Object.freeze([
+      [this.STABLE_TOKEN_SYMBOLS.EURm]: Object.freeze([
         { calculator: aaveCalculator },
       ]),
     })

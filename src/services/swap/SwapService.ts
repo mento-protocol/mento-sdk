@@ -97,7 +97,7 @@ export class SwapService {
    * @example
    * ```typescript
    * const { approval, swap } = await mento.swap.buildSwapTransaction(
-   *   cUSD,
+   *   USDm,
    *   CELO,
    *   parseUnits('100', 18),
    *   recipientAddress,
@@ -152,7 +152,7 @@ export class SwapService {
    * @example
    * ```typescript
    * const swapDetails = await mento.swap.buildSwapParams(
-   *   cUSD,
+   *   USDm,
    *   CELO,
    *   parseUnits('100', 18),
    *   recipientAddress,

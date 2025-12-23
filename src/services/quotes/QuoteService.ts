@@ -16,7 +16,6 @@ export class QuoteService {
     private routeService: RouteService
   ) {}
 
-  // TODO: Go through codebase and update token/symbol/name references to the old ones.
   /**
    * Calculates the expected output amount for a swap between two tokens.
    *
@@ -30,17 +29,17 @@ export class QuoteService {
    * 
    * @example
    * ```typescript
-   * const cUSD = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
+   * const USDm = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
    * const CELO = '0x471EcE3750Da237f93B8E339c536989b8978a438'
    *
-   * // Calculate output for 100 cUSD
-   * const amountIn = BigInt(100) * BigInt(10 ** 18) // 100 cUSD in wei
-   * const expectedOut = await quoteService.getAmountOut(cUSD, CELO, amountIn)
+   * // Calculate output for 100 USDm
+   * const amountIn = BigInt(100) * BigInt(10 ** 18) // 100 USDm in wei
+   * const expectedOut = await quoteService.getAmountOut(USDm, CELO, amountIn)
    * console.log(`Expected CELO output: ${expectedOut}`)
    *
    * // Or provide a pre-fetched route for better performance
-   * const route = await routeService.findRoute(cUSD, CELO)
-   * const expectedOut2 = await quoteService.getAmountOut(cUSD, CELO, amountIn, route)
+   * const route = await routeService.findRoute(USDm, CELO)
+   * const expectedOut2 = await quoteService.getAmountOut(USDm, CELO, amountIn, route)
    * ```
    */
   async getAmountOut(tokenIn: Address, tokenOut: Address, amountIn: bigint, route?: Route): Promise<bigint> {

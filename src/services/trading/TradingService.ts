@@ -69,7 +69,7 @@ export class TradingService {
    *
    * @example
    * ```typescript
-   * const isTradable = await tradingService.isPairTradable(cUSD, CELO)
+   * const isTradable = await tradingService.isPairTradable(USDm, CELO)
    * if (!isTradable) {
    *   console.log('Trading is currently suspended for this pair')
    * }

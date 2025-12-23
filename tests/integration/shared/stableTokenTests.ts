@@ -10,13 +10,13 @@ export function createStableTokenTests(service: StableTokenService) {
       expect(tokens.length).toBeGreaterThan(0)
 
       const expectedTokens = [
-        'cUSD',
-        'cEUR',
-        'cREAL',
-        'eXOF',
-        'PUSO',
-        'cCOP',
-        'cKES',
+        'USDm',
+        'EURm',
+        'BRLm',
+        'XOFm',
+        'PHPm',
+        'COPm',
+        'KESm',
       ]
       const tokenSymbols = tokens.map((token) => token.symbol)
       expectedTokens.forEach((symbol) => {

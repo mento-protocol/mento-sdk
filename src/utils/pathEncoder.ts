@@ -21,8 +21,8 @@ export interface RouterRoute {
  *
  * @example
  * ```typescript
- * const route = await routeService.findRoute(cUSD, CELO)
- * const routerRoutes = encodeRoutePath(route.path, cUSD, CELO)
+ * const route = await routeService.findRoute(USDm, CELO)
+ * const routerRoutes = encodeRoutePath(route.path, USDm, CELO)
  * // routerRoutes can now be passed to Router.getAmountsOut or Router.swapTokensForTokens
  * ```
  */

@@ -13,7 +13,7 @@ export type RouteID = `${string}-${string}`
 export interface Route {
   /**
    * Canonical identifier: sorted symbols joined with hyphen
-   * Always uses alphabetical order (e.g., 'cEUR-cUSD' not 'cUSD-cEUR')
+   * Always uses alphabetical order (e.g., 'EURm-USDm' not 'USDm-EURm')
    * Ensures consistent identification regardless of query direction
    */
   id: RouteID
