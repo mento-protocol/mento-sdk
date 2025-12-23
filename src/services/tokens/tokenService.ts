@@ -1,9 +1,6 @@
 import { RESERVE_ABI, BIPOOL_MANAGER_ABI, ERC20_ABI } from '../../core/abis'
 import { Token, StableToken, CollateralAsset } from '../../core/types'
 
-// TODO: Really need to think about how FPMM & CDP assets fit in here.
-//       This service is mainly used to drive data in the analytics API.
-
 // Legacy Exchange type for BiPoolManager v2 responses
 interface Exchange {
   exchangeId: string
@@ -105,6 +102,9 @@ export class TokenService {
       args: [],
     })) as string[]
 
+    // TODO: Once we have a cached mapping of stableToken -> addressRegistry we can 
+    // use that to get the token addresses.
+
     const tokens: StableToken[] = []
 
     for (const address of tokenAddresses) {
@@ -133,7 +133,6 @@ export class TokenService {
     return tokens
   }
 
-  // TODO: V3 - How does USD.m fit in here?
   /**
    * Get all collateral assets from exchanges
    * Filters tokens that are marked as collateral in the Reserve contract
@@ -143,7 +142,6 @@ export class TokenService {
     const biPoolManagerAddress = getContractAddress(this.chainId, BIPOOLMANAGER)
     const reserveAddress = getContractAddress(this.chainId, RESERVE)
 
-    // TODO: V3 - Should instead use the factories.
     // Get all exchanges to find unique token addresses
     const exchanges = (await retryOperation(() =>
       this.publicClient.readContract({

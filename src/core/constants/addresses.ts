@@ -17,8 +17,10 @@ export const addresses: ContractAddressMap = {
     MentoRouter: '0xbe729350f8cdfc19db6866e8579841188ee57f67',
     Reserve: '0x9380fA34Fd9e4Fd14c06305fd7B6199089eD4eb9',
 
+    // TODO: Find and remove references to this. This should be replaced
+    //       with the token cache
     // Stable Tokens
-    StableToken: '0x765DE816845861e75A25fCA122bb6898B8B1282a', // cUSD
+    StableToken: '0x765DE816845861e75A25fCA122bb6898B8B1282a', // USDm
 
     // Governance
     Airgrab: '0x7D8E73deafDBAfc98fDBe7974168cFA6d8B9AE0C',
