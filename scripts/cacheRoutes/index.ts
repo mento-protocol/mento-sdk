@@ -1,7 +1,7 @@
 import { createPublicClient, http } from 'viem'
 import { celo } from 'viem/chains'
 import { defineChain } from 'viem'
-import type { Route } from '../../src/core/types'
+import type { Route, RouteWithCost } from '../../src/core/types'
 import {
   buildConnectivityStructures,
   generateAllRoutes,
@@ -11,10 +11,10 @@ import { deduplicateRoutes } from '../shared/routeDeduplication'
 import { processRoutesInBatches } from './batchProcessor'
 import { parseCommandLineArgs, printUsageTips } from './cli'
 import { rpcUrls, type SupportedChainId } from './config'
-import { generateFileContent, writeToFile } from './fileGenerator'
+import { generateConsolidatedContent, writeConsolidatedFile } from './fileGenerator'
 import { sortRoutesBySpread } from './spread'
 import { calculateStatistics, displayStatistics } from './statistics'
-import { PoolService, RouterService } from '../../src/services'
+import { PoolService, RouteService } from '../../src/services'
 
 const celoSepolia = defineChain({
   id: 11142220,
@@ -47,11 +47,9 @@ const chainConfigs = {
 /**
  * Generate all available routes (not just optimal)
  */
-async function getAllRoutes(
-  routerService: RouterService
-): Promise<Route[]> {
+async function getAllRoutes(routeService: RouteService): Promise<Route[]> {
   // Get direct routes
-  const directRoutes = await routerService.getDirectRoutes()
+  const directRoutes = await routeService.getDirectRoutes()
 
   if (directRoutes.length === 0) {
     return []
@@ -63,22 +61,18 @@ async function getAllRoutes(
   // Generate all possible routes (direct + 2-hop)
   const allRoutes = generateAllRoutes(connectivity)
 
-  const optimalRoutes = selectOptimalRoutes(
-    allRoutes,
-    true,
-    connectivity.addrToSymbol
-  )
+  const optimalRoutes = selectOptimalRoutes(allRoutes, true, connectivity.addrToSymbol)
 
   return optimalRoutes as Route[]
 }
 
 /**
- * Generate and cache tradable pairs for a specific chain
+ * Generate routes for a specific chain
  */
-async function generateAndCacheRoutes(
+async function generateRoutesForChain(
   chainId: SupportedChainId,
   batchSize = 10
-): Promise<void> {
+): Promise<RouteWithCost[]> {
   const rpcUrl = rpcUrls[chainId]
   const chain = chainConfigs[chainId]
 
@@ -93,11 +87,16 @@ async function generateAndCacheRoutes(
   }) as any
 
   const poolService = new PoolService(publicClient, chainId)
-  const routerService = new RouterService(publicClient, chainId, poolService)
+  const routeService = new RouteService(publicClient, chainId, poolService)
 
   // Get all tradable pairs with all available routes - force fresh generation
   console.log(`Fetching all tradable pairs with all available routes...`)
-  const pairs = await getAllRoutes(routerService)
+  const pairs = await getAllRoutes(routeService)
+
+  if (pairs.length === 0) {
+    console.log(`No routes found for chain ${chainId}`)
+    return []
+  }
 
   // Process pairs with controlled concurrency using viem
   console.log(`Fetching spreads from pool configurations...`)
@@ -124,14 +123,7 @@ async function generateAndCacheRoutes(
   const statistics = calculateStatistics(pairsToCache)
   displayStatistics(statistics)
 
-  // Generate and write the TypeScript file
-  const content = generateFileContent(chainId, pairsToCache)
-  // Pass the script directory path
-  const fileName = writeToFile(chainId, content, __dirname)
-
-  console.log(
-    `\nSuccessfully cached ${statistics.totalRoutes} total routes (covering ${statistics.uniquePairs} unique pairs) with spread data to ${fileName}\n`
-  )
+  return pairsToCache
 }
 
 /**
@@ -154,17 +146,30 @@ export async function main(): Promise<void> {
     )} (batch size: ${batchSize})`
   )
 
-  // Generate tradable pairs for specified chain IDs
+  // Generate routes for all chains
+  const routesByChain: { [chainId: number]: RouteWithCost[] } = {}
+
   for (const chainId of chainIdsToProcess) {
     console.log(
       `\n\x1b[1mGenerating tradable pairs for chain ${chainId}...\x1b[0m`
     )
     try {
-      await generateAndCacheRoutes(chainId as SupportedChainId, batchSize)
+      const routes = await generateRoutesForChain(chainId as SupportedChainId, batchSize)
+      routesByChain[chainId] = routes
     } catch (error) {
       console.error(`Error generating pairs for chain ${chainId}:`, error)
+      // Use empty array for failed chains
+      routesByChain[chainId] = []
     }
   }
+
+  // Generate consolidated cache file
+  console.log(`\n\x1b[1mGenerating consolidated routes cache file...\x1b[0m`)
+  const content = generateConsolidatedContent(routesByChain)
+  const fileName = writeConsolidatedFile(content, __dirname)
+
+  const totalRoutes = Object.values(routesByChain).reduce((sum, routes) => sum + routes.length, 0)
+  console.log(`\n✅ Successfully cached ${totalRoutes} routes across ${chainIdsToProcess.length} chains to src/cache/${fileName}`)
 
   console.log('\nAll done!')
 

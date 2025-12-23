@@ -322,14 +322,12 @@ describe('PoolService', () => {
         const pools = await service.getPools()
 
         // FPMM pools should have FPMM factory address
-        const fpmmPools = pools.filter(
-          (p) => p.poolAddress === mockFPMMPools[0].poolAddress
-        )
+        const fpmmPools = pools.filter((p) => p.poolAddr === mockFPMMPools[0].poolAddress)
         expect(fpmmPools.length).toBeGreaterThan(0)
 
         // Virtual pools should have Virtual factory address
         const virtualPools = pools.filter(
-          (p) => p.poolAddress === mockVirtualPools[0]
+          (p) => p.poolAddr === mockVirtualPools[0]
         )
         expect(virtualPools.length).toBeGreaterThan(0)
       })
@@ -496,7 +494,7 @@ describe('PoolService', () => {
       const pools = await service.getPools()
 
       // Each pool should have unique poolAddress
-      const poolAddresses = pools.map((p) => p.poolAddress)
+      const poolAddresses = pools.map((p) => p.poolAddr)
       const uniqueAddresses = new Set(poolAddresses)
       expect(uniqueAddresses.size).toBe(poolAddresses.length)
     })
