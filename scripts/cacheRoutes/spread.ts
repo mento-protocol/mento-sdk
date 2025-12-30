@@ -37,8 +37,8 @@ export async function calculateCostForRoute(route: Route, publicClient: PublicCl
   }
 
   // Calculate total spread from compounded effective rate
-  // Round to 8 decimal places to eliminate floating-point precision errors
-  const totalCostPercent = Math.round((1 - totalEffectiveRate) * 100 * 1e8) / 1e8
+  // Round to 2 decimal places
+  const totalCostPercent = Math.round((1 - totalEffectiveRate) * 100 * 100) / 100
 
   return {
     ...route,

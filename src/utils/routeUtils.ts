@@ -32,15 +32,15 @@ type Address = string
  *
  * CONCRETE EXAMPLE:
  * Given these direct trading pairs:
- * - cUSD ↔ CELO (direct exchange exists)
- * - CELO ↔ cEUR (direct exchange exists)
- * - cUSD ↔ cREAL (direct exchange exists)
+ * - USDm ↔ CELO (direct exchange exists)
+ * - CELO ↔ EURm (direct exchange exists)
+ * - USDm ↔ BRLm (direct exchange exists)
  *
  * How route finding works:
- * - Direct route: cUSD → cEUR? Check token graph: cUSD connects to [CELO, cREAL], none is cEUR → No direct route
- * - Two-hop route: cUSD → ? → cEUR?
- *   - cUSD connects to CELO, CELO connects to cEUR → Found route: cUSD → CELO → cEUR
- *   - cUSD connects to cREAL, cREAL connects to [cUSD] → No route via cREAL
+ * - Direct route: USDm → EURm? Check token graph: USDm connects to [CELO, BRLm], none is EURm → No direct route
+ * - Two-hop route: USDm → ? → EURm?
+ *   - USDm connects to CELO, CELO connects to EURm → Found route: USDm → CELO → EURm
+ *   - USDm connects to BRLm, BRLm connects to [USDm] → No route via BRLm
  *
  * The "connectivity" part means we can quickly traverse the network of
  * token connections to find all possible trading paths.
@@ -50,9 +50,9 @@ export interface ConnectivityData {
   /** Maps token address to symbol for efficient lookups
    *
    *    ```
-   *    '0x765D...' → 'cUSD'
+   *    '0x765D...' → 'USDm'
    *    '0x471E...' → 'CELO'
-   *    '0xD876...' → 'cEUR'
+   *    '0xD876...' → 'EURm'
    *    ```
    */
   addrToSymbol: Map<Address, TokenSymbol>
@@ -60,23 +60,23 @@ export interface ConnectivityData {
   /** Adjacency list mapping which tokens connect to which
    * Used for finding two-hop routes by traversing token → neighbor → neighbor.
    *
-   * Example for a cUSD => cEUR swap: First we find cUSD → [CELO, cKES, ...]
-   * Then we find CELO → [cUSD, cEUR, ...] = found route via cUSD → CELO → cEUR
+   * Example for a USDm => EURm swap: First we find USDm → [CELO, KESm, ...]
+   * Then we find CELO → [USDm, EURm, ...] = found route via USDm → CELO → EURm
    *
    *    ```
-   *    'cUSD_addr' → Set(['CELO_addr', 'cKES_addr'])  // cUSD connects to CELO and cKES
-   *    'CELO_addr' → Set(['cUSD_addr', 'cEUR_addr'])  // CELO connects to cUSD and cEUR
-   *    'cEUR_addr' → Set(['CELO_addr'])               // cEUR connects to CELO
-   *    'cKES_addr' → Set(['cUSD_addr'])               // cKES connects to cUSD
+   *    'USDm_addr' → Set(['CELO_addr', 'KESm_addr'])  // USDm connects to CELO and KESm
+   *    'CELO_addr' → Set(['USDm_addr', 'EURm_addr'])  // CELO connects to USDm and EURm
+   *    'EURm_addr' → Set(['CELO_addr'])               // EURm connects to CELO
+   *    'KESm_addr' → Set(['USDm_addr'])               // KESm connects to USDm
    *    ```
    */
   tokenGraph: Map<Address, Set<Address>>
 
   /** Maps sorted token address pairs to their direct route details
    *    ```
-   *    'CELO_addr-cEUR_addr' → { route details for CELO ↔ cEUR }
-   *    'CELO_addr-cUSD_addr' → { route details for CELO ↔ cUSD }
-   *    'cUSD_addr-cKES_addr' → { route details for cUSD ↔ cKES }
+   *    'CELO_addr-EURm_addr' → { route details for CELO ↔ EURm }
+   *    'CELO_addr-USDm_addr' → { route details for CELO ↔ USDm }
+   *    'USDm_addr-KESm_addr' → { route details for USDm ↔ KESm }
    *    ```
    */
   directRouteMap: Map<RouteID, Pool>
@@ -95,23 +95,23 @@ export interface ConnectivityData {
  *
  * ```
  * Input: TradablePairs = [
- *   { id: 'cUSD-CELO', assets: [cUSD, CELO], path: [exchange1_CELO_cUSD] },
- *   { id: 'CELO-cEUR', assets: [CELO, cEUR], path: [exchange2_CELO_cEUR] }
+ *   { id: 'USDm-CELO', assets: [USDm, CELO], path: [exchange1_CELO_USDm] },
+ *   { id: 'CELO-EURm', assets: [CELO, EURm], path: [exchange2_CELO_EURm] }
  * ]
  *
  * Step 1 - Build addrToSymbol map:
- *   cUSD.address → 'cUSD'
+ *   USDm.address → 'USDm'
  *   CELO.address → 'CELO'
- *   cEUR.address → 'cEUR'
+ *   EURm.address → 'EURm'
  *
  * Step 2 - Build directPathMap (sorted alphabetically for consistency):
- *   'CELO_addr-cEUR_addr' → exchange2_CELO_cEUR
- *   'CELO_addr-cUSD_addr' → exchange1_CELO_cUSD
+ *   'CELO_addr-EURm_addr' → exchange2_CELO_EURm
+ *   'CELO_addr-USDm_addr' → exchange1_CELO_USDm
  *
  * Step 3 - Build bidirectional tokenGraph:
- *   cUSD.address → Set([CELO.address])
- *   CELO.address → Set([cUSD.address, cEUR.address])
- *   cEUR.address → Set([CELO.address])
+ *   USDm.address → Set([CELO.address])
+ *   CELO.address → Set([USDm.address, EURm.address])
+ *   EURm.address → Set([CELO.address])
  * ```
  *
  * **Result**: We can now efficiently answer:
@@ -125,17 +125,17 @@ export interface ConnectivityData {
  * @example
  * ```typescript
  * const directPairs = [
- *   { id: 'cUSD-CELO', assets: [cUSD, CELO], path: [exchange1] },
- *   { id: 'CELO-cEUR', assets: [CELO, cEUR], path: [exchange2] }
+ *   { id: 'USDm-CELO', assets: [USDm, CELO], path: [exchange1] },
+ *   { id: 'CELO-EURm', assets: [CELO, EURm], path: [exchange2] }
  * ]
  *
  * const connectivityData = buildConnectivityStructures(directPairs)
  *
  * // Now we can efficiently find routes:
- * // 1. Check if cUSD connects to anything: connectivityData.tokenGraph.get(cUSD.address) → [CELO.address]
- * // 2. Check if CELO connects to cEUR: connectivityData.tokenGraph.get(CELO.address) → [cUSD.address, cEUR.address] ✓
- * // 3. Get exchange details: connectivityData.directPathMap.get('CELO_addr-cEUR_addr') → exchange2_CELO_cEUR
- * // Result: Found route cUSD → CELO → cEUR with exchange details
+ * // 1. Check if USDm connects to anything: connectivityData.tokenGraph.get(USDm.address) → [CELO.address]
+ * // 2. Check if CELO connects to EURm: connectivityData.tokenGraph.get(CELO.address) → [USDm.address, EURm.address] ✓
+ * // 3. Get exchange details: connectivityData.directPathMap.get('CELO_addr-EURm_addr') → exchange2_CELO_EURm
+ * // Result: Found route USDm → CELO → EURm with exchange details
  * ```
  */
 export function buildConnectivityStructures(directRoutes: Route[]): ConnectivityData {
@@ -184,21 +184,21 @@ export function buildConnectivityStructures(directRoutes: Route[]): Connectivity
  * the best one based on cost data or heuristics.
  *
  * **Canonical Route IDs**: All routes use alphabetically sorted symbols
- * (e.g., 'cEUR-cUSD' not 'cUSD-cEUR') for consistent identification.
+ * (e.g., 'EURm-USDm' not 'USDm-EURm') for consistent identification.
  *
  * @param connectivityData - The connectivity data from buildConnectivityStructures()
  * @returns Map of route ID -> array of possible routes for that token pair
  *
  * @example
  * ```typescript
- * // Given direct routes: cUSD-CELO, CELO-cEUR, cUSD-USDC
+ * // Given direct routes: USDm-CELO, CELO-EURm, USDm-USDC
  * const allRoutes = generateAllRoutes(connectivityData)
  *
  * // Results might include:
- * // 'cUSD-CELO' -> [{ path: [cUSD->CELO] }] // direct route
- * // 'cEUR-cUSD' -> [
- * //   { path: [cUSD->USDC, USDC->cEUR] } // two-hop via USDC
- * //   { path: [cUSD->CELO, CELO->cEUR] } // two-hop via CELO
+ * // 'USDm-CELO' -> [{ path: [USDm->CELO] }] // direct route
+ * // 'EURm-USDm' -> [
+ * //   { path: [USDm->USDC, USDC->EURm] } // two-hop via USDC
+ * //   { path: [USDm->CELO, CELO->EURm] } // two-hop via CELO
  * // ]
  * ```
  */
@@ -217,23 +217,23 @@ export function generateAllRoutes(connectivityData: ConnectivityData): Map<Route
   // Step 2: Generate two-hop routes using graph traversal
   // Algorithm: For each token, explore all paths of length 2
 
-  // OUTER LOOP: "For each starting token..." (e.g., cUSD, CELO, cEUR, etc.)
+  // OUTER LOOP: "For each starting token..." (e.g., USDm, CELO, EURm, etc.)
   for (const [start, neighbors] of tokenGraph.entries()) {
     // MIDDLE LOOP: "Where can I go from the starting token?" (first hop)
-    // Example: If start = cUSD, neighbors might be [CELO, USDC, cKES]
+    // Example: If start = USDm, neighbors might be [CELO, USDC, KESm]
     for (const intermediate of neighbors) {
       // Get all tokens reachable from this intermediate token (second hop destinations)
       const secondHopNeighbors = tokenGraph.get(intermediate)
       if (!secondHopNeighbors) continue
 
       // INNER LOOP: "From the intermediate token, where can I go?" (second hop)
-      // Example: If intermediate = CELO, secondHopNeighbors might be [cUSD, cEUR, cBRL]
+      // Example: If intermediate = CELO, secondHopNeighbors might be [USDm, EURm, BRLm]
       for (const end of secondHopNeighbors) {
-        // Skip circular routes like cUSD → CELO → cUSD (pointless)
+        // Skip circular routes like USDm → CELO → USDm (pointless)
         if (end === start) continue
 
         // At this point we have a potential route: start → intermediate → end
-        // Example: cUSD → CELO → cEUR
+        // Example: USDm → CELO → EURm
 
         // Try to create a valid two-hop trading pair from this route
         const twoHopRoute = createTwoHopRoute(start, intermediate, end, addrToSymbol, directRouteMap)
@@ -275,22 +275,22 @@ export function generateAllRoutes(connectivityData: ConnectivityData): Map<Route
  *
  * @example
  * ```typescript
- * // Create route: cUSD -> CELO -> cEUR
+ * // Create route: USDm -> CELO -> EURm
  * const pair = createTwoHopPair(
- *   '0x765D...', // cUSD address
+ *   '0x765D...', // USDm address
  *   '0x471E...', // CELO address
- *   '0xD876...', // cEUR address
+ *   '0xD876...', // EURm address
  *   addrToSymbol,
  *   directPathMap
  * )
  *
  * // Result:
  * // {
- * //   id: 'cEUR-cUSD',           // alphabetical order
- * //   assets: [cEUR, cUSD],     // alphabetical order
+ * //   id: 'EURm-USDm',           // alphabetical order
+ * //   assets: [EURm, USDm],     // alphabetical order
  * //   path: [                   // actual routing path
- * //     { cUSD->CELO exchange },
- * //     { CELO->cEUR exchange }
+ * //     { USDm->CELO exchange },
+ * //     { CELO->EURm exchange }
  * //   ]
  * // }
  * ```
@@ -356,17 +356,17 @@ export function createTwoHopRoute(
  *
  * @example
  * ```typescript
- * // Multiple routes for cUSD-cEUR pair
+ * // Multiple routes for USDm-EURm pair
  * const candidates = new Map([
- *   ['cEUR-cUSD', [
- *     { path: [cUSD->CELO->cEUR], costData: { totalCostPercent: 0.5 } },
- *     { path: [cUSD->cREAL->cEUR], costData: { totalCostPercent: 0.3 } },
- *     { path: [cUSD->cEUR] } // direct route, no cost data
+ *   ['EURm-USDm', [
+ *     { path: [USDm->CELO->EURm], costData: { totalCostPercent: 0.5 } },
+ *     { path: [USDm->BRLm->EURm], costData: { totalCostPercent: 0.3 } },
+ *     { path: [USDm->EURm] } // direct route, no cost data
  *   ]]
  * ])
  *
  * const optimal = selectOptimalRoutes(candidates, false, assetMap)
- * // Returns the cUSD->cREAL->cEUR route (lowest cost: 0.3%)
+ * // Returns the USDm->BRLm->EURm route (lowest cost: 0.3%)
  * ```
  */
 export function selectOptimalRoutes(
@@ -412,7 +412,7 @@ export function selectOptimalRoutes(
  *
  * **Tier 3 - Major Stablecoin Preference** (Final Fallback):
  * - For two-hop routes, prefer those going through major stablecoins
- * - Major FX currencies like cUSD and cEUR typically have better liquidity
+ * - Major FX currencies like USDm and EURm typically have better liquidity
  *
  * **Tier 4 - First Available** (Last Resort):
  * - If no other heuristics apply, use the first route found
@@ -447,7 +447,7 @@ export function selectBestRoute(candidates: Route[], addrToSymbol: Map<Address, 
   if (directRoute) return directRoute
 
   // Tier 3: Prefer routes through major stablecoins (better liquidity)
-  const stablecoins = ['cUSD', 'cEUR', 'USDC', 'USDT']
+  const stablecoins = ['USDm', 'EURm', 'USDC', 'USDT']
   const routeWithStablecoin = candidates.find((candidate) => {
     const intermediateToken = getIntermediateToken(candidate)
     if (!intermediateToken) return false

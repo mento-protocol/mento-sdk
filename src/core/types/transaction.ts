@@ -1,4 +1,3 @@
-
 export interface ContractCallOptions {
   address: string
   abi: string[] | unknown[]

@@ -5,8 +5,7 @@ import { TokenService } from '../../src/services/tokens/tokenService'
 import type { Token } from '../../src/core/types'
 import { rpcUrls, type SupportedChainId } from '../shared/network'
 import { parseCommandLineArgs, printUsageTips } from './cli'
-import { generateFileContent, writeToFile } from './fileGenerator'
-import { generateTokensIndexFile } from './tokensIndexGenerator'
+import { generateConsolidatedContent, writeConsolidatedFile } from './fileGenerator'
 
 const celoSepolia = defineChain({
   id: 11142220,
@@ -86,26 +85,9 @@ async function fetchTokensForChain(
 }
 
 /**
- * Write per-chain cache files
- */
-function writeChainCacheFiles(tokensByChain: {
-  [chainId: number]: Token[]
-}): void {
-  for (const [chainIdStr, tokens] of Object.entries(tokensByChain)) {
-    const chainId = Number(chainIdStr) as SupportedChainId
-    const content = generateFileContent(chainId, tokens)
-    const fileName = writeToFile(chainId, content, __dirname)
-    console.log(`✅ Successfully cached ${tokens.length} tokens to ${fileName}`)
-  }
-}
-
-/**
  * Main function
  *
- * Generation order is important:
- * 1. Fetch tokens for all chains
- * 2. Generate tokens.ts with TokenSymbol enum FIRST
- * 3. Generate per-chain files that import TokenSymbol from tokens.ts
+ * Generates a single consolidated tokens.ts file with all chain data
  */
 export async function main(): Promise<void> {
   const args = parseCommandLineArgs()
@@ -116,7 +98,7 @@ export async function main(): Promise<void> {
 
   console.log(`📡 Cache tokens for chain(s): ${chainIdsToProcess.join(', ')}`)
 
-  // Step 1: Fetch tokens for all chains first
+  // Fetch tokens for all chains
   const tokensByChain: { [chainId: number]: Token[] } = {}
 
   for (const chainId of chainIdsToProcess) {
@@ -127,17 +109,18 @@ export async function main(): Promise<void> {
       tokensByChain[chainId] = tokens
     } catch (error) {
       console.error(`❌ Error fetching tokens for chain ${chainId}:`, error)
+      // Use empty array for failed chains
+      tokensByChain[chainId] = []
     }
   }
 
-  // Step 2: Generate tokens.ts with TokenSymbol enum FIRST
-  // This must happen before per-chain files since they import TokenSymbol
-  console.log(`\n🔄 \x1b[1mGenerating tokens.ts index file...\x1b[0m`)
-  generateTokensIndexFile(tokensByChain, __dirname)
+  // Generate consolidated cache file
+  console.log(`\n🔄 \x1b[1mGenerating consolidated tokens cache file...\x1b[0m`)
+  const content = generateConsolidatedContent(tokensByChain)
+  const fileName = writeConsolidatedFile(content, __dirname)
 
-  // Step 3: Generate per-chain cache files that import TokenSymbol
-  console.log(`\n🔄 \x1b[1mGenerating per-chain cache files...\x1b[0m`)
-  writeChainCacheFiles(tokensByChain)
+  const totalTokens = Object.values(tokensByChain).reduce((sum, tokens) => sum + tokens.length, 0)
+  console.log(`✅ Successfully cached ${totalTokens} tokens across ${chainIdsToProcess.length} chains to src/cache/${fileName}`)
 
   console.log(`\nAll done!`)
   printUsageTips()

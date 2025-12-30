@@ -1,28 +1,16 @@
 import { StableToken, TokenSupplyConfig } from '../../core/types'
 import { CalculatorFactory } from './supply/calculatorFactory'
 import type { PublicClient } from 'viem'
+import { TokenSymbol } from '../../cache/tokens'
 
 export class SupplyAdjustmentService {
   private readonly config: Readonly<TokenSupplyConfig>
 
-  STABLE_TOKEN_SYMBOLS = {
-    cUSD: 'cUSD',
-    cEUR: 'cEUR',
-  } as const
-
-  constructor(
-    publicClient: PublicClient,
-    chainId: number,
-    calculatorFactory: CalculatorFactory
-  ) {
+  constructor(publicClient: PublicClient, chainId: number, calculatorFactory: CalculatorFactory) {
     if (!publicClient) throw new Error('PublicClient is required')
     if (!calculatorFactory) throw new Error('Calculator factory is required')
 
-    this.config = this.initializeConfig(
-      publicClient,
-      chainId,
-      calculatorFactory
-    )
+    this.config = this.initializeConfig(publicClient, chainId, calculatorFactory)
   }
 
   private initializeConfig(
@@ -35,14 +23,12 @@ export class SupplyAdjustmentService {
     const multisigCalculator = factory.createMultisigCalculator(publicClient)
 
     return Object.freeze({
-      [this.STABLE_TOKEN_SYMBOLS.cUSD]: Object.freeze([
+      [TokenSymbol.USDm]: Object.freeze([
         { calculator: uniV3Calculator },
         { calculator: multisigCalculator },
         { calculator: aaveCalculator },
       ]),
-      [this.STABLE_TOKEN_SYMBOLS.cEUR]: Object.freeze([
-        { calculator: aaveCalculator },
-      ]),
+      [TokenSymbol.EURm]: Object.freeze([{ calculator: aaveCalculator }]),
     })
   }
 
