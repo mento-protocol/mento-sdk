@@ -5,6 +5,7 @@ import { Route, CallParams } from '../../core/types'
 import { ROUTER_ABI, ERC20_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
 import { encodeRoutePath, RouterRoute } from '../../utils/pathEncoder'
+import { validateAddress } from '../../utils/validation'
 
 /**
  * Options for configuring a swap transaction
@@ -85,8 +86,8 @@ export class SwapService {
    * Builds a complete swap transaction including approval if needed.
    * This is the recommended method for most use cases.
    *
-   * @param tokenIn - The address of the input token
-   * @param tokenOut - The address of the output token
+   * @param tokenIn - The address of the input token (e.g., '0x765DE816845861e75A25fCA122bb6898B8B1282a')
+   * @param tokenOut - The address of the output token (e.g., '0x471EcE3750Da237f93B8E339c536989b8978a438')
    * @param amountIn - The amount of input tokens (in wei/smallest unit)
    * @param recipient - The address to receive the output tokens
    * @param owner - The address that owns the input tokens (needed to check allowance)
@@ -97,11 +98,11 @@ export class SwapService {
    * @example
    * ```typescript
    * const { approval, swap } = await mento.swap.buildSwapTransaction(
-   *   USDm,
-   *   CELO,
+   *   '0x765DE816845861e75A25fCA122bb6898B8B1282a', // USDm
+   *   '0x471EcE3750Da237f93B8E339c536989b8978a438', // CELO
    *   parseUnits('100', 18),
-   *   recipientAddress,
-   *   ownerAddress,
+   *   '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', // recipient
+   *   '0x123...', // owner
    *   { slippageTolerance: 0.5 }
    * )
    *
@@ -115,34 +116,36 @@ export class SwapService {
    * ```
    */
   async buildSwapTransaction(
-    tokenIn: Address,
-    tokenOut: Address,
+    tokenIn: string,
+    tokenOut: string,
     amountIn: bigint,
-    recipient: Address,
-    owner: Address,
+    recipient: string,
+    owner: string,
     options: SwapOptions,
     route?: Route
   ): Promise<SwapTransaction> {
+    // Validate all address inputs
+    validateAddress(tokenIn, 'tokenIn')
+    validateAddress(tokenOut, 'tokenOut')
+    validateAddress(recipient, 'recipient')
+    validateAddress(owner, 'owner')
+
     // Build swap params first
     const swap = await this.buildSwapParams(tokenIn, tokenOut, amountIn, recipient, options, route)
 
     // Check if approval is needed
-    const currentAllowance = await this.getAllowance(tokenIn, owner)
-    const approval = currentAllowance < amountIn ? this.buildApprovalParams(tokenIn, amountIn) : null
+    const currentAllowance = await this.getAllowance(tokenIn as Address, owner as Address)
+    const approval = currentAllowance < amountIn ? this.buildApprovalParams(tokenIn as Address, amountIn) : null
 
     return { approval, swap }
   }
-
-  // TODO: Do not use viem.Address on public interface functions. 
-  // Instead use a string and validate it is a valid address.
-  // This prevents consumers from having to do any weird casting or importing viem.address
 
   /**
    * Builds swap transaction parameters without executing the transaction.
    * Does NOT check or handle token approval - use buildSwapTransaction for that.
    *
-   * @param tokenIn - The address of the input token
-   * @param tokenOut - The address of the output token
+   * @param tokenIn - The address of the input token (e.g., '0x765DE816845861e75A25fCA122bb6898B8B1282a')
+   * @param tokenOut - The address of the output token (e.g., '0x471EcE3750Da237f93B8E339c536989b8978a438')
    * @param amountIn - The amount of input tokens (in wei/smallest unit)
    * @param recipient - The address to receive the output tokens
    * @param options - Swap configuration options (slippage, deadline)
@@ -152,10 +155,10 @@ export class SwapService {
    * @example
    * ```typescript
    * const swapDetails = await mento.swap.buildSwapParams(
-   *   USDm,
-   *   CELO,
+   *   '0x765DE816845861e75A25fCA122bb6898B8B1282a', // USDm
+   *   '0x471EcE3750Da237f93B8E339c536989b8978a438', // CELO
    *   parseUnits('100', 18),
-   *   recipientAddress,
+   *   '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', // recipient
    *   { slippageTolerance: 0.5 }
    * )
    *
@@ -164,13 +167,18 @@ export class SwapService {
    * ```
    */
   async buildSwapParams(
-    tokenIn: Address,
-    tokenOut: Address,
+    tokenIn: string,
+    tokenOut: string,
     amountIn: bigint,
-    recipient: Address,
+    recipient: string,
     options: SwapOptions,
     route?: Route
   ): Promise<SwapDetails> {
+    // Validate all address inputs
+    validateAddress(tokenIn, 'tokenIn')
+    validateAddress(tokenOut, 'tokenOut')
+    validateAddress(recipient, 'recipient')
+
     // Find route if not provided
     if (!route) {
       route = await this.routeService.findRoute(tokenIn, tokenOut)
@@ -182,9 +190,9 @@ export class SwapService {
     // Set deadline (default: 20 minutes from now)
     const deadline = options.deadline ?? BigInt(Math.floor(Date.now() / 1000) + 20 * 60)
 
-    const routerRoutes = encodeRoutePath(route.path, tokenIn, tokenOut)
+    const routerRoutes = encodeRoutePath(route.path, tokenIn as Address, tokenOut as Address)
     const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
-    const data = this.encodeSwapCall(amountIn, amountOutMin, routerRoutes, recipient, deadline)
+    const data = this.encodeSwapCall(amountIn, amountOutMin, routerRoutes, recipient as Address, deadline)
 
     return {
       params: {
