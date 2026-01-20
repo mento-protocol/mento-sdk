@@ -18,6 +18,7 @@ export interface RouterRoute {
  * @param tokenIn - The input token address (determines swap direction)
  * @param _tokenOut - The output token address (unused but kept for API clarity)
  * @returns Array of RouterRoute objects for the contract call
+ * @throws {Error} If path is empty, too long, or contains invalid pools
  *
  * @example
  * ```typescript
@@ -27,8 +28,23 @@ export interface RouterRoute {
  * ```
  */
 export function encodeRoutePath(path: Pool[], tokenIn: Address, _tokenOut: Address): RouterRoute[] {
+  // Validate path is not empty
   if (!path || path.length === 0) {
-    return []
+    throw new Error(
+      'Internal error: Route path is empty. This should not happen - routes are validated before encoding.'
+    )
+  }
+
+  // Validate all pools have required structure
+  for (let i = 0; i < path.length; i++) {
+    const pool = path[i]
+    if (!pool.token0 || !pool.token1 || !pool.factoryAddr) {
+      throw new Error(
+        `Invalid pool structure at index ${i}: missing required fields. ` +
+        `Pool must have token0, token1, and factoryAddr. ` +
+        `Got: ${JSON.stringify(pool)}`
+      )
+    }
   }
 
   const routes: RouterRoute[] = []
@@ -60,7 +76,11 @@ export function encodeRoutePath(path: Pool[], tokenIn: Address, _tokenOut: Addre
       from = pool.token1 as Address
       to = pool.token0 as Address
     } else {
-      throw new Error(`Token ${currentTokenIn} not found in pool ${pool.poolAddr}`)
+      throw new Error(
+        `Route encoding error: Token ${currentTokenIn} not found in pool ${pool.poolAddr}. ` +
+        `Pool contains tokens: ${token0}, ${token1}. ` +
+        `This indicates the route path is invalid or tokens don't form a connected path.`
+      )
     }
 
     routes.push({
