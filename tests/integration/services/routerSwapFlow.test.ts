@@ -22,7 +22,7 @@ import { Route, Pool, PoolType } from '../../../src/core/types'
  * @group local
  */
 describe('Router Swap Flow Integration', () => {
-  const RPC_URL = process.env.LOCAL_RPC_URL || 'http://localhost:8545'
+  const RPC_URL = process.env.CELO_RPC_URL || 'http://localhost:8545'
   const CHAIN_ID = 42220 // Celo mainnet chain ID
 
   const publicClient = createPublicClient({

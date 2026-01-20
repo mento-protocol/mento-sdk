@@ -4,12 +4,11 @@ export const NETWORK_MAP: Record<string, number> = {
   ['celo-sepolia']: 11142220,
 }
 
-// TODO: Remove the local rpc
 // RPC URLs for different networks
+// Can be overridden with CELO_RPC_URL and CELO_SEPOLIA_RPC_URL environment variables
 export const rpcUrls = {
-  // 42220: 'https://forno.celo.org',
-  42220: 'http://localhost:8545',
-  11142220: 'https://forno.celo-sepolia.celo-testnet.org',
+  42220: process.env.CELO_RPC_URL || 'https://forno.celo.org',
+  11142220: process.env.CELO_SEPOLIA_RPC_URL || 'https://forno.celo-sepolia.celo-testnet.org',
 } as const
 
 // Type for supported chain IDs
