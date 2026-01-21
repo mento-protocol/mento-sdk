@@ -1,5 +1,12 @@
 import { parseAbi } from 'viem'
 
+/**
+ * ERC20 ABI for standard token operations
+ *
+ * Note: `as any` is used because viem's parseAbi returns a complex readonly tuple type
+ * that can cause type verbosity. This doesn't compromise type safety - viem's
+ * readContract/writeContract still infer types correctly from the ABI at usage sites.
+ */
 export const ERC20_ABI = parseAbi([
   'function name() view returns (string)',
   'function symbol() view returns (string)',

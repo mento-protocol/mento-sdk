@@ -20,7 +20,7 @@ export class PoolService {
    * Results are cached in memory for the service instance lifetime
    *
    * @returns Array of all pools available in the protocol
-   * @throws {Error} If RPC call fails or pools are unavailable
+   * @throws {Error} If no pools can be discovered from any factory
    *
    * @example
    * ```typescript
@@ -37,12 +37,24 @@ export class PoolService {
     //       for dynamic factory discovery. For now we will use
     //       the hardcoded factory addresses for the chain for v1.
     const pools: Pool[] = []
+    
+    try {
+      const fpmmPools = await this.fetchFPMMPools()
+      pools.push(...fpmmPools)
+    } catch {}
 
-    const fpmmPools = await this.fetchFPMMPools()
-    pools.push(...fpmmPools)
+    try {
+      const virtualPools = await this.fetchVirtualPools()
+      pools.push(...virtualPools)
+    } catch {}
 
-    const virtualPools = await this.fetchVirtualPools()
-    pools.push(...virtualPools)
+    // Only throw if NO pools were discovered from any factory
+    if (pools.length === 0) {
+      throw new Error(
+        'Failed to discover any pools from any factory. ' +
+        'All pool factory queries failed. Check network connectivity and RPC endpoint.'
+      )
+    }
 
     this.poolsCache = pools
     return pools
@@ -55,7 +67,6 @@ export class PoolService {
     const fpmmFactoryAddress = getContractAddress(this.chainId as ChainId, 'FPMMFactory')
 
     if (!fpmmFactoryAddress) {
-      console.warn('FPMM Factory address not found for this chain')
       return []
     }
 
@@ -96,7 +107,6 @@ export class PoolService {
 
       return await Promise.all(poolDataPromises)
     } catch (error) {
-      console.error('Failed to fetch FPMM pools:', error)
       throw new Error(`Failed to fetch FPMM pools: ${(error as Error).message}`)
     }
   }
@@ -111,12 +121,11 @@ export class PoolService {
     const biPoolManagerAddress = getContractAddress(this.chainId as ChainId, 'BiPoolManager')
 
     if (!virtualPoolFactoryAddress || !biPoolManagerAddress) {
-      console.warn('VirtualPoolFactory or BiPoolManager address not found for this chain')
       return []
     }
 
     try {
-      // TODO: When new virtual pool factory is deployed
+      // TODO: When the latest virtual pool factory contract is deployed
       //       we can simplify this by using VirtualPoolFactory.getAllPools() returns(address[])
 
       // Get all exchanges from BiPoolManager
@@ -133,7 +142,6 @@ export class PoolService {
       // For each exchange, check if a virtual pool exists, and if so, return the pool address.
       const poolPromises = exchangesData.map(async (exchange) => {
         if (exchange.assets.length !== 2) {
-          console.warn(`Skipping invalid exchange ${exchange.exchangeId}: expected 2 assets`)
           return null
         }
 
@@ -171,7 +179,6 @@ export class PoolService {
       const results = await Promise.all(poolPromises)
       return results.filter((pool): pool is Pool => pool !== null)
     } catch (error) {
-      console.error('Failed to fetch Virtual pools:', error)
       throw new Error(`Failed to fetch Virtual pools: ${(error as Error).message}`)
     }
   }

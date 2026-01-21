@@ -196,7 +196,7 @@ describe('PoolService', () => {
 
         // Should have called isPool for each exchange
         const isPoolCalls = mockPublicClient.readContract.mock.calls.filter(
-          (call) => (call[0] as any).functionName === 'isPool'
+          ([params]) => 'functionName' in params && params.functionName === 'isPool'
         )
         expect(isPoolCalls.length).toBe(mockExchanges.length)
       })

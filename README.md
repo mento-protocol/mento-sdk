@@ -84,6 +84,40 @@ pnpm build
 pnpm test
 ```
 
+#### Cache Generation Scripts
+
+The SDK includes scripts to generate and update cached route and token data:
+
+```bash
+# Generate route cache
+pnpm cacheRoutes
+
+# Generate token cache
+pnpm cacheTokens
+```
+
+**Environment Variables:**
+
+You can override the default RPC URLs used by cache generation scripts:
+
+```bash
+# Use custom RPC for Celo mainnet
+export CELO_RPC_URL=https://your-custom-rpc.example.com
+pnpm cacheRoutes
+
+# Use custom RPC for Celo Sepolia testnet
+export CELO_SEPOLIA_RPC_URL=https://your-sepolia-rpc.example.com
+pnpm cacheRoutes
+
+# Or set both
+CELO_RPC_URL=https://your-rpc.com CELO_SEPOLIA_RPC_URL=https://your-sepolia.com pnpm cacheRoutes
+```
+
+By default, scripts use the public Forno RPC endpoints:
+
+- Celo mainnet: `https://forno.celo.org`
+- Celo Sepolia: `https://forno.celo-sepolia.celo-testnet.org`
+
 ### Project Structure
 
 ```bash
