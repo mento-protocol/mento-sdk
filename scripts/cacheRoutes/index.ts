@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { createPublicClient, http } from 'viem'
 import { celo } from 'viem/chains'
 import { defineChain } from 'viem'

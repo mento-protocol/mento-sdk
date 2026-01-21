@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-12-18T17:44:38.856Z
+// Generated on 2026-01-21T20:27:37.682Z
 
 import type { RouteWithCost } from '../core/types'
 
@@ -103,7 +103,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.3,
+        "totalCostPercent": 1.297,
         "hops": [
           {
             "poolAddress": "0x5c3919258a040D203260880401E3201a82d224c4",
@@ -117,8 +117,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     }
   ],
-  // Chain 11142220
-  11142220: [],
 }
 
 /**
