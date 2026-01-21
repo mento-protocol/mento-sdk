@@ -11,6 +11,7 @@ export async function processRoutesInBatches(
   batchSize = 10
 ): Promise<RouteWithCost[]> {
   const results: RouteWithCost[] = []
+  const failedRoutes: Array<{ routeId: string; error: string }> = []
   let processed = 0
   let errors = 0
 
@@ -26,6 +27,10 @@ export async function processRoutesInBatches(
         return result
       } catch (error) {
         errors++
+        failedRoutes.push({
+          routeId: route.id,
+          error: (error as Error).message,
+        })
         process.stdout.write(`\r   Processing ${processed}/${routes.length} routes... (${errors} errors)`)
 
         // Return null for failed routes - we'll filter them out later
@@ -43,8 +48,11 @@ export async function processRoutesInBatches(
     }
   }
 
-  if (errors > 0) {
-    console.log(`\n   ${errors} routes failed to fetch spread data (excluded from cache)`)
+  if (failedRoutes.length > 0) {
+    console.log(`\n   ${errors} routes failed to fetch cost data:`)
+    failedRoutes.forEach(({ routeId, error }) => {
+      console.log(`     - ${routeId}: ${error}`)
+    })
   }
 
   return results
