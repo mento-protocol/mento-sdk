@@ -239,9 +239,20 @@ export class SwapService {
 
   /**
    * Calculates minimum output amount after applying slippage tolerance
+   * @param amountOut - Expected output amount
+   * @param slippageTolerance - Slippage tolerance as percentage (e.g., 0.5 for 0.5%)
+   * @returns Minimum acceptable output amount
+   * @throws Error if slippage tolerance is invalid
    * @private
    */
   private calculateMinAmountOut(amountOut: bigint, slippageTolerance: number): bigint {
+    if (slippageTolerance < 0) {
+      throw new Error('Slippage tolerance cannot be negative')
+    }
+    if (slippageTolerance > 100) {
+      throw new Error('Slippage tolerance cannot exceed 100%')
+    }
+
     const basisPoints = BigInt(Math.floor(slippageTolerance * 100))
     const slippageMultiplier = 10000n - basisPoints
     return (amountOut * slippageMultiplier) / 10000n
