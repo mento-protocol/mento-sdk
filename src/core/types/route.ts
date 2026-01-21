@@ -1,5 +1,5 @@
 import { Pool } from './pool'
-import { Token } from './token'
+import { RouteToken } from './token'
 
 /**
  * Route identifier: sorted symbols joined with hyphen
@@ -22,7 +22,7 @@ export interface Route {
    * The two tokens being traded, in alphabetical order by symbol
    * Always [symbolA, symbolB] where symbolA < symbolB alphabetically
    */
-  tokens: [Token, Token]
+  tokens: [RouteToken, RouteToken]
 
   /**
    * Array of exchange hops needed to execute the trade

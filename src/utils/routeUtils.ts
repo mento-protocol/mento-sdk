@@ -1,4 +1,4 @@
-import type { Route, RouteID, Token, RouteWithCost, Pool } from '../core/types'
+import type { Route, RouteID, RouteToken, RouteWithCost, Pool } from '../core/types'
 import { canonicalAddressKey, canonicalSymbolKey } from './sortUtils'
 import type { Address as ViemAddress } from 'viem'
 
@@ -322,11 +322,11 @@ export function createTwoHopRoute(
   const routeId = canonicalSymbolKey(startSymbol, endSymbol) as RouteID
 
   // Create Token objects from address and symbol
-  const startToken: Token = { address: startAddr, symbol: startSymbol }
-  const endToken: Token = { address: endAddr, symbol: endSymbol }
+  const startToken: RouteToken = { address: startAddr, symbol: startSymbol }
+  const endToken: RouteToken = { address: endAddr, symbol: endSymbol }
 
   // Token array follows alphabetical ordering for consistency
-  const tokens: [Token, Token] = startSymbol <= endSymbol ? [startToken, endToken] : [endToken, startToken]
+  const tokens: [RouteToken, RouteToken] = startSymbol <= endSymbol ? [startToken, endToken] : [endToken, startToken]
 
   return {
     id: routeId,

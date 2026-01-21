@@ -1,7 +1,7 @@
 import { PoolService } from '../pools'
 import { ERC20_ABI } from '../../core/abis'
 import { RouteNotFoundError } from '../../core/errors'
-import { Route, RouteID, Pool, RouteWithCost, Token } from '../../core/types'
+import { Route, RouteID, Pool, RouteWithCost, RouteToken } from '../../core/types'
 import { buildConnectivityStructures, generateAllRoutes, selectOptimalRoutes } from '../../utils/routeUtils'
 import { canonicalSymbolKey } from '../../utils/sortUtils'
 import { PublicClient } from 'viem'
@@ -77,7 +77,7 @@ export class RouteService {
       const routeId = canonicalSymbolKey(symbol0, symbol1) as RouteID
 
       // Sort tokens to match the canonical route ID order (alphabetical by symbol)
-      const sortedTokens: [Token, Token] =
+      const sortedTokens: [RouteToken, RouteToken] =
         symbol0 < symbol1
           ? [
               { address: pool.token0, symbol: symbol0 },
