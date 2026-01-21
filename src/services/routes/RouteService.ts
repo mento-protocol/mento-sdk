@@ -234,7 +234,6 @@ export class RouteService {
 
     try {
       const symbol = (await this.publicClient.readContract({
-        // TODO: Consider using Address type from viem. Keep this consistent across the codebase
         address: address as `0x${string}`,
         abi: ERC20_ABI,
         functionName: 'symbol',
@@ -246,7 +245,6 @@ export class RouteService {
       return symbol
     } catch {
       // Fallback to address if symbol fetch fails
-      console.warn(`Failed to fetch symbol for token ${address}, using address as fallback`)
       this.symbolCache.set(address, address)
       return address
     }
