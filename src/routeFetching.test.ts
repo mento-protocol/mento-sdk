@@ -91,14 +91,14 @@ Contract.mockImplementation((contractAddr: string) => {
 
 // Token addresses from mainnet (chain 42220) - these should eventually reference constants
 const TOKENS = {
-  cUSD: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
-  cEUR: '0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73',
-  cREAL: '0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787',
+  USDm: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+  EURm: '0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73',
+  BRLm: '0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787',
   USDC: '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
   axlUSDC: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
   USDT: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
   CELO: '0x471EcE3750Da237f93B8E339c536989b8978a438',
-  eXOF: '0x73F93dcc49cB8A239e2032663e9475dd5ef29A08',
+  XOFm: '0x73F93dcc49cB8A239e2032663e9475dd5ef29A08',
 }
 
 // Simplified helper function for checking intermediate tokens
@@ -135,7 +135,7 @@ describe('Route Fetching Logic', () => {
     })
 
     it('should find optimized routes for key token pairs', async () => {
-      // Test axlUSDC => USDC route through cUSD (not cREAL)
+      // Test axlUSDC => USDC route through USDm (not BRLm)
       const axlUsdcToUsdc = await mento.findPairForTokens(
         TOKENS.axlUSDC,
         TOKENS.USDC
@@ -144,22 +144,22 @@ describe('Route Fetching Logic', () => {
         TOKENS.axlUSDC
       )
       expect(axlUsdcToUsdc.assets.map((a) => a.address)).toContain(TOKENS.USDC)
-      expect(hasIntermediateToken(axlUsdcToUsdc, TOKENS.cUSD)).toBe(true)
-      expect(hasIntermediateToken(axlUsdcToUsdc, TOKENS.cREAL)).toBe(false)
+      expect(hasIntermediateToken(axlUsdcToUsdc, TOKENS.USDm)).toBe(true)
+      expect(hasIntermediateToken(axlUsdcToUsdc, TOKENS.BRLm)).toBe(false)
 
-      // Test USDC => USDT route through cUSD
+      // Test USDC => USDT route through USDm
       const usdcToUsdt = await mento.findPairForTokens(TOKENS.USDC, TOKENS.USDT)
       expect(usdcToUsdt.assets.map((a) => a.address)).toContain(TOKENS.USDC)
       expect(usdcToUsdt.assets.map((a) => a.address)).toContain(TOKENS.USDT)
-      expect(hasIntermediateToken(usdcToUsdt, TOKENS.cUSD)).toBe(true)
+      expect(hasIntermediateToken(usdcToUsdt, TOKENS.USDm)).toBe(true)
 
       // Test direct routes
       const cEurToReal = await mento.findPairForTokens(
-        TOKENS.cEUR,
-        TOKENS.cREAL
+        TOKENS.EURm,
+        TOKENS.BRLm
       )
-      expect(cEurToReal.assets.map((a) => a.address)).toContain(TOKENS.cEUR)
-      expect(cEurToReal.assets.map((a) => a.address)).toContain(TOKENS.cREAL)
+      expect(cEurToReal.assets.map((a) => a.address)).toContain(TOKENS.EURm)
+      expect(cEurToReal.assets.map((a) => a.address)).toContain(TOKENS.BRLm)
     })
   })
 
@@ -202,35 +202,35 @@ describe('Route Fetching Logic', () => {
 
   describe('Route Display Functionality', () => {
     it('should correctly display multi-hop route through an intermediate hub', async () => {
-      // Find the cREAL-USDC route that goes through cUSD
-      const cREALtoUSDC = await mento.findPairForTokens(
-        TOKENS.cREAL,
+      // Find the BRLm-USDC route that goes through USDm
+      const BRLmtoUSDC = await mento.findPairForTokens(
+        TOKENS.BRLm,
         TOKENS.USDC
       )
 
       // Verify this is a multi-hop route
-      expect(cREALtoUSDC.path.length).toBe(2)
+      expect(BRLmtoUSDC.path.length).toBe(2)
 
-      // Verify it goes through cUSD as intermediate token
-      expect(hasIntermediateToken(cREALtoUSDC, TOKENS.cUSD)).toBe(true)
+      // Verify it goes through USDm as intermediate token
+      expect(hasIntermediateToken(BRLmtoUSDC, TOKENS.USDm)).toBe(true)
 
       // Test route display in both directions
-      const cREALtoUSDCDisplay = buildRouteDisplay(
-        cREALtoUSDC,
-        'cREAL',
+      const BRLmtoUSDCDisplay = buildRouteDisplay(
+        BRLmtoUSDC,
+        'BRLm',
         'USDC',
         allPairs
       )
       const usdcToCREALDisplay = buildRouteDisplay(
-        cREALtoUSDC,
+        BRLmtoUSDC,
         'USDC',
-        'cREAL',
+        'BRLm',
         allPairs
       )
 
-      // Both should show cUSD as the intermediate token
-      expect(cREALtoUSDCDisplay).toBe('cREAL → cUSD → USDC')
-      expect(usdcToCREALDisplay).toBe('USDC → cUSD → cREAL')
+      // Both should show USDm as the intermediate token
+      expect(BRLmtoUSDCDisplay).toBe('BRLm → USDm → USDC')
+      expect(usdcToCREALDisplay).toBe('USDC → USDm → BRLm')
     })
 
     it('should correctly display direct routes', async () => {

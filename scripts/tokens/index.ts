@@ -167,13 +167,19 @@ async function main(): Promise<void> {
       const networksCount = new Set(sortedTokens.map((t) => t.network)).size
       console.log(
         chalk.bold(
-          `\nTotal: ${chalk.green(sortedTokens.length)} token entries across ${chalk.blue(networksCount)} networks (${chalk.cyan(uniqueSymbols.size)} unique symbols)`
+          `\nTotal: ${chalk.green(
+            sortedTokens.length
+          )} token entries across ${chalk.blue(
+            networksCount
+          )} networks (${chalk.cyan(uniqueSymbols.size)} unique symbols)`
         )
       )
     } else {
       console.log(
         chalk.bold(
-          `\nTotal: ${chalk.green(sortedTokens.length)} unique token${sortedTokens.length !== 1 ? 's' : ''}`
+          `\nTotal: ${chalk.green(sortedTokens.length)} unique token${
+            sortedTokens.length !== 1 ? 's' : ''
+          }`
         )
       )
     }
@@ -191,7 +197,6 @@ async function main(): Promise<void> {
     console.log('\n' + chalk.bold('Examples:'))
     console.log('  yarn tokens                        # All networks')
     console.log('  yarn tokens --network celo         # Celo mainnet only')
-    console.log('  yarn tokens --network alfajores    # Alfajores testnet only')
     console.log(
       '  yarn tokens --network celo-sepolia # Celo Sepolia testnet only'
     )

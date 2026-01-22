@@ -4,11 +4,11 @@
  * Unified swap information tool - combines route discovery and quote calculation
  *
  * Usage Examples:
- * - Basic route info: yarn quote -f USDC -t cUSD
- * - With quote amount: yarn quote -f USDC -t cUSD -a 1000
- * - All routes: yarn quote -f USDC -t cUSD --all
- * - All routes with quotes: yarn quote -f USDC -t cUSD -a 1000 --all
- * - Verbose details: yarn quote -f USDC -t cUSD --verbose
+ * - Basic route info: yarn quote -f USDC -t USDm
+ * - With quote amount: yarn quote -f USDC -t USDm -a 1000
+ * - All routes: yarn quote -f USDC -t USDm --all
+ * - All routes with quotes: yarn quote -f USDC -t USDm -a 1000 --all
+ * - Verbose details: yarn quote -f USDC -t USDm --verbose
  */
 
 import { formatUnits, parseUnits } from 'ethers/lib/utils'

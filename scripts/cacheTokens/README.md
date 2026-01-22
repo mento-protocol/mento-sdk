@@ -21,7 +21,7 @@ yarn cacheTokens
 ### Cache tokens for specific chains
 
 ```bash
-yarn cacheTokens --chain-ids=42220,44787
+yarn cacheTokens --chain-ids=42220,11142220
 ```
 
 ## Output
@@ -31,7 +31,6 @@ The script generates TypeScript files in `src/constants/`:
 **Individual token files (per chain):**
 
 - `tokens.42220.ts` - Celo Mainnet tokens (readonly Token[])
-- `tokens.44787.ts` - Alfajores Testnet tokens (readonly Token[])
 - `tokens.11142220.ts` - Celo Sepolia Testnet tokens (readonly Token[])
 
 **Main index file (dynamically generated):**
@@ -48,7 +47,7 @@ The script generates TypeScript files in `src/constants/`:
 
 Everything is computed dynamically from blockchain data:
 
-✅ **Token enum** - Unique symbols across all chains (e.g., `TokenSymbol.CELO`, `TokenSymbol.cUSD`)  
+✅ **Token enum** - Unique symbols across all chains (e.g., `TokenSymbol.CELO`, `TokenSymbol.USDm`)  
 ✅ **Address mappings** - Complete `TOKEN_ADDRESSES_BY_CHAIN` for all chains  
 ✅ **Helper functions** - Type-safe address lookups and token search  
 ✅ **Chain support** - Auto-detects supported chains from network config  
@@ -59,7 +58,6 @@ Everything is computed dynamically from blockchain data:
 RPC URLs can be configured via environment variables:
 
 - `CELO_RPC_URL` - Celo Mainnet RPC URL (default: <https://forno.celo.org>)
-- `ALFAJORES_RPC_URL` - Alfajores RPC URL (default: <https://alfajores-forno.celo-testnet.org>)
 - `CELO_SEPOLIA_RPC_URL` - Celo Sepolia RPC URL (default: <https://forno.celo-sepolia.celo-testnet.org>)
 
 ## When to Regenerate
@@ -74,12 +72,9 @@ Regenerate cached tokens when:
 ## Example Output
 
 ```bash
-📡 Cache tokens for chain(s): 42220, 44787, 11142220
+📡 Cache tokens for chain(s): 42220, 11142220
 🔄 Generating tokens for chain 42220...
 ✅ Successfully cached 20 tokens to tokens.42220.ts
-
-🔄 Generating tokens for chain 44787...
-✅ Successfully cached 20 tokens to tokens.44787.ts
 
 🔄 Generating tokens for chain 11142220...
 ✅ Successfully cached 20 tokens to tokens.11142220.ts

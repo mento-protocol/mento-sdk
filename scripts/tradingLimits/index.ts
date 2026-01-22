@@ -112,11 +112,9 @@ async function main(): Promise<void> {
     )
     console.log('\n' + chalk.bold('Network options:'))
     console.log('  --network celo       # Celo mainnet')
-    console.log('  --network alfajores  # Alfajores testnet')
     console.log(
       '  --chainId 42220      # Celo mainnet (same as --network celo)'
     )
-    console.log('  --chainId 44787      # Alfajores testnet')
   } catch (error) {
     console.error(chalk.red('ERROR: An unexpected error occurred:'))
     console.error(error instanceof Error ? error.message : String(error))

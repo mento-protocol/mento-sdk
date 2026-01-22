@@ -26,30 +26,6 @@ export const addresses: ContractAddressMap = {
     TimelockController: '0x890DB8A597940165901372Dd7DB61C9f246e2147',
   },
 
-  [ChainId.ALFAJORES]: {
-    // Oracles & Breakers
-    BreakerBox: '0xC76BDf0AFb654888728003683cf748A8B1b4f5fD',
-    MedianDeltaBreaker: '0x6B0a2076713fDAef4F9301fe8404a228e3682DE4',
-    SortedOracles: '0xFdd8bD58115FfBf04e47411c1d228eCC45E93075',
-    ValueDeltaBreaker: '0xfa6fFf746a5E74055e432f3bba26138956AEfbFe',
-
-    // DEX
-    BiPoolManager: '0x9B64E8EaBD1a035b148cE970d3319c5C3Ad53EC3',
-    Broker: '0xD3Dff18E465bCa6241A244144765b4421Ac14D09',
-    ConstantProductPricingModule: '0x99EDce8143FF8AeFA1fBB6C2103B349Add2B9519',
-    ConstantSumPricingModule: '0x474DBf1eDF845410bdaC6aeE97C3CC403651ba2E',
-    MentoRouter: '0xe6101a457a69b53e298e35a7f6e3dcb0390df02a',
-    Reserve: '0xa7ed835288Aa4524bB6C73DD23c0bF4315D9Fe3e',
-
-    // Governance
-    Airgrab: '0x8dC9282F0a74A2a36F41440e009AA0EADFe490c5',
-    Emission: '0xe62cc88ca2A5E7Dd3Fe5ce8511C874e610Ddb0b6',
-    Locking: '0x537CaE97C588C6DA64A385817F3D3563DDCf0591',
-    MentoGovernor: '0x558e92236f85Bb4e8A63ec0D5Bf9d34087Eab744',
-    MentoToken: '0x3eDd2f7c90e2E931c817a44302Af7112E84be6Cc',
-    TimelockController: '0xa0Ad8DD40104556122c21dF50eD14bb1B53A3338',
-  },
-
   [ChainId.CELO_SEPOLIA]: {
     // Oracles & Breakers
     BreakerBox: '0x578bD46003B9D3fd4c3C3f47c98B329562a6a1dE',
@@ -71,7 +47,7 @@ export const addresses: ContractAddressMap = {
     MentoGovernor: '0x23173Ac37b8E4e5a60d787aC543B3F51e8f398b4',
     MentoToken: '0x07867fd40EB56b4380bE39c88D0a7EA59Aa99A20',
     TimelockController: '0x74c44Be99937815173A3C56274331e0A05611e0D',
-  }
+  },
 }
 
 export type Identifier = keyof ContractAddressMap[keyof ContractAddressMap]

@@ -22,9 +22,9 @@ A CLI tool for visualizing all circuit breaker configurations and their current 
 yarn breakerBox
 
 # Filter by token symbol
-yarn breakerBox --token cUSD
-yarn breakerBox --token=cUSD
-yarn breakerBox -t cUSD
+yarn breakerBox --token USDm
+yarn breakerBox --token=USDm
+yarn breakerBox -t USDm
 
 # Connect to a specific RPC endpoint
 RPC_URL=https://your-rpc-url.com yarn breakerBox

@@ -122,15 +122,15 @@ This method:
 ### Multi-Hop Routes
 
 The `isPairTradable()` method intelligently handles multi-hop routes. For example, if you want to swap CELO → USDT but there's no direct exchange, the route might be:
-- CELO → cUSD (hop 1)
-- cUSD → USDT (hop 2)
+- CELO → USDm (hop 1)
+- USDm → USDT (hop 2)
 
 The method will check that **ALL** rate feeds in the path are in BIDIRECTIONAL mode. If any hop is HALTED or DISABLED, the entire pair is considered not tradable.
 
 ```typescript
 // Example: Multi-hop route check
 const isTradable = await mento.isPairTradable(celoAddress, usdtAddress)
-// Returns true ONLY if both CELO/cUSD AND cUSD/USDT rate feeds are BIDIRECTIONAL
+// Returns true ONLY if both CELO/USDm AND USDm/USDT rate feeds are BIDIRECTIONAL
 ```
 
 ### Method Comparison

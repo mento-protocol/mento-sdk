@@ -50,7 +50,4 @@ export function printUsageTips(): void {
   console.log(
     '   yarn cacheTradablePairs --chainId 42220       # Same as above'
   )
-  console.log(
-    '   yarn cacheTradablePairs -n alfajores          # Cache only Alfajores'
-  )
 }

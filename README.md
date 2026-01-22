@@ -30,25 +30,25 @@ Current token connectivity on Celo Mainnet (last updated: 2025-10-02):
 ```mermaid
 graph TD
     USDT["USD₮"]
-    USDC --- cUSD
-    axlUSDC --- cUSD
-    USDT --- cUSD
-    cAUD --- cUSD
-    cCAD --- cUSD
-    CELO --- cUSD
-    cGBP --- cUSD
-    cUSD --- cZAR
-    cCHF --- cUSD
-    PUSO --- cUSD
-    cJPY --- cUSD
-    cCOP --- cUSD
-    cREAL --- cUSD
-    axlEUROC --- cEUR
-    cEUR --- cUSD
-    cGHS --- cUSD
-    cNGN --- cUSD
-    cKES --- cUSD
-    cUSD --- eXOF
+    USDC --- USDm
+    axlUSDC --- USDm
+    USDT --- USDm
+    AUDm --- USDm
+    CADm --- USDm
+    CELO --- USDm
+    GBPm --- USDm
+    USDm --- ZARm
+    CHFm --- USDm
+    PHPm --- USDm
+    JPYm --- USDm
+    COPm --- USDm
+    BRLm --- USDm
+    axlEUROC --- EURm
+    EURm --- USDm
+    GHSm --- USDm
+    NGNm --- USDm
+    KESm --- USDm
+    USDm --- XOFm
 ```
 
 **Network Stats:** 20 tokens, 19 direct trading pairs
