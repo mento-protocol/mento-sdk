@@ -39,6 +39,8 @@ export type ContractAddresses = {
 
   // V3
   Router?: string
+  ReserveLiquidityStrategy?: string
+  CDPLiquidityStrategy?: string
 }
 
 /**
