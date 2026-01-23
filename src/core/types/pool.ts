@@ -107,8 +107,8 @@ export interface FPMMRebalancing {
   /** Threshold below as a percentage */
   rebalanceThresholdBelowPercent: number
 
-  /** Whether the current price is within rebalancing thresholds */
-  inBand: boolean
+  /** Whether the current price is within rebalancing thresholds (null when pricing unavailable) */
+  inBand: boolean | null
 
   /** The active liquidity strategy address for this pool, or null if none */
   liquidityStrategy: string | null
@@ -129,8 +129,8 @@ export interface FPMMPoolDetails extends Pool {
   reserve1: bigint
   /** Block timestamp of last reserve update */
   blockTimestampLast: bigint
-  /** Pricing and oracle data */
-  pricing: FPMMPricing
+  /** Pricing and oracle data (null when FX market is closed) */
+  pricing: FPMMPricing | null
   /** Fee configuration */
   fees: FPMMFees
   /** Rebalancing state */

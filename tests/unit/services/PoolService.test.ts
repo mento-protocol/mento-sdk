@@ -530,21 +530,21 @@ describe('PoolService', () => {
       it('should compute oracle and reserve prices correctly', async () => {
         const details = await service.getPoolDetails(mockFPMMPools[0].poolAddress) as FPMMPoolDetails
 
-        expect(details.pricing.oraclePriceNum).toBe(1830n)
-        expect(details.pricing.oraclePriceDen).toBe(1000n)
-        expect(details.pricing.oraclePrice).toBeCloseTo(1.83, 5)
+        expect(details.pricing!.oraclePriceNum).toBe(1830n)
+        expect(details.pricing!.oraclePriceDen).toBe(1000n)
+        expect(details.pricing!.oraclePrice).toBeCloseTo(1.83, 5)
 
-        expect(details.pricing.reservePriceNum).toBe(1832n)
-        expect(details.pricing.reservePriceDen).toBe(1000n)
-        expect(details.pricing.reservePrice).toBeCloseTo(1.832, 5)
+        expect(details.pricing!.reservePriceNum).toBe(1832n)
+        expect(details.pricing!.reservePriceDen).toBe(1000n)
+        expect(details.pricing!.reservePrice).toBeCloseTo(1.832, 5)
       })
 
       it('should compute price difference correctly', async () => {
         const details = await service.getPoolDetails(mockFPMMPools[0].poolAddress) as FPMMPoolDetails
 
-        expect(details.pricing.priceDifferenceBps).toBe(12n)
-        expect(details.pricing.priceDifferencePercent).toBeCloseTo(0.12, 5)
-        expect(details.pricing.reservePriceAboveOraclePrice).toBe(true)
+        expect(details.pricing!.priceDifferenceBps).toBe(12n)
+        expect(details.pricing!.priceDifferencePercent).toBeCloseTo(0.12, 5)
+        expect(details.pricing!.reservePriceAboveOraclePrice).toBe(true)
       })
 
       it('should compute fees correctly', async () => {
@@ -628,8 +628,43 @@ describe('PoolService', () => {
 
         // reservePriceAboveOraclePrice=false → uses thresholdBelow=40
         // priceDifference=50 >= 40 → inBand = false
-        expect(details.pricing.reservePriceAboveOraclePrice).toBe(false)
+        expect(details.pricing!.reservePriceAboveOraclePrice).toBe(false)
         expect(details.rebalancing.inBand).toBe(false)
+      })
+
+      it('should return pricing as null when getPrices() fails (FX market closed)', async () => {
+        mockPublicClient.readContract.mockImplementation(
+          async ({ functionName }: any) => {
+            if (functionName === 'deployedFPMMAddresses') return [mockFPMMPools[0].poolAddress]
+            if (functionName === 'token0') return mockFPMMPools[0].token0
+            if (functionName === 'token1') return mockFPMMPools[0].token1
+            if (functionName === 'getExchanges') return []
+            if (functionName === 'getReserves') return [3500000000000000000000n, 6400000000n, 1700000000n]
+            if (functionName === 'getPrices') throw new Error('execution reverted: 0xa407143a')
+            if (functionName === 'decimals0') return 1000000000000000000n
+            if (functionName === 'decimals1') return 1000000n
+            if (functionName === 'lpFee') return 25n
+            if (functionName === 'protocolFee') return 5n
+            if (functionName === 'rebalanceIncentive') return 10n
+            if (functionName === 'rebalanceThresholdAbove') return 60n
+            if (functionName === 'rebalanceThresholdBelow') return 60n
+            if (functionName === 'liquidityStrategy') return false
+            return null
+          }
+        )
+
+        const details = await service.getPoolDetails(mockFPMMPools[0].poolAddress) as FPMMPoolDetails
+
+        // Pricing should be null but other fields should still be populated
+        expect(details.pricing).toBeNull()
+        expect(details.rebalancing.inBand).toBeNull()
+
+        // Other fields should still have values
+        expect(details.reserve0).toBe(3500000000000000000000n)
+        expect(details.reserve1).toBe(6400000000n)
+        expect(details.fees.lpFeeBps).toBe(25n)
+        expect(details.fees.protocolFeeBps).toBe(5n)
+        expect(details.rebalancing.rebalanceThresholdAboveBps).toBe(60n)
       })
 
       it('should return null liquidityStrategy when no strategy is active', async () => {

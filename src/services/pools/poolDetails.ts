@@ -1,5 +1,5 @@
 import { addresses, ChainId } from '../../core/constants'
-import { Pool, FPMMPoolDetails, VirtualPoolDetails } from '../../core/types'
+import { Pool, FPMMPoolDetails, FPMMPricing, VirtualPoolDetails } from '../../core/types'
 import { FPMM_ABI, VIRTUAL_POOL_ABI } from '../../core/abis'
 import { PublicClient, Address } from 'viem'
 
@@ -17,9 +17,9 @@ export async function fetchFPMMPoolDetails(
     // Known liquidity strategy addresses for this chain
     const knownStrategies = getKnownLiquidityStrategies(chainId)
 
+    // Fetch core data
     const [
       reservesResult,
-      pricesResult,
       decimals0,
       decimals1,
       lpFee,
@@ -30,7 +30,6 @@ export async function fetchFPMMPoolDetails(
       ...strategyResults
     ] = await Promise.all([
       publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'getReserves' }),
-      publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'getPrices' }),
       publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'decimals0' }),
       publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'decimals1' }),
       publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'lpFee' }),
@@ -49,14 +48,6 @@ export async function fetchFPMMPoolDetails(
     ])
 
     const [reserve0, reserve1, blockTimestampLast] = reservesResult as [bigint, bigint, bigint]
-    const [
-      oraclePriceNum,
-      oraclePriceDen,
-      reservePriceNum,
-      reservePriceDen,
-      priceDifference,
-      reservePriceAboveOraclePrice,
-    ] = pricesResult as [bigint, bigint, bigint, bigint, bigint, boolean]
 
     const lpFeeBps = lpFee as bigint
     const protocolFeeBps = protocolFee as bigint
@@ -65,25 +56,28 @@ export async function fetchFPMMPoolDetails(
     const thresholdBelowBps = rebalanceThresholdBelow as bigint
 
     // Find the active liquidity strategy (first match wins)
-    // Note: this could break at some point in the future if we decide to use
-    //       more than one stragegy for a pool. For now it is not an issue,
-    //       if we do forget to change this the impact is low as this function
-    //       is just for informational purposes.
     const activeIndex = strategyResults.findIndex((result) => result === true)
     const liquidityStrategy = activeIndex >= 0 ? knownStrategies[activeIndex] : null
 
-    const applicableThreshold = reservePriceAboveOraclePrice ? thresholdAboveBps : thresholdBelowBps
-    const inBand = priceDifference < applicableThreshold
+    // Fetch pricing separately — graceful degradation when FX market is closed
+    let pricing: FPMMPricing | null = null
+    let inBand: boolean | null = null
+    try {
+      const pricesResult = await publicClient.readContract({
+        address,
+        abi: FPMM_ABI,
+        functionName: 'getPrices',
+      })
+      const [
+        oraclePriceNum,
+        oraclePriceDen,
+        reservePriceNum,
+        reservePriceDen,
+        priceDifference,
+        reservePriceAboveOraclePrice,
+      ] = pricesResult as [bigint, bigint, bigint, bigint, bigint, boolean]
 
-    return {
-      ...pool,
-      poolType: 'FPMM',
-      decimals0: decimals0 as bigint,
-      decimals1: decimals1 as bigint,
-      reserve0,
-      reserve1,
-      blockTimestampLast,
-      pricing: {
+      pricing = {
         oraclePriceNum,
         oraclePriceDen,
         oraclePrice: Number(oraclePriceNum) / Number(oraclePriceDen),
@@ -93,7 +87,23 @@ export async function fetchFPMMPoolDetails(
         priceDifferenceBps: priceDifference,
         priceDifferencePercent: Number(priceDifference) / 100,
         reservePriceAboveOraclePrice,
-      },
+      }
+
+      const applicableThreshold = reservePriceAboveOraclePrice ? thresholdAboveBps : thresholdBelowBps
+      inBand = priceDifference < applicableThreshold
+    } catch {
+      // getPrices() failed (likely FXMarketClosed) — pricing stays null
+    }
+
+    return {
+      ...pool,
+      poolType: 'FPMM',
+      decimals0: decimals0 as bigint,
+      decimals1: decimals1 as bigint,
+      reserve0,
+      reserve1,
+      blockTimestampLast,
+      pricing,
       fees: {
         lpFeeBps,
         lpFeePercent: Number(lpFeeBps) / 100,

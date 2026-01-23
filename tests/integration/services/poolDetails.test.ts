@@ -70,10 +70,16 @@ describe('PoolService.getPoolDetails() Integration', () => {
       expect(details.decimals1).toBeGreaterThanOrEqual(1000000n)
     })
 
-    it('should return valid pricing data', async () => {
+    it('should return valid pricing data (or null when FX market closed)', async () => {
       if (!fpmmPool) return
 
       const details = await poolService.getPoolDetails(fpmmPool.poolAddr) as FPMMPoolDetails
+
+      if (details.pricing === null) {
+        // FX market is closed — pricing unavailable, other fields still populated
+        expect(details.reserve0).toBeGreaterThan(0n)
+        return
+      }
 
       // Oracle price should be a positive number
       expect(details.pricing.oraclePriceNum).toBeGreaterThan(0n)
@@ -135,11 +141,15 @@ describe('PoolService.getPoolDetails() Integration', () => {
       expect(details.rebalancing.rebalanceThresholdBelowBps).toBeLessThanOrEqual(1000n)
 
       // inBand should be consistent with price difference vs threshold
-      const applicableThreshold = details.pricing.reservePriceAboveOraclePrice
-        ? details.rebalancing.rebalanceThresholdAboveBps
-        : details.rebalancing.rebalanceThresholdBelowBps
-      const expectedInBand = details.pricing.priceDifferenceBps < applicableThreshold
-      expect(details.rebalancing.inBand).toBe(expectedInBand)
+      if (details.pricing) {
+        const applicableThreshold = details.pricing.reservePriceAboveOraclePrice
+          ? details.rebalancing.rebalanceThresholdAboveBps
+          : details.rebalancing.rebalanceThresholdBelowBps
+        const expectedInBand = details.pricing.priceDifferenceBps < applicableThreshold
+        expect(details.rebalancing.inBand).toBe(expectedInBand)
+      } else {
+        expect(details.rebalancing.inBand).toBeNull()
+      }
     })
 
     it('should return liquidity strategy (string or null)', async () => {
