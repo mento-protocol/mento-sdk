@@ -120,9 +120,9 @@ export interface FPMMRebalancing {
 export interface FPMMPoolDetails extends Pool {
   poolType: 'FPMM'
   /** Scaling factor for token0 (10^tokenDecimals) */
-  decimals0: bigint
+  scalingFactor0: bigint
   /** Scaling factor for token1 (10^tokenDecimals) */
-  decimals1: bigint
+  scalingFactor1: bigint
   /** Reserve of token0 (raw) */
   reserve0: bigint
   /** Reserve of token1 (raw) */
@@ -143,9 +143,9 @@ export interface FPMMPoolDetails extends Pool {
 export interface VirtualPoolDetails extends Pool {
   poolType: 'Virtual'
   /** Scaling factor for token0 (10^tokenDecimals) */
-  decimals0: bigint
+  scalingFactor0: bigint
   /** Scaling factor for token1 (10^tokenDecimals) */
-  decimals1: bigint
+  scalingFactor1: bigint
   /** Reserve (bucket) of token0 (raw) */
   reserve0: bigint
   /** Reserve (bucket) of token1 (raw) */

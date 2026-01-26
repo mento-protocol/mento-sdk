@@ -98,8 +98,8 @@ export async function fetchFPMMPoolDetails(
     return {
       ...pool,
       poolType: 'FPMM',
-      decimals0: decimals0 as bigint,
-      decimals1: decimals1 as bigint,
+      scalingFactor0: decimals0 as bigint,
+      scalingFactor1: decimals1 as bigint,
       reserve0,
       reserve1,
       blockTimestampLast,
@@ -147,8 +147,8 @@ export async function fetchVirtualPoolDetails(publicClient: PublicClient, pool: 
     return {
       ...pool,
       poolType: 'Virtual',
-      decimals0: dec0,
-      decimals1: dec1,
+      scalingFactor0: dec0,
+      scalingFactor1: dec1,
       reserve0,
       reserve1,
       blockTimestampLast,

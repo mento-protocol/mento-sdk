@@ -53,7 +53,7 @@ describe('PoolService.getPoolDetails() Integration', () => {
     it('should return valid reserves', async () => {
       if (!fpmmPool) return
 
-      const details = await poolService.getPoolDetails(fpmmPool.poolAddr) as FPMMPoolDetails
+      const details = (await poolService.getPoolDetails(fpmmPool.poolAddr)) as FPMMPoolDetails
 
       expect(details.reserve0).toBeGreaterThan(0n)
       expect(details.reserve1).toBeGreaterThan(0n)
@@ -63,17 +63,17 @@ describe('PoolService.getPoolDetails() Integration', () => {
     it('should return valid token decimals (scaling factors)', async () => {
       if (!fpmmPool) return
 
-      const details = await poolService.getPoolDetails(fpmmPool.poolAddr) as FPMMPoolDetails
+      const details = (await poolService.getPoolDetails(fpmmPool.poolAddr)) as FPMMPoolDetails
 
       // Decimals are scaling factors (10^n where n is 6-18 typically)
-      expect(details.decimals0).toBeGreaterThanOrEqual(1000000n) // at least 10^6
-      expect(details.decimals1).toBeGreaterThanOrEqual(1000000n)
+      expect(details.scalingFactor0).toBeGreaterThanOrEqual(1000000n) // at least 10^6
+      expect(details.scalingFactor1).toBeGreaterThanOrEqual(1000000n)
     })
 
     it('should return valid pricing data (or null when FX market closed)', async () => {
       if (!fpmmPool) return
 
-      const details = await poolService.getPoolDetails(fpmmPool.poolAddr) as FPMMPoolDetails
+      const details = (await poolService.getPoolDetails(fpmmPool.poolAddr)) as FPMMPoolDetails
 
       if (details.pricing === null) {
         // FX market is closed — pricing unavailable, other fields still populated
@@ -104,7 +104,7 @@ describe('PoolService.getPoolDetails() Integration', () => {
     it('should return valid fee configuration', async () => {
       if (!fpmmPool) return
 
-      const details = await poolService.getPoolDetails(fpmmPool.poolAddr) as FPMMPoolDetails
+      const details = (await poolService.getPoolDetails(fpmmPool.poolAddr)) as FPMMPoolDetails
 
       // Fees should be non-negative and reasonable (< 2% each, < 2% combined)
       expect(details.fees.lpFeeBps).toBeGreaterThanOrEqual(0n)
@@ -117,16 +117,13 @@ describe('PoolService.getPoolDetails() Integration', () => {
       expect(details.fees.protocolFeePercent).toBeGreaterThanOrEqual(0)
 
       // Total fee should equal sum of LP + protocol
-      expect(details.fees.totalFeePercent).toBeCloseTo(
-        details.fees.lpFeePercent + details.fees.protocolFeePercent,
-        10
-      )
+      expect(details.fees.totalFeePercent).toBeCloseTo(details.fees.lpFeePercent + details.fees.protocolFeePercent, 10)
     })
 
     it('should return valid rebalancing state', async () => {
       if (!fpmmPool) return
 
-      const details = await poolService.getPoolDetails(fpmmPool.poolAddr) as FPMMPoolDetails
+      const details = (await poolService.getPoolDetails(fpmmPool.poolAddr)) as FPMMPoolDetails
 
       // Rebalance incentive should be <= 1% (100 bps)
       expect(details.rebalancing.rebalanceIncentiveBps).toBeGreaterThanOrEqual(0n)
@@ -155,7 +152,7 @@ describe('PoolService.getPoolDetails() Integration', () => {
     it('should return liquidity strategy (string or null)', async () => {
       if (!fpmmPool) return
 
-      const details = await poolService.getPoolDetails(fpmmPool.poolAddr) as FPMMPoolDetails
+      const details = (await poolService.getPoolDetails(fpmmPool.poolAddr)) as FPMMPoolDetails
 
       if (details.rebalancing.liquidityStrategy !== null) {
         expect(details.rebalancing.liquidityStrategy).toMatch(/^0x[0-9a-fA-F]{40}$/)
@@ -179,7 +176,7 @@ describe('PoolService.getPoolDetails() Integration', () => {
         return
       }
 
-      const details = await poolService.getPoolDetails(virtualPool.poolAddr) as VirtualPoolDetails
+      const details = (await poolService.getPoolDetails(virtualPool.poolAddr)) as VirtualPoolDetails
 
       expect(details.poolType).toBe('Virtual')
       expect(details.poolAddr).toBe(virtualPool.poolAddr)
@@ -190,7 +187,7 @@ describe('PoolService.getPoolDetails() Integration', () => {
     it('should return valid reserves for Virtual pool', async () => {
       if (!virtualPool) return
 
-      const details = await poolService.getPoolDetails(virtualPool.poolAddr) as VirtualPoolDetails
+      const details = (await poolService.getPoolDetails(virtualPool.poolAddr)) as VirtualPoolDetails
 
       expect(details.reserve0).toBeGreaterThan(0n)
       expect(details.reserve1).toBeGreaterThan(0n)
@@ -200,7 +197,7 @@ describe('PoolService.getPoolDetails() Integration', () => {
     it('should return valid spread for Virtual pool', async () => {
       if (!virtualPool) return
 
-      const details = await poolService.getPoolDetails(virtualPool.poolAddr) as VirtualPoolDetails
+      const details = (await poolService.getPoolDetails(virtualPool.poolAddr)) as VirtualPoolDetails
 
       // Spread should be reasonable (< 10%)
       expect(details.spreadBps).toBeGreaterThanOrEqual(0n)
@@ -212,18 +209,18 @@ describe('PoolService.getPoolDetails() Integration', () => {
     it('should return valid decimals for Virtual pool', async () => {
       if (!virtualPool) return
 
-      const details = await poolService.getPoolDetails(virtualPool.poolAddr) as VirtualPoolDetails
+      const details = (await poolService.getPoolDetails(virtualPool.poolAddr)) as VirtualPoolDetails
 
-      expect(details.decimals0).toBeGreaterThanOrEqual(1000000n)
-      expect(details.decimals1).toBeGreaterThanOrEqual(1000000n)
+      expect(details.scalingFactor0).toBeGreaterThanOrEqual(1000000n)
+      expect(details.scalingFactor1).toBeGreaterThanOrEqual(1000000n)
     })
   })
 
   describe('error handling', () => {
     it('should throw for unknown pool address', async () => {
-      await expect(
-        poolService.getPoolDetails('0x0000000000000000000000000000000000000000')
-      ).rejects.toThrow('Pool not found')
+      await expect(poolService.getPoolDetails('0x0000000000000000000000000000000000000000')).rejects.toThrow(
+        'Pool not found'
+      )
     })
   })
 })
