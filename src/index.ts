@@ -95,6 +95,7 @@ export class Mento {
 }
 
 export * from './core/constants'
+export * from './core/errors'
 export * from './core/types'
 export * from './core/abis'
 export * from './services'

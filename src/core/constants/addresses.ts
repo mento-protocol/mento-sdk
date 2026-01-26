@@ -34,6 +34,10 @@ export const addresses: ContractAddressMap = {
     FPMMFactory: '0x65A67cb93a3e035C32f131e911A0d6b46a5f3Bd0',
     VirtualPoolFactory: '0x6CE2dFC48b2688075A804835757a734e3316E0a2',
     Router: '0xc04201c72A401373905A71DE3cE868b8583d0545',
+
+    // TODO: replace with deployed addresses
+    ReserveLiquidityStrategy: '0x0000000000000000000000000000000000000001',
+    CDPLiquidityStrategy: '0x0000000000000000000000000000000000000002',
   },
 
   [ChainId.CELO_SEPOLIA]: {
@@ -69,10 +73,7 @@ export type Identifier = keyof ContractAddresses
  * @returns The contract address
  * @throws Error if the address is not found for the given chain
  */
-export function getContractAddress(
-  chainId: ChainId,
-  contractName: Identifier
-): string {
+export function getContractAddress(chainId: ChainId, contractName: Identifier): string {
   const addressesForChain = addresses[chainId]
   if (!addressesForChain) {
     throw new Error(`No addresses found for chain ID ${chainId}`)
@@ -80,9 +81,7 @@ export function getContractAddress(
 
   const address = addressesForChain[contractName]
   if (!address) {
-    throw new Error(
-      `Address not found for contract ${contractName} on chain ID ${chainId}`
-    )
+    throw new Error(`Address not found for contract ${contractName} on chain ID ${chainId}`)
   }
 
   return address

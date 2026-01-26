@@ -3,8 +3,11 @@ import { RouteService } from '../routes'
 import { Route } from '../../core/types'
 import { ROUTER_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
+import { FXMarketClosedError } from '../../core/errors'
 import { encodeRoutePath } from '../../utils/pathEncoder'
 import { validateAddress } from '../../utils/validation'
+
+const FX_MARKET_CLOSED_SIG = '0xa407143a'
 
 /**
  * Service for getting swap quotes from the Mento protocol.
@@ -66,13 +69,21 @@ export class QuoteService {
     const routerRoutes = encodeRoutePath(route.path, tokenIn as Address, tokenOut as Address)
     const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
 
-    const amounts = (await this.publicClient.readContract({
-      address: routerAddress as `0x${string}`,
-      abi: ROUTER_ABI,
-      functionName: 'getAmountsOut',
-      args: [amountIn, routerRoutes],
-    })) as bigint[]
+    try {
+      const amounts = (await this.publicClient.readContract({
+        address: routerAddress as `0x${string}`,
+        abi: ROUTER_ABI,
+        functionName: 'getAmountsOut',
+        args: [amountIn, routerRoutes],
+      })) as bigint[]
 
-    return amounts[amounts.length - 1]
+      return amounts[amounts.length - 1]
+    } catch (error: unknown) {
+      const errorString = String(error)
+      if (errorString.includes(FX_MARKET_CLOSED_SIG)) {
+        throw new FXMarketClosedError()
+      }
+      throw error
+    }
   }
 }
