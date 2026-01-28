@@ -29,29 +29,28 @@ export class CollateralAssetService {
       exchange.assets.forEach((address) => uniqueAddresses.add(address))
     }
 
-    // Check which tokens are collateral assets and get their info
-    const assets: CollateralAsset[] = []
-    for (const address of uniqueAddresses) {
-      const isCollateral = (await retryOperation(() =>
-        this.provider.readContract({
-          address: reserveAddress,
-          abi: RESERVE_ABI,
-          functionName: 'isCollateralAsset',
-          args: [address],
-        })
-      )) as boolean
+    // Check which tokens are collateral assets and get their info in parallel
+    const results = await Promise.all(
+      Array.from(uniqueAddresses).map(async (address) => {
+        const [isCollateral, metadata] = await Promise.all([
+          retryOperation(() =>
+            this.provider.readContract({
+              address: reserveAddress,
+              abi: RESERVE_ABI,
+              functionName: 'isCollateralAsset',
+              args: [address],
+            })
+          ) as Promise<boolean>,
+          this.tokenMetadataService.getTokenMetadata(address),
+        ])
 
-      if (isCollateral) {
-        const metadata = await this.tokenMetadataService.getTokenMetadata(
-          address
-        )
-        assets.push({
-          address,
-          ...metadata,
-        })
-      }
-    }
+        if (isCollateral) {
+          return { address, ...metadata }
+        }
+        return null
+      })
+    )
 
-    return assets
+    return results.filter((asset): asset is CollateralAsset => asset !== null)
   }
 }

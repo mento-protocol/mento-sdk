@@ -41,13 +41,13 @@ export class SupplyAdjustmentService {
     const adjustments = this.config[token.symbol]
     if (!adjustments) return token.totalSupply
 
-    let supply = BigInt(token.totalSupply)
+    const amounts = await Promise.all(
+      adjustments.map((adjustment) =>
+        adjustment.calculator.getAmount(token.address)
+      )
+    )
 
-    for (const adjustment of adjustments) {
-      const amount = await adjustment.calculator.getAmount(token.address)
-      supply -= amount
-    }
-
-    return supply.toString()
+    const totalAdjustment = amounts.reduce((sum, amount) => sum + amount, 0n)
+    return (BigInt(token.totalSupply) - totalAdjustment).toString()
   }
 }
