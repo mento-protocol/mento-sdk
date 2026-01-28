@@ -464,6 +464,11 @@ export function selectBestRoute(candidates: Route[], addrToSymbol: Map<Address, 
  * In a two-hop route A->B->C, this function finds token B (the intermediate).
  */
 export function getIntermediateToken(route: Route): Address | undefined {
+  // Only two-hop routes have intermediate tokens
+  if (route.path.length !== 2) {
+    return undefined
+  }
+
   // Find the common token between the two hops
   const [hop1, hop2] = route.path
   const hop1Tokens = [hop1.token0, hop1.token1]
