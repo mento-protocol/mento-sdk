@@ -64,6 +64,15 @@ export class Mento {
    * @returns A new Mento instance
    */
   public static async create(chainId: number, rpcUrl?: string): Promise<Mento> {
+    // Validate chainId is supported
+    const supportedChainIds = Object.values(ChainId).filter((v) => typeof v === 'number') as number[]
+    if (!supportedChainIds.includes(chainId)) {
+      throw new Error(
+        `ChainId ${chainId} is not supported. ` +
+          `Supported chains: ${supportedChainIds.map((id) => `${id} (${ChainId[id]})`).join(', ')}`
+      )
+    }
+
     // Use provided RPC URL or default for the chain
     const transport = http(rpcUrl || getDefaultRpcUrl(chainId))
 
