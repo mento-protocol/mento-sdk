@@ -130,6 +130,11 @@ export class SwapService {
     validateAddress(recipient, 'recipient')
     validateAddress(owner, 'owner')
 
+    // Validate amountIn
+    if (amountIn <= 0n) {
+      throw new Error('amountIn must be greater than zero')
+    }
+
     // Build swap params first
     const swap = await this.buildSwapParams(tokenIn, tokenOut, amountIn, recipient, options, route)
 
@@ -178,6 +183,11 @@ export class SwapService {
     validateAddress(tokenIn, 'tokenIn')
     validateAddress(tokenOut, 'tokenOut')
     validateAddress(recipient, 'recipient')
+
+    // Validate amountIn
+    if (amountIn <= 0n) {
+      throw new Error('amountIn must be greater than zero')
+    }
 
     // Find route if not provided
     if (!route) {
