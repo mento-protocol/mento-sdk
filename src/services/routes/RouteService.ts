@@ -243,10 +243,13 @@ export class RouteService {
       // Cache the symbol
       this.symbolCache.set(address, symbol)
       return symbol
-    } catch {
-      // Fallback to address if symbol fetch fails
-      this.symbolCache.set(address, address)
-      return address
+    } catch (error) {
+      // Log warning and use truncated address as fallback
+      const truncated = `${address.slice(0, 6)}...${address.slice(-4)}`
+      const fallback = `UNKNOWN_${truncated}`
+      console.warn(`[RouteService] Failed to fetch symbol for ${address}, using fallback "${fallback}":`, error)
+      this.symbolCache.set(address, fallback)
+      return fallback
     }
   }
 }
