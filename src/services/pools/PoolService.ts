@@ -4,13 +4,30 @@ import { fetchFPMMPools, fetchVirtualPools } from './poolDiscovery'
 import { fetchFPMMPoolDetails, fetchVirtualPoolDetails } from './poolDetails'
 
 /**
+ * Result of pool discovery including any warnings from failed factories
+ */
+export interface PoolDiscoveryResult {
+  pools: Pool[]
+  warnings: string[]
+}
+
+/**
  * Service for discovering liquidity pools in the Mento protocol.
  * Aggregates pools from multiple factory contracts (FPMM and VirtualPool).
  */
 export class PoolService {
   private poolsCache: Pool[] | null = null
+  private discoveryWarnings: string[] = []
 
   constructor(private publicClient: PublicClient, private chainId: number) {}
+
+  /**
+   * Returns any warnings from the last pool discovery operation.
+   * Useful for debugging when some factories fail but others succeed.
+   */
+  getDiscoveryWarnings(): string[] {
+    return [...this.discoveryWarnings]
+  }
 
   /**
    * Fetches all pools available in the protocol from both FPMM and Virtual pool factories
@@ -34,16 +51,27 @@ export class PoolService {
     //       for dynamic factory discovery. For now we will use
     //       the hardcoded factory addresses for the chain for v1.
     const pools: Pool[] = []
+    const warnings: string[] = []
 
     try {
       const fpmmPools = await fetchFPMMPools(this.publicClient, this.chainId)
       pools.push(...fpmmPools)
-    } catch {}
+    } catch (error) {
+      const message = `Failed to fetch FPMM pools: ${error instanceof Error ? error.message : String(error)}`
+      console.warn(`[PoolService] ${message}`)
+      warnings.push(message)
+    }
 
     try {
       const virtualPools = await fetchVirtualPools(this.publicClient, this.chainId)
       pools.push(...virtualPools)
-    } catch {}
+    } catch (error) {
+      const message = `Failed to fetch Virtual pools: ${error instanceof Error ? error.message : String(error)}`
+      console.warn(`[PoolService] ${message}`)
+      warnings.push(message)
+    }
+
+    this.discoveryWarnings = warnings
 
     // Only throw if NO pools were discovered from any factory
     if (pools.length === 0) {
