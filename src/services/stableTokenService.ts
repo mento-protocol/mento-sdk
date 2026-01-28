@@ -20,20 +20,20 @@ export class StableTokenService {
       functionName: 'getTokens',
     })) as string[]
 
-    const tokens: StableToken[] = []
+    const tokens = await Promise.all(
+      tokenAddresses.map(async (address) => {
+        const [metadata, totalSupply] = await Promise.all([
+          this.tokenMetadataService.getTokenMetadata(address),
+          this.tokenMetadataService.getTotalSupply(address),
+        ])
 
-    for (const address of tokenAddresses) {
-      const metadata = await this.tokenMetadataService.getTokenMetadata(address)
-      const totalSupply = await this.tokenMetadataService.getTotalSupply(
-        address
-      )
-
-      tokens.push({
-        address,
-        ...metadata,
-        totalSupply,
+        return {
+          address,
+          ...metadata,
+          totalSupply,
+        }
       })
-    }
+    )
 
     return tokens
   }
