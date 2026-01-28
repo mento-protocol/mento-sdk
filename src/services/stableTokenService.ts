@@ -1,20 +1,13 @@
 import { RESERVE_ABI } from '../abis'
 import { getContractAddress, RESERVE } from '../constants'
 import { ProviderAdapter, StableToken } from '../types'
-import { DefaultCalculatorFactory } from './supply'
-import { SupplyAdjustmentService } from './supplyAdjustmentService'
 import { TokenMetadataService } from './tokenMetadataService'
 
 export class StableTokenService {
   private tokenMetadataService: TokenMetadataService
-  private supplyAdjustmentService: SupplyAdjustmentService
 
   constructor(private provider: ProviderAdapter) {
     this.tokenMetadataService = new TokenMetadataService(provider)
-    this.supplyAdjustmentService = new SupplyAdjustmentService(
-      provider,
-      new DefaultCalculatorFactory()
-    )
   }
 
   async getStableTokens(): Promise<StableToken[]> {
@@ -35,17 +28,11 @@ export class StableTokenService {
         address
       )
 
-      const token = {
+      tokens.push({
         address,
         ...metadata,
         totalSupply,
-      }
-
-      const adjustedSupply =
-        await this.supplyAdjustmentService.getAdjustedSupply(token)
-
-      token.totalSupply = adjustedSupply
-      tokens.push(token)
+      })
     }
 
     return tokens
