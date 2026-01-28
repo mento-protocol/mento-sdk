@@ -246,7 +246,7 @@ export class SwapService {
    * @private
    */
   private calculateMinAmountOut(amountOut: bigint, slippageTolerance: number): bigint {
-    const MAX_SLIPPAGE_TOLERANCE = 50 // 50% max to prevent sandwich attacks
+    const MAX_SLIPPAGE_TOLERANCE = 20 // 20% max
 
     if (slippageTolerance < 0) {
       throw new Error('Slippage tolerance cannot be negative')
