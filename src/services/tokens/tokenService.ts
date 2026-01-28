@@ -12,20 +12,10 @@ import {
   BIPOOLMANAGER,
 } from '../../core/constants'
 import { retryOperation } from '../../utils'
-import { SupplyAdjustmentService } from './supplyAdjustmentService'
-import { DefaultCalculatorFactory } from './supply'
 import type { PublicClient } from 'viem'
 
 export class TokenService {
-  private supplyAdjustmentService: SupplyAdjustmentService
-
-  constructor(private publicClient: PublicClient, private chainId: number) {
-    this.supplyAdjustmentService = new SupplyAdjustmentService(
-      publicClient,
-      chainId,
-      new DefaultCalculatorFactory()
-    )
-  }
+  constructor(private publicClient: PublicClient, private chainId: number) {}
 
   /**
    * Get token metadata (name, symbol, decimals)
@@ -89,7 +79,8 @@ export class TokenService {
 
   /**
    * Get all stable tokens from the Reserve contract
-   * @param includeSupply - Whether to fetch total supply and apply adjustments
+   * Returns the actual on-chain ERC20 totalSupply values without adjustments.
+   * @param includeSupply - Whether to fetch total supply
    * @returns Array of stable tokens
    */
   public async getStableTokens(includeSupply = true): Promise<StableToken[]> {
@@ -102,33 +93,21 @@ export class TokenService {
       args: [],
     })) as string[]
 
-    // TODO: Once we have a cached mapping of stableToken -> addressRegistry we can 
-    // use that to get the token addresses.
+    // Fetch metadata and totalSupply for all tokens concurrently
+    const tokens = await Promise.all(
+      tokenAddresses.map(async (address) => {
+        const [metadata, totalSupply] = await Promise.all([
+          this.getTokenMetadata(address),
+          includeSupply ? this.getTotalSupply(address) : Promise.resolve('0'),
+        ])
 
-    const tokens: StableToken[] = []
-
-    for (const address of tokenAddresses) {
-      const metadata = await this.getTokenMetadata(address)
-
-      let totalSupply = '0'
-      if (includeSupply) {
-        totalSupply = await this.getTotalSupply(address)
-      }
-
-      const token: StableToken = {
-        address,
-        ...metadata,
-        totalSupply,
-      }
-
-      if (includeSupply) {
-        const adjustedSupply =
-          await this.supplyAdjustmentService.getAdjustedSupply(token)
-        token.totalSupply = adjustedSupply
-      }
-
-      tokens.push(token)
-    }
+        return {
+          address,
+          ...metadata,
+          totalSupply,
+        }
+      })
+    )
 
     return tokens
   }
@@ -157,27 +136,28 @@ export class TokenService {
       exchange.assets.forEach((address: string) => uniqueAddresses.add(address))
     }
 
-    // Check which tokens are collateral assets and get their metadata
-    const assets: CollateralAsset[] = []
-    for (const address of uniqueAddresses) {
-      const isCollateral = (await retryOperation(() =>
-        this.publicClient.readContract({
-          address: reserveAddress as `0x${string}`,
-          abi: RESERVE_ABI,
-          functionName: 'isCollateralAsset',
-          args: [address as `0x${string}`],
-        })
-      )) as boolean
+    // Check which tokens are collateral assets and get their info in parallel
+    const results = await Promise.all(
+      Array.from(uniqueAddresses).map(async (address) => {
+        const [isCollateral, metadata] = await Promise.all([
+          retryOperation(() =>
+            this.publicClient.readContract({
+              address: reserveAddress as `0x${string}`,
+              abi: RESERVE_ABI,
+              functionName: 'isCollateralAsset',
+              args: [address as `0x${string}`],
+            })
+          ) as Promise<boolean>,
+          this.getTokenMetadata(address),
+        ])
 
-      if (isCollateral) {
-        const metadata = await this.getTokenMetadata(address)
-        assets.push({
-          address,
-          ...metadata,
-        })
-      }
-    }
+        if (isCollateral) {
+          return { address, ...metadata }
+        }
+        return null
+      })
+    )
 
-    return assets
+    return results.filter((asset): asset is CollateralAsset => asset !== null)
   }
 }
