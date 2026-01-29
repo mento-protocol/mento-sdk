@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mento-protocol/mento-sdk.git"
+    "url": "git+https://github.com/mento-protocol/mento-sdk.git"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
