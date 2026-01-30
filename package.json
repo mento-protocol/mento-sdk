@@ -25,6 +25,8 @@
     "lint": "eslint --config ./.eslintrc.json src/**/*.ts",
     "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",
     "test": "jest --verbose",
+    "test:unit": "jest --verbose --testPathPattern='tests/unit'",
+    "test:integration": "jest --verbose --testPathPattern='tests/integration'",
     "coverage": "jest --coverage",
     "cacheRoutes": "ts-node scripts/cacheRoutes/index.ts",
     "cacheTokens": "ts-node scripts/cacheTokens/index.ts"
