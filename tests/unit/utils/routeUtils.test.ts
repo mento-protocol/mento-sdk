@@ -10,9 +10,9 @@ import {
 import type {
   Route,
   RouteID,
-  Asset,
   RouteWithCost,
 } from '../../../src/core/types'
+import { PoolType } from '../../../src/core/types'
 
 /**
  * Unit tests for routeUtils
@@ -21,54 +21,62 @@ import type {
  * Tests circular route prevention, 2-hop route generation, and route selection heuristics.
  */
 describe('routeUtils', () => {
-  // Mock token addresses and symbols
-  const CUSD_ADDR = '0xcUSD0000000000000000000000000000000000'
-  const CELO_ADDR = '0xCELO0000000000000000000000000000000000'
-  const CEUR_ADDR = '0xcEUR0000000000000000000000000000000000'
-  const CREAL_ADDR = '0xcREAL000000000000000000000000000000000'
-  const USDC_ADDR = '0xUSDC0000000000000000000000000000000000'
+  // Mock token addresses (valid hex)
+  const CUSD_ADDR = '0xaa00000000000000000000000000000000000001'
+  const CELO_ADDR = '0xbb00000000000000000000000000000000000002'
+  const CEUR_ADDR = '0xcc00000000000000000000000000000000000003'
+  const CREAL_ADDR = '0xdd00000000000000000000000000000000000004'
+  const USDC_ADDR = '0xee00000000000000000000000000000000000005'
+
+  const FACTORY_ADDR = '0xff00000000000000000000000000000000000099'
 
   // Mock direct pairs
   const mockDirectPairs: Route[] = [
     {
       id: 'CELO-cUSD' as RouteID,
-      assets: [
+      tokens: [
         { address: CELO_ADDR, symbol: 'CELO' },
         { address: CUSD_ADDR, symbol: 'cUSD' },
       ],
       path: [
         {
-          providerAddr: '0xBiPoolManager',
-          id: '0xex1',
-          assets: [CELO_ADDR, CUSD_ADDR],
+          factoryAddr: FACTORY_ADDR,
+          poolAddr: '0x1000000000000000000000000000000000000001',
+          token0: CELO_ADDR,
+          token1: CUSD_ADDR,
+          poolType: PoolType.FPMM as `${PoolType}`,
         },
       ],
     },
     {
       id: 'CELO-cEUR' as RouteID,
-      assets: [
+      tokens: [
         { address: CELO_ADDR, symbol: 'CELO' },
         { address: CEUR_ADDR, symbol: 'cEUR' },
       ],
       path: [
         {
-          providerAddr: '0xBiPoolManager',
-          id: '0xex2',
-          assets: [CELO_ADDR, CEUR_ADDR],
+          factoryAddr: FACTORY_ADDR,
+          poolAddr: '0x1000000000000000000000000000000000000002',
+          token0: CELO_ADDR,
+          token1: CEUR_ADDR,
+          poolType: PoolType.FPMM as `${PoolType}`,
         },
       ],
     },
     {
       id: 'cREAL-cUSD' as RouteID,
-      assets: [
+      tokens: [
         { address: CREAL_ADDR, symbol: 'cREAL' },
         { address: CUSD_ADDR, symbol: 'cUSD' },
       ],
       path: [
         {
-          providerAddr: '0xBiPoolManager',
-          id: '0xex3',
-          assets: [CREAL_ADDR, CUSD_ADDR],
+          factoryAddr: FACTORY_ADDR,
+          poolAddr: '0x1000000000000000000000000000000000000003',
+          token0: CREAL_ADDR,
+          token1: CUSD_ADDR,
+          poolType: PoolType.FPMM as `${PoolType}`,
         },
       ],
     },
@@ -100,24 +108,22 @@ describe('routeUtils', () => {
       expect(celoNeighbors?.has(CEUR_ADDR)).toBe(true)
     })
 
-    it('should create direct path map with sorted keys', () => {
+    it('should create direct route map with sorted symbol keys', () => {
       const connectivity = buildConnectivityStructures(mockDirectPairs)
 
-      // Keys should be sorted alphabetically
-      const celoUsdKey = [CELO_ADDR, CUSD_ADDR]
-        .sort()
-        .join('-') as RouteID
-      const exchange = connectivity.directPathMap.get(celoUsdKey)
+      // Keys use canonicalSymbolKey (sorted symbols), not sorted addresses
+      const celoUsdKey = 'CELO-cUSD' as RouteID
+      const exchange = connectivity.directRouteMap.get(celoUsdKey)
 
       expect(exchange).toBeDefined()
-      expect(exchange?.id).toBe('0xex1')
+      expect(exchange?.poolAddr).toBe('0x1000000000000000000000000000000000000001')
     })
 
-    it('should preserve original direct pairs', () => {
+    it('should preserve original direct routes', () => {
       const connectivity = buildConnectivityStructures(mockDirectPairs)
 
-      expect(connectivity.directPairs).toEqual(mockDirectPairs)
-      expect(connectivity.directPairs.length).toBe(3)
+      expect(connectivity.directRoutes).toEqual(mockDirectPairs)
+      expect(connectivity.directRoutes.length).toBe(3)
     })
   })
 
@@ -153,20 +159,20 @@ describe('routeUtils', () => {
       const allRoutes = generateAllRoutes(connectivity)
 
       // Check all routes - none should be circular
-      for (const [pairId, routes] of allRoutes.entries()) {
+      for (const [_pairId, routes] of allRoutes.entries()) {
         for (const route of routes) {
           if (route.path.length === 2) {
             const [hop1, hop2] = route.path
             const start =
-              hop1.assets[0] === hop2.assets[0] ||
-              hop1.assets[0] === hop2.assets[1]
-                ? hop1.assets[1]
-                : hop1.assets[0]
+              hop1.token0 === hop2.token0 ||
+              hop1.token0 === hop2.token1
+                ? hop1.token1
+                : hop1.token0
             const end =
-              hop2.assets[0] === hop1.assets[0] ||
-              hop2.assets[0] === hop1.assets[1]
-                ? hop2.assets[1]
-                : hop2.assets[0]
+              hop2.token0 === hop1.token0 ||
+              hop2.token0 === hop1.token1
+                ? hop2.token1
+                : hop2.token0
 
             // Start and end should be different (not circular)
             expect(start).not.toBe(end)
@@ -180,43 +186,49 @@ describe('routeUtils', () => {
       const multiRoutePairs: Route[] = [
         {
           id: 'CELO-cUSD' as RouteID,
-          assets: [
+          tokens: [
             { address: CELO_ADDR, symbol: 'CELO' },
             { address: CUSD_ADDR, symbol: 'cUSD' },
           ],
           path: [
             {
-              providerAddr: '0xProvider1',
-              id: '0xex1',
-              assets: [CELO_ADDR, CUSD_ADDR],
+              factoryAddr: FACTORY_ADDR,
+              poolAddr: '0x2000000000000000000000000000000000000001',
+              token0: CELO_ADDR,
+              token1: CUSD_ADDR,
+              poolType: PoolType.FPMM as `${PoolType}`,
             },
           ],
         },
         {
           id: 'CELO-USDC' as RouteID,
-          assets: [
+          tokens: [
             { address: CELO_ADDR, symbol: 'CELO' },
             { address: USDC_ADDR, symbol: 'USDC' },
           ],
           path: [
             {
-              providerAddr: '0xProvider2',
-              id: '0xex2',
-              assets: [CELO_ADDR, USDC_ADDR],
+              factoryAddr: FACTORY_ADDR,
+              poolAddr: '0x2000000000000000000000000000000000000002',
+              token0: CELO_ADDR,
+              token1: USDC_ADDR,
+              poolType: PoolType.FPMM as `${PoolType}`,
             },
           ],
         },
         {
           id: 'USDC-cUSD' as RouteID,
-          assets: [
+          tokens: [
             { address: USDC_ADDR, symbol: 'USDC' },
             { address: CUSD_ADDR, symbol: 'cUSD' },
           ],
           path: [
             {
-              providerAddr: '0xProvider3',
-              id: '0xex3',
-              assets: [USDC_ADDR, CUSD_ADDR],
+              factoryAddr: FACTORY_ADDR,
+              poolAddr: '0x2000000000000000000000000000000000000003',
+              token0: USDC_ADDR,
+              token1: CUSD_ADDR,
+              poolType: PoolType.FPMM as `${PoolType}`,
             },
           ],
         },
@@ -344,35 +356,41 @@ describe('routeUtils', () => {
         {
           // 2-hop route
           id: 'cEUR-cUSD' as RouteID,
-          assets: [
+          tokens: [
             { address: CEUR_ADDR, symbol: 'cEUR' },
             { address: CUSD_ADDR, symbol: 'cUSD' },
           ],
           path: [
             {
-              providerAddr: '0xP1',
-              id: '0xex1',
-              assets: [CEUR_ADDR, CELO_ADDR],
+              factoryAddr: FACTORY_ADDR,
+              poolAddr: '0x3000000000000000000000000000000000000001',
+              token0: CEUR_ADDR,
+              token1: CELO_ADDR,
+              poolType: PoolType.FPMM as `${PoolType}`,
             },
             {
-              providerAddr: '0xP2',
-              id: '0xex2',
-              assets: [CELO_ADDR, CUSD_ADDR],
+              factoryAddr: FACTORY_ADDR,
+              poolAddr: '0x3000000000000000000000000000000000000002',
+              token0: CELO_ADDR,
+              token1: CUSD_ADDR,
+              poolType: PoolType.FPMM as `${PoolType}`,
             },
           ],
         },
         {
           // Direct route
           id: 'cEUR-cUSD' as RouteID,
-          assets: [
+          tokens: [
             { address: CEUR_ADDR, symbol: 'cEUR' },
             { address: CUSD_ADDR, symbol: 'cUSD' },
           ],
           path: [
             {
-              providerAddr: '0xP3',
-              id: '0xex3',
-              assets: [CEUR_ADDR, CUSD_ADDR],
+              factoryAddr: FACTORY_ADDR,
+              poolAddr: '0x3000000000000000000000000000000000000003',
+              token0: CEUR_ADDR,
+              token1: CUSD_ADDR,
+              poolType: PoolType.FPMM as `${PoolType}`,
             },
           ],
         },
@@ -390,44 +408,55 @@ describe('routeUtils', () => {
     })
 
     it('should prefer route through major stablecoin (Tier 3)', () => {
+      // The implementation's stablecoin list is: ['USDm', 'EURm', 'USDC', 'USDT']
+      const USDM_ADDR = '0xab00000000000000000000000000000000000099'
+
       const candidates: Route[] = [
         {
-          // Route through minor token
+          // Route through minor token (cREAL → cREAL loop, no valid intermediate)
           id: 'cEUR-cREAL' as RouteID,
-          assets: [
+          tokens: [
             { address: CEUR_ADDR, symbol: 'cEUR' },
             { address: CREAL_ADDR, symbol: 'cREAL' },
           ],
           path: [
             {
-              providerAddr: '0xP1',
-              id: '0xex1',
-              assets: [CEUR_ADDR, CREAL_ADDR],
+              factoryAddr: FACTORY_ADDR,
+              poolAddr: '0x4000000000000000000000000000000000000001',
+              token0: CEUR_ADDR,
+              token1: CELO_ADDR,
+              poolType: PoolType.FPMM as `${PoolType}`,
             },
             {
-              providerAddr: '0xP2',
-              id: '0xex2',
-              assets: [CREAL_ADDR, CREAL_ADDR],
+              factoryAddr: FACTORY_ADDR,
+              poolAddr: '0x4000000000000000000000000000000000000002',
+              token0: CELO_ADDR,
+              token1: CREAL_ADDR,
+              poolType: PoolType.FPMM as `${PoolType}`,
             },
           ],
         },
         {
-          // Route through cUSD (major stablecoin)
+          // Route through USDm (major stablecoin)
           id: 'cEUR-cREAL' as RouteID,
-          assets: [
+          tokens: [
             { address: CEUR_ADDR, symbol: 'cEUR' },
             { address: CREAL_ADDR, symbol: 'cREAL' },
           ],
           path: [
             {
-              providerAddr: '0xP3',
-              id: '0xex3',
-              assets: [CEUR_ADDR, CUSD_ADDR],
-            }, // cUSD intermediate
+              factoryAddr: FACTORY_ADDR,
+              poolAddr: '0x4000000000000000000000000000000000000003',
+              token0: CEUR_ADDR,
+              token1: USDM_ADDR,
+              poolType: PoolType.FPMM as `${PoolType}`,
+            },
             {
-              providerAddr: '0xP4',
-              id: '0xex4',
-              assets: [CUSD_ADDR, CREAL_ADDR],
+              factoryAddr: FACTORY_ADDR,
+              poolAddr: '0x4000000000000000000000000000000000000004',
+              token0: USDM_ADDR,
+              token1: CREAL_ADDR,
+              poolType: PoolType.FPMM as `${PoolType}`,
             },
           ],
         },
@@ -436,14 +465,15 @@ describe('routeUtils', () => {
       const addrToSymbol = new Map([
         [CEUR_ADDR, 'cEUR'],
         [CREAL_ADDR, 'cREAL'],
-        [CUSD_ADDR, 'cUSD'],
+        [CELO_ADDR, 'CELO'],
+        [USDM_ADDR, 'USDm'],
       ])
 
       const best = selectBestRoute(candidates, addrToSymbol)
 
-      // Should select route through cUSD
+      // Should select route through USDm (major stablecoin)
       const intermediate = getIntermediateToken(best)
-      expect(intermediate).toBe(CUSD_ADDR)
+      expect(intermediate).toBe(USDM_ADDR)
     })
 
     it('should return first route if no better heuristic applies (Tier 4)', () => {
@@ -469,13 +499,25 @@ describe('routeUtils', () => {
     it('should extract intermediate token from 2-hop route', () => {
       const twoHopRoute: Route = {
         id: 'cEUR-cUSD' as RouteID,
-        assets: [
+        tokens: [
           { address: CEUR_ADDR, symbol: 'cEUR' },
           { address: CUSD_ADDR, symbol: 'cUSD' },
         ],
         path: [
-          { providerAddr: '0xP1', id: '0xex1', assets: [CEUR_ADDR, CELO_ADDR] },
-          { providerAddr: '0xP2', id: '0xex2', assets: [CELO_ADDR, CUSD_ADDR] },
+          {
+            factoryAddr: FACTORY_ADDR,
+            poolAddr: '0x5000000000000000000000000000000000000001',
+            token0: CEUR_ADDR,
+            token1: CELO_ADDR,
+            poolType: PoolType.FPMM as `${PoolType}`,
+          },
+          {
+            factoryAddr: FACTORY_ADDR,
+            poolAddr: '0x5000000000000000000000000000000000000002',
+            token0: CELO_ADDR,
+            token1: CUSD_ADDR,
+            poolType: PoolType.FPMM as `${PoolType}`,
+          },
         ],
       }
 

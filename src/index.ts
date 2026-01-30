@@ -9,6 +9,7 @@ import { RouteService } from './services/routes'
 import { QuoteService } from './services/quotes'
 import { SwapService } from './services/swap'
 import { TradingService } from './services/trading'
+import { LiquidityService } from './services/liquidity'
 
 /**
  * @class Mento
@@ -45,6 +46,16 @@ import { TradingService } from './services/trading'
  *
  *              // Get full tradability status (circuit breaker + limits)
  *              const status = await mento.trading.getPoolTradabilityStatus(pool);
+ *
+ *              // Add liquidity to a pool
+ *              const { approval0, approval1, addLiquidity } = await mento.liquidity.buildAddLiquidityTransaction(
+ *                poolAddress, amount0, amount1, recipient, owner, { slippageTolerance: 0.5 }
+ *              );
+ *
+ *              // Add liquidity using a single token (zap in)
+ *              const { approval, zapIn } = await mento.liquidity.buildZapInTransaction(
+ *                poolAddress, tokenIn, amountIn, 0.5, recipient, owner, { slippageTolerance: 0.5 }
+ *              );
  */
 export class Mento {
   private constructor(
@@ -54,7 +65,8 @@ export class Mento {
     public routes: RouteService,
     public quotes: QuoteService,
     public swap: SwapService,
-    public trading: TradingService
+    public trading: TradingService,
+    public liquidity: LiquidityService
   ) {}
 
   /**
@@ -79,9 +91,10 @@ export class Mento {
     const quoteService = new QuoteService(publicClient, chainId, routeService)
     const swapService = new SwapService(publicClient, chainId, routeService, quoteService)
     const tradingService = new TradingService(publicClient, chainId, routeService)
+    const liquidityService = new LiquidityService(publicClient, chainId, poolService, routeService)
 
     // Return new mento
-    return new Mento(chainId, tokenService, poolService, routeService, quoteService, swapService, tradingService)
+    return new Mento(chainId, tokenService, poolService, routeService, quoteService, swapService, tradingService, liquidityService)
   }
 
   /**

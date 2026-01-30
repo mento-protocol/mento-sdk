@@ -272,7 +272,7 @@ export class SwapService {
     return encodeFunctionData({
       abi: ROUTER_ABI,
       functionName: 'swapExactTokensForTokens',
-      args: [amountIn, amountOutMin, routes, recipient, deadline],
+      args: [amountIn, amountOutMin, routes as readonly { from: Address, to: Address, factory: Address }[], recipient, deadline],
     })
   }
 }

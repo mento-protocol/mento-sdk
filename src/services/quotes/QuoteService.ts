@@ -74,7 +74,7 @@ export class QuoteService {
         address: routerAddress as `0x${string}`,
         abi: ROUTER_ABI,
         functionName: 'getAmountsOut',
-        args: [amountIn, routerRoutes],
+        args: [amountIn, routerRoutes as readonly { from: Address, to: Address, factory: Address }[]],
       })) as bigint[]
 
       return amounts[amounts.length - 1]

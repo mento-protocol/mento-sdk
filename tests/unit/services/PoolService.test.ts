@@ -12,42 +12,42 @@ describe('PoolService', () => {
   let mockPublicClient: jest.Mocked<PublicClient>
   let service: PoolService
 
-  // Mock FPMM pool data
+  // Mock FPMM pool data (all addresses must be valid hex for BigInt compatibility)
   const mockFPMMPools = [
     {
-      poolAddress: '0xFPMMPool1000000000000000000000000000000',
-      token0: '0xToken0A00000000000000000000000000000000',
-      token1: '0xToken1A00000000000000000000000000000000',
+      poolAddress: '0xF100000000000000000000000000000000000001',
+      token0: '0xA000000000000000000000000000000000000001',
+      token1: '0xA100000000000000000000000000000000000001',
     },
     {
-      poolAddress: '0xFPMMPool2000000000000000000000000000000',
-      token0: '0xToken0B00000000000000000000000000000000',
-      token1: '0xToken1B00000000000000000000000000000000',
+      poolAddress: '0xF200000000000000000000000000000000000002',
+      token0: '0xB000000000000000000000000000000000000002',
+      token1: '0xB100000000000000000000000000000000000002',
     },
   ]
 
   // Mock BiPoolManager exchange data
   const mockExchanges = [
     {
-      exchangeId: '0xexchange1',
+      exchangeId: '0xeee1',
       assets: [
-        '0xToken0C00000000000000000000000000000000',
-        '0xToken1C00000000000000000000000000000000',
+        '0xC000000000000000000000000000000000000001',
+        '0xC100000000000000000000000000000000000001',
       ],
     },
     {
-      exchangeId: '0xexchange2',
+      exchangeId: '0xeee2',
       assets: [
-        '0xToken0D00000000000000000000000000000000',
-        '0xToken1D00000000000000000000000000000000',
+        '0xD000000000000000000000000000000000000002',
+        '0xD100000000000000000000000000000000000002',
       ],
     },
   ]
 
   // Mock Virtual pool addresses
   const mockVirtualPools = [
-    '0xVirtualPool1000000000000000000000000000',
-    '0xVirtualPool2000000000000000000000000000',
+    '0x5000000000000000000000000000000000000001',
+    '0x5100000000000000000000000000000000000002',
   ]
 
   beforeEach(() => {
@@ -115,7 +115,7 @@ describe('PoolService', () => {
         })
       })
 
-      it('should return empty array if no FPMM pools deployed', async () => {
+      it('should throw if no pools discovered from any factory', async () => {
         mockPublicClient.readContract.mockImplementation(
           async ({ functionName }: any) => {
             if (functionName === 'deployedFPMMAddresses') {
@@ -128,8 +128,9 @@ describe('PoolService', () => {
           }
         )
 
-        const pools = await service.getPools()
-        expect(pools).toEqual([])
+        await expect(service.getPools()).rejects.toThrow(
+          'Failed to discover any pools from any factory'
+        )
       })
     })
 
@@ -196,7 +197,7 @@ describe('PoolService', () => {
         expect(isPoolCalls.length).toBe(mockExchanges.length)
       })
 
-      it('should skip exchanges that do not have deployed pools', async () => {
+      it('should throw when all exchanges have no deployed pools', async () => {
         mockPublicClient.readContract.mockImplementation(
           async ({ functionName, args }: any) => {
             if (functionName === 'deployedFPMMAddresses') {
@@ -206,7 +207,7 @@ describe('PoolService', () => {
               return mockExchanges
             }
             if (functionName === 'getOrPrecomputeProxyAddress') {
-              return '0xSomePoolAddress'
+              return '0x5000000000000000000000000000000000000099'
             }
             // isPool returns false - no pools deployed
             if (functionName === 'isPool') {
@@ -216,8 +217,9 @@ describe('PoolService', () => {
           }
         )
 
-        const pools = await service.getPools()
-        expect(pools).toEqual([])
+        await expect(service.getPools()).rejects.toThrow(
+          'Failed to discover any pools from any factory'
+        )
       })
 
       it('should sort tokens before querying VirtualPoolFactory', async () => {
@@ -235,10 +237,10 @@ describe('PoolService', () => {
               // Return exchange with unsorted tokens (higher address first)
               return [
                 {
-                  exchangeId: '0xex1',
+                  exchangeId: '0xee01',
                   assets: [
-                    '0xZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ',
-                    '0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+                    '0xFF00000000000000000000000000000000000000',
+                    '0xAA00000000000000000000000000000000000000',
                   ],
                 },
               ]
@@ -368,10 +370,13 @@ describe('PoolService', () => {
     })
 
     describe('error handling', () => {
-      it('should throw error if FPMM pool fetching fails', async () => {
+      it('should throw generic error if all factory fetches fail', async () => {
         mockPublicClient.readContract.mockImplementation(
           async ({ functionName }: any) => {
             if (functionName === 'deployedFPMMAddresses') {
+              throw new Error('RPC connection failed')
+            }
+            if (functionName === 'getExchanges') {
               throw new Error('RPC connection failed')
             }
             return null
@@ -379,11 +384,11 @@ describe('PoolService', () => {
         )
 
         await expect(service.getPools()).rejects.toThrow(
-          'Failed to fetch FPMM pools'
+          'Failed to discover any pools from any factory'
         )
       })
 
-      it('should throw error if Virtual pool fetching fails', async () => {
+      it('should throw when FPMM returns empty and Virtual fetch fails', async () => {
         mockPublicClient.readContract.mockImplementation(
           async ({ functionName }: any) => {
             if (functionName === 'deployedFPMMAddresses') {
@@ -397,12 +402,14 @@ describe('PoolService', () => {
         )
 
         await expect(service.getPools()).rejects.toThrow(
-          'Failed to fetch Virtual pools'
+          'Failed to discover any pools from any factory'
         )
       })
 
       it('should skip exchanges with invalid asset count', async () => {
-        const consoleSpy = jest.spyOn(console, 'warn').mockImplementation()
+        const validToken0 = '0xAA00000000000000000000000000000000000001'
+        const validToken1 = '0xBB00000000000000000000000000000000000001'
+        const validPool = '0x5500000000000000000000000000000000000001'
 
         mockPublicClient.readContract.mockImplementation(
           async ({ functionName }: any) => {
@@ -411,15 +418,15 @@ describe('PoolService', () => {
             }
             if (functionName === 'getExchanges') {
               return [
-                { exchangeId: '0xvalid', assets: ['0xtoken1', '0xtoken2'] },
+                { exchangeId: '0xee01', assets: [validToken0, validToken1] },
                 {
-                  exchangeId: '0xinvalid',
-                  assets: ['0xtoken1', '0xtoken2', '0xtoken3'],
+                  exchangeId: '0xee02',
+                  assets: [validToken0, validToken1, '0xCC00000000000000000000000000000000000001'],
                 },
               ]
             }
             if (functionName === 'getOrPrecomputeProxyAddress') {
-              return '0xPoolAddress'
+              return validPool
             }
             if (functionName === 'isPool') {
               return true
@@ -430,12 +437,8 @@ describe('PoolService', () => {
 
         const pools = await service.getPools()
 
+        // Only the 2-asset exchange should produce a pool; the 3-asset one is skipped
         expect(pools.length).toBe(1)
-        expect(consoleSpy).toHaveBeenCalledWith(
-          expect.stringContaining('Skipping invalid exchange')
-        )
-
-        consoleSpy.mockRestore()
       })
 
       it('should throw error if chain is not supported', async () => {
@@ -446,7 +449,7 @@ describe('PoolService', () => {
         )
 
         await expect(unsupportedService.getPools()).rejects.toThrow(
-          'No addresses found for chain ID 99999'
+          'Failed to discover any pools from any factory'
         )
       })
     })
@@ -523,8 +526,8 @@ describe('PoolService', () => {
         expect(details.reserve0).toBe(3500000000000000000000n)
         expect(details.reserve1).toBe(6400000000n)
         expect(details.blockTimestampLast).toBe(1700000000n)
-        expect(details.decimals0).toBe(1000000000000000000n)
-        expect(details.decimals1).toBe(1000000n)
+        expect(details.scalingFactor0).toBe(1000000000000000000n)
+        expect(details.scalingFactor1).toBe(1000000n)
       })
 
       it('should compute oracle and reserve prices correctly', async () => {
@@ -784,8 +787,8 @@ describe('PoolService', () => {
         expect(details.reserve0).toBe(5000000000000000000000n)
         expect(details.reserve1).toBe(9000000000n)
         expect(details.blockTimestampLast).toBe(1700000000n)
-        expect(details.decimals0).toBe(1000000000000000000n)
-        expect(details.decimals1).toBe(1000000n)
+        expect(details.scalingFactor0).toBe(1000000000000000000n)
+        expect(details.scalingFactor1).toBe(1000000n)
       })
 
       it('should return spread from protocolFee()', async () => {
@@ -958,7 +961,7 @@ describe('PoolService', () => {
 
       const pool = pools[0]
       expect(pool).toHaveProperty('factoryAddr')
-      expect(pool).toHaveProperty('poolAddress')
+      expect(pool).toHaveProperty('poolAddr')
       expect(pool).toHaveProperty('token0')
       expect(pool).toHaveProperty('token1')
     })

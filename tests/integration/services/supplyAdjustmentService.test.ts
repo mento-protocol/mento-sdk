@@ -1,13 +1,11 @@
-import { StableToken } from './../../../dist/types/token.d'
-import {
-  SupplyAdjustmentService,
-  TokenMetadataService,
-} from '../../../src/services'
-import { addresses, ChainId } from '../../../src/constants'
+import { StableToken } from '../../../src/core/types'
+import { SupplyAdjustmentService } from '../../../src/services'
+import { addresses, ChainId } from '../../../src/core/constants'
 import { TEST_CONFIG } from '../../config'
-import { DefaultCalculatorFactory } from '../../../src/services/supply'
+import { DefaultCalculatorFactory } from '../../../src/services/tokens/supply'
 import { createPublicClient, http } from 'viem'
 import { celo } from 'viem/chains'
+import { ERC20_ABI } from '../../../src/core/abis'
 
 describe('SupplyAdjustmentService Integration Tests', () => {
   // Setup public client
@@ -16,11 +14,10 @@ describe('SupplyAdjustmentService Integration Tests', () => {
     transport: http(TEST_CONFIG.rpcUrl),
   })
   const supplyAdjustmentService = new SupplyAdjustmentService(
-    publicClient,
+    publicClient as any,
     ChainId.CELO,
     new DefaultCalculatorFactory()
   )
-  const tokenMetadataService = new TokenMetadataService(publicClient)
   describe('adjustSupply()', () => {
     it(`should return the adjusted USDm supply`, async function () {
       const stableTokenAddress = addresses[ChainId.CELO].StableToken
@@ -28,14 +25,17 @@ describe('SupplyAdjustmentService Integration Tests', () => {
         throw new Error('StableToken address not found for CELO')
       }
 
-      const usdmOnChainSupply = await tokenMetadataService.getTotalSupply(
-        stableTokenAddress
-      )
+      const totalSupply = (await publicClient.readContract({
+        address: stableTokenAddress as `0x${string}`,
+        abi: ERC20_ABI,
+        functionName: 'totalSupply',
+        args: [],
+      })) as bigint
 
       const usdm: StableToken = {
         address: stableTokenAddress,
         symbol: 'USDm',
-        totalSupply: usdmOnChainSupply,
+        totalSupply: totalSupply.toString(),
         name: 'Mento Dollar',
         decimals: 18,
       }
