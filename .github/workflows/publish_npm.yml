@@ -22,7 +22,7 @@ jobs:
           node-version: '22'
 
       - name: Install the Node.js dependencies
-        run: yarn install --immutable --ignore-scripts
+        run: yarn install --immutable
 
       - name: Build the sdk
         run: yarn build

@@ -25,7 +25,7 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Install deps
-        run: yarn install --immutable --ignore-scripts
+        run: yarn install --immutable
 
       - name: Build
         run: yarn build
