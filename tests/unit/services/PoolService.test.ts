@@ -143,29 +143,23 @@ describe('PoolService', () => {
               return []
             }
 
+            // VirtualPoolFactory.getAllPools()
+            if (functionName === 'getAllPools') {
+              return mockVirtualPools
+            }
+
             // BiPoolManager.getExchanges()
             if (functionName === 'getExchanges') {
               return mockExchanges
             }
 
-            // VirtualPoolFactory.getOrPrecomputeProxyAddress()
-            if (functionName === 'getOrPrecomputeProxyAddress') {
-              const [token0, token1] = args as [string, string]
-              // Return a deterministic pool address based on tokens
-              const index = mockExchanges.findIndex(
-                (e) =>
-                  (e.assets[0].toLowerCase() === token0.toLowerCase() &&
-                    e.assets[1].toLowerCase() === token1.toLowerCase()) ||
-                  (e.assets[0].toLowerCase() === token1.toLowerCase() &&
-                    e.assets[1].toLowerCase() === token0.toLowerCase())
-              )
-              return mockVirtualPools[index] || '0x0'
-            }
-
-            // VirtualPoolFactory.isPool()
-            if (functionName === 'isPool') {
-              const [poolAddress] = args as [string]
-              return mockVirtualPools.includes(poolAddress)
+            // VirtualPool.tokens()
+            if (functionName === 'tokens') {
+              const poolIndex = mockVirtualPools.indexOf(address)
+              if (poolIndex >= 0) {
+                return [mockExchanges[poolIndex].assets[0], mockExchanges[poolIndex].assets[1]]
+              }
+              return null
             }
 
             return null
@@ -173,13 +167,13 @@ describe('PoolService', () => {
         )
       })
 
-      it('should discover Virtual pools from BiPoolManager exchanges', async () => {
+      it('should discover Virtual pools from VirtualPoolFactory.getAllPools()', async () => {
         const pools = await service.getPools()
 
-        // Should have called getExchanges on BiPoolManager
+        // Should have called getAllPools on VirtualPoolFactory
         expect(mockPublicClient.readContract).toHaveBeenCalledWith(
           expect.objectContaining({
-            functionName: 'getExchanges',
+            functionName: 'getAllPools',
           })
         )
 
@@ -187,31 +181,27 @@ describe('PoolService', () => {
         expect(pools.length).toBe(2)
       })
 
-      it('should verify each pool with isPool() before including', async () => {
+      it('should read tokens from each pool via tokens()', async () => {
         const pools = await service.getPools()
 
-        // Should have called isPool for each exchange
-        const isPoolCalls = mockPublicClient.readContract.mock.calls.filter(
-          ([params]) => 'functionName' in params && params.functionName === 'isPool'
+        // Should have called tokens() for each pool
+        const tokensCalls = mockPublicClient.readContract.mock.calls.filter(
+          ([params]) => 'functionName' in params && params.functionName === 'tokens'
         )
-        expect(isPoolCalls.length).toBe(mockExchanges.length)
+        expect(tokensCalls.length).toBe(mockVirtualPools.length)
       })
 
-      it('should throw when all exchanges have no deployed pools', async () => {
+      it('should throw when getAllPools returns empty', async () => {
         mockPublicClient.readContract.mockImplementation(
-          async ({ functionName, args }: any) => {
+          async ({ functionName }: any) => {
             if (functionName === 'deployedFPMMAddresses') {
+              return []
+            }
+            if (functionName === 'getAllPools') {
               return []
             }
             if (functionName === 'getExchanges') {
               return mockExchanges
-            }
-            if (functionName === 'getOrPrecomputeProxyAddress') {
-              return '0x5000000000000000000000000000000000000099'
-            }
-            // isPool returns false - no pools deployed
-            if (functionName === 'isPool') {
-              return false
             }
             return null
           }
@@ -222,19 +212,16 @@ describe('PoolService', () => {
         )
       })
 
-      it('should sort tokens before querying VirtualPoolFactory', async () => {
-        const calls: any[] = []
-
+      it('should sort tokens returned from pool.tokens()', async () => {
         mockPublicClient.readContract.mockImplementation(
-          async ({ functionName, args }: any) => {
-            if (functionName === 'getOrPrecomputeProxyAddress') {
-              calls.push({ functionName, args })
-            }
+          async ({ functionName }: any) => {
             if (functionName === 'deployedFPMMAddresses') {
               return []
             }
+            if (functionName === 'getAllPools') {
+              return ['0x5000000000000000000000000000000000000001']
+            }
             if (functionName === 'getExchanges') {
-              // Return exchange with unsorted tokens (higher address first)
               return [
                 {
                   exchangeId: '0xee01',
@@ -245,24 +232,21 @@ describe('PoolService', () => {
                 },
               ]
             }
-            if (functionName === 'isPool') {
-              return true
+            // Return unsorted tokens (higher address first)
+            if (functionName === 'tokens') {
+              return [
+                '0xFF00000000000000000000000000000000000000',
+                '0xAA00000000000000000000000000000000000000',
+              ]
             }
             return null
           }
         )
 
-        await service.getPools()
+        const pools = await service.getPools()
 
-        // Should have sorted tokens (lower address first)
-        const proxyCall = calls.find(
-          (c) => c.functionName === 'getOrPrecomputeProxyAddress'
-        )
-        expect(proxyCall).toBeDefined()
-        // String comparison: first arg should be lexicographically less than second
-        expect(
-          proxyCall.args[0].toLowerCase() < proxyCall.args[1].toLowerCase()
-        ).toBe(true)
+        // token0 should be lexicographically less than token1
+        expect(pools[0].token0.toLowerCase() < pools[0].token1.toLowerCase()).toBe(true)
       })
     })
 
@@ -284,23 +268,18 @@ describe('PoolService', () => {
             }
 
             // Virtual pools
+            if (functionName === 'getAllPools') {
+              return mockVirtualPools
+            }
             if (functionName === 'getExchanges') {
               return mockExchanges
             }
-            if (functionName === 'getOrPrecomputeProxyAddress') {
-              const [token0, token1] = args as [string, string]
-              const index = mockExchanges.findIndex(
-                (e) =>
-                  (e.assets[0].toLowerCase() === token0.toLowerCase() &&
-                    e.assets[1].toLowerCase() === token1.toLowerCase()) ||
-                  (e.assets[0].toLowerCase() === token1.toLowerCase() &&
-                    e.assets[1].toLowerCase() === token0.toLowerCase())
-              )
-              return mockVirtualPools[index] || '0x0'
-            }
-            if (functionName === 'isPool') {
-              const [poolAddress] = args as [string]
-              return mockVirtualPools.includes(poolAddress)
+            if (functionName === 'tokens') {
+              const poolIndex = mockVirtualPools.indexOf(address)
+              if (poolIndex >= 0) {
+                return [mockExchanges[poolIndex].assets[0], mockExchanges[poolIndex].assets[1]]
+              }
+              return null
             }
 
             return null
@@ -343,6 +322,9 @@ describe('PoolService', () => {
             if (functionName === 'token1') {
               return mockFPMMPools[0].token1
             }
+            if (functionName === 'getAllPools') {
+              return []
+            }
             if (functionName === 'getExchanges') {
               return []
             }
@@ -376,6 +358,9 @@ describe('PoolService', () => {
             if (functionName === 'deployedFPMMAddresses') {
               throw new Error('RPC connection failed')
             }
+            if (functionName === 'getAllPools') {
+              throw new Error('RPC connection failed')
+            }
             if (functionName === 'getExchanges') {
               throw new Error('RPC connection failed')
             }
@@ -394,6 +379,9 @@ describe('PoolService', () => {
             if (functionName === 'deployedFPMMAddresses') {
               return []
             }
+            if (functionName === 'getAllPools') {
+              throw new Error('RPC connection failed')
+            }
             if (functionName === 'getExchanges') {
               throw new Error('RPC connection failed')
             }
@@ -406,7 +394,7 @@ describe('PoolService', () => {
         )
       })
 
-      it('should skip exchanges with invalid asset count', async () => {
+      it('should skip exchanges with invalid asset count when matching exchangeIds', async () => {
         const validToken0 = '0xAA00000000000000000000000000000000000001'
         const validToken1 = '0xBB00000000000000000000000000000000000001'
         const validPool = '0x5500000000000000000000000000000000000001'
@@ -415,6 +403,9 @@ describe('PoolService', () => {
           async ({ functionName }: any) => {
             if (functionName === 'deployedFPMMAddresses') {
               return []
+            }
+            if (functionName === 'getAllPools') {
+              return [validPool]
             }
             if (functionName === 'getExchanges') {
               return [
@@ -425,11 +416,8 @@ describe('PoolService', () => {
                 },
               ]
             }
-            if (functionName === 'getOrPrecomputeProxyAddress') {
-              return validPool
-            }
-            if (functionName === 'isPool') {
-              return true
+            if (functionName === 'tokens') {
+              return [validToken0, validToken1]
             }
             return null
           }
@@ -437,8 +425,9 @@ describe('PoolService', () => {
 
         const pools = await service.getPools()
 
-        // Only the 2-asset exchange should produce a pool; the 3-asset one is skipped
+        // Pool should still be discovered and matched to the valid 2-asset exchange
         expect(pools.length).toBe(1)
+        expect(pools[0].exchangeId).toBe('0xee01')
       })
 
       it('should throw error if chain is not supported', async () => {
@@ -748,14 +737,14 @@ describe('PoolService', () => {
           async ({ address, functionName, args }: any) => {
             // getPools() discovery mocks
             if (functionName === 'deployedFPMMAddresses') return []
+            if (functionName === 'getAllPools') {
+              return [virtualPoolAddr]
+            }
             if (functionName === 'getExchanges') {
               return [{ exchangeId: '0xabc123', assets: [virtualToken0, virtualToken1] }]
             }
-            if (functionName === 'getOrPrecomputeProxyAddress') {
-              return virtualPoolAddr
-            }
-            if (functionName === 'isPool') {
-              return true
+            if (functionName === 'tokens') {
+              return [virtualToken0, virtualToken1]
             }
 
             // getPoolDetails() enrichment mocks
@@ -873,9 +862,9 @@ describe('PoolService', () => {
         mockPublicClient.readContract.mockImplementation(
           async ({ functionName }: any) => {
             if (functionName === 'deployedFPMMAddresses') return []
+            if (functionName === 'getAllPools') return [vPoolAddr]
             if (functionName === 'getExchanges') return [{ exchangeId: '0xabc', assets: [vToken0, vToken1] }]
-            if (functionName === 'getOrPrecomputeProxyAddress') return vPoolAddr
-            if (functionName === 'isPool') return true
+            if (functionName === 'tokens') return [vToken0, vToken1]
             // Detail calls fail
             if (functionName === 'getReserves') throw new Error('RPC timeout')
             return null
