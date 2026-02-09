@@ -11,6 +11,8 @@ import { SwapService } from './services/swap'
 import { TradingService } from './services/trading'
 import { LiquidityService } from './services/liquidity'
 
+// TODO: Ensure there are no silent errors in the codebase
+
 /**
  * @class Mento
  * @description The main class for the Mento SDK. Initializes a viem PublicClient internally

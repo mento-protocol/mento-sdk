@@ -467,8 +467,8 @@ describe('PoolService', () => {
             if (functionName === 'getReserves') {
               return [3500000000000000000000n, 6400000000n, 1700000000n]
             }
-            if (functionName === 'getPrices') {
-              return [1830n, 1000n, 1832n, 1000n, 12n, true]
+            if (functionName === 'getRebalancingState') {
+              return [1830n, 1000n, 1832n, 1000n, true, 60, 12n]
             }
             if (functionName === 'decimals0') {
               return 1000000000000000000n // 1e18
@@ -576,7 +576,7 @@ describe('PoolService', () => {
             if (functionName === 'token1') return mockFPMMPools[0].token1
             if (functionName === 'getExchanges') return []
             if (functionName === 'getReserves') return [1000n, 2000n, 100n]
-            if (functionName === 'getPrices') return [1000n, 1000n, 1100n, 1000n, 80n, true]
+            if (functionName === 'getRebalancingState') return [1000n, 1000n, 1100n, 1000n, true, 60, 80n]
             if (functionName === 'decimals0') return 1000000000000000000n
             if (functionName === 'decimals1') return 1000000000000000000n
             if (functionName === 'lpFee') return 25n
@@ -603,7 +603,7 @@ describe('PoolService', () => {
             if (functionName === 'token1') return mockFPMMPools[0].token1
             if (functionName === 'getExchanges') return []
             if (functionName === 'getReserves') return [1000n, 2000n, 100n]
-            if (functionName === 'getPrices') return [1000n, 1000n, 900n, 1000n, 50n, false]
+            if (functionName === 'getRebalancingState') return [1000n, 1000n, 900n, 1000n, false, 40, 50n]
             if (functionName === 'decimals0') return 1000000000000000000n
             if (functionName === 'decimals1') return 1000000000000000000n
             if (functionName === 'lpFee') return 25n
@@ -632,7 +632,7 @@ describe('PoolService', () => {
             if (functionName === 'token1') return mockFPMMPools[0].token1
             if (functionName === 'getExchanges') return []
             if (functionName === 'getReserves') return [3500000000000000000000n, 6400000000n, 1700000000n]
-            if (functionName === 'getPrices') throw new Error('execution reverted: 0xa407143a')
+            if (functionName === 'getRebalancingState') throw new Error('execution reverted: 0xa407143a')
             if (functionName === 'decimals0') return 1000000000000000000n
             if (functionName === 'decimals1') return 1000000n
             if (functionName === 'lpFee') return 25n
@@ -673,7 +673,7 @@ describe('PoolService', () => {
             if (functionName === 'token1') return mockFPMMPools[0].token1
             if (functionName === 'getExchanges') return []
             if (functionName === 'getReserves') return [3500000000000000000000n, 6400000000n, 1700000000n]
-            if (functionName === 'getPrices') return [1830n, 1000n, 1832n, 1000n, 12n, true]
+            if (functionName === 'getRebalancingState') return [1830n, 1000n, 1832n, 1000n, true, 60, 12n]
             if (functionName === 'decimals0') return 1000000000000000000n
             if (functionName === 'decimals1') return 1000000n
             if (functionName === 'lpFee') return 25n
@@ -703,7 +703,7 @@ describe('PoolService', () => {
             if (functionName === 'token1') return mockFPMMPools[0].token1
             if (functionName === 'getExchanges') return []
             if (functionName === 'getReserves') return [3500000000000000000000n, 6400000000n, 1700000000n]
-            if (functionName === 'getPrices') return [1830n, 1000n, 1832n, 1000n, 12n, true]
+            if (functionName === 'getRebalancingState') return [1830n, 1000n, 1832n, 1000n, true, 60, 12n]
             if (functionName === 'decimals0') return 1000000000000000000n
             if (functionName === 'decimals1') return 1000000n
             if (functionName === 'lpFee') return 25n
@@ -816,7 +816,7 @@ describe('PoolService', () => {
             if (functionName === 'token1') return mockFPMMPools[0].token1
             if (functionName === 'getExchanges') return []
             if (functionName === 'getReserves') return [1000n, 2000n, 100n]
-            if (functionName === 'getPrices') return [1000n, 1000n, 1000n, 1000n, 0n, false]
+            if (functionName === 'getRebalancingState') return [1000n, 1000n, 1000n, 1000n, false, 0, 0n]
             if (functionName === 'decimals0') return 1000000000000000000n
             if (functionName === 'decimals1') return 1000000000000000000n
             if (functionName === 'lpFee') return 0n
@@ -886,7 +886,7 @@ describe('PoolService', () => {
             if (functionName === 'token1') return mockFPMMPools[0].token1
             if (functionName === 'getExchanges') return []
             if (functionName === 'getReserves') return [1000n, 2000n, 100n]
-            if (functionName === 'getPrices') return [1000n, 1000n, 1000n, 1000n, 0n, false]
+            if (functionName === 'getRebalancingState') return [1000n, 1000n, 1000n, 1000n, false, 0, 0n]
             if (functionName === 'decimals0') return 1000000000000000000n
             if (functionName === 'decimals1') return 1000000000000000000n
             if (functionName === 'lpFee') return 0n
@@ -912,7 +912,7 @@ describe('PoolService', () => {
         const detailCalls = mockPublicClient.readContract.mock.calls
           .slice(callsAfterGetPools)
           .filter(([params]: any) =>
-            ['getReserves', 'getPrices', 'decimals0', 'decimals1', 'lpFee',
+            ['getReserves', 'getRebalancingState', 'decimals0', 'decimals1', 'lpFee',
              'protocolFee', 'rebalanceIncentive', 'rebalanceThresholdAbove',
              'rebalanceThresholdBelow', 'liquidityStrategy'].includes(params.functionName)
           )
