@@ -19,5 +19,5 @@ export const ROUTER_ABI = parseAbi([
 
   // Structs
   'struct Route { address from; address to; address factory; }',
-  'struct Zap { address tokenA; address tokenB; address factory; uint256 amountAMin; uint256 amountBMin; uint256 amountOutMinA; uint256 amountOutMinB; }',
+  'struct Zap { address tokenA; address tokenB; address factory; uint256 amountOutMinA; uint256 amountOutMinB; uint256 amountAMin; uint256 amountBMin; }',
 ])
