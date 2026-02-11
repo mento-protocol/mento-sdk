@@ -92,7 +92,9 @@ export async function buildZapOutParamsInternal(
     args: [token0, token1, factoryAddr, liquidity, routesA as readonly { from: Address, to: Address, factory: Address }[], routesB as readonly { from: Address, to: Address, factory: Address }[]],
   })) as [bigint, bigint, bigint, bigint]
 
-  // Apply slippage to output amounts
+  // Apply slippage to all minimum amounts
+  const finalAmountAMin = calculateMinAmount(amountAMin, options.slippageTolerance)
+  const finalAmountBMin = calculateMinAmount(amountBMin, options.slippageTolerance)
   const finalAmountOutMinA = calculateMinAmount(amountOutMinA, options.slippageTolerance)
   const finalAmountOutMinB = calculateMinAmount(amountOutMinB, options.slippageTolerance)
 
@@ -100,8 +102,8 @@ export async function buildZapOutParamsInternal(
     tokenA: token0,
     tokenB: token1,
     factory: factoryAddr,
-    amountAMin,
-    amountBMin,
+    amountAMin: finalAmountAMin,
+    amountBMin: finalAmountBMin,
     amountOutMinA: finalAmountOutMinA,
     amountOutMinB: finalAmountOutMinB,
   }
@@ -156,8 +158,8 @@ export async function quoteZapOutInternal(
   return {
     amountOutMinA: calculateMinAmount(amountOutMinA, options.slippageTolerance),
     amountOutMinB: calculateMinAmount(amountOutMinB, options.slippageTolerance),
-    amountAMin,
-    amountBMin,
+    amountAMin: calculateMinAmount(amountAMin, options.slippageTolerance),
+    amountBMin: calculateMinAmount(amountBMin, options.slippageTolerance),
     expectedTokenOut: amountOutMinA + amountOutMinB,
   }
 }
