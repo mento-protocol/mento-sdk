@@ -2,7 +2,7 @@ import { Address, encodeFunctionData } from 'viem'
 import { RouteService } from '../routes'
 import { ZapParams } from '../../core/types'
 import { ROUTER_ABI } from '../../core/abis'
-import { encodeRoutePath, RouterRoute } from '../../utils/pathEncoder'
+import { encodeRoutePath, RouterRoute, ReadonlyRouterRoutes } from '../../utils/pathEncoder'
 
 // ========== ENCODING FUNCTIONS ==========
 
@@ -21,7 +21,7 @@ export function encodeZapInCall(
   return encodeFunctionData({
     abi: ROUTER_ABI,
     functionName: 'zapIn',
-    args: [tokenIn, amountInA, amountInB, zapParams as { factory: Address, tokenA: Address, tokenB: Address, amountAMin: bigint, amountBMin: bigint, amountOutMinA: bigint, amountOutMinB: bigint }, routesA as readonly { from: Address, to: Address, factory: Address }[], routesB as readonly { from: Address, to: Address, factory: Address }[], recipient],
+    args: [tokenIn, amountInA, amountInB, zapParams as { factory: Address, tokenA: Address, tokenB: Address, amountAMin: bigint, amountBMin: bigint, amountOutMinA: bigint, amountOutMinB: bigint }, routesA as ReadonlyRouterRoutes, routesB as ReadonlyRouterRoutes, recipient],
   })
 }
 
@@ -38,7 +38,7 @@ export function encodeZapOutCall(
   return encodeFunctionData({
     abi: ROUTER_ABI,
     functionName: 'zapOut',
-    args: [tokenOut, liquidity, zapParams as { factory: Address, tokenA: Address, tokenB: Address, amountAMin: bigint, amountBMin: bigint, amountOutMinA: bigint, amountOutMinB: bigint }, routesA as readonly { from: Address, to: Address, factory: Address }[], routesB as readonly { from: Address, to: Address, factory: Address }[]],
+    args: [tokenOut, liquidity, zapParams as { factory: Address, tokenA: Address, tokenB: Address, amountAMin: bigint, amountBMin: bigint, amountOutMinA: bigint, amountOutMinB: bigint }, routesA as ReadonlyRouterRoutes, routesB as ReadonlyRouterRoutes],
   })
 }
 

@@ -11,6 +11,7 @@ import {
 import { ROUTER_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
 import { validateAddress } from '../../utils/validation'
+import { ReadonlyRouterRoutes } from '../../utils/pathEncoder'
 import { buildApprovalParams, getAllowance, calculateMinAmount, getPoolInfo } from './liquidityHelpers'
 import { encodeZapOutCall, findZapOutRoutes } from './zapHelpers'
 
@@ -89,7 +90,7 @@ export async function buildZapOutParamsInternal(
     address: routerAddress as Address,
     abi: ROUTER_ABI,
     functionName: 'generateZapOutParams',
-    args: [token0, token1, factoryAddr, liquidity, routesA as readonly { from: Address, to: Address, factory: Address }[], routesB as readonly { from: Address, to: Address, factory: Address }[]],
+    args: [token0, token1, factoryAddr, liquidity, routesA as ReadonlyRouterRoutes, routesB as ReadonlyRouterRoutes],
   })) as [bigint, bigint, bigint, bigint]
 
   // Apply slippage to all minimum amounts
@@ -152,7 +153,7 @@ export async function quoteZapOutInternal(
     address: routerAddress as Address,
     abi: ROUTER_ABI,
     functionName: 'generateZapOutParams',
-    args: [token0, token1, factoryAddr, liquidity, routesA as readonly { from: Address, to: Address, factory: Address }[], routesB as readonly { from: Address, to: Address, factory: Address }[]],
+    args: [token0, token1, factoryAddr, liquidity, routesA as ReadonlyRouterRoutes, routesB as ReadonlyRouterRoutes],
   })) as [bigint, bigint, bigint, bigint]
 
   const finalAmountOutFromA = calculateMinAmount(amountOutMinA, options.slippageTolerance)

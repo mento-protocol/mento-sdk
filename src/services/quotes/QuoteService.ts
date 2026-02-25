@@ -4,7 +4,7 @@ import { Route } from '../../core/types'
 import { ROUTER_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
 import { FXMarketClosedError } from '../../core/errors'
-import { encodeRoutePath } from '../../utils/pathEncoder'
+import { encodeRoutePath, ReadonlyRouterRoutes } from '../../utils/pathEncoder'
 import { validateAddress } from '../../utils/validation'
 
 const FX_MARKET_CLOSED_SIG = '0xa407143a'
@@ -74,7 +74,7 @@ export class QuoteService {
         address: routerAddress as `0x${string}`,
         abi: ROUTER_ABI,
         functionName: 'getAmountsOut',
-        args: [amountIn, routerRoutes as readonly { from: Address, to: Address, factory: Address }[]],
+        args: [amountIn, routerRoutes as ReadonlyRouterRoutes],
       })) as bigint[]
 
       return amounts[amounts.length - 1]

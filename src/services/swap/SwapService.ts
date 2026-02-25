@@ -4,7 +4,7 @@ import { QuoteService } from '../quotes'
 import { Route, CallParams } from '../../core/types'
 import { ROUTER_ABI, ERC20_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
-import { encodeRoutePath, RouterRoute } from '../../utils/pathEncoder'
+import { encodeRoutePath, RouterRoute, ReadonlyRouterRoutes } from '../../utils/pathEncoder'
 import { validateAddress } from '../../utils/validation'
 
 /**
@@ -271,7 +271,7 @@ export class SwapService {
     return encodeFunctionData({
       abi: ROUTER_ABI,
       functionName: 'swapExactTokensForTokens',
-      args: [amountIn, amountOutMin, routes as readonly { from: Address, to: Address, factory: Address }[], recipient, deadline],
+      args: [amountIn, amountOutMin, routes as ReadonlyRouterRoutes, recipient, deadline],
     })
   }
 }
