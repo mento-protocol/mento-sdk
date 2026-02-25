@@ -75,10 +75,10 @@ export interface ZapParams {
   tokenA: string
   tokenB: string
   factory: string
-  amountAMin: bigint
-  amountBMin: bigint
   amountOutMinA: bigint
   amountOutMinB: bigint
+  amountAMin: bigint
+  amountBMin: bigint
 }
 
 export interface ZapInQuote {
