@@ -103,9 +103,11 @@ export async function buildZapInParamsInternal(
     args: [token0, token1, factoryAddr, amountInA, amountInB, routesA as readonly { from: Address, to: Address, factory: Address }[], routesB as readonly { from: Address, to: Address, factory: Address }[]],
   })) as [bigint, bigint, bigint, bigint]
 
-  // Apply additional slippage to minimums
+  // Apply slippage to all minimum amounts
   const finalAmountAMin = calculateMinAmount(amountAMin, options.slippageTolerance)
   const finalAmountBMin = calculateMinAmount(amountBMin, options.slippageTolerance)
+  const finalAmountOutMinA = calculateMinAmount(amountOutMinA, options.slippageTolerance)
+  const finalAmountOutMinB = calculateMinAmount(amountOutMinB, options.slippageTolerance)
 
   // Estimate expected liquidity
   const poolDetails = await poolService.getPoolDetails(poolAddress)
@@ -116,8 +118,8 @@ export async function buildZapInParamsInternal(
     args: [],
   })) as bigint
   const expectedLiquidity = estimateLiquidityFromZapIn(
-    amountOutMinA,
-    amountOutMinB,
+    finalAmountOutMinA,
+    finalAmountOutMinB,
     poolDetails.reserve0,
     poolDetails.reserve1,
     totalSupply
@@ -129,8 +131,8 @@ export async function buildZapInParamsInternal(
     factory: factoryAddr,
     amountAMin: finalAmountAMin,
     amountBMin: finalAmountBMin,
-    amountOutMinA,
-    amountOutMinB,
+    amountOutMinA: finalAmountOutMinA,
+    amountOutMinB: finalAmountOutMinB,
   }
 
   const data = encodeZapInCall(tokenIn as Address, amountInA, amountInB, zapParams, routesA, routesB, recipient as Address)
@@ -190,17 +192,20 @@ export async function quoteZapInInternal(
     args: [],
   })) as bigint
 
+  const finalAmountOutMinA = calculateMinAmount(amountOutMinA, options.slippageTolerance)
+  const finalAmountOutMinB = calculateMinAmount(amountOutMinB, options.slippageTolerance)
+
   const expectedLiquidity = estimateLiquidityFromZapIn(
-    amountOutMinA,
-    amountOutMinB,
+    finalAmountOutMinA,
+    finalAmountOutMinB,
     poolDetails.reserve0,
     poolDetails.reserve1,
     totalSupply
   )
 
   return {
-    amountOutMinA,
-    amountOutMinB,
+    amountOutMinA: finalAmountOutMinA,
+    amountOutMinB: finalAmountOutMinB,
     amountAMin: calculateMinAmount(amountAMin, options.slippageTolerance),
     amountBMin: calculateMinAmount(amountBMin, options.slippageTolerance),
     expectedLiquidity,
