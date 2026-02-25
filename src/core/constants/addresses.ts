@@ -31,9 +31,9 @@ export const addresses: ContractAddressMap = {
     TimelockController: '0x890DB8A597940165901372Dd7DB61C9f246e2147',
 
     // V3
-    FPMMFactory: '0x65A67cb93a3e035C32f131e911A0d6b46a5f3Bd0',
-    VirtualPoolFactory: '0x6CE2dFC48b2688075A804835757a734e3316E0a2',
-    Router: '0xc04201c72A401373905A71DE3cE868b8583d0545',
+    FPMMFactory: '0xB9732EB66406334F56E9d8c515d5af3da29b0654',
+    VirtualPoolFactory: '0x3268E4b75BEe60C400Eb4Dd8E44E9a3A76873f65',
+    Router: '0x330A7141aFf4Ff2b2DDFB6b008676abBbd0e0838',
 
     // TODO: replace with deployed addresses
     ReserveLiquidityStrategy: '0x0000000000000000000000000000000000000001',

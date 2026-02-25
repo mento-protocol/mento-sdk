@@ -9,6 +9,9 @@ import { RouteService } from './services/routes'
 import { QuoteService } from './services/quotes'
 import { SwapService } from './services/swap'
 import { TradingService } from './services/trading'
+import { LiquidityService } from './services/liquidity'
+
+// TODO: Ensure there are no silent errors in the codebase
 
 /**
  * @class Mento
@@ -35,7 +38,7 @@ import { TradingService } from './services/trading'
  *              const amountOut = await mento.quotes.getAmountOut(USDm, CELO, amountIn);
  *
  *              // Build swap parameters
- *              const swapDetails = await mento.swap.buildSwapParams(USDm, CELO, amountIn, { slippageTolerance: 0.5 });
+ *              const swapDetails = await mento.swap.buildSwapParams(USDm, CELO, amountIn, recipient, { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) });
  *
  *              // Check if a pair is tradable (circuit breaker check)
  *              const isTradable = await mento.trading.isPairTradable(USDm, CELO);
@@ -45,6 +48,16 @@ import { TradingService } from './services/trading'
  *
  *              // Get full tradability status (circuit breaker + limits)
  *              const status = await mento.trading.getPoolTradabilityStatus(pool);
+ *
+ *              // Add liquidity to a pool
+ *              const { approval0, approval1, addLiquidity } = await mento.liquidity.buildAddLiquidityTransaction(
+ *                poolAddress, amount0, amount1, recipient, owner, { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
+ *              );
+ *
+ *              // Add liquidity using a single token (zap in)
+ *              const { approval, zapIn } = await mento.liquidity.buildZapInTransaction(
+ *                poolAddress, tokenIn, amountIn, 0.5, recipient, owner, { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
+ *              );
  */
 export class Mento {
   private constructor(
@@ -54,7 +67,8 @@ export class Mento {
     public routes: RouteService,
     public quotes: QuoteService,
     public swap: SwapService,
-    public trading: TradingService
+    public trading: TradingService,
+    public liquidity: LiquidityService
   ) {}
 
   /**
@@ -88,9 +102,10 @@ export class Mento {
     const quoteService = new QuoteService(publicClient, chainId, routeService)
     const swapService = new SwapService(publicClient, chainId, routeService, quoteService)
     const tradingService = new TradingService(publicClient, chainId, routeService)
+    const liquidityService = new LiquidityService(publicClient, chainId, poolService, routeService)
 
     // Return new mento
-    return new Mento(chainId, tokenService, poolService, routeService, quoteService, swapService, tradingService)
+    return new Mento(chainId, tokenService, poolService, routeService, quoteService, swapService, tradingService, liquidityService)
   }
 
   /**

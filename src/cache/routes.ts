@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-01-21T20:27:37.682Z
+// Generated on 2026-02-02T18:32:15.225Z
 
 import type { RouteWithCost } from '../core/types'
 
@@ -24,8 +24,8 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       ],
       "path": [
         {
-          "factoryAddr": "0x65A67cb93a3e035C32f131e911A0d6b46a5f3Bd0",
-          "poolAddr": "0x5c3919258a040D203260880401E3201a82d224c4",
+          "factoryAddr": "0xB9732EB66406334F56E9d8c515d5af3da29b0654",
+          "poolAddr": "0xc69D6bBA6785e76998f870609345aA2BE7F64d19",
           "token0": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
           "token1": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
           "poolType": "FPMM"
@@ -35,7 +35,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         "totalCostPercent": 0.3,
         "hops": [
           {
-            "poolAddress": "0x5c3919258a040D203260880401E3201a82d224c4",
+            "poolAddress": "0xc69D6bBA6785e76998f870609345aA2BE7F64d19",
             "costPercent": 0.3
           }
         ]
@@ -55,8 +55,8 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       ],
       "path": [
         {
-          "factoryAddr": "0x6CE2dFC48b2688075A804835757a734e3316E0a2",
-          "poolAddr": "0x21243E9F64815D86Eeb38d80a212295a39634e70",
+          "factoryAddr": "0x3268E4b75BEe60C400Eb4Dd8E44E9a3A76873f65",
+          "poolAddr": "0xE6063Edac6EaBdF812286c6c4e2EDF27B9CBe648",
           "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
           "token1": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
           "poolType": "Virtual",
@@ -67,7 +67,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         "totalCostPercent": 1,
         "hops": [
           {
-            "poolAddress": "0x21243E9F64815D86Eeb38d80a212295a39634e70",
+            "poolAddress": "0xE6063Edac6EaBdF812286c6c4e2EDF27B9CBe648",
             "costPercent": 1
           }
         ]
@@ -87,15 +87,15 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       ],
       "path": [
         {
-          "factoryAddr": "0x65A67cb93a3e035C32f131e911A0d6b46a5f3Bd0",
-          "poolAddr": "0x5c3919258a040D203260880401E3201a82d224c4",
+          "factoryAddr": "0xB9732EB66406334F56E9d8c515d5af3da29b0654",
+          "poolAddr": "0xc69D6bBA6785e76998f870609345aA2BE7F64d19",
           "token0": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
           "token1": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
           "poolType": "FPMM"
         },
         {
-          "factoryAddr": "0x6CE2dFC48b2688075A804835757a734e3316E0a2",
-          "poolAddr": "0x21243E9F64815D86Eeb38d80a212295a39634e70",
+          "factoryAddr": "0x3268E4b75BEe60C400Eb4Dd8E44E9a3A76873f65",
+          "poolAddr": "0xE6063Edac6EaBdF812286c6c4e2EDF27B9CBe648",
           "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
           "token1": "0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313",
           "poolType": "Virtual",
@@ -106,11 +106,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         "totalCostPercent": 1.297,
         "hops": [
           {
-            "poolAddress": "0x5c3919258a040D203260880401E3201a82d224c4",
+            "poolAddress": "0xc69D6bBA6785e76998f870609345aA2BE7F64d19",
             "costPercent": 0.3
           },
           {
-            "poolAddress": "0x21243E9F64815D86Eeb38d80a212295a39634e70",
+            "poolAddress": "0xE6063Edac6EaBdF812286c6c4e2EDF27B9CBe648",
             "costPercent": 1
           }
         ]

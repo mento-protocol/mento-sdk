@@ -10,6 +10,8 @@ export interface RouterRoute {
   factory: Address
 }
 
+export type ReadonlyRouterRoutes = readonly { from: Address; to: Address; factory: Address }[]
+
 /**
  * Converts a route path to the format expected by the Router contract.
  * Used by both QuoteService (getAmountsOut) and SwapService (swapTokensForTokens).

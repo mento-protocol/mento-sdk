@@ -4,6 +4,7 @@ import { RouteService } from '../../../src/services/routes/RouteService'
 import { QuoteService } from '../../../src/services/quotes/QuoteService'
 import { SwapService } from '../../../src/services/swap/SwapService'
 import { Route, Pool, PoolType } from '../../../src/core/types'
+import { deadlineFromMinutes } from '../../../src/utils/deadline'
 
 /**
  * Integration tests for the complete router swap flow.
@@ -185,12 +186,13 @@ describe('Router Swap Flow Integration', () => {
       const amountIn = 1000000000000000000n
       const recipient = devAddress || '0x0000000000000000000000000000000000000001'
 
+      const deadline = deadlineFromMinutes(20)
       const swapDetails = await swapService.buildSwapParams(
         tokenIn,
         tokenOut,
         amountIn,
         recipient as Address,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline }
       )
 
       expect(swapDetails).toBeDefined()
@@ -200,7 +202,7 @@ describe('Router Swap Flow Integration', () => {
       expect(swapDetails.amountIn).toBe(amountIn)
       expect(swapDetails.expectedAmountOut).toBeGreaterThan(0n)
       expect(swapDetails.amountOutMin).toBeLessThanOrEqual(swapDetails.expectedAmountOut)
-      expect(swapDetails.deadline).toBeGreaterThan(0n)
+      expect(swapDetails.deadline).toBe(deadline)
     })
 
     it('should calculate correct minimum output with slippage', async () => {
@@ -216,7 +218,7 @@ describe('Router Swap Flow Integration', () => {
         tokenOut,
         amountIn,
         recipient as Address,
-        { slippageTolerance }
+        { slippageTolerance, deadline: deadlineFromMinutes(20) }
       )
 
       // Verify slippage calculation: amountOutMin should be expectedAmountOut * (1 - slippage)
@@ -241,7 +243,7 @@ describe('Router Swap Flow Integration', () => {
         amountIn,
         devAddress,
         devAddress,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       // Approval may or may not be needed depending on existing allowance
@@ -289,7 +291,7 @@ describe('Router Swap Flow Integration', () => {
         tokenOut,
         amountIn,
         recipient as Address,
-        { slippageTolerance: 0.5 },
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
         testRoute
       )
 

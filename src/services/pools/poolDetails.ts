@@ -63,19 +63,20 @@ export async function fetchFPMMPoolDetails(
     let pricing: FPMMPricing | null = null
     let inBand: boolean | null = null
     try {
-      const pricesResult = await publicClient.readContract({
+      const rebalancingStateResult = await publicClient.readContract({
         address,
         abi: FPMM_ABI,
-        functionName: 'getPrices',
+        functionName: 'getRebalancingState',
       })
       const [
         oraclePriceNum,
         oraclePriceDen,
         reservePriceNum,
         reservePriceDen,
-        priceDifference,
         reservePriceAboveOraclePrice,
-      ] = pricesResult as [bigint, bigint, bigint, bigint, bigint, boolean]
+        rebalanceThreshold,
+        priceDifference,
+      ] = rebalancingStateResult as [bigint, bigint, bigint, bigint, boolean, number, bigint]
 
       pricing = {
         oraclePriceNum,
@@ -89,10 +90,9 @@ export async function fetchFPMMPoolDetails(
         reservePriceAboveOraclePrice,
       }
 
-      const applicableThreshold = reservePriceAboveOraclePrice ? thresholdAboveBps : thresholdBelowBps
-      inBand = priceDifference < applicableThreshold
+      inBand = priceDifference < BigInt(rebalanceThreshold)
     } catch {
-      // getPrices() failed (likely FXMarketClosed) — pricing stays null
+      // getRebalancingState() failed (likely FXMarketClosed) — pricing stays null
     }
 
     return {
