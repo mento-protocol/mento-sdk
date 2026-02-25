@@ -294,7 +294,7 @@ export async function getLPTokenBalanceInternal(
     }) as Promise<bigint>,
   ])
 
-  const sharePercent = totalSupply > 0n ? (Number(balance) / Number(totalSupply)) * 100 : 0
+  const sharePercent = totalSupply > 0n ? Number((balance * 10000n) / totalSupply) / 100 : 0
 
   return {
     poolAddress,

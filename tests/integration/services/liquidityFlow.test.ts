@@ -378,12 +378,12 @@ describe('Liquidity Flow Integration', () => {
 
       const balance = await liquidityService.getLPTokenBalance(testPool.poolAddr, devAddress)
 
-      // Verify share percentage calculation
+      // Verify share percentage calculation (basis-point precision: 0.01%)
       const expectedSharePercent = balance.totalSupply > 0n
-        ? (Number(balance.balance) / Number(balance.totalSupply)) * 100
+        ? Number((balance.balance * 10000n) / balance.totalSupply) / 100
         : 0
 
-      expect(balance.sharePercent).toBeCloseTo(expectedSharePercent, 10)
+      expect(balance.sharePercent).toBe(expectedSharePercent)
     })
   })
 
