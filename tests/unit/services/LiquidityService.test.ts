@@ -139,7 +139,7 @@ describe('LiquidityService', () => {
       expect(params).toHaveProperty('amountBDesired', 2000000000000000000n)
       expect(params).toHaveProperty('amountAMin')
       expect(params).toHaveProperty('amountBMin')
-      expect(params).toHaveProperty('expectedLiquidity')
+      expect(params).toHaveProperty('estimatedMinLiquidity')
       expect(params).toHaveProperty('deadline')
     })
 
@@ -492,7 +492,7 @@ describe('LiquidityService', () => {
       expect(quote).toHaveProperty('amountOutMinB')
       expect(quote).toHaveProperty('amountAMin')
       expect(quote).toHaveProperty('amountBMin')
-      expect(quote).toHaveProperty('expectedLiquidity')
+      expect(quote).toHaveProperty('estimatedMinLiquidity')
     })
 
     it('should build zap in transaction with approval', async () => {

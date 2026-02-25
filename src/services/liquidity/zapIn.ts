@@ -151,7 +151,7 @@ export async function buildZapInParamsInternal(
     routesA,
     routesB,
     zapParams,
-    expectedLiquidity,
+    estimatedMinLiquidity: expectedLiquidity,
   }
 }
 
@@ -208,6 +208,6 @@ export async function quoteZapInInternal(
     amountOutMinB: finalAmountOutMinB,
     amountAMin: calculateMinAmount(amountAMin, options.slippageTolerance),
     amountBMin: calculateMinAmount(amountBMin, options.slippageTolerance),
-    expectedLiquidity,
+    estimatedMinLiquidity: expectedLiquidity,
   }
 }

@@ -131,14 +131,19 @@ export function splitAmount(amountIn: bigint, splitRatio: number): { amountA: bi
 }
 
 /**
- * Estimates LP tokens from zap in amounts
+ * Estimates minimum LP tokens from zap in amounts.
  *
- * @param amountOutA - Amount of token0 after swap
- * @param amountOutB - Amount of token1 after swap
+ * This is a conservative lower-bound estimate. The inputs are slippage-adjusted
+ * minimums, not expected amounts. Actual LP tokens minted on-chain may be higher
+ * because the router uses balanceOf(address(this)) after swaps, which can exceed
+ * the pre-calculated minimums.
+ *
+ * @param amountOutA - Minimum amount of token0 after swap (slippage-adjusted)
+ * @param amountOutB - Minimum amount of token1 after swap (slippage-adjusted)
  * @param reserve0 - Current reserve of token0 in pool
  * @param reserve1 - Current reserve of token1 in pool
  * @param totalSupply - Total LP token supply
- * @returns Estimated LP tokens to be minted
+ * @returns Conservative estimate of minimum LP tokens to be minted
  */
 export function estimateLiquidityFromZapIn(
   amountOutA: bigint,

@@ -200,8 +200,8 @@ describe('Liquidity Flow Integration', () => {
       expect(params.amountBMin).toBeLessThanOrEqual(amountB)
       expect(params.amountAMin).toBeGreaterThan(amountA * 990n / 1000n) // At least 99% of desired
 
-      expect(params).toHaveProperty('expectedLiquidity')
-      expect(params.expectedLiquidity).toBeGreaterThan(0n)
+      expect(params).toHaveProperty('estimatedMinLiquidity')
+      expect(params.estimatedMinLiquidity).toBeGreaterThan(0n)
     })
 
     it('should apply slippage tolerance correctly', async () => {
@@ -410,8 +410,8 @@ describe('Liquidity Flow Integration', () => {
       expect(quote).toHaveProperty('amountOutMinB')
       expect(quote).toHaveProperty('amountAMin')
       expect(quote).toHaveProperty('amountBMin')
-      expect(quote).toHaveProperty('expectedLiquidity')
-      expect(quote.expectedLiquidity).toBeGreaterThan(0n)
+      expect(quote).toHaveProperty('estimatedMinLiquidity')
+      expect(quote.estimatedMinLiquidity).toBeGreaterThan(0n)
     })
 
     it('should build zap in params', async () => {
@@ -441,7 +441,7 @@ describe('Liquidity Flow Integration', () => {
       expect(params).toHaveProperty('routesA')
       expect(params).toHaveProperty('routesB')
       expect(params).toHaveProperty('zapParams')
-      expect(params).toHaveProperty('expectedLiquidity')
+      expect(params).toHaveProperty('estimatedMinLiquidity')
     })
 
     it('should quote zap out operation', async () => {

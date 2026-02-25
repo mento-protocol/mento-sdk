@@ -138,7 +138,7 @@ export async function buildAddLiquidityParamsInternal(
     amountBDesired: amountB,
     amountAMin,
     amountBMin,
-    expectedLiquidity: quote.liquidity,
+    estimatedMinLiquidity: quote.liquidity,
     deadline: options.deadline,
   }
 }

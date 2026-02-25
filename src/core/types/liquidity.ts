@@ -28,7 +28,7 @@ export interface AddLiquidityDetails {
   amountBDesired: bigint
   amountAMin: bigint // After slippage
   amountBMin: bigint // After slippage
-  expectedLiquidity: bigint
+  estimatedMinLiquidity: bigint // Conservative lower-bound; actual on-chain amount may be higher
   deadline: bigint
 }
 
@@ -86,7 +86,7 @@ export interface ZapInQuote {
   amountOutMinB: bigint
   amountAMin: bigint
   amountBMin: bigint
-  expectedLiquidity: bigint
+  estimatedMinLiquidity: bigint // Conservative lower-bound; actual on-chain amount may be higher
 }
 
 export interface ZapOutQuote {
@@ -107,7 +107,7 @@ export interface ZapInDetails {
   routesA: RouterRoute[]
   routesB: RouterRoute[]
   zapParams: ZapParams
-  expectedLiquidity: bigint
+  estimatedMinLiquidity: bigint // Conservative lower-bound; actual on-chain amount may be higher
 }
 
 export interface ZapOutDetails {

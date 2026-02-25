@@ -504,7 +504,7 @@ describe('Liquidity Service - Edge Cases', () => {
       )
 
       expect(result).toBeDefined()
-      expect(result.expectedLiquidity).toBeGreaterThanOrEqual(0n)
+      expect(result.estimatedMinLiquidity).toBeGreaterThanOrEqual(0n)
     })
 
     it('should handle 100% split (all to tokenA)', async () => {
@@ -517,7 +517,7 @@ describe('Liquidity Service - Edge Cases', () => {
       )
 
       expect(result).toBeDefined()
-      expect(result.expectedLiquidity).toBeGreaterThanOrEqual(0n)
+      expect(result.estimatedMinLiquidity).toBeGreaterThanOrEqual(0n)
     })
 
     it('should reject invalid split ratio < 0', async () => {

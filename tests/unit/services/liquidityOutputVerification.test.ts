@@ -372,7 +372,7 @@ describe('Liquidity Service - Output Verification', () => {
       )
 
       // Verify the returned values match quote
-      expect(params.expectedLiquidity).toBe(quoteLiquidity)
+      expect(params.estimatedMinLiquidity).toBe(quoteLiquidity)
 
       // Verify mins are derived from quote with slippage
       const expectedAmountAMin = (quoteAmountA * 9950n) / 10000n
