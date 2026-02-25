@@ -6,6 +6,7 @@ import { decodeFunctionData, parseAbi } from 'viem'
 import { ChainId } from '../../../src/core/constants'
 import { PoolType } from '../../../src/core/types'
 import { ROUTER_ABI, ERC20_ABI } from '../../../src/core/abis'
+import { deadlineFromMinutes } from '../../../src/utils/deadline'
 
 /**
  * Output verification tests for LiquidityService
@@ -75,7 +76,7 @@ describe('Liquidity Service - Output Verification', () => {
         TOKEN_1,
         2000000000000000000n,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       // Decode the function call
@@ -98,7 +99,7 @@ describe('Liquidity Service - Output Verification', () => {
         TOKEN_1,
         amountB,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       const decoded = decodeFunctionData({
@@ -139,7 +140,7 @@ describe('Liquidity Service - Output Verification', () => {
         TOKEN_1,
         amount * 2n,
         RECIPIENT,
-        { slippageTolerance: slippage }
+        { slippageTolerance: slippage, deadline: deadlineFromMinutes(20) }
       )
 
       const decoded = decodeFunctionData({
@@ -196,7 +197,7 @@ describe('Liquidity Service - Output Verification', () => {
         POOL_ADDRESS,
         1414213562373095048n,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       const decoded = decodeFunctionData({
@@ -214,7 +215,7 @@ describe('Liquidity Service - Output Verification', () => {
         POOL_ADDRESS,
         liquidity,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       const decoded = decodeFunctionData({
@@ -263,7 +264,7 @@ describe('Liquidity Service - Output Verification', () => {
         2000000000000000000n,
         RECIPIENT,
         OWNER,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(transaction.approvalA).not.toBeNull()
@@ -285,7 +286,7 @@ describe('Liquidity Service - Output Verification', () => {
         2000000000000000000n,
         RECIPIENT,
         OWNER,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(transaction.approvalA).not.toBeNull()
@@ -316,7 +317,7 @@ describe('Liquidity Service - Output Verification', () => {
         2000000000000000000n,
         RECIPIENT,
         OWNER,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(transaction.approvalA).not.toBeNull()
@@ -340,7 +341,7 @@ describe('Liquidity Service - Output Verification', () => {
         2000000000000000000n,
         RECIPIENT,
         OWNER,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(transaction.approvalA).not.toBeNull()
@@ -367,7 +368,7 @@ describe('Liquidity Service - Output Verification', () => {
         TOKEN_1,
         2000000000000000000n,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       // Verify the returned values match quote
@@ -394,7 +395,7 @@ describe('Liquidity Service - Output Verification', () => {
         TOKEN_1,
         4000000000000000000n,
         RECIPIENT,
-        { slippageTolerance: 1.0 } // 1% slippage
+        { slippageTolerance: 1.0, deadline: deadlineFromMinutes(20) } // 1% slippage
       )
 
       const decoded = decodeFunctionData({
@@ -452,7 +453,7 @@ describe('Liquidity Service - Output Verification', () => {
         1000000000000000000n,
         0.5,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       const decoded = decodeFunctionData({
@@ -473,7 +474,7 @@ describe('Liquidity Service - Output Verification', () => {
         amountIn,
         split,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       // Verify split in returned object
@@ -492,7 +493,7 @@ describe('Liquidity Service - Output Verification', () => {
         1000000000000000000n,
         0.5,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       // Verify zap params structure
@@ -525,7 +526,7 @@ describe('Liquidity Service - Output Verification', () => {
         TOKEN_1,
         2000000000000000000n,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       // ERC20 operations should never send native tokens
@@ -539,7 +540,7 @@ describe('Liquidity Service - Output Verification', () => {
         POOL_ADDRESS,
         1414213562373095048n,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(params.params.value).toBe('0')
@@ -562,7 +563,7 @@ describe('Liquidity Service - Output Verification', () => {
         2000000000000000000n,
         RECIPIENT,
         OWNER,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(transaction.approvalA!.params.value).toBe('0')

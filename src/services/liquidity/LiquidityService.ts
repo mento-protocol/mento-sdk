@@ -55,7 +55,7 @@ export class LiquidityService {
    * @param amountB - Amount of second token
    * @param recipient - Address to receive LP tokens
    * @param owner - Address that owns the input tokens (for checking allowances)
-   * @param options - Slippage tolerance and optional deadline
+   * @param options - Slippage tolerance and deadline
    * @returns Transaction with approvals (if needed) and add liquidity call
    */
   async buildAddLiquidityTransaction(
@@ -92,7 +92,7 @@ export class LiquidityService {
    * @param tokenB - Second token address
    * @param amountB - Amount of second token
    * @param recipient - Address to receive LP tokens
-   * @param options - Slippage tolerance and optional deadline
+   * @param options - Slippage tolerance and deadline
    * @returns Transaction details with encoded call data
    */
   async buildAddLiquidityParams(
@@ -124,7 +124,7 @@ export class LiquidityService {
    * @param liquidity - Amount of LP tokens to burn
    * @param recipient - Address to receive the underlying tokens
    * @param owner - Address that owns the LP tokens (for checking allowance)
-   * @param options - Slippage tolerance and optional deadline
+   * @param options - Slippage tolerance and deadline
    * @returns Transaction with approval (if needed) and remove liquidity call
    */
   async buildRemoveLiquidityTransaction(
@@ -152,7 +152,7 @@ export class LiquidityService {
    * @param poolAddress - FPMM pool address
    * @param liquidity - Amount of LP tokens to burn
    * @param recipient - Address to receive the underlying tokens
-   * @param options - Slippage tolerance and optional deadline
+   * @param options - Slippage tolerance and deadline
    * @returns Transaction details with encoded call data
    */
   async buildRemoveLiquidityParams(
@@ -231,7 +231,7 @@ export class LiquidityService {
    * @param amountInSplit - How to split input between pool tokens (0-1, e.g., 0.5 for 50/50)
    * @param recipient - Address to receive LP tokens
    * @param owner - Address that owns the input token
-   * @param options - Slippage tolerance and optional deadline
+   * @param options - Slippage tolerance and deadline
    * @returns Transaction with approval (if needed) and zap in call
    */
   async buildZapInTransaction(
@@ -266,7 +266,7 @@ export class LiquidityService {
    * @param amountIn - Total input amount
    * @param amountInSplit - Split ratio (0-1)
    * @param recipient - Address to receive LP tokens
-   * @param options - Slippage tolerance and optional deadline
+   * @param options - Slippage tolerance and deadline
    * @returns Transaction details with encoded call data and routing information
    */
   async buildZapInParams(
@@ -299,7 +299,7 @@ export class LiquidityService {
    * @param liquidity - Amount of LP tokens to burn
    * @param recipient - Address to receive output tokens
    * @param owner - Address that owns the LP tokens
-   * @param options - Slippage tolerance and optional deadline
+   * @param options - Slippage tolerance and deadline
    * @returns Transaction with approval (if needed) and zap out call
    */
   async buildZapOutTransaction(
@@ -331,7 +331,7 @@ export class LiquidityService {
    * @param tokenOut - Output token address
    * @param liquidity - Amount of LP tokens to burn
    * @param recipient - Address to receive output tokens
-   * @param options - Slippage tolerance and optional deadline
+   * @param options - Slippage tolerance and deadline
    * @returns Transaction details with encoded call data and routing information
    */
   async buildZapOutParams(
@@ -361,7 +361,7 @@ export class LiquidityService {
    * @param tokenIn - Input token address
    * @param amountIn - Total input amount
    * @param amountInSplit - Split ratio (0-1)
-   * @param options - Slippage tolerance and optional deadline
+   * @param options - Slippage tolerance and deadline
    * @returns Expected LP tokens and minimum amounts for both pool tokens
    */
   async quoteZapIn(
@@ -390,7 +390,7 @@ export class LiquidityService {
    * @param poolAddress - FPMM pool address
    * @param tokenOut - Output token address
    * @param liquidity - Amount of LP tokens to burn
-   * @param options - Slippage tolerance and optional deadline
+   * @param options - Slippage tolerance and deadline
    * @returns Expected output amount and minimum amounts after slippage
    */
   async quoteZapOut(

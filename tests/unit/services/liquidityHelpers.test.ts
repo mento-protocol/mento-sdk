@@ -3,7 +3,6 @@ import { PoolService } from '../../../src/services/pools/PoolService'
 import { PoolType } from '../../../src/core/types'
 import {
   calculateMinAmount,
-  getDeadline,
   validatePoolTokens,
   buildApprovalParams,
   getAllowance,
@@ -108,66 +107,6 @@ describe('Liquidity Helpers', () => {
 
       // (1000000 * 9967) / 10000 = 996700
       expect(result).toBe(996700n)
-    })
-  })
-
-  describe('getDeadline', () => {
-    it('should return custom deadline when provided', () => {
-      const customDeadline = BigInt(Math.floor(Date.now() / 1000) + 3600)
-      const options = {
-        slippageTolerance: 0.5,
-        deadline: customDeadline,
-      }
-
-      const result = getDeadline(options)
-
-      expect(result).toBe(customDeadline)
-    })
-
-    it('should return default deadline (20 minutes) when not provided', () => {
-      const beforeTime = BigInt(Math.floor(Date.now() / 1000) + 20 * 60 - 2)
-      const options = { slippageTolerance: 0.5 }
-
-      const result = getDeadline(options)
-
-      const afterTime = BigInt(Math.floor(Date.now() / 1000) + 20 * 60 + 2)
-
-      expect(result).toBeGreaterThanOrEqual(beforeTime)
-      expect(result).toBeLessThanOrEqual(afterTime)
-    })
-
-    it('should handle deadline of 0 (immediate expiry)', () => {
-      const options = {
-        slippageTolerance: 0.5,
-        deadline: 0n,
-      }
-
-      const result = getDeadline(options)
-
-      expect(result).toBe(0n)
-    })
-
-    it('should handle very far future deadline', () => {
-      const farFuture = BigInt(Math.floor(Date.now() / 1000) + 365 * 24 * 60 * 60) // 1 year
-      const options = {
-        slippageTolerance: 0.5,
-        deadline: farFuture,
-      }
-
-      const result = getDeadline(options)
-
-      expect(result).toBe(farFuture)
-    })
-
-    it('should generate deadline in UTC (timezone-independent)', () => {
-      const options = { slippageTolerance: 0.5 }
-
-      // Call multiple times to ensure consistency
-      const result1 = getDeadline(options)
-      const result2 = getDeadline(options)
-
-      // Results should be very close (within a few seconds)
-      expect(result2 - result1).toBeLessThanOrEqual(2n)
     })
   })
 

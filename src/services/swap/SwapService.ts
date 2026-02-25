@@ -16,10 +16,10 @@ export interface SwapOptions {
    */
   slippageTolerance: number
   /**
-   * Unix timestamp after which the transaction will revert
-   * Defaults to 20 minutes from now if not provided
+   * Unix timestamp after which the transaction will revert.
+   * Use `deadlineFromMinutes()` for convenience.
    */
-  deadline?: bigint
+  deadline: bigint
 }
 
 /**
@@ -103,7 +103,7 @@ export class SwapService {
    *   parseUnits('100', 18),
    *   '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', // recipient
    *   '0x123...', // owner
-   *   { slippageTolerance: 0.5 }
+   *   { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
    * )
    *
    * // Execute approval if needed
@@ -159,7 +159,7 @@ export class SwapService {
    *   '0x471EcE3750Da237f93B8E339c536989b8978a438', // CELO
    *   parseUnits('100', 18),
    *   '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', // recipient
-   *   { slippageTolerance: 0.5 }
+   *   { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
    * )
    *
    * // Execute with any wallet (assumes approval already granted)
@@ -187,8 +187,7 @@ export class SwapService {
     const expectedAmountOut = await this.quoteService.getAmountOut(tokenIn, tokenOut, amountIn, route)
     const amountOutMin = this.calculateMinAmountOut(expectedAmountOut, options.slippageTolerance)
 
-    // Set deadline (default: 20 minutes from now)
-    const deadline = options.deadline ?? BigInt(Math.floor(Date.now() / 1000) + 20 * 60)
+    const deadline = options.deadline
 
     const routerRoutes = encodeRoutePath(route.path, tokenIn as Address, tokenOut as Address)
     const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')

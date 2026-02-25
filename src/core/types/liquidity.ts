@@ -3,7 +3,7 @@ import { RouterRoute } from '../../utils/pathEncoder'
 
 export interface LiquidityOptions {
   slippageTolerance: number // Percentage (e.g., 0.5 for 0.5%)
-  deadline?: bigint // Timestamp, defaults to now + 20 minutes
+  deadline: bigint // Unix timestamp, use deadlineFromMinutes() for convenience
 }
 
 export interface AddLiquidityQuote {

@@ -13,7 +13,7 @@ import {
 import { ROUTER_ABI, ERC20_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
 import { validateAddress } from '../../utils/validation'
-import { buildApprovalParams, getAllowance, calculateMinAmount, getPoolInfo, validatePoolTokens, getDeadline } from './liquidityHelpers'
+import { buildApprovalParams, getAllowance, calculateMinAmount, getPoolInfo, validatePoolTokens } from './liquidityHelpers'
 
 function encodeAddLiquidityCall(
   tokenA: Address,
@@ -120,10 +120,8 @@ export async function buildAddLiquidityParamsInternal(
   const amountAMin = calculateMinAmount(quote.amountA, options.slippageTolerance)
   const amountBMin = calculateMinAmount(quote.amountB, options.slippageTolerance)
 
-  const deadline = getDeadline(options)
-
   const routerAddress = getContractAddress(chainId as ChainId, 'Router')
-  const data = encodeAddLiquidityCall(tokenA as Address, tokenB as Address, amountA, amountB, amountAMin, amountBMin, recipient as Address, deadline)
+  const data = encodeAddLiquidityCall(tokenA as Address, tokenB as Address, amountA, amountB, amountAMin, amountBMin, recipient as Address, options.deadline)
 
   return {
     params: {
@@ -141,7 +139,7 @@ export async function buildAddLiquidityParamsInternal(
     amountAMin,
     amountBMin,
     expectedLiquidity: quote.liquidity,
-    deadline,
+    deadline: options.deadline,
   }
 }
 
@@ -226,10 +224,8 @@ export async function buildRemoveLiquidityParamsInternal(
   const amount0Min = calculateMinAmount(quote.amount0, options.slippageTolerance)
   const amount1Min = calculateMinAmount(quote.amount1, options.slippageTolerance)
 
-  const deadline = getDeadline(options)
-
   const routerAddress = getContractAddress(chainId as ChainId, 'Router')
-  const data = encodeRemoveLiquidityCall(token0, token1, liquidity, amount0Min, amount1Min, recipient as Address, deadline)
+  const data = encodeRemoveLiquidityCall(token0, token1, liquidity, amount0Min, amount1Min, recipient as Address, options.deadline)
 
   return {
     params: {
@@ -245,7 +241,7 @@ export async function buildRemoveLiquidityParamsInternal(
     amount1Min,
     expectedAmount0: quote.amount0,
     expectedAmount1: quote.amount1,
-    deadline,
+    deadline: options.deadline,
   }
 }
 

@@ -4,6 +4,7 @@ import { RouteService } from '../../../src/services/routes/RouteService'
 import type { PublicClient, Address } from 'viem'
 import { ChainId } from '../../../src/core/constants'
 import { PoolType } from '../../../src/core/types'
+import { deadlineFromMinutes } from '../../../src/utils/deadline'
 
 /**
  * Edge case and boundary condition tests for LiquidityService
@@ -77,7 +78,7 @@ describe('Liquidity Service - Edge Cases', () => {
           TOKEN_1,
           1000000000000000000n,
           RECIPIENT,
-          { slippageTolerance: 0.5 }
+          { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
         )
       ).resolves.toBeDefined()
     })
@@ -91,7 +92,7 @@ describe('Liquidity Service - Edge Cases', () => {
           TOKEN_1,
           0n,
           RECIPIENT,
-          { slippageTolerance: 0.5 }
+          { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
         )
       ).resolves.toBeDefined()
     })
@@ -114,7 +115,7 @@ describe('Liquidity Service - Edge Cases', () => {
         TOKEN_1,
         maxUint256,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(result).toBeDefined()
@@ -138,7 +139,7 @@ describe('Liquidity Service - Edge Cases', () => {
         TOKEN_1,
         1n,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(result).toBeDefined()
@@ -167,7 +168,7 @@ describe('Liquidity Service - Edge Cases', () => {
           TOKEN_1,
           1000000000000000000n,
           RECIPIENT,
-          { slippageTolerance: -0.5 }
+          { slippageTolerance: -0.5, deadline: deadlineFromMinutes(20) }
         )
       ).rejects.toThrow(/cannot be negative/)
     })
@@ -181,7 +182,7 @@ describe('Liquidity Service - Edge Cases', () => {
           TOKEN_1,
           1000000000000000000n,
           RECIPIENT,
-          { slippageTolerance: 100.1 }
+          { slippageTolerance: 100.1, deadline: deadlineFromMinutes(20) }
         )
       ).rejects.toThrow(/cannot exceed 100%/)
     })
@@ -194,7 +195,7 @@ describe('Liquidity Service - Edge Cases', () => {
         TOKEN_1,
         1000000000000000000n,
         RECIPIENT,
-        { slippageTolerance: 0 }
+        { slippageTolerance: 0, deadline: deadlineFromMinutes(20) }
       )
 
       // With 0 slippage, min should equal desired (from quote)
@@ -210,7 +211,7 @@ describe('Liquidity Service - Edge Cases', () => {
         TOKEN_1,
         1000000000000000000n,
         RECIPIENT,
-        { slippageTolerance: 100 }
+        { slippageTolerance: 100, deadline: deadlineFromMinutes(20) }
       )
 
       // With 100% slippage, min should be 0
@@ -226,7 +227,7 @@ describe('Liquidity Service - Edge Cases', () => {
         TOKEN_1,
         1000000000000000000n,
         RECIPIENT,
-        { slippageTolerance: 0.001 }
+        { slippageTolerance: 0.001, deadline: deadlineFromMinutes(20) }
       )
 
       // 0.001% slippage = 0.1 basis point, which floors to 0 basis points
@@ -260,7 +261,7 @@ describe('Liquidity Service - Edge Cases', () => {
           1000000000000000000n,
           RECIPIENT,
           OWNER,
-          { slippageTolerance: 0.5 }
+          { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
         )
       )
 
@@ -295,7 +296,7 @@ describe('Liquidity Service - Edge Cases', () => {
         1000000000000000000n,
         RECIPIENT,
         OWNER,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       // Should check allowance at time of call and build approvals accordingly
@@ -499,7 +500,7 @@ describe('Liquidity Service - Edge Cases', () => {
         TOKEN_0,
         1000000000000000000n,
         0, // All to B
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(result).toBeDefined()
@@ -512,7 +513,7 @@ describe('Liquidity Service - Edge Cases', () => {
         TOKEN_0,
         1000000000000000000n,
         1, // All to A
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(result).toBeDefined()
@@ -523,6 +524,7 @@ describe('Liquidity Service - Edge Cases', () => {
       await expect(
         liquidityService.quoteZapIn(POOL_ADDRESS, TOKEN_0, 1000000000000000000n, -0.1, {
           slippageTolerance: 0.5,
+          deadline: deadlineFromMinutes(20),
         })
       ).rejects.toThrow(/must be between 0 and 1/)
     })
@@ -531,6 +533,7 @@ describe('Liquidity Service - Edge Cases', () => {
       await expect(
         liquidityService.quoteZapIn(POOL_ADDRESS, TOKEN_0, 1000000000000000000n, 1.1, {
           slippageTolerance: 0.5,
+          deadline: deadlineFromMinutes(20),
         })
       ).rejects.toThrow(/must be between 0 and 1/)
     })
@@ -577,6 +580,7 @@ describe('Liquidity Service - Edge Cases', () => {
       await expect(
         liquidityService.quoteZapIn(POOL_ADDRESS, TOKEN_0, 1000000000000000000n, 0.5, {
           slippageTolerance: 0.5,
+          deadline: deadlineFromMinutes(20),
         })
       ).resolves.toBeDefined()
     })

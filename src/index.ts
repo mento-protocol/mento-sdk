@@ -38,7 +38,7 @@ import { LiquidityService } from './services/liquidity'
  *              const amountOut = await mento.quotes.getAmountOut(USDm, CELO, amountIn);
  *
  *              // Build swap parameters
- *              const swapDetails = await mento.swap.buildSwapParams(USDm, CELO, amountIn, { slippageTolerance: 0.5 });
+ *              const swapDetails = await mento.swap.buildSwapParams(USDm, CELO, amountIn, recipient, { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) });
  *
  *              // Check if a pair is tradable (circuit breaker check)
  *              const isTradable = await mento.trading.isPairTradable(USDm, CELO);
@@ -51,12 +51,12 @@ import { LiquidityService } from './services/liquidity'
  *
  *              // Add liquidity to a pool
  *              const { approval0, approval1, addLiquidity } = await mento.liquidity.buildAddLiquidityTransaction(
- *                poolAddress, amount0, amount1, recipient, owner, { slippageTolerance: 0.5 }
+ *                poolAddress, amount0, amount1, recipient, owner, { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
  *              );
  *
  *              // Add liquidity using a single token (zap in)
  *              const { approval, zapIn } = await mento.liquidity.buildZapInTransaction(
- *                poolAddress, tokenIn, amountIn, 0.5, recipient, owner, { slippageTolerance: 0.5 }
+ *                poolAddress, tokenIn, amountIn, 0.5, recipient, owner, { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
  *              );
  */
 export class Mento {

@@ -4,6 +4,7 @@ import { RouteService } from '../../../src/services/routes/RouteService'
 import type { PublicClient, Address } from 'viem'
 import { ChainId } from '../../../src/core/constants'
 import { PoolType } from '../../../src/core/types'
+import { deadlineFromMinutes } from '../../../src/utils/deadline'
 
 /**
  * Unit tests for LiquidityService
@@ -123,7 +124,7 @@ describe('LiquidityService', () => {
         TOKEN_B,
         2000000000000000000n,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(params).toHaveProperty('params')
@@ -151,7 +152,7 @@ describe('LiquidityService', () => {
         TOKEN_B,
         2000000000000000000n,
         RECIPIENT,
-        { slippageTolerance }
+        { slippageTolerance, deadline: deadlineFromMinutes(20) }
       )
 
       // Expected mins: amount * (1 - 0.005) = amount * 0.995 = amount * 9950 / 10000
@@ -171,7 +172,7 @@ describe('LiquidityService', () => {
         2000000000000000000n,
         RECIPIENT,
         OWNER,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(transaction).toHaveProperty('approvalA')
@@ -210,7 +211,7 @@ describe('LiquidityService', () => {
         2000000000000000000n,
         RECIPIENT,
         OWNER,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       // Both approvals should be null (allowance is sufficient)
@@ -257,7 +258,7 @@ describe('LiquidityService', () => {
         POOL_ADDRESS,
         1414213562373095048n,
         RECIPIENT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(params).toHaveProperty('params')
@@ -275,7 +276,7 @@ describe('LiquidityService', () => {
         1414213562373095048n,
         RECIPIENT,
         OWNER,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(transaction).toHaveProperty('approval')
@@ -484,7 +485,7 @@ describe('LiquidityService', () => {
         TOKEN_IN,
         AMOUNT_IN,
         AMOUNT_IN_SPLIT,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(quote).toHaveProperty('amountOutMinA')
@@ -502,7 +503,7 @@ describe('LiquidityService', () => {
         AMOUNT_IN_SPLIT,
         RECIPIENT,
         OWNER,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(transaction).toHaveProperty('approval')
@@ -521,7 +522,7 @@ describe('LiquidityService', () => {
         POOL_ADDRESS,
         TOKEN_A,
         LIQUIDITY,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(quote).toHaveProperty('amountOutMinA')
@@ -540,7 +541,7 @@ describe('LiquidityService', () => {
         LIQUIDITY,
         RECIPIENT,
         OWNER,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(transaction).toHaveProperty('approval')
@@ -589,23 +590,5 @@ describe('LiquidityService', () => {
       expect(params.deadline).toBe(customDeadline)
     })
 
-    it('should use default deadline when not specified', async () => {
-      const beforeTime = BigInt(Math.floor(Date.now() / 1000) + 20 * 60 - 5) // 20min - 5sec buffer
-
-      const params = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_A,
-        1000000000000000000n,
-        TOKEN_B,
-        2000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 0.5 }
-      )
-
-      const afterTime = BigInt(Math.floor(Date.now() / 1000) + 20 * 60 + 5) // 20min + 5sec buffer
-
-      expect(params.deadline).toBeGreaterThanOrEqual(beforeTime)
-      expect(params.deadline).toBeLessThanOrEqual(afterTime)
-    })
   })
 })

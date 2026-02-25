@@ -1,6 +1,6 @@
 import { Address, PublicClient, encodeFunctionData } from 'viem'
 import { PoolService } from '../pools'
-import { CallParams, PoolType, LiquidityOptions } from '../../core/types'
+import { CallParams, PoolType } from '../../core/types'
 import { ERC20_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
 import { validateAddress } from '../../utils/validation'
@@ -98,6 +98,3 @@ export function validatePoolTokens(
   }
 }
 
-export function getDeadline(options: LiquidityOptions): bigint {
-  return options.deadline ?? BigInt(Math.floor(Date.now() / 1000) + 20 * 60)
-}

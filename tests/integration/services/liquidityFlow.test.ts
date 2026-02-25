@@ -3,6 +3,7 @@ import { PoolService } from '../../../src/services/pools/PoolService'
 import { RouteService } from '../../../src/services/routes/RouteService'
 import { LiquidityService } from '../../../src/services/liquidity/LiquidityService'
 import { Pool, PoolType } from '../../../src/core/types'
+import { deadlineFromMinutes } from '../../../src/utils/deadline'
 
 /**
  * Integration tests for the complete liquidity flow.
@@ -178,7 +179,7 @@ describe('Liquidity Flow Integration', () => {
         testPool.token1 as Address,
         amountB,
         recipient as Address,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(params).toBeDefined()
@@ -218,7 +219,7 @@ describe('Liquidity Flow Integration', () => {
         testPool.token1 as Address,
         amountB,
         recipient as Address,
-        { slippageTolerance }
+        { slippageTolerance, deadline: deadlineFromMinutes(20) }
       )
 
       // Expected calculation: amountMin = amount * (1 - 0.005) = amount * 9950 / 10000
@@ -249,7 +250,7 @@ describe('Liquidity Flow Integration', () => {
         amountB,
         devAddress,
         devAddress,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(transaction).toHaveProperty('approvalA')
@@ -289,7 +290,7 @@ describe('Liquidity Flow Integration', () => {
         testPool.poolAddr,
         liquidity,
         recipient as Address,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(params).toBeDefined()
@@ -322,7 +323,7 @@ describe('Liquidity Flow Integration', () => {
         liquidity,
         devAddress,
         devAddress,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(transaction).toHaveProperty('approval')
@@ -401,7 +402,7 @@ describe('Liquidity Flow Integration', () => {
         tokenIn,
         amountIn,
         amountInSplit,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(quote).toBeDefined()
@@ -427,7 +428,7 @@ describe('Liquidity Flow Integration', () => {
         amountIn,
         amountInSplit,
         recipient as Address,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(params).toBeDefined()
@@ -453,7 +454,7 @@ describe('Liquidity Flow Integration', () => {
         testPool.poolAddr,
         tokenOut,
         liquidity,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(quote).toBeDefined()
@@ -477,7 +478,7 @@ describe('Liquidity Flow Integration', () => {
         tokenOut,
         liquidity,
         recipient as Address,
-        { slippageTolerance: 0.5 }
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
       expect(params).toBeDefined()
@@ -569,7 +570,7 @@ describe('Liquidity Flow Integration', () => {
         testPool.token1 as Address,
         amount,
         recipient,
-        { slippageTolerance: 0.5 } // 0.5%
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) } // 0.5%
       )
 
       const params2 = await liquidityService.buildAddLiquidityParams(
@@ -579,7 +580,7 @@ describe('Liquidity Flow Integration', () => {
         testPool.token1 as Address,
         amount,
         recipient,
-        { slippageTolerance: 1.0 } // 1.0%
+        { slippageTolerance: 1.0, deadline: deadlineFromMinutes(20) } // 1.0%
       )
 
       // Higher slippage tolerance should result in lower minimums
