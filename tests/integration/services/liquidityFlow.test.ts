@@ -458,12 +458,12 @@ describe('Liquidity Flow Integration', () => {
       )
 
       expect(quote).toBeDefined()
-      expect(quote).toHaveProperty('amountOutMinA')
-      expect(quote).toHaveProperty('amountOutMinB')
+      expect(quote).toHaveProperty('amountOutFromA')
+      expect(quote).toHaveProperty('amountOutFromB')
       expect(quote).toHaveProperty('amountAMin')
       expect(quote).toHaveProperty('amountBMin')
-      expect(quote).toHaveProperty('expectedTokenOut')
-      expect(quote.expectedTokenOut).toBeGreaterThan(0n)
+      expect(quote).toHaveProperty('estimatedMinTokenOut')
+      expect(quote.estimatedMinTokenOut).toBeGreaterThan(0n)
     })
 
     it('should build zap out params', async () => {
@@ -489,7 +489,7 @@ describe('Liquidity Flow Integration', () => {
       expect(params).toHaveProperty('routesA')
       expect(params).toHaveProperty('routesB')
       expect(params).toHaveProperty('zapParams')
-      expect(params).toHaveProperty('expectedTokenOut')
+      expect(params).toHaveProperty('estimatedMinTokenOut')
     })
   })
 

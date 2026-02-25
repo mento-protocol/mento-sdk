@@ -90,11 +90,11 @@ export interface ZapInQuote {
 }
 
 export interface ZapOutQuote {
-  amountOutMinA: bigint
-  amountOutMinB: bigint
+  amountOutFromA: bigint // tokenOut received from swapping token0 (slippage-adjusted)
+  amountOutFromB: bigint // tokenOut received from swapping token1 (slippage-adjusted)
   amountAMin: bigint
   amountBMin: bigint
-  expectedTokenOut: bigint
+  estimatedMinTokenOut: bigint // Conservative lower-bound total tokenOut (amountOutFromA + amountOutFromB)
 }
 
 export interface ZapInDetails {
@@ -118,7 +118,7 @@ export interface ZapOutDetails {
   routesA: RouterRoute[]
   routesB: RouterRoute[]
   zapParams: ZapParams
-  expectedTokenOut: bigint
+  estimatedMinTokenOut: bigint // Conservative lower-bound total tokenOut; actual on-chain amount may be higher
 }
 
 export interface ZapInTransaction {

@@ -122,7 +122,7 @@ export async function buildZapOutParamsInternal(
     routesA,
     routesB,
     zapParams,
-    expectedTokenOut: amountOutMinA + amountOutMinB,
+    estimatedMinTokenOut: finalAmountOutMinA + finalAmountOutMinB,
   }
 }
 
@@ -155,11 +155,14 @@ export async function quoteZapOutInternal(
     args: [token0, token1, factoryAddr, liquidity, routesA as readonly { from: Address, to: Address, factory: Address }[], routesB as readonly { from: Address, to: Address, factory: Address }[]],
   })) as [bigint, bigint, bigint, bigint]
 
+  const finalAmountOutFromA = calculateMinAmount(amountOutMinA, options.slippageTolerance)
+  const finalAmountOutFromB = calculateMinAmount(amountOutMinB, options.slippageTolerance)
+
   return {
-    amountOutMinA: calculateMinAmount(amountOutMinA, options.slippageTolerance),
-    amountOutMinB: calculateMinAmount(amountOutMinB, options.slippageTolerance),
+    amountOutFromA: finalAmountOutFromA,
+    amountOutFromB: finalAmountOutFromB,
     amountAMin: calculateMinAmount(amountAMin, options.slippageTolerance),
     amountBMin: calculateMinAmount(amountBMin, options.slippageTolerance),
-    expectedTokenOut: amountOutMinA + amountOutMinB,
+    estimatedMinTokenOut: finalAmountOutFromA + finalAmountOutFromB,
   }
 }

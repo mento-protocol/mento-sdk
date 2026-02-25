@@ -525,11 +525,11 @@ describe('LiquidityService', () => {
         { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
-      expect(quote).toHaveProperty('amountOutMinA')
-      expect(quote).toHaveProperty('amountOutMinB')
+      expect(quote).toHaveProperty('amountOutFromA')
+      expect(quote).toHaveProperty('amountOutFromB')
       expect(quote).toHaveProperty('amountAMin')
       expect(quote).toHaveProperty('amountBMin')
-      expect(quote).toHaveProperty('expectedTokenOut')
+      expect(quote).toHaveProperty('estimatedMinTokenOut')
     })
 
     it('should build zap out transaction with LP token approval', async () => {
