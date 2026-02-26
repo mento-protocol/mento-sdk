@@ -1,6 +1,6 @@
 import { Address, PublicClient } from 'viem'
 import { getBorrowRegistry } from '../../../core/constants'
-import { readSystemParams, resolveAddressesFromRegistry } from '../borrowHelpers'
+import { readSystemParams, resolveAddressesFromRegistry } from './borrowRegistryReader'
 import { DeploymentContext } from './borrowTypes'
 import { requireDebtTokenSymbol } from './borrowValidation'
 

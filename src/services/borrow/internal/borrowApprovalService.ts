@@ -1,10 +1,7 @@
 import { Address, PublicClient, encodeFunctionData } from 'viem'
 import { ERC20_ABI } from '../../../core/abis'
 import { CallParams } from '../../../core/types'
-import {
-  buildCollateralApprovalParams as buildCollateralApprovalParamsHelper,
-  getCollateralAllowance as getCollateralAllowanceHelper,
-} from '../borrowHelpers'
+import { buildErc20ApprovalParams, readErc20Allowance } from './borrowErc20'
 import { DeploymentContext } from './borrowTypes'
 import { requireAddress, requireNonNegativeBigInt } from './borrowValidation'
 
@@ -15,7 +12,7 @@ export class BorrowApprovalService {
 
   buildCollateralApprovalParams(ctx: DeploymentContext, amount: bigint): CallParams {
     const approvalAmount = requireNonNegativeBigInt(amount, 'amount')
-    return buildCollateralApprovalParamsHelper(
+    return buildErc20ApprovalParams(
       ctx.addresses.collToken as Address,
       ctx.addresses.borrowerOperations as Address,
       approvalAmount
@@ -41,7 +38,7 @@ export class BorrowApprovalService {
         ? ctx.systemParams.ethGasCompensation
         : requireNonNegativeBigInt(amount, 'amount')
 
-    return buildCollateralApprovalParamsHelper(
+    return buildErc20ApprovalParams(
       ctx.addresses.gasToken as Address,
       ctx.addresses.borrowerOperations as Address,
       approvalAmount
@@ -51,7 +48,7 @@ export class BorrowApprovalService {
   async getCollateralAllowance(ctx: DeploymentContext, owner: string): Promise<bigint> {
     const ownerAddress = requireAddress(owner, 'owner')
 
-    return getCollateralAllowanceHelper(
+    return readErc20Allowance(
       this.publicClient,
       ctx.addresses.collToken as Address,
       ownerAddress,
@@ -74,7 +71,7 @@ export class BorrowApprovalService {
   async getGasTokenAllowance(ctx: DeploymentContext, owner: string): Promise<bigint> {
     const ownerAddress = requireAddress(owner, 'owner')
 
-    return getCollateralAllowanceHelper(
+    return readErc20Allowance(
       this.publicClient,
       ctx.addresses.gasToken as Address,
       ownerAddress,

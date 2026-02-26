@@ -29,118 +29,117 @@ export class BorrowService {
     this.readService = new BorrowReadService(publicClient)
   }
 
-  async buildOpenTroveTransaction(
-    debtTokenSymbol: string,
-    params: OpenTroveParams
-  ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildOpenTroveTransaction(ctx, params)
+  buildOpenTroveTransaction(debtTokenSymbol: string, params: OpenTroveParams): Promise<CallParams> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.txService.buildOpenTroveTransaction(ctx, params))
   }
 
-  async buildAdjustTroveTransaction(
-    debtTokenSymbol: string,
-    params: AdjustTroveParams
-  ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildAdjustTroveTransaction(ctx, params)
+  buildAdjustTroveTransaction(debtTokenSymbol: string, params: AdjustTroveParams): Promise<CallParams> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.txService.buildAdjustTroveTransaction(ctx, params))
   }
 
-  async buildAdjustZombieTroveTransaction(
+  buildAdjustZombieTroveTransaction(
     debtTokenSymbol: string,
     params: AdjustTroveParams
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildAdjustZombieTroveTransaction(ctx, params)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.txService.buildAdjustZombieTroveTransaction(ctx, params)
+    )
   }
 
-  async buildCloseTroveTransaction(debtTokenSymbol: string, troveId: string): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildCloseTroveTransaction(ctx, troveId)
+  buildCloseTroveTransaction(debtTokenSymbol: string, troveId: string): Promise<CallParams> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.txService.buildCloseTroveTransaction(ctx, troveId))
   }
 
-  async buildAddCollTransaction(
+  buildAddCollTransaction(
     debtTokenSymbol: string,
     troveId: string,
     amount: bigint
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildAddCollTransaction(ctx, troveId, amount)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.txService.buildAddCollTransaction(ctx, troveId, amount)
+    )
   }
 
-  async buildWithdrawCollTransaction(
+  buildWithdrawCollTransaction(
     debtTokenSymbol: string,
     troveId: string,
     amount: bigint
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildWithdrawCollTransaction(ctx, troveId, amount)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.txService.buildWithdrawCollTransaction(ctx, troveId, amount)
+    )
   }
 
-  async buildBorrowMoreTransaction(
+  buildBorrowMoreTransaction(
     debtTokenSymbol: string,
     troveId: string,
     amount: bigint,
     maxFee: bigint
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildBorrowMoreTransaction(ctx, troveId, amount, maxFee)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.txService.buildBorrowMoreTransaction(ctx, troveId, amount, maxFee)
+    )
   }
 
-  async buildRepayDebtTransaction(
+  buildRepayDebtTransaction(
     debtTokenSymbol: string,
     troveId: string,
     amount: bigint
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildRepayDebtTransaction(ctx, troveId, amount)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.txService.buildRepayDebtTransaction(ctx, troveId, amount)
+    )
   }
 
-  async buildAdjustInterestRateTransaction(
+  buildAdjustInterestRateTransaction(
     debtTokenSymbol: string,
     troveId: string,
     newRate: bigint,
     maxFee: bigint
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildAdjustInterestRateTransaction(ctx, troveId, newRate, maxFee)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.txService.buildAdjustInterestRateTransaction(ctx, troveId, newRate, maxFee)
+    )
   }
 
-  async buildClaimCollateralTransaction(debtTokenSymbol: string): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildClaimCollateralTransaction(ctx)
+  buildClaimCollateralTransaction(debtTokenSymbol: string): Promise<CallParams> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.txService.buildClaimCollateralTransaction(ctx))
   }
 
-  async buildSetBatchManagerTransaction(
+  buildSetBatchManagerTransaction(
     debtTokenSymbol: string,
     troveId: string,
     manager: string,
     maxFee: bigint
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildSetBatchManagerTransaction(ctx, troveId, manager, maxFee)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.txService.buildSetBatchManagerTransaction(ctx, troveId, manager, maxFee)
+    )
   }
 
-  async buildRemoveFromBatchTransaction(
+  buildRemoveFromBatchTransaction(
     debtTokenSymbol: string,
     troveId: string,
     newRate: bigint,
     maxFee: bigint
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildRemoveFromBatchTransaction(ctx, troveId, newRate, maxFee)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.txService.buildRemoveFromBatchTransaction(ctx, troveId, newRate, maxFee)
+    )
   }
 
-  async buildSwitchBatchManagerTransaction(
+  buildSwitchBatchManagerTransaction(
     debtTokenSymbol: string,
     troveId: string,
     newManager: string,
     maxFee: bigint
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildSwitchBatchManagerTransaction(ctx, troveId, newManager, maxFee)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.txService.buildSwitchBatchManagerTransaction(ctx, troveId, newManager, maxFee)
+    )
   }
 
-  async buildSetInterestDelegateTransaction(
+  buildSetInterestDelegateTransaction(
     debtTokenSymbol: string,
     troveId: string,
     delegate: string,
@@ -150,154 +149,157 @@ export class BorrowService {
     maxFee: bigint,
     minChangePeriod: bigint
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildSetInterestDelegateTransaction(
-      ctx,
-      troveId,
-      delegate,
-      minRate,
-      maxRate,
-      newRate,
-      maxFee,
-      minChangePeriod
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.txService.buildSetInterestDelegateTransaction(
+        ctx,
+        troveId,
+        delegate,
+        minRate,
+        maxRate,
+        newRate,
+        maxFee,
+        minChangePeriod
+      )
     )
   }
 
-  async buildRemoveInterestDelegateTransaction(
+  buildRemoveInterestDelegateTransaction(
     debtTokenSymbol: string,
     troveId: string
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.txService.buildRemoveInterestDelegateTransaction(ctx, troveId)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.txService.buildRemoveInterestDelegateTransaction(ctx, troveId)
+    )
   }
 
-  async buildCollateralApprovalParams(
-    debtTokenSymbol: string,
-    amount: bigint
-  ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.approvalService.buildCollateralApprovalParams(ctx, amount)
+  buildCollateralApprovalParams(debtTokenSymbol: string, amount: bigint): Promise<CallParams> {
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.approvalService.buildCollateralApprovalParams(ctx, amount)
+    )
   }
 
-  async buildDebtApprovalParams(
+  buildDebtApprovalParams(
     debtTokenSymbol: string,
     spender: string,
     amount: bigint
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.approvalService.buildDebtApprovalParams(ctx, spender, amount)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.approvalService.buildDebtApprovalParams(ctx, spender, amount)
+    )
   }
 
-  async buildGasCompensationApprovalParams(
+  buildGasCompensationApprovalParams(
     debtTokenSymbol: string,
     amount?: bigint
   ): Promise<CallParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.approvalService.buildGasCompensationApprovalParams(ctx, amount)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.approvalService.buildGasCompensationApprovalParams(ctx, amount)
+    )
   }
 
-  async getCollateralAllowance(debtTokenSymbol: string, owner: string): Promise<bigint> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.approvalService.getCollateralAllowance(ctx, owner)
+  getCollateralAllowance(debtTokenSymbol: string, owner: string): Promise<bigint> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.approvalService.getCollateralAllowance(ctx, owner))
   }
 
-  async getDebtAllowance(debtTokenSymbol: string, owner: string, spender: string): Promise<bigint> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.approvalService.getDebtAllowance(ctx, owner, spender)
+  getDebtAllowance(debtTokenSymbol: string, owner: string, spender: string): Promise<bigint> {
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.approvalService.getDebtAllowance(ctx, owner, spender)
+    )
   }
 
-  async getGasTokenAllowance(debtTokenSymbol: string, owner: string): Promise<bigint> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.approvalService.getGasTokenAllowance(ctx, owner)
+  getGasTokenAllowance(debtTokenSymbol: string, owner: string): Promise<bigint> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.approvalService.getGasTokenAllowance(ctx, owner))
   }
 
-  async getTroveData(debtTokenSymbol: string, troveId: string): Promise<BorrowPosition> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.getTroveData(ctx, troveId)
+  getTroveData(debtTokenSymbol: string, troveId: string): Promise<BorrowPosition> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getTroveData(ctx, troveId))
   }
 
-  async getUserTroves(debtTokenSymbol: string, owner: string): Promise<BorrowPosition[]> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.getUserTroves(ctx, owner)
+  getUserTroves(debtTokenSymbol: string, owner: string): Promise<BorrowPosition[]> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getUserTroves(ctx, owner))
   }
 
-  async getCollateralPrice(debtTokenSymbol: string): Promise<bigint> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.getCollateralPrice(ctx)
+  getCollateralPrice(debtTokenSymbol: string): Promise<bigint> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getCollateralPrice(ctx))
   }
 
-  async getSystemParams(debtTokenSymbol: string): Promise<SystemParams> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return { ...ctx.systemParams }
+  getSystemParams(debtTokenSymbol: string): Promise<SystemParams> {
+    return this.withContext(debtTokenSymbol, (ctx) => ({ ...ctx.systemParams }))
   }
 
-  async isSystemShutDown(debtTokenSymbol: string): Promise<boolean> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.isSystemShutDown(ctx)
+  isSystemShutDown(debtTokenSymbol: string): Promise<boolean> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.isSystemShutDown(ctx))
   }
 
-  async getBranchStats(debtTokenSymbol: string): Promise<{ totalColl: bigint; totalDebt: bigint }> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.getBranchStats(ctx)
+  getBranchStats(debtTokenSymbol: string): Promise<{ totalColl: bigint; totalDebt: bigint }> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getBranchStats(ctx))
   }
 
-  async getInterestRateBrackets(debtTokenSymbol: string): Promise<InterestRateBracket[]> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.getInterestRateBrackets(ctx)
+  getInterestRateBrackets(debtTokenSymbol: string): Promise<InterestRateBracket[]> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getInterestRateBrackets(ctx))
   }
 
-  async getAverageInterestRate(debtTokenSymbol: string): Promise<bigint> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.getAverageInterestRate(ctx)
+  getAverageInterestRate(debtTokenSymbol: string): Promise<bigint> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getAverageInterestRate(ctx))
   }
 
-  async getBatchManagerInfo(
+  getBatchManagerInfo(
     debtTokenSymbol: string,
     address: string
   ): Promise<{ minRate: bigint; maxRate: bigint; minChangePeriod: bigint } | null> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.getBatchManagerInfo(ctx, address)
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getBatchManagerInfo(ctx, address))
   }
 
-  async predictOpenTroveUpfrontFee(
+  predictOpenTroveUpfrontFee(
     debtTokenSymbol: string,
     amount: bigint,
     rate: bigint
   ): Promise<bigint> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.predictOpenTroveUpfrontFee(ctx, amount, rate)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.readService.predictOpenTroveUpfrontFee(ctx, amount, rate)
+    )
   }
 
-  async predictAdjustUpfrontFee(
+  predictAdjustUpfrontFee(
     debtTokenSymbol: string,
     troveId: string,
     debtIncrease: bigint
   ): Promise<bigint> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.predictAdjustUpfrontFee(ctx, troveId, debtIncrease)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.readService.predictAdjustUpfrontFee(ctx, troveId, debtIncrease)
+    )
   }
 
-  async predictAdjustInterestRateUpfrontFee(
+  predictAdjustInterestRateUpfrontFee(
     debtTokenSymbol: string,
     troveId: string,
     newRate: bigint
   ): Promise<bigint> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.predictAdjustInterestRateUpfrontFee(ctx, troveId, newRate)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.readService.predictAdjustInterestRateUpfrontFee(ctx, troveId, newRate)
+    )
   }
 
-  async predictJoinBatchUpfrontFee(
+  predictJoinBatchUpfrontFee(
     debtTokenSymbol: string,
     troveId: string,
     batchAddress: string
   ): Promise<bigint> {
-    const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.predictJoinBatchUpfrontFee(ctx, troveId, batchAddress)
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.readService.predictJoinBatchUpfrontFee(ctx, troveId, batchAddress)
+    )
   }
 
-  async getNextOwnerIndex(debtTokenSymbol: string, owner: string): Promise<number> {
+  getNextOwnerIndex(debtTokenSymbol: string, owner: string): Promise<number> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getNextOwnerIndex(ctx, owner))
+  }
+
+  private async withContext<T>(
+    debtTokenSymbol: string,
+    callback: (ctx: DeploymentContext) => Promise<T> | T
+  ): Promise<T> {
     const ctx = await this.ensureInitialized(debtTokenSymbol)
-    return this.readService.getNextOwnerIndex(ctx, owner)
+    return callback(ctx)
   }
 
   private ensureInitialized(debtTokenSymbol: string): Promise<DeploymentContext> {

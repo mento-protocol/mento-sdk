@@ -9,7 +9,7 @@ import {
 } from '../../../core/abis'
 import { COLL_INDEX } from '../../../core/constants'
 import { BorrowPosition, InterestRateBracket } from '../../../core/types'
-import { parseBorrowPosition } from '../borrowHelpers'
+import { parseBorrowPosition } from './borrowPositionParser'
 import { DebtPerInterestRateItem, DeploymentContext, InterestBatchManagerData } from './borrowTypes'
 import {
   formatTroveId,
