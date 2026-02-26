@@ -81,12 +81,19 @@ export interface BorrowContractAddresses {
   troveManager: string
   sortedTroves: string
   activePool: string
+  defaultPool: string
   hintHelpers: string
   multiTroveGetter: string
   collToken: string
   debtToken: string
   troveNFT: string
+  metadataNFT: string
   stabilityPool: string
   priceFeed: string
-  systemParams: string
+  collSurplusPool: string
+  interestRouter: string
+  collateralRegistry: string
+  gasToken: string
+  gasPoolAddress: string
+  liquidityStrategy: string
 }
