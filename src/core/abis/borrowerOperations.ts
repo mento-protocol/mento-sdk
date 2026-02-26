@@ -38,6 +38,11 @@ export const BORROWER_OPERATIONS_ABI = parseAbi([
   'function checkBatchManagerExists(address _batchManager) view returns (bool)',
   'function getInterestIndividualDelegateOf(uint256 _troveId) view returns ((address account, uint128 minInterestRate, uint128 maxInterestRate, uint256 minInterestRateChangePeriod))',
 
+  // Inherited view functions from LiquityBase
+  'function getEntireBranchDebt() view returns (uint256)',
+  'function getEntireBranchColl() view returns (uint256)',
+
+  'function systemParams() view returns (address)',
   'function CCR() view returns (uint256)',
   'function MCR() view returns (uint256)',
 
