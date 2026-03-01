@@ -153,9 +153,14 @@ export function estimateLiquidityFromZapIn(
   totalSupply: bigint
 ): bigint {
   if (totalSupply === 0n) {
-    // First liquidity provision - use geometric mean
-    const product = Number(amountOutA) * Number(amountOutB)
-    return BigInt(Math.floor(Math.sqrt(product)))
+    // First liquidity provision - use geometric mean with BigInt sqrt
+    // to avoid precision loss from Number() conversion on 18-decimal values
+    const product = amountOutA * amountOutB
+    if (product === 0n) return 0n
+    let x = product
+    let y = (x + 1n) / 2n
+    while (y < x) { x = y; y = (x + product / x) / 2n }
+    return x
   }
 
   // Existing pool - calculate based on smaller ratio
