@@ -37,6 +37,7 @@ describe('LiquidityService', () => {
     // Mock PublicClient
     mockPublicClient = {
       readContract: jest.fn(),
+      call: jest.fn(),
     } as unknown as jest.Mocked<PublicClient>
 
     // Mock PoolService
@@ -48,6 +49,7 @@ describe('LiquidityService', () => {
     // Mock RouteService
     mockRouteService = {
       findRoute: jest.fn(),
+      getRoutes: jest.fn(),
     } as unknown as jest.Mocked<RouteService>
 
     liquidityService = new LiquidityService(mockPublicClient, ChainId.CELO, mockPoolService, mockRouteService)
@@ -551,6 +553,60 @@ describe('LiquidityService', () => {
       expect(transaction.approval).not.toBeNull()
       expect(transaction.approval).toHaveProperty('token', POOL_ADDRESS)
       expect(transaction.approval).toHaveProperty('amount', LIQUIDITY)
+    })
+
+    it('should preflight zap out when allowance is sufficient', async () => {
+      const LIQUIDITY = 1000000000000000000n
+
+      mockPublicClient.readContract.mockImplementation(async ({ functionName }: any) => {
+        if (functionName === 'generateZapOutParams') {
+          return [500000000000000000n, 500000000000000000n, 500000000000000000n, 500000000000000000n]
+        }
+        if (functionName === 'allowance') {
+          return LIQUIDITY
+        }
+        return 0n
+      })
+      ;(mockPublicClient.call as jest.Mock).mockResolvedValue({ data: '0x' })
+
+      const transaction = await liquidityService.buildZapOutTransaction(
+        POOL_ADDRESS,
+        TOKEN_A,
+        LIQUIDITY,
+        RECIPIENT,
+        OWNER,
+        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+      )
+
+      expect(transaction.approval).toBeNull()
+      expect(mockPublicClient.call).toHaveBeenCalled()
+    })
+
+    it('should throw when no viable zap out route can be simulated', async () => {
+      const LIQUIDITY = 1000000000000000000n
+
+      mockPublicClient.readContract.mockImplementation(async ({ functionName }: any) => {
+        if (functionName === 'generateZapOutParams') {
+          return [500000000000000000n, 500000000000000000n, 500000000000000000n, 500000000000000000n]
+        }
+        if (functionName === 'allowance') {
+          return LIQUIDITY
+        }
+        return 0n
+      })
+      ;(mockPublicClient.call as jest.Mock).mockRejectedValue(new Error('execution reverted: 0xbb55fd27'))
+      ;(mockRouteService.getRoutes as jest.Mock).mockResolvedValue([])
+
+      await expect(
+        liquidityService.buildZapOutTransaction(
+          POOL_ADDRESS,
+          TOKEN_A,
+          LIQUIDITY,
+          RECIPIENT,
+          OWNER,
+          { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        )
+      ).rejects.toThrow(/No viable zap-out route/)
     })
   })
 
