@@ -20,4 +20,26 @@ export const ROUTER_ABI = parseAbi([
   // Structs
   'struct Route { address from; address to; address factory; }',
   'struct Zap { address tokenA; address tokenB; address factory; uint256 amountOutMinA; uint256 amountOutMinB; uint256 amountAMin; uint256 amountBMin; }',
+
+  // Custom errors
+  'error ETHTransferFailed()',
+  'error Expired()',
+  'error InsufficientAmount()',
+  'error InsufficientAmountA()',
+  'error InsufficientAmountB()',
+  'error InsufficientAmountADesired()',
+  'error InsufficientAmountBDesired()',
+  'error InsufficientAmountAOptimal()',
+  'error InsufficientLiquidity()',
+  'error InsufficientOutputAmount()',
+  'error InvalidAmountInForETHDeposit()',
+  'error InvalidTokenInForETHDeposit()',
+  'error InvalidPath()',
+  'error InvalidRouteA()',
+  'error InvalidRouteB()',
+  'error OnlyWETH()',
+  'error PoolDoesNotExist()',
+  'error PoolFactoryDoesNotExist()',
+  'error SameAddresses()',
+  'error ZeroAddress()',
 ])
