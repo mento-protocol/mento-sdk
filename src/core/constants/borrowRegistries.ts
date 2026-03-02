@@ -10,7 +10,7 @@ export const borrowRegistries: Record<number, Record<string, string>> = {
     GBPm: '0x7C88934470A7297C7B63654d78ccC6B61eEf79E1',
   },
   [ChainId.CELO_SEPOLIA]: {
-    // GBPm: '0x...',  // TODO: Add deployed registry address
+    GBPm: '0x8b33D626E8d79388889d404fBC515Ed131c9508e',
   },
 }
 
