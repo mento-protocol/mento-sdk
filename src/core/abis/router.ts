@@ -21,7 +21,7 @@ export const ROUTER_ABI = parseAbi([
   'struct Route { address from; address to; address factory; }',
   'struct Zap { address tokenA; address tokenB; address factory; uint256 amountOutMinA; uint256 amountOutMinB; uint256 amountAMin; uint256 amountBMin; }',
 
-  // Custom errors
+  // Custom errors (Router)
   'error ETHTransferFailed()',
   'error Expired()',
   'error InsufficientAmount()',
@@ -42,4 +42,5 @@ export const ROUTER_ABI = parseAbi([
   'error PoolFactoryDoesNotExist()',
   'error SameAddresses()',
   'error ZeroAddress()',
+  'error FXMarketClosed()',
 ])

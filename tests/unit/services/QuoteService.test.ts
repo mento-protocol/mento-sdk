@@ -3,7 +3,9 @@ import { RouteService } from '../../../src/services/routes'
 import { FXMarketClosedError } from '../../../src/core/errors'
 import { PoolType } from '../../../src/core/types'
 import type { PublicClient } from 'viem'
+import { ContractFunctionRevertedError } from 'viem'
 import { ChainId } from '../../../src/core/constants'
+import { ROUTER_ABI } from '../../../src/core/abis'
 
 describe('QuoteService', () => {
   let mockPublicClient: jest.Mocked<PublicClient>
@@ -45,10 +47,16 @@ describe('QuoteService', () => {
   })
 
   describe('FXMarketClosed handling', () => {
-    it('should throw FXMarketClosedError when router reverts with 0xa407143a', async () => {
-      mockPublicClient.readContract.mockRejectedValue(
-        new Error('execution reverted: error 0xa407143a')
-      )
+    function createFXMarketClosedError() {
+      return new ContractFunctionRevertedError({
+        abi: ROUTER_ABI as any,
+        data: '0xa407143a',
+        functionName: 'getAmountsOut',
+      })
+    }
+
+    it('should throw FXMarketClosedError when router reverts with FXMarketClosed', async () => {
+      mockPublicClient.readContract.mockRejectedValue(createFXMarketClosedError())
 
       await expect(
         service.getAmountOut(tokenIn, tokenOut, 1000000000000000000n, mockRoute)
@@ -56,9 +64,7 @@ describe('QuoteService', () => {
     })
 
     it('should throw FXMarketClosedError with descriptive message', async () => {
-      mockPublicClient.readContract.mockRejectedValue(
-        new Error('ContractFunctionExecutionError: 0xa407143a')
-      )
+      mockPublicClient.readContract.mockRejectedValue(createFXMarketClosedError())
 
       await expect(
         service.getAmountOut(tokenIn, tokenOut, 1000000000000000000n, mockRoute)
