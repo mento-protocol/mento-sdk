@@ -61,6 +61,13 @@ export const addresses: ContractAddressMap = {
     MentoGovernor: '0x23173Ac37b8E4e5a60d787aC543B3F51e8f398b4',
     MentoToken: '0x07867fd40EB56b4380bE39c88D0a7EA59Aa99A20',
     TimelockController: '0x74c44Be99937815173A3C56274331e0A05611e0D',
+
+    // V3
+    FPMMFactory: '0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980',
+    VirtualPoolFactory: '0x887955f28723B0e9Bddc358448CB5B1FDe692da4',
+    Router: '0xcf6cD45210b3ffE3cA28379C4683F1e60D0C2CCd',
+    ReserveLiquidityStrategy: '0x734bb3251Ec3f1A83f8f2A8609bcEF649D54EbF8',
+    CDPLiquidityStrategy: '0x065AE7d4e207C8f4dca112D0B79E668cc7e93e03',
   },
 }
 
