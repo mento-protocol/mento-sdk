@@ -1,7 +1,7 @@
 import { addresses, ChainId } from '../../core/constants'
 import { Pool, FPMMPoolDetails, FPMMPricing, VirtualPoolDetails } from '../../core/types'
 import { FPMM_ABI, VIRTUAL_POOL_ABI } from '../../core/abis'
-import { PublicClient, Address } from 'viem'
+import { PublicClient, Address, getAddress } from 'viem'
 
 /**
  * Fetches enriched details for an FPMM pool
@@ -37,12 +37,12 @@ export async function fetchFPMMPoolDetails(
       publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'rebalanceIncentive' }),
       publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'rebalanceThresholdAbove' }),
       publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'rebalanceThresholdBelow' }),
-      ...knownStrategies.map((strategyAddr: string) =>
+      ...knownStrategies.map((strategyAddr) =>
         publicClient.readContract({
           address,
           abi: FPMM_ABI,
           functionName: 'liquidityStrategy',
-          args: [strategyAddr as Address],
+          args: [strategyAddr],
         })
       ),
     ])
@@ -163,16 +163,21 @@ export async function fetchVirtualPoolDetails(publicClient: PublicClient, pool: 
 /**
  * Returns the known liquidity strategy addresses for the given chain.
  */
-function getKnownLiquidityStrategies(chainId: number): string[] {
-  const strategies: string[] = []
+function getKnownLiquidityStrategies(chainId: number): Address[] {
   const chainAddresses = addresses[chainId as ChainId]
-  if (!chainAddresses) return strategies
+  if (!chainAddresses) return []
 
-  if (chainAddresses.ReserveLiquidityStrategy) {
-    strategies.push(chainAddresses.ReserveLiquidityStrategy)
-  }
-  if (chainAddresses.CDPLiquidityStrategy) {
-    strategies.push(chainAddresses.CDPLiquidityStrategy)
-  }
-  return strategies
+  const strategyCandidates = [
+    chainAddresses.ReserveLiquidityStrategy,
+    chainAddresses.CDPLiquidityStrategy,
+  ].filter((address): address is string => Boolean(address))
+
+  // Normalize to checksummed addresses and ignore malformed config values.
+  return strategyCandidates.flatMap((address) => {
+    try {
+      return [getAddress(address)]
+    } catch {
+      return []
+    }
+  })
 }

@@ -10,6 +10,7 @@ import { QuoteService } from './services/quotes'
 import { SwapService } from './services/swap'
 import { TradingService } from './services/trading'
 import { LiquidityService } from './services/liquidity'
+import { BorrowService } from './services/borrow'
 
 // TODO: Ensure there are no silent errors in the codebase
 
@@ -68,7 +69,8 @@ export class Mento {
     public quotes: QuoteService,
     public swap: SwapService,
     public trading: TradingService,
-    public liquidity: LiquidityService
+    public liquidity: LiquidityService,
+    public borrow: BorrowService
   ) {}
 
   /**
@@ -103,9 +105,20 @@ export class Mento {
     const swapService = new SwapService(publicClient, chainId, routeService, quoteService)
     const tradingService = new TradingService(publicClient, chainId, routeService)
     const liquidityService = new LiquidityService(publicClient, chainId, poolService, routeService)
+    const borrowService = new BorrowService(publicClient, chainId)
 
     // Return new mento
-    return new Mento(chainId, tokenService, poolService, routeService, quoteService, swapService, tradingService, liquidityService)
+    return new Mento(
+      chainId,
+      tokenService,
+      poolService,
+      routeService,
+      quoteService,
+      swapService,
+      tradingService,
+      liquidityService,
+      borrowService
+    )
   }
 
   /**

@@ -10,3 +10,15 @@ export class RouteNotFoundError extends MentoError {
     )
   }
 }
+
+/**
+ * Error thrown when no executable zap-out route exists for the requested amount.
+ */
+export class ZapOutRouteNotViableError extends MentoError {
+  constructor(poolAddress: string, tokenOut: string) {
+    super(
+      `No viable zap-out route for pool ${poolAddress} to ${tokenOut}. ` +
+        'Try reducing the amount or removing liquidity in balanced mode.'
+    )
+  }
+}

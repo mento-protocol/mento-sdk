@@ -37,5 +37,6 @@ yarn-error.log*
 # AI files
 .claude/
 .specify/*
+IMPLEMENTATION_PLAN.md
 
 .vscode/
