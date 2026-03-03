@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-03-03T20:05:49.396Z
+// Generated on 2026-03-03T20:21:18.047Z
 
 import type { Token } from '../core/types'
 
