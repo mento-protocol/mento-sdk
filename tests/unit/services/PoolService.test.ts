@@ -714,7 +714,7 @@ describe('PoolService', () => {
             if (functionName === 'liquidityStrategy') {
               // Second known strategy is active
               const [candidate] = args as [string]
-              return candidate === '0x837E275e1492FfDd5F108AF4E97EF29a513EEf91'
+              return candidate === '0x4e78BD9565341EAbe99cDC024acB044d9BDcB985'
             }
             return null
           }
@@ -722,7 +722,7 @@ describe('PoolService', () => {
 
         const details = await service.getPoolDetails(mockFPMMPools[0].poolAddress) as FPMMPoolDetails
 
-        expect(details.rebalancing.liquidityStrategy).toBe('0x837E275e1492FfDd5F108AF4E97EF29a513EEf91')
+        expect(details.rebalancing.liquidityStrategy).toBe('0x4e78BD9565341EAbe99cDC024acB044d9BDcB985')
       })
     })
 

@@ -35,7 +35,7 @@ export const addresses: ContractAddressMap = {
     VirtualPoolFactory: '0x22abd4ADF6aab38aC1022352d496A07Acee5aCB3',
     Router: '0x4861840C2EfB2b98312B0aE34d86fD73E8f9B6f6',
     ReserveLiquidityStrategy: '0xa0fB8b16ce6AF3634fF9F3f4F40E49E1C1ae4f0B',
-    CDPLiquidityStrategy: '0x837E275e1492FfDd5F108AF4E97EF29a513EEf91',
+    CDPLiquidityStrategy: '0x4e78BD9565341EAbe99cDC024acB044d9BDcB985',
   },
 
   [ChainId.CELO_SEPOLIA]: {
