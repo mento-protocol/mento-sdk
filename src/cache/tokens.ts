@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-03-03T13:09:00.754Z
+// Generated on 2026-03-03T14:30:38.674Z
 
 import type { Token } from '../core/types'
 
@@ -128,7 +128,7 @@ export const cachedTokens: Record<number, readonly Token[]> = {
     {
       address: '0x471EcE3750Da237f93B8E339c536989b8978a438',
       symbol: TokenSymbol.CELO,
-      name: 'Celo native asset',
+      name: 'Celo',
       decimals: 18,
     },
     {
