@@ -31,13 +31,11 @@ export const addresses: ContractAddressMap = {
     TimelockController: '0x890DB8A597940165901372Dd7DB61C9f246e2147',
 
     // V3
-    FPMMFactory: '0xB9732EB66406334F56E9d8c515d5af3da29b0654',
-    VirtualPoolFactory: '0x3268E4b75BEe60C400Eb4Dd8E44E9a3A76873f65',
-    Router: '0x330A7141aFf4Ff2b2DDFB6b008676abBbd0e0838',
-
-    // TODO: replace with deployed addresses
-    ReserveLiquidityStrategy: '0x0000000000000000000000000000000000000001',
-    CDPLiquidityStrategy: '0x0000000000000000000000000000000000000002',
+    FPMMFactory: '0x22A81Fc75b0d5F7cac19cABa9F0c3719b3897F03',
+    VirtualPoolFactory: '0x2c316619b45a1e6672d5f5DD41a83AD9285c0A40',
+    Router: '0x40665c97a3Fa8C0Afc69b84725A3BfAAa8d19B79',
+    ReserveLiquidityStrategy: '0x531f753dbA3548Fa84eF3D15cFf45A1e298eB988',
+    CDPLiquidityStrategy: '0x837E275e1492FfDd5F108AF4E97EF29a513EEf91',
   },
 
   [ChainId.CELO_SEPOLIA]: {

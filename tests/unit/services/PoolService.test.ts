@@ -684,7 +684,7 @@ describe('PoolService', () => {
             if (functionName === 'liquidityStrategy') {
               // First known strategy is active
               const [candidate] = args as [string]
-              return candidate === '0x0000000000000000000000000000000000000001'
+              return candidate === '0x531f753dbA3548Fa84eF3D15cFf45A1e298eB988'
             }
             return null
           }
@@ -692,7 +692,7 @@ describe('PoolService', () => {
 
         const details = await service.getPoolDetails(mockFPMMPools[0].poolAddress) as FPMMPoolDetails
 
-        expect(details.rebalancing.liquidityStrategy).toBe('0x0000000000000000000000000000000000000001')
+        expect(details.rebalancing.liquidityStrategy).toBe('0x531f753dbA3548Fa84eF3D15cFf45A1e298eB988')
       })
 
       it('should return second strategy if first is inactive', async () => {
@@ -714,7 +714,7 @@ describe('PoolService', () => {
             if (functionName === 'liquidityStrategy') {
               // Second known strategy is active
               const [candidate] = args as [string]
-              return candidate === '0x0000000000000000000000000000000000000002'
+              return candidate === '0x837E275e1492FfDd5F108AF4E97EF29a513EEf91'
             }
             return null
           }
@@ -722,7 +722,7 @@ describe('PoolService', () => {
 
         const details = await service.getPoolDetails(mockFPMMPools[0].poolAddress) as FPMMPoolDetails
 
-        expect(details.rebalancing.liquidityStrategy).toBe('0x0000000000000000000000000000000000000002')
+        expect(details.rebalancing.liquidityStrategy).toBe('0x837E275e1492FfDd5F108AF4E97EF29a513EEf91')
       })
     })
 

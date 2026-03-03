@@ -7,7 +7,7 @@ import { ChainId } from './chainId'
 export const borrowRegistries: Record<number, Record<string, string>> = {
   // TODO: Consider making the key for the address registry strongly typed (TokenSymbol)
   [ChainId.CELO]: {
-    GBPm: '0x7C88934470A7297C7B63654d78ccC6B61eEf79E1',
+    GBPm: '0xC54519F356459c6E48dA5468885f2F61eAB4a001',
   },
   [ChainId.CELO_SEPOLIA]: {
     GBPm: '0x8b33D626E8d79388889d404fBC515Ed131c9508e',
