@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2025-12-18T14:22:08.063Z
+// Generated on 2026-03-03T13:09:00.754Z
 
 import type { Token } from '../core/types'
 
@@ -267,15 +267,15 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       decimals: 18,
     },
     {
-      address: '0xd077A400968890Eacc75cdc901F0356c943e4fDb',
-      symbol: TokenSymbol.USD_,
-      name: 'Tether USD',
-      decimals: 6,
-    },
-    {
       address: '0x01C5C0122039549AD1493B8220cABEdD739BC44E',
       symbol: TokenSymbol.USDC,
       name: 'USDC',
+      decimals: 6,
+    },
+    {
+      address: '0xd077A400968890Eacc75cdc901F0356c943e4fDb',
+      symbol: TokenSymbol.USD_,
+      name: 'Tether USD',
       decimals: 6,
     }
   ],
@@ -329,8 +329,8 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.axlUSDC]: '0x6285De9DA7C1d329C0451628638908915002d9d1',
     [TokenSymbol.CELO]: '0x471EcE3750Da237f93B8E339c536989b8978a438',
     [TokenSymbol.axlEUROC]: '0x9883d788d40F1C7595a780ed881Ea833C7743B4B',
-    [TokenSymbol.USD_]: '0xd077A400968890Eacc75cdc901F0356c943e4fDb',
     [TokenSymbol.USDC]: '0x01C5C0122039549AD1493B8220cABEdD739BC44E',
+    [TokenSymbol.USD_]: '0xd077A400968890Eacc75cdc901F0356c943e4fDb',
   },
 }
 
