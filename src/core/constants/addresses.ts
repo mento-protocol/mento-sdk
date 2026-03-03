@@ -31,10 +31,10 @@ export const addresses: ContractAddressMap = {
     TimelockController: '0x890DB8A597940165901372Dd7DB61C9f246e2147',
 
     // V3
-    FPMMFactory: '0x22A81Fc75b0d5F7cac19cABa9F0c3719b3897F03',
-    VirtualPoolFactory: '0x2c316619b45a1e6672d5f5DD41a83AD9285c0A40',
-    Router: '0x40665c97a3Fa8C0Afc69b84725A3BfAAa8d19B79',
-    ReserveLiquidityStrategy: '0x531f753dbA3548Fa84eF3D15cFf45A1e298eB988',
+    FPMMFactory: '0xa849b475FE5a4B5C9C3280152c7a1945b907613b',
+    VirtualPoolFactory: '0x22abd4ADF6aab38aC1022352d496A07Acee5aCB3',
+    Router: '0x4861840C2EfB2b98312B0aE34d86fD73E8f9B6f6',
+    ReserveLiquidityStrategy: '0xa0fB8b16ce6AF3634fF9F3f4F40E49E1C1ae4f0B',
     CDPLiquidityStrategy: '0x837E275e1492FfDd5F108AF4E97EF29a513EEf91',
   },
 
