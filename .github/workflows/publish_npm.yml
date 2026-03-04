@@ -35,7 +35,22 @@ jobs:
       - name: Test
         run: pnpm test:unit
 
+      - name: Determine npm tag
+        id: tag
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if echo "$VERSION" | grep -q "beta"; then
+            echo "tag=beta" >> "$GITHUB_OUTPUT"
+          elif echo "$VERSION" | grep -q "rc"; then
+            echo "tag=rc" >> "$GITHUB_OUTPUT"
+          elif echo "$VERSION" | grep -q "alpha"; then
+            echo "tag=alpha" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=latest" >> "$GITHUB_OUTPUT"
+          fi
+          echo "Publishing $VERSION with tag: $(cat "$GITHUB_OUTPUT" | grep tag | cut -d= -f2)"
+
       - name: Publish
-        run: npm publish --access public
+        run: npm publish --access public --tag ${{ steps.tag.outputs.tag }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.SDK_NPM_AUTH_TOKEN}}
