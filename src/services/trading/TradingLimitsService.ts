@@ -1,4 +1,4 @@
-import { PublicClient, Address } from 'viem'
+import { PublicClient, Address, BaseError, ContractFunctionRevertedError } from 'viem'
 import type {
   Pool,
   TradingLimit,
@@ -101,9 +101,16 @@ export class TradingLimitsService {
       }
 
       return calculateTradingLimitsV2(config, state, token)
-    } catch {
-      // Token may not have limits configured, or invalid token
-      return []
+    } catch (error) {
+      // Contract reverts indicate limits aren't configured for this token — return empty
+      if (error instanceof BaseError) {
+        const revertError = error.walk((e) => e instanceof ContractFunctionRevertedError)
+        if (revertError instanceof ContractFunctionRevertedError) {
+          return []
+        }
+      }
+      // Re-throw non-revert errors (network failures, RPC timeouts, etc.)
+      throw error
     }
   }
 
@@ -188,9 +195,16 @@ export class TradingLimitsService {
       const tokenDecimals = 0 // V1 stores values with 0 decimal precision
 
       return calculateTradingLimitsV1(config, state, token, tokenDecimals)
-    } catch {
-      // Trading limits may not be configured for this token
-      return []
+    } catch (error) {
+      // Contract reverts indicate limits aren't configured for this token — return empty
+      if (error instanceof BaseError) {
+        const revertError = error.walk((e) => e instanceof ContractFunctionRevertedError)
+        if (revertError instanceof ContractFunctionRevertedError) {
+          return []
+        }
+      }
+      // Re-throw non-revert errors (network failures, RPC timeouts, etc.)
+      throw error
     }
   }
 }

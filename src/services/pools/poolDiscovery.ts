@@ -57,7 +57,9 @@ export async function fetchFPMMPools(publicClient: PublicClient, chainId: number
 
     return await Promise.all(poolDataPromises)
   } catch (error) {
-    throw new Error(`Failed to fetch FPMM pools: ${(error as Error).message}`)
+    const wrapped = new Error(`Failed to fetch FPMM pools: ${(error as Error).message}`)
+    ;(wrapped as any).cause = error
+    throw wrapped
   }
 }
 
@@ -125,6 +127,8 @@ export async function fetchVirtualPools(publicClient: PublicClient, chainId: num
 
     return await Promise.all(poolPromises)
   } catch (error) {
-    throw new Error(`Failed to fetch Virtual pools: ${(error as Error).message}`)
+    const wrapped = new Error(`Failed to fetch Virtual pools: ${(error as Error).message}`)
+    ;(wrapped as any).cause = error
+    throw wrapped
   }
 }

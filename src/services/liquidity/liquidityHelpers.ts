@@ -31,11 +31,16 @@ export async function getAllowance(
 }
 
 export function calculateMinAmount(amount: bigint, slippageTolerance: number): bigint {
+  const MAX_SLIPPAGE_TOLERANCE = 20 
+
   if (slippageTolerance < 0) {
     throw new Error('Slippage tolerance cannot be negative')
   }
-  if (slippageTolerance > 100) {
-    throw new Error('Slippage tolerance cannot exceed 100%')
+  if (slippageTolerance > MAX_SLIPPAGE_TOLERANCE) {
+    throw new Error(
+      `Slippage tolerance ${slippageTolerance}% exceeds maximum of ${MAX_SLIPPAGE_TOLERANCE}%. ` +
+        'High slippage makes transactions vulnerable to sandwich attacks.'
+    )
   }
 
   const basisPoints = BigInt(Math.floor(slippageTolerance * 100))

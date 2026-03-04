@@ -115,18 +115,35 @@ if (!status.circuitBreakerOk) {
 
 ```typescript
 // Add liquidity to a pool
-const addTx = await mento.liquidity.buildAddLiquidityTransaction(
-  poolAddress, tokenA, amountA, tokenB, amountB,
-  recipient, owner,
-  { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
-)
+const { approvalA, approvalB, addLiquidity } = await mento.liquidity.buildAddLiquidityTransaction({
+  poolAddress,
+  tokenA,
+  amountA,
+  tokenB,
+  amountB,
+  recipient,
+  owner,
+  options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) },
+})
+
+// Execute approvals if needed, then add liquidity
+if (approvalA) await walletClient.sendTransaction(approvalA.params)
+if (approvalB) await walletClient.sendTransaction(approvalB.params)
+await walletClient.sendTransaction(addLiquidity.params)
 
 // Zap in with a single token
-const zapTx = await mento.liquidity.buildZapInTransaction(
-  poolAddress, tokenIn, amountIn, 0.5, // split ratio
-  recipient, owner,
-  { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
-)
+const { approval: zapApproval, zapIn } = await mento.liquidity.buildZapInTransaction({
+  poolAddress,
+  tokenIn,
+  amountIn,
+  amountInSplit: 0.5, // split ratio
+  recipient,
+  owner,
+  options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) },
+})
+
+if (zapApproval) await walletClient.sendTransaction(zapApproval.params)
+await walletClient.sendTransaction(zapIn.params)
 
 // Get LP token balance
 const balance = await mento.liquidity.getLPTokenBalance(poolAddress, owner)

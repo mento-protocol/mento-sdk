@@ -52,14 +52,16 @@ import { BorrowService } from './services/borrow'
  *              const status = await mento.trading.getPoolTradabilityStatus(pool);
  *
  *              // Add liquidity to a pool
- *              const { approval0, approval1, addLiquidity } = await mento.liquidity.buildAddLiquidityTransaction(
- *                poolAddress, amount0, amount1, recipient, owner, { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
- *              );
+ *              const { approvalA, approvalB, addLiquidity } = await mento.liquidity.buildAddLiquidityTransaction({
+ *                poolAddress, tokenA, amountA, tokenB, amountB, recipient, owner,
+ *                options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) },
+ *              });
  *
  *              // Add liquidity using a single token (zap in)
- *              const { approval, zapIn } = await mento.liquidity.buildZapInTransaction(
- *                poolAddress, tokenIn, amountIn, 0.5, recipient, owner, { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
- *              );
+ *              const { approval, zapIn } = await mento.liquidity.buildZapInTransaction({
+ *                poolAddress, tokenIn, amountIn, amountInSplit: 0.5, recipient, owner,
+ *                options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) },
+ *              });
  */
 export class Mento {
   private constructor(
