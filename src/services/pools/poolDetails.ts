@@ -61,6 +61,7 @@ export async function fetchFPMMPoolDetails(
 
     // Fetch pricing separately — graceful degradation when FX market is closed
     let pricing: FPMMPricing | null = null
+    let pricingUnavailableReason: string | null = null
     let inBand: boolean | null = null
     try {
       const rebalancingStateResult = await publicClient.readContract({
@@ -91,8 +92,8 @@ export async function fetchFPMMPoolDetails(
       }
 
       inBand = priceDifference < BigInt(rebalanceThreshold)
-    } catch {
-      // getRebalancingState() failed (likely FXMarketClosed) — pricing stays null
+    } catch (error) {
+      pricingUnavailableReason = `getRebalancingState() reverted: ${(error as Error).message ?? 'unknown error'}`
     }
 
     return {
@@ -104,6 +105,7 @@ export async function fetchFPMMPoolDetails(
       reserve1,
       blockTimestampLast,
       pricing,
+      pricingUnavailableReason,
       fees: {
         lpFeeBps,
         lpFeePercent: Number(lpFeeBps) / 100,
@@ -123,7 +125,9 @@ export async function fetchFPMMPoolDetails(
       },
     }
   } catch (error) {
-    throw new Error(`Failed to fetch FPMM pool details for ${pool.poolAddr}: ${(error as Error).message}`)
+    const wrapped = new Error(`Failed to fetch FPMM pool details for ${pool.poolAddr}: ${(error as Error).message}`)
+    ;(wrapped as any).cause = error
+    throw wrapped
   }
 }
 
@@ -156,7 +160,9 @@ export async function fetchVirtualPoolDetails(publicClient: PublicClient, pool: 
       spreadPercent: Number(spreadBps) / 100,
     }
   } catch (error) {
-    throw new Error(`Failed to fetch Virtual pool details for ${pool.poolAddr}: ${(error as Error).message}`)
+    const wrapped = new Error(`Failed to fetch Virtual pool details for ${pool.poolAddr}: ${(error as Error).message}`)
+    ;(wrapped as any).cause = error
+    throw wrapped
   }
 }
 

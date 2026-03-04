@@ -38,6 +38,7 @@
     "!dist/**/*.test.*",
     "!dist/**/*.map"
   ],
+  "sideEffects": false,
   "type": "commonjs",
   "scripts": {
     "build": "pnpm clean && tsc --project ./tsconfig.json && tsc --project ./tsconfig.esm.json && echo '{\"type\":\"module\"}' > dist/esm/package.json",

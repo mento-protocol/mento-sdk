@@ -129,8 +129,10 @@ export interface FPMMPoolDetails extends Pool {
   reserve1: bigint
   /** Block timestamp of last reserve update */
   blockTimestampLast: bigint
-  /** Pricing and oracle data (null when FX market is closed) */
+  /** Pricing and oracle data (null when unavailable — see pricingUnavailableReason) */
   pricing: FPMMPricing | null
+  /** Reason pricing data is unavailable, or null when pricing is present */
+  pricingUnavailableReason: string | null
   /** Fee configuration */
   fees: FPMMFees
   /** Rebalancing state */
