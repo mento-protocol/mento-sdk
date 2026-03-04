@@ -95,6 +95,7 @@ export class SwapService {
    * @param options - Swap configuration options (slippage, deadline)
    * @param route - Optional pre-fetched route for better performance
    * @returns Combined transaction with approval (if needed) and swap params
+   * @throws {Error} 'amountIn must be greater than zero' - if amountIn <= 0
    * @throws {Error} 'Slippage tolerance cannot be negative' - if slippageTolerance < 0
    * @throws {Error} 'Slippage tolerance exceeds maximum' - if slippageTolerance > 20%
    * @throws {Error} 'Deadline must be in the future' - if deadline is not a future timestamp
@@ -130,6 +131,8 @@ export class SwapService {
     options: SwapOptions,
     route?: Route
   ): Promise<SwapTransaction> {
+    this.validateAmountIn(amountIn)
+
     // Validate all address inputs
     validateAddress(tokenIn, 'tokenIn')
     validateAddress(tokenOut, 'tokenOut')
@@ -157,6 +160,7 @@ export class SwapService {
    * @param options - Swap configuration options (slippage, deadline)
    * @param route - Optional pre-fetched route for better performance
    * @returns Detailed swap parameters including transaction data
+   * @throws {Error} 'amountIn must be greater than zero' - if amountIn <= 0
    * @throws {Error} 'Slippage tolerance cannot be negative' - if slippageTolerance < 0
    * @throws {Error} 'Slippage tolerance exceeds maximum' - if slippageTolerance > 20%
    * @throws {Error} 'Deadline must be in the future' - if deadline is not a future timestamp
@@ -185,6 +189,8 @@ export class SwapService {
     options: SwapOptions,
     route?: Route
   ): Promise<SwapDetails> {
+    this.validateAmountIn(amountIn)
+
     const deadline = options.deadline
     if (deadline <= BigInt(Date.now()) / 1000n) {
       throw new Error('Deadline must be in the future')
@@ -250,6 +256,16 @@ export class SwapService {
         args: [owner, routerAddress],
       })
     ) as Promise<bigint>
+  }
+
+  /**
+   * Validates that the input amount is strictly positive.
+   * @private
+   */
+  private validateAmountIn(amountIn: bigint): void {
+    if (amountIn <= 0n) {
+      throw new Error('amountIn must be greater than zero')
+    }
   }
 
   /**
