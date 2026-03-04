@@ -47,9 +47,6 @@ export class PoolService {
       return this.poolsCache
     }
 
-    // TODO: Update to use router.factoryRegistry.poolFactories()
-    //       for dynamic factory discovery. For now we will use
-    //       the hardcoded factory addresses for the chain for v1.
     const pools: Pool[] = []
     const warnings: string[] = []
 
@@ -58,7 +55,6 @@ export class PoolService {
       pools.push(...fpmmPools)
     } catch (error) {
       const message = `Failed to fetch FPMM pools: ${error instanceof Error ? error.message : String(error)}`
-      console.warn(`[PoolService] ${message}`)
       warnings.push(message)
     }
 
@@ -67,7 +63,6 @@ export class PoolService {
       pools.push(...virtualPools)
     } catch (error) {
       const message = `Failed to fetch Virtual pools: ${error instanceof Error ? error.message : String(error)}`
-      console.warn(`[PoolService] ${message}`)
       warnings.push(message)
     }
 

@@ -113,7 +113,6 @@ export class TradingLimitsService {
    */
   private async getVirtualPoolTradingLimits(pool: Pool): Promise<TradingLimit[]> {
     if (!pool.exchangeId) {
-      console.warn(`Virtual pool ${pool.poolAddr} missing exchangeId - cannot query trading limits`)
       return []
     }
 

@@ -5,7 +5,6 @@ import { ChainId } from './chainId'
  * Each registry is the entry point for one Bold deployment.
  */
 export const borrowRegistries: Record<number, Record<string, string>> = {
-  // TODO: Consider making the key for the address registry strongly typed (TokenSymbol)
   [ChainId.CELO]: {
     GBPm: '0xB3136DBadB14Ab587FFa91545538126938Fe0C6E',
   },

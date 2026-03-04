@@ -1,6 +1,5 @@
 import type { Route, RouteID, RouteToken, RouteWithCost, Pool } from '../core/types'
-import { canonicalAddressKey, canonicalSymbolKey } from './sortUtils'
-import type { Address as ViemAddress } from 'viem'
+import { canonicalSymbolKey } from './sortUtils'
 
 type TokenSymbol = string
 type Address = string

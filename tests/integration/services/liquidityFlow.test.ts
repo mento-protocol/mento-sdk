@@ -172,15 +172,15 @@ describe('Liquidity Flow Integration', () => {
       const amountA = 1000000000000000000n
       const amountB = 2000000000000000000n
 
-      const params = await liquidityService.buildAddLiquidityParams(
-        testPool.poolAddr,
-        testPool.token0 as Address,
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: testPool.poolAddr,
+        tokenA: testPool.token0 as Address,
         amountA,
-        testPool.token1 as Address,
+        tokenB: testPool.token1 as Address,
         amountB,
-        recipient as Address,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+        recipient: recipient as Address,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+      })
 
       expect(params).toBeDefined()
       expect(params.params).toHaveProperty('to')
@@ -212,15 +212,15 @@ describe('Liquidity Flow Integration', () => {
       const amountB = 2000000000000000000n
       const slippageTolerance = 0.5 // 0.5%
 
-      const params = await liquidityService.buildAddLiquidityParams(
-        testPool.poolAddr,
-        testPool.token0 as Address,
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: testPool.poolAddr,
+        tokenA: testPool.token0 as Address,
         amountA,
-        testPool.token1 as Address,
+        tokenB: testPool.token1 as Address,
         amountB,
-        recipient as Address,
-        { slippageTolerance, deadline: deadlineFromMinutes(20) }
-      )
+        recipient: recipient as Address,
+        options: { slippageTolerance, deadline: deadlineFromMinutes(20) }
+      })
 
       // Expected calculation: amountMin = amount * (1 - 0.005) = amount * 9950 / 10000
       const expectedAmountAMin = (amountA * 9950n) / 10000n
@@ -242,16 +242,16 @@ describe('Liquidity Flow Integration', () => {
       const amountA = 1000000000000000000n
       const amountB = 2000000000000000000n
 
-      const transaction = await liquidityService.buildAddLiquidityTransaction(
-        testPool.poolAddr,
-        testPool.token0 as Address,
+      const transaction = await liquidityService.buildAddLiquidityTransaction({
+        poolAddress: testPool.poolAddr,
+        tokenA: testPool.token0 as Address,
         amountA,
-        testPool.token1 as Address,
+        tokenB: testPool.token1 as Address,
         amountB,
-        devAddress,
-        devAddress,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+        recipient: devAddress,
+        owner: devAddress,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+      })
 
       expect(transaction).toHaveProperty('approvalA')
       expect(transaction).toHaveProperty('approvalB')
@@ -286,12 +286,12 @@ describe('Liquidity Flow Integration', () => {
       const recipient = devAddress || '0x0000000000000000000000000000000000000001'
       const liquidity = 1000000000000000000n
 
-      const params = await liquidityService.buildRemoveLiquidityParams(
-        testPool.poolAddr,
+      const params = await liquidityService.buildRemoveLiquidityParams({
+        poolAddress: testPool.poolAddr,
         liquidity,
-        recipient as Address,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+        recipient: recipient as Address,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+      })
 
       expect(params).toBeDefined()
       expect(params.params).toHaveProperty('to')
@@ -318,13 +318,13 @@ describe('Liquidity Flow Integration', () => {
 
       const liquidity = 1000000000000000000n
 
-      const transaction = await liquidityService.buildRemoveLiquidityTransaction(
-        testPool.poolAddr,
+      const transaction = await liquidityService.buildRemoveLiquidityTransaction({
+        poolAddress: testPool.poolAddr,
         liquidity,
-        devAddress,
-        devAddress,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+        recipient: devAddress,
+        owner: devAddress,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+      })
 
       expect(transaction).toHaveProperty('approval')
       expect(transaction).toHaveProperty('removeLiquidity')
@@ -406,8 +406,8 @@ describe('Liquidity Flow Integration', () => {
       )
 
       expect(quote).toBeDefined()
-      expect(quote).toHaveProperty('amountOutMinA')
-      expect(quote).toHaveProperty('amountOutMinB')
+      expect(quote).toHaveProperty('amountOutFromA')
+      expect(quote).toHaveProperty('amountOutFromB')
       expect(quote).toHaveProperty('amountAMin')
       expect(quote).toHaveProperty('amountBMin')
       expect(quote).toHaveProperty('estimatedMinLiquidity')
@@ -422,14 +422,14 @@ describe('Liquidity Flow Integration', () => {
       const amountIn = 1000000000000000000n
       const amountInSplit = 0.5
 
-      const params = await liquidityService.buildZapInParams(
-        testPool.poolAddr,
+      const params = await liquidityService.buildZapInParams({
+        poolAddress: testPool.poolAddr,
         tokenIn,
         amountIn,
         amountInSplit,
-        recipient as Address,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+        recipient: recipient as Address,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+      })
 
       expect(params).toBeDefined()
       expect(params).toHaveProperty('params')
@@ -473,13 +473,13 @@ describe('Liquidity Flow Integration', () => {
       const tokenOut = testPool.token0 as Address
       const liquidity = 1000000000000000000n
 
-      const params = await liquidityService.buildZapOutParams(
-        testPool.poolAddr,
+      const params = await liquidityService.buildZapOutParams({
+        poolAddress: testPool.poolAddr,
         tokenOut,
         liquidity,
-        recipient as Address,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+        recipient: recipient as Address,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+      })
 
       expect(params).toBeDefined()
       expect(params).toHaveProperty('params')
@@ -544,15 +544,15 @@ describe('Liquidity Flow Integration', () => {
       const recipient = '0x0000000000000000000000000000000000000001' as Address
       const customDeadline = BigInt(Math.floor(Date.now() / 1000) + 60 * 60) // 1 hour
 
-      const params = await liquidityService.buildAddLiquidityParams(
-        testPool.poolAddr,
-        testPool.token0 as Address,
-        1000000000000000000n,
-        testPool.token1 as Address,
-        2000000000000000000n,
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: testPool.poolAddr,
+        tokenA: testPool.token0 as Address,
+        amountA: 1000000000000000000n,
+        tokenB: testPool.token1 as Address,
+        amountB: 2000000000000000000n,
         recipient,
-        { slippageTolerance: 0.5, deadline: customDeadline }
-      )
+        options: { slippageTolerance: 0.5, deadline: customDeadline }
+      })
 
       expect(params.deadline).toBe(customDeadline)
     })
@@ -563,25 +563,25 @@ describe('Liquidity Flow Integration', () => {
       const recipient = '0x0000000000000000000000000000000000000001' as Address
       const amount = 1000000000000000000n
 
-      const params1 = await liquidityService.buildAddLiquidityParams(
-        testPool.poolAddr,
-        testPool.token0 as Address,
-        amount,
-        testPool.token1 as Address,
-        amount,
+      const params1 = await liquidityService.buildAddLiquidityParams({
+        poolAddress: testPool.poolAddr,
+        tokenA: testPool.token0 as Address,
+        amountA: amount,
+        tokenB: testPool.token1 as Address,
+        amountB: amount,
         recipient,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) } // 0.5%
-      )
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) } // 0.5%
+      })
 
-      const params2 = await liquidityService.buildAddLiquidityParams(
-        testPool.poolAddr,
-        testPool.token0 as Address,
-        amount,
-        testPool.token1 as Address,
-        amount,
+      const params2 = await liquidityService.buildAddLiquidityParams({
+        poolAddress: testPool.poolAddr,
+        tokenA: testPool.token0 as Address,
+        amountA: amount,
+        tokenB: testPool.token1 as Address,
+        amountB: amount,
         recipient,
-        { slippageTolerance: 1.0, deadline: deadlineFromMinutes(20) } // 1.0%
-      )
+        options: { slippageTolerance: 1.0, deadline: deadlineFromMinutes(20) } // 1.0%
+      })
 
       // Higher slippage tolerance should result in lower minimums
       expect(params2.amountAMin).toBeLessThan(params1.amountAMin)

@@ -13,14 +13,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./src",
-    "types": ["jest", "node"],
-    "paths": {
-      "@adapters/*": ["adapters/*"],
-      "@services/*": ["services/*"],
-      "@types/*": ["types/*"],
-      "@constants/*": ["constants/*"],
-      "@abis/*": ["abis/*"]
-    }
+    "types": ["jest", "node"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "tests/**/*"]

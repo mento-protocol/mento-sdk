@@ -1,382 +1,205 @@
 # Mento SDK
 
-A TypeScript SDK for interacting with the Mento protocol. This SDK provides a simple interface to interact with Mento's smart contracts, supporting both Ethers.js and Viem providers.
+A TypeScript SDK for interacting with the [Mento Protocol](https://www.mento.org/). Provides a simple interface for token swaps, liquidity management, borrowing, and trading status queries.
 
 ## Installation
 
 ```bash
-npm install @mento/sdk
+npm install @mento-protocol/mento-sdk viem
 # or
-yarn add @mento/sdk
-# or
-pnpm add @mento/sdk
+pnpm add @mento-protocol/mento-sdk viem
 ```
+
+`viem` is a peer dependency required for blockchain interactions.
 
 ## Quick Start
 
-### Initialize with Viem
+```typescript
+import { Mento, ChainId, deadlineFromMinutes } from '@mento-protocol/mento-sdk'
+import { parseUnits } from 'viem'
+
+// Initialize the SDK (uses default public RPC)
+const mento = await Mento.create(ChainId.CELO)
+
+// Or with a custom RPC URL
+const mento = await Mento.create(ChainId.CELO, 'https://your-rpc-url.com')
+
+// Or with an existing viem PublicClient
+const mento = await Mento.create(ChainId.CELO, yourPublicClient)
+```
+
+## Services
+
+The SDK is organized into service namespaces:
+
+| Service | Description |
+|---------|-------------|
+| `mento.tokens` | Query stable tokens and collateral assets |
+| `mento.pools` | Discover and inspect liquidity pools |
+| `mento.routes` | Find trading routes (direct and multi-hop) |
+| `mento.quotes` | Get expected swap output amounts |
+| `mento.swap` | Build swap transactions with approvals |
+| `mento.trading` | Check circuit breakers and trading limits |
+| `mento.liquidity` | Add/remove liquidity, zap in/out |
+| `mento.borrow` | Open, adjust, and close troves |
+
+## Token Queries
 
 ```typescript
-import { createPublicClient, http } from 'viem'
-import { celo } from 'viem/chains'
-import { Mento } from '@mento/sdk'
+// Get all Mento stable tokens
+const stableTokens = await mento.tokens.getStableTokens()
 
-// Create Viem client
-const provider = createPublicClient({
-  chain: celo,
-  transport: http(),
+// Get all collateral assets
+const collateral = await mento.tokens.getCollateralAssets()
+```
+
+## Swaps
+
+```typescript
+const USDm = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
+const CELO = '0x471EcE3750Da237f93B8E339c536989b8978a438'
+
+// Get a quote
+const amountIn = parseUnits('100', 18)
+const expectedOut = await mento.quotes.getAmountOut(USDm, CELO, amountIn)
+
+// Build a swap transaction (includes approval if needed)
+const { approval, swap } = await mento.swap.buildSwapTransaction(
+  USDm,
+  CELO,
+  amountIn,
+  recipientAddress,
+  ownerAddress,
+  { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
+)
+
+// Execute with any viem wallet client
+if (approval) {
+  await walletClient.sendTransaction(approval)
+}
+await walletClient.sendTransaction(swap.params)
+```
+
+## Routes
+
+```typescript
+// Find a route between two tokens
+const route = await mento.routes.findRoute(USDm, CELO)
+console.log(`Hops: ${route.path.length}`)
+
+// Get all tradable routes (uses pre-generated cache by default)
+const routes = await mento.routes.getRoutes()
+
+// Generate fresh routes from blockchain
+const freshRoutes = await mento.routes.getRoutes({ cached: false })
+```
+
+## Trading Status
+
+```typescript
+// Check if a pair is tradable (circuit breaker check)
+const isTradable = await mento.trading.isPairTradable(USDm, CELO)
+
+// Get full tradability status for a pool
+const pools = await mento.pools.getPools()
+const status = await mento.trading.getPoolTradabilityStatus(pools[0])
+
+if (!status.circuitBreakerOk) {
+  console.log('Trading suspended by circuit breaker')
+} else if (!status.limitsOk) {
+  console.log('Trading limit reached')
+}
+```
+
+## Liquidity
+
+```typescript
+// Add liquidity to a pool
+const addTx = await mento.liquidity.buildAddLiquidityTransaction(
+  poolAddress, tokenA, amountA, tokenB, amountB,
+  recipient, owner,
+  { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
+)
+
+// Zap in with a single token
+const zapTx = await mento.liquidity.buildZapInTransaction(
+  poolAddress, tokenIn, amountIn, 0.5, // split ratio
+  recipient, owner,
+  { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
+)
+
+// Get LP token balance
+const balance = await mento.liquidity.getLPTokenBalance(poolAddress, owner)
+```
+
+## Borrowing
+
+```typescript
+import { parseUnits } from 'viem'
+
+// Open a trove (borrow against collateral)
+const openTx = await mento.borrow.buildOpenTroveTransaction('USDm', {
+  owner: ownerAddress,
+  ownerIndex: 0,
+  collAmount: parseUnits('10', 18),
+  boldAmount: parseUnits('1000', 18),
+  annualInterestRate: parseUnits('0.05', 18), // 5%
+  maxUpfrontFee: parseUnits('100', 18),
 })
 
-// Initialize Mento SDK
-const mento = new Mento({ provider })
+// Get trove data
+const trove = await mento.borrow.getTroveData('USDm', troveId)
 
-// Use the SDK
-const stableTokens = await mento.tokens.getStableTokens()
-console.log('Stable Tokens:', stableTokens)
-```
+// Get system parameters
+const params = await mento.borrow.getSystemParams('USDm')
 
-### Initialize with Ethers.js
-
-```typescript
-import { JsonRpcProvider } from 'ethers'
-import { Mento } from '@mento/sdk'
-
-// Create Ethers provider
-const provider = new JsonRpcProvider('YOUR_RPC_URL')
-
-// Initialize Mento SDK
-const mento = new Mento({ provider })
-
-// Use the SDK
-const collateralAssets = await mento.collateral.getCollateralAssets()
-console.log('Collateral Assets:', collateralAssets)
-```
-
-## Development Setup
-
-### Project Setup
-
-1. Clone the repository
-
-```bash
-git clone git@github.com:mento-protocol/mento-sdk.git
-cd mento-sdk
-```
-
-2. Install dependencies
-
-```bash
-pnpm install
-```
-
-### Development Workflow
-
-#### Build
-
-```bash
-pnpm build
-```
-
-#### Running Tests
-
-```bash
-# Run all tests
-pnpm test
-```
-
-#### Cache Generation Scripts
-
-The SDK includes scripts to generate and update cached route and token data:
-
-```bash
-# Generate route cache
-pnpm cacheRoutes
-
-# Generate token cache
-pnpm cacheTokens
-```
-
-**Environment Variables:**
-
-You can override the default RPC URLs used by cache generation scripts:
-
-```bash
-# Use custom RPC for Celo mainnet
-export CELO_RPC_URL=https://your-custom-rpc.example.com
-pnpm cacheRoutes
-
-# Use custom RPC for Celo Sepolia testnet
-export CELO_SEPOLIA_RPC_URL=https://your-sepolia-rpc.example.com
-pnpm cacheRoutes
-
-# Or set both
-CELO_RPC_URL=https://your-rpc.com CELO_SEPOLIA_RPC_URL=https://your-sepolia.com pnpm cacheRoutes
-```
-
-By default, scripts use the public Forno RPC endpoints:
-
-- Celo mainnet: `https://forno.celo.org`
-- Celo Sepolia: `https://forno.celo-sepolia.celo-testnet.org`
-
-### Project Structure
-
-```bash
-├── src/
-│   ├── abis/           # Contract ABIs
-│   ├── adapters/       # Provider adapters (Ethers, Viem)
-│   ├── constants/      # Constants and addresses
-│   ├── services/       # Core services
-│   ├── types/          # TypeScript type definitions
-|   ├── utils/          # Utility functions
-│   └── index.ts        # Main entry point
-├── tests/
-│   ├── unit/          # Unit tests
-│   └── integration/   # Integration tests
-```
-
-## Features
-
-### Read Operations
-
-#### Stable Tokens
-
-Query Mento stable tokens:
-
-```typescript
-// Get all stable tokens
-const tokens = await mento.tokens.getStableTokens()
-```
-
-#### Collateral Assets
-
-Retrieve collateral assets:
-
-```typescript
-// Get all collateral assets
-const assets = await mento.collateral.getCollateralAssets()
-```
-
-#### Exchanges
-
-Query exchanges and tradable pairs:
-
-```typescript
-// Get all exchanges
-const exchanges = await mento.exchanges.getExchanges()
-
-// Get tradable pairs (includes multi-hop routes)
-const pairs = await mento.exchanges.getTradablePairs()
-
-// Find specific pair
-const pair = await mento.exchanges.findPairForTokens(
-  tokenInAddress,
-  tokenOutAddress
+// Predict upfront fee before opening
+const fee = await mento.borrow.predictOpenTroveUpfrontFee(
+  'USDm',
+  parseUnits('1000', 18),
+  parseUnits('0.05', 18)
 )
 ```
 
-### Write Operations
+## Supported Chains
 
-The SDK supports write transactions for submitting state-changing operations to the blockchain. Write operations require a signer (Ethers) or wallet client (Viem).
+| Chain | Chain ID | Constant |
+|-------|----------|----------|
+| Celo Mainnet | 42220 | `ChainId.CELO` |
+| Celo Sepolia | 11142220 | `ChainId.CELO_SEPOLIA` |
 
-#### Setup for Write Operations
+## Development
 
-**With Viem:**
+```bash
+# Install dependencies
+pnpm install
 
-```typescript
-import { createPublicClient, createWalletClient, http } from 'viem'
-import { privateKeyToAccount } from 'viem/accounts'
-import { celo } from 'viem/chains'
-import { Mento } from '@mento/sdk'
+# Build
+pnpm build
 
-// Create account from private key
-const account = privateKeyToAccount('0x...')
+# Run tests
+pnpm test
 
-// Create public and wallet clients
-const publicClient = createPublicClient({
-  chain: celo,
-  transport: http('https://forno.celo.org'),
-})
-
-const walletClient = createWalletClient({
-  account,
-  chain: celo,
-  transport: http('https://forno.celo.org'),
-})
-
-// Initialize SDK with write support
-const mento = await Mento.create({
-  provider: publicClient,
-  signer: walletClient, // Add wallet client for write operations
-})
+# Lint
+pnpm lint
 ```
 
-**With Ethers v6:**
+### Cache Generation
 
-```typescript
-import { JsonRpcProvider, Wallet } from 'ethers'
-import { Mento } from '@mento/sdk'
+The SDK ships with pre-generated route and token caches for fast startup:
 
-// Create provider and signer
-const provider = new JsonRpcProvider('https://forno.celo.org')
-const signer = new Wallet('0x...', provider)
-
-// Initialize SDK with write support
-const mento = await Mento.create({
-  provider,
-  signer, // Add signer for write operations
-})
+```bash
+pnpm cacheRoutes
+pnpm cacheTokens
 ```
 
-#### Token Approval
+Override RPC URLs via environment variables:
 
-Approve tokens for Mento protocol interactions:
-
-```typescript
-// Get the adapter (provider-agnostic)
-const adapter = mento.getAdapter()
-
-// Approve USDC for Mento Broker
-const tx = await adapter.writeContract({
-  address: '0x765DE816845861e75A25fCA122bb6898B8B1282a', // USDC on Celo
-  abi: ['function approve(address spender, uint256 amount) returns (bool)'],
-  functionName: 'approve',
-  args: [
-    '0x...', // Spender address (e.g., Mento Broker)
-    1000000n, // Amount (1 USDC with 6 decimals)
-  ],
-})
-
-console.log('Transaction hash:', tx.hash)
-console.log('From:', tx.from)
-console.log('To:', tx.to)
-
-// Wait for confirmation
-const receipt = await tx.wait()
-console.log('Transaction confirmed in block:', receipt.blockNumber)
-console.log('Status:', receipt.status) // 'success' or 'failed'
+```bash
+CELO_RPC_URL=https://your-rpc.com pnpm cacheRoutes
+CELO_SEPOLIA_RPC_URL=https://your-sepolia-rpc.com pnpm cacheTokens
 ```
-
-#### Transaction Status Tracking
-
-Monitor transaction status and confirmations:
-
-```typescript
-// Submit transaction
-const tx = await adapter.writeContract({...})
-
-// Check if transaction is mined (returns null if pending)
-const receipt = await tx.getReceipt()
-if (receipt) {
-  console.log('Transaction mined!', receipt.blockNumber)
-}
-
-// Wait for specific number of confirmations
-const confirmedReceipt = await tx.wait(3)  // Wait for 3 confirmations
-console.log('Transaction confirmed after 3 blocks')
-```
-
-#### Gas Estimation
-
-Estimate gas before submitting transactions:
-
-```typescript
-// Estimate gas for an approval
-const estimatedGas = await adapter.estimateGas({
-  address: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
-  abi: ['function approve(address spender, uint256 amount) returns (bool)'],
-  functionName: 'approve',
-  args: ['0x...', 1000000n],
-})
-
-console.log('Estimated gas:', estimatedGas) // Returns BigInt
-```
-
-#### Custom Gas Parameters
-
-Customize gas parameters for transactions:
-
-```typescript
-// Legacy gas price (Type 0/1 transactions)
-const tx = await adapter.writeContract({
-  address: '0x...',
-  abi: [...],
-  functionName: 'approve',
-  args: [...],
-  gasLimit: 100000n,       // Custom gas limit
-  gasPrice: 5000000000n,   // 5 gwei
-})
-
-// EIP-1559 (Type 2 transactions)
-const tx = await adapter.writeContract({
-  address: '0x...',
-  abi: [...],
-  functionName: 'approve',
-  args: [...],
-  gasLimit: 100000n,
-  maxFeePerGas: 10000000000n,        // 10 gwei max
-  maxPriorityFeePerGas: 2000000000n, // 2 gwei priority
-})
-
-// Custom nonce (for transaction ordering)
-const tx = await adapter.writeContract({
-  address: '0x...',
-  abi: [...],
-  functionName: 'approve',
-  args: [...],
-  nonce: 42n,  // Explicit nonce
-})
-```
-
-#### Error Handling
-
-The SDK provides detailed error information:
-
-```typescript
-import { ValidationError, ExecutionError, NetworkError } from '@mento/sdk'
-
-try {
-  const tx = await adapter.writeContract({...})
-  const receipt = await tx.wait()
-} catch (error) {
-  if (error instanceof ValidationError) {
-    // Pre-submission validation errors (no gas cost)
-    console.error('Invalid parameters:', error.message)
-  } else if (error instanceof ExecutionError) {
-    // Transaction reverted on-chain (gas was consumed)
-    console.error('Transaction failed:', error.message)
-    console.error('Revert reason:', error.revertReason)
-  } else if (error instanceof NetworkError) {
-    // RPC/network errors
-    console.error('Network error:', error.message)
-    if (error.retry) {
-      console.log('This error is retryable')
-    }
-  }
-}
-```
-
-#### Utility Methods
-
-Additional helper methods for write operations:
-
-```typescript
-// Get signer/wallet address
-const address = await adapter.getSignerAddress()
-console.log('Wallet address:', address)
-
-// Get current nonce
-const nonce = await adapter.getTransactionCount(address)
-console.log('Next nonce:', nonce)
-```
-
-## Contributing
-
-Contributions are welcome! Please read our contributing guidelines for details.
 
 ## License
 
 MIT
-
----
-
-For more detailed documentation and examples, visit our [documentation site](https://docs.mento.org).

@@ -6,6 +6,7 @@ import { ROUTER_ABI, ERC20_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
 import { encodeRoutePath, RouterRoute, ReadonlyRouterRoutes } from '../../utils/pathEncoder'
 import { validateAddress } from '../../utils/validation'
+import { retryOperation } from '../../utils'
 
 /**
  * Options for configuring a swap transaction
@@ -94,6 +95,11 @@ export class SwapService {
    * @param options - Swap configuration options (slippage, deadline)
    * @param route - Optional pre-fetched route for better performance
    * @returns Combined transaction with approval (if needed) and swap params
+   * @throws {Error} 'Slippage tolerance cannot be negative' - if slippageTolerance < 0
+   * @throws {Error} 'Slippage tolerance exceeds maximum' - if slippageTolerance > 20%
+   * @throws {Error} 'Deadline must be in the future' - if deadline is not a future timestamp
+   * @throws {Error} Invalid address - if any address parameter is not a valid Ethereum address
+   * @throws {RouteNotFoundError} If no trading route exists between the token pair
    *
    * @example
    * ```typescript
@@ -151,6 +157,11 @@ export class SwapService {
    * @param options - Swap configuration options (slippage, deadline)
    * @param route - Optional pre-fetched route for better performance
    * @returns Detailed swap parameters including transaction data
+   * @throws {Error} 'Slippage tolerance cannot be negative' - if slippageTolerance < 0
+   * @throws {Error} 'Slippage tolerance exceeds maximum' - if slippageTolerance > 20%
+   * @throws {Error} 'Deadline must be in the future' - if deadline is not a future timestamp
+   * @throws {Error} Invalid address - if any address parameter is not a valid Ethereum address
+   * @throws {RouteNotFoundError} If no trading route exists between the token pair
    *
    * @example
    * ```typescript
@@ -174,6 +185,11 @@ export class SwapService {
     options: SwapOptions,
     route?: Route
   ): Promise<SwapDetails> {
+    const deadline = options.deadline
+    if (deadline <= BigInt(Date.now()) / 1000n) {
+      throw new Error('Deadline must be in the future')
+    }
+
     // Validate all address inputs
     validateAddress(tokenIn, 'tokenIn')
     validateAddress(tokenOut, 'tokenOut')
@@ -186,8 +202,6 @@ export class SwapService {
 
     const expectedAmountOut = await this.quoteService.getAmountOut(tokenIn, tokenOut, amountIn, route)
     const amountOutMin = this.calculateMinAmountOut(expectedAmountOut, options.slippageTolerance)
-
-    const deadline = options.deadline
 
     const routerRoutes = encodeRoutePath(route.path, tokenIn as Address, tokenOut as Address)
     const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
@@ -228,12 +242,14 @@ export class SwapService {
    */
   private async getAllowance(tokenIn: Address, owner: Address): Promise<bigint> {
     const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
-    return this.publicClient.readContract({
-      address: tokenIn,
-      abi: ERC20_ABI,
-      functionName: 'allowance',
-      args: [owner, routerAddress],
-    }) as Promise<bigint>
+    return retryOperation(() =>
+      this.publicClient.readContract({
+        address: tokenIn,
+        abi: ERC20_ABI,
+        functionName: 'allowance',
+        args: [owner, routerAddress],
+      })
+    ) as Promise<bigint>
   }
 
   /**

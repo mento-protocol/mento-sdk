@@ -205,8 +205,8 @@ export async function quoteZapInInternal(
   )
 
   return {
-    amountOutMinA: finalAmountOutMinA,
-    amountOutMinB: finalAmountOutMinB,
+    amountOutFromA: finalAmountOutMinA,
+    amountOutFromB: finalAmountOutMinB,
     amountAMin: calculateMinAmount(amountAMin, options.slippageTolerance),
     amountBMin: calculateMinAmount(amountBMin, options.slippageTolerance),
     estimatedMinLiquidity: expectedLiquidity,

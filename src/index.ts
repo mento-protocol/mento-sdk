@@ -12,7 +12,6 @@ import { TradingService } from './services/trading'
 import { LiquidityService } from './services/liquidity'
 import { BorrowService } from './services/borrow'
 
-// TODO: Ensure there are no silent errors in the codebase
 
 /**
  * @class Mento
@@ -22,6 +21,8 @@ import { BorrowService } from './services/borrow'
  *              const mento = await Mento.create(ChainId.CELO);
  *              // or with custom RPC URL
  *              const mento = await Mento.create(ChainId.CELO, 'https://custom-rpc-url.com');
+ *              // or with an existing viem PublicClient
+ *              const mento = await Mento.create(ChainId.CELO, myPublicClient);
  *
  *              // Get all stable tokens
  *              const stableTokens = await mento.tokens.getStableTokens();
@@ -76,10 +77,11 @@ export class Mento {
   /**
    * Create a new Mento SDK instance
    * @param chainId - The chain ID (e.g., ChainId.CELO, ChainId.CELO_SEPOLIA)
-   * @param rpcUrl - Optional RPC URL. If not provided, uses default for the chain
+   * @param rpcUrlOrClient - Optional RPC URL string or an existing viem PublicClient.
+   *                         If not provided, uses the default RPC URL for the chain.
    * @returns A new Mento instance
    */
-  public static async create(chainId: number, rpcUrl?: string): Promise<Mento> {
+  public static async create(chainId: number, rpcUrlOrClient?: string | PublicClient): Promise<Mento> {
     // Validate chainId is supported
     const supportedChainIds = Object.values(ChainId).filter((v) => typeof v === 'number') as number[]
     if (!supportedChainIds.includes(chainId)) {
@@ -89,14 +91,16 @@ export class Mento {
       )
     }
 
-    // Use provided RPC URL or default for the chain
-    const transport = http(rpcUrl || getDefaultRpcUrl(chainId))
-
-    // Create viem PublicClient
-    const publicClient = createPublicClient({
-      chain: getChainConfig(chainId),
-      transport,
-    })
+    let publicClient: PublicClient
+    if (rpcUrlOrClient && typeof rpcUrlOrClient !== 'string') {
+      publicClient = rpcUrlOrClient
+    } else {
+      const transport = http(rpcUrlOrClient || getDefaultRpcUrl(chainId))
+      publicClient = createPublicClient({
+        chain: getChainConfig(chainId),
+        transport,
+      })
+    }
 
     const tokenService = new TokenService(publicClient, chainId)
     const poolService = new PoolService(publicClient, chainId)
