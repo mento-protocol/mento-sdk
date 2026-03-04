@@ -8,12 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@mento-protocol/mento-core-ts':
-        specifier: ^0.2.0
-        version: 0.2.3
-      dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
       viem:
         specifier: ^2.21.44
         version: 2.21.44(typescript@5.6.3)
@@ -42,6 +36,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^5.53.0
         version: 5.62.0(eslint@8.57.1)(typescript@5.6.3)
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
       eslint:
         specifier: ^8.34.0
         version: 8.57.1
@@ -504,9 +501,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
-
-  '@mento-protocol/mento-core-ts@0.2.3':
-    resolution: {integrity: sha512-Fjj0t2a6xqpHTbhfafioqjkY9ZDBsq3oy/DkRizihDI2zul/PFQJfQwyy7WDSSc/cNAflevBeSJyqTPTv9HD/Q==}
 
   '@noble/curves@1.6.0':
     resolution: {integrity: sha512-TlaHRXDehJuRNR9TfZDNQ45mMEd5dwUwmicsafcIX4SsNiqnCHKjE/1alYPd/lDRVhxdhUAlv8uEhMCI5zjIJQ==}
@@ -2436,8 +2430,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
-
-  '@mento-protocol/mento-core-ts@0.2.3': {}
 
   '@noble/curves@1.6.0':
     dependencies:
