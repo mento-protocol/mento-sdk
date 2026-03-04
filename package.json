@@ -1,7 +1,7 @@
 {
   "name": "@mento-protocol/mento-sdk",
   "description": "Official SDK for interacting with the Mento Protocol",
-  "version": "3.0.0-beta.29",
+  "version": "3.0.0-beta.30",
   "license": "MIT",
   "author": "Mento Labs",
   "keywords": [
@@ -53,11 +53,10 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "5.6.3",
-    "yargs-parser": "^21.1.1"
+    "yargs-parser": "^21.1.1",
+    "dotenv": "^16.4.5"
   },
   "dependencies": {
-    "@mento-protocol/mento-core-ts": "^0.2.0",
-    "dotenv": "^16.4.5",
     "viem": "^2.21.44"
   }
 }
