@@ -5,9 +5,10 @@ export const NETWORK_MAP: Record<string, number> = {
 }
 
 // RPC URLs for different networks
+// Can be overridden with CELO_RPC_URL and CELO_SEPOLIA_RPC_URL environment variables
 export const rpcUrls = {
-  42220: 'https://forno.celo.org',
-  11142220: 'https://forno.celo-sepolia.celo-testnet.org',
+  42220: process.env.CELO_RPC_URL || 'https://forno.celo.org',
+  11142220: process.env.CELO_SEPOLIA_RPC_URL || 'https://forno.celo-sepolia.celo-testnet.org',
 } as const
 
 // Type for supported chain IDs
@@ -21,8 +22,8 @@ export interface NetworkConfig {
 
 /**
  * Parse network arguments and return network configuration
- * @param networkArg - The network name argument (e.g., 'celo')
- * @param chainIdArg - The chainId argument (e.g., '42220')
+ * @param networkArg - The network name argument (e.g., 'celo', 'celo-sepolia')
+ * @param chainIdArg - The chainId argument (e.g., '42220', '11142220')
  * @returns NetworkConfig with chainId and rpcUrl
  */
 export function parseNetworkArgs(
@@ -36,7 +37,7 @@ export function parseNetworkArgs(
     const networkName = networkArg.toLowerCase()
     if (!NETWORK_MAP[networkName]) {
       console.error(
-        `❌ Invalid network "${networkArg}". Valid networks: ${Object.keys(
+        `Invalid network "${networkArg}". Valid networks: ${Object.keys(
           NETWORK_MAP
         ).join(', ')}`
       )
@@ -48,7 +49,7 @@ export function parseNetworkArgs(
     chainId = Number(chainIdArg)
     if (!rpcUrls[chainId as keyof typeof rpcUrls]) {
       console.error(
-        `❌ Invalid chainId "${chainId}". Valid chainIds: ${Object.keys(
+        `Invalid chainId "${chainId}". Valid chainIds: ${Object.keys(
           rpcUrls
         ).join(', ')}`
       )

@@ -1,58 +1,205 @@
 # Mento SDK
 
-The official Mento Protocol SDK for interacting with Multi-Collateral Mento smart contracts on the Celo network.
+A TypeScript SDK for interacting with the [Mento Protocol](https://www.mento.org/). Provides a simple interface for token swaps, liquidity management, borrowing, and trading status queries.
 
 ## Installation
 
-```sh
-# Install with npm
-npm install @mento-protocol/mento-sdk
-
-# Or install with yarn
-yarn add @mento-protocol/mento-sdk
+```bash
+npm install @mento-protocol/mento-sdk viem
+# or
+pnpm add @mento-protocol/mento-sdk viem
 ```
 
-## Learn more
+`viem` is a peer dependency required for blockchain interactions.
 
-You can find example usages of the SDK in the [mento-sdk-examples](https://github.com/mento-protocol/mento-sdk-examples) repository. For in-depth documentation and walk through explanations please see the [SDK section](https://docs.mento.org/mento/developers/mento-sdk) of the Mento docs.
+## Quick Start
 
-## Tokens & Tradable Pairs Cache
+```typescript
+import { Mento, ChainId, deadlineFromMinutes } from '@mento-protocol/mento-sdk'
+import { parseUnits } from 'viem'
 
-Anytime we launch a new stable token, we need to update the tokens & tradable pairs caches.
+// Initialize the SDK (uses default public RPC)
+const mento = await Mento.create(ChainId.CELO)
 
-- The `yarn cacheTokens` script generates a TypeScript file containing a list of all tradable Tokens on the Mento protocol. This cache can be used by UIs to avoid costly async token data lookups.
-- The `yarn cacheTradablePairs` script generates a TypeScript file containing a list of all tradable pairs on the Mento protocol. This file is used to cache the tradable pairs in the SDK and avoid costly re-fetching from the network.
+// Or with a custom RPC URL
+const mento = await Mento.create(ChainId.CELO, 'https://your-rpc-url.com')
 
-## Token Graph Visualization
-
-Current token connectivity on Celo Mainnet (last updated: 2025-10-02):
-
-```mermaid
-graph TD
-    USDT["USD₮"]
-    USDC --- USDm
-    axlUSDC --- USDm
-    USDT --- USDm
-    AUDm --- USDm
-    CADm --- USDm
-    CELO --- USDm
-    GBPm --- USDm
-    USDm --- ZARm
-    CHFm --- USDm
-    PHPm --- USDm
-    JPYm --- USDm
-    COPm --- USDm
-    BRLm --- USDm
-    axlEUROC --- EURm
-    EURm --- USDm
-    GHSm --- USDm
-    NGNm --- USDm
-    KESm --- USDm
-    USDm --- XOFm
+// Or with an existing viem PublicClient
+const mento = await Mento.create(ChainId.CELO, yourPublicClient)
 ```
 
-**Network Stats:** 20 tokens, 19 direct trading pairs
+## Services
 
-> 💡 This graph shows direct trading pairs only. The SDK automatically finds optimal routes including multi-hop paths.
->
-> To regenerate: `yarn getTokenGraph`
+The SDK is organized into service namespaces:
+
+| Service | Description |
+|---------|-------------|
+| `mento.tokens` | Query stable tokens and collateral assets |
+| `mento.pools` | Discover and inspect liquidity pools |
+| `mento.routes` | Find trading routes (direct and multi-hop) |
+| `mento.quotes` | Get expected swap output amounts |
+| `mento.swap` | Build swap transactions with approvals |
+| `mento.trading` | Check circuit breakers and trading limits |
+| `mento.liquidity` | Add/remove liquidity, zap in/out |
+| `mento.borrow` | Open, adjust, and close troves |
+
+## Token Queries
+
+```typescript
+// Get all Mento stable tokens
+const stableTokens = await mento.tokens.getStableTokens()
+
+// Get all collateral assets
+const collateral = await mento.tokens.getCollateralAssets()
+```
+
+## Swaps
+
+```typescript
+const USDm = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
+const CELO = '0x471EcE3750Da237f93B8E339c536989b8978a438'
+
+// Get a quote
+const amountIn = parseUnits('100', 18)
+const expectedOut = await mento.quotes.getAmountOut(USDm, CELO, amountIn)
+
+// Build a swap transaction (includes approval if needed)
+const { approval, swap } = await mento.swap.buildSwapTransaction(
+  USDm,
+  CELO,
+  amountIn,
+  recipientAddress,
+  ownerAddress,
+  { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
+)
+
+// Execute with any viem wallet client
+if (approval) {
+  await walletClient.sendTransaction(approval)
+}
+await walletClient.sendTransaction(swap.params)
+```
+
+## Routes
+
+```typescript
+// Find a route between two tokens
+const route = await mento.routes.findRoute(USDm, CELO)
+console.log(`Hops: ${route.path.length}`)
+
+// Get all tradable routes (uses pre-generated cache by default)
+const routes = await mento.routes.getRoutes()
+
+// Generate fresh routes from blockchain
+const freshRoutes = await mento.routes.getRoutes({ cached: false })
+```
+
+## Trading Status
+
+```typescript
+// Check if a pair is tradable (circuit breaker check)
+const isTradable = await mento.trading.isPairTradable(USDm, CELO)
+
+// Get full tradability status for a pool
+const pools = await mento.pools.getPools()
+const status = await mento.trading.getPoolTradabilityStatus(pools[0])
+
+if (!status.circuitBreakerOk) {
+  console.log('Trading suspended by circuit breaker')
+} else if (!status.limitsOk) {
+  console.log('Trading limit reached')
+}
+```
+
+## Liquidity
+
+```typescript
+// Add liquidity to a pool
+const addTx = await mento.liquidity.buildAddLiquidityTransaction(
+  poolAddress, tokenA, amountA, tokenB, amountB,
+  recipient, owner,
+  { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
+)
+
+// Zap in with a single token
+const zapTx = await mento.liquidity.buildZapInTransaction(
+  poolAddress, tokenIn, amountIn, 0.5, // split ratio
+  recipient, owner,
+  { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
+)
+
+// Get LP token balance
+const balance = await mento.liquidity.getLPTokenBalance(poolAddress, owner)
+```
+
+## Borrowing
+
+```typescript
+import { parseUnits } from 'viem'
+
+// Open a trove (borrow against collateral)
+const openTx = await mento.borrow.buildOpenTroveTransaction('USDm', {
+  owner: ownerAddress,
+  ownerIndex: 0,
+  collAmount: parseUnits('10', 18),
+  boldAmount: parseUnits('1000', 18),
+  annualInterestRate: parseUnits('0.05', 18), // 5%
+  maxUpfrontFee: parseUnits('100', 18),
+})
+
+// Get trove data
+const trove = await mento.borrow.getTroveData('USDm', troveId)
+
+// Get system parameters
+const params = await mento.borrow.getSystemParams('USDm')
+
+// Predict upfront fee before opening
+const fee = await mento.borrow.predictOpenTroveUpfrontFee(
+  'USDm',
+  parseUnits('1000', 18),
+  parseUnits('0.05', 18)
+)
+```
+
+## Supported Chains
+
+| Chain | Chain ID | Constant |
+|-------|----------|----------|
+| Celo Mainnet | 42220 | `ChainId.CELO` |
+| Celo Sepolia | 11142220 | `ChainId.CELO_SEPOLIA` |
+
+## Development
+
+```bash
+# Install dependencies
+pnpm install
+
+# Build
+pnpm build
+
+# Run tests
+pnpm test
+
+# Lint
+pnpm lint
+```
+
+### Cache Generation
+
+The SDK ships with pre-generated route and token caches for fast startup:
+
+```bash
+pnpm cacheRoutes
+pnpm cacheTokens
+```
+
+Override RPC URLs via environment variables:
+
+```bash
+CELO_RPC_URL=https://your-rpc.com pnpm cacheRoutes
+CELO_SEPOLIA_RPC_URL=https://your-sepolia-rpc.com pnpm cacheTokens
+```
+
+## License
+
+MIT

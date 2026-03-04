@@ -1,85 +1,131 @@
-import { providers } from 'ethers'
-import { Mento, Token } from '../../src/mento'
-import { rpcUrls, SupportedChainId } from '../shared/network'
+import 'dotenv/config'
+import { createPublicClient, http } from 'viem'
+import { celo } from 'viem/chains'
+import { defineChain } from 'viem'
+import { TokenService } from '../../src/services/tokens/tokenService'
+import type { Token } from '../../src/core/types'
+import { rpcUrls, type SupportedChainId } from '../shared/network'
 import { parseCommandLineArgs, printUsageTips } from './cli'
-import { generateFileContent, writeToFile } from './fileGenerator'
-import { generateTokensIndexFile } from './tokensIndexGenerator'
+import { generateConsolidatedContent, writeConsolidatedFile } from './fileGenerator'
+
+const celoSepolia = defineChain({
+  id: 11142220,
+  name: 'Celo Sepolia',
+  nativeCurrency: {
+    name: 'CELO',
+    symbol: 'CELO',
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: { http: ['https://forno.celo-sepolia.celo-testnet.org'] },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Celo Sepolia Explorer',
+      url: 'https://celo-sepolia.blockscout.com',
+    },
+  },
+  testnet: true,
+})
+
+const chainConfigs = {
+  42220: celo,
+  11142220: celoSepolia,
+} as const
 
 /**
- * Fetch tokens for a specific chain
+ * Fetch all tokens (stable tokens + collateral assets) for a chain
  */
 async function fetchTokensForChain(
   chainId: SupportedChainId
 ): Promise<Token[]> {
-  const provider = new providers.JsonRpcProvider(rpcUrls[chainId])
-  const mento = await Mento.create(provider)
+  const chain = chainConfigs[chainId]
+  const rpcUrl = rpcUrls[chainId]
+
+  // Create viem PublicClient
+  const publicClient = createPublicClient({
+    chain,
+    transport: http(rpcUrl),
+  }) as any
+
+  const tokenService = new TokenService(publicClient, chainId)
 
   console.log(`📡 Fetching tokens from blockchain...`)
-  const tokens = await mento.getTokensAsync({ cached: false })
+
+  // Fetch both stable tokens and collateral assets (skip supply data for caching)
+  const [stableTokens, collateralAssets] = await Promise.all([
+    tokenService.getStableTokens(/* includeSupply */ false),
+    tokenService.getCollateralAssets(),
+  ])
+
+  // Combine and deduplicate by address
+  const tokenMap = new Map<string, Token>()
+
+  // Add stable tokens
+  stableTokens.forEach((token) => {
+    const baseToken: Token = {
+      address: token.address,
+      name: token.name,
+      symbol: token.symbol,
+      decimals: token.decimals,
+    }
+    tokenMap.set(token.address.toLowerCase(), baseToken)
+  })
+
+  // Add collateral assets
+  collateralAssets.forEach((token) => {
+    if (!tokenMap.has(token.address.toLowerCase())) {
+      tokenMap.set(token.address.toLowerCase(), token)
+    }
+  })
+
+  const tokens = Array.from(tokenMap.values())
   console.log(`✅ Fetched ${tokens.length} unique tokens`)
 
   return tokens
 }
 
 /**
- * Generate and cache tokens for a specific chain
- */
-async function generateAndCacheTokens(
-  chainId: SupportedChainId
-): Promise<Token[]> {
-  const tokens = await fetchTokensForChain(chainId)
-
-  // Generate and write the TypeScript file
-  const content = generateFileContent(chainId, tokens)
-  const fileName = writeToFile(chainId, content, __dirname)
-
-  console.log(
-    `\n✅ Successfully cached ${tokens.length} tokens to ${fileName}\n`
-  )
-
-  return tokens
-}
-
-/**
- * Main function that orchestrates the entire caching process
+ * Main function
+ *
+ * Generates a single consolidated tokens.ts file with all chain data
  */
 export async function main(): Promise<void> {
   const args = parseCommandLineArgs()
 
-  // Determine which chain IDs to process
   const chainIdsToProcess =
     args.targetChainIds ||
     (Object.keys(rpcUrls).map(Number) as SupportedChainId[])
 
   console.log(`📡 Cache tokens for chain(s): ${chainIdsToProcess.join(', ')}`)
 
-  // Store tokens by chain for index file generation
+  // Fetch tokens for all chains
   const tokensByChain: { [chainId: number]: Token[] } = {}
 
-  // Generate tokens for specified chain IDs
   for (const chainId of chainIdsToProcess) {
-    console.log(`\n🔄 \x1b[1mGenerating tokens for chain ${chainId}...\x1b[0m`)
+    console.log(`\n🔄 \x1b[1mFetching tokens for chain ${chainId}...\x1b[0m`)
+
     try {
-      const tokens = await generateAndCacheTokens(chainId as SupportedChainId)
+      const tokens = await fetchTokensForChain(chainId as SupportedChainId)
       tokensByChain[chainId] = tokens
     } catch (error) {
-      console.error(`❌ Error generating tokens for chain ${chainId}:`, error)
+      console.error(`❌ Error fetching tokens for chain ${chainId}:`, error)
+      // Use empty array for failed chains
+      tokensByChain[chainId] = []
     }
   }
 
-  // Generate the main tokens.ts index file with enums and mappings
-  console.log(`\n🔄 \x1b[1mGenerating tokens.ts index file...\x1b[0m`)
-  generateTokensIndexFile(tokensByChain, __dirname)
+  // Generate consolidated cache file
+  console.log(`\n🔄 \x1b[1mGenerating consolidated tokens cache file...\x1b[0m`)
+  const content = generateConsolidatedContent(tokensByChain)
+  const fileName = writeConsolidatedFile(content, __dirname)
 
+  const totalTokens = Object.values(tokensByChain).reduce((sum, tokens) => sum + tokens.length, 0)
+  console.log(`✅ Successfully cached ${totalTokens} tokens across ${chainIdsToProcess.length} chains to src/cache/${fileName}`)
+
+  console.log(`\nAll done!`)
   printUsageTips()
 }
 
-// Run the script if called directly
-if (require.main === module) {
-  main()
-    .then(() => process.exit(0))
-    .catch((error) => {
-      console.error(error)
-      process.exit(1)
-    })
-}
+// Execute if run directly
+main().catch(console.error)
