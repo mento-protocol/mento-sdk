@@ -78,7 +78,7 @@
     "yargs-parser": "^21.1.1",
     "dotenv": "^16.4.5"
   },
-  "dependencies": {
+  "peerDependencies": {
     "viem": "^2.21.44"
   }
 }
