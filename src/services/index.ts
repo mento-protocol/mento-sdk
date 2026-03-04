@@ -1,5 +1,3 @@
-export * from './tokens/supplyAdjustmentService'
-export * from './tokens/supply'
 export * from './pools'
 export * from './routes'
 export * from './quotes'
