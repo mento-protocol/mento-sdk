@@ -14,6 +14,7 @@ describe('SwapService', () => {
   const tokenIn = '0x765DE816845861e75A25fCA122bb6898B8B1282a'
   const tokenOut = '0x471EcE3750Da237f93B8E339c536989b8978a438'
   const recipient = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
+  const owner = '0x1111111111111111111111111111111111111111'
   const amountIn = 100000000000000000000n
 
   const mockRoute = {
@@ -91,6 +92,40 @@ describe('SwapService', () => {
 
       expect(result.deadline).toBe(futureDeadline)
       expect(result.params.data).toBeDefined()
+    })
+  })
+
+  describe('amountIn validation', () => {
+    it('should reject zero amountIn in buildSwapParams', async () => {
+      await expect(
+        service.buildSwapParams(tokenIn, tokenOut, 0n, recipient, {
+          slippageTolerance: 0.5,
+          deadline: deadlineFromMinutes(5),
+        })
+      ).rejects.toThrow('amountIn must be greater than zero')
+    })
+
+    it('should reject negative amountIn in buildSwapParams', async () => {
+      await expect(
+        service.buildSwapParams(tokenIn, tokenOut, -1n, recipient, {
+          slippageTolerance: 0.5,
+          deadline: deadlineFromMinutes(5),
+        })
+      ).rejects.toThrow('amountIn must be greater than zero')
+    })
+
+    it('should reject zero amountIn in buildSwapTransaction', async () => {
+      await expect(
+        service.buildSwapTransaction(
+          tokenIn,
+          tokenOut,
+          0n,
+          recipient,
+          owner,
+          { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) },
+          mockRoute
+        )
+      ).rejects.toThrow('amountIn must be greater than zero')
     })
   })
 })
