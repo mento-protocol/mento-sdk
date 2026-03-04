@@ -18,5 +18,5 @@
  * ```
  */
 export function deadlineFromMinutes(minutes: number): bigint {
-  return BigInt(Math.floor(Date.now() / 1000) + minutes * 60)
+  return BigInt(Date.now()) / 1000n + BigInt(minutes * 60)
 }

@@ -185,6 +185,11 @@ export class SwapService {
     options: SwapOptions,
     route?: Route
   ): Promise<SwapDetails> {
+    const deadline = options.deadline
+    if (deadline <= BigInt(Date.now()) / 1000n) {
+      throw new Error('Deadline must be in the future')
+    }
+
     // Validate all address inputs
     validateAddress(tokenIn, 'tokenIn')
     validateAddress(tokenOut, 'tokenOut')
@@ -197,11 +202,6 @@ export class SwapService {
 
     const expectedAmountOut = await this.quoteService.getAmountOut(tokenIn, tokenOut, amountIn, route)
     const amountOutMin = this.calculateMinAmountOut(expectedAmountOut, options.slippageTolerance)
-
-    const deadline = options.deadline
-    if (deadline <= BigInt(Math.floor(Date.now() / 1000))) {
-      throw new Error('Deadline must be in the future')
-    }
 
     const routerRoutes = encodeRoutePath(route.path, tokenIn as Address, tokenOut as Address)
     const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
