@@ -6,7 +6,7 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.lint.json"
   },
   "plugins": ["@typescript-eslint"],
   "root": true,
@@ -14,5 +14,13 @@
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-non-null-assertion": "off"
   },
-  "ignorePatterns": ["jest.config.ts", "tests/**/*"]
+  "ignorePatterns": ["jest.config.ts"],
+  "overrides": [
+    {
+      "files": ["tests/**/*"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    }
+  ]
 }

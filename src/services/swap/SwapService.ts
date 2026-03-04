@@ -6,6 +6,7 @@ import { ROUTER_ABI, ERC20_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
 import { encodeRoutePath, RouterRoute, ReadonlyRouterRoutes } from '../../utils/pathEncoder'
 import { validateAddress } from '../../utils/validation'
+import { retryOperation } from '../../utils'
 
 /**
  * Options for configuring a swap transaction
@@ -188,6 +189,9 @@ export class SwapService {
     const amountOutMin = this.calculateMinAmountOut(expectedAmountOut, options.slippageTolerance)
 
     const deadline = options.deadline
+    if (deadline <= BigInt(Math.floor(Date.now() / 1000))) {
+      throw new Error('Deadline must be in the future')
+    }
 
     const routerRoutes = encodeRoutePath(route.path, tokenIn as Address, tokenOut as Address)
     const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
@@ -228,12 +232,14 @@ export class SwapService {
    */
   private async getAllowance(tokenIn: Address, owner: Address): Promise<bigint> {
     const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
-    return this.publicClient.readContract({
-      address: tokenIn,
-      abi: ERC20_ABI,
-      functionName: 'allowance',
-      args: [owner, routerAddress],
-    }) as Promise<bigint>
+    return retryOperation(() =>
+      this.publicClient.readContract({
+        address: tokenIn,
+        abi: ERC20_ABI,
+        functionName: 'allowance',
+        args: [owner, routerAddress],
+      })
+    ) as Promise<bigint>
   }
 
   /**

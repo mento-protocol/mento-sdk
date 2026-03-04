@@ -12,7 +12,6 @@ import { TradingService } from './services/trading'
 import { LiquidityService } from './services/liquidity'
 import { BorrowService } from './services/borrow'
 
-// TODO: Ensure there are no silent errors in the codebase
 
 /**
  * @class Mento

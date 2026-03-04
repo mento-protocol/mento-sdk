@@ -69,7 +69,6 @@ export class RouteService {
       const symbol1 = this.symbolCache.get(pool.token1)
 
       if (!symbol0 || !symbol1) {
-        // TODO: Consider error handling across the codebase for better consumer experience.
         throw new Error(`Symbol not found for token ${pool.token0} or ${pool.token1}`)
       }
 
