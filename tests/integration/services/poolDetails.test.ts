@@ -131,11 +131,11 @@ describe('PoolService.getPoolDetails() Integration', () => {
       expect(details.rebalancing.rebalanceIncentivePercent).toBeGreaterThanOrEqual(0)
       expect(details.rebalancing.rebalanceIncentivePercent).toBeLessThanOrEqual(1)
 
-      // Thresholds should be <= 10% (1000 bps)
+      // Thresholds should be <= 100% (10000 bps)
       expect(details.rebalancing.rebalanceThresholdAboveBps).toBeGreaterThanOrEqual(0n)
-      expect(details.rebalancing.rebalanceThresholdAboveBps).toBeLessThanOrEqual(1000n)
+      expect(details.rebalancing.rebalanceThresholdAboveBps).toBeLessThanOrEqual(10000n)
       expect(details.rebalancing.rebalanceThresholdBelowBps).toBeGreaterThanOrEqual(0n)
-      expect(details.rebalancing.rebalanceThresholdBelowBps).toBeLessThanOrEqual(1000n)
+      expect(details.rebalancing.rebalanceThresholdBelowBps).toBeLessThanOrEqual(10000n)
 
       // inBand should be consistent with price difference vs threshold
       if (details.pricing) {
