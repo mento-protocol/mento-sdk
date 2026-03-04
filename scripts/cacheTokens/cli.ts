@@ -1,34 +1,41 @@
-import { SupportedChainId } from '../shared/network'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const yargsParser = require('yargs-parser') as typeof import('yargs-parser')
+import { parseNetworkArgs } from '../shared/network'
 
-export interface CommandLineArgs {
-  targetChainIds?: SupportedChainId[]
+export interface CliArgs {
+  targetChainIds?: number[]
 }
 
-/**
- * Parse command line arguments for token caching script
- */
-export function parseCommandLineArgs(): CommandLineArgs {
-  const args: CommandLineArgs = {}
+export function parseCommandLineArgs(): CliArgs {
+  const argv = yargsParser(process.argv.slice(2), {
+    string: ['chainId', 'network', 'chain-ids'],
+    alias: {
+      c: 'chainId',
+      n: 'network',
+    },
+  })
 
-  // Check if specific chain IDs were requested
-  const chainIdArg = process.argv.find((arg) => arg.startsWith('--chain-ids='))
-  if (chainIdArg) {
-    const chainIdsStr = chainIdArg.split('=')[1]
-    args.targetChainIds = chainIdsStr
+  // Support both individual network/chainId flags and comma-separated chain-ids
+  let targetChainIds: number[] | undefined
+
+  if (argv['chain-ids']) {
+    // Parse comma-separated chain IDs
+    targetChainIds = argv['chain-ids']
       .split(',')
-      .map((id) => parseInt(id.trim(), 10) as SupportedChainId)
+      .map((id: string) => parseInt(id.trim(), 10))
+  } else if (argv.network || argv.chainId) {
+    // Parse single network configuration
+    const networkConfig = parseNetworkArgs(argv.network, argv.chainId)
+    targetChainIds = [networkConfig.chainId]
   }
 
-  return args
+  return { targetChainIds }
 }
 
-/**
- * Print usage tips for the token caching script
- */
 export function printUsageTips(): void {
-  console.log('\n💡 Usage tips:')
-  console.log('   - To cache tokens for specific chains:')
-  console.log('     yarn cacheTokens --chain-ids=42220,11142220')
-  console.log('   - To cache tokens for all chains:')
-  console.log('     yarn cacheTokens')
+  console.log('\nTip: You can cache specific networks only:')
+  console.log('   pnpm cacheTokens --network celo           # Cache only Celo mainnet')
+  console.log('   pnpm cacheTokens --chainId 42220          # Same as above')
+  console.log('   pnpm cacheTokens -n celo-sepolia          # Cache only Celo Sepolia')
+  console.log('   pnpm cacheTokens --chain-ids 42220,11142220  # Multiple chains')
 }

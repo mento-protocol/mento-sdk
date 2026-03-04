@@ -32,4 +32,11 @@ yarn-error.log*
 # local env files
 .env
 .env.*
-.tool-versions
+!.env.example
+
+# AI files
+.claude/
+.specify/*
+IMPLEMENTATION_PLAN.md
+
+.vscode/

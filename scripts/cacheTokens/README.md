@@ -15,25 +15,25 @@ This script fetches token metadata from the blockchain for all unique tokens ava
 ### Cache tokens for all supported chains
 
 ```bash
-yarn cacheTokens
+pnpm cacheTokens
 ```
 
 ### Cache tokens for specific chains
 
 ```bash
-yarn cacheTokens --chain-ids=42220,11142220
+pnpm cacheTokens --chain-ids=42220,11142220
 ```
 
 ## Output
 
-The script generates TypeScript files in `src/constants/`:
+The script generates TypeScript files in two locations:
 
-**Individual token files (per chain):**
+**Individual token files (per chain) in `src/cache/`:**
 
 - `tokens.42220.ts` - Celo Mainnet tokens (readonly Token[])
 - `tokens.11142220.ts` - Celo Sepolia Testnet tokens (readonly Token[])
 
-**Main index file (dynamically generated):**
+**Main index file in `src/utils/`:**
 
 - `tokens.ts` - Contains:
   - `TokenSymbol` enum - All unique token symbols across all chains
@@ -47,7 +47,7 @@ The script generates TypeScript files in `src/constants/`:
 
 Everything is computed dynamically from blockchain data:
 
-✅ **Token enum** - Unique symbols across all chains (e.g., `TokenSymbol.CELO`, `TokenSymbol.USDm`)  
+✅ **Token enum** - Unique symbols across all chains (e.g., `TokenSymbol.CELO`, `TokenSymbol.cUSD`)  
 ✅ **Address mappings** - Complete `TOKEN_ADDRESSES_BY_CHAIN` for all chains  
 ✅ **Helper functions** - Type-safe address lookups and token search  
 ✅ **Chain support** - Auto-detects supported chains from network config  
@@ -55,10 +55,10 @@ Everything is computed dynamically from blockchain data:
 
 ## Configuration
 
-RPC URLs can be configured via environment variables:
+RPC URLs are configured in `scripts/shared/network.ts`:
 
-- `CELO_RPC_URL` - Celo Mainnet RPC URL (default: <https://forno.celo.org>)
-- `CELO_SEPOLIA_RPC_URL` - Celo Sepolia RPC URL (default: <https://forno.celo-sepolia.celo-testnet.org>)
+- Celo Mainnet (42220): `https://forno.celo.org`
+- Celo Sepolia (11142220): `https://forno.celo-sepolia.celo-testnet.org`
 
 ## When to Regenerate
 
@@ -73,12 +73,19 @@ Regenerate cached tokens when:
 
 ```bash
 📡 Cache tokens for chain(s): 42220, 11142220
-🔄 Generating tokens for chain 42220...
-✅ Successfully cached 20 tokens to tokens.42220.ts
 
-🔄 Generating tokens for chain 11142220...
-✅ Successfully cached 20 tokens to tokens.11142220.ts
+🔄 Fetching tokens for chain 42220...
+📡 Fetching tokens from blockchain...
+✅ Fetched 20 unique tokens
+
+🔄 Fetching tokens for chain 11142220...
+📡 Fetching tokens from blockchain...
+✅ Fetched 20 unique tokens
 
 🔄 Generating tokens.ts index file...
-✅ Generated tokens.ts with 23 unique token symbols
+✅ Successfully generated tokens index file at src/utils/tokens.ts
+
+🔄 Generating per-chain cache files...
+✅ Successfully cached 20 tokens to tokens.42220.ts
+✅ Successfully cached 20 tokens to tokens.11142220.ts
 ```
