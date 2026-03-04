@@ -69,15 +69,15 @@ describe('Liquidity Service - Output Verification', () => {
     })
 
     it('should encode correct function selector for addLiquidity', async () => {
-      const params = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        2000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       // Decode the function call
       const decoded = decodeFunctionData({
@@ -92,15 +92,15 @@ describe('Liquidity Service - Output Verification', () => {
       const amountA = 1000000000000000000n
       const amountB = 2000000000000000000n
 
-      const params = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
         amountA,
-        TOKEN_1,
+        tokenB: TOKEN_1,
         amountB,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       const decoded = decodeFunctionData({
         abi: ROUTER_ABI,
@@ -133,15 +133,15 @@ describe('Liquidity Service - Output Verification', () => {
       const amount = 1000000000000000000n
       const slippage = 0.5
 
-      const params = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        amount,
-        TOKEN_1,
-        amount * 2n,
-        RECIPIENT,
-        { slippageTolerance: slippage, deadline: deadlineFromMinutes(20) }
-      )
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: amount,
+        tokenB: TOKEN_1,
+        amountB: amount * 2n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: slippage, deadline: deadlineFromMinutes(20) },
+      })
 
       const decoded = decodeFunctionData({
         abi: ROUTER_ABI,
@@ -161,15 +161,15 @@ describe('Liquidity Service - Output Verification', () => {
     it('should encode deadline correctly', async () => {
       const customDeadline = BigInt(Math.floor(Date.now() / 1000) + 3600)
 
-      const params = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        2000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: customDeadline }
-      )
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: customDeadline },
+      })
 
       const decoded = decodeFunctionData({
         abi: ROUTER_ABI,
@@ -193,12 +193,12 @@ describe('Liquidity Service - Output Verification', () => {
     })
 
     it('should encode correct function selector for removeLiquidity', async () => {
-      const params = await liquidityService.buildRemoveLiquidityParams(
-        POOL_ADDRESS,
-        1414213562373095048n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const params = await liquidityService.buildRemoveLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        liquidity: 1414213562373095048n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       const decoded = decodeFunctionData({
         abi: ROUTER_ABI,
@@ -211,12 +211,12 @@ describe('Liquidity Service - Output Verification', () => {
     it('should encode correct parameters in removeLiquidity call', async () => {
       const liquidity = 1414213562373095048n
 
-      const params = await liquidityService.buildRemoveLiquidityParams(
-        POOL_ADDRESS,
+      const params = await liquidityService.buildRemoveLiquidityParams({
+        poolAddress: POOL_ADDRESS,
         liquidity,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       const decoded = decodeFunctionData({
         abi: ROUTER_ABI,
@@ -256,16 +256,16 @@ describe('Liquidity Service - Output Verification', () => {
     })
 
     it('should encode correct function selector for approve', async () => {
-      const transaction = await liquidityService.buildAddLiquidityTransaction(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        2000000000000000000n,
-        RECIPIENT,
-        OWNER,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const transaction = await liquidityService.buildAddLiquidityTransaction({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        owner: OWNER,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(transaction.approvalA).not.toBeNull()
 
@@ -278,16 +278,16 @@ describe('Liquidity Service - Output Verification', () => {
     })
 
     it('should encode correct spender (router) in approval', async () => {
-      const transaction = await liquidityService.buildAddLiquidityTransaction(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        2000000000000000000n,
-        RECIPIENT,
-        OWNER,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const transaction = await liquidityService.buildAddLiquidityTransaction({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        owner: OWNER,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(transaction.approvalA).not.toBeNull()
 
@@ -309,16 +309,16 @@ describe('Liquidity Service - Output Verification', () => {
     it('should encode correct amount in approval', async () => {
       const amountA = 5000000000000000000n // 5 tokens
 
-      const transaction = await liquidityService.buildAddLiquidityTransaction(
-        POOL_ADDRESS,
-        TOKEN_0,
+      const transaction = await liquidityService.buildAddLiquidityTransaction({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
         amountA,
-        TOKEN_1,
-        2000000000000000000n,
-        RECIPIENT,
-        OWNER,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+        tokenB: TOKEN_1,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        owner: OWNER,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(transaction.approvalA).not.toBeNull()
 
@@ -333,16 +333,16 @@ describe('Liquidity Service - Output Verification', () => {
     })
 
     it('should target correct token address in approval params', async () => {
-      const transaction = await liquidityService.buildAddLiquidityTransaction(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        2000000000000000000n,
-        RECIPIENT,
-        OWNER,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const transaction = await liquidityService.buildAddLiquidityTransaction({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        owner: OWNER,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(transaction.approvalA).not.toBeNull()
       expect(transaction.approvalB).not.toBeNull()
@@ -361,15 +361,15 @@ describe('Liquidity Service - Output Verification', () => {
 
       mockPublicClient.readContract.mockResolvedValue([quoteAmountA, quoteAmountB, quoteLiquidity])
 
-      const params = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        2000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       // Verify the returned values match quote
       expect(params.estimatedMinLiquidity).toBe(quoteLiquidity)
@@ -388,15 +388,15 @@ describe('Liquidity Service - Output Verification', () => {
 
       mockPublicClient.readContract.mockResolvedValue([quoteAmountA, quoteAmountB, 2121320343559642584n])
 
-      const params = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        2000000000000000000n,
-        TOKEN_1,
-        4000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 1.0, deadline: deadlineFromMinutes(20) } // 1% slippage
-      )
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 2000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 4000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 1.0, deadline: deadlineFromMinutes(20) }, // 1% slippage
+      })
 
       const decoded = decodeFunctionData({
         abi: ROUTER_ABI,
@@ -447,14 +447,14 @@ describe('Liquidity Service - Output Verification', () => {
     })
 
     it('should encode correct function selector for zapIn', async () => {
-      const params = await liquidityService.buildZapInParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        0.5,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const params = await liquidityService.buildZapInParams({
+        poolAddress: POOL_ADDRESS,
+        tokenIn: TOKEN_0,
+        amountIn: 1000000000000000000n,
+        amountInSplit: 0.5,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       const decoded = decodeFunctionData({
         abi: ROUTER_ABI,
@@ -468,14 +468,14 @@ describe('Liquidity Service - Output Verification', () => {
       const amountIn = 1000000000000000000n
       const split = 0.6 // 60/40
 
-      const params = await liquidityService.buildZapInParams(
-        POOL_ADDRESS,
-        TOKEN_0,
+      const params = await liquidityService.buildZapInParams({
+        poolAddress: POOL_ADDRESS,
+        tokenIn: TOKEN_0,
         amountIn,
-        split,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+        amountInSplit: split,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       // Verify split in returned object
       const expectedAmountInA = (amountIn * 6000n) / 10000n
@@ -487,14 +487,14 @@ describe('Liquidity Service - Output Verification', () => {
     })
 
     it('should encode zap parameters correctly', async () => {
-      const params = await liquidityService.buildZapInParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        0.5,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const params = await liquidityService.buildZapInParams({
+        poolAddress: POOL_ADDRESS,
+        tokenIn: TOKEN_0,
+        amountIn: 1000000000000000000n,
+        amountInSplit: 0.5,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       // Verify zap params structure
       expect(params.zapParams).toBeDefined()
@@ -519,15 +519,15 @@ describe('Liquidity Service - Output Verification', () => {
     })
 
     it('should always set value to "0" for ERC20 liquidity operations', async () => {
-      const params = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        2000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       // ERC20 operations should never send native tokens
       expect(params.params.value).toBe('0')
@@ -536,12 +536,12 @@ describe('Liquidity Service - Output Verification', () => {
     it('should set value to "0" for remove liquidity', async () => {
       mockPublicClient.readContract.mockResolvedValue([1000000000000000000n, 2000000000000000000n])
 
-      const params = await liquidityService.buildRemoveLiquidityParams(
-        POOL_ADDRESS,
-        1414213562373095048n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const params = await liquidityService.buildRemoveLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        liquidity: 1414213562373095048n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(params.params.value).toBe('0')
     })
@@ -555,16 +555,16 @@ describe('Liquidity Service - Output Verification', () => {
         return 0n
       })
 
-      const transaction = await liquidityService.buildAddLiquidityTransaction(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        2000000000000000000n,
-        RECIPIENT,
-        OWNER,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const transaction = await liquidityService.buildAddLiquidityTransaction({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        owner: OWNER,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(transaction.approvalA!.params.value).toBe('0')
       expect(transaction.approvalB!.params.value).toBe('0')

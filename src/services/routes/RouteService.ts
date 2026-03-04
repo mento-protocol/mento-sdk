@@ -130,7 +130,7 @@ export class RouteService {
           return cachedRoutes
         }
       } catch {
-        console.warn('Failed to load cached routes, falling back to fresh generation')
+        // Cache miss or corrupt - silently fall through to fresh generation
       }
     }
 

@@ -55,7 +55,6 @@ export class PoolService {
       pools.push(...fpmmPools)
     } catch (error) {
       const message = `Failed to fetch FPMM pools: ${error instanceof Error ? error.message : String(error)}`
-      console.warn(`[PoolService] ${message}`)
       warnings.push(message)
     }
 
@@ -64,7 +63,6 @@ export class PoolService {
       pools.push(...virtualPools)
     } catch (error) {
       const message = `Failed to fetch Virtual pools: ${error instanceof Error ? error.message : String(error)}`
-      console.warn(`[PoolService] ${message}`)
       warnings.push(message)
     }
 

@@ -13,14 +13,28 @@
     "url": "https://github.com/mento-protocol/mento-sdk.git"
   },
   "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
   "files": [
     "dist",
-    "!dist/**/*.test.*"
+    "!dist/**/*.test.*",
+    "!dist/**/*.map"
   ],
   "type": "commonjs",
   "scripts": {
-    "build": "pnpm clean && tsc --project ./tsconfig.json",
+    "build": "pnpm clean && tsc --project ./tsconfig.json && tsc --project ./tsconfig.esm.json && echo '{\"type\":\"module\"}' > dist/esm/package.json",
     "clean": "rm -rf ./dist",
     "lint": "eslint --config ./.eslintrc.json src/**/*.ts tests/**/*.ts",
     "prettier": "prettier --config ./.prettierrc.json --write **/*.{json,md,js,ts,yml}",

@@ -71,29 +71,29 @@ describe('Liquidity Service - Edge Cases', () => {
 
     it('should handle zero amount for tokenA', async () => {
       await expect(
-        liquidityService.buildAddLiquidityParams(
-          POOL_ADDRESS,
-          TOKEN_0,
-          0n,
-          TOKEN_1,
-          1000000000000000000n,
-          RECIPIENT,
-          { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-        )
+        liquidityService.buildAddLiquidityParams({
+          poolAddress: POOL_ADDRESS,
+          tokenA: TOKEN_0,
+          amountA: 0n,
+          tokenB: TOKEN_1,
+          amountB: 1000000000000000000n,
+          recipient: RECIPIENT,
+          options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+        })
       ).resolves.toBeDefined()
     })
 
     it('should handle zero amount for tokenB', async () => {
       await expect(
-        liquidityService.buildAddLiquidityParams(
-          POOL_ADDRESS,
-          TOKEN_0,
-          1000000000000000000n,
-          TOKEN_1,
-          0n,
-          RECIPIENT,
-          { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-        )
+        liquidityService.buildAddLiquidityParams({
+          poolAddress: POOL_ADDRESS,
+          tokenA: TOKEN_0,
+          amountA: 1000000000000000000n,
+          tokenB: TOKEN_1,
+          amountB: 0n,
+          recipient: RECIPIENT,
+          options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+        })
       ).resolves.toBeDefined()
     })
 
@@ -108,15 +108,15 @@ describe('Liquidity Service - Edge Cases', () => {
         return 0n
       })
 
-      const result = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        maxUint256,
-        TOKEN_1,
-        maxUint256,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const result = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: maxUint256,
+        tokenB: TOKEN_1,
+        amountB: maxUint256,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(result).toBeDefined()
       expect(result.amountADesired).toBe(maxUint256)
@@ -132,15 +132,15 @@ describe('Liquidity Service - Edge Cases', () => {
         return 0n
       })
 
-      const result = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1n,
-        TOKEN_1,
-        1n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const result = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1n,
+        tokenB: TOKEN_1,
+        amountB: 1n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(result).toBeDefined()
       expect(result.amountAMin).toBeGreaterThanOrEqual(0n)
@@ -161,42 +161,42 @@ describe('Liquidity Service - Edge Cases', () => {
 
     it('should reject negative slippage', async () => {
       await expect(
-        liquidityService.buildAddLiquidityParams(
-          POOL_ADDRESS,
-          TOKEN_0,
-          1000000000000000000n,
-          TOKEN_1,
-          1000000000000000000n,
-          RECIPIENT,
-          { slippageTolerance: -0.5, deadline: deadlineFromMinutes(20) }
-        )
+        liquidityService.buildAddLiquidityParams({
+          poolAddress: POOL_ADDRESS,
+          tokenA: TOKEN_0,
+          amountA: 1000000000000000000n,
+          tokenB: TOKEN_1,
+          amountB: 1000000000000000000n,
+          recipient: RECIPIENT,
+          options: { slippageTolerance: -0.5, deadline: deadlineFromMinutes(20) },
+        })
       ).rejects.toThrow(/cannot be negative/)
     })
 
     it('should reject slippage over 100%', async () => {
       await expect(
-        liquidityService.buildAddLiquidityParams(
-          POOL_ADDRESS,
-          TOKEN_0,
-          1000000000000000000n,
-          TOKEN_1,
-          1000000000000000000n,
-          RECIPIENT,
-          { slippageTolerance: 100.1, deadline: deadlineFromMinutes(20) }
-        )
+        liquidityService.buildAddLiquidityParams({
+          poolAddress: POOL_ADDRESS,
+          tokenA: TOKEN_0,
+          amountA: 1000000000000000000n,
+          tokenB: TOKEN_1,
+          amountB: 1000000000000000000n,
+          recipient: RECIPIENT,
+          options: { slippageTolerance: 100.1, deadline: deadlineFromMinutes(20) },
+        })
       ).rejects.toThrow(/cannot exceed 100%/)
     })
 
     it('should accept 0% slippage', async () => {
-      const result = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        1000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 0, deadline: deadlineFromMinutes(20) }
-      )
+      const result = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 1000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0, deadline: deadlineFromMinutes(20) },
+      })
 
       // With 0 slippage, min should equal desired (from quote)
       expect(result.amountAMin).toBe(1000000000000000000n)
@@ -204,15 +204,15 @@ describe('Liquidity Service - Edge Cases', () => {
     })
 
     it('should accept 100% slippage', async () => {
-      const result = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        1000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 100, deadline: deadlineFromMinutes(20) }
-      )
+      const result = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 1000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 100, deadline: deadlineFromMinutes(20) },
+      })
 
       // With 100% slippage, min should be 0
       expect(result.amountAMin).toBe(0n)
@@ -220,15 +220,15 @@ describe('Liquidity Service - Edge Cases', () => {
     })
 
     it('should handle very high precision slippage (0.001%)', async () => {
-      const result = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        1000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 0.001, deadline: deadlineFromMinutes(20) }
-      )
+      const result = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 1000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.001, deadline: deadlineFromMinutes(20) },
+      })
 
       // 0.001% slippage = 0.1 basis point, which floors to 0 basis points
       // in calculateMinAmount (Math.floor(0.001 * 100) = 0)
@@ -253,16 +253,16 @@ describe('Liquidity Service - Edge Cases', () => {
 
     it('should handle concurrent transaction building', async () => {
       const promises = Array.from({ length: 10 }, () =>
-        liquidityService.buildAddLiquidityTransaction(
-          POOL_ADDRESS,
-          TOKEN_0,
-          1000000000000000000n,
-          TOKEN_1,
-          1000000000000000000n,
-          RECIPIENT,
-          OWNER,
-          { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-        )
+        liquidityService.buildAddLiquidityTransaction({
+          poolAddress: POOL_ADDRESS,
+          tokenA: TOKEN_0,
+          amountA: 1000000000000000000n,
+          tokenB: TOKEN_1,
+          amountB: 1000000000000000000n,
+          recipient: RECIPIENT,
+          owner: OWNER,
+          options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+        })
       )
 
       const results = await Promise.all(promises)
@@ -288,16 +288,16 @@ describe('Liquidity Service - Edge Cases', () => {
         return 0n
       })
 
-      const result = await liquidityService.buildAddLiquidityTransaction(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        1000000000000000000n,
-        RECIPIENT,
-        OWNER,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const result = await liquidityService.buildAddLiquidityTransaction({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 1000000000000000000n,
+        recipient: RECIPIENT,
+        owner: OWNER,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       // Should check allowance at time of call and build approvals accordingly
       expect(result).toBeDefined()
@@ -411,30 +411,30 @@ describe('Liquidity Service - Edge Cases', () => {
     it('should accept deadline in the past (edge case)', async () => {
       const pastDeadline = BigInt(Math.floor(Date.now() / 1000) - 3600) // 1 hour ago
 
-      const result = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        1000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: pastDeadline }
-      )
+      const result = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 1000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: pastDeadline },
+      })
 
       // Should accept it (on-chain will revert, but SDK doesn't validate)
       expect(result.deadline).toBe(pastDeadline)
     })
 
     it('should accept deadline = 0', async () => {
-      const result = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        1000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: 0n }
-      )
+      const result = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 1000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: 0n },
+      })
 
       expect(result.deadline).toBe(0n)
     })
@@ -442,15 +442,15 @@ describe('Liquidity Service - Edge Cases', () => {
     it('should accept maximum uint256 deadline', async () => {
       const maxDeadline = 2n ** 256n - 1n
 
-      const result = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_0,
-        1000000000000000000n,
-        TOKEN_1,
-        1000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: maxDeadline }
-      )
+      const result = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_0,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_1,
+        amountB: 1000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: maxDeadline },
+      })
 
       expect(result.deadline).toBe(maxDeadline)
     })

@@ -39,9 +39,10 @@ async function getFPMMCostPercent(poolAddress: string, publicClient: PublicClien
     }) as Promise<bigint>,
   ])
 
-  // Convert from basis points to percentage, rounded to 8dp for precision
-  const totalBasisPoints = Number(lpFee) + Number(protocolFee)
-  return Math.round((totalBasisPoints / 100) * 1e8) / 1e8
+  // Convert from basis points to percentage using BigInt arithmetic to avoid precision loss
+  const totalBasisPoints = lpFee + protocolFee
+  const scaled = totalBasisPoints * 1000000n
+  return Number(scaled / 100n) / 1e6
 }
 
 /**
@@ -54,6 +55,7 @@ async function getVirtualPoolCostPercent(poolAddress: string, publicClient: Publ
     functionName: 'protocolFee',
   })
 
-  // Convert from basis points to percentage, rounded to 8dp for precision
-  return Math.round((Number(protocolFee) / 100) * 1e8) / 1e8
+  // Convert from basis points to percentage using BigInt arithmetic to avoid precision loss
+  const scaled = (protocolFee as bigint) * 1000000n
+  return Number(scaled / 100n) / 1e6
 }

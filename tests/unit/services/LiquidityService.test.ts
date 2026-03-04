@@ -119,15 +119,15 @@ describe('LiquidityService', () => {
     })
 
     it('should build add liquidity params with correct structure', async () => {
-      const params = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_A,
-        1000000000000000000n,
-        TOKEN_B,
-        2000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_A,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_B,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(params).toHaveProperty('params')
       expect(params.params).toHaveProperty('to')
@@ -147,15 +147,15 @@ describe('LiquidityService', () => {
 
     it('should apply slippage tolerance correctly', async () => {
       const slippageTolerance = 0.5 // 0.5%
-      const params = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_A,
-        1000000000000000000n,
-        TOKEN_B,
-        2000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance, deadline: deadlineFromMinutes(20) }
-      )
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_A,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_B,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance, deadline: deadlineFromMinutes(20) },
+      })
 
       // Expected mins: amount * (1 - 0.005) = amount * 0.995 = amount * 9950 / 10000
       const expectedAmountAMin = (1000000000000000000n * 9950n) / 10000n
@@ -166,16 +166,16 @@ describe('LiquidityService', () => {
     })
 
     it('should build transaction with approvals when allowance is zero', async () => {
-      const transaction = await liquidityService.buildAddLiquidityTransaction(
-        POOL_ADDRESS,
-        TOKEN_A,
-        1000000000000000000n,
-        TOKEN_B,
-        2000000000000000000n,
-        RECIPIENT,
-        OWNER,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const transaction = await liquidityService.buildAddLiquidityTransaction({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_A,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_B,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        owner: OWNER,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(transaction).toHaveProperty('approvalA')
       expect(transaction).toHaveProperty('approvalB')
@@ -205,16 +205,16 @@ describe('LiquidityService', () => {
         return 0n
       })
 
-      const transaction = await liquidityService.buildAddLiquidityTransaction(
-        POOL_ADDRESS,
-        TOKEN_A,
-        1000000000000000000n,
-        TOKEN_B,
-        2000000000000000000n,
-        RECIPIENT,
-        OWNER,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const transaction = await liquidityService.buildAddLiquidityTransaction({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_A,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_B,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        owner: OWNER,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       // Both approvals should be null (allowance is sufficient)
       expect(transaction.approvalA).toBeNull()
@@ -256,12 +256,12 @@ describe('LiquidityService', () => {
     })
 
     it('should build remove liquidity params', async () => {
-      const params = await liquidityService.buildRemoveLiquidityParams(
-        POOL_ADDRESS,
-        1414213562373095048n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const params = await liquidityService.buildRemoveLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        liquidity: 1414213562373095048n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(params).toHaveProperty('params')
       expect(params).toHaveProperty('poolAddress', POOL_ADDRESS)
@@ -273,13 +273,13 @@ describe('LiquidityService', () => {
     })
 
     it('should build transaction with LP token approval when needed', async () => {
-      const transaction = await liquidityService.buildRemoveLiquidityTransaction(
-        POOL_ADDRESS,
-        1414213562373095048n,
-        RECIPIENT,
-        OWNER,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const transaction = await liquidityService.buildRemoveLiquidityTransaction({
+        poolAddress: POOL_ADDRESS,
+        liquidity: 1414213562373095048n,
+        recipient: RECIPIENT,
+        owner: OWNER,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(transaction).toHaveProperty('approval')
       expect(transaction).toHaveProperty('removeLiquidity')
@@ -490,23 +490,23 @@ describe('LiquidityService', () => {
         { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
       )
 
-      expect(quote).toHaveProperty('amountOutMinA')
-      expect(quote).toHaveProperty('amountOutMinB')
+      expect(quote).toHaveProperty('amountOutFromA')
+      expect(quote).toHaveProperty('amountOutFromB')
       expect(quote).toHaveProperty('amountAMin')
       expect(quote).toHaveProperty('amountBMin')
       expect(quote).toHaveProperty('estimatedMinLiquidity')
     })
 
     it('should build zap in transaction with approval', async () => {
-      const transaction = await liquidityService.buildZapInTransaction(
-        POOL_ADDRESS,
-        TOKEN_IN,
-        AMOUNT_IN,
-        AMOUNT_IN_SPLIT,
-        RECIPIENT,
-        OWNER,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const transaction = await liquidityService.buildZapInTransaction({
+        poolAddress: POOL_ADDRESS,
+        tokenIn: TOKEN_IN,
+        amountIn: AMOUNT_IN,
+        amountInSplit: AMOUNT_IN_SPLIT,
+        recipient: RECIPIENT,
+        owner: OWNER,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(transaction).toHaveProperty('approval')
       expect(transaction).toHaveProperty('zapIn')
@@ -537,14 +537,14 @@ describe('LiquidityService', () => {
     it('should build zap out transaction with LP token approval', async () => {
       const LIQUIDITY = 1000000000000000000n
 
-      const transaction = await liquidityService.buildZapOutTransaction(
-        POOL_ADDRESS,
-        TOKEN_A,
-        LIQUIDITY,
-        RECIPIENT,
-        OWNER,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const transaction = await liquidityService.buildZapOutTransaction({
+        poolAddress: POOL_ADDRESS,
+        tokenOut: TOKEN_A,
+        liquidity: LIQUIDITY,
+        recipient: RECIPIENT,
+        owner: OWNER,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(transaction).toHaveProperty('approval')
       expect(transaction).toHaveProperty('zapOut')
@@ -569,14 +569,14 @@ describe('LiquidityService', () => {
       })
       ;(mockPublicClient.call as jest.Mock).mockResolvedValue({ data: '0x' })
 
-      const transaction = await liquidityService.buildZapOutTransaction(
-        POOL_ADDRESS,
-        TOKEN_A,
-        LIQUIDITY,
-        RECIPIENT,
-        OWNER,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const transaction = await liquidityService.buildZapOutTransaction({
+        poolAddress: POOL_ADDRESS,
+        tokenOut: TOKEN_A,
+        liquidity: LIQUIDITY,
+        recipient: RECIPIENT,
+        owner: OWNER,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
 
       expect(transaction.approval).toBeNull()
       expect(mockPublicClient.call).toHaveBeenCalled()
@@ -598,14 +598,14 @@ describe('LiquidityService', () => {
       ;(mockRouteService.getRoutes as jest.Mock).mockResolvedValue([])
 
       await expect(
-        liquidityService.buildZapOutTransaction(
-          POOL_ADDRESS,
-          TOKEN_A,
-          LIQUIDITY,
-          RECIPIENT,
-          OWNER,
-          { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-        )
+        liquidityService.buildZapOutTransaction({
+          poolAddress: POOL_ADDRESS,
+          tokenOut: TOKEN_A,
+          liquidity: LIQUIDITY,
+          recipient: RECIPIENT,
+          owner: OWNER,
+          options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+        })
       ).rejects.toThrow(/No viable zap-out route/)
     })
   })
@@ -633,15 +633,15 @@ describe('LiquidityService', () => {
     it('should support custom deadline', async () => {
       const customDeadline = BigInt(Math.floor(Date.now() / 1000) + 60 * 60) // 1 hour
 
-      const params = await liquidityService.buildAddLiquidityParams(
-        POOL_ADDRESS,
-        TOKEN_A,
-        1000000000000000000n,
-        TOKEN_B,
-        2000000000000000000n,
-        RECIPIENT,
-        { slippageTolerance: 0.5, deadline: customDeadline }
-      )
+      const params = await liquidityService.buildAddLiquidityParams({
+        poolAddress: POOL_ADDRESS,
+        tokenA: TOKEN_A,
+        amountA: 1000000000000000000n,
+        tokenB: TOKEN_B,
+        amountB: 2000000000000000000n,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: customDeadline },
+      })
 
       expect(params.deadline).toBe(customDeadline)
     })

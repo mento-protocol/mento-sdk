@@ -82,8 +82,8 @@ export interface ZapParams {
 }
 
 export interface ZapInQuote {
-  amountOutMinA: bigint
-  amountOutMinB: bigint
+  amountOutFromA: bigint // tokenA output from swap (slippage-adjusted)
+  amountOutFromB: bigint // tokenB output from swap (slippage-adjusted)
   amountAMin: bigint
   amountBMin: bigint
   estimatedMinLiquidity: bigint // Conservative lower-bound; actual on-chain amount may be higher
@@ -129,4 +129,44 @@ export interface ZapInTransaction {
 export interface ZapOutTransaction {
   approval: TokenApproval | null
   zapOut: ZapOutDetails
+}
+
+// ========== Method Input Types ==========
+
+/** Input for adding liquidity (without approval handling) */
+export interface AddLiquidityInput {
+  poolAddress: string
+  tokenA: string
+  amountA: bigint
+  tokenB: string
+  amountB: bigint
+  recipient: string
+  options: LiquidityOptions
+}
+
+/** Input for removing liquidity (without approval handling) */
+export interface RemoveLiquidityInput {
+  poolAddress: string
+  liquidity: bigint
+  recipient: string
+  options: LiquidityOptions
+}
+
+/** Input for zap in (without approval handling) */
+export interface ZapInInput {
+  poolAddress: string
+  tokenIn: string
+  amountIn: bigint
+  amountInSplit: number
+  recipient: string
+  options: LiquidityOptions
+}
+
+/** Input for zap out (without approval handling) */
+export interface ZapOutInput {
+  poolAddress: string
+  tokenOut: string
+  liquidity: bigint
+  recipient: string
+  options: LiquidityOptions
 }

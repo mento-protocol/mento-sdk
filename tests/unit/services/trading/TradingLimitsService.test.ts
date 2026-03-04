@@ -116,22 +116,15 @@ describe('TradingLimitsService', () => {
       expect(limits.length).toBe(4)
     })
 
-    it('should warn and return empty when Virtual pool missing exchangeId', async () => {
+    it('should return empty when Virtual pool missing exchangeId', async () => {
       const poolWithoutExchangeId: Pool = {
         ...mockVirtualPool,
         exchangeId: undefined,
       }
 
-      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation()
-
       const limits = await service.getPoolTradingLimits(poolWithoutExchangeId)
 
       expect(limits).toEqual([])
-      expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('missing exchangeId')
-      )
-
-      consoleSpy.mockRestore()
     })
 
     it('should return empty array when no limits configured for Virtual', async () => {

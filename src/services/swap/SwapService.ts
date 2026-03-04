@@ -95,6 +95,11 @@ export class SwapService {
    * @param options - Swap configuration options (slippage, deadline)
    * @param route - Optional pre-fetched route for better performance
    * @returns Combined transaction with approval (if needed) and swap params
+   * @throws {Error} 'Slippage tolerance cannot be negative' - if slippageTolerance < 0
+   * @throws {Error} 'Slippage tolerance exceeds maximum' - if slippageTolerance > 20%
+   * @throws {Error} 'Deadline must be in the future' - if deadline is not a future timestamp
+   * @throws {Error} Invalid address - if any address parameter is not a valid Ethereum address
+   * @throws {RouteNotFoundError} If no trading route exists between the token pair
    *
    * @example
    * ```typescript
@@ -152,6 +157,11 @@ export class SwapService {
    * @param options - Swap configuration options (slippage, deadline)
    * @param route - Optional pre-fetched route for better performance
    * @returns Detailed swap parameters including transaction data
+   * @throws {Error} 'Slippage tolerance cannot be negative' - if slippageTolerance < 0
+   * @throws {Error} 'Slippage tolerance exceeds maximum' - if slippageTolerance > 20%
+   * @throws {Error} 'Deadline must be in the future' - if deadline is not a future timestamp
+   * @throws {Error} Invalid address - if any address parameter is not a valid Ethereum address
+   * @throws {RouteNotFoundError} If no trading route exists between the token pair
    *
    * @example
    * ```typescript
