@@ -156,6 +156,10 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       decimals: 6,
     }
   ],
+  // Chain 10143
+  10143: [],
+  // Chain 143
+  143: [],
   // Chain 11142220
   11142220: [
     {
@@ -310,6 +314,8 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.axlUSDC]: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
     [TokenSymbol.USD_]: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
   },
+  10143: {},
+  143: {},
   11142220: {
     [TokenSymbol.USDm]: '0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b',
     [TokenSymbol.EURm]: '0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a',

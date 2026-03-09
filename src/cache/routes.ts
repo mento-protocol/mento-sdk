@@ -5739,6 +5739,10 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     }
   ],
+  // Chain 10143
+  10143: [],
+  // Chain 143
+  143: [],
   // Chain 11142220
   11142220: [
     {

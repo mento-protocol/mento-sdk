@@ -13,9 +13,11 @@ describe('Addresses Unit Tests', () => {
       if (typeof chainId === 'number') {
         const chainAddresses = addresses[chainId]
         expect(chainAddresses).toBeDefined()
-        // BiPoolManager and Broker are required for the SDK to function
-        expect(chainAddresses.BiPoolManager).toBeDefined()
-        expect(chainAddresses.Broker).toBeDefined()
+        // BiPoolManager and Broker are required for the SDK to function on chains with deployed contracts
+        if (Object.keys(chainAddresses).length > 0) {
+          expect(chainAddresses.BiPoolManager).toBeDefined()
+          expect(chainAddresses.Broker).toBeDefined()
+        }
       }
     }
   })

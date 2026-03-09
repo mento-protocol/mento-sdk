@@ -36,6 +36,10 @@ export const addresses: ContractAddressMap = {
     CDPLiquidityStrategy: '0x4e78BD9565341EAbe99cDC024acB044d9BDcB985',
   },
 
+  [ChainId.MONAD_TESTNET]: {},
+
+  [ChainId.MONAD]: {},
+
   [ChainId.CELO_SEPOLIA]: {
     // Oracles & Breakers
     BreakerBox: '0x578bD46003B9D3fd4c3C3f47c98B329562a6a1dE',

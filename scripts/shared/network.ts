@@ -2,6 +2,8 @@
 export const NETWORK_MAP: Record<string, number> = {
   celo: 42220,
   ['celo-sepolia']: 11142220,
+  monad: 143,
+  ['monad-testnet']: 10143,
 }
 
 // RPC URLs for different networks
@@ -9,6 +11,8 @@ export const NETWORK_MAP: Record<string, number> = {
 export const rpcUrls = {
   42220: process.env.CELO_RPC_URL || 'https://forno.celo.org',
   11142220: process.env.CELO_SEPOLIA_RPC_URL || 'https://forno.celo-sepolia.celo-testnet.org',
+  143: process.env.MONAD_RPC_URL || 'https://rpc.monad.xyz',
+  10143: process.env.MONAD_TESTNET_RPC_URL || 'https://testnet-rpc.monad.xyz',
 } as const
 
 // Type for supported chain IDs
