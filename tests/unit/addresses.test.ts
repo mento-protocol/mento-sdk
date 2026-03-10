@@ -4,19 +4,19 @@ import { isAddress } from 'viem'
 describe('Addresses Unit Tests', () => {
   it('should have address mappings for all supported chains', () => {
     // Test that all chain IDs have address mappings
-    expect(Object.keys(addresses).length).toEqual(
-      Object.keys(ChainId).length / 2
-    )
+    expect(Object.keys(addresses).length).toEqual(Object.keys(ChainId).length / 2)
 
-    // Each chain should have at least the DEX contracts needed for exchange
+    // Each chain should have at least the DEX contracts needed for exchanging tokens
     for (const chainId of Object.values(ChainId)) {
       if (typeof chainId === 'number') {
         const chainAddresses = addresses[chainId]
         expect(chainAddresses).toBeDefined()
-        // BiPoolManager and Broker are required for the SDK to function on chains with deployed contracts
+        // Each chain with deployed contracts should have either V2 DEX contracts (BiPoolManager, Broker)
+        // or V3 DEX contracts (Router, FPMMFactory), or both
         if (Object.keys(chainAddresses).length > 0) {
-          expect(chainAddresses.BiPoolManager).toBeDefined()
-          expect(chainAddresses.Broker).toBeDefined()
+          const hasV2 = chainAddresses.BiPoolManager && chainAddresses.Broker
+          const hasV3 = chainAddresses.Router && chainAddresses.FPMMFactory
+          expect(hasV2 || hasV3).toBeTruthy()
         }
       }
     }
@@ -32,9 +32,7 @@ describe('Addresses Unit Tests', () => {
     expect(isAddress(biPoolManagerAddress)).toBe(true)
 
     // Test that missing addresses throw
-    expect(() =>
-      getContractAddress(ChainId.CELO_SEPOLIA, 'GovernanceFactory')
-    ).toThrow('Address not found')
+    expect(() => getContractAddress(ChainId.CELO_SEPOLIA, 'GovernanceFactory')).toThrow('Address not found')
   })
 
   it('should return different addresses for different chains', () => {
