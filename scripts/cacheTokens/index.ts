@@ -1,80 +1,12 @@
 import 'dotenv/config'
 import { createPublicClient, http, type PublicClient } from 'viem'
-import { celo } from 'viem/chains'
-import { defineChain } from 'viem'
 import { ERC20_ABI } from '../../src/core/abis'
 import type { Token } from '../../src/core/types'
 import { PoolService, RouteService } from '../../src/services'
-import { retryOperation } from '../../src/utils'
+import { getChainConfig, retryOperation } from '../../src/utils'
 import { rpcUrls, type SupportedChainId } from '../shared/network'
 import { parseCommandLineArgs, printUsageTips } from './cli'
 import { generateConsolidatedContent, writeConsolidatedFile } from './fileGenerator'
-
-const celoSepolia = defineChain({
-  id: 11142220,
-  name: 'Celo Sepolia',
-  nativeCurrency: {
-    name: 'CELO',
-    symbol: 'CELO',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: { http: ['https://forno.celo-sepolia.celo-testnet.org'] },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Celo Sepolia Explorer',
-      url: 'https://celo-sepolia.blockscout.com',
-    },
-  },
-  testnet: true,
-})
-
-const monadTestnet = defineChain({
-  id: 10143,
-  name: 'Monad Testnet',
-  nativeCurrency: {
-    name: 'MON',
-    symbol: 'MON',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: { http: ['https://testnet-rpc.monad.xyz'] },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Monad Testnet Explorer',
-      url: 'https://testnet.monadexplorer.com',
-    },
-  },
-  testnet: true,
-})
-
-const monad = defineChain({
-  id: 143,
-  name: 'Monad',
-  nativeCurrency: {
-    name: 'MON',
-    symbol: 'MON',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: { http: ['https://rpc.monad.xyz'] },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Monad Explorer',
-      url: 'https://monadvision.com',
-    },
-  },
-})
-
-const chainConfigs = {
-  42220: celo,
-  11142220: celoSepolia,
-  10143: monadTestnet,
-  143: monad,
-} as const
 
 /**
  * Fetch token metadata (name, symbol, decimals) for an ERC20 token
@@ -119,7 +51,7 @@ async function fetchTokenMetadata(publicClient: PublicClient, address: string): 
  * Fetch all unique tokens referenced by direct routes for a chain
  */
 async function fetchTokensForChain(chainId: SupportedChainId): Promise<Token[]> {
-  const chain = chainConfigs[chainId]
+  const chain = getChainConfig(chainId)
   const rpcUrl = rpcUrls[chainId]
 
   // Create viem PublicClient

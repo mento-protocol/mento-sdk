@@ -40,7 +40,7 @@ const monadTestnet = defineChain({
   },
   blockExplorers: {
     default: {
-      name: 'Monad Explorer',
+      name: 'Monad Testnet Explorer',
       url: 'https://testnet.monadexplorer.com',
     },
   },

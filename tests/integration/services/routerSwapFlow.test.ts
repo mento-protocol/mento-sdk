@@ -5,6 +5,8 @@ import { QuoteService } from '../../../src/services/quotes/QuoteService'
 import { SwapService } from '../../../src/services/swap/SwapService'
 import { Route, Pool, PoolType } from '../../../src/core/types'
 import { deadlineFromMinutes } from '../../../src/utils/deadline'
+import { ChainId } from '../../../src/core/constants/chainId'
+import { getDefaultRpcUrl } from '../../../src/utils/chainConfig'
 
 /**
  * Integration tests for the complete router swap flow.
@@ -15,25 +17,48 @@ import { deadlineFromMinutes } from '../../../src/utils/deadline'
  * - Quote calculation
  * - Swap transaction building
  *
+ * Tests are parameterised across all deployed chains to ensure
+ * coverage is not lost when new chains are added.
+ *
  * Requirements:
- * - Local node running at localhost:8545 (e.g., anvil fork)
+ * - RPC access to each chain (via env vars or default public RPCs)
  * - DEV_ADDRESS environment variable set to a valid address with token balances
+ *   (only needed for approval-check tests)
  *
  * @group integration
  * @group local
  */
-describe('Router Swap Flow Integration', () => {
-  const RPC_URL = process.env.MONAD_TESTNET_RPC_URL || 'http://localhost:8545'
-  const CHAIN_ID = 10143
+
+interface ChainTestConfig {
+  name: string
+  chainId: number
+  rpcEnvVar: string
+}
+
+const CHAIN_CONFIGS: ChainTestConfig[] = [
+  {
+    name: 'Celo Mainnet',
+    chainId: ChainId.CELO,
+    rpcEnvVar: 'CELO_RPC_URL',
+  },
+  {
+    name: 'Monad Testnet',
+    chainId: ChainId.MONAD_TESTNET,
+    rpcEnvVar: 'MONAD_TESTNET_RPC_URL',
+  },
+]
+
+describe.each(CHAIN_CONFIGS)('Router Swap Flow Integration - $name', ({ chainId, rpcEnvVar }) => {
+  const RPC_URL = process.env[rpcEnvVar] || getDefaultRpcUrl(chainId)
 
   const publicClient = createPublicClient({
     transport: http(RPC_URL),
   })
 
-  const poolService = new PoolService(publicClient, CHAIN_ID)
-  const routeService = new RouteService(publicClient, CHAIN_ID, poolService)
-  const quoteService = new QuoteService(publicClient, CHAIN_ID, routeService)
-  const swapService = new SwapService(publicClient, CHAIN_ID, routeService, quoteService)
+  const poolService = new PoolService(publicClient, chainId)
+  const routeService = new RouteService(publicClient, chainId, poolService)
+  const quoteService = new QuoteService(publicClient, chainId, routeService)
+  const swapService = new SwapService(publicClient, chainId, routeService, quoteService)
 
   // Test fixtures populated from on-chain data
   let pools: Pool[]

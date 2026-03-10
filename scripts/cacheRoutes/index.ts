@@ -1,8 +1,7 @@
 import 'dotenv/config'
 import { createPublicClient, http } from 'viem'
-import { celo } from 'viem/chains'
-import { defineChain } from 'viem'
 import type { Route, RouteWithCost } from '../../src/core/types'
+import { getChainConfig } from '../../src/utils/chainConfig'
 import { buildConnectivityStructures, generateAllRoutes, selectOptimalRoutes } from '../../src/utils/routeUtils'
 import { deduplicateRoutes } from '../shared/routeDeduplication'
 import { processRoutesInBatches } from './batchProcessor'
@@ -12,79 +11,6 @@ import { generateConsolidatedContent, writeConsolidatedFile } from './fileGenera
 import { sortRoutesBySpread } from './spread'
 import { calculateStatistics, displayStatistics } from './statistics'
 import { PoolService, RouteService } from '../../src/services'
-
-const celoSepolia = defineChain({
-  id: 11142220,
-  name: 'Celo Sepolia',
-  nativeCurrency: {
-    name: 'CELO',
-    symbol: 'CELO',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://forno.celo-sepolia.celo-testnet.org'],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Celo Sepolia Explorer',
-      url: 'https://celo-sepolia.blockscout.com',
-    },
-  },
-  testnet: true,
-})
-
-const monadTestnet = defineChain({
-  id: 10143,
-  name: 'Monad Testnet',
-  nativeCurrency: {
-    name: 'MON',
-    symbol: 'MON',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://testnet-rpc.monad.xyz'],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Monad Testnet Explorer',
-      url: 'https://testnet.monadexplorer.com',
-    },
-  },
-  testnet: true,
-})
-
-const monad = defineChain({
-  id: 143,
-  name: 'Monad',
-  nativeCurrency: {
-    name: 'MON',
-    symbol: 'MON',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://rpc.monad.xyz'],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Monad Explorer',
-      url: 'https://monadvision.com',
-    },
-  },
-})
-
-// Map chain IDs to viem chain configs
-const chainConfigs = {
-  42220: celo,
-  11142220: celoSepolia,
-  10143: monadTestnet,
-  143: monad,
-} as const
 
 /**
  * Generate all available routes (not just optimal)
@@ -113,11 +39,7 @@ async function getAllRoutes(routeService: RouteService): Promise<Route[]> {
  */
 async function generateRoutesForChain(chainId: SupportedChainId, batchSize = 10): Promise<RouteWithCost[]> {
   const rpcUrl = rpcUrls[chainId]
-  const chain = chainConfigs[chainId]
-
-  if (!chain) {
-    throw new Error(`Unsupported chain ID: ${chainId}`)
-  }
+  const chain = getChainConfig(chainId)
 
   // Create viem PublicClient
   const publicClient = createPublicClient({
