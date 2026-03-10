@@ -1,0 +1,27 @@
+import type { Abi, PublicClient } from 'viem'
+
+/**
+ * Standard Multicall3 contract address, deployed at the same address on all EVM chains.
+ * https://www.multicall3.com/
+ */
+export const MULTICALL3_ADDRESS = '0xcA11bde05977b3631167028862bE2a173976CA11' as const
+
+type MulticallResult = { status: 'success'; result: unknown } | { status: 'failure'; error: Error }
+
+interface ContractCall {
+  address: `0x${string}`
+  abi: Abi | readonly unknown[]
+  functionName: string
+  args?: readonly unknown[]
+}
+
+/**
+ * Wrapper around viem's multicall that explicitly provides the Multicall3 address.
+ * This ensures multicall works even when the PublicClient was created without a `chain` config.
+ */
+export async function multicall(publicClient: PublicClient, contracts: ContractCall[]): Promise<MulticallResult[]> {
+  return publicClient.multicall({
+    contracts: contracts as Parameters<PublicClient['multicall']>[0]['contracts'],
+    multicallAddress: MULTICALL3_ADDRESS,
+  }) as Promise<MulticallResult[]>
+}

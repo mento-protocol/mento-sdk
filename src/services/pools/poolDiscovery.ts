@@ -9,6 +9,7 @@ import {
 } from '../../core/abis'
 import { PublicClient, Address } from 'viem'
 import { sortTokenAddresses } from '../../utils/sortUtils'
+import { multicall } from '../../utils/multicall'
 
 /**
  * Fetches all FPMM pools from the FPMM Factory
@@ -38,7 +39,7 @@ export async function fetchFPMMPools(publicClient: PublicClient, chainId: number
       { address: poolAddress, abi: FPMM_ABI, functionName: 'token1' as const },
     ])
 
-    const results = await publicClient.multicall({ contracts })
+    const results = await multicall(publicClient, contracts)
 
     return poolAddresses.map((poolAddress, i) => {
       const token0Result = results[i * 2]
@@ -108,7 +109,7 @@ export async function fetchVirtualPools(publicClient: PublicClient, chainId: num
       functionName: 'tokens' as const,
     }))
 
-    const results = await publicClient.multicall({ contracts })
+    const results = await multicall(publicClient, contracts)
 
     return poolAddresses.map((poolAddress, i) => {
       const result = results[i]

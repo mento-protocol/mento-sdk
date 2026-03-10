@@ -2,6 +2,7 @@ import { addresses, ChainId } from '../../core/constants'
 import { Pool, FPMMPoolDetails, FPMMPricing, VirtualPoolDetails } from '../../core/types'
 import { FPMM_ABI, VIRTUAL_POOL_ABI } from '../../core/abis'
 import { PublicClient, Address, getAddress } from 'viem'
+import { multicall } from '../../utils/multicall'
 
 /**
  * Fetches enriched details for an FPMM pool
@@ -37,7 +38,7 @@ export async function fetchFPMMPoolDetails(
       { address, abi: FPMM_ABI, functionName: 'getRebalancingState' as const },
     ]
 
-    const results = await publicClient.multicall({ contracts: coreContracts })
+    const results = await multicall(publicClient, coreContracts)
 
     // Parse core results (first 8 are fixed)
     const reservesRes = results[0]
@@ -147,13 +148,11 @@ export async function fetchVirtualPoolDetails(publicClient: PublicClient, pool: 
   const address = pool.poolAddr as Address
 
   try {
-    const results = await publicClient.multicall({
-      contracts: [
-        { address, abi: VIRTUAL_POOL_ABI, functionName: 'getReserves' },
-        { address, abi: VIRTUAL_POOL_ABI, functionName: 'protocolFee' },
-        { address, abi: VIRTUAL_POOL_ABI, functionName: 'metadata' },
-      ],
-    })
+    const results = await multicall(publicClient, [
+      { address, abi: VIRTUAL_POOL_ABI, functionName: 'getReserves' as const },
+      { address, abi: VIRTUAL_POOL_ABI, functionName: 'protocolFee' as const },
+      { address, abi: VIRTUAL_POOL_ABI, functionName: 'metadata' as const },
+    ])
 
     if (results[0].status === 'failure' || results[1].status === 'failure' || results[2].status === 'failure') {
       throw new Error('One or more virtual pool reads failed')
