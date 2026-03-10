@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-03-03T20:21:18.047Z
+// Generated on 2026-03-10T12:14:17.694Z
 
 import type { Token } from '../core/types'
 
@@ -8,6 +8,7 @@ import type { Token } from '../core/types'
  */
 export enum TokenSymbol {
   AUDm = 'AUDm',
+  AUSD = 'AUSD',
   BRLm = 'BRLm',
   CADm = 'CADm',
   CELO = 'CELO',
@@ -33,6 +34,31 @@ export enum TokenSymbol {
  * Cached tokens indexed by chain ID
  */
 export const cachedTokens: Record<number, readonly Token[]> = {
+  // Chain 143
+  143: [
+
+  ],
+  // Chain 10143
+  10143: [
+    {
+      address: '0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc',
+      symbol: TokenSymbol.USDm,
+      name: 'Mento Dollar',
+      decimals: 18,
+    },
+    {
+      address: '0x534b2f3A21130d7a60830c2Df862319e593943A3',
+      symbol: TokenSymbol.USDC,
+      name: 'USDC',
+      decimals: 6,
+    },
+    {
+      address: '0x502E67D3fE9302A5e4Ec1CFCDdbD6F34F9B9484B',
+      symbol: TokenSymbol.AUSD,
+      name: 'Mento Mock AUSD',
+      decimals: 6,
+    }
+  ],
   // Chain 42220
   42220: [
     {
@@ -156,10 +182,6 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       decimals: 6,
     }
   ],
-  // Chain 10143
-  10143: [],
-  // Chain 143
-  143: [],
   // Chain 11142220
   11142220: [
     {
@@ -292,6 +314,14 @@ export const cachedTokens: Record<number, readonly Token[]> = {
 export const TOKEN_ADDRESSES_BY_CHAIN: {
   [chainId: number]: { [tokenSymbol in TokenSymbol]?: string }
 } = {
+  143: {
+
+  },
+  10143: {
+    [TokenSymbol.USDm]: '0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc',
+    [TokenSymbol.USDC]: '0x534b2f3A21130d7a60830c2Df862319e593943A3',
+    [TokenSymbol.AUSD]: '0x502E67D3fE9302A5e4Ec1CFCDdbD6F34F9B9484B',
+  },
   42220: {
     [TokenSymbol.USDm]: '0x765DE816845861e75A25fCA122bb6898B8B1282a',
     [TokenSymbol.EURm]: '0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73',
@@ -314,8 +344,6 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.axlUSDC]: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
     [TokenSymbol.USD_]: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
   },
-  10143: {},
-  143: {},
   11142220: {
     [TokenSymbol.USDm]: '0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b',
     [TokenSymbol.EURm]: '0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a',

@@ -9,7 +9,7 @@ import type {
 } from '../../core/types'
 import { PoolType } from '../../core/types'
 import { FPMM_ABI, BROKER_ABI } from '../../core/abis'
-import { getContractAddress, ChainId } from '../../core/constants'
+import { tryGetContractAddress, ChainId } from '../../core/constants'
 import {
   computeLimitId,
   calculateTradingLimitsV1,
@@ -137,7 +137,10 @@ export class TradingLimitsService {
     exchangeId: string,
     token: string
   ): Promise<TradingLimit[]> {
-    const brokerAddr = getContractAddress(this.chainId as ChainId, 'Broker')
+    const brokerAddr = tryGetContractAddress(this.chainId as ChainId, 'Broker')
+    if (!brokerAddr) {
+      return []
+    }
     const limitId = computeLimitId(exchangeId, token)
 
     try {

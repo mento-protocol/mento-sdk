@@ -1,4 +1,4 @@
-import { getContractAddress, ChainId } from '../../core/constants'
+import { tryGetContractAddress, ChainId } from '../../core/constants'
 import { Pool, PoolType } from '../../core/types'
 import {
   FPMM_FACTORY_ABI,
@@ -14,7 +14,7 @@ import { sortTokenAddresses } from '../../utils/sortUtils'
  * Fetches all FPMM pools from the FPMM Factory
  */
 export async function fetchFPMMPools(publicClient: PublicClient, chainId: number): Promise<Pool[]> {
-  const fpmmFactoryAddress = getContractAddress(chainId as ChainId, 'FPMMFactory')
+  const fpmmFactoryAddress = tryGetContractAddress(chainId as ChainId, 'FPMMFactory')
 
   if (!fpmmFactoryAddress) {
     return []
@@ -66,8 +66,8 @@ export async function fetchFPMMPools(publicClient: PublicClient, chainId: number
  * then resolves token pairs and exchange IDs from each pool and BiPoolManager.
  */
 export async function fetchVirtualPools(publicClient: PublicClient, chainId: number): Promise<Pool[]> {
-  const virtualPoolFactoryAddress = getContractAddress(chainId as ChainId, 'VirtualPoolFactory')
-  const biPoolManagerAddress = getContractAddress(chainId as ChainId, 'BiPoolManager')
+  const virtualPoolFactoryAddress = tryGetContractAddress(chainId as ChainId, 'VirtualPoolFactory')
+  const biPoolManagerAddress = tryGetContractAddress(chainId as ChainId, 'BiPoolManager')
 
   if (!virtualPoolFactoryAddress || !biPoolManagerAddress) {
     return []

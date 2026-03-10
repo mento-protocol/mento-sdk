@@ -1,4 +1,4 @@
-import { RESERVE_ABI, BIPOOL_MANAGER_ABI, ERC20_ABI } from '../../core/abis'
+import { RESERVE_ABI, RESERVE_V2_ABI, BIPOOL_MANAGER_ABI, ERC20_ABI } from '../../core/abis'
 import { Token, StableToken, CollateralAsset } from '../../core/types'
 
 // Legacy Exchange type for BiPoolManager v2 responses
@@ -8,14 +8,25 @@ interface Exchange {
 }
 import {
   getContractAddress,
+  tryGetContractAddress,
+  ChainId,
   RESERVE,
   BIPOOLMANAGER,
 } from '../../core/constants'
 import { retryOperation } from '../../utils'
 import type { PublicClient } from 'viem'
 
+/**
+ * Chains that use ReserveV2 (v3) instead of the legacy Reserve contract.
+ */
+const RESERVE_V2_CHAINS: Set<number> = new Set([ChainId.MONAD_TESTNET, ChainId.MONAD])
+
 export class TokenService {
   constructor(private publicClient: PublicClient, private chainId: number) {}
+
+  private isReserveV2(): boolean {
+    return RESERVE_V2_CHAINS.has(this.chainId)
+  }
 
   /**
    * Get token metadata (name, symbol, decimals)
@@ -78,6 +89,28 @@ export class TokenService {
   }
 
   /**
+   * Get stable token addresses from the Reserve contract.
+   * Uses getStableAssets() on ReserveV2, getTokens() on legacy Reserve.
+   */
+  private async getStableTokenAddresses(reserveAddress: string): Promise<string[]> {
+    if (this.isReserveV2()) {
+      return (await this.publicClient.readContract({
+        address: reserveAddress as `0x${string}`,
+        abi: RESERVE_V2_ABI,
+        functionName: 'getStableAssets',
+        args: [],
+      })) as string[]
+    }
+
+    return (await this.publicClient.readContract({
+      address: reserveAddress as `0x${string}`,
+      abi: RESERVE_ABI,
+      functionName: 'getTokens',
+      args: [],
+    })) as string[]
+  }
+
+  /**
    * Get all stable tokens from the Reserve contract.
    * Returns the actual on-chain ERC20 totalSupply values without adjustments.
    * @param includeSupply - Whether to fetch total supply
@@ -86,12 +119,7 @@ export class TokenService {
   public async getStableTokens(includeSupply = true): Promise<StableToken[]> {
     const reserveAddress = getContractAddress(this.chainId, RESERVE)
 
-    const tokenAddresses = (await this.publicClient.readContract({
-      address: reserveAddress as `0x${string}`,
-      abi: RESERVE_ABI,
-      functionName: 'getTokens',
-      args: [],
-    })) as string[]
+    const tokenAddresses = await this.getStableTokenAddresses(reserveAddress)
 
     // Fetch metadata and totalSupply for all tokens concurrently
     const tokens = await Promise.all(
@@ -113,12 +141,51 @@ export class TokenService {
   }
 
   /**
-   * Get all collateral assets from exchanges
-   * Filters tokens that are marked as collateral in the Reserve contract
+   * Get all collateral assets.
+   * On ReserveV2 chains, queries the reserve directly.
+   * On legacy chains, discovers collateral via BiPoolManager exchanges.
    * @returns Array of collateral assets
    */
   public async getCollateralAssets(): Promise<CollateralAsset[]> {
-    const biPoolManagerAddress = getContractAddress(this.chainId, BIPOOLMANAGER)
+    if (this.isReserveV2()) {
+      return this.getCollateralAssetsV2()
+    }
+    return this.getCollateralAssetsLegacy()
+  }
+
+  /**
+   * Get collateral assets directly from ReserveV2.
+   */
+  private async getCollateralAssetsV2(): Promise<CollateralAsset[]> {
+    const reserveAddress = getContractAddress(this.chainId, RESERVE)
+
+    const collateralAddresses = (await retryOperation(() =>
+      this.publicClient.readContract({
+        address: reserveAddress as `0x${string}`,
+        abi: RESERVE_V2_ABI,
+        functionName: 'getCollateralAssets',
+        args: [],
+      })
+    )) as string[]
+
+    const assets = await Promise.all(
+      collateralAddresses.map(async (address) => {
+        const metadata = await this.getTokenMetadata(address)
+        return { address, ...metadata }
+      })
+    )
+
+    return assets
+  }
+
+  /**
+   * Get collateral assets from legacy Reserve via BiPoolManager exchanges.
+   */
+  private async getCollateralAssetsLegacy(): Promise<CollateralAsset[]> {
+    const biPoolManagerAddress = tryGetContractAddress(this.chainId, BIPOOLMANAGER)
+    if (!biPoolManagerAddress) {
+      return []
+    }
     const reserveAddress = getContractAddress(this.chainId, RESERVE)
 
     // Get all exchanges to find unique token addresses

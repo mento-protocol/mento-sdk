@@ -28,9 +28,50 @@ const celoSepolia = defineChain({
   testnet: true,
 })
 
+const monadTestnet = defineChain({
+  id: 10143,
+  name: 'Monad Testnet',
+  nativeCurrency: {
+    name: 'MON',
+    symbol: 'MON',
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: { http: ['https://testnet-rpc.monad.xyz'] },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Monad Testnet Explorer',
+      url: 'https://testnet.monadexplorer.com',
+    },
+  },
+  testnet: true,
+})
+
+const monad = defineChain({
+  id: 143,
+  name: 'Monad',
+  nativeCurrency: {
+    name: 'MON',
+    symbol: 'MON',
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: { http: ['https://rpc.monad.xyz'] },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Monad Explorer',
+      url: 'https://monadexplorer.com',
+    },
+  },
+})
+
 const chainConfigs = {
   42220: celo,
   11142220: celoSepolia,
+  10143: monadTestnet,
+  143: monad,
 } as const
 
 /**
