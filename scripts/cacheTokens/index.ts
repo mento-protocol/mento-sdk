@@ -64,7 +64,7 @@ const monad = defineChain({
   blockExplorers: {
     default: {
       name: 'Monad Explorer',
-      url: 'https://monadexplorer.com',
+      url: 'https://monadvision.com',
     },
   },
 })
@@ -79,10 +79,7 @@ const chainConfigs = {
 /**
  * Fetch token metadata (name, symbol, decimals) for an ERC20 token
  */
-async function fetchTokenMetadata(
-  publicClient: PublicClient,
-  address: string
-): Promise<Token> {
+async function fetchTokenMetadata(publicClient: PublicClient, address: string): Promise<Token> {
   const [name, symbol, decimals] = await Promise.all([
     retryOperation(() =>
       publicClient.readContract({
@@ -148,14 +145,10 @@ async function fetchTokensForChain(chainId: SupportedChainId): Promise<Token[]> 
     })
   })
 
-  console.log(
-    `📡 Fetching token metadata for ${uniqueAddresses.size} unique tokens...`
-  )
+  console.log(`📡 Fetching token metadata for ${uniqueAddresses.size} unique tokens...`)
 
   const tokens = await Promise.all(
-    Array.from(uniqueAddresses.values()).map((address) =>
-      fetchTokenMetadata(publicClient, address)
-    )
+    Array.from(uniqueAddresses.values()).map((address) => fetchTokenMetadata(publicClient, address))
   )
 
   console.log(`✅ Fetched ${tokens.length} unique tokens`)
@@ -171,9 +164,7 @@ async function fetchTokensForChain(chainId: SupportedChainId): Promise<Token[]> 
 export async function main(): Promise<void> {
   const args = parseCommandLineArgs()
 
-  const chainIdsToProcess =
-    args.targetChainIds ||
-    (Object.keys(rpcUrls).map(Number) as SupportedChainId[])
+  const chainIdsToProcess = args.targetChainIds || (Object.keys(rpcUrls).map(Number) as SupportedChainId[])
 
   console.log(`📡 Cache tokens for chain(s): ${chainIdsToProcess.join(', ')}`)
 
@@ -198,10 +189,7 @@ export async function main(): Promise<void> {
   const content = generateConsolidatedContent(tokensByChain)
   const fileName = writeConsolidatedFile(content, __dirname)
 
-  const totalTokens = Object.values(tokensByChain).reduce(
-    (sum, tokens) => sum + tokens.length,
-    0
-  )
+  const totalTokens = Object.values(tokensByChain).reduce((sum, tokens) => sum + tokens.length, 0)
   console.log(
     `✅ Successfully cached ${totalTokens} tokens across ${chainIdsToProcess.length} chains to src/cache/${fileName}`
   )

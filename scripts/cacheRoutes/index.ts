@@ -3,11 +3,7 @@ import { createPublicClient, http } from 'viem'
 import { celo } from 'viem/chains'
 import { defineChain } from 'viem'
 import type { Route, RouteWithCost } from '../../src/core/types'
-import {
-  buildConnectivityStructures,
-  generateAllRoutes,
-  selectOptimalRoutes,
-} from '../../src/utils/routeUtils'
+import { buildConnectivityStructures, generateAllRoutes, selectOptimalRoutes } from '../../src/utils/routeUtils'
 import { deduplicateRoutes } from '../shared/routeDeduplication'
 import { processRoutesInBatches } from './batchProcessor'
 import { parseCommandLineArgs, printUsageTips } from './cli'
@@ -77,7 +73,7 @@ const monad = defineChain({
   blockExplorers: {
     default: {
       name: 'Monad Explorer',
-      url: 'https://monadexplorer.com',
+      url: 'https://monadvision.com',
     },
   },
 })
@@ -115,10 +111,7 @@ async function getAllRoutes(routeService: RouteService): Promise<Route[]> {
 /**
  * Generate routes for a specific chain
  */
-async function generateRoutesForChain(
-  chainId: SupportedChainId,
-  batchSize = 10
-): Promise<RouteWithCost[]> {
+async function generateRoutesForChain(chainId: SupportedChainId, batchSize = 10): Promise<RouteWithCost[]> {
   const rpcUrl = rpcUrls[chainId]
   const chain = chainConfigs[chainId]
 
@@ -179,26 +172,18 @@ export async function main(): Promise<void> {
   const args = parseCommandLineArgs()
 
   // Determine which chain IDs to process
-  const chainIdsToProcess =
-    args.targetChainIds ||
-    (Object.keys(rpcUrls).map(Number) as SupportedChainId[])
+  const chainIdsToProcess = args.targetChainIds || (Object.keys(rpcUrls).map(Number) as SupportedChainId[])
 
   // Use configured batch size or default to 10
   const batchSize = args.batchSize || 10
 
-  console.log(
-    `Cache all available routes for chain(s): ${chainIdsToProcess.join(
-      ', '
-    )} (batch size: ${batchSize})`
-  )
+  console.log(`Cache all available routes for chain(s): ${chainIdsToProcess.join(', ')} (batch size: ${batchSize})`)
 
   // Generate routes for all chains
   const routesByChain: { [chainId: number]: RouteWithCost[] } = {}
 
   for (const chainId of chainIdsToProcess) {
-    console.log(
-      `\n\x1b[1mGenerating tradable pairs for chain ${chainId}...\x1b[0m`
-    )
+    console.log(`\n\x1b[1mGenerating tradable pairs for chain ${chainId}...\x1b[0m`)
     try {
       const routes = await generateRoutesForChain(chainId as SupportedChainId, batchSize)
       routesByChain[chainId] = routes
@@ -215,7 +200,9 @@ export async function main(): Promise<void> {
   const fileName = writeConsolidatedFile(content, __dirname)
 
   const totalRoutes = Object.values(routesByChain).reduce((sum, routes) => sum + routes.length, 0)
-  console.log(`\n✅ Successfully cached ${totalRoutes} routes across ${chainIdsToProcess.length} chains to src/cache/${fileName}`)
+  console.log(
+    `\n✅ Successfully cached ${totalRoutes} routes across ${chainIdsToProcess.length} chains to src/cache/${fileName}`
+  )
 
   console.log('\nAll done!')
 
