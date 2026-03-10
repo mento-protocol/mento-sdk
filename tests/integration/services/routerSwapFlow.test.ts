@@ -23,8 +23,8 @@ import { deadlineFromMinutes } from '../../../src/utils/deadline'
  * @group local
  */
 describe('Router Swap Flow Integration', () => {
-  const RPC_URL = process.env.CELO_RPC_URL || 'http://localhost:8545'
-  const CHAIN_ID = 42220 // Celo mainnet chain ID
+  const RPC_URL = process.env.MONAD_TESTNET_RPC_URL || 'http://localhost:8545'
+  const CHAIN_ID = 10143
 
   const publicClient = createPublicClient({
     transport: http(RPC_URL),

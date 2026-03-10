@@ -37,19 +37,12 @@ export const addresses: ContractAddressMap = {
   },
 
   [ChainId.MONAD_TESTNET]: {
-    // Oracles & Breakers
     BreakerBox: '0x88869E30609D2C0E4032463D713328C6f541878e',
     MedianDeltaBreaker: '0xf923C884F319b8866F67C5719A80E5cB4D0FAF2c',
     SortedOracles: '0x85ed9ac57827132B8F60938F3165BC139E1F53cd',
     ValueDeltaBreaker: '0xbbD0D093F5F11D16D4456FBd6229c9a3b70B8Aaf',
-
-    // DEX
     Reserve: '0xbCdc1D0b92DfceEaa0FcD0a0D53355F4bF1DB8a7',
-
-    // Stable Tokens
     StableToken: '0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc', // USDm
-
-    // V3
     FPMMFactory: '0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980',
     Router: '0xcf6cD45210b3ffE3cA28379C4683F1e60D0C2CCd',
     ReserveLiquidityStrategy: '0x734bb3251Ec3f1A83f8f2A8609bcEF649D54EbF8',

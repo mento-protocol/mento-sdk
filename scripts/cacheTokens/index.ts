@@ -1,9 +1,11 @@
 import 'dotenv/config'
-import { createPublicClient, http } from 'viem'
+import { createPublicClient, http, type PublicClient } from 'viem'
 import { celo } from 'viem/chains'
 import { defineChain } from 'viem'
-import { TokenService } from '../../src/services/tokens/tokenService'
+import { ERC20_ABI } from '../../src/core/abis'
 import type { Token } from '../../src/core/types'
+import { PoolService, RouteService } from '../../src/services'
+import { retryOperation } from '../../src/utils'
 import { rpcUrls, type SupportedChainId } from '../shared/network'
 import { parseCommandLineArgs, printUsageTips } from './cli'
 import { generateConsolidatedContent, writeConsolidatedFile } from './fileGenerator'
@@ -75,11 +77,51 @@ const chainConfigs = {
 } as const
 
 /**
- * Fetch all tokens (stable tokens + collateral assets) for a chain
+ * Fetch token metadata (name, symbol, decimals) for an ERC20 token
  */
-async function fetchTokensForChain(
-  chainId: SupportedChainId
-): Promise<Token[]> {
+async function fetchTokenMetadata(
+  publicClient: PublicClient,
+  address: string
+): Promise<Token> {
+  const [name, symbol, decimals] = await Promise.all([
+    retryOperation(() =>
+      publicClient.readContract({
+        address: address as `0x${string}`,
+        abi: ERC20_ABI,
+        functionName: 'name',
+        args: [],
+      })
+    ),
+    retryOperation(() =>
+      publicClient.readContract({
+        address: address as `0x${string}`,
+        abi: ERC20_ABI,
+        functionName: 'symbol',
+        args: [],
+      })
+    ),
+    retryOperation(() =>
+      publicClient.readContract({
+        address: address as `0x${string}`,
+        abi: ERC20_ABI,
+        functionName: 'decimals',
+        args: [],
+      })
+    ),
+  ])
+
+  return {
+    address,
+    name: name as string,
+    symbol: symbol as string,
+    decimals: Number(decimals),
+  }
+}
+
+/**
+ * Fetch all unique tokens referenced by direct routes for a chain
+ */
+async function fetchTokensForChain(chainId: SupportedChainId): Promise<Token[]> {
   const chain = chainConfigs[chainId]
   const rpcUrl = rpcUrls[chainId]
 
@@ -87,40 +129,35 @@ async function fetchTokensForChain(
   const publicClient = createPublicClient({
     chain,
     transport: http(rpcUrl),
-  }) as any
+  }) as PublicClient
 
-  const tokenService = new TokenService(publicClient, chainId)
+  const poolService = new PoolService(publicClient, chainId)
+  const routeService = new RouteService(publicClient, chainId, poolService)
 
-  console.log(`📡 Fetching tokens from blockchain...`)
+  console.log(`📡 Fetching direct routes from blockchain...`)
 
-  // Fetch both stable tokens and collateral assets (skip supply data for caching)
-  const [stableTokens, collateralAssets] = await Promise.all([
-    tokenService.getStableTokens(/* includeSupply */ false),
-    tokenService.getCollateralAssets(),
-  ])
+  const directRoutes = await routeService.getDirectRoutes()
 
-  // Combine and deduplicate by address
-  const tokenMap = new Map<string, Token>()
-
-  // Add stable tokens
-  stableTokens.forEach((token) => {
-    const baseToken: Token = {
-      address: token.address,
-      name: token.name,
-      symbol: token.symbol,
-      decimals: token.decimals,
-    }
-    tokenMap.set(token.address.toLowerCase(), baseToken)
+  const uniqueAddresses = new Map<string, string>()
+  directRoutes.forEach((route) => {
+    route.tokens.forEach((token) => {
+      const key = token.address.toLowerCase()
+      if (!uniqueAddresses.has(key)) {
+        uniqueAddresses.set(key, token.address)
+      }
+    })
   })
 
-  // Add collateral assets
-  collateralAssets.forEach((token) => {
-    if (!tokenMap.has(token.address.toLowerCase())) {
-      tokenMap.set(token.address.toLowerCase(), token)
-    }
-  })
+  console.log(
+    `📡 Fetching token metadata for ${uniqueAddresses.size} unique tokens...`
+  )
 
-  const tokens = Array.from(tokenMap.values())
+  const tokens = await Promise.all(
+    Array.from(uniqueAddresses.values()).map((address) =>
+      fetchTokenMetadata(publicClient, address)
+    )
+  )
+
   console.log(`✅ Fetched ${tokens.length} unique tokens`)
 
   return tokens
@@ -161,8 +198,13 @@ export async function main(): Promise<void> {
   const content = generateConsolidatedContent(tokensByChain)
   const fileName = writeConsolidatedFile(content, __dirname)
 
-  const totalTokens = Object.values(tokensByChain).reduce((sum, tokens) => sum + tokens.length, 0)
-  console.log(`✅ Successfully cached ${totalTokens} tokens across ${chainIdsToProcess.length} chains to src/cache/${fileName}`)
+  const totalTokens = Object.values(tokensByChain).reduce(
+    (sum, tokens) => sum + tokens.length,
+    0
+  )
+  console.log(
+    `✅ Successfully cached ${totalTokens} tokens across ${chainIdsToProcess.length} chains to src/cache/${fileName}`
+  )
 
   console.log(`\nAll done!`)
   printUsageTips()

@@ -117,9 +117,19 @@ export class TokenService {
    * @returns Array of stable tokens
    */
   public async getStableTokens(includeSupply = true): Promise<StableToken[]> {
+    console.log("\r\n =======================================")
+    console.log("ReserveV2: " + this.isReserveV2())
+    console.log('=======================================')
+
     const reserveAddress = getContractAddress(this.chainId, RESERVE)
 
     const tokenAddresses = await this.getStableTokenAddresses(reserveAddress)
+
+    console.log('\r\n =======================================')
+    console.log('Stable tokens: ')
+    console.log(tokenAddresses)
+    console.log('=======================================')
+
 
     // Fetch metadata and totalSupply for all tokens concurrently
     const tokens = await Promise.all(
