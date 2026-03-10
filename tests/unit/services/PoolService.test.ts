@@ -51,8 +51,21 @@ describe('PoolService', () => {
   ]
 
   beforeEach(() => {
+    const readContract = jest.fn()
     mockPublicClient = {
-      readContract: jest.fn(),
+      readContract,
+      multicall: jest.fn().mockImplementation(async ({ contracts }: { contracts: any[] }) => {
+        return Promise.all(
+          contracts.map(async (c: any) => {
+            try {
+              const result = await readContract(c)
+              return { status: 'success', result }
+            } catch (error) {
+              return { status: 'failure', error }
+            }
+          })
+        )
+      }),
     } as unknown as jest.Mocked<PublicClient>
 
     service = new PoolService(mockPublicClient, ChainId.CELO)

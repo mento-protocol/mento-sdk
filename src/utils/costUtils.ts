@@ -26,18 +26,19 @@ export async function getPoolCostPercent(pool: Pool, publicClient: PublicClient)
  * FPMM pools use lpFee + protocolFee in basis points (10000 = 100%)
  */
 async function getFPMMCostPercent(poolAddress: string, publicClient: PublicClient): Promise<number> {
-  const [lpFee, protocolFee] = await Promise.all([
-    publicClient.readContract({
-      address: poolAddress as `0x${string}`,
-      abi: FPMM_ABI,
-      functionName: 'lpFee',
-    }) as Promise<bigint>,
-    publicClient.readContract({
-      address: poolAddress as `0x${string}`,
-      abi: FPMM_ABI,
-      functionName: 'protocolFee',
-    }) as Promise<bigint>,
-  ])
+  const results = await publicClient.multicall({
+    contracts: [
+      { address: poolAddress as `0x${string}`, abi: FPMM_ABI, functionName: 'lpFee' },
+      { address: poolAddress as `0x${string}`, abi: FPMM_ABI, functionName: 'protocolFee' },
+    ],
+  })
+
+  if (results[0].status === 'failure' || results[1].status === 'failure') {
+    throw new Error(`Failed to read fees for pool ${poolAddress}`)
+  }
+
+  const lpFee = results[0].result as bigint
+  const protocolFee = results[1].result as bigint
 
   // Convert from basis points to percentage using BigInt arithmetic to avoid precision loss
   const totalBasisPoints = lpFee + protocolFee
@@ -49,13 +50,15 @@ async function getFPMMCostPercent(poolAddress: string, publicClient: PublicClien
  * Calculate cost for Virtual pools
  */
 async function getVirtualPoolCostPercent(poolAddress: string, publicClient: PublicClient): Promise<number> {
-  const protocolFee = await publicClient.readContract({
-    address: poolAddress as `0x${string}`,
-    abi: VIRTUAL_POOL_ABI,
-    functionName: 'protocolFee',
+  const results = await publicClient.multicall({
+    contracts: [{ address: poolAddress as `0x${string}`, abi: VIRTUAL_POOL_ABI, functionName: 'protocolFee' }],
   })
 
+  if (results[0].status === 'failure') {
+    throw new Error(`Failed to read protocolFee for pool ${poolAddress}`)
+  }
+
   // Convert from basis points to percentage using BigInt arithmetic to avoid precision loss
-  const scaled = (protocolFee as bigint) * 1000000n
+  const scaled = (results[0].result as bigint) * 1000000n
   return Number(scaled / 100n) / 1e6
 }

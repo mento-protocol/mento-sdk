@@ -17,57 +17,71 @@ export async function fetchFPMMPoolDetails(
     // Known liquidity strategy addresses for this chain
     const knownStrategies = getKnownLiquidityStrategies(chainId)
 
-    // Fetch core data
-    const [
-      reservesResult,
-      decimals0,
-      decimals1,
-      lpFee,
-      protocolFee,
-      rebalanceIncentive,
-      rebalanceThresholdAbove,
-      rebalanceThresholdBelow,
-      ...strategyResults
-    ] = await Promise.all([
-      publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'getReserves' }),
-      publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'decimals0' }),
-      publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'decimals1' }),
-      publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'lpFee' }),
-      publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'protocolFee' }),
-      publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'rebalanceIncentive' }),
-      publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'rebalanceThresholdAbove' }),
-      publicClient.readContract({ address, abi: FPMM_ABI, functionName: 'rebalanceThresholdBelow' }),
-      ...knownStrategies.map((strategyAddr) =>
-        publicClient.readContract({
-          address,
-          abi: FPMM_ABI,
-          functionName: 'liquidityStrategy',
-          args: [strategyAddr],
-        })
-      ),
-    ])
-
-    const [reserve0, reserve1, blockTimestampLast] = reservesResult as [bigint, bigint, bigint]
-
-    const lpFeeBps = lpFee as bigint
-    const protocolFeeBps = protocolFee as bigint
-    const rebalanceIncentiveBps = rebalanceIncentive as bigint
-    const thresholdAboveBps = rebalanceThresholdAbove as bigint
-    const thresholdBelowBps = rebalanceThresholdBelow as bigint
-
-    // Find the active liquidity strategy (first match wins)
-    const activeIndex = strategyResults.findIndex((result) => result === true)
-    const liquidityStrategy = activeIndex >= 0 ? knownStrategies[activeIndex] : null
-
-    // Fetch pricing separately — graceful degradation when FX market is closed
-    let pricing: FPMMPricing | null = null
-    let inBand: boolean | null = null
-    try {
-      const rebalancingStateResult = await publicClient.readContract({
+    // Build all contract reads for a single multicall
+    const coreContracts = [
+      { address, abi: FPMM_ABI, functionName: 'getReserves' as const },
+      { address, abi: FPMM_ABI, functionName: 'decimals0' as const },
+      { address, abi: FPMM_ABI, functionName: 'decimals1' as const },
+      { address, abi: FPMM_ABI, functionName: 'lpFee' as const },
+      { address, abi: FPMM_ABI, functionName: 'protocolFee' as const },
+      { address, abi: FPMM_ABI, functionName: 'rebalanceIncentive' as const },
+      { address, abi: FPMM_ABI, functionName: 'rebalanceThresholdAbove' as const },
+      { address, abi: FPMM_ABI, functionName: 'rebalanceThresholdBelow' as const },
+      ...knownStrategies.map((strategyAddr) => ({
         address,
         abi: FPMM_ABI,
-        functionName: 'getRebalancingState',
-      })
+        functionName: 'liquidityStrategy' as const,
+        args: [strategyAddr] as const,
+      })),
+      // Include getRebalancingState in the same multicall (allowFailure handles FXMarketClosed)
+      { address, abi: FPMM_ABI, functionName: 'getRebalancingState' as const },
+    ]
+
+    const results = await publicClient.multicall({ contracts: coreContracts })
+
+    // Parse core results (first 8 are fixed)
+    const reservesRes = results[0]
+    const decimals0Res = results[1]
+    const decimals1Res = results[2]
+    const lpFeeRes = results[3]
+    const protocolFeeRes = results[4]
+    const rebalanceIncentiveRes = results[5]
+    const thresholdAboveRes = results[6]
+    const thresholdBelowRes = results[7]
+
+    // Check core results
+    if (
+      reservesRes.status === 'failure' ||
+      decimals0Res.status === 'failure' ||
+      decimals1Res.status === 'failure' ||
+      lpFeeRes.status === 'failure' ||
+      protocolFeeRes.status === 'failure' ||
+      rebalanceIncentiveRes.status === 'failure' ||
+      thresholdAboveRes.status === 'failure' ||
+      thresholdBelowRes.status === 'failure'
+    ) {
+      throw new Error('One or more core pool reads failed')
+    }
+
+    const [reserve0, reserve1, blockTimestampLast] = reservesRes.result as [bigint, bigint, bigint]
+
+    const lpFeeBps = lpFeeRes.result as bigint
+    const protocolFeeBps = protocolFeeRes.result as bigint
+    const rebalanceIncentiveBps = rebalanceIncentiveRes.result as bigint
+    const thresholdAboveBps = thresholdAboveRes.result as bigint
+    const thresholdBelowBps = thresholdBelowRes.result as bigint
+
+    // Parse strategy results (indices 8 .. 8+N-1)
+    const strategyResults = results.slice(8, 8 + knownStrategies.length)
+    const activeIndex = strategyResults.findIndex((r) => r.status === 'success' && r.result === true)
+    const liquidityStrategy = activeIndex >= 0 ? knownStrategies[activeIndex] : null
+
+    // Parse getRebalancingState (last result) — graceful degradation when FX market is closed
+    const rebalancingRes = results[8 + knownStrategies.length]
+    let pricing: FPMMPricing | null = null
+    let inBand: boolean | null = null
+
+    if (rebalancingRes.status === 'success') {
       const [
         oraclePriceNum,
         oraclePriceDen,
@@ -76,7 +90,7 @@ export async function fetchFPMMPoolDetails(
         reservePriceAboveOraclePrice,
         rebalanceThreshold,
         priceDifference,
-      ] = rebalancingStateResult as [bigint, bigint, bigint, bigint, boolean, number, bigint]
+      ] = rebalancingRes.result as [bigint, bigint, bigint, bigint, boolean, number, bigint]
 
       pricing = {
         oraclePriceNum,
@@ -91,15 +105,14 @@ export async function fetchFPMMPoolDetails(
       }
 
       inBand = priceDifference < BigInt(rebalanceThreshold)
-    } catch {
-      // getRebalancingState() failed (likely FXMarketClosed) — pricing stays null
     }
+    // If rebalancingRes.status === 'failure' (likely FXMarketClosed) — pricing stays null
 
     return {
       ...pool,
       poolType: 'FPMM',
-      scalingFactor0: decimals0 as bigint,
-      scalingFactor1: decimals1 as bigint,
+      scalingFactor0: decimals0Res.result as bigint,
+      scalingFactor1: decimals1Res.result as bigint,
       reserve0,
       reserve1,
       blockTimestampLast,
@@ -134,15 +147,21 @@ export async function fetchVirtualPoolDetails(publicClient: PublicClient, pool: 
   const address = pool.poolAddr as Address
 
   try {
-    const [reservesResult, protocolFee, metadataResult] = await Promise.all([
-      publicClient.readContract({ address, abi: VIRTUAL_POOL_ABI, functionName: 'getReserves' }),
-      publicClient.readContract({ address, abi: VIRTUAL_POOL_ABI, functionName: 'protocolFee' }),
-      publicClient.readContract({ address, abi: VIRTUAL_POOL_ABI, functionName: 'metadata' }),
-    ])
+    const results = await publicClient.multicall({
+      contracts: [
+        { address, abi: VIRTUAL_POOL_ABI, functionName: 'getReserves' },
+        { address, abi: VIRTUAL_POOL_ABI, functionName: 'protocolFee' },
+        { address, abi: VIRTUAL_POOL_ABI, functionName: 'metadata' },
+      ],
+    })
 
-    const [reserve0, reserve1, blockTimestampLast] = reservesResult as [bigint, bigint, bigint]
-    const [dec0, dec1] = metadataResult as [bigint, bigint, bigint, bigint, string, string]
-    const spreadBps = protocolFee as bigint
+    if (results[0].status === 'failure' || results[1].status === 'failure' || results[2].status === 'failure') {
+      throw new Error('One or more virtual pool reads failed')
+    }
+
+    const [reserve0, reserve1, blockTimestampLast] = results[0].result as [bigint, bigint, bigint]
+    const [dec0, dec1] = results[2].result as [bigint, bigint, bigint, bigint, string, string]
+    const spreadBps = results[1].result as bigint
 
     return {
       ...pool,
