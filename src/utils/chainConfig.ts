@@ -44,6 +44,12 @@ const monadTestnet = defineChain({
       url: 'https://testnet.monadexplorer.com',
     },
   },
+  contracts: {
+    multicall3: {
+      address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+      blockCreated: 251449,
+    },
+  },
   testnet: true,
 })
 
@@ -64,6 +70,12 @@ const monad = defineChain({
     default: {
       name: 'Monad Explorer',
       url: 'https://monadvision.com',
+    },
+  },
+  contracts: {
+    multicall3: {
+      address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+      blockCreated: 9248132,
     },
   },
 })
