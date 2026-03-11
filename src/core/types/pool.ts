@@ -110,8 +110,78 @@ export interface FPMMRebalancing {
   /** Whether the current price is within rebalancing thresholds (null when pricing unavailable) */
   inBand: boolean | null
 
-  /** The active liquidity strategy address for this pool, or null if none */
+  /** The registered Open Liquidity Strategy address for this pool, or null if none */
   liquidityStrategy: string | null
+}
+
+export type LiquidityStrategyDirection = 'Expand' | 'Contract'
+
+export interface LiquidityStrategyRebalanceIncentives {
+  liquiditySourceIncentiveExpansion: bigint
+  protocolIncentiveExpansion: bigint
+  liquiditySourceIncentiveContraction: bigint
+  protocolIncentiveContraction: bigint
+}
+
+export interface LiquidityStrategyPoolConfig {
+  isToken0Debt: boolean
+  lastRebalance: number
+  rebalanceCooldown: number
+  protocolFeeRecipient: string
+  liquiditySourceIncentiveExpansion: bigint
+  protocolIncentiveExpansion: bigint
+  liquiditySourceIncentiveContraction: bigint
+  protocolIncentiveContraction: bigint
+}
+
+export interface LiquidityStrategyContext {
+  pool: string
+  reserves: {
+    reserveNum: bigint
+    reserveDen: bigint
+  }
+  prices: {
+    oracleNum: bigint
+    oracleDen: bigint
+    poolPriceAbove: boolean
+    rebalanceThreshold: number
+  }
+  token0: string
+  token1: string
+  token0Dec: bigint
+  token1Dec: bigint
+  isToken0Debt: boolean
+  incentives: LiquidityStrategyRebalanceIncentives
+}
+
+export interface LiquidityStrategyAction {
+  dir: LiquidityStrategyDirection
+  amount0Out: bigint
+  amount1Out: bigint
+  amountOwedToPool: bigint
+}
+
+export interface PoolRebalanceTokenAmount {
+  token: string
+  amount: bigint
+}
+
+export interface PoolRebalancePreview {
+  poolAddress: string
+  strategyAddress: string
+  direction: LiquidityStrategyDirection
+  config: LiquidityStrategyPoolConfig
+  context: LiquidityStrategyContext
+  action: LiquidityStrategyAction
+  inputToken: string
+  outputToken: string
+  amountRequired: PoolRebalanceTokenAmount
+  amountTransferred: PoolRebalanceTokenAmount
+  protocolIncentive: PoolRebalanceTokenAmount
+  liquiditySourceIncentive: PoolRebalanceTokenAmount
+  approvalToken: string
+  approvalSpender: string
+  approvalAmount: bigint
 }
 
 /**

@@ -4,6 +4,9 @@ import { RouteService } from '../routes'
 import {
   AddLiquidityInput,
   RemoveLiquidityInput,
+  RebalanceDetails,
+  RebalanceInput,
+  RebalanceTransaction,
   ZapInInput,
   ZapOutInput,
   PrepareZapInInput,
@@ -46,6 +49,10 @@ import {
   prepareZapOutInternal,
   quoteZapOutInternal,
 } from './zapOut'
+import {
+  buildRebalanceParamsInternal,
+  buildRebalanceTransactionInternal,
+} from './rebalance'
 
 export class LiquidityService {
   constructor(
@@ -369,6 +376,40 @@ export class LiquidityService {
       tokenOut,
       liquidity,
       options
+    )
+  }
+
+  /**
+   * Builds rebalance transaction parameters without checking approval.
+   * Use buildRebalanceTransaction if you need approval handling.
+   * @param input - Rebalance parameters
+   * @returns Transaction details with encoded call data
+   */
+  async buildRebalanceParams(
+    input: RebalanceInput
+  ): Promise<RebalanceDetails> {
+    return buildRebalanceParamsInternal(
+      this.publicClient,
+      this.chainId,
+      this.poolService,
+      input.poolAddress
+    )
+  }
+
+  /**
+   * Builds a rebalance transaction with ERC20 approval if needed.
+   * @param input - Rebalance parameters including owner for allowance checks
+   * @returns Transaction with approval (if needed) and rebalance call
+   */
+  async buildRebalanceTransaction(
+    input: RebalanceInput & { owner: string }
+  ): Promise<RebalanceTransaction> {
+    return buildRebalanceTransactionInternal(
+      this.publicClient,
+      this.chainId,
+      this.poolService,
+      input.poolAddress,
+      input.owner
     )
   }
 }

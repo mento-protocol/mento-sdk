@@ -1,4 +1,4 @@
-import { addresses, ChainId } from '../../core/constants'
+import { ChainId, tryGetContractAddress } from '../../core/constants'
 import { Pool, FPMMPoolDetails, FPMMPricing, VirtualPoolDetails } from '../../core/types'
 import { FPMM_ABI, VIRTUAL_POOL_ABI } from '../../core/abis'
 import { PublicClient, Address, getAddress } from 'viem'
@@ -30,19 +30,20 @@ export async function fetchFPMMPoolDetailsBatch(
     return []
   }
 
-  const knownStrategies = getKnownLiquidityStrategies(chainId)
-  const contracts = pools.flatMap((pool) => buildFPMMContracts(pool, knownStrategies))
+  const openLiquidityStrategy = getOpenLiquidityStrategy(chainId)
+  const contracts = pools.flatMap((pool) => buildFPMMContracts(pool, openLiquidityStrategy))
   const results = await multicall(publicClient, contracts)
 
-  const perPoolResultCount = FPMM_FIXED_RESULT_COUNT + knownStrategies.length + 1
+  const strategyCheckCount = openLiquidityStrategy ? 1 : 0
+  const perPoolResultCount = FPMM_FIXED_RESULT_COUNT + strategyCheckCount + 1
   return pools.map((pool, index) => {
     const offset = index * perPoolResultCount
     const poolResults = results.slice(offset, offset + perPoolResultCount)
-    return parseFPMMPoolDetails(pool, knownStrategies, poolResults)
+    return parseFPMMPoolDetails(pool, openLiquidityStrategy, poolResults)
   })
 }
 
-function buildFPMMContracts(pool: Pool, knownStrategies: Address[]) {
+function buildFPMMContracts(pool: Pool, openLiquidityStrategy: Address | null) {
   const address = pool.poolAddr as Address
 
   return [
@@ -54,19 +55,21 @@ function buildFPMMContracts(pool: Pool, knownStrategies: Address[]) {
     { address, abi: FPMM_ABI, functionName: 'rebalanceIncentive' as const },
     { address, abi: FPMM_ABI, functionName: 'rebalanceThresholdAbove' as const },
     { address, abi: FPMM_ABI, functionName: 'rebalanceThresholdBelow' as const },
-    ...knownStrategies.map((strategyAddr) => ({
-      address,
-      abi: FPMM_ABI,
-      functionName: 'liquidityStrategy' as const,
-      args: [strategyAddr] as const,
-    })),
+    ...(openLiquidityStrategy
+      ? [{
+          address,
+          abi: FPMM_ABI,
+          functionName: 'liquidityStrategy' as const,
+          args: [openLiquidityStrategy] as const,
+        }]
+      : []),
     { address, abi: FPMM_ABI, functionName: 'getRebalancingState' as const },
   ]
 }
 
 function parseFPMMPoolDetails(
   pool: Pool,
-  knownStrategies: Address[],
+  openLiquidityStrategy: Address | null,
   results: MulticallResults
 ): FPMMPoolDetails {
   try {
@@ -107,11 +110,16 @@ function parseFPMMPoolDetails(
     const thresholdAboveBps = thresholdAboveRes.result as bigint
     const thresholdBelowBps = thresholdBelowRes.result as bigint
 
-    const strategyResults = results.slice(FPMM_FIXED_RESULT_COUNT, FPMM_FIXED_RESULT_COUNT + knownStrategies.length)
-    const activeIndex = strategyResults.findIndex((result) => result.status === 'success' && result.result === true)
-    const liquidityStrategy = activeIndex >= 0 ? knownStrategies[activeIndex] : null
+    const strategyCheckCount = openLiquidityStrategy ? 1 : 0
+    const openStrategyResult = strategyCheckCount > 0 ? results[FPMM_FIXED_RESULT_COUNT] : null
+    const liquidityStrategy =
+      openLiquidityStrategy &&
+      openStrategyResult?.status === 'success' &&
+      openStrategyResult.result === true
+        ? openLiquidityStrategy
+        : null
 
-    const rebalancingRes = results[FPMM_FIXED_RESULT_COUNT + knownStrategies.length]
+    const rebalancingRes = results[FPMM_FIXED_RESULT_COUNT + strategyCheckCount]
     let pricing: FPMMPricing | null = null
     let inBand: boolean | null = null
 
@@ -241,23 +249,15 @@ function parseVirtualPoolDetails(pool: Pool, results: MulticallResults): Virtual
 }
 
 /**
- * Returns the known liquidity strategy addresses for the given chain.
+ * Returns the configured Open Liquidity Strategy for the given chain.
  */
-function getKnownLiquidityStrategies(chainId: number): Address[] {
-  const chainAddresses = addresses[chainId as ChainId]
-  if (!chainAddresses) return []
+function getOpenLiquidityStrategy(chainId: number): Address | null {
+  const strategyAddress = tryGetContractAddress(chainId as ChainId, 'OpenLiquidityStrategy')
+  if (!strategyAddress) return null
 
-  const strategyCandidates = [
-    chainAddresses.ReserveLiquidityStrategy,
-    chainAddresses.CDPLiquidityStrategy,
-  ].filter((address): address is string => Boolean(address))
-
-  // Normalize to checksummed addresses and ignore malformed config values.
-  return strategyCandidates.flatMap((address) => {
-    try {
-      return [getAddress(address)]
-    } catch {
-      return []
-    }
-  })
+  try {
+    return getAddress(strategyAddress)
+  } catch {
+    return null
+  }
 }

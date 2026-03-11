@@ -1,9 +1,10 @@
 import { LiquidityService } from '../../../src/services/liquidity/LiquidityService'
 import { PoolService } from '../../../src/services/pools/PoolService'
 import { RouteService } from '../../../src/services/routes/RouteService'
-import type { PublicClient, Address } from 'viem'
+import { encodeFunctionData, type PublicClient, type Address } from 'viem'
 import { ChainId } from '../../../src/core/constants'
 import { PoolType } from '../../../src/core/types'
+import { LIQUIDITY_STRATEGY_ABI } from '../../../src/core/abis'
 import { deadlineFromMinutes } from '../../../src/utils/deadline'
 
 /**
@@ -60,6 +61,7 @@ describe('LiquidityService', () => {
     mockPoolService = {
       getPools: jest.fn(),
       getPoolDetails: jest.fn(),
+      getPoolRebalancePreview: jest.fn(),
     } as unknown as jest.Mocked<PoolService>
 
     // Mock RouteService
@@ -663,6 +665,166 @@ describe('LiquidityService', () => {
           options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
         })
       ).rejects.toThrow(/No viable zap-out route/)
+    })
+  })
+
+  describe('Rebalance Operations', () => {
+    const STRATEGY = '0x3333333333333333333333333333333333333333' as Address
+
+    const rebalancePreview = {
+      poolAddress: POOL_ADDRESS,
+      strategyAddress: STRATEGY,
+      direction: 'Expand' as const,
+      config: {
+        isToken0Debt: true,
+        lastRebalance: 100,
+        rebalanceCooldown: 600,
+        protocolFeeRecipient: '0x4444444444444444444444444444444444444444',
+        liquiditySourceIncentiveExpansion: 100000000000000000n,
+        protocolIncentiveExpansion: 20000000000000000n,
+        liquiditySourceIncentiveContraction: 200000000000000000n,
+        protocolIncentiveContraction: 40000000000000000n,
+      },
+      context: {
+        pool: POOL_ADDRESS,
+        reserves: {
+          reserveNum: 1000n,
+          reserveDen: 2000n,
+        },
+        prices: {
+          oracleNum: 1n,
+          oracleDen: 1n,
+          poolPriceAbove: true,
+          rebalanceThreshold: 60,
+        },
+        token0: TOKEN_0,
+        token1: TOKEN_1,
+        token0Dec: 18n,
+        token1Dec: 18n,
+        isToken0Debt: true,
+        incentives: {
+          liquiditySourceIncentiveExpansion: 100000000000000000n,
+          protocolIncentiveExpansion: 20000000000000000n,
+          liquiditySourceIncentiveContraction: 200000000000000000n,
+          protocolIncentiveContraction: 40000000000000000n,
+        },
+      },
+      action: {
+        dir: 'Expand' as const,
+        amount0Out: 0n,
+        amount1Out: 500n,
+        amountOwedToPool: 200n,
+      },
+      inputToken: TOKEN_0,
+      outputToken: TOKEN_1,
+      amountRequired: {
+        token: TOKEN_0,
+        amount: 200n,
+      },
+      amountTransferred: {
+        token: TOKEN_1,
+        amount: 500n,
+      },
+      protocolIncentive: {
+        token: TOKEN_1,
+        amount: 10n,
+      },
+      liquiditySourceIncentive: {
+        token: TOKEN_1,
+        amount: 49n,
+      },
+      approvalToken: TOKEN_0,
+      approvalSpender: STRATEGY,
+      approvalAmount: 200n,
+    }
+
+    beforeEach(() => {
+      mockPoolService.getPoolRebalancePreview.mockResolvedValue(rebalancePreview as any)
+      mockPublicClient.readContract.mockResolvedValue(0n)
+    })
+
+    it('should build rebalance params against the active strategy', async () => {
+      const params = await liquidityService.buildRebalanceParams({
+        poolAddress: POOL_ADDRESS,
+      })
+
+      expect(params.strategyAddress).toBe(STRATEGY)
+      expect(params.inputToken).toBe(TOKEN_0)
+      expect(params.outputToken).toBe(TOKEN_1)
+      expect(params.amountRequired).toBe(200n)
+      expect(params.expectedAmountTransferred).toBe(500n)
+      expect(params.expectedProtocolIncentive).toBe(10n)
+      expect(params.expectedLiquiditySourceIncentive).toBe(49n)
+      expect(params.params).toEqual({
+        to: STRATEGY,
+        data: encodeFunctionData({
+          abi: LIQUIDITY_STRATEGY_ABI,
+          functionName: 'rebalance',
+          args: [POOL_ADDRESS],
+        }),
+        value: '0',
+      })
+    })
+
+    it('should build a rebalance approval against the strategy spender when allowance is insufficient', async () => {
+      const transaction = await liquidityService.buildRebalanceTransaction({
+        poolAddress: POOL_ADDRESS,
+        owner: OWNER,
+      })
+
+      expect(mockPublicClient.readContract).toHaveBeenCalledWith(
+        expect.objectContaining({
+          address: TOKEN_0,
+          functionName: 'allowance',
+          args: [OWNER, STRATEGY],
+        })
+      )
+      expect(transaction.approval).toEqual(
+        expect.objectContaining({
+          token: TOKEN_0,
+          amount: 200n,
+        })
+      )
+      expect(transaction.rebalance.strategyAddress).toBe(STRATEGY)
+    })
+
+    it('should skip approval when strategy allowance already covers the rebalance', async () => {
+      mockPublicClient.readContract.mockResolvedValue(200n)
+
+      const transaction = await liquidityService.buildRebalanceTransaction({
+        poolAddress: POOL_ADDRESS,
+        owner: OWNER,
+      })
+
+      expect(transaction.approval).toBeNull()
+    })
+
+    it('should throw when no rebalance preview is available', async () => {
+      mockPoolService.getPoolRebalancePreview.mockResolvedValue(null)
+
+      await expect(
+        liquidityService.buildRebalanceParams({
+          poolAddress: POOL_ADDRESS,
+        })
+      ).rejects.toThrow(/not currently rebalanceable/)
+    })
+
+    it('should throw when the rebalance action resolves to zero amounts', async () => {
+      mockPoolService.getPoolRebalancePreview.mockResolvedValue({
+        ...rebalancePreview,
+        amountRequired: {
+          token: TOKEN_0,
+          amount: 0n,
+        },
+        approvalAmount: 0n,
+      } as any)
+
+      await expect(
+        liquidityService.buildRebalanceTransaction({
+          poolAddress: POOL_ADDRESS,
+          owner: OWNER,
+        })
+      ).rejects.toThrow(/zero amounts/)
     })
   })
 

@@ -1,4 +1,5 @@
 import { CallParams } from './transaction'
+import { LiquidityStrategyDirection } from './pool'
 import { RouterRoute } from '../../utils/pathEncoder'
 
 export interface LiquidityOptions {
@@ -131,6 +132,27 @@ export interface ZapOutTransaction {
   zapOut: ZapOutDetails
 }
 
+export interface RebalanceDetails {
+  params: CallParams
+  poolAddress: string
+  strategyAddress: string
+  inputToken: string
+  outputToken: string
+  amountRequired: bigint
+  expectedAmountTransferred: bigint
+  expectedProtocolIncentive: bigint
+  expectedLiquiditySourceIncentive: bigint
+  approvalToken: string
+  approvalSpender: string
+  approvalAmount: bigint
+  direction: LiquidityStrategyDirection
+}
+
+export interface RebalanceTransaction {
+  approval: TokenApproval | null
+  rebalance: RebalanceDetails
+}
+
 export interface PreparedZapIn {
   routesA: RouterRoute[]
   routesB: RouterRoute[]
@@ -193,4 +215,8 @@ export interface ZapOutInput {
 
 export interface PrepareZapOutInput extends ZapOutInput {
   owner?: string
+}
+
+export interface RebalanceInput {
+  poolAddress: string
 }

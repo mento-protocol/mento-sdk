@@ -1,10 +1,14 @@
-import { Pool, PoolType, PoolDetails } from '../../core/types'
+import { Pool, PoolType, PoolDetails, PoolRebalancePreview } from '../../core/types'
 import { PublicClient } from 'viem'
 import { fetchFPMMPools, fetchVirtualPools } from './poolDiscovery'
 import {
   fetchFPMMPoolDetailsBatch,
   fetchVirtualPoolDetailsBatch,
 } from './poolDetails'
+import {
+  fetchPoolRebalancePreview,
+  fetchPoolRebalancePreviewBatch,
+} from './rebalancePreview'
 
 /**
  * Result of pool discovery including any warnings from failed factories
@@ -126,6 +130,16 @@ export class PoolService {
   async getPoolDetails(poolAddr: string): Promise<PoolDetails> {
     const [details] = await this.getPoolDetailsBatch([poolAddr])
     return details
+  }
+
+  async getPoolRebalancePreview(poolAddr: string): Promise<PoolRebalancePreview | null> {
+    const details = await this.getPoolDetails(poolAddr)
+    return fetchPoolRebalancePreview(this.publicClient, details)
+  }
+
+  async getPoolRebalancePreviewBatch(poolAddresses?: string[]): Promise<Array<PoolRebalancePreview | null>> {
+    const details = await this.getPoolDetailsBatch(poolAddresses)
+    return fetchPoolRebalancePreviewBatch(this.publicClient, details)
   }
 
   async getPoolDetailsBatch(poolAddresses?: string[]): Promise<PoolDetails[]> {

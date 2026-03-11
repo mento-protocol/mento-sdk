@@ -46,6 +46,7 @@ export const addresses: ContractAddressMap = {
     FPMMFactory: '0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980',
     Router: '0xcf6cD45210b3ffE3cA28379C4683F1e60D0C2CCd',
     ReserveLiquidityStrategy: '0x734bb3251Ec3f1A83f8f2A8609bcEF649D54EbF8',
+    OpenLiquidityStrategy: '0xCCd2aD0603a08EBc14D223a983171ef18192e8c9',
   },
 
   [ChainId.MONAD]: {},

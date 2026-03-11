@@ -6,12 +6,16 @@ import { getContractAddress, ChainId } from '../../core/constants'
 import { validateAddress } from '../../utils/validation'
 import { multicall } from '../../utils/multicall'
 
-export function buildApprovalParams(chainId: number, token: Address, amount: bigint): CallParams {
-  const routerAddress = getContractAddress(chainId as ChainId, 'Router')
+function getApprovalSpender(chainId: number, spender?: Address): Address {
+  return spender ?? (getContractAddress(chainId as ChainId, 'Router') as Address)
+}
+
+export function buildApprovalParams(chainId: number, token: Address, amount: bigint, spender?: Address): CallParams {
+  const approvalSpender = getApprovalSpender(chainId, spender)
   const data = encodeFunctionData({
     abi: ERC20_ABI,
     functionName: 'approve',
-    args: [routerAddress, amount],
+    args: [approvalSpender, amount],
   })
   return { to: token, data, value: '0' }
 }
@@ -20,14 +24,15 @@ export async function getAllowance(
   publicClient: PublicClient,
   token: Address,
   owner: Address,
-  chainId: number
+  chainId: number,
+  spender?: Address
 ): Promise<bigint> {
-  const routerAddress = getContractAddress(chainId as ChainId, 'Router')
+  const approvalSpender = getApprovalSpender(chainId, spender)
   return (await publicClient.readContract({
     address: token,
     abi: ERC20_ABI,
     functionName: 'allowance',
-    args: [owner, routerAddress],
+    args: [owner, approvalSpender],
   })) as bigint
 }
 
