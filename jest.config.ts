@@ -17,6 +17,13 @@ const config: Config.InitialOptions = {
   ],
   coverageDirectory: '<rootDir>/coverage/',
   coveragePathIgnorePatterns: ['src/constants', 'src/types'],
+  coverageThreshold: {
+    global: {
+      statements: 60,
+      functions: 60,
+      branches: 60,
+    },
+  },
   testTimeout: 900000,
   rootDir: '.',
   setupFiles: ['<rootDir>/tests/setup.ts'],
