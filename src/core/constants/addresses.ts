@@ -49,7 +49,18 @@ export const addresses: ContractAddressMap = {
     OpenLiquidityStrategy: '0xCCd2aD0603a08EBc14D223a983171ef18192e8c9',
   },
 
-  [ChainId.MONAD]: {},
+  [ChainId.MONAD]: {
+    BreakerBox: '0x9fc1E0d10fb38954Da385B8B25aB2BbaF3241722',
+    MedianDeltaBreaker: '0x3E4F2Bca4f7192Be4C3c5E5bD4840F2E90a8Ba84',
+    SortedOracles: '0x6f92C745346057a61b259579256159458a0a6A92',
+    ValueDeltaBreaker: '0xca2e7563dfC30bc94687F3deAcF682E1dBAffA13',
+    Reserve: '0x4255Cf38e51516766180b33122029A88Cb853806',
+    StableToken: '0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115', // USDm
+    FPMMFactory: '0xa849b475FE5a4B5C9C3280152c7a1945b907613b',
+    Router: '0x4861840C2EfB2b98312B0aE34d86fD73E8f9B6f6',
+    ReserveLiquidityStrategy: '0xa0fB8b16ce6AF3634fF9F3f4F40E49E1C1ae4f0B',
+    OpenLiquidityStrategy: '0x54e2Ae8c8448912E17cE0b2453bAFB7B0D80E40f',
+  },
 
   [ChainId.CELO_SEPOLIA]: {
     // Oracles & Breakers
