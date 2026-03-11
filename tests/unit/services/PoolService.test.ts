@@ -977,4 +977,81 @@ describe('PoolService', () => {
       expect(uniqueAddresses.size).toBe(poolAddresses.length)
     })
   })
+
+  describe('getPoolDetailsBatch()', () => {
+    it('preserves input order for mixed FPMM and Virtual pools', async () => {
+      const fpmmPool = mockFPMMPools[0]
+      const virtualPool = mockVirtualPools[0]
+
+      mockPublicClient.readContract.mockImplementation(async ({ address, functionName }: any) => {
+        if (functionName === 'deployedFPMMAddresses') {
+          return [fpmmPool.poolAddress]
+        }
+        if (functionName === 'token0') {
+          return fpmmPool.token0
+        }
+        if (functionName === 'token1') {
+          return fpmmPool.token1
+        }
+        if (functionName === 'getAllPools') {
+          return [virtualPool]
+        }
+        if (functionName === 'getExchanges') {
+          return [mockExchanges[0]]
+        }
+        if (functionName === 'tokens') {
+          return [mockExchanges[0].assets[0], mockExchanges[0].assets[1]]
+        }
+        if (functionName === 'getReserves' && address === fpmmPool.poolAddress) {
+          return [1n, 2n, 3n]
+        }
+        if (functionName === 'decimals0') {
+          return 1n
+        }
+        if (functionName === 'decimals1') {
+          return 1n
+        }
+        if (functionName === 'lpFee') {
+          return 25n
+        }
+        if (functionName === 'protocolFee') {
+          return 5n
+        }
+        if (functionName === 'rebalanceIncentive') {
+          return 10n
+        }
+        if (functionName === 'rebalanceThresholdAbove') {
+          return 60n
+        }
+        if (functionName === 'rebalanceThresholdBelow') {
+          return 60n
+        }
+        if (functionName === 'liquidityStrategy') {
+          return false
+        }
+        if (functionName === 'getRebalancingState') {
+          return [1n, 1n, 1n, 1n, true, 60, 0n]
+        }
+        if (functionName === 'getReserves' && address === virtualPool) {
+          return [10n, 20n, 30n]
+        }
+        if (functionName === 'protocolFee') {
+          return 12n
+        }
+        if (functionName === 'metadata') {
+          return [18n, 6n, 0n, 0n, '', '']
+        }
+
+        return null
+      })
+
+      const details = await service.getPoolDetailsBatch([virtualPool, fpmmPool.poolAddress])
+
+      expect(details).toHaveLength(2)
+      expect(details[0].poolAddr).toBe(virtualPool)
+      expect(details[0].poolType).toBe('Virtual')
+      expect(details[1].poolAddr).toBe(fpmmPool.poolAddress)
+      expect(details[1].poolType).toBe('FPMM')
+    })
+  })
 })

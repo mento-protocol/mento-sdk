@@ -4,6 +4,11 @@ import { FPMM_ABI, VIRTUAL_POOL_ABI } from '../../core/abis'
 import { PublicClient, Address, getAddress } from 'viem'
 import { multicall } from '../../utils/multicall'
 
+type MulticallResults = Awaited<ReturnType<typeof multicall>>
+
+const FPMM_FIXED_RESULT_COUNT = 8
+const VIRTUAL_RESULT_COUNT = 3
+
 /**
  * Fetches enriched details for an FPMM pool
  */
@@ -12,35 +17,59 @@ export async function fetchFPMMPoolDetails(
   chainId: number,
   pool: Pool
 ): Promise<FPMMPoolDetails> {
+  const [details] = await fetchFPMMPoolDetailsBatch(publicClient, chainId, [pool])
+  return details
+}
+
+export async function fetchFPMMPoolDetailsBatch(
+  publicClient: PublicClient,
+  chainId: number,
+  pools: Pool[]
+): Promise<FPMMPoolDetails[]> {
+  if (pools.length === 0) {
+    return []
+  }
+
+  const knownStrategies = getKnownLiquidityStrategies(chainId)
+  const contracts = pools.flatMap((pool) => buildFPMMContracts(pool, knownStrategies))
+  const results = await multicall(publicClient, contracts)
+
+  const perPoolResultCount = FPMM_FIXED_RESULT_COUNT + knownStrategies.length + 1
+  return pools.map((pool, index) => {
+    const offset = index * perPoolResultCount
+    const poolResults = results.slice(offset, offset + perPoolResultCount)
+    return parseFPMMPoolDetails(pool, knownStrategies, poolResults)
+  })
+}
+
+function buildFPMMContracts(pool: Pool, knownStrategies: Address[]) {
   const address = pool.poolAddr as Address
 
+  return [
+    { address, abi: FPMM_ABI, functionName: 'getReserves' as const },
+    { address, abi: FPMM_ABI, functionName: 'decimals0' as const },
+    { address, abi: FPMM_ABI, functionName: 'decimals1' as const },
+    { address, abi: FPMM_ABI, functionName: 'lpFee' as const },
+    { address, abi: FPMM_ABI, functionName: 'protocolFee' as const },
+    { address, abi: FPMM_ABI, functionName: 'rebalanceIncentive' as const },
+    { address, abi: FPMM_ABI, functionName: 'rebalanceThresholdAbove' as const },
+    { address, abi: FPMM_ABI, functionName: 'rebalanceThresholdBelow' as const },
+    ...knownStrategies.map((strategyAddr) => ({
+      address,
+      abi: FPMM_ABI,
+      functionName: 'liquidityStrategy' as const,
+      args: [strategyAddr] as const,
+    })),
+    { address, abi: FPMM_ABI, functionName: 'getRebalancingState' as const },
+  ]
+}
+
+function parseFPMMPoolDetails(
+  pool: Pool,
+  knownStrategies: Address[],
+  results: MulticallResults
+): FPMMPoolDetails {
   try {
-    // Known liquidity strategy addresses for this chain
-    const knownStrategies = getKnownLiquidityStrategies(chainId)
-
-    // Build all contract reads for a single multicall
-    const coreContracts = [
-      { address, abi: FPMM_ABI, functionName: 'getReserves' as const },
-      { address, abi: FPMM_ABI, functionName: 'decimals0' as const },
-      { address, abi: FPMM_ABI, functionName: 'decimals1' as const },
-      { address, abi: FPMM_ABI, functionName: 'lpFee' as const },
-      { address, abi: FPMM_ABI, functionName: 'protocolFee' as const },
-      { address, abi: FPMM_ABI, functionName: 'rebalanceIncentive' as const },
-      { address, abi: FPMM_ABI, functionName: 'rebalanceThresholdAbove' as const },
-      { address, abi: FPMM_ABI, functionName: 'rebalanceThresholdBelow' as const },
-      ...knownStrategies.map((strategyAddr) => ({
-        address,
-        abi: FPMM_ABI,
-        functionName: 'liquidityStrategy' as const,
-        args: [strategyAddr] as const,
-      })),
-      // Include getRebalancingState in the same multicall (allowFailure handles FXMarketClosed)
-      { address, abi: FPMM_ABI, functionName: 'getRebalancingState' as const },
-    ]
-
-    const results = await multicall(publicClient, coreContracts)
-
-    // Parse core results (first 8 are fixed)
     const reservesRes = results[0]
     const decimals0Res = results[1]
     const decimals1Res = results[2]
@@ -50,8 +79,15 @@ export async function fetchFPMMPoolDetails(
     const thresholdAboveRes = results[6]
     const thresholdBelowRes = results[7]
 
-    // Check core results
     if (
+      !reservesRes ||
+      !decimals0Res ||
+      !decimals1Res ||
+      !lpFeeRes ||
+      !protocolFeeRes ||
+      !rebalanceIncentiveRes ||
+      !thresholdAboveRes ||
+      !thresholdBelowRes ||
       reservesRes.status === 'failure' ||
       decimals0Res.status === 'failure' ||
       decimals1Res.status === 'failure' ||
@@ -65,24 +101,21 @@ export async function fetchFPMMPoolDetails(
     }
 
     const [reserve0, reserve1, blockTimestampLast] = reservesRes.result as [bigint, bigint, bigint]
-
     const lpFeeBps = lpFeeRes.result as bigint
     const protocolFeeBps = protocolFeeRes.result as bigint
     const rebalanceIncentiveBps = rebalanceIncentiveRes.result as bigint
     const thresholdAboveBps = thresholdAboveRes.result as bigint
     const thresholdBelowBps = thresholdBelowRes.result as bigint
 
-    // Parse strategy results (indices 8 .. 8+N-1)
-    const strategyResults = results.slice(8, 8 + knownStrategies.length)
-    const activeIndex = strategyResults.findIndex((r) => r.status === 'success' && r.result === true)
+    const strategyResults = results.slice(FPMM_FIXED_RESULT_COUNT, FPMM_FIXED_RESULT_COUNT + knownStrategies.length)
+    const activeIndex = strategyResults.findIndex((result) => result.status === 'success' && result.result === true)
     const liquidityStrategy = activeIndex >= 0 ? knownStrategies[activeIndex] : null
 
-    // Parse getRebalancingState (last result) — graceful degradation when FX market is closed
-    const rebalancingRes = results[8 + knownStrategies.length]
+    const rebalancingRes = results[FPMM_FIXED_RESULT_COUNT + knownStrategies.length]
     let pricing: FPMMPricing | null = null
     let inBand: boolean | null = null
 
-    if (rebalancingRes.status === 'success') {
+    if (rebalancingRes?.status === 'success') {
       const [
         oraclePriceNum,
         oraclePriceDen,
@@ -107,7 +140,6 @@ export async function fetchFPMMPoolDetails(
 
       inBand = priceDifference < BigInt(rebalanceThreshold)
     }
-    // If rebalancingRes.status === 'failure' (likely FXMarketClosed) — pricing stays null
 
     return {
       ...pool,
@@ -145,16 +177,46 @@ export async function fetchFPMMPoolDetails(
  * Fetches enriched details for a Virtual pool
  */
 export async function fetchVirtualPoolDetails(publicClient: PublicClient, pool: Pool): Promise<VirtualPoolDetails> {
+  const [details] = await fetchVirtualPoolDetailsBatch(publicClient, [pool])
+  return details
+}
+
+export async function fetchVirtualPoolDetailsBatch(
+  publicClient: PublicClient,
+  pools: Pool[]
+): Promise<VirtualPoolDetails[]> {
+  if (pools.length === 0) {
+    return []
+  }
+
+  const contracts = pools.flatMap((pool) => buildVirtualContracts(pool))
+  const results = await multicall(publicClient, contracts)
+
+  return pools.map((pool, index) => {
+    const offset = index * VIRTUAL_RESULT_COUNT
+    const poolResults = results.slice(offset, offset + VIRTUAL_RESULT_COUNT)
+    return parseVirtualPoolDetails(pool, poolResults)
+  })
+}
+
+function buildVirtualContracts(pool: Pool) {
   const address = pool.poolAddr as Address
 
-  try {
-    const results = await multicall(publicClient, [
-      { address, abi: VIRTUAL_POOL_ABI, functionName: 'getReserves' as const },
-      { address, abi: VIRTUAL_POOL_ABI, functionName: 'protocolFee' as const },
-      { address, abi: VIRTUAL_POOL_ABI, functionName: 'metadata' as const },
-    ])
+  return [
+    { address, abi: VIRTUAL_POOL_ABI, functionName: 'getReserves' as const },
+    { address, abi: VIRTUAL_POOL_ABI, functionName: 'protocolFee' as const },
+    { address, abi: VIRTUAL_POOL_ABI, functionName: 'metadata' as const },
+  ]
+}
 
-    if (results[0].status === 'failure' || results[1].status === 'failure' || results[2].status === 'failure') {
+function parseVirtualPoolDetails(pool: Pool, results: MulticallResults): VirtualPoolDetails {
+  try {
+    if (
+      results.length !== VIRTUAL_RESULT_COUNT ||
+      results[0].status === 'failure' ||
+      results[1].status === 'failure' ||
+      results[2].status === 'failure'
+    ) {
       throw new Error('One or more virtual pool reads failed')
     }
 

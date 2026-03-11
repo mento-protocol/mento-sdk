@@ -6,6 +6,8 @@ import {
   RemoveLiquidityInput,
   ZapInInput,
   ZapOutInput,
+  PrepareZapInInput,
+  PrepareZapOutInput,
   AddLiquidityQuote,
   RemoveLiquidityQuote,
   AddLiquidityDetails,
@@ -13,13 +15,15 @@ import {
   AddLiquidityTransaction,
   RemoveLiquidityTransaction,
   LPTokenBalance,
+  LiquidityOptions,
+  PreparedZapIn,
+  PreparedZapOut,
   ZapInQuote,
   ZapOutQuote,
   ZapInDetails,
   ZapOutDetails,
   ZapInTransaction,
   ZapOutTransaction,
-  LiquidityOptions,
 } from '../../core/types'
 import {
   buildAddLiquidityTransactionInternal,
@@ -33,11 +37,13 @@ import {
 import {
   buildZapInTransactionInternal,
   buildZapInParamsInternal,
+  prepareZapInInternal,
   quoteZapInInternal,
 } from './zapIn'
 import {
   buildZapOutTransactionInternal,
   buildZapOutParamsInternal,
+  prepareZapOutInternal,
   quoteZapOutInternal,
 } from './zapOut'
 
@@ -233,6 +239,22 @@ export class LiquidityService {
     )
   }
 
+  async prepareZapIn(input: PrepareZapInInput): Promise<PreparedZapIn> {
+    return prepareZapInInternal(
+      this.publicClient,
+      this.chainId,
+      this.poolService,
+      this.routeService,
+      input.poolAddress,
+      input.tokenIn,
+      input.amountIn,
+      input.amountInSplit,
+      input.recipient,
+      input.owner,
+      input.options
+    )
+  }
+
   /**
    * Builds zap out transaction with approval if needed.
    * Removes liquidity and swaps both tokens to a single output token.
@@ -274,6 +296,21 @@ export class LiquidityService {
       input.tokenOut,
       input.liquidity,
       input.recipient,
+      input.options
+    )
+  }
+
+  async prepareZapOut(input: PrepareZapOutInput): Promise<PreparedZapOut> {
+    return prepareZapOutInternal(
+      this.publicClient,
+      this.chainId,
+      this.poolService,
+      this.routeService,
+      input.poolAddress,
+      input.tokenOut,
+      input.liquidity,
+      input.recipient,
+      input.owner,
       input.options
     )
   }

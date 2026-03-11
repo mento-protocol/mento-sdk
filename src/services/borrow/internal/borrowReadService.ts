@@ -9,6 +9,7 @@ import {
 } from '../../../core/abis'
 import { COLL_INDEX } from '../../../core/constants'
 import { BorrowPosition, InterestRateBracket } from '../../../core/types'
+import { multicall } from '../../../utils/multicall'
 import { parseBorrowPosition } from './borrowPositionParser'
 import { DebtPerInterestRateItem, DeploymentContext, InterestBatchManagerData } from './borrowTypes'
 import {
@@ -19,26 +20,40 @@ import {
   requireNonNegativeBigInt,
 } from './borrowValidation'
 
+const TROVE_ID_BATCH_SIZE = 64
+const TROVE_OWNER_BATCH_SIZE = 64
+const TROVE_DETAIL_BATCH_SIZE = 64
+
+type BorrowReadContract = {
+  address: Address
+  abi: readonly unknown[]
+  functionName: string
+  args?: readonly unknown[]
+}
+
 export class BorrowReadService {
   constructor(private publicClient: PublicClient) {}
 
   async getTroveData(ctx: DeploymentContext, troveId: string): Promise<BorrowPosition> {
     const parsedTroveId = parseTroveId(troveId)
 
-    const [latestData, trovesData] = await Promise.all([
-      this.publicClient.readContract({
-        address: ctx.addresses.troveManager as Address,
-        abi: TROVE_MANAGER_ABI,
-        functionName: 'getLatestTroveData',
-        args: [parsedTroveId],
-      }),
-      this.publicClient.readContract({
-        address: ctx.addresses.troveManager as Address,
-        abi: TROVE_MANAGER_ABI,
-        functionName: 'Troves',
-        args: [parsedTroveId],
-      }),
-    ])
+    const [latestData, trovesData] = await this.readContractsInChunks(
+      [
+        {
+          address: ctx.addresses.troveManager as Address,
+          abi: TROVE_MANAGER_ABI,
+          functionName: 'getLatestTroveData',
+          args: [parsedTroveId],
+        },
+        {
+          address: ctx.addresses.troveManager as Address,
+          abi: TROVE_MANAGER_ABI,
+          functionName: 'Troves',
+          args: [parsedTroveId],
+        },
+      ],
+      2
+    )
 
     return parseBorrowPosition(formatTroveId(parsedTroveId), latestData, trovesData)
   }
@@ -53,48 +68,64 @@ export class BorrowReadService {
       args: [],
     })) as bigint
 
-    const matchedTroveIds: bigint[] = []
+    if (troveCount === 0n) {
+      return []
+    }
 
+    const troveIdContracts: BorrowReadContract[] = []
     for (let i = 0n; i < troveCount; i++) {
-      const troveId = (await this.publicClient.readContract({
+      troveIdContracts.push({
         address: ctx.addresses.troveManager as Address,
         abi: TROVE_MANAGER_ABI,
         functionName: 'getTroveFromTroveIdsArray',
         args: [i],
-      })) as bigint
-
-      const troveOwner = (await this.publicClient.readContract({
-        address: ctx.addresses.troveNFT as Address,
-        abi: TROVE_NFT_ABI,
-        functionName: 'ownerOf',
-        args: [troveId],
-      })) as Address
-
-      if (troveOwner.toLowerCase() === ownerAddress.toLowerCase()) {
-        matchedTroveIds.push(troveId)
-      }
+      })
     }
 
-    return Promise.all(
-      matchedTroveIds.map(async (troveId) => {
-        const [latestData, trovesData] = await Promise.all([
-          this.publicClient.readContract({
-            address: ctx.addresses.troveManager as Address,
-            abi: TROVE_MANAGER_ABI,
-            functionName: 'getLatestTroveData',
-            args: [troveId],
-          }),
-          this.publicClient.readContract({
-            address: ctx.addresses.troveManager as Address,
-            abi: TROVE_MANAGER_ABI,
-            functionName: 'Troves',
-            args: [troveId],
-          }),
-        ])
-
-        return parseBorrowPosition(formatTroveId(troveId), latestData, trovesData)
-      })
+    const troveIds = (await this.readContractsInChunks<bigint>(troveIdContracts, TROVE_ID_BATCH_SIZE)).map(
+      (troveId) => troveId as bigint
     )
+
+    const ownerContracts = troveIds.map((troveId) => ({
+      address: ctx.addresses.troveNFT as Address,
+      abi: TROVE_NFT_ABI,
+      functionName: 'ownerOf',
+      args: [troveId],
+    }))
+
+    const troveOwners = await this.readContractsInChunks<Address>(ownerContracts, TROVE_OWNER_BATCH_SIZE)
+    const matchedTroveIds = troveIds.filter(
+      (troveId, index) => troveOwners[index].toLowerCase() === ownerAddress.toLowerCase()
+    )
+
+    if (matchedTroveIds.length === 0) {
+      return []
+    }
+
+    const troveDetailContracts = matchedTroveIds.flatMap((troveId) => ([
+      {
+        address: ctx.addresses.troveManager as Address,
+        abi: TROVE_MANAGER_ABI,
+        functionName: 'getLatestTroveData',
+        args: [troveId],
+      },
+      {
+        address: ctx.addresses.troveManager as Address,
+        abi: TROVE_MANAGER_ABI,
+        functionName: 'Troves',
+        args: [troveId],
+      },
+    ]))
+
+    const detailResults = await this.readContractsInChunks(
+      troveDetailContracts,
+      TROVE_DETAIL_BATCH_SIZE * 2
+    )
+
+    return matchedTroveIds.map((troveId, index) => {
+      const offset = index * 2
+      return parseBorrowPosition(formatTroveId(troveId), detailResults[offset], detailResults[offset + 1])
+    })
   }
 
   async getCollateralPrice(ctx: DeploymentContext): Promise<bigint> {
@@ -282,5 +313,31 @@ export class BorrowReadService {
     }
 
     return Number(ownerTroveCount)
+  }
+
+  private async readContractsInChunks<T = unknown>(
+    contracts: BorrowReadContract[],
+    chunkSize: number
+  ): Promise<T[]> {
+    if (contracts.length === 0) {
+      return []
+    }
+
+    const results: T[] = []
+
+    for (let index = 0; index < contracts.length; index += chunkSize) {
+      const chunk = contracts.slice(index, index + chunkSize)
+      const chunkResults = await multicall(this.publicClient, chunk, { allowFailure: false })
+
+      for (const result of chunkResults) {
+        if (result.status === 'failure') {
+          throw result.error
+        }
+
+        results.push(result.result as T)
+      }
+    }
+
+    return results
   }
 }

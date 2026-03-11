@@ -63,30 +63,40 @@ export class QuoteService {
       route = await this.routeService.findRoute(tokenIn, tokenOut)
     }
 
-    // Convert route.path to Router contract's Route[] format
-    const routerRoutes = encodeRoutePath(route.path, tokenIn as Address, tokenOut as Address)
-    const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
+    return getAmountOutForRoute(this.publicClient, this.chainId, tokenIn, tokenOut, amountIn, route)
+  }
+}
 
-    try {
-      const amounts = (await this.publicClient.readContract({
-        address: routerAddress as `0x${string}`,
-        abi: ROUTER_ABI,
-        functionName: 'getAmountsOut',
-        args: [amountIn, routerRoutes as ReadonlyRouterRoutes],
-      })) as bigint[]
+export async function getAmountOutForRoute(
+  publicClient: PublicClient,
+  chainId: number,
+  tokenIn: string,
+  tokenOut: string,
+  amountIn: bigint,
+  route: Route
+): Promise<bigint> {
+  const routerRoutes = encodeRoutePath(route.path, tokenIn as Address, tokenOut as Address)
+  const routerAddress = getContractAddress(chainId as ChainId, 'Router')
 
-      return amounts[amounts.length - 1]
-    } catch (error: unknown) {
-      if (error instanceof BaseError) {
-        const revertError = error.walk((e) => e instanceof ContractFunctionRevertedError)
-        if (
-          revertError instanceof ContractFunctionRevertedError &&
-          revertError.data?.errorName === 'FXMarketClosed'
-        ) {
-          throw new FXMarketClosedError()
-        }
+  try {
+    const amounts = (await publicClient.readContract({
+      address: routerAddress as `0x${string}`,
+      abi: ROUTER_ABI,
+      functionName: 'getAmountsOut',
+      args: [amountIn, routerRoutes as ReadonlyRouterRoutes],
+    })) as bigint[]
+
+    return amounts[amounts.length - 1]
+  } catch (error: unknown) {
+    if (error instanceof BaseError) {
+      const revertError = error.walk((candidate) => candidate instanceof ContractFunctionRevertedError)
+      if (
+        revertError instanceof ContractFunctionRevertedError &&
+        revertError.data?.errorName === 'FXMarketClosed'
+      ) {
+        throw new FXMarketClosedError()
       }
-      throw error
     }
+    throw error
   }
 }

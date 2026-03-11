@@ -56,4 +56,57 @@ describe('Monad Testnet multicall regression', () => {
     expect(details.poolAddr.toLowerCase()).toBe(MONAD_TESTNET_FPMM_POOL.toLowerCase())
     expect(details.poolType).toBe('FPMM')
   })
+
+  it('should batch pool details and prepare swap/zap flows through the new APIs', async () => {
+    const mento = await Mento.create(ChainId.MONAD_TESTNET, rpcUrl)
+    const pools = await mento.pools.getPools()
+    const knownPool = pools.find((pool) => pool.poolAddr.toLowerCase() === MONAD_TESTNET_FPMM_POOL.toLowerCase())
+
+    expect(knownPool).toBeDefined()
+    if (!knownPool || knownPool.poolType !== 'FPMM') {
+      return
+    }
+
+    const [batchDetails] = await mento.pools.getPoolDetailsBatch([knownPool.poolAddr])
+    expect(batchDetails.poolAddr.toLowerCase()).toBe(MONAD_TESTNET_FPMM_POOL.toLowerCase())
+
+    const recipient = '0x0000000000000000000000000000000000000001' as Address
+    const amountIn = 1_000_000_000_000_000_000n
+    const deadline = BigInt(Math.floor(Date.now() / 1000) + 60 * 20)
+
+    const preparedSwap = await mento.swap.prepareSwap({
+      tokenIn: knownPool.token0,
+      tokenOut: knownPool.token1,
+      amountIn,
+      recipient,
+      slippageTolerance: 0.5,
+      deadline,
+    })
+
+    expect(preparedSwap.params).toBeDefined()
+    expect(preparedSwap.expectedAmountOut).toBeGreaterThan(0n)
+
+    const preparedZapIn = await mento.liquidity.prepareZapIn({
+      poolAddress: knownPool.poolAddr,
+      tokenIn: knownPool.token0,
+      amountIn,
+      amountInSplit: 0.5,
+      recipient,
+      options: { slippageTolerance: 0.5, deadline },
+    })
+
+    expect(preparedZapIn.details.poolAddress.toLowerCase()).toBe(knownPool.poolAddr.toLowerCase())
+    expect(preparedZapIn.quote.estimatedMinLiquidity).toBeGreaterThanOrEqual(0n)
+
+    const preparedZapOut = await mento.liquidity.prepareZapOut({
+      poolAddress: knownPool.poolAddr,
+      tokenOut: knownPool.token0,
+      liquidity: 1_000_000_000_000_000n,
+      recipient,
+      options: { slippageTolerance: 0.5, deadline },
+    })
+
+    expect(preparedZapOut.details.poolAddress.toLowerCase()).toBe(knownPool.poolAddr.toLowerCase())
+    expect(preparedZapOut.quote.estimatedMinTokenOut).toBeGreaterThanOrEqual(0n)
+  })
 })

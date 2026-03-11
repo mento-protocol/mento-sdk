@@ -35,9 +35,25 @@ describe('LiquidityService', () => {
 
   beforeEach(() => {
     // Mock PublicClient
+    const readContract = jest.fn()
     mockPublicClient = {
-      readContract: jest.fn(),
+      readContract,
       call: jest.fn(),
+      multicall: jest.fn().mockImplementation(async ({ contracts }: { contracts: any[] }) => {
+        return Promise.all(
+          contracts.map(async (contract: any) => {
+            try {
+              const result = await readContract({
+                ...contract,
+                args: contract.args ?? [],
+              })
+              return { status: 'success', result }
+            } catch (error) {
+              return { status: 'failure', error }
+            }
+          })
+        )
+      }),
     } as unknown as jest.Mocked<PublicClient>
 
     // Mock PoolService
@@ -471,6 +487,9 @@ describe('LiquidityService', () => {
           // Return: [amountOutMinA, amountOutMinB, amountAMin, amountBMin]
           return [500000000000000000n, 500000000000000000n, 500000000000000000n, 500000000000000000n]
         }
+        if (functionName === 'getReserves') {
+          return [10000000000000000000n, 20000000000000000000n, 1700000000n]
+        }
         if (functionName === 'totalSupply') {
           return 10000000000000000000n
         }
@@ -495,6 +514,27 @@ describe('LiquidityService', () => {
       expect(quote).toHaveProperty('amountAMin')
       expect(quote).toHaveProperty('amountBMin')
       expect(quote).toHaveProperty('estimatedMinLiquidity')
+    })
+
+    it('should prepare zap in without calling full pool details enrichment', async () => {
+      const prepared = await liquidityService.prepareZapIn({
+        poolAddress: POOL_ADDRESS,
+        tokenIn: TOKEN_IN,
+        amountIn: AMOUNT_IN,
+        amountInSplit: AMOUNT_IN_SPLIT,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
+
+      expect(prepared.quote.estimatedMinLiquidity).toBeGreaterThanOrEqual(0n)
+      expect(prepared.details.routesA).toEqual(prepared.routesA)
+      expect(prepared.details.routesB).toEqual(prepared.routesB)
+      expect(mockPoolService.getPoolDetails).not.toHaveBeenCalled()
+      expect(mockPublicClient.readContract).toHaveBeenCalledWith(
+        expect.objectContaining({
+          functionName: 'getReserves',
+        })
+      )
     })
 
     it('should build zap in transaction with approval', async () => {
@@ -532,6 +572,22 @@ describe('LiquidityService', () => {
       expect(quote).toHaveProperty('amountAMin')
       expect(quote).toHaveProperty('amountBMin')
       expect(quote).toHaveProperty('estimatedMinTokenOut')
+    })
+
+    it('should prepare zap out and expose the quote alongside details', async () => {
+      const LIQUIDITY = 1000000000000000000n
+
+      const prepared = await liquidityService.prepareZapOut({
+        poolAddress: POOL_ADDRESS,
+        tokenOut: TOKEN_A,
+        liquidity: LIQUIDITY,
+        recipient: RECIPIENT,
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
+      })
+
+      expect(prepared.quote.estimatedMinTokenOut).toBeGreaterThan(0n)
+      expect(prepared.details.estimatedMinTokenOut).toBe(prepared.quote.estimatedMinTokenOut)
+      expect(prepared.approval).toBeUndefined()
     })
 
     it('should build zap out transaction with LP token approval', async () => {

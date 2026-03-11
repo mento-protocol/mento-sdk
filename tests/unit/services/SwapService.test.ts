@@ -16,6 +16,7 @@ describe('SwapService', () => {
   const recipient = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
   const owner = '0x1111111111111111111111111111111111111111'
   const amountIn = 100000000000000000000n
+  const expectedAmountOut = 99000000000000000000n
 
   const mockRoute = {
     id: 'CELO-USDm' as const,
@@ -36,7 +37,17 @@ describe('SwapService', () => {
 
   beforeEach(() => {
     mockPublicClient = {
-      readContract: jest.fn(),
+      readContract: jest.fn().mockImplementation(async ({ functionName }: any) => {
+        if (functionName === 'getAmountsOut') {
+          return [amountIn, expectedAmountOut]
+        }
+
+        if (functionName === 'allowance') {
+          return 0n
+        }
+
+        return 0n
+      }),
     } as unknown as jest.Mocked<PublicClient>
 
     mockRouteService = {
@@ -44,7 +55,7 @@ describe('SwapService', () => {
     } as unknown as jest.Mocked<RouteService>
 
     mockQuoteService = {
-      getAmountOut: jest.fn().mockResolvedValue(99000000000000000000n),
+      getAmountOut: jest.fn(),
     } as unknown as jest.Mocked<QuoteService>
 
     service = new SwapService(
@@ -53,6 +64,111 @@ describe('SwapService', () => {
       mockRouteService,
       mockQuoteService
     )
+  })
+
+  describe('prepareSwap()', () => {
+    it('prepares quote, approval, and params in one call', async () => {
+      const deadline = deadlineFromMinutes(5)
+
+      const prepared = await service.prepareSwap({
+        tokenIn,
+        tokenOut,
+        amountIn,
+        recipient,
+        owner,
+        slippageTolerance: 0.5,
+        deadline,
+      })
+
+      expect(prepared.route).toEqual(mockRoute)
+      expect(prepared.expectedAmountOut).toBe(expectedAmountOut)
+      expect(prepared.amountOutMin).toBe((expectedAmountOut * 9950n) / 10000n)
+      expect(prepared.approval).toEqual(
+        expect.objectContaining({
+          to: tokenIn,
+          value: '0',
+        })
+      )
+      expect(prepared.params).toEqual(
+        expect.objectContaining({
+          to: expect.any(String),
+          value: '0',
+        })
+      )
+      expect(mockRouteService.findRoute).toHaveBeenCalledTimes(1)
+      expect(mockPublicClient.readContract).toHaveBeenCalledWith(
+        expect.objectContaining({
+          functionName: 'getAmountsOut',
+        })
+      )
+    })
+
+    it('uses the provided route without resolving it again', async () => {
+      await service.prepareSwap({
+        tokenIn,
+        tokenOut,
+        amountIn,
+        slippageTolerance: 0.5,
+        route: mockRoute,
+      })
+
+      expect(mockRouteService.findRoute).not.toHaveBeenCalled()
+    })
+
+    it('omits approval and params when owner and recipient inputs are omitted', async () => {
+      const prepared = await service.prepareSwap({
+        tokenIn,
+        tokenOut,
+        amountIn,
+        slippageTolerance: 0.5,
+      })
+
+      expect(prepared.approval).toBeUndefined()
+      expect(prepared.params).toBeUndefined()
+    })
+  })
+
+  describe('legacy wrappers', () => {
+    it('buildSwapParams returns the same quote data as prepareSwap', async () => {
+      const deadline = deadlineFromMinutes(5)
+      const prepared = await service.prepareSwap({
+        tokenIn,
+        tokenOut,
+        amountIn,
+        recipient,
+        slippageTolerance: 0.5,
+        deadline,
+      })
+
+      const details = await service.buildSwapParams(
+        tokenIn,
+        tokenOut,
+        amountIn,
+        recipient,
+        { slippageTolerance: 0.5, deadline }
+      )
+
+      expect(details.route).toEqual(prepared.route)
+      expect(details.expectedAmountOut).toBe(prepared.expectedAmountOut)
+      expect(details.amountOutMin).toBe(prepared.amountOutMin)
+      expect(details.params).toEqual(prepared.params)
+    })
+
+    it('buildSwapTransaction maps prepareSwap approval output to the legacy shape', async () => {
+      const deadline = deadlineFromMinutes(5)
+      const transaction = await service.buildSwapTransaction(
+        tokenIn,
+        tokenOut,
+        amountIn,
+        recipient,
+        owner,
+        { slippageTolerance: 0.5, deadline }
+      )
+
+      expect(transaction.approval).not.toBeNull()
+      expect(transaction.swap.expectedAmountOut).toBe(expectedAmountOut)
+      expect(transaction.swap.amountOutMin).toBe((expectedAmountOut * 9950n) / 10000n)
+    })
   })
 
   describe('deadline validation', () => {

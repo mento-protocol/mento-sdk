@@ -31,8 +31,24 @@ describe('Liquidity Service - Edge Cases', () => {
   const OWNER = '0x1111111111111111111111111111111111111111' as Address
 
   beforeEach(() => {
+    const readContract = jest.fn()
     mockPublicClient = {
-      readContract: jest.fn(),
+      readContract,
+      multicall: jest.fn().mockImplementation(async ({ contracts }: { contracts: any[] }) => {
+        return Promise.all(
+          contracts.map(async (contract: any) => {
+            try {
+              const result = await readContract({
+                ...contract,
+                args: contract.args ?? [],
+              })
+              return { status: 'success', result }
+            } catch (error) {
+              return { status: 'failure', error }
+            }
+          })
+        )
+      }),
     } as unknown as jest.Mocked<PublicClient>
 
     mockPoolService = {
@@ -488,6 +504,7 @@ describe('Liquidity Service - Edge Cases', () => {
         if (functionName === 'generateZapInParams') {
           return [400n, 400n, 400n, 400n]
         }
+        if (functionName === 'getReserves') return [10000000000000000000n, 10000000000000000000n, 0n]
         if (functionName === 'totalSupply') return 10000n
         if (functionName === 'allowance') return 0n
         return 0n
@@ -571,6 +588,7 @@ describe('Liquidity Service - Edge Cases', () => {
         if (functionName === 'generateZapInParams') {
           return [100n, 100n, 100n, 100n]
         }
+        if (functionName === 'getReserves') return [0n, 0n, 0n]
         if (functionName === 'totalSupply') return 0n // Empty pool
         if (functionName === 'allowance') return 0n
         return 0n

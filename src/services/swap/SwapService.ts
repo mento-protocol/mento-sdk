@@ -7,6 +7,7 @@ import { getContractAddress, ChainId } from '../../core/constants'
 import { encodeRoutePath, RouterRoute, ReadonlyRouterRoutes } from '../../utils/pathEncoder'
 import { validateAddress } from '../../utils/validation'
 import { retryOperation } from '../../utils'
+import { getAmountOutForRoute } from '../quotes/QuoteService'
 
 /**
  * Options for configuring a swap transaction
@@ -71,6 +72,26 @@ export interface SwapTransaction {
   swap: SwapDetails
 }
 
+export interface PrepareSwapInput {
+  tokenIn: string
+  tokenOut: string
+  amountIn: bigint
+  slippageTolerance: number
+  recipient?: string
+  owner?: string
+  deadline?: bigint
+  route?: Route
+}
+
+export interface PreparedSwap {
+  route: Route
+  routerRoutes: RouterRoute[]
+  expectedAmountOut: bigint
+  amountOutMin: bigint
+  approval?: CallParams | null
+  params?: CallParams
+}
+
 /**
  * Service for building token swap transactions on the Mento protocol.
  * Returns transaction parameters that can be executed by any wallet.
@@ -131,22 +152,33 @@ export class SwapService {
     options: SwapOptions,
     route?: Route
   ): Promise<SwapTransaction> {
-    this.validateAmountIn(amountIn)
+    const prepared = await this.prepareSwap({
+      amountIn,
+      deadline: options.deadline,
+      owner,
+      recipient,
+      route,
+      slippageTolerance: options.slippageTolerance,
+      tokenIn,
+      tokenOut,
+    })
 
-    // Validate all address inputs
-    validateAddress(tokenIn, 'tokenIn')
-    validateAddress(tokenOut, 'tokenOut')
-    validateAddress(recipient, 'recipient')
-    validateAddress(owner, 'owner')
+    if (!prepared.params) {
+      throw new Error('Swap params were not prepared')
+    }
 
-    // Build swap params first
-    const swap = await this.buildSwapParams(tokenIn, tokenOut, amountIn, recipient, options, route)
-
-    // Check if approval is needed
-    const currentAllowance = await this.getAllowance(tokenIn as Address, owner as Address)
-    const approval = currentAllowance < amountIn ? this.buildApprovalParams(tokenIn as Address, amountIn) : null
-
-    return { approval, swap }
+    return {
+      approval: prepared.approval ?? null,
+      swap: {
+        params: prepared.params,
+        route: prepared.route,
+        routerRoutes: prepared.routerRoutes,
+        amountIn,
+        amountOutMin: prepared.amountOutMin,
+        expectedAmountOut: prepared.expectedAmountOut,
+        deadline: options.deadline,
+      },
+    }
   }
 
   /**
@@ -189,43 +221,92 @@ export class SwapService {
     options: SwapOptions,
     route?: Route
   ): Promise<SwapDetails> {
-    this.validateAmountIn(amountIn)
+    const prepared = await this.prepareSwap({
+      amountIn,
+      deadline: options.deadline,
+      recipient,
+      route,
+      slippageTolerance: options.slippageTolerance,
+      tokenIn,
+      tokenOut,
+    })
 
-    const deadline = options.deadline
-    if (deadline <= BigInt(Date.now()) / 1000n) {
+    if (!prepared.params) {
+      throw new Error('Swap params were not prepared')
+    }
+
+    return {
+      params: prepared.params,
+      route: prepared.route,
+      routerRoutes: prepared.routerRoutes,
+      amountIn,
+      amountOutMin: prepared.amountOutMin,
+      expectedAmountOut: prepared.expectedAmountOut,
+      deadline: options.deadline,
+    }
+  }
+
+  async prepareSwap(input: PrepareSwapInput): Promise<PreparedSwap> {
+    this.validateAmountIn(input.amountIn)
+    validateAddress(input.tokenIn, 'tokenIn')
+    validateAddress(input.tokenOut, 'tokenOut')
+
+    if (input.recipient) {
+      validateAddress(input.recipient, 'recipient')
+    }
+
+    if (input.owner) {
+      validateAddress(input.owner, 'owner')
+    }
+
+    if (input.deadline !== undefined && input.deadline <= BigInt(Date.now()) / 1000n) {
       throw new Error('Deadline must be in the future')
     }
 
-    // Validate all address inputs
-    validateAddress(tokenIn, 'tokenIn')
-    validateAddress(tokenOut, 'tokenOut')
-    validateAddress(recipient, 'recipient')
+    const route = input.route ?? await this.routeService.findRoute(input.tokenIn, input.tokenOut)
+    const routerRoutes = encodeRoutePath(route.path, input.tokenIn as Address, input.tokenOut as Address)
+    const expectedAmountOut = await getAmountOutForRoute(
+      this.publicClient,
+      this.chainId,
+      input.tokenIn,
+      input.tokenOut,
+      input.amountIn,
+      route
+    )
+    const amountOutMin = this.calculateMinAmountOut(expectedAmountOut, input.slippageTolerance)
 
-    // Find route if not provided
-    if (!route) {
-      route = await this.routeService.findRoute(tokenIn, tokenOut)
+    const prepared: PreparedSwap = {
+      route,
+      routerRoutes,
+      expectedAmountOut,
+      amountOutMin,
     }
 
-    const expectedAmountOut = await this.quoteService.getAmountOut(tokenIn, tokenOut, amountIn, route)
-    const amountOutMin = this.calculateMinAmountOut(expectedAmountOut, options.slippageTolerance)
+    if (input.owner) {
+      const currentAllowance = await this.getAllowance(input.tokenIn as Address, input.owner as Address)
+      prepared.approval = currentAllowance < input.amountIn
+        ? this.buildApprovalParams(input.tokenIn as Address, input.amountIn)
+        : null
+    }
 
-    const routerRoutes = encodeRoutePath(route.path, tokenIn as Address, tokenOut as Address)
-    const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
-    const data = this.encodeSwapCall(amountIn, amountOutMin, routerRoutes, recipient as Address, deadline)
+    if (input.recipient && input.deadline !== undefined) {
+      const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
+      const data = this.encodeSwapCall(
+        input.amountIn,
+        amountOutMin,
+        routerRoutes,
+        input.recipient as Address,
+        input.deadline
+      )
 
-    return {
-      params: {
+      prepared.params = {
         to: routerAddress,
         data,
         value: '0',
-      },
-      route,
-      routerRoutes,
-      amountIn,
-      amountOutMin,
-      expectedAmountOut,
-      deadline,
+      }
     }
+
+    return prepared
   }
 
   /**

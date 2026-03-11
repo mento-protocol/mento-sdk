@@ -32,8 +32,24 @@ describe('Liquidity Service - Output Verification', () => {
   const OWNER = '0x1111111111111111111111111111111111111111' as Address
 
   beforeEach(() => {
+    const readContract = jest.fn()
     mockPublicClient = {
-      readContract: jest.fn(),
+      readContract,
+      multicall: jest.fn().mockImplementation(async ({ contracts }: { contracts: any[] }) => {
+        return Promise.all(
+          contracts.map(async (contract: any) => {
+            try {
+              const result = await readContract({
+                ...contract,
+                args: contract.args ?? [],
+              })
+              return { status: 'success', result }
+            } catch (error) {
+              return { status: 'failure', error }
+            }
+          })
+        )
+      }),
     } as unknown as jest.Mocked<PublicClient>
 
     mockPoolService = {
@@ -440,6 +456,7 @@ describe('Liquidity Service - Output Verification', () => {
         if (functionName === 'generateZapInParams') {
           return [400000000000000000n, 400000000000000000n, 400000000000000000n, 400000000000000000n]
         }
+        if (functionName === 'getReserves') return [10000000000000000000n, 10000000000000000000n, 0n]
         if (functionName === 'totalSupply') return 10000000000000000000n
         if (functionName === 'allowance') return 0n
         return 0n

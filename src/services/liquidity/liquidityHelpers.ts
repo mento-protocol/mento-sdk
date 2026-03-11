@@ -1,9 +1,10 @@
 import { Address, PublicClient, encodeFunctionData } from 'viem'
 import { PoolService } from '../pools'
 import { CallParams, PoolType } from '../../core/types'
-import { ERC20_ABI } from '../../core/abis'
+import { ERC20_ABI, FPMM_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
 import { validateAddress } from '../../utils/validation'
+import { multicall } from '../../utils/multicall'
 
 export function buildApprovalParams(chainId: number, token: Address, amount: bigint): CallParams {
   const routerAddress = getContractAddress(chainId as ChainId, 'Router')
@@ -98,3 +99,33 @@ export function validatePoolTokens(
   }
 }
 
+export async function getPoolSnapshot(
+  publicClient: PublicClient,
+  poolAddress: Address
+): Promise<{ reserve0: bigint; reserve1: bigint; blockTimestampLast: bigint; totalSupply: bigint }> {
+  const results = await multicall(publicClient, [
+    {
+      address: poolAddress,
+      abi: FPMM_ABI,
+      functionName: 'getReserves',
+    },
+    {
+      address: poolAddress,
+      abi: ERC20_ABI,
+      functionName: 'totalSupply',
+      args: [] as const,
+    },
+  ])
+
+  if (results[0].status === 'failure' || results[1].status === 'failure') {
+    throw new Error(`Failed to fetch pool snapshot for ${poolAddress}`)
+  }
+
+  const [reserve0, reserve1, blockTimestampLast] = results[0].result as [bigint, bigint, bigint]
+  return {
+    reserve0,
+    reserve1,
+    blockTimestampLast,
+    totalSupply: results[1].result as bigint,
+  }
+}

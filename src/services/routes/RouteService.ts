@@ -5,6 +5,7 @@ import { Route, RouteID, Pool, RouteWithCost, RouteToken } from '../../core/type
 import { buildConnectivityStructures, generateAllRoutes, selectOptimalRoutes } from '../../utils/routeUtils'
 import { canonicalSymbolKey } from '../../utils/sortUtils'
 import { PublicClient } from 'viem'
+import { multicall } from '../../utils/multicall'
 
 export interface RouteOptions {
   /**
@@ -27,6 +28,9 @@ export interface RouteOptions {
  */
 export class RouteService {
   private symbolCache: Map<string, string> = new Map()
+  private routeCache = new Map<string, readonly (Route | RouteWithCost)[]>()
+  private routeLookupCache = new Map<string, Map<string, Route>>()
+  private routePromises = new Map<string, Promise<readonly (Route | RouteWithCost)[]>>()
 
   constructor(private publicClient: PublicClient, private chainId: number, private poolService: PoolService) {}
 
@@ -59,7 +63,7 @@ export class RouteService {
 
     // Fetch symbols for all tokens in parallel. Used for the route ids
     const tokenAddresses = Array.from(uniqueTokens)
-    await Promise.all(tokenAddresses.map((addr: string) => this.fetchTokenSymbol(addr)))
+    await this.hydrateTokenSymbols(tokenAddresses)
 
     const routes: Route[] = []
 
@@ -121,21 +125,35 @@ export class RouteService {
   async getRoutes(options?: RouteOptions): Promise<readonly (Route | RouteWithCost)[]> {
     const cached = options?.cached ?? true
     const returnAllRoutes = options?.returnAllRoutes ?? false
+    const cacheKey = this.getCacheKey(cached, returnAllRoutes)
+    const cachedRoutes = this.routeCache.get(cacheKey)
 
-    if (cached) {
-      // Try to load from static cache
-      try {
-        const cachedRoutes = await this.loadCachedRoutes()
-        if (cachedRoutes.length > 0) {
-          return cachedRoutes
-        }
-      } catch {
-        // Cache miss or corrupt - silently fall through to fresh generation
-      }
+    if (cachedRoutes) {
+      return cachedRoutes
     }
 
-    // Generate fresh routes from blockchain
-    return this.generateFreshRoutes(returnAllRoutes)
+    const inFlight = this.routePromises.get(cacheKey)
+    if (inFlight) {
+      return inFlight
+    }
+
+    const promise = this.loadRoutes(cached, returnAllRoutes)
+    this.routePromises.set(cacheKey, promise)
+
+    try {
+      const routes = await promise
+      this.routeCache.set(cacheKey, routes)
+      if (!returnAllRoutes) {
+        this.routeLookupCache.set(cacheKey, this.buildLookup(routes))
+      }
+      return routes
+    } finally {
+      this.routePromises.delete(cacheKey)
+    }
+  }
+
+  async warm(options?: RouteOptions): Promise<readonly (Route | RouteWithCost)[]> {
+    return this.getRoutes(options)
   }
 
   /**
@@ -161,26 +179,18 @@ export class RouteService {
    * ```
    */
   async findRoute(tokenIn: string, tokenOut: string, options?: { cached?: boolean }): Promise<Route> {
-    // Get all tradable routes
-    const allRoutes = await this.getRoutes(options)
-
-    const t0 = tokenIn.toLowerCase()
-    const t1 = tokenOut.toLowerCase()
-
-    // Search for matching route (bidirectional)
-    const matchingRoute = allRoutes.find((route) => {
-      const a0 = route.tokens[0].address.toLowerCase()
-      const a1 = route.tokens[1].address.toLowerCase()
-
-      // Match either direction: (t0,t1) or (t1,t0)
-      return (a0 === t0 && a1 === t1) || (a0 === t1 && a1 === t0)
-    })
+    const cached = options?.cached ?? true
+    const cacheKey = this.getCacheKey(cached, false)
+    const routes = await this.getRoutes({ cached, returnAllRoutes: false })
+    const lookup = this.routeLookupCache.get(cacheKey) ?? this.buildLookup(routes)
+    this.routeLookupCache.set(cacheKey, lookup)
+    const matchingRoute = lookup.get(makeTokenPairKey(tokenIn, tokenOut))
 
     if (!matchingRoute) {
       throw new RouteNotFoundError(tokenIn, tokenOut)
     }
 
-    return matchingRoute as Route
+    return matchingRoute
   }
 
   /**
@@ -218,6 +228,63 @@ export class RouteService {
     return (cachedRoutes as RouteWithCost[]) || []
   }
 
+  private async loadRoutes(cached: boolean, returnAllRoutes: boolean): Promise<readonly (Route | RouteWithCost)[]> {
+    if (cached) {
+      try {
+        const cachedRoutes = await this.loadCachedRoutes()
+        if (cachedRoutes.length > 0) {
+          return returnAllRoutes ? cachedRoutes : cachedRoutes
+        }
+      } catch {
+        // Cache miss or corrupt - silently fall through to fresh generation
+      }
+    }
+
+    return this.generateFreshRoutes(returnAllRoutes)
+  }
+
+  private getCacheKey(cached: boolean, returnAllRoutes: boolean): string {
+    return `${cached ? 'cached' : 'fresh'}:${returnAllRoutes ? 'all' : 'best'}`
+  }
+
+  private buildLookup(routes: readonly (Route | RouteWithCost)[]): Map<string, Route> {
+    const lookup = new Map<string, Route>()
+    for (const route of routes) {
+      lookup.set(
+        makeTokenPairKey(route.tokens[0].address, route.tokens[1].address),
+        route as Route
+      )
+    }
+    return lookup
+  }
+
+  private async hydrateTokenSymbols(addresses: string[]): Promise<void> {
+    const missingAddresses = addresses.filter((address) => !this.symbolCache.has(address))
+    if (missingAddresses.length === 0) {
+      return
+    }
+
+    const results = await multicall(
+      this.publicClient,
+      missingAddresses.map((address) => ({
+        address: address as `0x${string}`,
+        abi: ERC20_ABI,
+        functionName: 'symbol',
+        args: [] as const,
+      }))
+    )
+
+    for (const [index, address] of missingAddresses.entries()) {
+      const result = results[index]
+      if (!result || result.status === 'failure') {
+        this.symbolCache.set(address, address)
+        continue
+      }
+
+      this.symbolCache.set(address, result.result as string)
+    }
+  }
+
   /**
    * Helper: Fetch token symbol from on-chain
    * Results are cached to avoid redundant RPC calls
@@ -248,4 +315,9 @@ export class RouteService {
       return address
     }
   }
+}
+
+function makeTokenPairKey(tokenA: string, tokenB: string): string {
+  const [first, second] = [tokenA.toLowerCase(), tokenB.toLowerCase()].sort()
+  return `${first}:${second}`
 }

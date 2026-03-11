@@ -66,8 +66,24 @@ describe('TradingService', () => {
   }
 
   beforeEach(() => {
+    const readContract = jest.fn()
     mockPublicClient = {
-      readContract: jest.fn(),
+      readContract,
+      multicall: jest.fn().mockImplementation(async ({ contracts }: any) => {
+        return Promise.all(
+          contracts.map(async (contract: any) => {
+            try {
+              const result = await readContract({
+                ...contract,
+                args: contract.args ?? [],
+              })
+              return { status: 'success', result }
+            } catch (error) {
+              return { status: 'failure', error }
+            }
+          })
+        )
+      }),
     } as unknown as jest.Mocked<PublicClient>
 
     mockRouteService = {
@@ -241,6 +257,28 @@ describe('TradingService', () => {
       // Should have checked both rate feeds
       expect(tradingModeCalls).toContain(MOCK_RATE_FEED_1)
       expect(tradingModeCalls).toContain(MOCK_RATE_FEED_2)
+    })
+
+    it('batches pool and breaker-box reads when multicall is available', async () => {
+      mockPublicClient.multicall.mockImplementation(async ({ contracts }: any) => {
+        if (contracts[0]?.functionName === 'referenceRateFeedID') {
+          return contracts.map(({ address }: any) => ({
+            status: 'success',
+            result: address === MOCK_POOL_1 ? MOCK_RATE_FEED_1 : MOCK_RATE_FEED_2,
+          }))
+        }
+
+        return contracts.map(({ args }: any) => ({
+          status: 'success',
+          result: args[0] === MOCK_RATE_FEED_1 ? 0 : 0,
+        }))
+      })
+
+      const isTradable = await service.isRouteTradable(mockMultiHopRoute)
+
+      expect(isTradable).toBe(true)
+      expect(mockPublicClient.multicall).toHaveBeenCalledTimes(2)
+      expect(mockPublicClient.readContract).not.toHaveBeenCalled()
     })
 
     it('should return true for single-hop route with enabled rate feed', async () => {
