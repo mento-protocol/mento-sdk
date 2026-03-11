@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-03-10T14:45:05.132Z
+// Generated on 2026-03-11T16:57:52.465Z
 
 import type { Token } from '../core/types'
 
@@ -33,7 +33,30 @@ export enum TokenSymbol {
 export const cachedTokens: Record<number, readonly Token[]> = {
   // Chain 143
   143: [
-
+    {
+      address: '0x39bb4E0a204412bB98e821d25e7d955e69d40Fd1',
+      symbol: TokenSymbol.GBPm,
+      name: 'Mento British Pound',
+      decimals: 18,
+    },
+    {
+      address: '0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115',
+      symbol: TokenSymbol.USDm,
+      name: 'Mento Dollar',
+      decimals: 18,
+    },
+    {
+      address: '0x754704Bc059F8C67012fEd69BC8A327a5aafb603',
+      symbol: TokenSymbol.USDC,
+      name: 'USDC',
+      decimals: 6,
+    },
+    {
+      address: '0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a',
+      symbol: TokenSymbol.AUSD,
+      name: 'AUSD',
+      decimals: 6,
+    }
   ],
   // Chain 10143
   10143: [
@@ -282,7 +305,10 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
   [chainId: number]: { [tokenSymbol in TokenSymbol]?: string }
 } = {
   143: {
-
+    [TokenSymbol.GBPm]: '0x39bb4E0a204412bB98e821d25e7d955e69d40Fd1',
+    [TokenSymbol.USDm]: '0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115',
+    [TokenSymbol.USDC]: '0x754704Bc059F8C67012fEd69BC8A327a5aafb603',
+    [TokenSymbol.AUSD]: '0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a',
   },
   10143: {
     [TokenSymbol.GBPm]: '0x04de554E875c9797dC4ceBd834A9e99fa8fD5Df9',

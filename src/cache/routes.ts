@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-03-10T11:55:17.883Z
+// Generated on 2026-03-11T16:58:21.374Z
 
 import type { RouteWithCost } from '../core/types'
 
@@ -9,7 +9,227 @@ import type { RouteWithCost } from '../core/types'
  */
 export const cachedRoutes: Record<number, RouteWithCost[]> = {
   // Chain 143
-  143: [],
+  143: [
+    {
+      "id": "USDC-USDm",
+      "tokens": [
+        {
+          "address": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+          "symbol": "USDC"
+        },
+        {
+          "address": "0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115",
+          "symbol": "USDm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0x463c0d1F04bcd99A1efCF94AC2a75bc19Ea4A7E5",
+          "token0": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+          "token1": "0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.05,
+        "hops": [
+          {
+            "poolAddress": "0x463c0d1F04bcd99A1efCF94AC2a75bc19Ea4A7E5",
+            "costPercent": 0.05
+          }
+        ]
+      }
+    },
+    {
+      "id": "AUSD-USDm",
+      "tokens": [
+        {
+          "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+          "symbol": "AUSD"
+        },
+        {
+          "address": "0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115",
+          "symbol": "USDm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0xb0a0264Ce6847F101b76ba36A4a3083ba489F501",
+          "token0": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+          "token1": "0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.05,
+        "hops": [
+          {
+            "poolAddress": "0xb0a0264Ce6847F101b76ba36A4a3083ba489F501",
+            "costPercent": 0.05
+          }
+        ]
+      }
+    },
+    {
+      "id": "AUSD-USDC",
+      "tokens": [
+        {
+          "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+          "symbol": "AUSD"
+        },
+        {
+          "address": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+          "symbol": "USDC"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0x463c0d1F04bcd99A1efCF94AC2a75bc19Ea4A7E5",
+          "token0": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+          "token1": "0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0xb0a0264Ce6847F101b76ba36A4a3083ba489F501",
+          "token0": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+          "token1": "0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.099975,
+        "hops": [
+          {
+            "poolAddress": "0x463c0d1F04bcd99A1efCF94AC2a75bc19Ea4A7E5",
+            "costPercent": 0.05
+          },
+          {
+            "poolAddress": "0xb0a0264Ce6847F101b76ba36A4a3083ba489F501",
+            "costPercent": 0.05
+          }
+        ]
+      }
+    },
+    {
+      "id": "GBPm-USDm",
+      "tokens": [
+        {
+          "address": "0x39bb4E0a204412bB98e821d25e7d955e69d40Fd1",
+          "symbol": "GBPm"
+        },
+        {
+          "address": "0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115",
+          "symbol": "USDm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0xD0E9c1a718D2a693d41eacd4B2696180403Ce081",
+          "token0": "0x39bb4E0a204412bB98e821d25e7d955e69d40Fd1",
+          "token1": "0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.15,
+        "hops": [
+          {
+            "poolAddress": "0xD0E9c1a718D2a693d41eacd4B2696180403Ce081",
+            "costPercent": 0.15
+          }
+        ]
+      }
+    },
+    {
+      "id": "GBPm-USDC",
+      "tokens": [
+        {
+          "address": "0x39bb4E0a204412bB98e821d25e7d955e69d40Fd1",
+          "symbol": "GBPm"
+        },
+        {
+          "address": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+          "symbol": "USDC"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0xD0E9c1a718D2a693d41eacd4B2696180403Ce081",
+          "token0": "0x39bb4E0a204412bB98e821d25e7d955e69d40Fd1",
+          "token1": "0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0x463c0d1F04bcd99A1efCF94AC2a75bc19Ea4A7E5",
+          "token0": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+          "token1": "0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.199925,
+        "hops": [
+          {
+            "poolAddress": "0xD0E9c1a718D2a693d41eacd4B2696180403Ce081",
+            "costPercent": 0.15
+          },
+          {
+            "poolAddress": "0x463c0d1F04bcd99A1efCF94AC2a75bc19Ea4A7E5",
+            "costPercent": 0.05
+          }
+        ]
+      }
+    },
+    {
+      "id": "AUSD-GBPm",
+      "tokens": [
+        {
+          "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+          "symbol": "AUSD"
+        },
+        {
+          "address": "0x39bb4E0a204412bB98e821d25e7d955e69d40Fd1",
+          "symbol": "GBPm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0xD0E9c1a718D2a693d41eacd4B2696180403Ce081",
+          "token0": "0x39bb4E0a204412bB98e821d25e7d955e69d40Fd1",
+          "token1": "0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0xb0a0264Ce6847F101b76ba36A4a3083ba489F501",
+          "token0": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+          "token1": "0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.199925,
+        "hops": [
+          {
+            "poolAddress": "0xD0E9c1a718D2a693d41eacd4B2696180403Ce081",
+            "costPercent": 0.15
+          },
+          {
+            "poolAddress": "0xb0a0264Ce6847F101b76ba36A4a3083ba489F501",
+            "costPercent": 0.05
+          }
+        ]
+      }
+    }
+  ],
   // Chain 10143
   10143: [
     {
