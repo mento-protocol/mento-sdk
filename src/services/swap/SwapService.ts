@@ -192,7 +192,7 @@ export class SwapService {
     this.validateAmountIn(amountIn)
 
     const deadline = options.deadline
-    if (deadline <= BigInt(Date.now()) / 1000n) {
+    if (deadline <= BigInt(Math.floor(Date.now() / 1000))) {
       throw new Error('Deadline must be in the future')
     }
 

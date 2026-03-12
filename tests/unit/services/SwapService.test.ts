@@ -93,6 +93,24 @@ describe('SwapService', () => {
       expect(result.deadline).toBe(futureDeadline)
       expect(result.params.data).toBeDefined()
     })
+
+    it('should accept a deadline exactly 1 second in the future (L-1 precision fix)', async () => {
+      // Before the fix, `BigInt(Date.now()) / 1000n` truncated the fractional
+      // milliseconds, creating a ~1-second window where a valid deadline was
+      // treated as expired. The correct formula is Math.floor(Date.now() / 1000).
+      const oneSecondAhead = BigInt(Math.floor(Date.now() / 1000) + 1)
+
+      const result = await service.buildSwapParams(
+        tokenIn,
+        tokenOut,
+        amountIn,
+        recipient,
+        { slippageTolerance: 0.5, deadline: oneSecondAhead },
+        mockRoute
+      )
+
+      expect(result.deadline).toBe(oneSecondAhead)
+    })
   })
 
   describe('amountIn validation', () => {
