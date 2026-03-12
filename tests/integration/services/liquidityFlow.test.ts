@@ -17,18 +17,18 @@ import { deadlineFromMinutes } from '../../../src/utils/deadline'
  * - Approval handling
  *
  * Requirements:
- * - Local node running at localhost:8545 (e.g., anvil fork) OR Celo RPC endpoint
+ * - CELO_RPC_URL environment variable set to a live Celo node
  * - DEV_ADDRESS environment variable set to a valid address with token balances
  *
  * @group integration
  * @group local
  */
 describe('Liquidity Flow Integration', () => {
-  const RPC_URL = process.env.CELO_RPC_URL || 'http://localhost:8545'
+  const RPC_URL = process.env.CELO_RPC_URL ?? ''
   const CHAIN_ID = 42220
 
   const publicClient = createPublicClient({
-    transport: http(RPC_URL),
+    transport: http(RPC_URL || 'http://localhost:8545'),
   })
 
   const poolService = new PoolService(publicClient, CHAIN_ID)
@@ -39,8 +39,36 @@ describe('Liquidity Flow Integration', () => {
   let pools: Pool[]
   let fpmmPools: Pool[]
   let testPool: Pool | undefined
+  let rpcAvailable = false
+
+  // Skip guard: wrap tests that require a live RPC node.
+  function itRpc(name: string, fn: () => Promise<void>): void {
+    it(name, async () => {
+      if (!rpcAvailable) return
+      await fn()
+    })
+  }
 
   beforeAll(async () => {
+    if (!RPC_URL) {
+      console.warn(
+        '\n⚠  Skipping Liquidity Flow integration tests: CELO_RPC_URL is not set.\n' +
+          '   Set CELO_RPC_URL to a live Celo RPC endpoint to run these tests.\n'
+      )
+      return
+    }
+
+    try {
+      await publicClient.getChainId()
+      rpcAvailable = true
+    } catch (e) {
+      console.warn(
+        `\n⚠  Skipping Liquidity Flow integration tests: cannot reach RPC at ${RPC_URL}.\n` +
+          `   Error: ${e instanceof Error ? e.message : String(e)}\n`
+      )
+      return
+    }
+
     // Discover pools from the chain
     pools = await poolService.getPools()
     fpmmPools = pools.filter((p) => p.poolType === PoolType.FPMM)
@@ -48,7 +76,7 @@ describe('Liquidity Flow Integration', () => {
   })
 
   describe('Pool Discovery for Liquidity', () => {
-    it('should discover FPMM pools that support liquidity operations', async () => {
+    itRpc('should discover FPMM pools that support liquidity operations', async () => {
       expect(fpmmPools).toBeDefined()
       expect(Array.isArray(fpmmPools)).toBe(true)
       expect(fpmmPools.length).toBeGreaterThan(0)
@@ -56,7 +84,7 @@ describe('Liquidity Flow Integration', () => {
   })
 
   describe('Add Liquidity Quotes', () => {
-    it('should calculate add liquidity quote', async () => {
+    itRpc('should calculate add liquidity quote', async () => {
       if (!testPool) {
         console.log('No FPMM pools available - skipping test')
         return
@@ -79,7 +107,7 @@ describe('Liquidity Flow Integration', () => {
       expect(quote.liquidity).toBeGreaterThan(0n)
     })
 
-    it('should accept tokens in any order (tokenA/tokenB API)', async () => {
+    itRpc('should accept tokens in any order (tokenA/tokenB API)', async () => {
       if (!testPool) return
 
       const amount1 = 1000000000000000000n
@@ -108,7 +136,7 @@ describe('Liquidity Flow Integration', () => {
       expect(quote2.liquidity).toBeGreaterThan(0n)
     })
 
-    it('should return proportional liquidity for proportional amounts', async () => {
+    itRpc('should return proportional liquidity for proportional amounts', async () => {
       if (!testPool) return
 
       const baseAmount = 1000000000000000000n
@@ -130,13 +158,13 @@ describe('Liquidity Flow Integration', () => {
       )
 
       // Liquidity should roughly double (allowing for rounding)
-      expect(quote2.liquidity).toBeGreaterThanOrEqual(quote1.liquidity * 19n / 10n) // At least 1.9x
-      expect(quote2.liquidity).toBeLessThanOrEqual(quote1.liquidity * 21n / 10n) // At most 2.1x
+      expect(quote2.liquidity).toBeGreaterThanOrEqual((quote1.liquidity * 19n) / 10n) // At least 1.9x
+      expect(quote2.liquidity).toBeLessThanOrEqual((quote1.liquidity * 21n) / 10n) // At most 2.1x
     })
   })
 
   describe('Remove Liquidity Quotes', () => {
-    it('should calculate remove liquidity quote', async () => {
+    itRpc('should calculate remove liquidity quote', async () => {
       if (!testPool) return
 
       const liquidity = 1000000000000000000n // 1 LP token
@@ -148,7 +176,7 @@ describe('Liquidity Flow Integration', () => {
       expect(quote.amount1).toBeGreaterThan(0n)
     })
 
-    it('should return proportional amounts for proportional liquidity', async () => {
+    itRpc('should return proportional amounts for proportional liquidity', async () => {
       if (!testPool) return
 
       const baseLiquidity = 1000000000000000000n
@@ -157,15 +185,15 @@ describe('Liquidity Flow Integration', () => {
       const quote2 = await liquidityService.quoteRemoveLiquidity(testPool.poolAddr, baseLiquidity * 2n)
 
       // Amounts should roughly double
-      expect(quote2.amount0).toBeGreaterThanOrEqual(quote1.amount0 * 19n / 10n)
-      expect(quote2.amount0).toBeLessThanOrEqual(quote1.amount0 * 21n / 10n)
+      expect(quote2.amount0).toBeGreaterThanOrEqual((quote1.amount0 * 19n) / 10n)
+      expect(quote2.amount0).toBeLessThanOrEqual((quote1.amount0 * 21n) / 10n)
     })
   })
 
   describe('Add Liquidity Transaction Building', () => {
     const devAddress = process.env.DEV_ADDRESS as Address | undefined
 
-    it('should build add liquidity params with new API', async () => {
+    itRpc('should build add liquidity params with new API', async () => {
       if (!testPool) return
 
       const recipient = devAddress || '0x0000000000000000000000000000000000000001'
@@ -179,7 +207,7 @@ describe('Liquidity Flow Integration', () => {
         tokenB: testPool.token1 as Address,
         amountB,
         recipient: recipient as Address,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
 
       expect(params).toBeDefined()
@@ -198,19 +226,18 @@ describe('Liquidity Flow Integration', () => {
       // Verify slippage applied correctly
       expect(params.amountAMin).toBeLessThanOrEqual(amountA)
       expect(params.amountBMin).toBeLessThanOrEqual(amountB)
-      expect(params.amountAMin).toBeGreaterThan(amountA * 990n / 1000n) // At least 99% of desired
+      expect(params.amountAMin).toBeGreaterThan((amountA * 990n) / 1000n) // At least 99% of desired
 
       expect(params).toHaveProperty('estimatedMinLiquidity')
       expect(params.estimatedMinLiquidity).toBeGreaterThan(0n)
     })
 
-    it('should apply slippage tolerance correctly', async () => {
+    itRpc('should apply slippage tolerance correctly', async () => {
       if (!testPool) return
 
       const recipient = devAddress || '0x0000000000000000000000000000000000000001'
       const amountA = 1000000000000000000n
       const amountB = 2000000000000000000n
-      const slippageTolerance = 0.5 // 0.5%
 
       const params = await liquidityService.buildAddLiquidityParams({
         poolAddress: testPool.poolAddr,
@@ -219,12 +246,8 @@ describe('Liquidity Flow Integration', () => {
         tokenB: testPool.token1 as Address,
         amountB,
         recipient: recipient as Address,
-        options: { slippageTolerance, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
-
-      // Expected calculation: amountMin = amount * (1 - 0.005) = amount * 9950 / 10000
-      const expectedAmountAMin = (amountA * 9950n) / 10000n
-      const expectedAmountBMin = (amountB * 9950n) / 10000n
 
       // Allow for quote adjustments but verify slippage is applied
       expect(params.amountAMin).toBeLessThanOrEqual(params.amountADesired)
@@ -232,6 +255,7 @@ describe('Liquidity Flow Integration', () => {
     })
 
     it('should build complete transaction with approval check', async function () {
+      if (!rpcAvailable) return
       if (!devAddress) {
         console.log('Skipping test: DEV_ADDRESS not set')
         return
@@ -250,7 +274,7 @@ describe('Liquidity Flow Integration', () => {
         amountB,
         recipient: devAddress,
         owner: devAddress,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
 
       expect(transaction).toHaveProperty('approvalA')
@@ -280,7 +304,7 @@ describe('Liquidity Flow Integration', () => {
   describe('Remove Liquidity Transaction Building', () => {
     const devAddress = process.env.DEV_ADDRESS as Address | undefined
 
-    it('should build remove liquidity params', async () => {
+    itRpc('should build remove liquidity params', async () => {
       if (!testPool) return
 
       const recipient = devAddress || '0x0000000000000000000000000000000000000001'
@@ -290,7 +314,7 @@ describe('Liquidity Flow Integration', () => {
         poolAddress: testPool.poolAddr,
         liquidity,
         recipient: recipient as Address,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
 
       expect(params).toBeDefined()
@@ -309,6 +333,7 @@ describe('Liquidity Flow Integration', () => {
     })
 
     it('should build complete transaction with LP token approval check', async function () {
+      if (!rpcAvailable) return
       if (!devAddress) {
         console.log('Skipping test: DEV_ADDRESS not set')
         return
@@ -323,7 +348,7 @@ describe('Liquidity Flow Integration', () => {
         liquidity,
         recipient: devAddress,
         owner: devAddress,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
 
       expect(transaction).toHaveProperty('approval')
@@ -344,6 +369,7 @@ describe('Liquidity Flow Integration', () => {
     const devAddress = process.env.DEV_ADDRESS as Address | undefined
 
     it('should get LP token balance for an address', async function () {
+      if (!rpcAvailable) return
       if (!devAddress) {
         console.log('Skipping test: DEV_ADDRESS not set')
         return
@@ -369,6 +395,7 @@ describe('Liquidity Flow Integration', () => {
     })
 
     it('should calculate share percentage correctly', async function () {
+      if (!rpcAvailable) return
       if (!devAddress) {
         console.log('Skipping test: DEV_ADDRESS not set')
         return
@@ -379,18 +406,15 @@ describe('Liquidity Flow Integration', () => {
       const balance = await liquidityService.getLPTokenBalance(testPool.poolAddr, devAddress)
 
       // Verify share percentage calculation (basis-point precision: 0.01%)
-      const expectedSharePercent = balance.totalSupply > 0n
-        ? Number((balance.balance * 10000n) / balance.totalSupply) / 100
-        : 0
+      const expectedSharePercent =
+        balance.totalSupply > 0n ? Number((balance.balance * 10000n) / balance.totalSupply) / 100 : 0
 
       expect(balance.sharePercent).toBe(expectedSharePercent)
     })
   })
 
   describe('Zap Operations', () => {
-    const devAddress = process.env.DEV_ADDRESS as Address | undefined
-
-    it('should quote zap in operation', async () => {
+    itRpc('should quote zap in operation', async () => {
       if (!testPool) return
 
       const tokenIn = testPool.token0 as Address
@@ -414,9 +438,10 @@ describe('Liquidity Flow Integration', () => {
       expect(quote.estimatedMinLiquidity).toBeGreaterThan(0n)
     })
 
-    it('should build zap in params', async () => {
+    itRpc('should build zap in params', async () => {
       if (!testPool) return
 
+      const devAddress = process.env.DEV_ADDRESS as Address | undefined
       const recipient = devAddress || '0x0000000000000000000000000000000000000001'
       const tokenIn = testPool.token0 as Address
       const amountIn = 1000000000000000000n
@@ -428,7 +453,7 @@ describe('Liquidity Flow Integration', () => {
         amountIn,
         amountInSplit,
         recipient: recipient as Address,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
 
       expect(params).toBeDefined()
@@ -444,18 +469,16 @@ describe('Liquidity Flow Integration', () => {
       expect(params).toHaveProperty('estimatedMinLiquidity')
     })
 
-    it('should quote zap out operation', async () => {
+    itRpc('should quote zap out operation', async () => {
       if (!testPool) return
 
       const tokenOut = testPool.token0 as Address
       const liquidity = 1000000000000000000n
 
-      const quote = await liquidityService.quoteZapOut(
-        testPool.poolAddr,
-        tokenOut,
-        liquidity,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const quote = await liquidityService.quoteZapOut(testPool.poolAddr, tokenOut, liquidity, {
+        slippageTolerance: 0.5,
+        deadline: deadlineFromMinutes(20),
+      })
 
       expect(quote).toBeDefined()
       expect(quote).toHaveProperty('amountOutFromA')
@@ -466,9 +489,10 @@ describe('Liquidity Flow Integration', () => {
       expect(quote.estimatedMinTokenOut).toBeGreaterThan(0n)
     })
 
-    it('should build zap out params', async () => {
+    itRpc('should build zap out params', async () => {
       if (!testPool) return
 
+      const devAddress = process.env.DEV_ADDRESS as Address | undefined
       const recipient = devAddress || '0x0000000000000000000000000000000000000001'
       const tokenOut = testPool.token0 as Address
       const liquidity = 1000000000000000000n
@@ -478,7 +502,7 @@ describe('Liquidity Flow Integration', () => {
         tokenOut,
         liquidity,
         recipient: recipient as Address,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
 
       expect(params).toBeDefined()
@@ -494,7 +518,7 @@ describe('Liquidity Flow Integration', () => {
   })
 
   describe('Error Handling', () => {
-    it('should throw error for invalid pool address', async () => {
+    itRpc('should throw error for invalid pool address', async () => {
       await expect(
         liquidityService.quoteAddLiquidity(
           '0x0000000000000000000000000000000000000000',
@@ -506,7 +530,7 @@ describe('Liquidity Flow Integration', () => {
       ).rejects.toThrow(/Pool not found/)
     })
 
-    it('should throw error for tokens not in pool', async () => {
+    itRpc('should throw error for tokens not in pool', async () => {
       if (!testPool) return
 
       const wrongToken = '0x9999000000000000000000000000000000000000' as Address
@@ -522,7 +546,7 @@ describe('Liquidity Flow Integration', () => {
       ).rejects.toThrow(/don't match pool/)
     })
 
-    it('should throw error for same token twice', async () => {
+    itRpc('should throw error for same token twice', async () => {
       if (!testPool) return
 
       await expect(
@@ -538,7 +562,7 @@ describe('Liquidity Flow Integration', () => {
   })
 
   describe('Custom Configuration', () => {
-    it('should support custom deadline', async () => {
+    itRpc('should support custom deadline', async () => {
       if (!testPool) return
 
       const recipient = '0x0000000000000000000000000000000000000001' as Address
@@ -551,13 +575,13 @@ describe('Liquidity Flow Integration', () => {
         tokenB: testPool.token1 as Address,
         amountB: 2000000000000000000n,
         recipient,
-        options: { slippageTolerance: 0.5, deadline: customDeadline }
+        options: { slippageTolerance: 0.5, deadline: customDeadline },
       })
 
       expect(params.deadline).toBe(customDeadline)
     })
 
-    it('should support different slippage tolerances', async () => {
+    itRpc('should support different slippage tolerances', async () => {
       if (!testPool) return
 
       const recipient = '0x0000000000000000000000000000000000000001' as Address
@@ -570,7 +594,7 @@ describe('Liquidity Flow Integration', () => {
         tokenB: testPool.token1 as Address,
         amountB: amount,
         recipient,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) } // 0.5%
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }, // 0.5%
       })
 
       const params2 = await liquidityService.buildAddLiquidityParams({
@@ -580,7 +604,7 @@ describe('Liquidity Flow Integration', () => {
         tokenB: testPool.token1 as Address,
         amountB: amount,
         recipient,
-        options: { slippageTolerance: 1.0, deadline: deadlineFromMinutes(20) } // 1.0%
+        options: { slippageTolerance: 1.0, deadline: deadlineFromMinutes(20) }, // 1.0%
       })
 
       // Higher slippage tolerance should result in lower minimums
