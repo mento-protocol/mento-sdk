@@ -60,10 +60,18 @@ export async function multicall(
     )
   }
 
-  return client.multicall({
+  const raw = await client.multicall({
     allowFailure,
     batchSize,
     contracts: contracts as Parameters<PublicClient['multicall']>[0]['contracts'],
     multicallAddress: MULTICALL3_ADDRESS,
-  }) as Promise<MulticallResult[]>
+  })
+
+  const results = raw as unknown[]
+
+  if (!allowFailure) {
+    return results.map((result) => ({ status: 'success' as const, result }))
+  }
+
+  return results as MulticallResult[]
 }
