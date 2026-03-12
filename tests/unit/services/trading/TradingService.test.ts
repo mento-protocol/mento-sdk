@@ -1,7 +1,8 @@
 import { TradingService } from '../../../../src/services/trading/TradingService'
+import { TradingLimitsService } from '../../../../src/services/trading/TradingLimitsService'
 import { RouteService } from '../../../../src/services/routes/RouteService'
 import { TradingMode, PoolType, isTradingEnabled } from '../../../../src/core/types'
-import type { Route, Pool } from '../../../../src/core/types'
+import type { Route, Pool, TradingLimit } from '../../../../src/core/types'
 import type { PublicClient } from 'viem'
 import { ChainId } from '../../../../src/core/constants'
 import { RouteNotFoundError } from '../../../../src/core/errors'
@@ -253,6 +254,198 @@ describe('TradingService', () => {
       const isTradable = await service.isRouteTradable(mockDirectRoute)
 
       expect(isTradable).toBe(true)
+    })
+  })
+
+  describe('getPoolTradabilityStatus()', () => {
+    let tradingLimitsServiceSpy: jest.SpyInstance
+
+    const mockLimitWithCapacity: TradingLimit = {
+      asset: TOKEN_A,
+      maxIn: 1000n,
+      maxOut: 1000n,
+      until: 9999999999,
+      decimals: 18,
+    }
+
+    const mockLimitExhaustedIn: TradingLimit = {
+      asset: TOKEN_A,
+      maxIn: 0n,
+      maxOut: 1000n,
+      until: 9999999999,
+      decimals: 18,
+    }
+
+    const mockLimitExhaustedOut: TradingLimit = {
+      asset: TOKEN_B,
+      maxIn: 1000n,
+      maxOut: 0n,
+      until: 9999999999,
+      decimals: 18,
+    }
+
+    beforeEach(() => {
+      tradingLimitsServiceSpy = jest.spyOn(
+        (service as unknown as { tradingLimitsService: TradingLimitsService }).tradingLimitsService,
+        'getPoolTradingLimits'
+      )
+    })
+
+    it('should return tradable=true when circuit breaker OK and no limits configured', async () => {
+      tradingLimitsServiceSpy.mockResolvedValue([])
+      mockPublicClient.readContract.mockImplementation(async ({ functionName }) => {
+        if (functionName === 'referenceRateFeedID') return MOCK_RATE_FEED_1
+        if (functionName === 'getRateFeedTradingMode') return TradingMode.BIDIRECTIONAL
+        return null
+      })
+
+      const status = await service.getPoolTradabilityStatus(mockPool1)
+
+      expect(status.tradable).toBe(true)
+      expect(status.circuitBreakerOk).toBe(true)
+      expect(status.limitsOk).toBe(true)
+      expect(status.tradingMode).toBe(TradingMode.BIDIRECTIONAL)
+      expect(status.limits).toEqual([])
+    })
+
+    it('should return tradable=true when circuit breaker OK and all limits have capacity', async () => {
+      tradingLimitsServiceSpy.mockResolvedValue([mockLimitWithCapacity])
+      mockPublicClient.readContract.mockImplementation(async ({ functionName }) => {
+        if (functionName === 'referenceRateFeedID') return MOCK_RATE_FEED_1
+        if (functionName === 'getRateFeedTradingMode') return TradingMode.BIDIRECTIONAL
+        return null
+      })
+
+      const status = await service.getPoolTradabilityStatus(mockPool1)
+
+      expect(status.tradable).toBe(true)
+      expect(status.circuitBreakerOk).toBe(true)
+      expect(status.limitsOk).toBe(true)
+      expect(status.limits).toEqual([mockLimitWithCapacity])
+    })
+
+    it('should return tradable=false and circuitBreakerOk=false when circuit breaker tripped', async () => {
+      tradingLimitsServiceSpy.mockResolvedValue([])
+      mockPublicClient.readContract.mockImplementation(async ({ functionName }) => {
+        if (functionName === 'referenceRateFeedID') return MOCK_RATE_FEED_1
+        if (functionName === 'getRateFeedTradingMode') return TradingMode.SUSPENDED
+        return null
+      })
+
+      const status = await service.getPoolTradabilityStatus(mockPool1)
+
+      expect(status.tradable).toBe(false)
+      expect(status.circuitBreakerOk).toBe(false)
+      expect(status.limitsOk).toBe(true)
+      expect(status.tradingMode).toBe(TradingMode.SUSPENDED)
+    })
+
+    it('should return tradable=false when circuit breaker tripped with bitmask value', async () => {
+      tradingLimitsServiceSpy.mockResolvedValue([])
+      mockPublicClient.readContract.mockImplementation(async ({ functionName }) => {
+        if (functionName === 'referenceRateFeedID') return MOCK_RATE_FEED_1
+        if (functionName === 'getRateFeedTradingMode') return 3 // bitmask: multiple breakers
+        return null
+      })
+
+      const status = await service.getPoolTradabilityStatus(mockPool1)
+
+      expect(status.tradable).toBe(false)
+      expect(status.circuitBreakerOk).toBe(false)
+      expect(status.tradingMode).toBe(3)
+    })
+
+    it('should return tradable=false and limitsOk=false when maxIn is exhausted', async () => {
+      tradingLimitsServiceSpy.mockResolvedValue([mockLimitExhaustedIn])
+      mockPublicClient.readContract.mockImplementation(async ({ functionName }) => {
+        if (functionName === 'referenceRateFeedID') return MOCK_RATE_FEED_1
+        if (functionName === 'getRateFeedTradingMode') return TradingMode.BIDIRECTIONAL
+        return null
+      })
+
+      const status = await service.getPoolTradabilityStatus(mockPool1)
+
+      expect(status.tradable).toBe(false)
+      expect(status.circuitBreakerOk).toBe(true)
+      expect(status.limitsOk).toBe(false)
+    })
+
+    it('should return tradable=false and limitsOk=false when maxOut is exhausted', async () => {
+      tradingLimitsServiceSpy.mockResolvedValue([mockLimitExhaustedOut])
+      mockPublicClient.readContract.mockImplementation(async ({ functionName }) => {
+        if (functionName === 'referenceRateFeedID') return MOCK_RATE_FEED_1
+        if (functionName === 'getRateFeedTradingMode') return TradingMode.BIDIRECTIONAL
+        return null
+      })
+
+      const status = await service.getPoolTradabilityStatus(mockPool1)
+
+      expect(status.tradable).toBe(false)
+      expect(status.circuitBreakerOk).toBe(true)
+      expect(status.limitsOk).toBe(false)
+    })
+
+    it('should return tradable=false when both circuit breaker tripped and limits exhausted', async () => {
+      tradingLimitsServiceSpy.mockResolvedValue([mockLimitExhaustedIn])
+      mockPublicClient.readContract.mockImplementation(async ({ functionName }) => {
+        if (functionName === 'referenceRateFeedID') return MOCK_RATE_FEED_1
+        if (functionName === 'getRateFeedTradingMode') return TradingMode.SUSPENDED
+        return null
+      })
+
+      const status = await service.getPoolTradabilityStatus(mockPool1)
+
+      expect(status.tradable).toBe(false)
+      expect(status.circuitBreakerOk).toBe(false)
+      expect(status.limitsOk).toBe(false)
+    })
+
+    it('should return limitsOk=false when any limit has zero maxIn even if others have capacity', async () => {
+      tradingLimitsServiceSpy.mockResolvedValue([mockLimitWithCapacity, mockLimitExhaustedIn])
+      mockPublicClient.readContract.mockImplementation(async ({ functionName }) => {
+        if (functionName === 'referenceRateFeedID') return MOCK_RATE_FEED_1
+        if (functionName === 'getRateFeedTradingMode') return TradingMode.BIDIRECTIONAL
+        return null
+      })
+
+      const status = await service.getPoolTradabilityStatus(mockPool1)
+
+      expect(status.tradable).toBe(false)
+      expect(status.limitsOk).toBe(false)
+    })
+
+    it('should call getPoolRateFeedId and getPoolTradingLimits with the given pool', async () => {
+      tradingLimitsServiceSpy.mockResolvedValue([])
+      mockPublicClient.readContract.mockImplementation(async ({ functionName }) => {
+        if (functionName === 'referenceRateFeedID') return MOCK_RATE_FEED_1
+        if (functionName === 'getRateFeedTradingMode') return TradingMode.BIDIRECTIONAL
+        return null
+      })
+
+      await service.getPoolTradabilityStatus(mockPool1)
+
+      expect(tradingLimitsServiceSpy).toHaveBeenCalledWith(mockPool1)
+      expect(mockPublicClient.readContract).toHaveBeenCalledWith(
+        expect.objectContaining({
+          address: mockPool1.poolAddr,
+          functionName: 'referenceRateFeedID',
+        })
+      )
+    })
+
+    it('should return detailed limits array in the response', async () => {
+      const multiLimits: TradingLimit[] = [mockLimitWithCapacity, { ...mockLimitWithCapacity, asset: TOKEN_B }]
+      tradingLimitsServiceSpy.mockResolvedValue(multiLimits)
+      mockPublicClient.readContract.mockImplementation(async ({ functionName }) => {
+        if (functionName === 'referenceRateFeedID') return MOCK_RATE_FEED_1
+        if (functionName === 'getRateFeedTradingMode') return TradingMode.BIDIRECTIONAL
+        return null
+      })
+
+      const status = await service.getPoolTradabilityStatus(mockPool1)
+
+      expect(status.limits).toEqual(multiLimits)
+      expect(status.limits).toHaveLength(2)
     })
   })
 })
