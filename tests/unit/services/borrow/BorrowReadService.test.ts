@@ -53,50 +53,38 @@ describe('BorrowReadService', () => {
       }),
       multicall: jest.fn().mockImplementation(async ({ contracts }: any) => {
         if (contracts[0]?.functionName === 'getTroveFromTroveIdsArray') {
-          return [
-            { status: 'success', result: 11n },
-            { status: 'success', result: 12n },
-          ]
+          return [11n, 12n]
         }
 
         if (contracts[0]?.functionName === 'ownerOf') {
-          return [
-            { status: 'success', result: owner },
-            { status: 'success', result: otherOwner },
-          ]
+          return [owner, otherOwner]
         }
 
         if (contracts[0]?.functionName === 'getLatestTroveData') {
           return [
             {
-              status: 'success',
-              result: {
-                entireDebt: 100n,
-                entireColl: 200n,
-                redistBoldDebtGain: 0n,
-                redistCollGain: 0n,
-                accruedInterest: 0n,
-                recordedDebt: 100n,
-                annualInterestRate: 5n,
-                weightedRecordedDebt: 0n,
-                accruedBatchManagementFee: 0n,
-                lastInterestRateAdjTime: 456n,
-              },
+              entireDebt: 100n,
+              entireColl: 200n,
+              redistBoldDebtGain: 0n,
+              redistCollGain: 0n,
+              accruedInterest: 0n,
+              recordedDebt: 100n,
+              annualInterestRate: 5n,
+              weightedRecordedDebt: 0n,
+              accruedBatchManagementFee: 0n,
+              lastInterestRateAdjTime: 456n,
             },
             {
-              status: 'success',
-              result: {
-                debt: 100n,
-                coll: 200n,
-                stake: 0n,
-                status: 1,
-                arrayIndex: 0,
-                lastDebtUpdateTime: 123n,
-                lastInterestRateAdjTime: 456n,
-                annualInterestRate: 5n,
-                interestBatchManager: zeroAddress,
-                batchDebtShares: 0n,
-              },
+              debt: 100n,
+              coll: 200n,
+              stake: 0n,
+              status: 1,
+              arrayIndex: 0,
+              lastDebtUpdateTime: 123n,
+              lastInterestRateAdjTime: 456n,
+              annualInterestRate: 5n,
+              interestBatchManager: zeroAddress,
+              batchDebtShares: 0n,
             },
           ]
         }

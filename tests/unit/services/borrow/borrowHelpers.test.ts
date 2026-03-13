@@ -41,10 +41,7 @@ describe('borrowHelpers', () => {
       }
 
       mockPublicClient.multicall.mockResolvedValue(
-        Object.values(registryReads).map((value) => ({
-          status: 'success',
-          result: value,
-        }))
+        Object.values(registryReads)
       )
 
       const result = await resolveAddressesFromRegistry(mockPublicClient, registryAddress)
@@ -94,13 +91,13 @@ describe('borrowHelpers', () => {
         throw new Error(`Unexpected address: ${address}`)
       })
       mockPublicClient.multicall.mockResolvedValue([
-        { status: 'success', result: 1_500_000_000_000_000_000n },
-        { status: 'success', result: 1_100_000_000_000_000_000n },
-        { status: 'success', result: 1_250_000_000_000_000_000n },
-        { status: 'success', result: 200_000_000_000_000_000n },
-        { status: 'success', result: 1_800_000_000_000_000_000_000n },
-        { status: 'success', result: 37_500_000_000_000_000n },
-        { status: 'success', result: 10_000_000_000_000_000n },
+        1_500_000_000_000_000_000n,
+        1_100_000_000_000_000_000n,
+        1_250_000_000_000_000_000n,
+        200_000_000_000_000_000n,
+        1_800_000_000_000_000_000_000n,
+        37_500_000_000_000_000n,
+        10_000_000_000_000_000n,
       ])
 
       const result = await readSystemParams(mockPublicClient, borrowerOperations)
