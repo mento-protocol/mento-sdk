@@ -1,4 +1,4 @@
-import { getContractAddress, ChainId } from '../../core/constants'
+import { tryGetContractAddress, ChainId } from '../../core/constants'
 import { Pool, PoolType } from '../../core/types'
 import {
   FPMM_FACTORY_ABI,
@@ -9,12 +9,13 @@ import {
 } from '../../core/abis'
 import { PublicClient, Address } from 'viem'
 import { sortTokenAddresses } from '../../utils/sortUtils'
+import { multicall } from '../../utils/multicall'
 
 /**
  * Fetches all FPMM pools from the FPMM Factory
  */
 export async function fetchFPMMPools(publicClient: PublicClient, chainId: number): Promise<Pool[]> {
-  const fpmmFactoryAddress = getContractAddress(chainId as ChainId, 'FPMMFactory')
+  const fpmmFactoryAddress = tryGetContractAddress(chainId as ChainId, 'FPMMFactory')
 
   if (!fpmmFactoryAddress) {
     return []
@@ -32,30 +33,30 @@ export async function fetchFPMMPools(publicClient: PublicClient, chainId: number
       return []
     }
 
-    const poolDataPromises = poolAddresses.map(async (poolAddress) => {
-      const [token0, token1] = await Promise.all([
-        publicClient.readContract({
-          address: poolAddress,
-          abi: FPMM_ABI,
-          functionName: 'token0',
-        }) as Promise<Address>,
-        publicClient.readContract({
-          address: poolAddress,
-          abi: FPMM_ABI,
-          functionName: 'token1',
-        }) as Promise<Address>,
-      ])
+    // Batch all token0/token1 reads into a single multicall
+    const contracts = poolAddresses.flatMap((poolAddress) => [
+      { address: poolAddress, abi: FPMM_ABI, functionName: 'token0' as const },
+      { address: poolAddress, abi: FPMM_ABI, functionName: 'token1' as const },
+    ])
+
+    const results = await multicall(publicClient, contracts)
+
+    return poolAddresses.map((poolAddress, i) => {
+      const token0Result = results[i * 2]
+      const token1Result = results[i * 2 + 1]
+
+      if (token0Result.status === 'failure' || token1Result.status === 'failure') {
+        throw new Error(`Failed to read token addresses for pool ${poolAddress}`)
+      }
 
       return {
         factoryAddr: fpmmFactoryAddress,
         poolAddr: poolAddress as string,
-        token0: token0 as string,
-        token1: token1 as string,
+        token0: token0Result.result as string,
+        token1: token1Result.result as string,
         poolType: PoolType.FPMM as `${PoolType}`,
       }
     })
-
-    return await Promise.all(poolDataPromises)
   } catch (error) {
     throw new Error(`Failed to fetch FPMM pools: ${(error as Error).message}`)
   }
@@ -66,8 +67,8 @@ export async function fetchFPMMPools(publicClient: PublicClient, chainId: number
  * then resolves token pairs and exchange IDs from each pool and BiPoolManager.
  */
 export async function fetchVirtualPools(publicClient: PublicClient, chainId: number): Promise<Pool[]> {
-  const virtualPoolFactoryAddress = getContractAddress(chainId as ChainId, 'VirtualPoolFactory')
-  const biPoolManagerAddress = getContractAddress(chainId as ChainId, 'BiPoolManager')
+  const virtualPoolFactoryAddress = tryGetContractAddress(chainId as ChainId, 'VirtualPoolFactory')
+  const biPoolManagerAddress = tryGetContractAddress(chainId as ChainId, 'BiPoolManager')
 
   if (!virtualPoolFactoryAddress || !biPoolManagerAddress) {
     return []
@@ -101,18 +102,26 @@ export async function fetchVirtualPools(publicClient: PublicClient, chainId: num
       }
     }
 
-    // For each pool, read its token pair and match to an exchangeId
-    const poolPromises = poolAddresses.map(async (poolAddress) => {
-      const [token0, token1] = (await publicClient.readContract({
-        address: poolAddress,
-        abi: VIRTUAL_POOL_ABI,
-        functionName: 'tokens',
-      })) as [Address, Address]
+    // Batch all tokens() reads into a single multicall
+    const contracts = poolAddresses.map((poolAddress) => ({
+      address: poolAddress,
+      abi: VIRTUAL_POOL_ABI,
+      functionName: 'tokens' as const,
+    }))
 
+    const results = await multicall(publicClient, contracts)
+
+    return poolAddresses.map((poolAddress, i) => {
+      const result = results[i]
+      if (result.status === 'failure') {
+        throw new Error(`Failed to read token addresses for virtual pool ${poolAddress}`)
+      }
+
+      const [token0, token1] = result.result as [Address, Address]
       const [sorted0, sorted1] = sortTokenAddresses(token0, token1)
       const exchangeId = tokenPairToExchangeId.get(`${sorted0}:${sorted1}`)
 
-      const pool: Pool = {
+      return {
         factoryAddr: virtualPoolFactoryAddress,
         poolAddr: poolAddress as string,
         token0: sorted0 as string,
@@ -120,10 +129,7 @@ export async function fetchVirtualPools(publicClient: PublicClient, chainId: num
         poolType: PoolType.Virtual as `${PoolType}`,
         exchangeId,
       }
-      return pool
     })
-
-    return await Promise.all(poolPromises)
   } catch (error) {
     throw new Error(`Failed to fetch Virtual pools: ${(error as Error).message}`)
   }

@@ -25,6 +25,61 @@ const celoSepolia = defineChain({
   testnet: true,
 })
 
+const monadTestnet = defineChain({
+  id: 10143,
+  name: 'Monad Testnet',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'MON',
+    symbol: 'MON',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://testnet-rpc.monad.xyz'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Monad Testnet Explorer',
+      url: 'https://testnet.monadexplorer.com',
+    },
+  },
+  contracts: {
+    multicall3: {
+      address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+      blockCreated: 251449,
+    },
+  },
+  testnet: true,
+})
+
+const monad = defineChain({
+  id: 143,
+  name: 'Monad',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'MON',
+    symbol: 'MON',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://rpc.monad.xyz'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Monad Explorer',
+      url: 'https://monadvision.com',
+    },
+  },
+  contracts: {
+    multicall3: {
+      address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+      blockCreated: 9248132,
+    },
+  },
+})
+
 /**
  * Get the default RPC URL for a given chain ID
  * @param chainId - The chain ID
@@ -37,6 +92,10 @@ export function getDefaultRpcUrl(chainId: number): string {
       return 'https://forno.celo.org'
     case ChainId.CELO_SEPOLIA:
       return 'https://forno.celo-sepolia.celo-testnet.org'
+    case ChainId.MONAD_TESTNET:
+      return 'https://testnet-rpc.monad.xyz'
+    case ChainId.MONAD:
+      return 'https://rpc.monad.xyz'
     default:
       throw new Error(`Unsupported chain ID: ${chainId}`)
   }
@@ -54,6 +113,10 @@ export function getChainConfig(chainId: number): Chain {
       return celo
     case ChainId.CELO_SEPOLIA:
       return celoSepolia
+    case ChainId.MONAD_TESTNET:
+      return monadTestnet
+    case ChainId.MONAD:
+      return monad
     default:
       throw new Error(`Unsupported chain ID: ${chainId}`)
   }

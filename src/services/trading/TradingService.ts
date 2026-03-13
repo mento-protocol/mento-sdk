@@ -10,6 +10,7 @@ import { RouteService } from '../routes'
 import { TradingLimitsService } from './TradingLimitsService'
 import { BREAKERBOX_ABI, FPMM_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
+import { multicall } from '../../utils/multicall'
 
 /**
  * Service for checking trading status and circuit breaker state in the Mento protocol.
@@ -95,17 +96,10 @@ export class TradingService {
    * ```
    */
   async isRouteTradable(route: Route): Promise<boolean> {
-    // Get rate feed IDs for each pool in the path and check trading modes
-    const rateFeedChecks = await Promise.all(
-      route.path.map(async (pool) => {
-        const rateFeedId = await this.getPoolRateFeedId(pool)
-        const tradingMode = await this.getRateFeedTradingMode(rateFeedId)
-        return isTradingEnabled(tradingMode)
-      })
-    )
+    const tradingModes = await this.getTradingModesForPools(route.path)
 
     // All rate feeds must have trading enabled for the route to be tradable
-    return rateFeedChecks.every((isEnabled) => isEnabled)
+    return tradingModes.every((tradingMode) => isTradingEnabled(tradingMode))
   }
 
   /**
@@ -145,12 +139,11 @@ export class TradingService {
    * ```
    */
   async getPoolTradabilityStatus(pool: Pool): Promise<PoolTradabilityStatus> {
-    const [rateFeedId, limits] = await Promise.all([
-      this.getPoolRateFeedId(pool),
+    const [[tradingMode], limits] = await Promise.all([
+      this.getTradingModesForPools([pool]),
       this.tradingLimitsService.getPoolTradingLimits(pool),
     ])
 
-    const tradingMode = await this.getRateFeedTradingMode(rateFeedId)
     const circuitBreakerOk = isTradingEnabled(tradingMode)
 
     // Limits are OK if no limits configured OR all limits have capacity
@@ -173,12 +166,77 @@ export class TradingService {
    * @returns The rate feed ID address
    */
   async getPoolRateFeedId(pool: Pool): Promise<string> {
-    const rateFeedId = await this.publicClient.readContract({
-      address: pool.poolAddr as `0x${string}`,
-      abi: FPMM_ABI,
-      functionName: 'referenceRateFeedID',
-    })
+    const [rateFeedId] = await this.getPoolRateFeedIds([pool])
+    return rateFeedId
+  }
 
-    return rateFeedId as string
+  private async getTradingModesForPools(pools: readonly Pool[]): Promise<number[]> {
+    const rateFeedIds = await this.getPoolRateFeedIds(pools)
+    return this.getTradingModesForRateFeeds(rateFeedIds)
+  }
+
+  private async getPoolRateFeedIds(pools: readonly Pool[]): Promise<string[]> {
+    if (pools.length === 0) {
+      return []
+    }
+
+    const results = await multicall(
+      this.publicClient,
+      pools.map((pool) => ({
+        address: pool.poolAddr as `0x${string}`,
+        abi: FPMM_ABI,
+        functionName: 'referenceRateFeedID',
+        args: [] as const,
+      })),
+      { allowFailure: false }
+    )
+
+    return results.map((result) => {
+      if (result.status === 'failure') {
+        throw result.error
+      }
+
+      return result.result as string
+    })
+  }
+
+  private async getTradingModesForRateFeeds(rateFeedIds: readonly string[]): Promise<number[]> {
+    if (rateFeedIds.length === 0) {
+      return []
+    }
+
+    const breakerBoxAddr = getContractAddress(this.chainId as ChainId, 'BreakerBox')
+    const uniqueRateFeeds = Array.from(
+      new Map(rateFeedIds.map((rateFeedId) => [rateFeedId.toLowerCase(), rateFeedId])).values()
+    )
+
+    const results = await multicall(
+      this.publicClient,
+      uniqueRateFeeds.map((rateFeedId) => ({
+        address: breakerBoxAddr as `0x${string}`,
+        abi: BREAKERBOX_ABI,
+        functionName: 'getRateFeedTradingMode',
+        args: [rateFeedId as `0x${string}`] as const,
+      })),
+      { allowFailure: false }
+    )
+
+    const tradingModes = new Map<string, number>()
+    for (const [index, result] of results.entries()) {
+      if (result.status === 'failure') {
+        throw result.error
+      }
+
+      tradingModes.set(uniqueRateFeeds[index].toLowerCase(), Number(result.result))
+    }
+
+    return rateFeedIds.map((rateFeedId) => {
+      const tradingMode = tradingModes.get(rateFeedId.toLowerCase())
+      if (tradingMode === undefined) {
+        throw new Error(`Trading mode not found for rate feed ${rateFeedId}`)
+      }
+
+      return tradingMode
+    })
   }
 }

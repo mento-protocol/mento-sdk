@@ -36,6 +36,32 @@ export const addresses: ContractAddressMap = {
     CDPLiquidityStrategy: '0x4e78BD9565341EAbe99cDC024acB044d9BDcB985',
   },
 
+  [ChainId.MONAD_TESTNET]: {
+    BreakerBox: '0x88869E30609D2C0E4032463D713328C6f541878e',
+    MedianDeltaBreaker: '0xf923C884F319b8866F67C5719A80E5cB4D0FAF2c',
+    SortedOracles: '0x85ed9ac57827132B8F60938F3165BC139E1F53cd',
+    ValueDeltaBreaker: '0xbbD0D093F5F11D16D4456FBd6229c9a3b70B8Aaf',
+    Reserve: '0xbCdc1D0b92DfceEaa0FcD0a0D53355F4bF1DB8a7',
+    StableToken: '0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc', // USDm
+    FPMMFactory: '0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980',
+    Router: '0xcf6cD45210b3ffE3cA28379C4683F1e60D0C2CCd',
+    ReserveLiquidityStrategy: '0x734bb3251Ec3f1A83f8f2A8609bcEF649D54EbF8',
+    OpenLiquidityStrategy: '0xCCd2aD0603a08EBc14D223a983171ef18192e8c9',
+  },
+
+  [ChainId.MONAD]: {
+    BreakerBox: '0x9fc1E0d10fb38954Da385B8B25aB2BbaF3241722',
+    MedianDeltaBreaker: '0x3E4F2Bca4f7192Be4C3c5E5bD4840F2E90a8Ba84',
+    SortedOracles: '0x6f92C745346057a61b259579256159458a0a6A92',
+    ValueDeltaBreaker: '0xca2e7563dfC30bc94687F3deAcF682E1dBAffA13',
+    Reserve: '0x4255Cf38e51516766180b33122029A88Cb853806',
+    StableToken: '0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115', // USDm
+    FPMMFactory: '0xa849b475FE5a4B5C9C3280152c7a1945b907613b',
+    Router: '0x4861840C2EfB2b98312B0aE34d86fD73E8f9B6f6',
+    ReserveLiquidityStrategy: '0xa0fB8b16ce6AF3634fF9F3f4F40E49E1C1ae4f0B',
+    OpenLiquidityStrategy: '0x54e2Ae8c8448912E17cE0b2453bAFB7B0D80E40f',
+  },
+
   [ChainId.CELO_SEPOLIA]: {
     // Oracles & Breakers
     BreakerBox: '0x578bD46003B9D3fd4c3C3f47c98B329562a6a1dE',
@@ -70,6 +96,18 @@ export const addresses: ContractAddressMap = {
 export type Identifier = keyof ContractAddresses
 
 /**
+ * Get the address of a contract for a given chain, returning undefined if not found.
+ * Use this when the contract may not be deployed on the target chain.
+ */
+export function tryGetContractAddress(chainId: ChainId, contractName: Identifier): string | undefined {
+  const addressesForChain = addresses[chainId]
+  if (!addressesForChain) {
+    return undefined
+  }
+  return addressesForChain[contractName]
+}
+
+/**
  * Get the address of a contract for a given chain
  * @param chainId - The chain ID
  * @param contractName - The contract name
@@ -77,12 +115,7 @@ export type Identifier = keyof ContractAddresses
  * @throws Error if the address is not found for the given chain
  */
 export function getContractAddress(chainId: ChainId, contractName: Identifier): string {
-  const addressesForChain = addresses[chainId]
-  if (!addressesForChain) {
-    throw new Error(`No addresses found for chain ID ${chainId}`)
-  }
-
-  const address = addressesForChain[contractName]
+  const address = tryGetContractAddress(chainId, contractName)
   if (!address) {
     throw new Error(`Address not found for contract ${contractName} on chain ID ${chainId}`)
   }

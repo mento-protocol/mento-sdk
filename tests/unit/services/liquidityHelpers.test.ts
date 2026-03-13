@@ -1,6 +1,7 @@
-import { Address, PublicClient } from 'viem'
+import { Address, PublicClient, decodeFunctionData } from 'viem'
 import { PoolService } from '../../../src/services/pools/PoolService'
 import { PoolType } from '../../../src/core/types'
+import { ERC20_ABI } from '../../../src/core/abis'
 import {
   calculateMinAmount,
   validatePoolTokens,
@@ -184,6 +185,7 @@ describe('Liquidity Helpers', () => {
 
   describe('buildApprovalParams', () => {
     const TOKEN = '0xaaaa000000000000000000000000000000000000' as Address
+    const SPENDER = '0x2222222222222222222222222222222222222222' as Address
     const AMOUNT = 1000000000000000000n
 
     it('should build valid approval params', () => {
@@ -218,12 +220,24 @@ describe('Liquidity Helpers', () => {
       expect(params).toHaveProperty('data')
       expect(params.data.startsWith('0x')).toBe(true)
     })
+
+    it('should encode a custom approval spender when provided', () => {
+      const params = buildApprovalParams(ChainId.CELO, TOKEN, AMOUNT, SPENDER)
+      const decoded = decodeFunctionData({
+        abi: ERC20_ABI,
+        data: params.data as `0x${string}`,
+      })
+
+      expect(decoded.functionName).toBe('approve')
+      expect(decoded.args).toEqual([SPENDER, AMOUNT])
+    })
   })
 
   describe('getAllowance', () => {
     let mockPublicClient: jest.Mocked<PublicClient>
     const TOKEN = '0xaaaa000000000000000000000000000000000000' as Address
     const OWNER = '0x1111111111111111111111111111111111111111' as Address
+    const SPENDER = '0x2222222222222222222222222222222222222222' as Address
 
     beforeEach(() => {
       mockPublicClient = {
@@ -269,6 +283,20 @@ describe('Liquidity Helpers', () => {
       await expect(
         getAllowance(mockPublicClient, TOKEN, OWNER, ChainId.CELO)
       ).rejects.toThrow('Contract call failed')
+    })
+
+    it('should query allowance with a custom spender when provided', async () => {
+      mockPublicClient.readContract.mockResolvedValue(123n)
+
+      await getAllowance(mockPublicClient, TOKEN, OWNER, ChainId.CELO, SPENDER)
+
+      expect(mockPublicClient.readContract).toHaveBeenCalledWith(
+        expect.objectContaining({
+          address: TOKEN,
+          functionName: 'allowance',
+          args: [OWNER, SPENDER],
+        })
+      )
     })
   })
 

@@ -3,6 +3,7 @@ import { PoolService } from '../pools'
 import { RouteService } from '../routes'
 import {
   LiquidityOptions,
+  PreparedZapOut,
   Route,
   RouteWithCost,
   ZapOutQuote,
@@ -18,15 +19,18 @@ import { encodeRoutePath, ReadonlyRouterRoutes, RouterRoute } from '../../utils/
 import { buildApprovalParams, getAllowance, calculateMinAmount, getPoolInfo } from './liquidityHelpers'
 import { encodeZapOutCall, findZapOutRoutes } from './zapHelpers'
 
-// ========== ZAP OUT OPERATIONS ==========
-
 const INSUFFICIENT_LIQUIDITY_SELECTOR = '0xbb55fd27'
 const MAX_ROUTE_CANDIDATES_PER_LEG = 8
 const MAX_ROUTE_COMBINATIONS = 48
+const ROUTE_SIMULATION_BATCH_SIZE = 6
 
-/**
- * Builds a complete zap out transaction including approval if needed
- */
+interface ZapOutPreparedContext {
+  routesA: RouterRoute[]
+  routesB: RouterRoute[]
+  quote: ZapOutQuote
+  details: ZapOutDetails
+}
+
 export async function buildZapOutTransactionInternal(
   publicClient: PublicClient,
   chainId: number,
@@ -39,10 +43,7 @@ export async function buildZapOutTransactionInternal(
   owner: string,
   options: LiquidityOptions
 ): Promise<ZapOutTransaction> {
-  validateAddress(owner, 'owner')
-
-  // Build zap out params
-  let zapOut = await buildZapOutParamsInternal(
+  const prepared = await prepareZapOutInternal(
     publicClient,
     chainId,
     poolService,
@@ -51,32 +52,119 @@ export async function buildZapOutTransactionInternal(
     tokenOut,
     liquidity,
     recipient,
+    owner,
     options
   )
 
-  // Check LP token allowance
-  const poolAddr = poolAddress as Address
-  const ownerAddr = owner as Address
-  const currentAllowance = await getAllowance(publicClient, poolAddr, ownerAddr, chainId)
+  return {
+    approval: prepared.approval ?? null,
+    zapOut: prepared.details,
+  }
+}
 
-  // Build approval if needed
-  const approval = currentAllowance < liquidity
-    ? { token: poolAddress, amount: liquidity, params: buildApprovalParams(chainId, poolAddr, liquidity) }
-    : null
+export async function buildZapOutParamsInternal(
+  publicClient: PublicClient,
+  chainId: number,
+  poolService: PoolService,
+  routeService: RouteService,
+  poolAddress: string,
+  tokenOut: string,
+  liquidity: bigint,
+  recipient: string,
+  options: LiquidityOptions
+): Promise<ZapOutDetails> {
+  const prepared = await prepareZapOutInternal(
+    publicClient,
+    chainId,
+    poolService,
+    routeService,
+    poolAddress,
+    tokenOut,
+    liquidity,
+    recipient,
+    undefined,
+    options
+  )
 
-  // We can only preflight/simulate a real zap call when approval is already sufficient.
-  // Before approval, transferFrom in zapOut() would fail and make simulation meaningless.
-  if (currentAllowance >= liquidity) {
+  return prepared.details
+}
+
+export async function quoteZapOutInternal(
+  publicClient: PublicClient,
+  chainId: number,
+  poolService: PoolService,
+  routeService: RouteService,
+  poolAddress: string,
+  tokenOut: string,
+  liquidity: bigint,
+  options: LiquidityOptions
+): Promise<ZapOutQuote> {
+  const prepared = await prepareZapOutInternal(
+    publicClient,
+    chainId,
+    poolService,
+    routeService,
+    poolAddress,
+    tokenOut,
+    liquidity,
+    tokenOut,
+    undefined,
+    options
+  )
+
+  return prepared.quote
+}
+
+export async function prepareZapOutInternal(
+  publicClient: PublicClient,
+  chainId: number,
+  poolService: PoolService,
+  routeService: RouteService,
+  poolAddress: string,
+  tokenOut: string,
+  liquidity: bigint,
+  recipient: string,
+  owner: string | undefined,
+  options: LiquidityOptions
+): Promise<PreparedZapOut> {
+  if (owner) {
+    validateAddress(owner, 'owner')
+  }
+
+  const [context, currentAllowance] = await Promise.all([
+    prepareZapOutContextInternal(
+      publicClient,
+      chainId,
+      poolService,
+      routeService,
+      poolAddress,
+      tokenOut,
+      liquidity,
+      recipient,
+      options
+    ),
+    owner ? getAllowance(publicClient, poolAddress as Address, owner as Address, chainId) : Promise.resolve<bigint | null>(null),
+  ])
+
+  let details = context.details
+  const approval = owner && currentAllowance !== null && currentAllowance < liquidity
+    ? { token: poolAddress, amount: liquidity, params: buildApprovalParams(chainId, poolAddress as Address, liquidity) }
+    : owner
+      ? null
+      : undefined
+
+  if (owner && currentAllowance !== null && currentAllowance >= liquidity) {
+    const ownerAddr = owner as Address
     const routerAddress = getContractAddress(chainId as ChainId, 'Router') as Address
+
     try {
-      await simulateZapOut(publicClient, ownerAddr, routerAddress, zapOut.params.data as Hex)
+      await simulateZapOut(publicClient, ownerAddr, routerAddress, details.params.data as Hex)
     } catch (error) {
-      // Only attempt route fallback for the known liquidity failure.
       if (!isInsufficientLiquidityError(error)) {
         throw error
       }
 
-      zapOut = await findViableZapOutDetails(
+      details = await findViableZapOutDetails(
         publicClient,
         chainId,
         poolService,
@@ -90,13 +178,22 @@ export async function buildZapOutTransactionInternal(
     }
   }
 
-  return { approval, zapOut }
+  return {
+    routesA: details.routesA,
+    routesB: details.routesB,
+    quote: {
+      amountOutFromA: details.zapParams.amountOutMinA,
+      amountOutFromB: details.zapParams.amountOutMinB,
+      amountAMin: details.zapParams.amountAMin,
+      amountBMin: details.zapParams.amountBMin,
+      estimatedMinTokenOut: details.estimatedMinTokenOut,
+    },
+    approval,
+    details,
+  }
 }
 
-/**
- * Builds zap out transaction parameters without checking approval
- */
-export async function buildZapOutParamsInternal(
+async function prepareZapOutContextInternal(
   publicClient: PublicClient,
   chainId: number,
   poolService: PoolService,
@@ -106,18 +203,14 @@ export async function buildZapOutParamsInternal(
   liquidity: bigint,
   recipient: string,
   options: LiquidityOptions
-): Promise<ZapOutDetails> {
+): Promise<ZapOutPreparedContext> {
   validateAddress(poolAddress, 'poolAddress')
   validateAddress(tokenOut, 'tokenOut')
   validateAddress(recipient, 'recipient')
 
-  // Get pool info
   const { token0, token1, factoryAddr } = await getPoolInfo(poolService, poolAddress)
-
-  // Find routes for swapping (from pool tokens to tokenOut)
   const { routesA, routesB } = await findZapOutRoutes(routeService, token0, token1, tokenOut)
-
-  return buildZapOutDetailsForRoutes(
+  const details = await buildZapOutDetailsForRoutes(
     publicClient,
     chainId,
     poolAddress,
@@ -130,46 +223,18 @@ export async function buildZapOutParamsInternal(
     routesB,
     options
   )
-}
-
-/**
- * Quotes a zap out operation (read-only)
- */
-export async function quoteZapOutInternal(
-  publicClient: PublicClient,
-  chainId: number,
-  poolService: PoolService,
-  routeService: RouteService,
-  poolAddress: string,
-  tokenOut: string,
-  liquidity: bigint,
-  options: LiquidityOptions
-): Promise<ZapOutQuote> {
-  validateAddress(poolAddress, 'poolAddress')
-  validateAddress(tokenOut, 'tokenOut')
-
-  const { token0, token1, factoryAddr } = await getPoolInfo(poolService, poolAddress)
-
-  // Find routes for swapping (from pool tokens to tokenOut)
-  const { routesA, routesB } = await findZapOutRoutes(routeService, token0, token1, tokenOut)
-
-  const routerAddress = getContractAddress(chainId as ChainId, 'Router')
-  const [amountOutMinA, amountOutMinB, amountAMin, amountBMin] = (await publicClient.readContract({
-    address: routerAddress as Address,
-    abi: ROUTER_ABI,
-    functionName: 'generateZapOutParams',
-    args: [token0, token1, factoryAddr, liquidity, routesA as ReadonlyRouterRoutes, routesB as ReadonlyRouterRoutes],
-  })) as [bigint, bigint, bigint, bigint]
-
-  const finalAmountOutFromA = calculateMinAmount(amountOutMinA, options.slippageTolerance)
-  const finalAmountOutFromB = calculateMinAmount(amountOutMinB, options.slippageTolerance)
 
   return {
-    amountOutFromA: finalAmountOutFromA,
-    amountOutFromB: finalAmountOutFromB,
-    amountAMin: calculateMinAmount(amountAMin, options.slippageTolerance),
-    amountBMin: calculateMinAmount(amountBMin, options.slippageTolerance),
-    estimatedMinTokenOut: finalAmountOutFromA + finalAmountOutFromB,
+    routesA,
+    routesB,
+    quote: {
+      amountOutFromA: details.zapParams.amountOutMinA,
+      amountOutFromB: details.zapParams.amountOutMinB,
+      amountAMin: details.zapParams.amountAMin,
+      amountBMin: details.zapParams.amountBMin,
+      estimatedMinTokenOut: details.estimatedMinTokenOut,
+    },
+    details,
   }
 }
 
@@ -240,42 +305,54 @@ async function findViableZapOutDetails(
 ): Promise<ZapOutDetails> {
   const { token0, token1, factoryAddr } = await getPoolInfo(poolService, poolAddress)
   const routerAddress = getContractAddress(chainId as ChainId, 'Router') as Address
+  const allRoutes = await routeService.getRoutes({ cached: false, returnAllRoutes: true })
+  const [routesAOptions, routesBOptions] = await Promise.all([
+    getEncodedRouteCandidates(routeService, token0, tokenOut, poolAddress, allRoutes),
+    getEncodedRouteCandidates(routeService, token1, tokenOut, poolAddress, allRoutes),
+  ])
 
-  const routesAOptions = await getEncodedRouteCandidates(routeService, token0, tokenOut, poolAddress)
-  const routesBOptions = await getEncodedRouteCandidates(routeService, token1, tokenOut, poolAddress)
-
-  let best: ZapOutDetails | null = null
-  let combinationsTried = 0
-
+  const routeCombinations: Array<{ routesA: RouterRoute[]; routesB: RouterRoute[] }> = []
   outer: for (const routesA of routesAOptions) {
     for (const routesB of routesBOptions) {
-      if (combinationsTried >= MAX_ROUTE_COMBINATIONS) {
+      routeCombinations.push({ routesA, routesB })
+      if (routeCombinations.length >= MAX_ROUTE_COMBINATIONS) {
         break outer
       }
-      combinationsTried += 1
+    }
+  }
 
-      try {
-        const candidate = await buildZapOutDetailsForRoutes(
-          publicClient,
-          chainId,
-          poolAddress,
-          tokenOut,
-          liquidity,
-          token0,
-          token1,
-          factoryAddr,
-          routesA,
-          routesB,
-          options
-        )
+  let best: ZapOutDetails | null = null
 
-        await simulateZapOut(publicClient, owner, routerAddress, candidate.params.data as Hex)
+  for (let index = 0; index < routeCombinations.length; index += ROUTE_SIMULATION_BATCH_SIZE) {
+    const batch = routeCombinations.slice(index, index + ROUTE_SIMULATION_BATCH_SIZE)
+    const candidates = await Promise.all(
+      batch.map(async ({ routesA, routesB }) => {
+        try {
+          const candidate = await buildZapOutDetailsForRoutes(
+            publicClient,
+            chainId,
+            poolAddress,
+            tokenOut,
+            liquidity,
+            token0,
+            token1,
+            factoryAddr,
+            routesA,
+            routesB,
+            options
+          )
 
-        if (!best || candidate.estimatedMinTokenOut > best.estimatedMinTokenOut) {
-          best = candidate
+          await simulateZapOut(publicClient, owner, routerAddress, candidate.params.data as Hex)
+          return candidate
+        } catch {
+          return null
         }
-      } catch {
-        // Ignore non-viable route combination and continue searching.
+      })
+    )
+
+    for (const candidate of candidates) {
+      if (candidate && (!best || candidate.estimatedMinTokenOut > best.estimatedMinTokenOut)) {
+        best = candidate
       }
     }
   }
@@ -291,7 +368,8 @@ async function getEncodedRouteCandidates(
   routeService: RouteService,
   tokenIn: string,
   tokenOut: string,
-  sourcePoolAddress: string
+  sourcePoolAddress: string,
+  allRoutes?: readonly (Route | RouteWithCost)[]
 ): Promise<RouterRoute[][]> {
   if (tokenIn.toLowerCase() === tokenOut.toLowerCase()) {
     return [[]]
@@ -299,16 +377,13 @@ async function getEncodedRouteCandidates(
 
   const rawCandidates: Array<Route | RouteWithCost> = []
 
-  // Include the SDK default first for consistency.
   try {
     rawCandidates.push(await routeService.findRoute(tokenIn, tokenOut))
   } catch {
-    // Continue; we'll try full route enumeration next.
+    // Continue; we'll try the broader route set next.
   }
 
-  // Build a broader candidate set for fallback route selection.
-  const allRoutes = await routeService.getRoutes({ cached: false, returnAllRoutes: true })
-  const pairCandidates = allRoutes.filter((route) => {
+  const pairCandidates = (allRoutes ?? await routeService.getRoutes({ cached: false, returnAllRoutes: true })).filter((route) => {
     const a0 = route.tokens[0].address.toLowerCase()
     const a1 = route.tokens[1].address.toLowerCase()
     const t0 = tokenIn.toLowerCase()
@@ -321,13 +396,12 @@ async function getEncodedRouteCandidates(
     throw new RouteNotFoundError(tokenIn, tokenOut)
   }
 
-  // Prioritize routes that avoid swapping through the same pool being zapped out.
-  rawCandidates.sort((a, b) => {
-    const aUsesSourcePool = routeUsesPool(a, sourcePoolAddress) ? 1 : 0
-    const bUsesSourcePool = routeUsesPool(b, sourcePoolAddress) ? 1 : 0
-    if (aUsesSourcePool !== bUsesSourcePool) return aUsesSourcePool - bUsesSourcePool
+  rawCandidates.sort((routeA, routeB) => {
+    const routeAUsesSourcePool = routeUsesPool(routeA, sourcePoolAddress) ? 1 : 0
+    const routeBUsesSourcePool = routeUsesPool(routeB, sourcePoolAddress) ? 1 : 0
+    if (routeAUsesSourcePool !== routeBUsesSourcePool) return routeAUsesSourcePool - routeBUsesSourcePool
 
-    if (a.path.length !== b.path.length) return a.path.length - b.path.length
+    if (routeA.path.length !== routeB.path.length) return routeA.path.length - routeB.path.length
     return 0
   })
 

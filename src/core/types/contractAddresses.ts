@@ -41,6 +41,7 @@ export type ContractAddresses = {
   Router?: string
   ReserveLiquidityStrategy?: string
   CDPLiquidityStrategy?: string
+  OpenLiquidityStrategy?: string
 }
 
 /**

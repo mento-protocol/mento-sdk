@@ -4,8 +4,13 @@ import { RouteService } from '../routes'
 import {
   AddLiquidityInput,
   RemoveLiquidityInput,
+  RebalanceDetails,
+  RebalanceInput,
+  RebalanceTransaction,
   ZapInInput,
   ZapOutInput,
+  PrepareZapInInput,
+  PrepareZapOutInput,
   AddLiquidityQuote,
   RemoveLiquidityQuote,
   AddLiquidityDetails,
@@ -13,13 +18,15 @@ import {
   AddLiquidityTransaction,
   RemoveLiquidityTransaction,
   LPTokenBalance,
+  LiquidityOptions,
+  PreparedZapIn,
+  PreparedZapOut,
   ZapInQuote,
   ZapOutQuote,
   ZapInDetails,
   ZapOutDetails,
   ZapInTransaction,
   ZapOutTransaction,
-  LiquidityOptions,
 } from '../../core/types'
 import {
   buildAddLiquidityTransactionInternal,
@@ -33,13 +40,19 @@ import {
 import {
   buildZapInTransactionInternal,
   buildZapInParamsInternal,
+  prepareZapInInternal,
   quoteZapInInternal,
 } from './zapIn'
 import {
   buildZapOutTransactionInternal,
   buildZapOutParamsInternal,
+  prepareZapOutInternal,
   quoteZapOutInternal,
 } from './zapOut'
+import {
+  buildRebalanceParamsInternal,
+  buildRebalanceTransactionInternal,
+} from './rebalance'
 
 export class LiquidityService {
   constructor(
@@ -233,6 +246,22 @@ export class LiquidityService {
     )
   }
 
+  async prepareZapIn(input: PrepareZapInInput): Promise<PreparedZapIn> {
+    return prepareZapInInternal(
+      this.publicClient,
+      this.chainId,
+      this.poolService,
+      this.routeService,
+      input.poolAddress,
+      input.tokenIn,
+      input.amountIn,
+      input.amountInSplit,
+      input.recipient,
+      input.owner,
+      input.options
+    )
+  }
+
   /**
    * Builds zap out transaction with approval if needed.
    * Removes liquidity and swaps both tokens to a single output token.
@@ -274,6 +303,21 @@ export class LiquidityService {
       input.tokenOut,
       input.liquidity,
       input.recipient,
+      input.options
+    )
+  }
+
+  async prepareZapOut(input: PrepareZapOutInput): Promise<PreparedZapOut> {
+    return prepareZapOutInternal(
+      this.publicClient,
+      this.chainId,
+      this.poolService,
+      this.routeService,
+      input.poolAddress,
+      input.tokenOut,
+      input.liquidity,
+      input.recipient,
+      input.owner,
       input.options
     )
   }
@@ -332,6 +376,40 @@ export class LiquidityService {
       tokenOut,
       liquidity,
       options
+    )
+  }
+
+  /**
+   * Builds rebalance transaction parameters without checking approval.
+   * Use buildRebalanceTransaction if you need approval handling.
+   * @param input - Rebalance parameters
+   * @returns Transaction details with encoded call data
+   */
+  async buildRebalanceParams(
+    input: RebalanceInput
+  ): Promise<RebalanceDetails> {
+    return buildRebalanceParamsInternal(
+      this.publicClient,
+      this.chainId,
+      this.poolService,
+      input.poolAddress
+    )
+  }
+
+  /**
+   * Builds a rebalance transaction with ERC20 approval if needed.
+   * @param input - Rebalance parameters including owner for allowance checks
+   * @returns Transaction with approval (if needed) and rebalance call
+   */
+  async buildRebalanceTransaction(
+    input: RebalanceInput & { owner: string }
+  ): Promise<RebalanceTransaction> {
+    return buildRebalanceTransactionInternal(
+      this.publicClient,
+      this.chainId,
+      this.poolService,
+      input.poolAddress,
+      input.owner
     )
   }
 }

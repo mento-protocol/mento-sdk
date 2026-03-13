@@ -1,7 +1,7 @@
 import { PoolService } from '../../../src/services/pools/PoolService'
 import type { Pool, FPMMPoolDetails, VirtualPoolDetails } from '../../../src/core/types/pool'
 import type { PublicClient } from 'viem'
-import { ChainId } from '../../../src/core/constants'
+import { addresses, ChainId } from '../../../src/core/constants'
 
 /**
  * Unit tests for PoolService
@@ -51,8 +51,21 @@ describe('PoolService', () => {
   ]
 
   beforeEach(() => {
+    const readContract = jest.fn()
     mockPublicClient = {
-      readContract: jest.fn(),
+      readContract,
+      multicall: jest.fn().mockImplementation(async ({ contracts }: { contracts: any[] }) => {
+        return Promise.all(
+          contracts.map(async (c: any) => {
+            try {
+              const result = await readContract(c)
+              return { status: 'success', result }
+            } catch (error) {
+              return { status: 'failure', error }
+            }
+          })
+        )
+      }),
     } as unknown as jest.Mocked<PublicClient>
 
     service = new PoolService(mockPublicClient, ChainId.CELO)
@@ -665,7 +678,7 @@ describe('PoolService', () => {
         expect(details.rebalancing.liquidityStrategy).toBeNull()
       })
 
-      it('should return the active liquidity strategy address', async () => {
+      it('should return null when only non-open liquidity strategies are active', async () => {
         mockPublicClient.readContract.mockImplementation(
           async ({ address, functionName, args }: any) => {
             if (functionName === 'deployedFPMMAddresses') return [mockFPMMPools[0].poolAddress]
@@ -692,10 +705,10 @@ describe('PoolService', () => {
 
         const details = await service.getPoolDetails(mockFPMMPools[0].poolAddress) as FPMMPoolDetails
 
-        expect(details.rebalancing.liquidityStrategy).toBe('0xa0fB8b16ce6AF3634fF9F3f4F40E49E1C1ae4f0B')
+        expect(details.rebalancing.liquidityStrategy).toBeNull()
       })
 
-      it('should return second strategy if first is inactive', async () => {
+      it('should still return null when a different non-open strategy is active', async () => {
         mockPublicClient.readContract.mockImplementation(
           async ({ address, functionName, args }: any) => {
             if (functionName === 'deployedFPMMAddresses') return [mockFPMMPools[0].poolAddress]
@@ -722,7 +735,79 @@ describe('PoolService', () => {
 
         const details = await service.getPoolDetails(mockFPMMPools[0].poolAddress) as FPMMPoolDetails
 
-        expect(details.rebalancing.liquidityStrategy).toBe('0x4e78BD9565341EAbe99cDC024acB044d9BDcB985')
+        expect(details.rebalancing.liquidityStrategy).toBeNull()
+      })
+
+      it('should detect OpenLiquidityStrategy when it is configured for the chain', async () => {
+        const openStrategy = '0x5555555555555555555555555555555555555555'
+        const originalOpenStrategy = addresses[ChainId.CELO].OpenLiquidityStrategy
+        addresses[ChainId.CELO].OpenLiquidityStrategy = openStrategy
+
+        mockPublicClient.readContract.mockImplementation(
+          async ({ functionName, args }: any) => {
+            if (functionName === 'deployedFPMMAddresses') return [mockFPMMPools[0].poolAddress]
+            if (functionName === 'token0') return mockFPMMPools[0].token0
+            if (functionName === 'token1') return mockFPMMPools[0].token1
+            if (functionName === 'getExchanges') return []
+            if (functionName === 'getReserves') return [3500000000000000000000n, 6400000000n, 1700000000n]
+            if (functionName === 'getRebalancingState') return [1830n, 1000n, 1832n, 1000n, true, 60, 12n]
+            if (functionName === 'decimals0') return 1000000000000000000n
+            if (functionName === 'decimals1') return 1000000n
+            if (functionName === 'lpFee') return 25n
+            if (functionName === 'protocolFee') return 5n
+            if (functionName === 'rebalanceIncentive') return 10n
+            if (functionName === 'rebalanceThresholdAbove') return 60n
+            if (functionName === 'rebalanceThresholdBelow') return 60n
+            if (functionName === 'liquidityStrategy') {
+              const [candidate] = args as [string]
+              return candidate === openStrategy
+            }
+            return null
+          }
+        )
+
+        try {
+          const details = await service.getPoolDetails(mockFPMMPools[0].poolAddress) as FPMMPoolDetails
+          expect(details.rebalancing.liquidityStrategy).toBe(openStrategy)
+        } finally {
+          addresses[ChainId.CELO].OpenLiquidityStrategy = originalOpenStrategy
+        }
+      })
+
+      it('should prefer OpenLiquidityStrategy even if other strategies are also active', async () => {
+        const openStrategy = '0x5555555555555555555555555555555555555555'
+        const originalOpenStrategy = addresses[ChainId.CELO].OpenLiquidityStrategy
+        addresses[ChainId.CELO].OpenLiquidityStrategy = openStrategy
+
+        mockPublicClient.readContract.mockImplementation(
+          async ({ functionName, args }: any) => {
+            if (functionName === 'deployedFPMMAddresses') return [mockFPMMPools[0].poolAddress]
+            if (functionName === 'token0') return mockFPMMPools[0].token0
+            if (functionName === 'token1') return mockFPMMPools[0].token1
+            if (functionName === 'getExchanges') return []
+            if (functionName === 'getReserves') return [3500000000000000000000n, 6400000000n, 1700000000n]
+            if (functionName === 'getRebalancingState') return [1830n, 1000n, 1832n, 1000n, true, 60, 12n]
+            if (functionName === 'decimals0') return 1000000000000000000n
+            if (functionName === 'decimals1') return 1000000n
+            if (functionName === 'lpFee') return 25n
+            if (functionName === 'protocolFee') return 5n
+            if (functionName === 'rebalanceIncentive') return 10n
+            if (functionName === 'rebalanceThresholdAbove') return 60n
+            if (functionName === 'rebalanceThresholdBelow') return 60n
+            if (functionName === 'liquidityStrategy') {
+              const [candidate] = args as [string]
+              return candidate === openStrategy
+            }
+            return null
+          }
+        )
+
+        try {
+          const details = await service.getPoolDetails(mockFPMMPools[0].poolAddress) as FPMMPoolDetails
+          expect(details.rebalancing.liquidityStrategy).toBe(openStrategy)
+        } finally {
+          addresses[ChainId.CELO].OpenLiquidityStrategy = originalOpenStrategy
+        }
       })
     })
 
@@ -908,7 +993,7 @@ describe('PoolService', () => {
         // getPoolDetails should not re-call discovery functions
         await service.getPoolDetails(mockFPMMPools[0].poolAddress)
 
-        // Should only have the 11 detail calls (9 data + 2 strategy checks), not repeated discovery calls
+        // Should only have the 9 detail calls (8 core reads + getRebalancingState) when OpenLiquidityStrategy is not configured.
         const detailCalls = mockPublicClient.readContract.mock.calls
           .slice(callsAfterGetPools)
           .filter(([params]: any) =>
@@ -917,7 +1002,7 @@ describe('PoolService', () => {
              'rebalanceThresholdBelow', 'liquidityStrategy'].includes(params.functionName)
           )
 
-        expect(detailCalls.length).toBe(11)
+        expect(detailCalls.length).toBe(9)
       })
     })
   })
@@ -962,6 +1047,83 @@ describe('PoolService', () => {
       const poolAddresses = pools.map((p) => p.poolAddr)
       const uniqueAddresses = new Set(poolAddresses)
       expect(uniqueAddresses.size).toBe(poolAddresses.length)
+    })
+  })
+
+  describe('getPoolDetailsBatch()', () => {
+    it('preserves input order for mixed FPMM and Virtual pools', async () => {
+      const fpmmPool = mockFPMMPools[0]
+      const virtualPool = mockVirtualPools[0]
+
+      mockPublicClient.readContract.mockImplementation(async ({ address, functionName }: any) => {
+        if (functionName === 'deployedFPMMAddresses') {
+          return [fpmmPool.poolAddress]
+        }
+        if (functionName === 'token0') {
+          return fpmmPool.token0
+        }
+        if (functionName === 'token1') {
+          return fpmmPool.token1
+        }
+        if (functionName === 'getAllPools') {
+          return [virtualPool]
+        }
+        if (functionName === 'getExchanges') {
+          return [mockExchanges[0]]
+        }
+        if (functionName === 'tokens') {
+          return [mockExchanges[0].assets[0], mockExchanges[0].assets[1]]
+        }
+        if (functionName === 'getReserves' && address === fpmmPool.poolAddress) {
+          return [1n, 2n, 3n]
+        }
+        if (functionName === 'decimals0') {
+          return 1n
+        }
+        if (functionName === 'decimals1') {
+          return 1n
+        }
+        if (functionName === 'lpFee') {
+          return 25n
+        }
+        if (functionName === 'protocolFee') {
+          return 5n
+        }
+        if (functionName === 'rebalanceIncentive') {
+          return 10n
+        }
+        if (functionName === 'rebalanceThresholdAbove') {
+          return 60n
+        }
+        if (functionName === 'rebalanceThresholdBelow') {
+          return 60n
+        }
+        if (functionName === 'liquidityStrategy') {
+          return false
+        }
+        if (functionName === 'getRebalancingState') {
+          return [1n, 1n, 1n, 1n, true, 60, 0n]
+        }
+        if (functionName === 'getReserves' && address === virtualPool) {
+          return [10n, 20n, 30n]
+        }
+        if (functionName === 'protocolFee') {
+          return 12n
+        }
+        if (functionName === 'metadata') {
+          return [18n, 6n, 0n, 0n, '', '']
+        }
+
+        return null
+      })
+
+      const details = await service.getPoolDetailsBatch([virtualPool, fpmmPool.poolAddress])
+
+      expect(details).toHaveLength(2)
+      expect(details[0].poolAddr).toBe(virtualPool)
+      expect(details[0].poolType).toBe('Virtual')
+      expect(details[1].poolAddr).toBe(fpmmPool.poolAddress)
+      expect(details[1].poolType).toBe('FPMM')
     })
   })
 })

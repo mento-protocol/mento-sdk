@@ -59,20 +59,17 @@ export async function findZapInRoutes(
   token0: string,
   token1: string
 ): Promise<{ routesA: RouterRoute[]; routesB: RouterRoute[] }> {
-  let routesA: RouterRoute[] = []
-  let routesB: RouterRoute[] = []
+  const [routeA, routeB] = await Promise.all([
+    tokenIn.toLowerCase() !== token0.toLowerCase()
+      ? routeService.findRoute(tokenIn, token0)
+      : Promise.resolve(null),
+    tokenIn.toLowerCase() !== token1.toLowerCase()
+      ? routeService.findRoute(tokenIn, token1)
+      : Promise.resolve(null),
+  ])
 
-  // Find route from tokenIn to token0 (if different)
-  if (tokenIn.toLowerCase() !== token0.toLowerCase()) {
-    const routeA = await routeService.findRoute(tokenIn, token0)
-    routesA = encodeRoutePath(routeA.path, tokenIn as Address, token0 as Address)
-  }
-
-  // Find route from tokenIn to token1 (if different)
-  if (tokenIn.toLowerCase() !== token1.toLowerCase()) {
-    const routeB = await routeService.findRoute(tokenIn, token1)
-    routesB = encodeRoutePath(routeB.path, tokenIn as Address, token1 as Address)
-  }
+  const routesA = routeA ? encodeRoutePath(routeA.path, tokenIn as Address, token0 as Address) : []
+  const routesB = routeB ? encodeRoutePath(routeB.path, tokenIn as Address, token1 as Address) : []
 
   return { routesA, routesB }
 }
@@ -92,20 +89,17 @@ export async function findZapOutRoutes(
   token1: string,
   tokenOut: string
 ): Promise<{ routesA: RouterRoute[]; routesB: RouterRoute[] }> {
-  let routesA: RouterRoute[] = []
-  let routesB: RouterRoute[] = []
+  const [routeA, routeB] = await Promise.all([
+    token0.toLowerCase() !== tokenOut.toLowerCase()
+      ? routeService.findRoute(token0, tokenOut)
+      : Promise.resolve(null),
+    token1.toLowerCase() !== tokenOut.toLowerCase()
+      ? routeService.findRoute(token1, tokenOut)
+      : Promise.resolve(null),
+  ])
 
-  // Find route from token0 to tokenOut (if different)
-  if (token0.toLowerCase() !== tokenOut.toLowerCase()) {
-    const routeA = await routeService.findRoute(token0, tokenOut)
-    routesA = encodeRoutePath(routeA.path, token0 as Address, tokenOut as Address)
-  }
-
-  // Find route from token1 to tokenOut (if different)
-  if (token1.toLowerCase() !== tokenOut.toLowerCase()) {
-    const routeB = await routeService.findRoute(token1, tokenOut)
-    routesB = encodeRoutePath(routeB.path, token1 as Address, tokenOut as Address)
-  }
+  const routesA = routeA ? encodeRoutePath(routeA.path, token0 as Address, tokenOut as Address) : []
+  const routesB = routeB ? encodeRoutePath(routeB.path, token1 as Address, tokenOut as Address) : []
 
   return { routesA, routesB }
 }

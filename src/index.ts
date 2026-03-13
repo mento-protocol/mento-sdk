@@ -12,6 +12,25 @@ import { TradingService } from './services/trading'
 import { LiquidityService } from './services/liquidity'
 import { BorrowService } from './services/borrow'
 
+export interface MentoBatchOptions {
+  batchSize?: number
+  wait?: number
+}
+
+export interface MentoClientOptions {
+  httpBatch?: MentoBatchOptions | false
+  multicallBatch?: MentoBatchOptions | false
+}
+
+const DEFAULT_HTTP_BATCH_OPTIONS: Required<MentoBatchOptions> = {
+  batchSize: 1000,
+  wait: 8,
+}
+
+const DEFAULT_MULTICALL_BATCH_OPTIONS: Required<MentoBatchOptions> = {
+  batchSize: 1024,
+  wait: 8,
+}
 
 /**
  * @class Mento
@@ -79,9 +98,20 @@ export class Mento {
    * @param chainId - The chain ID (e.g., ChainId.CELO, ChainId.CELO_SEPOLIA)
    * @param rpcUrlOrClient - Optional RPC URL string or an existing viem PublicClient.
    *                         If not provided, uses the default RPC URL for the chain.
+   * @param options - Optional batching configuration used only when the SDK creates the PublicClient internally.
    * @returns A new Mento instance
    */
-  public static async create(chainId: number, rpcUrlOrClient?: string | PublicClient): Promise<Mento> {
+  public static async create(chainId: number): Promise<Mento>
+  public static async create(
+    chainId: number,
+    rpcUrlOrClient: string | PublicClient,
+    options?: MentoClientOptions
+  ): Promise<Mento>
+  public static async create(
+    chainId: number,
+    rpcUrlOrClient?: string | PublicClient,
+    options?: MentoClientOptions
+  ): Promise<Mento> {
     // Validate chainId is supported
     const supportedChainIds = Object.values(ChainId).filter((v) => typeof v === 'number') as number[]
     if (!supportedChainIds.includes(chainId)) {
@@ -95,8 +125,23 @@ export class Mento {
     if (rpcUrlOrClient && typeof rpcUrlOrClient !== 'string') {
       publicClient = rpcUrlOrClient
     } else {
-      const transport = http(rpcUrlOrClient || getDefaultRpcUrl(chainId))
+      const transport = http(rpcUrlOrClient || getDefaultRpcUrl(chainId), {
+        batch: options?.httpBatch === false
+          ? false
+          : {
+              ...DEFAULT_HTTP_BATCH_OPTIONS,
+              ...(options?.httpBatch ?? {}),
+            },
+      })
       publicClient = createPublicClient({
+        batch: {
+          multicall: options?.multicallBatch === false
+            ? false
+            : {
+                ...DEFAULT_MULTICALL_BATCH_OPTIONS,
+                ...(options?.multicallBatch ?? {}),
+              },
+        },
         chain: getChainConfig(chainId),
         transport,
       })

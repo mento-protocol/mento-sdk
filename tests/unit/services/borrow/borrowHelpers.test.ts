@@ -15,6 +15,7 @@ describe('borrowHelpers', () => {
       const registryAddress = '0x1111111111111111111111111111111111111111'
       const mockPublicClient = {
         readContract: jest.fn(),
+        multicall: jest.fn(),
       } as unknown as jest.Mocked<PublicClient>
 
       const registryReads: Record<string, Address> = {
@@ -39,13 +40,9 @@ describe('borrowHelpers', () => {
         liquidityStrategy: '0x0000000000000000000000000000000000000023',
       }
 
-      mockPublicClient.readContract.mockImplementation(async ({ functionName }: any) => {
-        const value = registryReads[functionName]
-        if (!value) {
-          throw new Error(`Unexpected functionName: ${functionName}`)
-        }
-        return value
-      })
+      mockPublicClient.multicall.mockResolvedValue(
+        Object.values(registryReads)
+      )
 
       const result = await resolveAddressesFromRegistry(mockPublicClient, registryAddress)
 
@@ -71,14 +68,8 @@ describe('borrowHelpers', () => {
         liquidityStrategy: registryReads.liquidityStrategy,
       })
 
-      expect(mockPublicClient.readContract).toHaveBeenCalledTimes(19)
-      for (const [call] of mockPublicClient.readContract.mock.calls) {
-        expect(call).toEqual(
-          expect.objectContaining({
-            address: registryAddress,
-          })
-        )
-      }
+      expect(mockPublicClient.multicall).toHaveBeenCalledTimes(1)
+      expect(mockPublicClient.readContract).not.toHaveBeenCalled()
     })
   })
 
@@ -86,6 +77,7 @@ describe('borrowHelpers', () => {
     it('reads borrowerOperations.systemParams then loads all params from SystemParams', async () => {
       const mockPublicClient = {
         readContract: jest.fn(),
+        multicall: jest.fn(),
       } as unknown as jest.Mocked<PublicClient>
 
       const borrowerOperations = '0x00000000000000000000000000000000000000B0' as Address
@@ -96,29 +88,17 @@ describe('borrowHelpers', () => {
           return systemParamsAddress
         }
 
-        if (address !== systemParamsAddress) {
-          throw new Error(`Unexpected address: ${address}`)
-        }
-
-        switch (functionName) {
-          case 'CCR':
-            return 1_500_000_000_000_000_000n
-          case 'MCR':
-            return 1_100_000_000_000_000_000n
-          case 'SCR':
-            return 1_250_000_000_000_000_000n
-          case 'BCR':
-            return 200_000_000_000_000_000n
-          case 'MIN_DEBT':
-            return 1_800_000_000_000_000_000_000n
-          case 'ETH_GAS_COMPENSATION':
-            return 37_500_000_000_000_000n
-          case 'MIN_ANNUAL_INTEREST_RATE':
-            return 10_000_000_000_000_000n
-          default:
-            throw new Error(`Unexpected functionName: ${functionName}`)
-        }
+        throw new Error(`Unexpected address: ${address}`)
       })
+      mockPublicClient.multicall.mockResolvedValue([
+        1_500_000_000_000_000_000n,
+        1_100_000_000_000_000_000n,
+        1_250_000_000_000_000_000n,
+        200_000_000_000_000_000n,
+        1_800_000_000_000_000_000_000n,
+        37_500_000_000_000_000n,
+        10_000_000_000_000_000n,
+      ])
 
       const result = await readSystemParams(mockPublicClient, borrowerOperations)
 
@@ -133,13 +113,14 @@ describe('borrowHelpers', () => {
       })
 
       const readCalls = mockPublicClient.readContract.mock.calls.map(([args]) => args)
-      expect(readCalls).toHaveLength(8)
-      expect(
-        readCalls.some(
-          (call) => call.address === borrowerOperations && call.functionName === 'systemParams'
-        )
-      ).toBe(true)
-      expect(readCalls.filter((call) => call.address === systemParamsAddress)).toHaveLength(7)
+      expect(readCalls).toHaveLength(1)
+      expect(readCalls[0]).toEqual(
+        expect.objectContaining({
+          address: borrowerOperations,
+          functionName: 'systemParams',
+        })
+      )
+      expect(mockPublicClient.multicall).toHaveBeenCalledTimes(1)
     })
   })
 

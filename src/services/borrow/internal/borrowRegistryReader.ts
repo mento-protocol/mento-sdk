@@ -5,6 +5,7 @@ import {
   SYSTEM_PARAMS_ABI,
 } from '../../../core/abis'
 import { BorrowContractAddresses, SystemParams } from '../../../core/types'
+import { multicall } from '../../../utils/multicall'
 import { validateAddress } from '../../../utils/validation'
 
 type ReadNoArgsParams = {
@@ -23,6 +24,33 @@ function readNoArgsContract(
 ): Promise<unknown> {
   const readContract = publicClient.readContract as unknown as ReadNoArgsFn
   return readContract({ address, abi, functionName, args: [] })
+}
+
+async function readNoArgsContracts(
+  publicClient: PublicClient,
+  contracts: ReadNoArgsParams[]
+): Promise<unknown[]> {
+  if (contracts.length === 0) {
+    return []
+  }
+
+  const results = await multicall(
+    publicClient,
+    contracts.map((contract) => ({
+      ...contract,
+      abi: contract.abi as readonly unknown[],
+      args: [] as const,
+    })),
+    { allowFailure: false }
+  )
+
+  return results.map((result) => {
+    if (result.status === 'failure') {
+      throw result.error
+    }
+
+    return result.result
+  })
 }
 
 function requireAddress(value: unknown, fieldName: string): Address {
@@ -72,26 +100,26 @@ export async function resolveAddressesFromRegistry(
     gasTokenRaw,
     gasPoolAddressRaw,
     liquidityStrategyRaw,
-  ] = await Promise.all([
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'borrowerOperations'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'troveManager'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'sortedTroves'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'activePool'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'defaultPool'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'hintHelpers'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'multiTroveGetter'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'collToken'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'boldToken'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'troveNFT'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'metadataNFT'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'stabilityPool'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'priceFeed'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'collSurplusPool'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'interestRouter'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'collateralRegistry'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'gasToken'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'gasPoolAddress'),
-    readNoArgsContract(publicClient, registry, ADDRESSES_REGISTRY_ABI, 'liquidityStrategy'),
+  ] = await readNoArgsContracts(publicClient, [
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'borrowerOperations' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'troveManager' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'sortedTroves' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'activePool' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'defaultPool' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'hintHelpers' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'multiTroveGetter' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'collToken' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'boldToken' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'troveNFT' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'metadataNFT' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'stabilityPool' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'priceFeed' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'collSurplusPool' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'interestRouter' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'collateralRegistry' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'gasToken' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'gasPoolAddress' },
+    { address: registry, abi: ADDRESSES_REGISTRY_ABI, functionName: 'liquidityStrategy' },
   ])
 
   return {
@@ -140,24 +168,14 @@ export async function readSystemParams(
     minDebtRaw,
     ethGasCompensationRaw,
     minAnnualInterestRateRaw,
-  ] = await Promise.all([
-    readNoArgsContract(publicClient, systemParamsAddress, SYSTEM_PARAMS_ABI, 'CCR'),
-    readNoArgsContract(publicClient, systemParamsAddress, SYSTEM_PARAMS_ABI, 'MCR'),
-    readNoArgsContract(publicClient, systemParamsAddress, SYSTEM_PARAMS_ABI, 'SCR'),
-    readNoArgsContract(publicClient, systemParamsAddress, SYSTEM_PARAMS_ABI, 'BCR'),
-    readNoArgsContract(publicClient, systemParamsAddress, SYSTEM_PARAMS_ABI, 'MIN_DEBT'),
-    readNoArgsContract(
-      publicClient,
-      systemParamsAddress,
-      SYSTEM_PARAMS_ABI,
-      'ETH_GAS_COMPENSATION'
-    ),
-    readNoArgsContract(
-      publicClient,
-      systemParamsAddress,
-      SYSTEM_PARAMS_ABI,
-      'MIN_ANNUAL_INTEREST_RATE'
-    ),
+  ] = await readNoArgsContracts(publicClient, [
+    { address: systemParamsAddress, abi: SYSTEM_PARAMS_ABI, functionName: 'CCR' },
+    { address: systemParamsAddress, abi: SYSTEM_PARAMS_ABI, functionName: 'MCR' },
+    { address: systemParamsAddress, abi: SYSTEM_PARAMS_ABI, functionName: 'SCR' },
+    { address: systemParamsAddress, abi: SYSTEM_PARAMS_ABI, functionName: 'BCR' },
+    { address: systemParamsAddress, abi: SYSTEM_PARAMS_ABI, functionName: 'MIN_DEBT' },
+    { address: systemParamsAddress, abi: SYSTEM_PARAMS_ABI, functionName: 'ETH_GAS_COMPENSATION' },
+    { address: systemParamsAddress, abi: SYSTEM_PARAMS_ABI, functionName: 'MIN_ANNUAL_INTEREST_RATE' },
   ])
 
   return {

@@ -3,22 +3,30 @@ import { PoolService } from '../pools'
 import { RouteService } from '../routes'
 import {
   LiquidityOptions,
+  PreparedZapIn,
   ZapInQuote,
   ZapInDetails,
   ZapInTransaction,
   ZapParams,
 } from '../../core/types'
-import { ROUTER_ABI, ERC20_ABI } from '../../core/abis'
+import { ROUTER_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
 import { validateAddress } from '../../utils/validation'
 import { ReadonlyRouterRoutes } from '../../utils/pathEncoder'
-import { buildApprovalParams, getAllowance, calculateMinAmount, getPoolInfo } from './liquidityHelpers'
+import { buildApprovalParams, getAllowance, calculateMinAmount, getPoolInfo, getPoolSnapshot } from './liquidityHelpers'
 import {
   encodeZapInCall,
   findZapInRoutes,
   splitAmount,
   estimateLiquidityFromZapIn,
 } from './zapHelpers'
+
+interface ZapInPreparedContext {
+  routesA: ZapInDetails['routesA']
+  routesB: ZapInDetails['routesB']
+  quote: ZapInQuote
+  details: ZapInDetails
+}
 
 // ========== ZAP IN OPERATIONS ==========
 
@@ -38,10 +46,7 @@ export async function buildZapInTransactionInternal(
   owner: string,
   options: LiquidityOptions
 ): Promise<ZapInTransaction> {
-  validateAddress(owner, 'owner')
-
-  // Build zap in params
-  const zapIn = await buildZapInParamsInternal(
+  const prepared = await prepareZapInInternal(
     publicClient,
     chainId,
     poolService,
@@ -51,20 +56,14 @@ export async function buildZapInTransactionInternal(
     amountIn,
     amountInSplit,
     recipient,
+    owner,
     options
   )
 
-  // Check allowance for input token
-  const tokenInAddr = tokenIn as Address
-  const ownerAddr = owner as Address
-  const currentAllowance = await getAllowance(publicClient, tokenInAddr, ownerAddr, chainId)
-
-  // Build approval if needed
-  const approval = currentAllowance < amountIn
-    ? { token: tokenIn, amount: amountIn, params: buildApprovalParams(chainId, tokenInAddr, amountIn) }
-    : null
-
-  return { approval, zapIn }
+  return {
+    approval: prepared.approval ?? null,
+    zapIn: prepared.details,
+  }
 }
 
 /**
@@ -82,78 +81,21 @@ export async function buildZapInParamsInternal(
   recipient: string,
   options: LiquidityOptions
 ): Promise<ZapInDetails> {
-  validateAddress(poolAddress, 'poolAddress')
-  validateAddress(tokenIn, 'tokenIn')
-  validateAddress(recipient, 'recipient')
-
-  // Get pool info
-  const { token0, token1, factoryAddr } = await getPoolInfo(poolService, poolAddress)
-
-  // Split input amount
-  const { amountA: amountInA, amountB: amountInB } = splitAmount(amountIn, amountInSplit)
-
-  // Find routes for swapping
-  const { routesA, routesB } = await findZapInRoutes(routeService, tokenIn, token0, token1)
-
-  // Generate zap parameters using Router helper
-  const routerAddress = getContractAddress(chainId as ChainId, 'Router')
-  const [amountOutMinA, amountOutMinB, amountAMin, amountBMin] = (await publicClient.readContract({
-    address: routerAddress as Address,
-    abi: ROUTER_ABI,
-    functionName: 'generateZapInParams',
-    args: [token0, token1, factoryAddr, amountInA, amountInB, routesA as ReadonlyRouterRoutes, routesB as ReadonlyRouterRoutes],
-  })) as [bigint, bigint, bigint, bigint]
-
-  // Apply slippage to all minimum amounts
-  const finalAmountAMin = calculateMinAmount(amountAMin, options.slippageTolerance)
-  const finalAmountBMin = calculateMinAmount(amountBMin, options.slippageTolerance)
-  const finalAmountOutMinA = calculateMinAmount(amountOutMinA, options.slippageTolerance)
-  const finalAmountOutMinB = calculateMinAmount(amountOutMinB, options.slippageTolerance)
-
-  // Estimate expected liquidity
-  const poolDetails = await poolService.getPoolDetails(poolAddress)
-  const totalSupply = (await publicClient.readContract({
-    address: poolAddress as Address,
-    abi: ERC20_ABI,
-    functionName: 'totalSupply',
-    args: [],
-  })) as bigint
-  const expectedLiquidity = estimateLiquidityFromZapIn(
-    finalAmountOutMinA,
-    finalAmountOutMinB,
-    poolDetails.reserve0,
-    poolDetails.reserve1,
-    totalSupply
-  )
-
-  const zapParams: ZapParams = {
-    tokenA: token0,
-    tokenB: token1,
-    factory: factoryAddr,
-    amountAMin: finalAmountAMin,
-    amountBMin: finalAmountBMin,
-    amountOutMinA: finalAmountOutMinA,
-    amountOutMinB: finalAmountOutMinB,
-  }
-
-  const data = encodeZapInCall(tokenIn as Address, amountInA, amountInB, zapParams, routesA, routesB, recipient as Address)
-
-  return {
-    params: {
-      to: routerAddress,
-      data,
-      value: '0',
-    },
+  const prepared = await prepareZapInInternal(
+    publicClient,
+    chainId,
+    poolService,
+    routeService,
     poolAddress,
     tokenIn,
     amountIn,
-    amountInA,
-    amountInB,
-    routesA,
-    routesB,
-    zapParams,
-    estimatedMinLiquidity: expectedLiquidity,
-  }
+    amountInSplit,
+    recipient,
+    undefined,
+    options
+  )
+
+  return prepared.details
 }
 
 /**
@@ -170,12 +112,93 @@ export async function quoteZapInInternal(
   amountInSplit: number,
   options: LiquidityOptions
 ): Promise<ZapInQuote> {
+  const prepared = await prepareZapInInternal(
+    publicClient,
+    chainId,
+    poolService,
+    routeService,
+    poolAddress,
+    tokenIn,
+    amountIn,
+    amountInSplit,
+    tokenIn,
+    undefined,
+    options
+  )
+
+  return prepared.quote
+}
+
+export async function prepareZapInInternal(
+  publicClient: PublicClient,
+  chainId: number,
+  poolService: PoolService,
+  routeService: RouteService,
+  poolAddress: string,
+  tokenIn: string,
+  amountIn: bigint,
+  amountInSplit: number,
+  recipient: string,
+  owner: string | undefined,
+  options: LiquidityOptions
+): Promise<PreparedZapIn> {
+  if (owner) {
+    validateAddress(owner, 'owner')
+  }
+
+  const [context, currentAllowance] = await Promise.all([
+    prepareZapInContextInternal(
+      publicClient,
+      chainId,
+      poolService,
+      routeService,
+      poolAddress,
+      tokenIn,
+      amountIn,
+      amountInSplit,
+      recipient,
+      options
+    ),
+    owner ? getAllowance(publicClient, tokenIn as Address, owner as Address, chainId) : Promise.resolve<bigint | null>(null),
+  ])
+
+  const approval = owner && currentAllowance !== null && currentAllowance < amountIn
+    ? { token: tokenIn, amount: amountIn, params: buildApprovalParams(chainId, tokenIn as Address, amountIn) }
+    : owner
+      ? null
+      : undefined
+
+  return {
+    routesA: context.routesA,
+    routesB: context.routesB,
+    quote: context.quote,
+    approval,
+    details: context.details,
+  }
+}
+
+async function prepareZapInContextInternal(
+  publicClient: PublicClient,
+  chainId: number,
+  poolService: PoolService,
+  routeService: RouteService,
+  poolAddress: string,
+  tokenIn: string,
+  amountIn: bigint,
+  amountInSplit: number,
+  recipient: string,
+  options: LiquidityOptions
+): Promise<ZapInPreparedContext> {
   validateAddress(poolAddress, 'poolAddress')
   validateAddress(tokenIn, 'tokenIn')
+  validateAddress(recipient, 'recipient')
 
   const { token0, token1, factoryAddr } = await getPoolInfo(poolService, poolAddress)
   const { amountA: amountInA, amountB: amountInB } = splitAmount(amountIn, amountInSplit)
-  const { routesA, routesB } = await findZapInRoutes(routeService, tokenIn, token0, token1)
+  const [{ routesA, routesB }, poolSnapshot] = await Promise.all([
+    findZapInRoutes(routeService, tokenIn, token0, token1),
+    getPoolSnapshot(publicClient, poolAddress as Address),
+  ])
 
   const routerAddress = getContractAddress(chainId as ChainId, 'Router')
   const [amountOutMinA, amountOutMinB, amountAMin, amountBMin] = (await publicClient.readContract({
@@ -185,30 +208,58 @@ export async function quoteZapInInternal(
     args: [token0, token1, factoryAddr, amountInA, amountInB, routesA as ReadonlyRouterRoutes, routesB as ReadonlyRouterRoutes],
   })) as [bigint, bigint, bigint, bigint]
 
-  const poolDetails = await poolService.getPoolDetails(poolAddress)
-  const totalSupply = (await publicClient.readContract({
-    address: poolAddress as Address,
-    abi: ERC20_ABI,
-    functionName: 'totalSupply',
-    args: [],
-  })) as bigint
-
+  const finalAmountAMin = calculateMinAmount(amountAMin, options.slippageTolerance)
+  const finalAmountBMin = calculateMinAmount(amountBMin, options.slippageTolerance)
   const finalAmountOutMinA = calculateMinAmount(amountOutMinA, options.slippageTolerance)
   const finalAmountOutMinB = calculateMinAmount(amountOutMinB, options.slippageTolerance)
 
   const expectedLiquidity = estimateLiquidityFromZapIn(
     finalAmountOutMinA,
     finalAmountOutMinB,
-    poolDetails.reserve0,
-    poolDetails.reserve1,
-    totalSupply
+    poolSnapshot.reserve0,
+    poolSnapshot.reserve1,
+    poolSnapshot.totalSupply
   )
 
-  return {
+  const quote: ZapInQuote = {
     amountOutFromA: finalAmountOutMinA,
     amountOutFromB: finalAmountOutMinB,
-    amountAMin: calculateMinAmount(amountAMin, options.slippageTolerance),
-    amountBMin: calculateMinAmount(amountBMin, options.slippageTolerance),
+    amountAMin: finalAmountAMin,
+    amountBMin: finalAmountBMin,
     estimatedMinLiquidity: expectedLiquidity,
+  }
+
+  const zapParams: ZapParams = {
+    tokenA: token0,
+    tokenB: token1,
+    factory: factoryAddr,
+    amountAMin: finalAmountAMin,
+    amountBMin: finalAmountBMin,
+    amountOutMinA: finalAmountOutMinA,
+    amountOutMinB: finalAmountOutMinB,
+  }
+
+  const data = encodeZapInCall(tokenIn as Address, amountInA, amountInB, zapParams, routesA, routesB, recipient as Address)
+
+  return {
+    routesA,
+    routesB,
+    quote,
+    details: {
+      params: {
+        to: routerAddress,
+        data,
+        value: '0',
+      },
+      poolAddress,
+      tokenIn,
+      amountIn,
+      amountInA,
+      amountInB,
+      routesA,
+      routesB,
+      zapParams,
+      estimatedMinLiquidity: expectedLiquidity,
+    },
   }
 }

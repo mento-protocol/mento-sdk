@@ -1,13 +1,8 @@
 import 'dotenv/config'
 import { createPublicClient, http } from 'viem'
-import { celo } from 'viem/chains'
-import { defineChain } from 'viem'
 import type { Route, RouteWithCost } from '../../src/core/types'
-import {
-  buildConnectivityStructures,
-  generateAllRoutes,
-  selectOptimalRoutes,
-} from '../../src/utils/routeUtils'
+import { getChainConfig } from '../../src/utils/chainConfig'
+import { buildConnectivityStructures, generateAllRoutes, selectOptimalRoutes } from '../../src/utils/routeUtils'
 import { deduplicateRoutes } from '../shared/routeDeduplication'
 import { processRoutesInBatches } from './batchProcessor'
 import { parseCommandLineArgs, printUsageTips } from './cli'
@@ -16,34 +11,6 @@ import { generateConsolidatedContent, writeConsolidatedFile } from './fileGenera
 import { sortRoutesBySpread } from './spread'
 import { calculateStatistics, displayStatistics } from './statistics'
 import { PoolService, RouteService } from '../../src/services'
-
-const celoSepolia = defineChain({
-  id: 11142220,
-  name: 'Celo Sepolia',
-  nativeCurrency: {
-    name: 'CELO',
-    symbol: 'CELO',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://forno.celo-sepolia.celo-testnet.org'],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Celo Sepolia Explorer',
-      url: 'https://celo-sepolia.blockscout.com',
-    },
-  },
-  testnet: true,
-})
-
-// Map chain IDs to viem chain configs
-const chainConfigs = {
-  42220: celo,
-  11142220: celoSepolia,
-} as const
 
 /**
  * Generate all available routes (not just optimal)
@@ -70,16 +37,9 @@ async function getAllRoutes(routeService: RouteService): Promise<Route[]> {
 /**
  * Generate routes for a specific chain
  */
-async function generateRoutesForChain(
-  chainId: SupportedChainId,
-  batchSize = 10
-): Promise<RouteWithCost[]> {
+async function generateRoutesForChain(chainId: SupportedChainId, batchSize = 10): Promise<RouteWithCost[]> {
   const rpcUrl = rpcUrls[chainId]
-  const chain = chainConfigs[chainId]
-
-  if (!chain) {
-    throw new Error(`Unsupported chain ID: ${chainId}`)
-  }
+  const chain = getChainConfig(chainId)
 
   // Create viem PublicClient
   const publicClient = createPublicClient({
@@ -134,26 +94,18 @@ export async function main(): Promise<void> {
   const args = parseCommandLineArgs()
 
   // Determine which chain IDs to process
-  const chainIdsToProcess =
-    args.targetChainIds ||
-    (Object.keys(rpcUrls).map(Number) as SupportedChainId[])
+  const chainIdsToProcess = args.targetChainIds || (Object.keys(rpcUrls).map(Number) as SupportedChainId[])
 
   // Use configured batch size or default to 10
   const batchSize = args.batchSize || 10
 
-  console.log(
-    `Cache all available routes for chain(s): ${chainIdsToProcess.join(
-      ', '
-    )} (batch size: ${batchSize})`
-  )
+  console.log(`Cache all available routes for chain(s): ${chainIdsToProcess.join(', ')} (batch size: ${batchSize})`)
 
   // Generate routes for all chains
   const routesByChain: { [chainId: number]: RouteWithCost[] } = {}
 
   for (const chainId of chainIdsToProcess) {
-    console.log(
-      `\n\x1b[1mGenerating tradable pairs for chain ${chainId}...\x1b[0m`
-    )
+    console.log(`\n\x1b[1mGenerating tradable pairs for chain ${chainId}...\x1b[0m`)
     try {
       const routes = await generateRoutesForChain(chainId as SupportedChainId, batchSize)
       routesByChain[chainId] = routes
@@ -170,7 +122,9 @@ export async function main(): Promise<void> {
   const fileName = writeConsolidatedFile(content, __dirname)
 
   const totalRoutes = Object.values(routesByChain).reduce((sum, routes) => sum + routes.length, 0)
-  console.log(`\n✅ Successfully cached ${totalRoutes} routes across ${chainIdsToProcess.length} chains to src/cache/${fileName}`)
+  console.log(
+    `\n✅ Successfully cached ${totalRoutes} routes across ${chainIdsToProcess.length} chains to src/cache/${fileName}`
+  )
 
   console.log('\nAll done!')
 
