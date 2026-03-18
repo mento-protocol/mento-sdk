@@ -1,6 +1,8 @@
 import { createPublicClient, http } from 'viem'
 import { PoolService } from '../../../src/services/pools/PoolService'
 import { Pool, PoolType, FPMMPoolDetails, VirtualPoolDetails } from '../../../src/core/types'
+import { ChainId } from '../../../src/core/constants/chainId'
+import { getDefaultRpcUrl } from '../../../src/utils/chainConfig'
 
 /**
  * Integration tests for PoolService.getPoolDetails()
@@ -9,20 +11,52 @@ import { Pool, PoolType, FPMMPoolDetails, VirtualPoolDetails } from '../../../sr
  * - FPMM pools: pricing, fees, rebalancing state
  * - Virtual pools: reserves, spread
  *
+ * Tests are parameterised across all deployed chains to ensure
+ * coverage is not lost when new chains are added.
+ *
  * Requirements:
- * - RPC endpoint accessible (default: Celo mainnet via Forno)
+ * - RPC endpoint accessible (via env vars or default public RPCs)
  *
  * @group integration
  */
-describe('PoolService.getPoolDetails() Integration', () => {
-  const RPC_URL = process.env.CELO_RPC_URL || process.env.CELO_MAINNET_RPC_URL || 'https://forno.celo.org'
-  const CHAIN_ID = 42220 // Celo mainnet
+
+interface ChainTestConfig {
+  name: string
+  chainId: number
+  rpcEnvVar: string
+}
+
+const CHAIN_CONFIGS: ChainTestConfig[] = [
+  {
+    name: 'Celo Mainnet',
+    chainId: ChainId.CELO,
+    rpcEnvVar: 'CELO_RPC_URL',
+  },
+  {
+    name: 'Celo Sepolia',
+    chainId: ChainId.CELO_SEPOLIA,
+    rpcEnvVar: 'CELO_SEPOLIA_RPC_URL',
+  },
+  {
+    name: 'Monad Testnet',
+    chainId: ChainId.MONAD_TESTNET,
+    rpcEnvVar: 'MONAD_TESTNET_RPC_URL',
+  },
+  {
+    name: 'Monad',
+    chainId: ChainId.MONAD,
+    rpcEnvVar: 'MONAD_RPC_URL',
+  },
+]
+
+describe.each(CHAIN_CONFIGS)('PoolService.getPoolDetails() Integration - $name', ({ chainId, rpcEnvVar }) => {
+  const RPC_URL = process.env[rpcEnvVar] || getDefaultRpcUrl(chainId)
 
   const publicClient = createPublicClient({
     transport: http(RPC_URL),
   })
 
-  const poolService = new PoolService(publicClient, CHAIN_ID)
+  const poolService = new PoolService(publicClient, chainId)
 
   let pools: Pool[]
   let fpmmPool: Pool | undefined
@@ -172,7 +206,7 @@ describe('PoolService.getPoolDetails() Integration', () => {
   describe('Virtual pool details', () => {
     it('should return enriched Virtual pool details if any exist', async () => {
       if (!virtualPool) {
-        console.log('No Virtual pools found on chain - skipping Virtual pool detail tests')
+        console.log('No Virtual pools found on this chain - skipping Virtual pool detail tests')
         return
       }
 
