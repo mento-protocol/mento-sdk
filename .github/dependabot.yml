@@ -1,22 +1,67 @@
-# Dependabot configuration for automated dependency updates
-# See: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates
+ 
 version: 2
 updates:
-  # npm dependencies
-  - package-ecosystem: npm
-    directory: /
+  # ── npm dependencies ───────────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: weekly
+      interval: "monthly"
+      day: "monday"
+      time: "06:00"
+      timezone: "UTC"
+ 
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+      semver-minor-days: 7
+      semver-patch-days: 3
+ 
+    open-pull-requests-limit: 5
+ 
+    # Group updates to reduce PR noise
     groups:
-      dev-dependencies:
-        patterns:
-          - '*'
-        exclude-patterns:
-          - '@mento-protocol/*'
-          - viem
-
-  # GitHub Actions
-  - package-ecosystem: github-actions
-    directory: /
+      production-deps:
+        applies-to: version-updates
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+ 
+      dev-deps:
+        applies-to: version-updates
+        dependency-type: "development"
+ 
+    # Commit message prefix for easy filtering
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+ 
+    labels:
+      - "dependencies"
+ 
+  # ── GitHub Actions ─────────────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: weekly
+      interval: "monthly"
+      day: "monday"
+      time: "06:00"
+      timezone: "UTC"
+ 
+    cooldown:
+      default-days: 7
+ 
+    open-pull-requests-limit: 3
+ 
+    groups:
+      gh-actions:
+        applies-to: version-updates
+        patterns:
+          - "*"
+ 
+    commit-message:
+      prefix: "chore(ci)"
+ 
+    labels:
+      - "dependencies"
+      - "github_actions"
