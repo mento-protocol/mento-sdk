@@ -42,9 +42,19 @@ const CHAIN_CONFIGS: ChainTestConfig[] = [
     rpcEnvVar: 'CELO_RPC_URL',
   },
   {
+    name: 'Celo Sepolia',
+    chainId: ChainId.CELO_SEPOLIA,
+    rpcEnvVar: 'CELO_SEPOLIA_RPC_URL',
+  },
+  {
     name: 'Monad Testnet',
     chainId: ChainId.MONAD_TESTNET,
     rpcEnvVar: 'MONAD_TESTNET_RPC_URL',
+  },
+  {
+    name: 'Monad',
+    chainId: ChainId.MONAD,
+    rpcEnvVar: 'MONAD_RPC_URL',
   },
 ]
 
