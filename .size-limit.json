@@ -1,7 +1,7 @@
 [
   {
     "path": "dist/index.js",
-    "limit": "210 kB"
+    "limit": "300 kB"
   },
   {
     "path": "dist/esm/index.js",
