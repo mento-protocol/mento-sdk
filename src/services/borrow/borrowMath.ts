@@ -98,6 +98,14 @@ export function calculateDebtSuggestions(
   return suggestions
 }
 
+/**
+ * Computes collateralization metrics from the supplied collateral, debt, price, and MCR.
+ *
+ * This helper is lifecycle-agnostic: it does not inspect trove status. For example, a zombie
+ * trove with `debt === 0` may still hold collateral on-chain, but this function only reports
+ * the math implied by the inputs. Combine its output with `BorrowPosition.status` when building
+ * UI for open, zombie, closed, or liquidated troves.
+ */
 export function getLoanDetails(
   collateral: bigint | null,
   debt: bigint | null,

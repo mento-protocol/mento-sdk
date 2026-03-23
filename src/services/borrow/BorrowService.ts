@@ -79,8 +79,11 @@ export class BorrowService {
   }
 
   /**
-   * Builds a transaction to adjust a zombie trove (a trove that fell below minimum debt
-   * after a liquidation). Same parameters as `buildAdjustTroveTransaction`.
+   * Builds a transaction to adjust a zombie trove. Zombie troves are still-open troves whose
+   * debt fell below the branch minimum debt, typically after a redemption.
+   *
+   * Use this when `getTroveData()` or `getUserTroves()` returns `status === 'zombie'`.
+   * Same parameters as `buildAdjustTroveTransaction`.
    *
    * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
    * @param params - Adjustment parameters specifying collateral/debt changes
@@ -203,6 +206,8 @@ export class BorrowService {
 
   /**
    * Builds a transaction to claim collateral surplus after a liquidation.
+   * This is for collateral held in the surplus pool after `closedByLiquidation`.
+   * Zombie troves with remaining collateral should usually be closed or adjusted instead.
    *
    * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
    * @returns Transaction parameters ready to send
@@ -411,6 +416,8 @@ export class BorrowService {
 
   /**
    * Fetches on-chain data for a specific trove.
+   * The returned position reflects the trove's current lifecycle status, including
+   * zombie troves that may still hold collateral even when their debt is zero.
    *
    * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
    * @param troveId - The NFT token ID identifying the trove
@@ -422,6 +429,9 @@ export class BorrowService {
 
   /**
    * Fetches troves currently owned by an address via the Trove NFT.
+   * This includes zombie troves that have been removed from `SortedTroves` but are still owned
+   * by the address. Closed or liquidated troves are not returned once their Trove NFT is burned
+   * or transferred away.
    *
    * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
    * @param owner - Address to query troves for
