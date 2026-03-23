@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.1
+
+### Fixes
+
+- **Published package contents**: Rebuilt `dist` so the npm package includes `getOwnedTroveCount()` and `findNextAvailableOwnerIndex()`, which were missing from `3.2.0` due to stale build output.
+
 ## 3.2.0
 
 ### Improvements
