@@ -26,9 +26,11 @@ import { DeploymentContext } from './internal/borrowTypes'
  * ```typescript
  * const mento = await Mento.create(ChainId.CELO)
  *
+ * const ownerIndex = await mento.borrow.findNextAvailableOwnerIndex('GBPm', '0x...', '0x...')
+ *
  * // Open a trove
  * const tx = await mento.borrow.buildOpenTroveTransaction('GBPm', {
- *   owner: '0x...', ownerIndex: 0,
+ *   owner: '0x...', ownerIndex,
  *   collAmount: parseUnits('10', 18),
  *   boldAmount: parseUnits('1000', 18),
  *   annualInterestRate: parseUnits('0.05', 18),
@@ -419,11 +421,11 @@ export class BorrowService {
   }
 
   /**
-   * Fetches all troves owned by an address.
+   * Fetches troves currently owned by an address via the Trove NFT.
    *
    * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
    * @param owner - Address to query troves for
-   * @returns Array of trove positions owned by the address
+   * @returns Array of trove positions currently owned by the address
    */
   getUserTroves(debtTokenSymbol: string, owner: string): Promise<BorrowPosition[]> {
     return this.withContext(debtTokenSymbol, (ctx) => this.readService.getUserTroves(ctx, owner))
@@ -577,15 +579,48 @@ export class BorrowService {
   }
 
   /**
-   * Gets the next available owner index for opening a new trove.
-   * Each owner can have multiple troves, indexed starting from 0.
+   * Gets the current number of troves owned by an address via the Trove NFT.
    *
    * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
    * @param owner - Address of the trove owner
-   * @returns The next available index (pass to OpenTroveParams.ownerIndex)
+   * @returns The number of troves currently owned by the address
+   */
+  getOwnedTroveCount(debtTokenSymbol: string, owner: string): Promise<number> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getOwnedTroveCount(ctx, owner))
+  }
+
+  /**
+   * Finds the first safe owner index for opening a trove with the given transaction sender.
+   *
+   * The `opener` must be the address that will call BorrowerOperations on-chain.
+   * For smart accounts, pass the smart account address rather than the controlling EOA.
+   *
+   * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
+   * @param owner - Address that will own the trove NFT
+   * @param opener - Address that will submit the open-trove transaction on-chain
+   * @returns The first owner index that does not already map to an existing trove
+   */
+  findNextAvailableOwnerIndex(
+    debtTokenSymbol: string,
+    owner: string,
+    opener: string
+  ): Promise<number> {
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.readService.findNextAvailableOwnerIndex(ctx, owner, opener)
+    )
+  }
+
+  /**
+   * Gets the current number of troves owned by an address via the Trove NFT.
+   *
+   * @deprecated Use `findNextAvailableOwnerIndex` when preparing an open-trove transaction.
+   *
+   * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
+   * @param owner - Address of the trove owner
+   * @returns The number of troves currently owned by the address
    */
   getNextOwnerIndex(debtTokenSymbol: string, owner: string): Promise<number> {
-    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getNextOwnerIndex(ctx, owner))
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getOwnedTroveCount(ctx, owner))
   }
 
   private async withContext<T>(

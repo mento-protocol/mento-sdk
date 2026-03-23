@@ -15,11 +15,13 @@ import {
 } from '../../../../src/core/abis'
 import { ChainId, borrowRegistries } from '../../../../src/core/constants'
 import { BorrowService } from '../../../../src/services/borrow/BorrowService'
+import { deriveTroveId } from '../../../../src/services/borrow/internal/borrowValidation'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 // All-numeric hex avoids EIP-55 checksum issues in viem's encodeFunctionData
 const OWNER = '0x00000000000000000000000000000000000000AA' as Address
+const OTHER_OPENER = '0x00000000000000000000000000000000000000AC' as Address
 const SPENDER = '0x0000000000000000000000000000000000000077' as Address
 const BATCH_MANAGER = '0x0000000000000000000000000000000000000099' as Address
 const DELEGATE = '0x0000000000000000000000000000000000000088' as Address
@@ -165,6 +167,7 @@ function buildMockClient(
       if (functionName === 'getTroveAnnualInterestRate') return 100_000_000_000_000_000n
       if (functionName === 'getTroveIdsCount') return 0n
       if (functionName === 'getTroveFromTroveIdsArray') return BigInt(TROVE_ID)
+      if (functionName === 'getTroveStatus') return 0
       if (functionName === 'getLatestTroveData') return LATEST_TROVE_DATA
       if (functionName === 'Troves') return TROVES_DATA
       throw new Error(`Unexpected troveManager read: ${functionName}`)
@@ -713,6 +716,29 @@ describe('BorrowService – read methods', () => {
       const service = makeService()
       await expect(service.getUserTroves('GBPm', 'not-an-address')).rejects.toThrow()
     })
+
+    it('returns empty array without scanning trove ids when the owner currently holds no troves', async () => {
+      const mockPublicClient = buildMockClient({
+        [`${ADDRESSES.troveNFT}.balanceOf`]: 0n,
+      })
+      const service = new BorrowService(mockPublicClient, ChainId.CELO)
+
+      await expect(service.getUserTroves('GBPm', OWNER)).resolves.toEqual([])
+      expect(
+        mockPublicClient.readContract.mock.calls.some(
+          ([call]) => call.address === ADDRESSES.troveManager && call.functionName === 'getTroveIdsCount'
+        )
+      ).toBe(false)
+    })
+  })
+
+  describe('getOwnedTroveCount', () => {
+    it('returns the current Trove NFT balance', async () => {
+      const service = makeService()
+      const count = await service.getOwnedTroveCount('GBPm', OWNER)
+
+      expect(count).toBe(3)
+    })
   })
 
   describe('getCollateralPrice', () => {
@@ -878,7 +904,7 @@ describe('BorrowService – read methods', () => {
   })
 
   describe('getNextOwnerIndex', () => {
-    it('returns the current trove balance as the next available index', async () => {
+    it('returns the current trove balance as a deprecated alias of getOwnedTroveCount', async () => {
       const service = makeService()
       const index = await service.getNextOwnerIndex('GBPm', OWNER)
 
@@ -898,6 +924,62 @@ describe('BorrowService – read methods', () => {
       await expect(service.getNextOwnerIndex('GBPm', OWNER)).rejects.toThrow(
         'Owner trove count exceeds Number.MAX_SAFE_INTEGER'
       )
+    })
+  })
+
+  describe('findNextAvailableOwnerIndex', () => {
+    it('returns the current trove balance when the next derived trove id is unused', async () => {
+      const service = makeService()
+      const index = await service.findNextAvailableOwnerIndex('GBPm', OWNER, OWNER)
+
+      expect(index).toBe(3)
+    })
+
+    it('skips occupied indices including closed and liquidated troves', async () => {
+      const occupiedStatuses = new Map<string, number>([
+        [deriveTroveId(OWNER, OWNER, 3).toString(), 1],
+        [deriveTroveId(OWNER, OWNER, 4).toString(), 2],
+        [deriveTroveId(OWNER, OWNER, 5).toString(), 3],
+        [deriveTroveId(OWNER, OWNER, 6).toString(), 4],
+      ])
+      const service = makeService({
+        [`${ADDRESSES.troveManager}.getTroveStatus`]: ([troveId]: [bigint]) =>
+          occupiedStatuses.get(troveId.toString()) ?? 0,
+      })
+
+      await expect(service.findNextAvailableOwnerIndex('GBPm', OWNER, OWNER)).resolves.toBe(7)
+    })
+
+    it('derives trove ids using the opener address', async () => {
+      const occupiedStatuses = new Map<string, number>([
+        [deriveTroveId(OTHER_OPENER, OWNER, 3).toString(), 1],
+      ])
+      const service = makeService({
+        [`${ADDRESSES.troveManager}.getTroveStatus`]: ([troveId]: [bigint]) =>
+          occupiedStatuses.get(troveId.toString()) ?? 0,
+      })
+
+      await expect(service.findNextAvailableOwnerIndex('GBPm', OWNER, OTHER_OPENER)).resolves.toBe(4)
+    })
+
+    it('throws for invalid owner or opener address', async () => {
+      const service = makeService()
+      await expect(service.findNextAvailableOwnerIndex('GBPm', 'not-an-address', OWNER)).rejects.toThrow()
+      await expect(service.findNextAvailableOwnerIndex('GBPm', OWNER, 'not-an-address')).rejects.toThrow()
+    })
+
+    it('continues probing in batches when the first batch is fully occupied', async () => {
+      const occupiedStatuses = new Map<string, number>()
+      for (let ownerIndex = 3; ownerIndex < 67; ownerIndex++) {
+        occupiedStatuses.set(deriveTroveId(OWNER, OWNER, ownerIndex).toString(), 1)
+      }
+
+      const service = makeService({
+        [`${ADDRESSES.troveManager}.getTroveStatus`]: ([troveId]: [bigint]) =>
+          occupiedStatuses.get(troveId.toString()) ?? 0,
+      })
+
+      await expect(service.findNextAvailableOwnerIndex('GBPm', OWNER, OWNER)).resolves.toBe(67)
     })
   })
 

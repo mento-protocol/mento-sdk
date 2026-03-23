@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Improvements
+
+- **Borrow ownership helpers**: Added `getOwnedTroveCount()` and sender-aware `findNextAvailableOwnerIndex()` for safe trove opening. `getNextOwnerIndex()` is now a compatibility alias for current NFT-owned trove count, and borrow docs now clarify that `getUserTroves()` reflects current Trove NFT ownership.
+
 ## 3.0.0
 
 ### Breaking Changes

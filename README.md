@@ -137,15 +137,20 @@ const balance = await mento.liquidity.getLPTokenBalance(poolAddress, owner)
 ```typescript
 import { parseUnits } from 'viem'
 
+// Find a safe ownerIndex for the account that will submit the transaction
+const ownerIndex = await mento.borrow.findNextAvailableOwnerIndex('USDm', ownerAddress, ownerAddress)
+
 // Open a trove (borrow against collateral)
 const openTx = await mento.borrow.buildOpenTroveTransaction('USDm', {
   owner: ownerAddress,
-  ownerIndex: 0,
+  ownerIndex,
   collAmount: parseUnits('10', 18),
   boldAmount: parseUnits('1000', 18),
   annualInterestRate: parseUnits('0.05', 18), // 5%
   maxUpfrontFee: parseUnits('100', 18),
 })
+
+// For smart accounts, pass the smart account address as the third argument above.
 
 // Get trove data
 const trove = await mento.borrow.getTroveData('USDm', troveId)
