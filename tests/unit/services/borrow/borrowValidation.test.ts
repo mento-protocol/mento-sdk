@@ -3,6 +3,7 @@
  * These are pure functions and can be tested in isolation.
  */
 import {
+  deriveTroveId,
   ceilSqrt,
   formatTroveId,
   parseTroveId,
@@ -68,6 +69,40 @@ describe('borrowValidation', () => {
       expect(formatTroveId(255n)).toBe('0xff')
       expect(formatTroveId(0n)).toBe('0x0')
       expect(formatTroveId(12345n)).toBe(`0x${(12345n).toString(16)}`)
+    })
+  })
+
+  describe('deriveTroveId', () => {
+    it('derives the same trove id for the same opener, owner, and ownerIndex', () => {
+      const troveId = deriveTroveId(
+        '0x00000000000000000000000000000000000000AA',
+        '0x00000000000000000000000000000000000000BB',
+        7
+      )
+
+      expect(formatTroveId(troveId)).toBe(
+        '0x6de914153c1d031a206de366a358df9b1b497524226c231b7eef43928144da22'
+      )
+    })
+
+    it('throws for invalid addresses or ownerIndex', () => {
+      expect(() =>
+        deriveTroveId('not-an-address', '0x00000000000000000000000000000000000000BB', 0)
+      ).toThrow()
+      expect(() =>
+        deriveTroveId(
+          '0x00000000000000000000000000000000000000AA',
+          'not-an-address',
+          0
+        )
+      ).toThrow()
+      expect(() =>
+        deriveTroveId(
+          '0x00000000000000000000000000000000000000AA',
+          '0x00000000000000000000000000000000000000BB',
+          -1
+        )
+      ).toThrow('ownerIndex must be a non-negative safe integer')
     })
   })
 

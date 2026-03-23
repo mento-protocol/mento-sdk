@@ -1,8 +1,9 @@
-import { Address, zeroAddress } from 'viem'
+import { Address, encodeAbiParameters, getAddress, keccak256, parseAbiParameters, zeroAddress } from 'viem'
 import { validateAddress } from '../../../utils/validation'
 
 const UINT128_MAX = (1n << 128n) - 1n
 export const MAX_SAFE_INTEGER_BIGINT = BigInt(Number.MAX_SAFE_INTEGER)
+const TROVE_ID_PARAMETERS = parseAbiParameters('address opener, address owner, uint256 ownerIndex')
 
 export function requireDebtTokenSymbol(symbol: string): string {
   if (typeof symbol !== 'string' || symbol.trim().length === 0) {
@@ -42,6 +43,18 @@ export function parseTroveId(troveId: string): bigint {
 
 export function formatTroveId(troveId: bigint): string {
   return `0x${troveId.toString(16)}`
+}
+
+export function deriveTroveId(opener: string, owner: string, ownerIndex: number): bigint {
+  const openerAddress = getAddress(requireAddress(opener, 'opener'))
+  const ownerAddress = getAddress(requireAddress(owner, 'owner'))
+  const validatedOwnerIndex = requireNonNegativeInteger(ownerIndex, 'ownerIndex')
+
+  return BigInt(
+    keccak256(
+      encodeAbiParameters(TROVE_ID_PARAMETERS, [openerAddress, ownerAddress, BigInt(validatedOwnerIndex)])
+    )
+  )
 }
 
 export function requireNonNegativeInteger(value: number, fieldName: string): number {

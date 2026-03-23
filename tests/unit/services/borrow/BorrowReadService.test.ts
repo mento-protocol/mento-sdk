@@ -44,7 +44,12 @@ describe('BorrowReadService', () => {
 
   beforeEach(() => {
     mockPublicClient = {
-      readContract: jest.fn().mockImplementation(async ({ functionName }: any) => {
+      readContract: jest.fn().mockImplementation(async ({ functionName, args }: any) => {
+        if (functionName === 'balanceOf') {
+          expect(args).toEqual([owner])
+          return 1n
+        }
+
         if (functionName === 'getTroveIdsCount') {
           return 2n
         }
@@ -108,7 +113,21 @@ describe('BorrowReadService', () => {
         status: 'active',
       })
     )
-    expect(mockPublicClient.readContract).toHaveBeenCalledTimes(1)
+    expect(mockPublicClient.readContract).toHaveBeenCalledTimes(2)
     expect(mockPublicClient.multicall).toHaveBeenCalledTimes(3)
+  })
+
+  it('returns empty array without scanning global troves when the owner holds no troves', async () => {
+    mockPublicClient.readContract.mockImplementation(async ({ functionName, args }: any) => {
+      if (functionName === 'balanceOf') {
+        expect(args).toEqual([owner])
+        return 0n
+      }
+
+      throw new Error(`Unexpected readContract call: ${functionName}`)
+    })
+
+    await expect(service.getUserTroves(ctx, owner)).resolves.toEqual([])
+    expect(mockPublicClient.multicall).not.toHaveBeenCalled()
   })
 })

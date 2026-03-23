@@ -26,9 +26,11 @@ import { DeploymentContext } from './internal/borrowTypes'
  * ```typescript
  * const mento = await Mento.create(ChainId.CELO)
  *
+ * const ownerIndex = await mento.borrow.findNextAvailableOwnerIndex('GBPm', '0x...', '0x...')
+ *
  * // Open a trove
  * const tx = await mento.borrow.buildOpenTroveTransaction('GBPm', {
- *   owner: '0x...', ownerIndex: 0,
+ *   owner: '0x...', ownerIndex,
  *   collAmount: parseUnits('10', 18),
  *   boldAmount: parseUnits('1000', 18),
  *   annualInterestRate: parseUnits('0.05', 18),
@@ -77,8 +79,11 @@ export class BorrowService {
   }
 
   /**
-   * Builds a transaction to adjust a zombie trove (a trove that fell below minimum debt
-   * after a liquidation). Same parameters as `buildAdjustTroveTransaction`.
+   * Builds a transaction to adjust a zombie trove. Zombie troves are still-open troves whose
+   * debt fell below the branch minimum debt, typically after a redemption.
+   *
+   * Use this when `getTroveData()` or `getUserTroves()` returns `status === 'zombie'`.
+   * Same parameters as `buildAdjustTroveTransaction`.
    *
    * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
    * @param params - Adjustment parameters specifying collateral/debt changes
@@ -201,6 +206,8 @@ export class BorrowService {
 
   /**
    * Builds a transaction to claim collateral surplus after a liquidation.
+   * This is for collateral held in the surplus pool after `closedByLiquidation`.
+   * Zombie troves with remaining collateral should usually be closed or adjusted instead.
    *
    * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
    * @returns Transaction parameters ready to send
@@ -409,6 +416,8 @@ export class BorrowService {
 
   /**
    * Fetches on-chain data for a specific trove.
+   * The returned position reflects the trove's current lifecycle status, including
+   * zombie troves that may still hold collateral even when their debt is zero.
    *
    * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
    * @param troveId - The NFT token ID identifying the trove
@@ -419,11 +428,14 @@ export class BorrowService {
   }
 
   /**
-   * Fetches all troves owned by an address.
+   * Fetches troves currently owned by an address via the Trove NFT.
+   * This includes zombie troves that have been removed from `SortedTroves` but are still owned
+   * by the address. Closed or liquidated troves are not returned once their Trove NFT is burned
+   * or transferred away.
    *
    * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
    * @param owner - Address to query troves for
-   * @returns Array of trove positions owned by the address
+   * @returns Array of trove positions currently owned by the address
    */
   getUserTroves(debtTokenSymbol: string, owner: string): Promise<BorrowPosition[]> {
     return this.withContext(debtTokenSymbol, (ctx) => this.readService.getUserTroves(ctx, owner))
@@ -577,15 +589,48 @@ export class BorrowService {
   }
 
   /**
-   * Gets the next available owner index for opening a new trove.
-   * Each owner can have multiple troves, indexed starting from 0.
+   * Gets the current number of troves owned by an address via the Trove NFT.
    *
    * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
    * @param owner - Address of the trove owner
-   * @returns The next available index (pass to OpenTroveParams.ownerIndex)
+   * @returns The number of troves currently owned by the address
+   */
+  getOwnedTroveCount(debtTokenSymbol: string, owner: string): Promise<number> {
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getOwnedTroveCount(ctx, owner))
+  }
+
+  /**
+   * Finds the first safe owner index for opening a trove with the given transaction sender.
+   *
+   * The `opener` must be the address that will call BorrowerOperations on-chain.
+   * For smart accounts, pass the smart account address rather than the controlling EOA.
+   *
+   * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
+   * @param owner - Address that will own the trove NFT
+   * @param opener - Address that will submit the open-trove transaction on-chain
+   * @returns The first owner index that does not already map to an existing trove
+   */
+  findNextAvailableOwnerIndex(
+    debtTokenSymbol: string,
+    owner: string,
+    opener: string
+  ): Promise<number> {
+    return this.withContext(debtTokenSymbol, (ctx) =>
+      this.readService.findNextAvailableOwnerIndex(ctx, owner, opener)
+    )
+  }
+
+  /**
+   * Gets the current number of troves owned by an address via the Trove NFT.
+   *
+   * @deprecated Use `findNextAvailableOwnerIndex` when preparing an open-trove transaction.
+   *
+   * @param debtTokenSymbol - The debt token symbol (e.g., 'GBPm')
+   * @param owner - Address of the trove owner
+   * @returns The number of troves currently owned by the address
    */
   getNextOwnerIndex(debtTokenSymbol: string, owner: string): Promise<number> {
-    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getNextOwnerIndex(ctx, owner))
+    return this.withContext(debtTokenSymbol, (ctx) => this.readService.getOwnedTroveCount(ctx, owner))
   }
 
   private async withContext<T>(

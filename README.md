@@ -137,18 +137,33 @@ const balance = await mento.liquidity.getLPTokenBalance(poolAddress, owner)
 ```typescript
 import { parseUnits } from 'viem'
 
+// Find a safe ownerIndex for the account that will submit the transaction
+const ownerIndex = await mento.borrow.findNextAvailableOwnerIndex('USDm', ownerAddress, ownerAddress)
+
 // Open a trove (borrow against collateral)
 const openTx = await mento.borrow.buildOpenTroveTransaction('USDm', {
   owner: ownerAddress,
-  ownerIndex: 0,
+  ownerIndex,
   collAmount: parseUnits('10', 18),
   boldAmount: parseUnits('1000', 18),
   annualInterestRate: parseUnits('0.05', 18), // 5%
   maxUpfrontFee: parseUnits('100', 18),
 })
 
+// For smart accounts, pass the smart account address as the third argument above.
+
 // Get trove data
 const trove = await mento.borrow.getTroveData('USDm', troveId)
+
+// Get troves currently owned by an address via the Trove NFT
+const troves = await mento.borrow.getUserTroves('USDm', ownerAddress)
+
+// Zombie troves are still-open troves whose debt fell below the branch minimum debt,
+// typically after redemption. They can still hold collateral, and may even have 0 debt.
+if (trove.status === 'zombie') {
+  // Reactivate by adjusting the zombie trove, or close it to withdraw remaining collateral.
+  const closeTx = await mento.borrow.buildCloseTroveTransaction('USDm', trove.troveId)
+}
 
 // Get system parameters
 const params = await mento.borrow.getSystemParams('USDm')
@@ -160,6 +175,12 @@ const fee = await mento.borrow.predictOpenTroveUpfrontFee(
   parseUnits('0.05', 18)
 )
 ```
+
+Notes:
+
+- `getUserTroves()` reflects current Trove NFT ownership. It includes zombie troves still owned by the address, even though zombie troves are removed from `SortedTroves`.
+- `status === 'zombie'` does not mean liquidated. Zombie troves can still exist with collateral remaining on-chain, including the case where `debt === 0`.
+- Use `buildClaimCollateralTransaction()` for collateral surplus after liquidation. For zombie troves with remaining collateral, use `buildCloseTroveTransaction()` to withdraw it, or `buildAdjustZombieTroveTransaction()` to reactivate the trove.
 
 ## Supported Chains
 

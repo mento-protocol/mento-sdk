@@ -13,6 +13,7 @@ import { multicall } from '../../../utils/multicall'
 import { parseBorrowPosition } from './borrowPositionParser'
 import { DebtPerInterestRateItem, DeploymentContext, InterestBatchManagerData } from './borrowTypes'
 import {
+  deriveTroveId,
   formatTroveId,
   MAX_SAFE_INTEGER_BIGINT,
   parseTroveId,
@@ -23,6 +24,7 @@ import {
 const TROVE_ID_BATCH_SIZE = 64
 const TROVE_OWNER_BATCH_SIZE = 64
 const TROVE_DETAIL_BATCH_SIZE = 64
+const OWNER_INDEX_PROBE_BATCH_SIZE = 64
 
 type BorrowReadContract = {
   address: Address
@@ -60,6 +62,11 @@ export class BorrowReadService {
 
   async getUserTroves(ctx: DeploymentContext, owner: string): Promise<BorrowPosition[]> {
     const ownerAddress = requireAddress(owner, 'owner')
+    const ownedTroveCount = await this.getOwnedTroveCount(ctx, ownerAddress)
+
+    if (ownedTroveCount === 0) {
+      return []
+    }
 
     const troveCount = (await this.publicClient.readContract({
       address: ctx.addresses.troveManager as Address,
@@ -298,7 +305,7 @@ export class BorrowReadService {
     })) as bigint
   }
 
-  async getNextOwnerIndex(ctx: DeploymentContext, owner: string): Promise<number> {
+  async getOwnedTroveCount(ctx: DeploymentContext, owner: string): Promise<number> {
     const ownerAddress = requireAddress(owner, 'owner')
 
     const ownerTroveCount = (await this.publicClient.readContract({
@@ -313,6 +320,49 @@ export class BorrowReadService {
     }
 
     return Number(ownerTroveCount)
+  }
+
+  async findNextAvailableOwnerIndex(
+    ctx: DeploymentContext,
+    owner: string,
+    opener: string
+  ): Promise<number> {
+    const ownerAddress = requireAddress(owner, 'owner')
+    const openerAddress = requireAddress(opener, 'opener')
+
+    let candidateIndex = await this.getOwnedTroveCount(ctx, ownerAddress)
+
+    while (candidateIndex <= Number.MAX_SAFE_INTEGER) {
+      const batchIndices = Array.from(
+        { length: Math.min(OWNER_INDEX_PROBE_BATCH_SIZE, Number.MAX_SAFE_INTEGER - candidateIndex + 1) },
+        (_, offset) => candidateIndex + offset
+      )
+
+      const statusContracts = batchIndices.map((ownerIndex) => ({
+        address: ctx.addresses.troveManager as Address,
+        abi: TROVE_MANAGER_ABI,
+        functionName: 'getTroveStatus',
+        args: [deriveTroveId(openerAddress, ownerAddress, ownerIndex)],
+      }))
+
+      const statuses = await this.readContractsInChunks<number | bigint>(
+        statusContracts,
+        OWNER_INDEX_PROBE_BATCH_SIZE
+      )
+
+      const availableOffset = statuses.findIndex((status) => status === 0 || status === 0n)
+      if (availableOffset !== -1) {
+        return batchIndices[availableOffset]
+      }
+
+      candidateIndex += batchIndices.length
+    }
+
+    throw new Error('Next available owner index exceeds Number.MAX_SAFE_INTEGER')
+  }
+
+  async getNextOwnerIndex(ctx: DeploymentContext, owner: string): Promise<number> {
+    return this.getOwnedTroveCount(ctx, owner)
   }
 
   private async readContractsInChunks<T = unknown>(
