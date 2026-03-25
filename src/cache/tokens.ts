@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-03-11T16:57:52.465Z
+// Generated on 2026-03-25T12:09:19.504Z
 
 import type { Token } from '../core/types'
 
@@ -13,6 +13,7 @@ export enum TokenSymbol {
   CADm = 'CADm',
   CHFm = 'CHFm',
   COPm = 'COPm',
+  EURm = 'EURm',
   GBPm = 'GBPm',
   GHSm = 'GHSm',
   JPYm = 'JPYm',
@@ -20,6 +21,7 @@ export enum TokenSymbol {
   NGNm = 'NGNm',
   PHPm = 'PHPm',
   USDC = 'USDC',
+  USDT0 = 'USDT0',
   USDm = 'USDm',
   USD_ = 'USD₮',
   XOFm = 'XOFm',
@@ -83,6 +85,18 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       symbol: TokenSymbol.AUSD,
       name: 'Mento Mock AUSD',
       decimals: 6,
+    },
+    {
+      address: '0xC304EE1876c32d1A194558B1000bE4842F960dF9',
+      symbol: TokenSymbol.USDT0,
+      name: 'Mento Mock USDT0',
+      decimals: 6,
+    },
+    {
+      address: '0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0',
+      symbol: TokenSymbol.EURm,
+      name: 'Mento Euro',
+      decimals: 18,
     }
   ],
   // Chain 42220
@@ -315,6 +329,8 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.USDm]: '0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc',
     [TokenSymbol.USDC]: '0x534b2f3A21130d7a60830c2Df862319e593943A3',
     [TokenSymbol.AUSD]: '0x502E67D3fE9302A5e4Ec1CFCDdbD6F34F9B9484B',
+    [TokenSymbol.USDT0]: '0xC304EE1876c32d1A194558B1000bE4842F960dF9',
+    [TokenSymbol.EURm]: '0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0',
   },
   42220: {
     [TokenSymbol.GBPm]: '0xCCF663b1fF11028f0b19058d0f7B674004a40746',
