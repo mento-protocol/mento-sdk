@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-03-25T12:09:19.504Z
+// Generated on 2026-03-27T15:47:10.494Z
 
 import type { Token } from '../core/types'
 
@@ -26,6 +26,7 @@ export enum TokenSymbol {
   USD_ = 'USD₮',
   XOFm = 'XOFm',
   ZARm = 'ZARm',
+  axlEUROC = 'axlEUROC',
   axlUSDC = 'axlUSDC',
 }
 
@@ -129,6 +130,18 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       address: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
       symbol: TokenSymbol.USD_,
       name: 'Tether USD',
+      decimals: 6,
+    },
+    {
+      address: '0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73',
+      symbol: TokenSymbol.EURm,
+      name: 'Mento Euro',
+      decimals: 18,
+    },
+    {
+      address: '0x061cc5a2C863E0C1Cb404006D559dB18A34C762d',
+      symbol: TokenSymbol.axlEUROC,
+      name: 'Axelar Wrapped EUROC',
       decimals: 6,
     },
     {
@@ -237,6 +250,18 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       decimals: 6,
     },
     {
+      address: '0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a',
+      symbol: TokenSymbol.EURm,
+      name: 'Mento Euro',
+      decimals: 18,
+    },
+    {
+      address: '0x9883d788d40F1C7595a780ed881Ea833C7743B4B',
+      symbol: TokenSymbol.axlEUROC,
+      name: 'Mento Mock axlEUROC',
+      decimals: 18,
+    },
+    {
       address: '0x0352976d940a2C3FBa0C3623198947Ee1d17869E',
       symbol: TokenSymbol.PHPm,
       name: 'Mento Philippine Peso',
@@ -338,6 +363,8 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.axlUSDC]: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
     [TokenSymbol.USDC]: '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
     [TokenSymbol.USD_]: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
+    [TokenSymbol.EURm]: '0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73',
+    [TokenSymbol.axlEUROC]: '0x061cc5a2C863E0C1Cb404006D559dB18A34C762d',
     [TokenSymbol.GHSm]: '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
     [TokenSymbol.ZARm]: '0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6',
     [TokenSymbol.AUDm]: '0x7175504C455076F15c04A2F90a8e352281F492F9',
@@ -357,6 +384,8 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.axlUSDC]: '0x6285De9DA7C1d329C0451628638908915002d9d1',
     [TokenSymbol.USDC]: '0x01C5C0122039549AD1493B8220cABEdD739BC44E',
     [TokenSymbol.USD_]: '0xd077A400968890Eacc75cdc901F0356c943e4fDb',
+    [TokenSymbol.EURm]: '0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a',
+    [TokenSymbol.axlEUROC]: '0x9883d788d40F1C7595a780ed881Ea833C7743B4B',
     [TokenSymbol.PHPm]: '0x0352976d940a2C3FBa0C3623198947Ee1d17869E',
     [TokenSymbol.XOFm]: '0x5505b70207aE3B826c1A7607F19F3Bf73444A082',
     [TokenSymbol.AUDm]: '0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139',
