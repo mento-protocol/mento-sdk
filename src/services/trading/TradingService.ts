@@ -3,13 +3,14 @@ import {
   isTradingEnabled,
   Route,
   Pool,
+  PoolType,
   TradingLimit,
   PoolTradabilityStatus,
 } from '../../core/types'
 import { RouteService } from '../routes'
 import { TradingLimitsService } from './TradingLimitsService'
-import { BREAKERBOX_ABI, FPMM_ABI } from '../../core/abis'
-import { getContractAddress, ChainId } from '../../core/constants'
+import { BIPOOL_MANAGER_ABI, BREAKERBOX_ABI, FPMM_ABI } from '../../core/abis'
+import { ChainId, getContractAddress, tryGetContractAddress } from '../../core/constants'
 import { multicall } from '../../utils/multicall'
 
 /**
@@ -160,7 +161,9 @@ export class TradingService {
 
   /**
    * Get the reference rate feed ID for a pool.
-   * Both FPMM and Virtual pools expose this via the referenceRateFeedID() view function.
+   * FPMM pools expose this via referenceRateFeedID() directly.
+   * Virtual pools wrap a BiPoolManager exchange; the rate feed is read from
+   * BiPoolManager.getPoolExchange(exchangeId).config.referenceRateFeedID.
    *
    * @param pool - The pool to get rate feed ID for
    * @returns The rate feed ID address
@@ -180,20 +183,47 @@ export class TradingService {
       return []
     }
 
-    const results = await multicall(
-      this.publicClient,
-      pools.map((pool) => ({
+    const biPoolManagerAddr = pools.some((pool) => pool.poolType === PoolType.Virtual)
+      ? tryGetContractAddress(this.chainId as ChainId, 'BiPoolManager')
+      : undefined
+
+    const contracts = pools.map((pool) => {
+      if (pool.poolType === PoolType.Virtual) {
+        if (!pool.exchangeId) {
+          throw new Error(`Virtual pool ${pool.poolAddr} is missing exchangeId`)
+        }
+        if (!biPoolManagerAddr) {
+          throw new Error(
+            `BiPoolManager address not configured for chain ID ${this.chainId}; cannot resolve rate feed for virtual pool ${pool.poolAddr}`
+          )
+        }
+
+        return {
+          address: biPoolManagerAddr as `0x${string}`,
+          abi: BIPOOL_MANAGER_ABI,
+          functionName: 'getPoolExchange',
+          args: [pool.exchangeId as `0x${string}`] as const,
+        }
+      }
+
+      return {
         address: pool.poolAddr as `0x${string}`,
         abi: FPMM_ABI,
         functionName: 'referenceRateFeedID',
         args: [] as const,
-      })),
-      { allowFailure: false }
-    )
+      }
+    })
 
-    return results.map((result) => {
+    const results = await multicall(this.publicClient, contracts, { allowFailure: false })
+
+    return results.map((result, index) => {
       if (result.status === 'failure') {
         throw result.error
+      }
+
+      if (pools[index].poolType === PoolType.Virtual) {
+        const exchange = result.result as { config: { referenceRateFeedID: string } }
+        return exchange.config.referenceRateFeedID
       }
 
       return result.result as string

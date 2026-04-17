@@ -22,10 +22,14 @@ describe('TradingService', () => {
 
   // Mock addresses
   const MOCK_BREAKERBOX = '0x303ED1df62Fa067659B586EbEe8De0EcE824Ab39'
+  const MOCK_BIPOOL_MANAGER = '0x22d9db95E6Ae61c104A7B6F6C78D7993B94ec901'
   const MOCK_RATE_FEED_1 = '0xRateFeed1000000000000000000000000000000'
   const MOCK_RATE_FEED_2 = '0xRateFeed2000000000000000000000000000000'
+  const MOCK_VIRTUAL_RATE_FEED = '0xRateFeedV000000000000000000000000000000'
   const MOCK_POOL_1 = '0xPool1000000000000000000000000000000000000'
   const MOCK_POOL_2 = '0xPool2000000000000000000000000000000000000'
+  const MOCK_VIRTUAL_POOL = '0xPoolV00000000000000000000000000000000000'
+  const MOCK_EXCHANGE_ID = '0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7'
   const TOKEN_A = '0xTokenA00000000000000000000000000000000000'
   const TOKEN_B = '0xTokenB00000000000000000000000000000000000'
   const TOKEN_C = '0xTokenC00000000000000000000000000000000000'
@@ -45,6 +49,31 @@ describe('TradingService', () => {
     token0: TOKEN_B,
     token1: TOKEN_C,
     poolType: PoolType.FPMM,
+  }
+
+  const mockVirtualPool: Pool = {
+    factoryAddr: '0xVirtualFactory',
+    poolAddr: MOCK_VIRTUAL_POOL,
+    token0: TOKEN_A,
+    token1: TOKEN_B,
+    poolType: PoolType.Virtual,
+    exchangeId: MOCK_EXCHANGE_ID,
+  }
+
+  const mockExchange = {
+    asset0: TOKEN_A,
+    asset1: TOKEN_B,
+    pricingModule: '0xPricingModule0000000000000000000000000000',
+    bucket0: 0n,
+    bucket1: 0n,
+    lastBucketUpdate: 0n,
+    config: {
+      spread: { value: 0n },
+      referenceRateFeedID: MOCK_VIRTUAL_RATE_FEED,
+      referenceRateResetFrequency: 0n,
+      minimumReports: 0n,
+      stablePoolResetSize: { value: 0n },
+    },
   }
 
   // Mock routes
@@ -292,6 +321,78 @@ describe('TradingService', () => {
       const isTradable = await service.isRouteTradable(mockDirectRoute)
 
       expect(isTradable).toBe(true)
+    })
+
+    it('resolves virtual pool rate feed via BiPoolManager.getPoolExchange', async () => {
+      const virtualRoute: Route = {
+        id: 'TokenA-TokenB-virtual',
+        tokens: [
+          { address: TOKEN_A, symbol: 'TokenA' },
+          { address: TOKEN_B, symbol: 'TokenB' },
+        ],
+        path: [mockVirtualPool],
+      }
+
+      const getPoolExchangeCalls: Array<{ address: string; args: readonly unknown[] }> = []
+      mockPublicClient.readContract.mockImplementation(async ({ functionName, address, args }) => {
+        if (functionName === 'getPoolExchange') {
+          getPoolExchangeCalls.push({ address: address as string, args: (args ?? []) as readonly unknown[] })
+          return mockExchange
+        }
+        if (functionName === 'getRateFeedTradingMode') return 0
+        if (functionName === 'referenceRateFeedID') {
+          throw new Error('Virtual pools must not call referenceRateFeedID()')
+        }
+        return null
+      })
+
+      const isTradable = await service.isRouteTradable(virtualRoute)
+
+      expect(isTradable).toBe(true)
+      expect(getPoolExchangeCalls).toHaveLength(1)
+      expect(getPoolExchangeCalls[0].address).toBe(MOCK_BIPOOL_MANAGER)
+      expect(getPoolExchangeCalls[0].args).toEqual([MOCK_EXCHANGE_ID])
+    })
+
+    it('mixes FPMM and Virtual pools in the same route without erroring', async () => {
+      const mixedRoute: Route = {
+        id: 'TokenA-TokenC',
+        tokens: [
+          { address: TOKEN_A, symbol: 'TokenA' },
+          { address: TOKEN_C, symbol: 'TokenC' },
+        ],
+        path: [mockVirtualPool, mockPool2],
+      }
+
+      mockPublicClient.readContract.mockImplementation(async ({ functionName, address }) => {
+        if (functionName === 'getPoolExchange') return mockExchange
+        if (functionName === 'referenceRateFeedID') {
+          if (address === MOCK_VIRTUAL_POOL) {
+            throw new Error('Virtual pools must not call referenceRateFeedID()')
+          }
+          return MOCK_RATE_FEED_2
+        }
+        if (functionName === 'getRateFeedTradingMode') return 0
+        return null
+      })
+
+      const isTradable = await service.isRouteTradable(mixedRoute)
+
+      expect(isTradable).toBe(true)
+    })
+
+    it('throws when a virtual pool is missing its exchangeId', async () => {
+      const brokenVirtualPool: Pool = { ...mockVirtualPool, exchangeId: undefined }
+      const brokenRoute: Route = {
+        id: 'TokenA-TokenB',
+        tokens: [
+          { address: TOKEN_A, symbol: 'TokenA' },
+          { address: TOKEN_B, symbol: 'TokenB' },
+        ],
+        path: [brokenVirtualPool],
+      }
+
+      await expect(service.isRouteTradable(brokenRoute)).rejects.toThrow(/missing exchangeId/)
     })
   })
 
