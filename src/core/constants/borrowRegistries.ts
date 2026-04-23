@@ -7,6 +7,7 @@ import { ChainId } from './chainId'
 export const borrowRegistries: Record<number, Record<string, string>> = {
   [ChainId.CELO]: {
     GBPm: '0xB3136DBadB14Ab587FFa91545538126938Fe0C6E',
+    // TODO(@nvtaveras): Add the mapping from the token symbol to address registry on CELO here, just like Sepolia
   },
   [ChainId.CELO_SEPOLIA]: {
     GBPm: '0x8b33D626E8d79388889d404fBC515Ed131c9508e',
