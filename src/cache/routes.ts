@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-04-16T14:27:24.306Z
+// Generated on 2026-04-23T15:34:57.091Z
 
 import type { RouteWithCost } from '../core/types'
 
@@ -682,30 +682,30 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
-      "id": "AUSD-USDC",
+      "id": "AUSD-USDT0",
       "tokens": [
         {
           "address": "0x502E67D3fE9302A5e4Ec1CFCDdbD6F34F9B9484B",
           "symbol": "AUSD"
         },
         {
-          "address": "0x534b2f3A21130d7a60830c2Df862319e593943A3",
-          "symbol": "USDC"
+          "address": "0xC304EE1876c32d1A194558B1000bE4842F960dF9",
+          "symbol": "USDT0"
         }
       ],
       "path": [
         {
           "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-          "token0": "0x534b2f3A21130d7a60830c2Df862319e593943A3",
+          "poolAddr": "0x52716E8F44E417bE8F573F8A85cA8eD3DAe1eAE1",
+          "token0": "0x502E67D3fE9302A5e4Ec1CFCDdbD6F34F9B9484B",
           "token1": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
           "poolType": "FPMM"
         },
         {
           "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x52716E8F44E417bE8F573F8A85cA8eD3DAe1eAE1",
-          "token0": "0x502E67D3fE9302A5e4Ec1CFCDdbD6F34F9B9484B",
-          "token1": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "poolAddr": "0xa51a83F0260a83A7F9AdFecC1Bc93C58DEf2c9A2",
+          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "token1": "0xC304EE1876c32d1A194558B1000bE4842F960dF9",
           "poolType": "FPMM"
         }
       ],
@@ -713,11 +713,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         "totalCostPercent": 0.099975,
         "hops": [
           {
-            "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
+            "poolAddress": "0x52716E8F44E417bE8F573F8A85cA8eD3DAe1eAE1",
             "costPercent": 0.05
           },
           {
-            "poolAddress": "0x52716E8F44E417bE8F573F8A85cA8eD3DAe1eAE1",
+            "poolAddress": "0xa51a83F0260a83A7F9AdFecC1Bc93C58DEf2c9A2",
             "costPercent": 0.05
           }
         ]
@@ -912,6 +912,48 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
+      "id": "EURm-USDC",
+      "tokens": [
+        {
+          "address": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
+          "symbol": "EURm"
+        },
+        {
+          "address": "0x534b2f3A21130d7a60830c2Df862319e593943A3",
+          "symbol": "USDC"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
+          "token0": "0x534b2f3A21130d7a60830c2Df862319e593943A3",
+          "token1": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xD74728994135734968b03EFc03448394BaCb1e5f",
+          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "token1": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.199925,
+        "hops": [
+          {
+            "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
+            "costPercent": 0.05
+          },
+          {
+            "poolAddress": "0xD74728994135734968b03EFc03448394BaCb1e5f",
+            "costPercent": 0.15
+          }
+        ]
+      }
+    },
+    {
       "id": "AUSD-EURm",
       "tokens": [
         {
@@ -1010,16 +1052,16 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       "path": [
         {
           "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
-          "token0": "0x04de554E875c9797dC4ceBd834A9e99fa8fD5Df9",
-          "token1": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "poolAddr": "0xD74728994135734968b03EFc03448394BaCb1e5f",
+          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "token1": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
           "poolType": "FPMM"
         },
         {
           "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xD74728994135734968b03EFc03448394BaCb1e5f",
-          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
-          "token1": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
+          "poolAddr": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
+          "token0": "0x04de554E875c9797dC4ceBd834A9e99fa8fD5Df9",
+          "token1": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
           "poolType": "FPMM"
         }
       ],
@@ -1027,11 +1069,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         "totalCostPercent": 0.299775,
         "hops": [
           {
-            "poolAddress": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
+            "poolAddress": "0xD74728994135734968b03EFc03448394BaCb1e5f",
             "costPercent": 0.15
           },
           {
-            "poolAddress": "0xD74728994135734968b03EFc03448394BaCb1e5f",
+            "poolAddress": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
             "costPercent": 0.15
           }
         ]
@@ -8333,6 +8375,68 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
+      "id": "JPYm-USDm",
+      "tokens": [
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        },
+        {
+          "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "symbol": "USDm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.3,
+        "hops": [
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-USDm",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "symbol": "USDm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.3,
+        "hops": [
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
       "id": "PHPm-USDm",
       "tokens": [
         {
@@ -8391,70 +8495,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         "hops": [
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-USDm",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "symbol": "USDm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.3,
-        "hops": [
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "JPYm-USDm",
-      "tokens": [
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        },
-        {
-          "address": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "symbol": "USDm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.3,
-        "hops": [
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
             "costPercent": 0.3
           }
         ]
@@ -8651,6 +8691,90 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
+      "id": "JPYm-axlUSDC",
+      "tokens": [
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        },
+        {
+          "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+          "symbol": "axlUSDC"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
+          "token0": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.34985,
+        "hops": [
+          {
+            "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
+            "costPercent": 0.05
+          },
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-axlUSDC",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+          "symbol": "axlUSDC"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
+          "token0": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.34985,
+        "hops": [
+          {
+            "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
+            "costPercent": 0.05
+          },
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
       "id": "PHPm-axlUSDC",
       "tokens": [
         {
@@ -8731,92 +8855,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-axlUSDC",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-          "symbol": "axlUSDC"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-          "token0": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.34985,
-        "hops": [
-          {
-            "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "JPYm-axlUSDC",
-      "tokens": [
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        },
-        {
-          "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-          "symbol": "axlUSDC"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-          "token0": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.34985,
-        "hops": [
-          {
-            "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
             "costPercent": 0.3
           }
         ]
@@ -8909,6 +8947,90 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
+      "id": "JPYm-USDC",
+      "tokens": [
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        },
+        {
+          "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+          "symbol": "USDC"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
+          "token0": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.34985,
+        "hops": [
+          {
+            "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
+            "costPercent": 0.05
+          },
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-USDC",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+          "symbol": "USDC"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
+          "token0": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.34985,
+        "hops": [
+          {
+            "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
+            "costPercent": 0.05
+          },
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
       "id": "PHPm-USDC",
       "tokens": [
         {
@@ -8989,92 +9111,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-USDC",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-          "symbol": "USDC"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-          "token0": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.34985,
-        "hops": [
-          {
-            "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "JPYm-USDC",
-      "tokens": [
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        },
-        {
-          "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-          "symbol": "USDC"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-          "token0": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.34985,
-        "hops": [
-          {
-            "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
             "costPercent": 0.3
           }
         ]
@@ -9167,6 +9203,90 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
+      "id": "JPYm-USD₮",
+      "tokens": [
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        },
+        {
+          "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+          "symbol": "USD₮"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
+          "token0": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.34985,
+        "hops": [
+          {
+            "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
+            "costPercent": 0.05
+          },
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-USD₮",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+          "symbol": "USD₮"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
+          "token0": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.34985,
+        "hops": [
+          {
+            "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
+            "costPercent": 0.05
+          },
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
       "id": "PHPm-USD₮",
       "tokens": [
         {
@@ -9247,92 +9367,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-USD₮",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-          "symbol": "USD₮"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-          "token0": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.34985,
-        "hops": [
-          {
-            "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "JPYm-USD₮",
-      "tokens": [
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        },
-        {
-          "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-          "symbol": "USD₮"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-          "token0": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.34985,
-        "hops": [
-          {
-            "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
             "costPercent": 0.3
           }
         ]
@@ -9597,6 +9631,178 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
+      "id": "AUDm-JPYm",
+      "tokens": [
+        {
+          "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+          "symbol": "AUDm"
+        },
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x8103Fb2db87AC96cc62FAA399B98e1173720aB19",
+          "token0": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.44955,
+        "hops": [
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x8103Fb2db87AC96cc62FAA399B98e1173720aB19",
+            "costPercent": 0.15
+          }
+        ]
+      }
+    },
+    {
+      "id": "CADm-JPYm",
+      "tokens": [
+        {
+          "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+          "symbol": "CADm"
+        },
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x62722497dc8992337117ee79A02015dcEa43b2C2",
+          "token0": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "token1": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+          "poolType": "Virtual",
+          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.44955,
+        "hops": [
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x62722497dc8992337117ee79A02015dcEa43b2C2",
+            "costPercent": 0.15
+          }
+        ]
+      }
+    },
+    {
+      "id": "AUDm-CHFm",
+      "tokens": [
+        {
+          "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+          "symbol": "AUDm"
+        },
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x8103Fb2db87AC96cc62FAA399B98e1173720aB19",
+          "token0": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.44955,
+        "hops": [
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x8103Fb2db87AC96cc62FAA399B98e1173720aB19",
+            "costPercent": 0.15
+          }
+        ]
+      }
+    },
+    {
+      "id": "CADm-CHFm",
+      "tokens": [
+        {
+          "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+          "symbol": "CADm"
+        },
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x62722497dc8992337117ee79A02015dcEa43b2C2",
+          "token0": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "token1": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
+          "poolType": "Virtual",
+          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.44955,
+        "hops": [
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x62722497dc8992337117ee79A02015dcEa43b2C2",
+            "costPercent": 0.15
+          }
+        ]
+      }
+    },
+    {
       "id": "AUDm-PHPm",
       "tokens": [
         {
@@ -9729,94 +9935,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
-      "id": "AUDm-CHFm",
-      "tokens": [
-        {
-          "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-          "symbol": "AUDm"
-        },
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x8103Fb2db87AC96cc62FAA399B98e1173720aB19",
-          "token0": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.44955,
-        "hops": [
-          {
-            "poolAddress": "0x8103Fb2db87AC96cc62FAA399B98e1173720aB19",
-            "costPercent": 0.15
-          },
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "AUDm-JPYm",
-      "tokens": [
-        {
-          "address": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-          "symbol": "AUDm"
-        },
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x8103Fb2db87AC96cc62FAA399B98e1173720aB19",
-          "token0": "0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0xd580d237231109e6a96d67d82450611c610a805a26660c90281bdc0cd04a95c7"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.44955,
-        "hops": [
-          {
-            "poolAddress": "0x8103Fb2db87AC96cc62FAA399B98e1173720aB19",
-            "costPercent": 0.15
-          },
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
       "id": "AUDm-COPm",
       "tokens": [
         {
@@ -9943,94 +10061,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "CADm-CHFm",
-      "tokens": [
-        {
-          "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-          "symbol": "CADm"
-        },
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x62722497dc8992337117ee79A02015dcEa43b2C2",
-          "token0": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "token1": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-          "poolType": "Virtual",
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.44955,
-        "hops": [
-          {
-            "poolAddress": "0x62722497dc8992337117ee79A02015dcEa43b2C2",
-            "costPercent": 0.15
-          },
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "CADm-JPYm",
-      "tokens": [
-        {
-          "address": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-          "symbol": "CADm"
-        },
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x62722497dc8992337117ee79A02015dcEa43b2C2",
-          "token0": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "token1": "0xF151c9a13b78C84f93f50B8b3bC689fedc134F60",
-          "poolType": "Virtual",
-          "exchangeId": "0x517ccc3bcab9f35e2e24143a0c1809068efc649f740846cfb6a1c5703735c1ee"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.44955,
-        "hops": [
-          {
-            "poolAddress": "0x62722497dc8992337117ee79A02015dcEa43b2C2",
-            "costPercent": 0.15
-          },
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
             "costPercent": 0.3
           }
         ]
@@ -10198,6 +10228,90 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
+      "id": "EURm-JPYm",
+      "tokens": [
+        {
+          "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+          "symbol": "EURm"
+        },
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
+          "token0": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.54925,
+        "hops": [
+          {
+            "poolAddress": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
+            "costPercent": 0.25
+          },
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-EURm",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+          "symbol": "EURm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
+          "token0": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.54925,
+        "hops": [
+          {
+            "poolAddress": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
+            "costPercent": 0.25
+          },
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
       "id": "EURm-PHPm",
       "tokens": [
         {
@@ -10278,92 +10392,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-EURm",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-          "symbol": "EURm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
-          "token0": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.54925,
-        "hops": [
-          {
-            "poolAddress": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
-            "costPercent": 0.25
-          },
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "EURm-JPYm",
-      "tokens": [
-        {
-          "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-          "symbol": "EURm"
-        },
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
-          "token0": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.54925,
-        "hops": [
-          {
-            "poolAddress": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
-            "costPercent": 0.25
-          },
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
             "costPercent": 0.3
           }
         ]
@@ -10456,6 +10484,90 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
+      "id": "GBPm-JPYm",
+      "tokens": [
+        {
+          "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+          "symbol": "GBPm"
+        },
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
+          "token0": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.5991,
+        "hops": [
+          {
+            "poolAddress": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-GBPm",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+          "symbol": "GBPm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
+          "token0": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.5991,
+        "hops": [
+          {
+            "poolAddress": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
       "id": "GBPm-PHPm",
       "tokens": [
         {
@@ -10536,92 +10648,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-GBPm",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-          "symbol": "GBPm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
-          "token0": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.5991,
-        "hops": [
-          {
-            "poolAddress": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "GBPm-JPYm",
-      "tokens": [
-        {
-          "address": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-          "symbol": "GBPm"
-        },
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
-          "token0": "0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.5991,
-        "hops": [
-          {
-            "poolAddress": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
             "costPercent": 0.3
           }
         ]
@@ -10714,6 +10740,392 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
+      "id": "CHFm-JPYm",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.5991,
+        "hops": [
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "JPYm-PHPm",
+      "tokens": [
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        },
+        {
+          "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+          "symbol": "PHPm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x671334256a893fDBc4FfE55F98f156A168bD897a",
+          "token0": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.5991,
+        "hops": [
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x671334256a893fDBc4FfE55F98f156A168bD897a",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "JPYm-ZARm",
+      "tokens": [
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        },
+        {
+          "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+          "symbol": "ZARm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
+          "token0": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.5991,
+        "hops": [
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "COPm-JPYm",
+      "tokens": [
+        {
+          "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+          "symbol": "COPm"
+        },
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0xCBfC8C84168D7F34FabA0018A3A63b998f1ffeCe",
+          "token0": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.5991,
+        "hops": [
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0xCBfC8C84168D7F34FabA0018A3A63b998f1ffeCe",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "BRLm-JPYm",
+      "tokens": [
+        {
+          "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+          "symbol": "BRLm"
+        },
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x49A968C539599385c69c2d528500DA58d933FafA",
+          "token0": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.5991,
+        "hops": [
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x49A968C539599385c69c2d528500DA58d933FafA",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-PHPm",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+          "symbol": "PHPm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x671334256a893fDBc4FfE55F98f156A168bD897a",
+          "token0": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.5991,
+        "hops": [
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x671334256a893fDBc4FfE55F98f156A168bD897a",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-ZARm",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+          "symbol": "ZARm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
+          "token0": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.5991,
+        "hops": [
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-COPm",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+          "symbol": "COPm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0xCBfC8C84168D7F34FabA0018A3A63b998f1ffeCe",
+          "token0": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.5991,
+        "hops": [
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0xCBfC8C84168D7F34FabA0018A3A63b998f1ffeCe",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "BRLm-CHFm",
+      "tokens": [
+        {
+          "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+          "symbol": "BRLm"
+        },
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x49A968C539599385c69c2d528500DA58d933FafA",
+          "token0": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.5991,
+        "hops": [
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x49A968C539599385c69c2d528500DA58d933FafA",
+            "costPercent": 0.3
+          }
+        ]
+      }
+    },
+    {
       "id": "PHPm-ZARm",
       "tokens": [
         {
@@ -10752,94 +11164,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-PHPm",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-          "symbol": "PHPm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x671334256a893fDBc4FfE55F98f156A168bD897a",
-          "token0": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.5991,
-        "hops": [
-          {
-            "poolAddress": "0x671334256a893fDBc4FfE55F98f156A168bD897a",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "JPYm-PHPm",
-      "tokens": [
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        },
-        {
-          "address": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-          "symbol": "PHPm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x671334256a893fDBc4FfE55F98f156A168bD897a",
-          "token0": "0x0352976d940a2C3FBa0C3623198947Ee1d17869E",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7952984d7278ca3417febf52815c321984ac3147ced2c02bb6a02b0bcab08413"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.5991,
-        "hops": [
-          {
-            "poolAddress": "0x671334256a893fDBc4FfE55F98f156A168bD897a",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
             "costPercent": 0.3
           }
         ]
@@ -10934,94 +11258,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
-      "id": "CHFm-ZARm",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-          "symbol": "ZARm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-          "token0": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.5991,
-        "hops": [
-          {
-            "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "JPYm-ZARm",
-      "tokens": [
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        },
-        {
-          "address": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-          "symbol": "ZARm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-          "token0": "0x10CCfB235b0E1Ed394bACE4560C3ed016697687e",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x4206e101b13bf29e40b2bfed4cf167271c41677720f2ee786ac1bf5efac101cb"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.5991,
-        "hops": [
-          {
-            "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
       "id": "COPm-ZARm",
       "tokens": [
         {
@@ -11100,226 +11336,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         "hops": [
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x49A968C539599385c69c2d528500DA58d933FafA",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-JPYm",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.5991,
-        "hops": [
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-COPm",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-          "symbol": "COPm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0xCBfC8C84168D7F34FabA0018A3A63b998f1ffeCe",
-          "token0": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.5991,
-        "hops": [
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0xCBfC8C84168D7F34FabA0018A3A63b998f1ffeCe",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "BRLm-CHFm",
-      "tokens": [
-        {
-          "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-          "symbol": "BRLm"
-        },
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x49A968C539599385c69c2d528500DA58d933FafA",
-          "token0": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.5991,
-        "hops": [
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x49A968C539599385c69c2d528500DA58d933FafA",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "COPm-JPYm",
-      "tokens": [
-        {
-          "address": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-          "symbol": "COPm"
-        },
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0xCBfC8C84168D7F34FabA0018A3A63b998f1ffeCe",
-          "token0": "0x5F8d55c3627d2dc0a2B4afa798f877242F382F67",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x1c9378bd0973ff313a599d3effc654ba759f8ccca655ab6d6ce5bd39a212943b"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.5991,
-        "hops": [
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0xCBfC8C84168D7F34FabA0018A3A63b998f1ffeCe",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "BRLm-JPYm",
-      "tokens": [
-        {
-          "address": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-          "symbol": "BRLm"
-        },
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x49A968C539599385c69c2d528500DA58d933FafA",
-          "token0": "0x2294298942fdc79417DE9E0D740A4957E0e7783a",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0xd11d52b973ddbb983cc2087aabcafd915fc3140cf9996aacc61db9710d1bde05"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.5991,
-        "hops": [
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
             "costPercent": 0.3
           },
           {
@@ -12421,6 +12437,264 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
+      "id": "GHSm-JPYm",
+      "tokens": [
+        {
+          "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+          "symbol": "GHSm"
+        },
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x917eE035bF0A964ACC75539f919A5B4F16336373",
+          "token0": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 1.297,
+        "hops": [
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x917eE035bF0A964ACC75539f919A5B4F16336373",
+            "costPercent": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "JPYm-NGNm",
+      "tokens": [
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        },
+        {
+          "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+          "symbol": "NGNm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x6B66271811615F4b6daDb8620ED71a1E90f41Deb",
+          "token0": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 1.297,
+        "hops": [
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x6B66271811615F4b6daDb8620ED71a1E90f41Deb",
+            "costPercent": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "JPYm-KESm",
+      "tokens": [
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        },
+        {
+          "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+          "symbol": "KESm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x22118009665B1d6810d4560A098D3E67bbcb934f",
+          "token0": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 1.297,
+        "hops": [
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x22118009665B1d6810d4560A098D3E67bbcb934f",
+            "costPercent": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-GHSm",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+          "symbol": "GHSm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x917eE035bF0A964ACC75539f919A5B4F16336373",
+          "token0": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 1.297,
+        "hops": [
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x917eE035bF0A964ACC75539f919A5B4F16336373",
+            "costPercent": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-NGNm",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+          "symbol": "NGNm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x6B66271811615F4b6daDb8620ED71a1E90f41Deb",
+          "token0": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 1.297,
+        "hops": [
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x6B66271811615F4b6daDb8620ED71a1E90f41Deb",
+            "costPercent": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-KESm",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+          "symbol": "KESm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x22118009665B1d6810d4560A098D3E67bbcb934f",
+          "token0": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 1.297,
+        "hops": [
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x22118009665B1d6810d4560A098D3E67bbcb934f",
+            "costPercent": 1
+          }
+        ]
+      }
+    },
+    {
       "id": "GHSm-PHPm",
       "tokens": [
         {
@@ -12675,270 +12949,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         "hops": [
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x22118009665B1d6810d4560A098D3E67bbcb934f",
-            "costPercent": 1
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-GHSm",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-          "symbol": "GHSm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x917eE035bF0A964ACC75539f919A5B4F16336373",
-          "token0": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 1.297,
-        "hops": [
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x917eE035bF0A964ACC75539f919A5B4F16336373",
-            "costPercent": 1
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-NGNm",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-          "symbol": "NGNm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x6B66271811615F4b6daDb8620ED71a1E90f41Deb",
-          "token0": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 1.297,
-        "hops": [
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x6B66271811615F4b6daDb8620ED71a1E90f41Deb",
-            "costPercent": 1
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-KESm",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-          "symbol": "KESm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x22118009665B1d6810d4560A098D3E67bbcb934f",
-          "token0": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 1.297,
-        "hops": [
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x22118009665B1d6810d4560A098D3E67bbcb934f",
-            "costPercent": 1
-          }
-        ]
-      }
-    },
-    {
-      "id": "GHSm-JPYm",
-      "tokens": [
-        {
-          "address": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-          "symbol": "GHSm"
-        },
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x917eE035bF0A964ACC75539f919A5B4F16336373",
-          "token0": "0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3562f9d29eba092b857480a82b03375839c752346b9ebe93a57ab82410328187"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 1.297,
-        "hops": [
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x917eE035bF0A964ACC75539f919A5B4F16336373",
-            "costPercent": 1
-          }
-        ]
-      }
-    },
-    {
-      "id": "JPYm-NGNm",
-      "tokens": [
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        },
-        {
-          "address": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-          "symbol": "NGNm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x6B66271811615F4b6daDb8620ED71a1E90f41Deb",
-          "token0": "0x3d5ae86F34E2a82771496D140daFAEf3789dF888",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x67a5122dab72931be57196e0abba81690461f327bc60fb98ca7eef0ac58906cc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 1.297,
-        "hops": [
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-            "costPercent": 0.3
-          },
-          {
-            "poolAddress": "0x6B66271811615F4b6daDb8620ED71a1E90f41Deb",
-            "costPercent": 1
-          }
-        ]
-      }
-    },
-    {
-      "id": "JPYm-KESm",
-      "tokens": [
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        },
-        {
-          "address": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-          "symbol": "KESm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x22118009665B1d6810d4560A098D3E67bbcb934f",
-          "token0": "0xC7e4635651E3e3Af82b61d3E23c159438daE3BbF",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x89de88b8eb790de26f4649f543cb6893d93635c728ac857f0926e842fb0d298b"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 1.297,
-        "hops": [
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
             "costPercent": 0.3
           },
           {
@@ -13680,6 +13690,92 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
+      "id": "JPYm-XOFm",
+      "tokens": [
+        {
+          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "symbol": "JPYm"
+        },
+        {
+          "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+          "symbol": "XOFm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x1e2506EdCa4eF3030E51bE8B571B935d55677604",
+          "token0": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 2.294,
+        "hops": [
+          {
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x1e2506EdCa4eF3030E51bE8B571B935d55677604",
+            "costPercent": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "CHFm-XOFm",
+      "tokens": [
+        {
+          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "symbol": "CHFm"
+        },
+        {
+          "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+          "symbol": "XOFm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
+          "poolAddr": "0x1e2506EdCa4eF3030E51bE8B571B935d55677604",
+          "token0": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "Virtual",
+          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 2.294,
+        "hops": [
+          {
+            "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
+            "costPercent": 0.3
+          },
+          {
+            "poolAddress": "0x1e2506EdCa4eF3030E51bE8B571B935d55677604",
+            "costPercent": 2
+          }
+        ]
+      }
+    },
+    {
       "id": "PHPm-XOFm",
       "tokens": [
         {
@@ -13762,94 +13858,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-XOFm",
-      "tokens": [
-        {
-          "address": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "symbol": "CHFm"
-        },
-        {
-          "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-          "symbol": "XOFm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x1e2506EdCa4eF3030E51bE8B571B935d55677604",
-          "token0": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-          "token0": "0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x3ddbc61433314a4b7d3cbb56a001fc4cc0f1d52d64338336d5f2083a580ce4fc"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 2.294,
-        "hops": [
-          {
-            "poolAddress": "0x1e2506EdCa4eF3030E51bE8B571B935d55677604",
-            "costPercent": 2
-          },
-          {
-            "poolAddress": "0x58F08739eA9764097b9500B6e4A4db64D168b807",
-            "costPercent": 0.3
-          }
-        ]
-      }
-    },
-    {
-      "id": "JPYm-XOFm",
-      "tokens": [
-        {
-          "address": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "symbol": "JPYm"
-        },
-        {
-          "address": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-          "symbol": "XOFm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x1e2506EdCa4eF3030E51bE8B571B935d55677604",
-          "token0": "0x5505b70207aE3B826c1A7607F19F3Bf73444A082",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0xc9664df358594c5eaf2f410ab371e2deb8b532ca26162d2bc36d99b8d174567b"
-        },
-        {
-          "factoryAddr": "0x887955f28723B0e9Bddc358448CB5B1FDe692da4",
-          "poolAddr": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
-          "token0": "0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "Virtual",
-          "exchangeId": "0x7c3b41fbd140c6fb54ff9f8f7b7b0c954606682d44ed5e56b0080f40faaf652c"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 2.294,
-        "hops": [
-          {
-            "poolAddress": "0x1e2506EdCa4eF3030E51bE8B571B935d55677604",
-            "costPercent": 2
-          },
-          {
-            "poolAddress": "0x284c2d99c5A12A65F10eFF7183c33C1217B65A56",
             "costPercent": 0.3
           }
         ]

@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-04-16T14:26:59.057Z
+// Generated on 2026-04-23T15:34:16.106Z
 
 import type { Token } from '../core/types'
 
@@ -274,6 +274,18 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       decimals: 18,
     },
     {
+      address: '0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426',
+      symbol: TokenSymbol.JPYm,
+      name: 'Mento Japanese Yen',
+      decimals: 18,
+    },
+    {
+      address: '0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980',
+      symbol: TokenSymbol.CHFm,
+      name: 'Mento Swiss Franc',
+      decimals: 18,
+    },
+    {
       address: '0x0352976d940a2C3FBa0C3623198947Ee1d17869E',
       symbol: TokenSymbol.PHPm,
       name: 'Mento Philippine Peso',
@@ -301,18 +313,6 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       address: '0x10CCfB235b0E1Ed394bACE4560C3ed016697687e',
       symbol: TokenSymbol.ZARm,
       name: 'Mento South African Rand',
-      decimals: 18,
-    },
-    {
-      address: '0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980',
-      symbol: TokenSymbol.CHFm,
-      name: 'Mento Swiss Franc',
-      decimals: 18,
-    },
-    {
-      address: '0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426',
-      symbol: TokenSymbol.JPYm,
-      name: 'Mento Japanese Yen',
       decimals: 18,
     },
     {
@@ -400,13 +400,13 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.USD_]: '0xd077A400968890Eacc75cdc901F0356c943e4fDb',
     [TokenSymbol.EURm]: '0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a',
     [TokenSymbol.axlEUROC]: '0x9883d788d40F1C7595a780ed881Ea833C7743B4B',
+    [TokenSymbol.JPYm]: '0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426',
+    [TokenSymbol.CHFm]: '0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980',
     [TokenSymbol.PHPm]: '0x0352976d940a2C3FBa0C3623198947Ee1d17869E',
     [TokenSymbol.XOFm]: '0x5505b70207aE3B826c1A7607F19F3Bf73444A082',
     [TokenSymbol.AUDm]: '0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139',
     [TokenSymbol.CADm]: '0xF151c9a13b78C84f93f50B8b3bC689fedc134F60',
     [TokenSymbol.ZARm]: '0x10CCfB235b0E1Ed394bACE4560C3ed016697687e',
-    [TokenSymbol.CHFm]: '0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980',
-    [TokenSymbol.JPYm]: '0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426',
     [TokenSymbol.COPm]: '0x5F8d55c3627d2dc0a2B4afa798f877242F382F67',
     [TokenSymbol.BRLm]: '0x2294298942fdc79417DE9E0D740A4957E0e7783a',
     [TokenSymbol.GHSm]: '0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C',
