@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-04-16T14:26:59.057Z
+// Generated on 2026-04-27T16:44:41.707Z
 
 import type { Token } from '../core/types'
 
@@ -71,6 +71,18 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       symbol: TokenSymbol.EURm,
       name: 'Mento Euro',
       decimals: 18,
+    },
+    {
+      address: '0x22f6A6752800eAB67b84748FeFc3cC658384aF72',
+      symbol: TokenSymbol.JPYm,
+      name: 'Mento Japanese Yen',
+      decimals: 18,
+    },
+    {
+      address: '0xF64e91fFEf7ef43aA314F0Bc2AC39f770797990C',
+      symbol: TokenSymbol.CHFm,
+      name: 'Mento Swiss Franc',
+      decimals: 18,
     }
   ],
   // Chain 10143
@@ -109,6 +121,18 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       address: '0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0',
       symbol: TokenSymbol.EURm,
       name: 'Mento Euro',
+      decimals: 18,
+    },
+    {
+      address: '0x377755da4994c2cfE21b39bbCE7211eab6f5FCC1',
+      symbol: TokenSymbol.JPYm,
+      name: 'Mento Japanese Yen',
+      decimals: 18,
+    },
+    {
+      address: '0xCD8f6950359795eb4688AC18d1e9BB88fa111eEe',
+      symbol: TokenSymbol.CHFm,
+      name: 'Mento Swiss Franc',
       decimals: 18,
     }
   ],
@@ -157,6 +181,18 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       decimals: 6,
     },
     {
+      address: '0xc45eCF20f3CD864B32D9794d6f76814aE8892e20',
+      symbol: TokenSymbol.JPYm,
+      name: 'Mento Japanese Yen',
+      decimals: 18,
+    },
+    {
+      address: '0xb55a79F398E759E43C95b979163f30eC87Ee131D',
+      symbol: TokenSymbol.CHFm,
+      name: 'Mento Swiss Franc',
+      decimals: 18,
+    },
+    {
       address: '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
       symbol: TokenSymbol.GHSm,
       name: 'Mento Ghanaian Cedi',
@@ -172,12 +208,6 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       address: '0x7175504C455076F15c04A2F90a8e352281F492F9',
       symbol: TokenSymbol.AUDm,
       name: 'Mento Australian Dollar',
-      decimals: 18,
-    },
-    {
-      address: '0xb55a79F398E759E43C95b979163f30eC87Ee131D',
-      symbol: TokenSymbol.CHFm,
-      name: 'Mento Swiss Franc',
       decimals: 18,
     },
     {
@@ -202,12 +232,6 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       address: '0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B',
       symbol: TokenSymbol.PHPm,
       name: 'Mento Philippine Peso',
-      decimals: 18,
-    },
-    {
-      address: '0xc45eCF20f3CD864B32D9794d6f76814aE8892e20',
-      symbol: TokenSymbol.JPYm,
-      name: 'Mento Japanese Yen',
       decimals: 18,
     },
     {
@@ -274,6 +298,18 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       decimals: 18,
     },
     {
+      address: '0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426',
+      symbol: TokenSymbol.JPYm,
+      name: 'Mento Japanese Yen',
+      decimals: 18,
+    },
+    {
+      address: '0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980',
+      symbol: TokenSymbol.CHFm,
+      name: 'Mento Swiss Franc',
+      decimals: 18,
+    },
+    {
       address: '0x0352976d940a2C3FBa0C3623198947Ee1d17869E',
       symbol: TokenSymbol.PHPm,
       name: 'Mento Philippine Peso',
@@ -301,18 +337,6 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       address: '0x10CCfB235b0E1Ed394bACE4560C3ed016697687e',
       symbol: TokenSymbol.ZARm,
       name: 'Mento South African Rand',
-      decimals: 18,
-    },
-    {
-      address: '0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980',
-      symbol: TokenSymbol.CHFm,
-      name: 'Mento Swiss Franc',
-      decimals: 18,
-    },
-    {
-      address: '0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426',
-      symbol: TokenSymbol.JPYm,
-      name: 'Mento Japanese Yen',
       decimals: 18,
     },
     {
@@ -362,6 +386,8 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.AUSD]: '0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a',
     [TokenSymbol.USDT0]: '0xe7cd86e13AC4309349F30B3435a9d337750fC82D',
     [TokenSymbol.EURm]: '0x4D502d735B4C574B487Ed641ae87cEaE884731C7',
+    [TokenSymbol.JPYm]: '0x22f6A6752800eAB67b84748FeFc3cC658384aF72',
+    [TokenSymbol.CHFm]: '0xF64e91fFEf7ef43aA314F0Bc2AC39f770797990C',
   },
   10143: {
     [TokenSymbol.GBPm]: '0x04de554E875c9797dC4ceBd834A9e99fa8fD5Df9',
@@ -370,6 +396,8 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.AUSD]: '0x502E67D3fE9302A5e4Ec1CFCDdbD6F34F9B9484B',
     [TokenSymbol.USDT0]: '0xC304EE1876c32d1A194558B1000bE4842F960dF9',
     [TokenSymbol.EURm]: '0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0',
+    [TokenSymbol.JPYm]: '0x377755da4994c2cfE21b39bbCE7211eab6f5FCC1',
+    [TokenSymbol.CHFm]: '0xCD8f6950359795eb4688AC18d1e9BB88fa111eEe',
   },
   42220: {
     [TokenSymbol.GBPm]: '0xCCF663b1fF11028f0b19058d0f7B674004a40746',
@@ -379,15 +407,15 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.USD_]: '0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e',
     [TokenSymbol.EURm]: '0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73',
     [TokenSymbol.axlEUROC]: '0x061cc5a2C863E0C1Cb404006D559dB18A34C762d',
+    [TokenSymbol.JPYm]: '0xc45eCF20f3CD864B32D9794d6f76814aE8892e20',
+    [TokenSymbol.CHFm]: '0xb55a79F398E759E43C95b979163f30eC87Ee131D',
     [TokenSymbol.GHSm]: '0xfAeA5F3404bbA20D3cc2f8C4B0A888F55a3c7313',
     [TokenSymbol.ZARm]: '0x4c35853A3B4e647fD266f4de678dCc8fEC410BF6',
     [TokenSymbol.AUDm]: '0x7175504C455076F15c04A2F90a8e352281F492F9',
-    [TokenSymbol.CHFm]: '0xb55a79F398E759E43C95b979163f30eC87Ee131D',
     [TokenSymbol.NGNm]: '0xE2702Bd97ee33c88c8f6f92DA3B733608aa76F71',
     [TokenSymbol.KESm]: '0x456a3D042C0DbD3db53D5489e98dFb038553B0d0',
     [TokenSymbol.CADm]: '0xff4Ab19391af240c311c54200a492233052B6325',
     [TokenSymbol.PHPm]: '0x105d4A9306D2E55a71d2Eb95B81553AE1dC20d7B',
-    [TokenSymbol.JPYm]: '0xc45eCF20f3CD864B32D9794d6f76814aE8892e20',
     [TokenSymbol.COPm]: '0x8A567e2aE79CA692Bd748aB832081C45de4041eA',
     [TokenSymbol.BRLm]: '0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787',
     [TokenSymbol.XOFm]: '0x73F93dcc49cB8A239e2032663e9475dd5ef29A08',
@@ -400,13 +428,13 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.USD_]: '0xd077A400968890Eacc75cdc901F0356c943e4fDb',
     [TokenSymbol.EURm]: '0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a',
     [TokenSymbol.axlEUROC]: '0x9883d788d40F1C7595a780ed881Ea833C7743B4B',
+    [TokenSymbol.JPYm]: '0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426',
+    [TokenSymbol.CHFm]: '0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980',
     [TokenSymbol.PHPm]: '0x0352976d940a2C3FBa0C3623198947Ee1d17869E',
     [TokenSymbol.XOFm]: '0x5505b70207aE3B826c1A7607F19F3Bf73444A082',
     [TokenSymbol.AUDm]: '0x5873Faeb42F3563dcD77F0fbbdA818E6d6DA3139',
     [TokenSymbol.CADm]: '0xF151c9a13b78C84f93f50B8b3bC689fedc134F60',
     [TokenSymbol.ZARm]: '0x10CCfB235b0E1Ed394bACE4560C3ed016697687e',
-    [TokenSymbol.CHFm]: '0x284E9b7B623eAE866914b7FA0eB720C2Bb3C2980',
-    [TokenSymbol.JPYm]: '0x85Bee67D435A39f7467a8a9DE34a5B73D25Df426',
     [TokenSymbol.COPm]: '0x5F8d55c3627d2dc0a2B4afa798f877242F382F67',
     [TokenSymbol.BRLm]: '0x2294298942fdc79417DE9E0D740A4957E0e7783a',
     [TokenSymbol.GHSm]: '0x5e94B8C872bD47BC4255E60ECBF44D5E66e7401C',
