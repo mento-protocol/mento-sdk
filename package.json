@@ -80,5 +80,11 @@
   },
   "dependencies": {
     "viem": "^2.21.44"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "unrs-resolver"
+    ]
   }
 }
