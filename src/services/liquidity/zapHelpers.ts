@@ -125,6 +125,83 @@ export function splitAmount(amountIn: bigint, splitRatio: number): { amountA: bi
 }
 
 /**
+ * Off-chain mirror of Router.sol's quoteAddLiquidity / _quoteZapLiquidity logic.
+ *
+ * Given desired amounts and pool reserves, returns the (amountA, amountB) the
+ * router will actually deposit when adding liquidity. Used to predict the exact
+ * `amountAMin` / `amountBMin` the contract will check against post-swap reserves.
+ *
+ * @param amountADesired - Desired amount of tokenA
+ * @param amountBDesired - Desired amount of tokenB
+ * @param reserveA - Reserve of tokenA at the moment liquidity is added
+ * @param reserveB - Reserve of tokenB at the moment liquidity is added
+ */
+export function quoteAddLiquidityFromReserves(
+  amountADesired: bigint,
+  amountBDesired: bigint,
+  reserveA: bigint,
+  reserveB: bigint
+): { amountA: bigint; amountB: bigint } {
+  if (reserveA === 0n && reserveB === 0n) {
+    return { amountA: amountADesired, amountB: amountBDesired }
+  }
+  if (reserveA === 0n || reserveB === 0n) {
+    // Mirrors Router.sol's InsufficientLiquidity revert. Caller can fall back.
+    return { amountA: 0n, amountB: 0n }
+  }
+
+  const amountBOptimal = (amountADesired * reserveB) / reserveA
+  if (amountBOptimal <= amountBDesired) {
+    return { amountA: amountADesired, amountB: amountBOptimal }
+  }
+  const amountAOptimal = (amountBDesired * reserveA) / reserveB
+  return { amountA: amountAOptimal, amountB: amountBDesired }
+}
+
+/**
+ * Computes the net delta a single-hop zap swap applies to a target pool's
+ * reserves. Returns `{delta0, delta1}` to add to the pool's pre-swap reserves
+ * to obtain the reserves the router will see when it runs `_quoteZapLiquidity`.
+ *
+ * Only single-hop routes whose factory matches the target pool's factory and
+ * whose `(from, to)` are `(token0, token1)` (in either direction) are
+ * considered. Multi-hop routes and routes through other pools have no effect
+ * on the target pool's reserves and return `{0, 0}`.
+ *
+ * Note: Multi-hop routes that traverse the target pool as an intermediate hop
+ * are intentionally not handled here — they are uncommon for single-sided zaps
+ * and would require per-hop amounts from `getAmountsOut`.
+ */
+export function computeTargetPoolImpact(
+  routes: RouterRoute[],
+  amountIn: bigint,
+  amountOut: bigint,
+  token0: Address,
+  token1: Address,
+  factoryAddr: Address
+): { delta0: bigint; delta1: bigint } {
+  if (routes.length !== 1) {
+    return { delta0: 0n, delta1: 0n }
+  }
+  const route = routes[0]
+  if (route.factory.toLowerCase() !== factoryAddr.toLowerCase()) {
+    return { delta0: 0n, delta1: 0n }
+  }
+  const fromLower = route.from.toLowerCase()
+  const toLower = route.to.toLowerCase()
+  const t0 = token0.toLowerCase()
+  const t1 = token1.toLowerCase()
+
+  if (fromLower === t0 && toLower === t1) {
+    return { delta0: amountIn, delta1: -amountOut }
+  }
+  if (fromLower === t1 && toLower === t0) {
+    return { delta0: -amountOut, delta1: amountIn }
+  }
+  return { delta0: 0n, delta1: 0n }
+}
+
+/**
  * Estimates minimum LP tokens from zap in amounts.
  *
  * This is a conservative lower-bound estimate. The inputs are slippage-adjusted
