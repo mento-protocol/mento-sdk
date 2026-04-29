@@ -19,6 +19,8 @@ import {
   findZapInRoutes,
   splitAmount,
   estimateLiquidityFromZapIn,
+  quoteAddLiquidityFromReserves,
+  computeTargetPoolImpact,
 } from './zapHelpers'
 
 interface ZapInPreparedContext {
@@ -208,8 +210,28 @@ async function prepareZapInContextInternal(
     args: [token0, token1, factoryAddr, amountInA, amountInB, routesA as ReadonlyRouterRoutes, routesB as ReadonlyRouterRoutes],
   })) as [bigint, bigint, bigint, bigint]
 
-  const finalAmountAMin = calculateMinAmount(amountAMin, options.slippageTolerance)
-  const finalAmountBMin = calculateMinAmount(amountBMin, options.slippageTolerance)
+  // Re-quote amountAMin / amountBMin against POST-swap reserves.
+  //
+  // `generateZapInParams` calls `quoteAddLiquidity` with the pool's *current*
+  // reserves, but on-chain `_quoteZapLiquidity` runs *after* the zap's internal
+  // swap, which moves the same pool when tokenIn is one of the pool tokens.
+  // Applying user slippage on top of a pre-swap minimum makes the contract
+  // reject any non-trivial amount because the deterministic price impact of
+  // the swap alone exceeds the slippage budget. Predict the post-swap reserves
+  // and re-derive the minimums so that user slippage only covers real drift
+  // between quote-time and execution.
+  const impactA = computeTargetPoolImpact(routesA, amountInA, amountOutMinA, token0, token1, factoryAddr)
+  const impactB = computeTargetPoolImpact(routesB, amountInB, amountOutMinB, token0, token1, factoryAddr)
+  const projectedReserveA = poolSnapshot.reserve0 + impactA.delta0 + impactB.delta0
+  const projectedReserveB = poolSnapshot.reserve1 + impactA.delta1 + impactB.delta1
+  const useReserveA = projectedReserveA > 0n ? projectedReserveA : poolSnapshot.reserve0
+  const useReserveB = projectedReserveB > 0n ? projectedReserveB : poolSnapshot.reserve1
+  const projected = quoteAddLiquidityFromReserves(amountOutMinA, amountOutMinB, useReserveA, useReserveB)
+  const baselineAmountAMin = projected.amountA > 0n ? projected.amountA : amountAMin
+  const baselineAmountBMin = projected.amountB > 0n ? projected.amountB : amountBMin
+
+  const finalAmountAMin = calculateMinAmount(baselineAmountAMin, options.slippageTolerance)
+  const finalAmountBMin = calculateMinAmount(baselineAmountBMin, options.slippageTolerance)
   const finalAmountOutMinA = calculateMinAmount(amountOutMinA, options.slippageTolerance)
   const finalAmountOutMinB = calculateMinAmount(amountOutMinB, options.slippageTolerance)
 
