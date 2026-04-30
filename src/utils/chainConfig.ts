@@ -1,4 +1,4 @@
-import { celo, type Chain } from 'viem/chains'
+import { celo, polygonAmoy, type Chain } from 'viem/chains'
 import { defineChain } from 'viem'
 import { ChainId } from '../core/constants/chainId'
 
@@ -96,6 +96,8 @@ export function getDefaultRpcUrl(chainId: number): string {
       return 'https://testnet-rpc.monad.xyz'
     case ChainId.MONAD:
       return 'https://rpc.monad.xyz'
+    case ChainId.POLYGON_AMOY:
+      return 'https://polygon-amoy.drpc.org'
     default:
       throw new Error(`Unsupported chain ID: ${chainId}`)
   }
@@ -117,6 +119,8 @@ export function getChainConfig(chainId: number): Chain {
       return monadTestnet
     case ChainId.MONAD:
       return monad
+    case ChainId.POLYGON_AMOY:
+      return polygonAmoy
     default:
       throw new Error(`Unsupported chain ID: ${chainId}`)
   }

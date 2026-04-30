@@ -57,6 +57,11 @@ const CHAIN_CONFIGS: ChainTestConfig[] = [
     chainId: ChainId.MONAD,
     rpcEnvVar: 'MONAD_RPC_URL',
   },
+  {
+    name: 'Polygon Amoy',
+    chainId: ChainId.POLYGON_AMOY,
+    rpcEnvVar: 'POLYGON_AMOY_RPC_URL',
+  },
 ]
 
 describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, rpcEnvVar }) => {

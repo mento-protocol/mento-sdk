@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-04-27T17:19:25.234Z
+// Generated on 2026-04-30T16:05:05.474Z
 
 import type { RouteWithCost } from '../core/types'
 
@@ -1206,48 +1206,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
-      "id": "AUSD-USDT0",
-      "tokens": [
-        {
-          "address": "0x502E67D3fE9302A5e4Ec1CFCDdbD6F34F9B9484B",
-          "symbol": "AUSD"
-        },
-        {
-          "address": "0xC304EE1876c32d1A194558B1000bE4842F960dF9",
-          "symbol": "USDT0"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xa51a83F0260a83A7F9AdFecC1Bc93C58DEf2c9A2",
-          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
-          "token1": "0xC304EE1876c32d1A194558B1000bE4842F960dF9",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x52716E8F44E417bE8F573F8A85cA8eD3DAe1eAE1",
-          "token0": "0x502E67D3fE9302A5e4Ec1CFCDdbD6F34F9B9484B",
-          "token1": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
-          "poolType": "FPMM"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.099975,
-        "hops": [
-          {
-            "poolAddress": "0xa51a83F0260a83A7F9AdFecC1Bc93C58DEf2c9A2",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x52716E8F44E417bE8F573F8A85cA8eD3DAe1eAE1",
-            "costPercent": 0.05
-          }
-        ]
-      }
-    },
-    {
       "id": "GBPm-USDm",
       "tokens": [
         {
@@ -1456,65 +1414,23 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
-      "id": "GBPm-USDT0",
-      "tokens": [
-        {
-          "address": "0x04de554E875c9797dC4ceBd834A9e99fa8fD5Df9",
-          "symbol": "GBPm"
-        },
-        {
-          "address": "0xC304EE1876c32d1A194558B1000bE4842F960dF9",
-          "symbol": "USDT0"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xa51a83F0260a83A7F9AdFecC1Bc93C58DEf2c9A2",
-          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
-          "token1": "0xC304EE1876c32d1A194558B1000bE4842F960dF9",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
-          "token0": "0x04de554E875c9797dC4ceBd834A9e99fa8fD5Df9",
-          "token1": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
-          "poolType": "FPMM"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.199925,
-        "hops": [
-          {
-            "poolAddress": "0xa51a83F0260a83A7F9AdFecC1Bc93C58DEf2c9A2",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
-            "costPercent": 0.15
-          }
-        ]
-      }
-    },
-    {
-      "id": "AUSD-EURm",
+      "id": "AUSD-JPYm",
       "tokens": [
         {
           "address": "0x502E67D3fE9302A5e4Ec1CFCDdbD6F34F9B9484B",
           "symbol": "AUSD"
         },
         {
-          "address": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
-          "symbol": "EURm"
+          "address": "0x377755da4994c2cfE21b39bbCE7211eab6f5FCC1",
+          "symbol": "JPYm"
         }
       ],
       "path": [
         {
           "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xD74728994135734968b03EFc03448394BaCb1e5f",
-          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
-          "token1": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
+          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
+          "token0": "0x377755da4994c2cfE21b39bbCE7211eab6f5FCC1",
+          "token1": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
           "poolType": "FPMM"
         },
         {
@@ -1529,7 +1445,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         "totalCostPercent": 0.199925,
         "hops": [
           {
-            "poolAddress": "0xD74728994135734968b03EFc03448394BaCb1e5f",
+            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
             "costPercent": 0.15
           },
           {
@@ -1540,65 +1456,23 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     },
     {
-      "id": "JPYm-USDT0",
+      "id": "AUSD-CHFm",
       "tokens": [
         {
-          "address": "0x377755da4994c2cfE21b39bbCE7211eab6f5FCC1",
-          "symbol": "JPYm"
+          "address": "0x502E67D3fE9302A5e4Ec1CFCDdbD6F34F9B9484B",
+          "symbol": "AUSD"
         },
-        {
-          "address": "0xC304EE1876c32d1A194558B1000bE4842F960dF9",
-          "symbol": "USDT0"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xa51a83F0260a83A7F9AdFecC1Bc93C58DEf2c9A2",
-          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
-          "token1": "0xC304EE1876c32d1A194558B1000bE4842F960dF9",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
-          "token0": "0x377755da4994c2cfE21b39bbCE7211eab6f5FCC1",
-          "token1": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
-          "poolType": "FPMM"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.199925,
-        "hops": [
-          {
-            "poolAddress": "0xa51a83F0260a83A7F9AdFecC1Bc93C58DEf2c9A2",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
-            "costPercent": 0.15
-          }
-        ]
-      }
-    },
-    {
-      "id": "CHFm-USDT0",
-      "tokens": [
         {
           "address": "0xCD8f6950359795eb4688AC18d1e9BB88fa111eEe",
           "symbol": "CHFm"
-        },
-        {
-          "address": "0xC304EE1876c32d1A194558B1000bE4842F960dF9",
-          "symbol": "USDT0"
         }
       ],
       "path": [
         {
           "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xa51a83F0260a83A7F9AdFecC1Bc93C58DEf2c9A2",
-          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
-          "token1": "0xC304EE1876c32d1A194558B1000bE4842F960dF9",
+          "poolAddr": "0x52716E8F44E417bE8F573F8A85cA8eD3DAe1eAE1",
+          "token0": "0x502E67D3fE9302A5e4Ec1CFCDdbD6F34F9B9484B",
+          "token1": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
           "poolType": "FPMM"
         },
         {
@@ -1613,53 +1487,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         "totalCostPercent": 0.199925,
         "hops": [
           {
-            "poolAddress": "0xa51a83F0260a83A7F9AdFecC1Bc93C58DEf2c9A2",
+            "poolAddress": "0x52716E8F44E417bE8F573F8A85cA8eD3DAe1eAE1",
             "costPercent": 0.05
           },
           {
             "poolAddress": "0x49e220DB6255061E0A49e679A115A4e6948971Ce",
-            "costPercent": 0.15
-          }
-        ]
-      }
-    },
-    {
-      "id": "GBPm-JPYm",
-      "tokens": [
-        {
-          "address": "0x04de554E875c9797dC4ceBd834A9e99fa8fD5Df9",
-          "symbol": "GBPm"
-        },
-        {
-          "address": "0x377755da4994c2cfE21b39bbCE7211eab6f5FCC1",
-          "symbol": "JPYm"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
-          "token0": "0x377755da4994c2cfE21b39bbCE7211eab6f5FCC1",
-          "token1": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
-          "token0": "0x04de554E875c9797dC4ceBd834A9e99fa8fD5Df9",
-          "token1": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
-          "poolType": "FPMM"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.299775,
-        "hops": [
-          {
-            "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
-            "costPercent": 0.15
-          },
-          {
-            "poolAddress": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
             "costPercent": 0.15
           }
         ]
@@ -1690,11 +1522,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.05,
+        "totalCostPercent": 0.02,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -1721,11 +1553,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.05,
+        "totalCostPercent": 0.02,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -1752,11 +1584,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.05,
+        "totalCostPercent": 0.02,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -1790,15 +1622,15 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.099975,
+        "totalCostPercent": 0.039996,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -1832,15 +1664,15 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.099975,
+        "totalCostPercent": 0.039996,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -1874,15 +1706,15 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.099975,
+        "totalCostPercent": 0.039996,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -1981,11 +1813,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.199925,
+        "totalCostPercent": 0.16997,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x1d013077b00B28038A3f1e7A29ABa34E12e562e9",
@@ -2024,11 +1856,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.199925,
+        "totalCostPercent": 0.16997,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x62fA288e3AC844dCfcE5469af4f8feb7d6f7Ba61",
@@ -2067,11 +1899,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.199925,
+        "totalCostPercent": 0.16997,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x1d013077b00B28038A3f1e7A29ABa34E12e562e9",
@@ -2110,11 +1942,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.199925,
+        "totalCostPercent": 0.16997,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x62fA288e3AC844dCfcE5469af4f8feb7d6f7Ba61",
@@ -2153,11 +1985,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.199925,
+        "totalCostPercent": 0.16997,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x1d013077b00B28038A3f1e7A29ABa34E12e562e9",
@@ -2196,11 +2028,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.199925,
+        "totalCostPercent": 0.16997,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x62fA288e3AC844dCfcE5469af4f8feb7d6f7Ba61",
@@ -2233,6 +2065,132 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       "costData": {
         "totalCostPercent": 0.25,
         "hops": [
+          {
+            "poolAddress": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
+            "costPercent": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "id": "EURm-axlUSDC",
+      "tokens": [
+        {
+          "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+          "symbol": "EURm"
+        },
+        {
+          "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+          "symbol": "axlUSDC"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
+          "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "token1": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
+          "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "token1": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.26995,
+        "hops": [
+          {
+            "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
+            "costPercent": 0.02
+          },
+          {
+            "poolAddress": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
+            "costPercent": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "id": "EURm-USDC",
+      "tokens": [
+        {
+          "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+          "symbol": "EURm"
+        },
+        {
+          "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+          "symbol": "USDC"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
+          "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "token1": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
+          "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "token1": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.26995,
+        "hops": [
+          {
+            "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
+            "costPercent": 0.02
+          },
+          {
+            "poolAddress": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
+            "costPercent": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "id": "EURm-USD₮",
+      "tokens": [
+        {
+          "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+          "symbol": "EURm"
+        },
+        {
+          "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
+          "symbol": "USD₮"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
+          "token0": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
+          "token1": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
+          "poolAddr": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
+          "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+          "token1": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.26995,
+        "hops": [
+          {
+            "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
+            "costPercent": 0.02
+          },
           {
             "poolAddress": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
             "costPercent": 0.25
@@ -2280,132 +2238,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           {
             "poolAddress": "0x62fA288e3AC844dCfcE5469af4f8feb7d6f7Ba61",
             "costPercent": 0.15
-          }
-        ]
-      }
-    },
-    {
-      "id": "EURm-axlUSDC",
-      "tokens": [
-        {
-          "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-          "symbol": "EURm"
-        },
-        {
-          "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-          "symbol": "axlUSDC"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
-          "poolAddr": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-          "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "token1": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
-          "poolAddr": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
-          "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "token1": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-          "poolType": "FPMM"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.299875,
-        "hops": [
-          {
-            "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
-            "costPercent": 0.25
-          }
-        ]
-      }
-    },
-    {
-      "id": "EURm-USDC",
-      "tokens": [
-        {
-          "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-          "symbol": "EURm"
-        },
-        {
-          "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-          "symbol": "USDC"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
-          "poolAddr": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-          "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "token1": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
-          "poolAddr": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
-          "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "token1": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-          "poolType": "FPMM"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.299875,
-        "hops": [
-          {
-            "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
-            "costPercent": 0.25
-          }
-        ]
-      }
-    },
-    {
-      "id": "EURm-USD₮",
-      "tokens": [
-        {
-          "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-          "symbol": "EURm"
-        },
-        {
-          "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-          "symbol": "USD₮"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
-          "poolAddr": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-          "token0": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-          "token1": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0xa849b475FE5a4B5C9C3280152c7a1945b907613b",
-          "poolAddr": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
-          "token0": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-          "token1": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-          "poolType": "FPMM"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.299875,
-        "hops": [
-          {
-            "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x1aD2EA06502919F935D9c09028dF73a462979e29",
-            "costPercent": 0.25
           }
         ]
       }
@@ -2660,7 +2492,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x8C0014afe032E4574481D8934504100bF23fCB56",
@@ -2668,7 +2500,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -2702,7 +2534,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x8C0014afe032E4574481D8934504100bF23fCB56",
@@ -2710,7 +2542,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -2744,7 +2576,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x8C0014afe032E4574481D8934504100bF23fCB56",
@@ -2752,7 +2584,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -2786,11 +2618,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x9861F6D2Fe392b934C86eC89D2886CEb772B2b41",
@@ -2828,11 +2660,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xDC81135fD82f02Cae736E261FB676B716663e8b8",
@@ -2871,11 +2703,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x6dAa327E0CbE2CE84c0F312F20b9432Fe744ed58",
@@ -2914,11 +2746,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x30214Efe28Ab44D6A5c739ebA5e0729B1d4213E4",
@@ -2957,11 +2789,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x71f55035a49C972C5C3197e874f6b7Fd94672B6E",
@@ -3000,11 +2832,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x62753eC2956f84AF240b4666a130C88a83933848",
@@ -3042,11 +2874,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x9861F6D2Fe392b934C86eC89D2886CEb772B2b41",
@@ -3084,11 +2916,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xDC81135fD82f02Cae736E261FB676B716663e8b8",
@@ -3127,11 +2959,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x6dAa327E0CbE2CE84c0F312F20b9432Fe744ed58",
@@ -3170,11 +3002,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x30214Efe28Ab44D6A5c739ebA5e0729B1d4213E4",
@@ -3213,11 +3045,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x71f55035a49C972C5C3197e874f6b7Fd94672B6E",
@@ -3256,11 +3088,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x62753eC2956f84AF240b4666a130C88a83933848",
@@ -3298,11 +3130,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x9861F6D2Fe392b934C86eC89D2886CEb772B2b41",
@@ -3340,11 +3172,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xDC81135fD82f02Cae736E261FB676B716663e8b8",
@@ -3383,11 +3215,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x6dAa327E0CbE2CE84c0F312F20b9432Fe744ed58",
@@ -3426,11 +3258,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x30214Efe28Ab44D6A5c739ebA5e0729B1d4213E4",
@@ -3469,11 +3301,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x71f55035a49C972C5C3197e874f6b7Fd94672B6E",
@@ -3512,11 +3344,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x62753eC2956f84AF240b4666a130C88a83933848",
@@ -5624,11 +5456,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xab945882018B81bDF62629e98fFdAfd9495a0076",
@@ -5667,11 +5499,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xaEa92e8006e6edf0f9E9368Ee9Af36814B738855",
@@ -5710,11 +5542,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xa337a498e4e061F4029FCb3b9F4E3D535E885dc5",
@@ -5753,11 +5585,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xab945882018B81bDF62629e98fFdAfd9495a0076",
@@ -5796,11 +5628,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xaEa92e8006e6edf0f9E9368Ee9Af36814B738855",
@@ -5839,11 +5671,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xa337a498e4e061F4029FCb3b9F4E3D535E885dc5",
@@ -5882,11 +5714,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xab945882018B81bDF62629e98fFdAfd9495a0076",
@@ -5925,11 +5757,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xaEa92e8006e6edf0f9E9368Ee9Af36814B738855",
@@ -5968,11 +5800,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xa337a498e4e061F4029FCb3b9F4E3D535E885dc5",
@@ -7483,11 +7315,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 2.049,
+        "totalCostPercent": 2.0196,
         "hops": [
           {
             "poolAddress": "0xb285d4C7133d6f27BfB29224fb0D22E7EC3ddD2D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x3d6e023177Bac13D6E316d95161D4bB9DCf0E276",
@@ -7526,11 +7358,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 2.049,
+        "totalCostPercent": 2.0196,
         "hops": [
           {
             "poolAddress": "0x462fe04b4FD719Cbd04C0310365D421D02AaA19E",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x3d6e023177Bac13D6E316d95161D4bB9DCf0E276",
@@ -7569,11 +7401,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 2.049,
+        "totalCostPercent": 2.0196,
         "hops": [
           {
             "poolAddress": "0x0FEBa760d93423D127DE1B6ABECdB60E5253228D",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x3d6e023177Bac13D6E316d95161D4bB9DCf0E276",
@@ -8151,6 +7983,113 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       }
     }
   ],
+  // Chain 80002
+  80002: [
+    {
+      "id": "USDC-USDm",
+      "tokens": [
+        {
+          "address": "0xfbD2d6a7C3Cb4491647173D6eCb2a4473521cd66",
+          "symbol": "USDC"
+        },
+        {
+          "address": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "symbol": "USDm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x7f8198C1C5a32f07Db575B88D2bAe6fD0Aa7F056",
+          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "token1": "0xfbD2d6a7C3Cb4491647173D6eCb2a4473521cd66",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.05,
+        "hops": [
+          {
+            "poolAddress": "0x7f8198C1C5a32f07Db575B88D2bAe6fD0Aa7F056",
+            "costPercent": 0.05
+          }
+        ]
+      }
+    },
+    {
+      "id": "EURm-USDm",
+      "tokens": [
+        {
+          "address": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
+          "symbol": "EURm"
+        },
+        {
+          "address": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "symbol": "USDm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xD74728994135734968b03EFc03448394BaCb1e5f",
+          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "token1": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.05,
+        "hops": [
+          {
+            "poolAddress": "0xD74728994135734968b03EFc03448394BaCb1e5f",
+            "costPercent": 0.05
+          }
+        ]
+      }
+    },
+    {
+      "id": "EURm-USDC",
+      "tokens": [
+        {
+          "address": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
+          "symbol": "EURm"
+        },
+        {
+          "address": "0xfbD2d6a7C3Cb4491647173D6eCb2a4473521cd66",
+          "symbol": "USDC"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x7f8198C1C5a32f07Db575B88D2bAe6fD0Aa7F056",
+          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "token1": "0xfbD2d6a7C3Cb4491647173D6eCb2a4473521cd66",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xD74728994135734968b03EFc03448394BaCb1e5f",
+          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "token1": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.099975,
+        "hops": [
+          {
+            "poolAddress": "0x7f8198C1C5a32f07Db575B88D2bAe6fD0Aa7F056",
+            "costPercent": 0.05
+          },
+          {
+            "poolAddress": "0xD74728994135734968b03EFc03448394BaCb1e5f",
+            "costPercent": 0.05
+          }
+        ]
+      }
+    }
+  ],
   // Chain 11142220
   11142220: [
     {
@@ -8175,11 +8114,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.05,
+        "totalCostPercent": 0.02,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -8206,11 +8145,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.05,
+        "totalCostPercent": 0.02,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -8237,11 +8176,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.05,
+        "totalCostPercent": 0.02,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -8275,15 +8214,15 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.099975,
+        "totalCostPercent": 0.039996,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -8317,15 +8256,15 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.099975,
+        "totalCostPercent": 0.039996,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -8359,15 +8298,15 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.099975,
+        "totalCostPercent": 0.039996,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -8466,11 +8405,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.199925,
+        "totalCostPercent": 0.16997,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x8103Fb2db87AC96cc62FAA399B98e1173720aB19",
@@ -8509,11 +8448,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.199925,
+        "totalCostPercent": 0.16997,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x62722497dc8992337117ee79A02015dcEa43b2C2",
@@ -8552,11 +8491,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.199925,
+        "totalCostPercent": 0.16997,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x8103Fb2db87AC96cc62FAA399B98e1173720aB19",
@@ -8595,11 +8534,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.199925,
+        "totalCostPercent": 0.16997,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x62722497dc8992337117ee79A02015dcEa43b2C2",
@@ -8638,11 +8577,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.199925,
+        "totalCostPercent": 0.16997,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x8103Fb2db87AC96cc62FAA399B98e1173720aB19",
@@ -8681,11 +8620,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.199925,
+        "totalCostPercent": 0.16997,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x62722497dc8992337117ee79A02015dcEa43b2C2",
@@ -8718,6 +8657,132 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
       "costData": {
         "totalCostPercent": 0.25,
         "hops": [
+          {
+            "poolAddress": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
+            "costPercent": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "id": "EURm-axlUSDC",
+      "tokens": [
+        {
+          "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+          "symbol": "EURm"
+        },
+        {
+          "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+          "symbol": "axlUSDC"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
+          "token0": "0x6285De9DA7C1d329C0451628638908915002d9d1",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
+          "token0": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.26995,
+        "hops": [
+          {
+            "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
+            "costPercent": 0.02
+          },
+          {
+            "poolAddress": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
+            "costPercent": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "id": "EURm-USDC",
+      "tokens": [
+        {
+          "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+          "symbol": "EURm"
+        },
+        {
+          "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+          "symbol": "USDC"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
+          "token0": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
+          "token0": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.26995,
+        "hops": [
+          {
+            "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
+            "costPercent": 0.02
+          },
+          {
+            "poolAddress": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
+            "costPercent": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "id": "EURm-USD₮",
+      "tokens": [
+        {
+          "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+          "symbol": "EURm"
+        },
+        {
+          "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+          "symbol": "USD₮"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
+          "token0": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
+          "token0": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
+          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.26995,
+        "hops": [
+          {
+            "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
+            "costPercent": 0.02
+          },
           {
             "poolAddress": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
             "costPercent": 0.25
@@ -8765,132 +8830,6 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           {
             "poolAddress": "0x62722497dc8992337117ee79A02015dcEa43b2C2",
             "costPercent": 0.15
-          }
-        ]
-      }
-    },
-    {
-      "id": "EURm-axlUSDC",
-      "tokens": [
-        {
-          "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-          "symbol": "EURm"
-        },
-        {
-          "address": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-          "symbol": "axlUSDC"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-          "token0": "0x6285De9DA7C1d329C0451628638908915002d9d1",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
-          "token0": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.299875,
-        "hops": [
-          {
-            "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
-            "costPercent": 0.25
-          }
-        ]
-      }
-    },
-    {
-      "id": "EURm-USDC",
-      "tokens": [
-        {
-          "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-          "symbol": "EURm"
-        },
-        {
-          "address": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-          "symbol": "USDC"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-          "token0": "0x01C5C0122039549AD1493B8220cABEdD739BC44E",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
-          "token0": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.299875,
-        "hops": [
-          {
-            "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
-            "costPercent": 0.25
-          }
-        ]
-      }
-    },
-    {
-      "id": "EURm-USD₮",
-      "tokens": [
-        {
-          "address": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-          "symbol": "EURm"
-        },
-        {
-          "address": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-          "symbol": "USD₮"
-        }
-      ],
-      "path": [
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-          "token0": "0xd077A400968890Eacc75cdc901F0356c943e4fDb",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        },
-        {
-          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
-          "poolAddr": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
-          "token0": "0xA99dC247d6b7B2E3ab48a1fEE101b83cD6aCd82a",
-          "token1": "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b",
-          "poolType": "FPMM"
-        }
-      ],
-      "costData": {
-        "totalCostPercent": 0.299875,
-        "hops": [
-          {
-            "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
-          },
-          {
-            "poolAddress": "0x3a58ACdd4627478581960f366fF411E11349FcB3",
-            "costPercent": 0.25
           }
         ]
       }
@@ -9145,7 +9084,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
@@ -9153,7 +9092,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -9187,7 +9126,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
@@ -9195,7 +9134,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -9229,7 +9168,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x550D9EcB4C373510b8A41f5fB7D98E9E1c51A07e",
@@ -9237,7 +9176,7 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           },
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           }
         ]
       }
@@ -9271,11 +9210,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
@@ -9313,11 +9252,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
@@ -9356,11 +9295,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x671334256a893fDBc4FfE55F98f156A168bD897a",
@@ -9399,11 +9338,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
@@ -9442,11 +9381,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xCBfC8C84168D7F34FabA0018A3A63b998f1ffeCe",
@@ -9485,11 +9424,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x49A968C539599385c69c2d528500DA58d933FafA",
@@ -9527,11 +9466,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
@@ -9569,11 +9508,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
@@ -9612,11 +9551,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x671334256a893fDBc4FfE55F98f156A168bD897a",
@@ -9655,11 +9594,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
@@ -9698,11 +9637,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xCBfC8C84168D7F34FabA0018A3A63b998f1ffeCe",
@@ -9741,11 +9680,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x49A968C539599385c69c2d528500DA58d933FafA",
@@ -9783,11 +9722,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xfD5295e75Ffea02780B0e2638D9faBb0316fD4e0",
@@ -9825,11 +9764,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x938A21b1f301206aBB4e15340782b89EF7D83c9c",
@@ -9868,11 +9807,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x671334256a893fDBc4FfE55F98f156A168bD897a",
@@ -9911,11 +9850,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x68D19b5a48cbbFd11057E97DA9960B09D771E7B6",
@@ -9954,11 +9893,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0xCBfC8C84168D7F34FabA0018A3A63b998f1ffeCe",
@@ -9997,11 +9936,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 0.34985,
+        "totalCostPercent": 0.31994,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x49A968C539599385c69c2d528500DA58d933FafA",
@@ -12109,11 +12048,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x917eE035bF0A964ACC75539f919A5B4F16336373",
@@ -12152,11 +12091,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x6B66271811615F4b6daDb8620ED71a1E90f41Deb",
@@ -12195,11 +12134,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x22118009665B1d6810d4560A098D3E67bbcb934f",
@@ -12238,11 +12177,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x917eE035bF0A964ACC75539f919A5B4F16336373",
@@ -12281,11 +12220,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x6B66271811615F4b6daDb8620ED71a1E90f41Deb",
@@ -12324,11 +12263,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x22118009665B1d6810d4560A098D3E67bbcb934f",
@@ -12367,11 +12306,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x917eE035bF0A964ACC75539f919A5B4F16336373",
@@ -12410,11 +12349,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x6B66271811615F4b6daDb8620ED71a1E90f41Deb",
@@ -12453,11 +12392,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 1.0495,
+        "totalCostPercent": 1.0198,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x22118009665B1d6810d4560A098D3E67bbcb934f",
@@ -13968,11 +13907,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 2.049,
+        "totalCostPercent": 2.0196,
         "hops": [
           {
             "poolAddress": "0xF1B77Ffc1F71b21b6c69876CEDAf82340803dE75",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x1e2506EdCa4eF3030E51bE8B571B935d55677604",
@@ -14011,11 +13950,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 2.049,
+        "totalCostPercent": 2.0196,
         "hops": [
           {
             "poolAddress": "0x7109E0A9B4623e90755b7e5c4e10F089E5Bf8bDb",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x1e2506EdCa4eF3030E51bE8B571B935d55677604",
@@ -14054,11 +13993,11 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
         }
       ],
       "costData": {
-        "totalCostPercent": 2.049,
+        "totalCostPercent": 2.0196,
         "hops": [
           {
             "poolAddress": "0xd1a70F43B2A95384DD2a7D7b259293328B3974f8",
-            "costPercent": 0.05
+            "costPercent": 0.02
           },
           {
             "poolAddress": "0x1e2506EdCa4eF3030E51bE8B571B935d55677604",

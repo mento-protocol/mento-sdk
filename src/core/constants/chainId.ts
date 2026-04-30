@@ -2,5 +2,6 @@ export enum ChainId {
   CELO = 42220,
   CELO_SEPOLIA = 11142220,
   MONAD_TESTNET = 10143,
-  MONAD = 143
+  MONAD = 143,
+  POLYGON_AMOY = 80002,
 }
