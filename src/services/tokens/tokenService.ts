@@ -20,7 +20,7 @@ import type { PublicClient } from 'viem'
 /**
  * Chains that use ReserveV2 (v3) instead of the legacy Reserve contract.
  */
-const RESERVE_V2_CHAINS: Set<number> = new Set([ChainId.MONAD_TESTNET, ChainId.MONAD])
+const RESERVE_V2_CHAINS: Set<number> = new Set([ChainId.MONAD_TESTNET, ChainId.MONAD, ChainId.POLYGON_AMOY])
 
 export class TokenService {
   private tokenMetadataCache = new Map<string, Pick<Token, 'name' | 'symbol' | 'decimals'>>()

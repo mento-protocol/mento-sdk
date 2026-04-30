@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-04-27T16:44:41.707Z
+// Generated on 2026-04-30T16:03:41.719Z
 
 import type { Token } from '../core/types'
 
@@ -253,6 +253,27 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       decimals: 18,
     }
   ],
+  // Chain 80002
+  80002: [
+    {
+      address: '0xfbD2d6a7C3Cb4491647173D6eCb2a4473521cd66',
+      symbol: TokenSymbol.USDC,
+      name: 'Mento Mock USDC',
+      decimals: 6,
+    },
+    {
+      address: '0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc',
+      symbol: TokenSymbol.USDm,
+      name: 'Mento Dollar',
+      decimals: 18,
+    },
+    {
+      address: '0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0',
+      symbol: TokenSymbol.EURm,
+      name: 'Mento Euro',
+      decimals: 18,
+    }
+  ],
   // Chain 11142220
   11142220: [
     {
@@ -419,6 +440,11 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.COPm]: '0x8A567e2aE79CA692Bd748aB832081C45de4041eA',
     [TokenSymbol.BRLm]: '0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787',
     [TokenSymbol.XOFm]: '0x73F93dcc49cB8A239e2032663e9475dd5ef29A08',
+  },
+  80002: {
+    [TokenSymbol.USDC]: '0xfbD2d6a7C3Cb4491647173D6eCb2a4473521cd66',
+    [TokenSymbol.USDm]: '0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc',
+    [TokenSymbol.EURm]: '0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0',
   },
   11142220: {
     [TokenSymbol.GBPm]: '0x85F5181Abdbf0e1814Fc4358582Ae07b8eBA3aF3',

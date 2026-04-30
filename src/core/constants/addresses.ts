@@ -62,6 +62,19 @@ export const addresses: ContractAddressMap = {
     OpenLiquidityStrategy: '0x54e2Ae8c8448912E17cE0b2453bAFB7B0D80E40f',
   },
 
+  [ChainId.POLYGON_AMOY]: {
+    BreakerBox: '0x88869E30609D2C0E4032463D713328C6f541878e',
+    MedianDeltaBreaker: '0xf923C884F319b8866F67C5719A80E5cB4D0FAF2c',
+    SortedOracles: '0x85ed9ac57827132B8F60938F3165BC139E1F53cd',
+    ValueDeltaBreaker: '0xbbD0D093F5F11D16D4456FBd6229c9a3b70B8Aaf',
+    Reserve: '0xbCdc1D0b92DfceEaa0FcD0a0D53355F4bF1DB8a7',
+    StableToken: '0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc', // USDm
+    FPMMFactory: '0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980',
+    Router: '0xcf6cD45210b3ffE3cA28379C4683F1e60D0C2CCd',
+    ReserveLiquidityStrategy: '0x734bb3251Ec3f1A83f8f2A8609bcEF649D54EbF8',
+    OpenLiquidityStrategy: '0xCCd2aD0603a08EBc14D223a983171ef18192e8c9',
+  },
+
   [ChainId.CELO_SEPOLIA]: {
     // Oracles & Breakers
     BreakerBox: '0x578bD46003B9D3fd4c3C3f47c98B329562a6a1dE',
