@@ -4,4 +4,5 @@ export enum ChainId {
   MONAD_TESTNET = 10143,
   MONAD = 143,
   POLYGON_AMOY = 80002,
+  BASE_SEPOLIA = 84532,
 }

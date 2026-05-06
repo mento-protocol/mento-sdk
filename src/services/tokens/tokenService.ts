@@ -6,13 +6,7 @@ interface Exchange {
   exchangeId: string
   assets: readonly `0x${string}`[]
 }
-import {
-  getContractAddress,
-  tryGetContractAddress,
-  ChainId,
-  RESERVE,
-  BIPOOLMANAGER,
-} from '../../core/constants'
+import { getContractAddress, tryGetContractAddress, ChainId, RESERVE, BIPOOLMANAGER } from '../../core/constants'
 import { retryOperation } from '../../utils'
 import { multicall } from '../../utils/multicall'
 import type { PublicClient } from 'viem'
@@ -20,12 +14,20 @@ import type { PublicClient } from 'viem'
 /**
  * Chains that use ReserveV2 (v3) instead of the legacy Reserve contract.
  */
-const RESERVE_V2_CHAINS: Set<number> = new Set([ChainId.MONAD_TESTNET, ChainId.MONAD, ChainId.POLYGON_AMOY])
+const RESERVE_V2_CHAINS: Set<number> = new Set([
+  ChainId.MONAD_TESTNET,
+  ChainId.MONAD,
+  ChainId.POLYGON_AMOY,
+  ChainId.BASE_SEPOLIA,
+])
 
 export class TokenService {
   private tokenMetadataCache = new Map<string, Pick<Token, 'name' | 'symbol' | 'decimals'>>()
 
-  constructor(private publicClient: PublicClient, private chainId: number) {}
+  constructor(
+    private publicClient: PublicClient,
+    private chainId: number
+  ) {}
 
   private isReserveV2(): boolean {
     return RESERVE_V2_CHAINS.has(this.chainId)
@@ -36,9 +38,7 @@ export class TokenService {
    * @param address - Token contract address
    * @returns Token metadata
    */
-  private async getTokenMetadata(
-    address: string
-  ): Promise<Pick<Token, 'name' | 'symbol' | 'decimals'>> {
+  private async getTokenMetadata(address: string): Promise<Pick<Token, 'name' | 'symbol' | 'decimals'>> {
     const cacheKey = address.toLowerCase()
     const cached = this.tokenMetadataCache.get(cacheKey)
     if (cached) {
@@ -76,7 +76,7 @@ export class TokenService {
 
     const multicallResults = await multicall(
       this.publicClient,
-      missing.flatMap(({ address }) => ([
+      missing.flatMap(({ address }) => [
         {
           address: address as `0x${string}`,
           abi: ERC20_ABI,
@@ -95,7 +95,7 @@ export class TokenService {
           functionName: 'decimals',
           args: [] as const,
         },
-      ])),
+      ]),
       { allowFailure: true }
     )
 
@@ -106,11 +106,7 @@ export class TokenService {
         const symbol = multicallResults[resultOffset + 1]
         const decimals = multicallResults[resultOffset + 2]
 
-        if (
-          name?.status === 'success' &&
-          symbol?.status === 'success' &&
-          decimals?.status === 'success'
-        ) {
+        if (name?.status === 'success' && symbol?.status === 'success' && decimals?.status === 'success') {
           return {
             name: name.result as string,
             symbol: symbol.result as string,
@@ -131,9 +127,7 @@ export class TokenService {
     return results
   }
 
-  private async readTokenMetadataWithRetry(
-    address: string
-  ): Promise<Pick<Token, 'name' | 'symbol' | 'decimals'>> {
+  private async readTokenMetadataWithRetry(address: string): Promise<Pick<Token, 'name' | 'symbol' | 'decimals'>> {
     const [name, symbol, decimals] = await Promise.all([
       retryOperation(() =>
         this.publicClient.readContract({
@@ -219,10 +213,7 @@ export class TokenService {
     return (totalSupply as bigint).toString()
   }
 
-  private async getCollateralStatusBatch(
-    reserveAddress: string,
-    addresses: string[]
-  ): Promise<boolean[]> {
+  private async getCollateralStatusBatch(reserveAddress: string, addresses: string[]): Promise<boolean[]> {
     if (addresses.length === 0) {
       return []
     }

@@ -61,6 +61,11 @@ const CHAIN_CONFIGS: ChainTestConfig[] = [
     chainId: ChainId.POLYGON_AMOY,
     rpcEnvVar: 'POLYGON_AMOY_RPC_URL',
   },
+  {
+    name: 'Base Sepolia',
+    chainId: ChainId.BASE_SEPOLIA,
+    rpcEnvVar: 'BASE_SEPOLIA_RPC_URL',
+  },
 ]
 
 describe.each(CHAIN_CONFIGS)('Router Swap Flow Integration - $name', ({ chainId, rpcEnvVar }) => {
@@ -227,13 +232,10 @@ describe.each(CHAIN_CONFIGS)('Router Swap Flow Integration - $name', ({ chainId,
       const recipient = devAddress || '0x0000000000000000000000000000000000000001'
 
       const deadline = deadlineFromMinutes(20)
-      const swapDetails = await swapService.buildSwapParams(
-        tokenIn,
-        tokenOut,
-        amountIn,
-        recipient as Address,
-        { slippageTolerance: 0.5, deadline }
-      )
+      const swapDetails = await swapService.buildSwapParams(tokenIn, tokenOut, amountIn, recipient as Address, {
+        slippageTolerance: 0.5,
+        deadline,
+      })
 
       expect(swapDetails).toBeDefined()
       expect(swapDetails.params).toHaveProperty('to')
@@ -253,13 +255,10 @@ describe.each(CHAIN_CONFIGS)('Router Swap Flow Integration - $name', ({ chainId,
       const recipient = devAddress || '0x0000000000000000000000000000000000000001'
       const slippageTolerance = 0.5 // 0.5%
 
-      const swapDetails = await swapService.buildSwapParams(
-        tokenIn,
-        tokenOut,
-        amountIn,
-        recipient as Address,
-        { slippageTolerance, deadline: deadlineFromMinutes(20) }
-      )
+      const swapDetails = await swapService.buildSwapParams(tokenIn, tokenOut, amountIn, recipient as Address, {
+        slippageTolerance,
+        deadline: deadlineFromMinutes(20),
+      })
 
       // Verify slippage calculation: amountOutMin should be expectedAmountOut * (1 - slippage)
       const expectedMin = (swapDetails.expectedAmountOut * 9950n) / 10000n // 0.5% = 50 basis points
@@ -308,13 +307,10 @@ describe.each(CHAIN_CONFIGS)('Router Swap Flow Integration - $name', ({ chainId,
       const recipient = devAddress || '0x0000000000000000000000000000000000000001'
       const customDeadline = BigInt(Math.floor(Date.now() / 1000) + 60 * 60) // 1 hour
 
-      const swapDetails = await swapService.buildSwapParams(
-        tokenIn,
-        tokenOut,
-        amountIn,
-        recipient as Address,
-        { slippageTolerance: 0.5, deadline: customDeadline }
-      )
+      const swapDetails = await swapService.buildSwapParams(tokenIn, tokenOut, amountIn, recipient as Address, {
+        slippageTolerance: 0.5,
+        deadline: customDeadline,
+      })
 
       expect(swapDetails.deadline).toBe(customDeadline)
     })

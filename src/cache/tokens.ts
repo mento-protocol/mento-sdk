@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-04-30T16:03:41.719Z
+// Generated on 2026-05-06T12:39:32.137Z
 
 import type { Token } from '../core/types'
 
@@ -13,6 +13,7 @@ export enum TokenSymbol {
   CADm = 'CADm',
   CHFm = 'CHFm',
   COPm = 'COPm',
+  EURC = 'EURC',
   EURm = 'EURm',
   GBPm = 'GBPm',
   GHSm = 'GHSm',
@@ -274,6 +275,21 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       decimals: 18,
     }
   ],
+  // Chain 84532
+  84532: [
+    {
+      address: '0xe36C65cF840C16F45A0bd89628B89a9414DFda82',
+      symbol: TokenSymbol.EURC,
+      name: 'Mento Mock EURC',
+      decimals: 6,
+    },
+    {
+      address: '0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0',
+      symbol: TokenSymbol.EURm,
+      name: 'Mento Euro',
+      decimals: 18,
+    }
+  ],
   // Chain 11142220
   11142220: [
     {
@@ -444,6 +460,10 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
   80002: {
     [TokenSymbol.USDC]: '0xfbD2d6a7C3Cb4491647173D6eCb2a4473521cd66',
     [TokenSymbol.USDm]: '0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc',
+    [TokenSymbol.EURm]: '0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0',
+  },
+  84532: {
+    [TokenSymbol.EURC]: '0xe36C65cF840C16F45A0bd89628B89a9414DFda82',
     [TokenSymbol.EURm]: '0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0',
   },
   11142220: {
