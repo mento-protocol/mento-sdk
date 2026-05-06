@@ -5,6 +5,7 @@ export const NETWORK_MAP: Record<string, number> = {
   monad: 143,
   ['monad-testnet']: 10143,
   ['polygon-amoy']: 80002,
+  ['base-sepolia']: 84532,
 }
 
 // RPC URLs for different networks
@@ -15,6 +16,7 @@ export const rpcUrls = {
   143: process.env.MONAD_RPC_URL || 'https://rpc.monad.xyz',
   10143: process.env.MONAD_TESTNET_RPC_URL || 'https://testnet-rpc.monad.xyz',
   80002: process.env.POLYGON_AMOY_RPC_URL || 'https://polygon-amoy.drpc.org',
+  84532: process.env.BASE_SEPOLIA_RPC_URL || 'https://base-sepolia.drpc.org',
 } as const
 
 // Type for supported chain IDs
@@ -32,21 +34,14 @@ export interface NetworkConfig {
  * @param chainIdArg - The chainId argument (e.g., '42220', '11142220')
  * @returns NetworkConfig with chainId and rpcUrl
  */
-export function parseNetworkArgs(
-  networkArg?: string,
-  chainIdArg?: string
-): NetworkConfig {
+export function parseNetworkArgs(networkArg?: string, chainIdArg?: string): NetworkConfig {
   let chainId: number
   let rpcUrl: string
 
   if (networkArg) {
     const networkName = networkArg.toLowerCase()
     if (!NETWORK_MAP[networkName]) {
-      console.error(
-        `Invalid network "${networkArg}". Valid networks: ${Object.keys(
-          NETWORK_MAP
-        ).join(', ')}`
-      )
+      console.error(`Invalid network "${networkArg}". Valid networks: ${Object.keys(NETWORK_MAP).join(', ')}`)
       process.exit(1)
     }
     chainId = NETWORK_MAP[networkName]
@@ -54,11 +49,7 @@ export function parseNetworkArgs(
   } else if (chainIdArg) {
     chainId = Number(chainIdArg)
     if (!rpcUrls[chainId as keyof typeof rpcUrls]) {
-      console.error(
-        `Invalid chainId "${chainId}". Valid chainIds: ${Object.keys(
-          rpcUrls
-        ).join(', ')}`
-      )
+      console.error(`Invalid chainId "${chainId}". Valid chainIds: ${Object.keys(rpcUrls).join(', ')}`)
       process.exit(1)
     }
     rpcUrl = rpcUrls[chainId as keyof typeof rpcUrls]
@@ -77,8 +68,6 @@ export function parseNetworkArgs(
  * @returns The network name or 'Unknown' if not found
  */
 export function getNetworkName(chainId: number): string {
-  const networkEntry = Object.entries(NETWORK_MAP).find(
-    ([, id]) => id === chainId
-  )
+  const networkEntry = Object.entries(NETWORK_MAP).find(([, id]) => id === chainId)
   return networkEntry ? networkEntry[0] : 'Unknown'
 }

@@ -52,6 +52,11 @@ const CHAIN_CONFIGS: ChainTestConfig[] = [
     chainId: ChainId.POLYGON_AMOY,
     rpcEnvVar: 'POLYGON_AMOY_RPC_URL',
   },
+  {
+    name: 'Base Sepolia',
+    chainId: ChainId.BASE_SEPOLIA,
+    rpcEnvVar: 'BASE_SEPOLIA_RPC_URL',
+  },
 ]
 
 describe.each(CHAIN_CONFIGS)('PoolService.getPoolDetails() Integration - $name', ({ chainId, rpcEnvVar }) => {

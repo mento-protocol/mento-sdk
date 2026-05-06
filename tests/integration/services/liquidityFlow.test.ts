@@ -62,6 +62,11 @@ const CHAIN_CONFIGS: ChainTestConfig[] = [
     chainId: ChainId.POLYGON_AMOY,
     rpcEnvVar: 'POLYGON_AMOY_RPC_URL',
   },
+  {
+    name: 'Base Sepolia',
+    chainId: ChainId.BASE_SEPOLIA,
+    rpcEnvVar: 'BASE_SEPOLIA_RPC_URL',
+  },
 ]
 
 describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, rpcEnvVar }) => {
@@ -170,8 +175,8 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
       )
 
       // Liquidity should roughly double (allowing for rounding)
-      expect(quote2.liquidity).toBeGreaterThanOrEqual(quote1.liquidity * 19n / 10n) // At least 1.9x
-      expect(quote2.liquidity).toBeLessThanOrEqual(quote1.liquidity * 21n / 10n) // At most 2.1x
+      expect(quote2.liquidity).toBeGreaterThanOrEqual((quote1.liquidity * 19n) / 10n) // At least 1.9x
+      expect(quote2.liquidity).toBeLessThanOrEqual((quote1.liquidity * 21n) / 10n) // At most 2.1x
     })
   })
 
@@ -197,8 +202,8 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
       const quote2 = await liquidityService.quoteRemoveLiquidity(testPool.poolAddr, baseLiquidity * 2n)
 
       // Amounts should roughly double
-      expect(quote2.amount0).toBeGreaterThanOrEqual(quote1.amount0 * 19n / 10n)
-      expect(quote2.amount0).toBeLessThanOrEqual(quote1.amount0 * 21n / 10n)
+      expect(quote2.amount0).toBeGreaterThanOrEqual((quote1.amount0 * 19n) / 10n)
+      expect(quote2.amount0).toBeLessThanOrEqual((quote1.amount0 * 21n) / 10n)
     })
   })
 
@@ -219,7 +224,7 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
         tokenB: testPool.token1 as Address,
         amountB,
         recipient: recipient as Address,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
 
       expect(params).toBeDefined()
@@ -261,7 +266,7 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
         tokenB: testPool.token1 as Address,
         amountB,
         recipient: recipient as Address,
-        options: { slippageTolerance, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance, deadline: deadlineFromMinutes(20) },
       })
 
       // Expected calculation: amountMin = amount * (1 - 0.005) = amount * 9950 / 10000
@@ -292,7 +297,7 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
         amountB,
         recipient: devAddress,
         owner: devAddress,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
 
       expect(transaction).toHaveProperty('approvalA')
@@ -332,7 +337,7 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
         poolAddress: testPool.poolAddr,
         liquidity,
         recipient: recipient as Address,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
 
       expect(params).toBeDefined()
@@ -365,7 +370,7 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
         liquidity,
         recipient: devAddress,
         owner: devAddress,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
 
       expect(transaction).toHaveProperty('approval')
@@ -421,9 +426,8 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
       const balance = await liquidityService.getLPTokenBalance(testPool.poolAddr, devAddress)
 
       // Verify share percentage calculation (basis-point precision: 0.01%)
-      const expectedSharePercent = balance.totalSupply > 0n
-        ? Number((balance.balance * 10000n) / balance.totalSupply) / 100
-        : 0
+      const expectedSharePercent =
+        balance.totalSupply > 0n ? Number((balance.balance * 10000n) / balance.totalSupply) / 100 : 0
 
       expect(balance.sharePercent).toBe(expectedSharePercent)
     })
@@ -439,13 +443,10 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
       const amountIn = 1000000000000000000n // 1 token
       const amountInSplit = 0.5 // 50/50 split
 
-      const quote = await liquidityService.quoteZapIn(
-        testPool.poolAddr,
-        tokenIn,
-        amountIn,
-        amountInSplit,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const quote = await liquidityService.quoteZapIn(testPool.poolAddr, tokenIn, amountIn, amountInSplit, {
+        slippageTolerance: 0.5,
+        deadline: deadlineFromMinutes(20),
+      })
 
       expect(quote).toBeDefined()
       expect(quote).toHaveProperty('amountOutFromA')
@@ -470,7 +471,7 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
         amountIn,
         amountInSplit,
         recipient: recipient as Address,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
 
       expect(params).toBeDefined()
@@ -492,12 +493,10 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
       const tokenOut = testPool.token0 as Address
       const liquidity = 1000000000000000000n
 
-      const quote = await liquidityService.quoteZapOut(
-        testPool.poolAddr,
-        tokenOut,
-        liquidity,
-        { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
-      )
+      const quote = await liquidityService.quoteZapOut(testPool.poolAddr, tokenOut, liquidity, {
+        slippageTolerance: 0.5,
+        deadline: deadlineFromMinutes(20),
+      })
 
       expect(quote).toBeDefined()
       expect(quote).toHaveProperty('amountOutFromA')
@@ -520,7 +519,7 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
         tokenOut,
         liquidity,
         recipient: recipient as Address,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) },
       })
 
       expect(params).toBeDefined()
@@ -554,13 +553,7 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
       const wrongToken = '0x9999000000000000000000000000000000000000' as Address
 
       await expect(
-        liquidityService.quoteAddLiquidity(
-          testPool.poolAddr,
-          testPool.token0 as Address,
-          1n,
-          wrongToken,
-          1n
-        )
+        liquidityService.quoteAddLiquidity(testPool.poolAddr, testPool.token0 as Address, 1n, wrongToken, 1n)
       ).rejects.toThrow(/don't match pool/)
     })
 
@@ -593,7 +586,7 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
         tokenB: testPool.token1 as Address,
         amountB: 2000000000000000000n,
         recipient,
-        options: { slippageTolerance: 0.5, deadline: customDeadline }
+        options: { slippageTolerance: 0.5, deadline: customDeadline },
       })
 
       expect(params.deadline).toBe(customDeadline)
@@ -612,7 +605,7 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
         tokenB: testPool.token1 as Address,
         amountB: amount,
         recipient,
-        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) } // 0.5%
+        options: { slippageTolerance: 0.5, deadline: deadlineFromMinutes(20) }, // 0.5%
       })
 
       const params2 = await liquidityService.buildAddLiquidityParams({
@@ -622,7 +615,7 @@ describe.each(CHAIN_CONFIGS)('Liquidity Flow Integration - $name', ({ chainId, r
         tokenB: testPool.token1 as Address,
         amountB: amount,
         recipient,
-        options: { slippageTolerance: 1.0, deadline: deadlineFromMinutes(20) } // 1.0%
+        options: { slippageTolerance: 1.0, deadline: deadlineFromMinutes(20) }, // 1.0%
       })
 
       // Higher slippage tolerance should result in lower minimums
