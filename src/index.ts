@@ -1,5 +1,5 @@
 import { createPublicClient, http, type PublicClient } from 'viem'
-import { ContractAddresses } from './core/types'
+import { ContractAddresses, DataStreamsCredentials } from './core/types'
 import { ChainId } from './core/constants/chainId'
 import { getContractAddress } from './core/constants/addresses'
 import { getDefaultRpcUrl, getChainConfig } from './utils/chainConfig'
@@ -20,6 +20,7 @@ export interface MentoBatchOptions {
 export interface MentoClientOptions {
   httpBatch?: MentoBatchOptions | false
   multicallBatch?: MentoBatchOptions | false
+  dataStreams?: DataStreamsCredentials
 }
 
 const DEFAULT_HTTP_BATCH_OPTIONS: Required<MentoBatchOptions> = {

@@ -1,0 +1,73 @@
+{
+  "project": "mento-sdk",
+  "branchName": "ralph/data-streams-client",
+  "description": "SDK-T1 — DataStreamsClient: Chainlink Data Streams REST client with HMAC auth, V3/V4 report schema types, and 5s TTL cache",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Add DataStreams credential types and report schema interfaces",
+      "description": "As a developer, I need TypeScript types for Data Streams credentials and decoded report schemas so that the client and consumers are fully typed.",
+      "acceptanceCriteria": [
+        "Create `src/core/types/dataStreams.ts` exporting: `DataStreamsCredentials` interface with `apiKey: string`, `userSecret: string`, `baseUrl?: string`; `ReportV3` interface with fields `feedID: string`, `validFromTimestamp: number`, `observationsTimestamp: number`, `nativeFee: bigint`, `linkFee: bigint`, `expiresAt: number`, `price: bigint`, `bid: bigint`, `ask: bigint`, `fullReport: string`; `ReportV4` interface with same fields minus `bid`/`ask`, plus `marketStatus: 0 | 1 | 2`; `DataStreamsReport` union type `ReportV3 | ReportV4`; `DataStreamsSchemaVersion` enum or const with `V3 = '0x0003'` and `V4 = '0x0004'`",
+        "Extend `MentoClientOptions` in `src/core/types/provider.ts` with optional field `dataStreams?: DataStreamsCredentials`",
+        "Export all new types from `src/core/types/index.ts`",
+        "No implementation code — types only",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "V3 prefix = 0x0003 (crypto + NCFX FX), V4 prefix = 0x0004 (premium FX/RWA). marketStatus values: 0=UNKNOWN, 1=INACTIVE, 2=ACTIVE. fullReport is a raw hex string that MUST be preserved as-is for on-chain submission — do not parse or transform it."
+    },
+    {
+      "id": "US-002",
+      "title": "Implement DataStreamsClient with HMAC auth and 5s TTL cache",
+      "description": "As an SDK consumer, I want a client that fetches signed Chainlink Data Streams reports with proper HMAC authentication so that I can obtain reports for on-chain submission.",
+      "acceptanceCriteria": [
+        "Create `src/services/dataStreams/auth.ts` exporting `generateDataStreamsAuthHeaders(apiKey: string, userSecret: string, method: string, fullUrl: string, body?: string): Record<string, string>` — computes HMAC-SHA256 where string-to-sign is `METHOD PATH_WITH_QUERY BODY_HASH API_KEY TIMESTAMP_MS` (space-separated), body hash for GET is SHA-256 of empty string (`e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`), returns headers `{ Authorization: apiKey, 'X-Authorization-Timestamp': ms.toString(), 'X-Authorization-Signature-SHA256': hmacHex }`",
+        "Create `src/services/dataStreams/DataStreamsClient.ts` with class `DataStreamsClient` accepting `DataStreamsCredentials` in constructor",
+        "`getLatestReport(feedId: string): Promise<DataStreamsReport>` calls `GET /api/v1/reports/latest?feedID={feedId}`, decodes response into `ReportV3` or `ReportV4` based on feedId prefix (first 6 chars), results cached for 5 seconds keyed by feedId",
+        "`getBulkReports(feedIds: string[], timestamp: number): Promise<DataStreamsReport[]>` calls `GET /api/v1/reports/bulk?feedIDs={ids}&timestamp={ts}`, returns reports in the same order as input feedIds, no caching",
+        "Both methods throw a descriptive `Error` if credentials were not provided at construction",
+        "Default baseUrl is `https://api.dataengine.chain.link`; respects `credentials.baseUrl` override",
+        "Credentials are never logged or written to any output",
+        "Export `DataStreamsClient` from `src/services/dataStreams/index.ts` and from `src/index.ts`",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Use Node.js built-in `crypto` module for HMAC (available in Node 18+). Do NOT use external crypto libraries. The API response envelope for latest is `{ report: { feedID, fullReport, validFromTimestamp, observationsTimestamp } }` — the decoded numeric fields (price, bid, ask, nativeFee, linkFee, expiresAt, marketStatus) are inside `report` as strings that must be converted to bigint. For bulk the envelope is `{ reports: [...] }`. Preserve `fullReport` as the raw hex string exactly as returned."
+    },
+    {
+      "id": "US-003",
+      "title": "Unit tests for DataStreamsClient auth and cache",
+      "description": "As a developer, I want unit tests for the HMAC auth and cache behaviour so that correctness is verified without hitting the live API.",
+      "acceptanceCriteria": [
+        "Create `tests/unit/services/dataStreams/auth.test.ts`: test that `generateDataStreamsAuthHeaders` produces the correct `Authorization` (equals apiKey), `X-Authorization-Timestamp` (a numeric string), and `X-Authorization-Signature-SHA256` (a 64-char hex string); test with a fixed timestamp to verify the signature against a known-good HMAC-SHA256 computed value",
+        "Create `tests/unit/services/dataStreams/DataStreamsClient.test.ts`: mock `fetch` (or the HTTP layer); test that `getLatestReport` returns cached result on second call within 5s; test that cache is bypassed after 5s TTL expires; test that `getBulkReports` is never cached; test that both methods throw `Error` when constructed without credentials (or with empty credentials)",
+        "Tests do not make real HTTP calls — all network is mocked",
+        "Tests pass",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "Use Jest's fake timers (`jest.useFakeTimers()`) to advance time and test TTL expiry without sleeping. The known-good HMAC vector: method='GET', path='/api/v1/reports/latest?feedID=0xabc', bodyHash='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', apiKey='test-key', timestamp=1700000000000 — compute expected HMAC with `echo -n 'GET /api/v1/reports/latest?feedID=0xabc e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 test-key 1700000000000' | openssl dgst -sha256 -hmac 'test-secret'` and hardcode as the expected value."
+    },
+    {
+      "id": "US-004",
+      "title": "Integration test for DataStreamsClient against live API",
+      "description": "As a developer, I want an integration test that calls the real Chainlink Data Streams API so that authentication and response parsing are validated end-to-end.",
+      "acceptanceCriteria": [
+        "Create `tests/integration/dataStreams/DataStreamsClient.test.ts`",
+        "Entire test file is skipped (via `describe.skip` or `beforeAll` + `test.skip`) when `DATA_STREAMS_API_KEY` env var is not set — print a message: `'Skipping: DATA_STREAMS_API_KEY not set'`",
+        "When env vars are present, construct `DataStreamsClient` with `apiKey = process.env.DATA_STREAMS_API_KEY`, `userSecret = process.env.DATA_STREAMS_USER_SECRET`, `baseUrl = process.env.DATA_STREAMS_BASE_URL ?? 'https://api.dataengine.chain.link'`",
+        "Test `getLatestReport` with EUR/USD feedId `0x0004ce7bd717133dc3d5280e917e4c875bc51b5250af08207f88d2188183b999`: response has `feedID` equal to the requested feedId, `fullReport` is a non-empty hex string, `observationsTimestamp` is a positive number, `price` is a bigint > 0n",
+        "Test that calling `getLatestReport` twice within 1 second returns the same `fullReport` value (cache hit)",
+        "Tests pass",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "EUR/USD feedId `0x0004ce7bd717133dc3d5280e917e4c875bc51b5250af08207f88d2188183b999` is confirmed provisioned in Mento's mainnet subscription. V4 schema — response will have `price` and `marketStatus` but no `bid`/`ask`. The integration test runner must set DATA_STREAMS_API_KEY and DATA_STREAMS_USER_SECRET as env vars. Do not hardcode credentials."
+    }
+  ]
+}

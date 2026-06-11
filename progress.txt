@@ -1,0 +1,9 @@
+# Ralph Progress Log
+Started: 2026-06-10
+Feature: ralph/data-streams-client (SDK-T1 — DataStreamsClient)
+---
+
+## US-001 — DataStreams credential types and report schema interfaces [DONE]
+Date: 2026-06-11
+Files: src/core/types/dataStreams.ts, src/core/types/index.ts, src/index.ts
+Summary: Added DataStreamsCredentials, ReportV3, ReportV4, DataStreamsReport union, and DataStreamsSchemaVersion const. Exported from src/core/types/index.ts. Extended MentoClientOptions with optional dataStreams field. Typecheck passes.
