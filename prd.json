@@ -34,7 +34,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Use Node.js built-in `crypto` module for HMAC (available in Node 18+). Do NOT use external crypto libraries. The API response envelope for latest is `{ report: { feedID, fullReport, validFromTimestamp, observationsTimestamp } }` — the decoded numeric fields (price, bid, ask, nativeFee, linkFee, expiresAt, marketStatus) are inside `report` as strings that must be converted to bigint. For bulk the envelope is `{ reports: [...] }`. Preserve `fullReport` as the raw hex string exactly as returned."
     },
     {
@@ -49,7 +49,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Use Jest's fake timers (`jest.useFakeTimers()`) to advance time and test TTL expiry without sleeping. The known-good HMAC vector: method='GET', path='/api/v1/reports/latest?feedID=0xabc', bodyHash='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', apiKey='test-key', timestamp=1700000000000 — compute expected HMAC with `echo -n 'GET /api/v1/reports/latest?feedID=0xabc e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 test-key 1700000000000' | openssl dgst -sha256 -hmac 'test-secret'` and hardcode as the expected value."
     },
     {
@@ -66,7 +66,7 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "EUR/USD feedId `0x0004ce7bd717133dc3d5280e917e4c875bc51b5250af08207f88d2188183b999` is confirmed provisioned in Mento's mainnet subscription. V4 schema — response will have `price` and `marketStatus` but no `bid`/`ask`. The integration test runner must set DATA_STREAMS_API_KEY and DATA_STREAMS_USER_SECRET as env vars. Do not hardcode credentials."
     }
   ]
