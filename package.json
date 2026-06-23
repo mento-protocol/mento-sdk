@@ -57,28 +57,29 @@
     "pnpm": ">=9"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@jest/types": "^30.2.0",
-    "size-limit": "^12.0.0",
     "@size-limit/preset-small-lib": "^12.0.0",
     "@tsconfig/recommended": "^1.0.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.3.3",
     "@types/yargs-parser": "^21.0.3",
-    "@eslint/js": "^10.0.1",
+    "dotenv": "^17.3.1",
     "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.0.0",
-    "typescript-eslint": "^8.0.0",
     "husky": "^9.1.7",
     "jest": "^30.2.0",
     "prettier": "^3.8.1",
+    "size-limit": "^12.0.0",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "5.9.3",
-    "yargs-parser": "^22.0.0",
-    "dotenv": "^17.3.1"
+    "typescript-eslint": "^8.0.0",
+    "yargs-parser": "^22.0.0"
   },
   "dependencies": {
+    "@chainlink/data-streams-sdk": "^1.2.1",
     "viem": "^2.21.44"
   },
   "pnpm": {

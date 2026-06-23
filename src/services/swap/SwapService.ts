@@ -1,6 +1,7 @@
-import { Address, PublicClient, encodeFunctionData } from 'viem'
+import { Address, Hex, PublicClient, encodeFunctionData } from 'viem'
 import { RouteService } from '../routes'
 import { QuoteService } from '../quotes'
+import { DataStreamsService } from '../dataStreams'
 import { Route, CallParams } from '../../core/types'
 import { ROUTER_ABI, ERC20_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
@@ -101,7 +102,9 @@ export class SwapService {
     private publicClient: PublicClient,
     private chainId: number,
     private routeService: RouteService,
-    private quoteService: QuoteService
+    private quoteService: QuoteService,
+    /** Optional — required only for the Data Streams verify-on-swap path (`buildSwapWithReportsParams`). */
+    private dataStreams?: DataStreamsService
   ) {}
 
   /**
@@ -237,6 +240,74 @@ export class SwapService {
 
     return {
       params: prepared.params,
+      route: prepared.route,
+      routerRoutes: prepared.routerRoutes,
+      amountIn,
+      amountOutMin: prepared.amountOutMin,
+      expectedAmountOut: prepared.expectedAmountOut,
+      deadline: options.deadline,
+    }
+  }
+
+  /**
+   * Builds swap parameters for the Data Streams verify-on-swap path. Fetches a fresh DON-signed
+   * report for each hop's rate feed and encodes `RouterWithReports.swapExactTokensForTokensWithReports`,
+   * so the Router ingests + verifies the reports before pricing the swap (just-in-time).
+   *
+   * Requires the SDK to be created with `dataStreams` credentials and a `dataStreamsRelayerFactory`.
+   *
+   * @param tokenIn The input token address.
+   * @param tokenOut The output token address.
+   * @param amountIn The input amount (wei).
+   * @param recipient The address to receive the output.
+   * @param options Slippage + deadline.
+   * @param route Optional pre-fetched route.
+   * @returns Swap details whose `params` call `swapExactTokensForTokensWithReports`.
+   * @throws if Data Streams is not configured on this SDK instance.
+   */
+  async buildSwapWithReportsParams(
+    tokenIn: string,
+    tokenOut: string,
+    amountIn: bigint,
+    recipient: string,
+    options: SwapOptions,
+    route?: Route
+  ): Promise<SwapDetails> {
+    if (!this.dataStreams) {
+      throw new Error(
+        'Data Streams is not configured. Create the SDK with `dataStreams` credentials and ' +
+          '`dataStreamsRelayerFactory` to use swap-with-reports.'
+      )
+    }
+    validateAddress(recipient, 'recipient')
+    if (options.deadline <= BigInt(Date.now()) / 1000n) {
+      throw new Error('Deadline must be in the future')
+    }
+
+    const prepared = await this.prepareSwap({
+      amountIn,
+      route,
+      slippageTolerance: options.slippageTolerance,
+      tokenIn,
+      tokenOut,
+    })
+
+    // One signed-report bundle per hop, in route order (empty for any non-Data-Streams hop).
+    const poolAddresses = prepared.route.path.map((pool) => pool.poolAddr)
+    const signedReportsPerHop = await this.dataStreams.fetchReportsForPools(poolAddresses)
+
+    const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
+    const data = this.encodeSwapWithReportsCall(
+      amountIn,
+      prepared.amountOutMin,
+      prepared.routerRoutes,
+      recipient as Address,
+      options.deadline,
+      signedReportsPerHop
+    )
+
+    return {
+      params: { to: routerAddress, data, value: '0' },
       route: prepared.route,
       routerRoutes: prepared.routerRoutes,
       amountIn,
@@ -390,6 +461,25 @@ export class SwapService {
       abi: ROUTER_ABI,
       functionName: 'swapExactTokensForTokens',
       args: [amountIn, amountOutMin, routes as ReadonlyRouterRoutes, recipient, deadline],
+    })
+  }
+
+  /**
+   * Encodes the swapExactTokensForTokensWithReports function call
+   * @private
+   */
+  private encodeSwapWithReportsCall(
+    amountIn: bigint,
+    amountOutMin: bigint,
+    routes: RouterRoute[],
+    recipient: Address,
+    deadline: bigint,
+    signedReportsPerHop: Hex[][]
+  ): string {
+    return encodeFunctionData({
+      abi: ROUTER_ABI,
+      functionName: 'swapExactTokensForTokensWithReports',
+      args: [amountIn, amountOutMin, routes as ReadonlyRouterRoutes, recipient, deadline, signedReportsPerHop],
     })
   }
 }

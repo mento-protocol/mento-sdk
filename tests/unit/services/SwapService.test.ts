@@ -1,7 +1,9 @@
 import { SwapService } from '../../../src/services/swap/SwapService'
-import type { PublicClient } from 'viem'
+import { decodeFunctionData, type PublicClient } from 'viem'
 import type { RouteService } from '../../../src/services/routes'
 import type { QuoteService } from '../../../src/services/quotes'
+import type { DataStreamsService } from '../../../src/services/dataStreams'
+import { ROUTER_ABI } from '../../../src/core/abis'
 import { ChainId } from '../../../src/core/constants'
 import { deadlineFromMinutes } from '../../../src/utils/deadline'
 
@@ -242,6 +244,45 @@ describe('SwapService', () => {
           mockRoute
         )
       ).rejects.toThrow('amountIn must be greater than zero')
+    })
+  })
+
+  describe('buildSwapWithReportsParams()', () => {
+    const REPORT = '0xdeadbeef'
+
+    it('fetches per-hop reports and encodes swapExactTokensForTokensWithReports', async () => {
+      const fetchReportsForPools = jest.fn().mockResolvedValue([[REPORT]])
+      const dataStreams = { fetchReportsForPools } as unknown as DataStreamsService
+      const withReports = new SwapService(
+        mockPublicClient,
+        ChainId.CELO,
+        mockRouteService,
+        mockQuoteService,
+        dataStreams
+      )
+
+      const details = await withReports.buildSwapWithReportsParams(tokenIn, tokenOut, amountIn, recipient, {
+        slippageTolerance: 0.5,
+        deadline: deadlineFromMinutes(5),
+      })
+
+      // One bundle fetched for the single hop's pool.
+      expect(fetchReportsForPools).toHaveBeenCalledWith([mockRoute.path[0].poolAddr])
+      expect(details.params.value).toBe('0')
+
+      const decoded = decodeFunctionData({ abi: ROUTER_ABI, data: details.params.data as `0x${string}` })
+      expect(decoded.functionName).toBe('swapExactTokensForTokensWithReports')
+      expect(decoded.args[0]).toBe(amountIn)
+      expect(decoded.args[5]).toEqual([[REPORT]])
+    })
+
+    it('throws when Data Streams is not configured on the SDK instance', async () => {
+      await expect(
+        service.buildSwapWithReportsParams(tokenIn, tokenOut, amountIn, recipient, {
+          slippageTolerance: 0.5,
+          deadline: deadlineFromMinutes(5),
+        })
+      ).rejects.toThrow(/Data Streams is not configured/)
     })
   })
 })

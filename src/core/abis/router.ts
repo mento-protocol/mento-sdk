@@ -4,6 +4,8 @@ export const ROUTER_ABI = parseAbi([
   // Swap operations
   'function getAmountsOut(uint256 amountIn, Route[] memory routes) view returns (uint256[] memory amounts)',
   'function swapExactTokensForTokens(uint256 amountIn, uint256 amountOutMin, Route[] calldata routes, address to, uint256 deadline) returns (uint256[] memory amounts)',
+  // Data Streams verify-on-swap variant (RouterWithReports): ingests a fresh signed report per hop before pricing.
+  'function swapExactTokensForTokensWithReports(uint256 amountIn, uint256 amountOutMin, Route[] calldata routes, address to, uint256 deadline, bytes[][] calldata signedReportsPerHop) returns (uint256[] memory amounts)',
 
   // Basic liquidity operations
   'function addLiquidity(address tokenA, address tokenB, uint256 amountADesired, uint256 amountBDesired, uint256 amountAMin, uint256 amountBMin, address to, uint256 deadline) returns (uint256 amountA, uint256 amountB, uint256 liquidity)',

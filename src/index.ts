@@ -11,6 +11,7 @@ import { SwapService } from './services/swap'
 import { TradingService } from './services/trading'
 import { LiquidityService } from './services/liquidity'
 import { BorrowService } from './services/borrow'
+import { DataStreamsClient, DataStreamsService } from './services/dataStreams'
 
 export interface MentoBatchOptions {
   batchSize?: number
@@ -21,6 +22,11 @@ export interface MentoClientOptions {
   httpBatch?: MentoBatchOptions | false
   multicallBatch?: MentoBatchOptions | false
   dataStreams?: DataStreamsCredentials
+  /**
+   * Override for the DataStreamsRelayerFactory address. Required to use `mento.reports` until the
+   * factory is deployed and present in the address registry (blockers B1/B13).
+   */
+  dataStreamsRelayerFactory?: string
 }
 
 const DEFAULT_HTTP_BATCH_OPTIONS: Required<MentoBatchOptions> = {
@@ -91,7 +97,13 @@ export class Mento {
     public swap: SwapService,
     public trading: TradingService,
     public liquidity: LiquidityService,
-    public borrow: BorrowService
+    public borrow: BorrowService,
+    /**
+     * Data Streams report service (rateFeedId -> legs -> signed reports, and the ingest helper).
+     * Defined only when `dataStreams` credentials were supplied to `Mento.create`.
+     */
+    public reports: DataStreamsService | undefined,
+    private dataStreams: DataStreamsClient | undefined
   ) {}
 
   /**
@@ -152,12 +164,15 @@ export class Mento {
     const poolService = new PoolService(publicClient, chainId)
     const routeService = new RouteService(publicClient, chainId, poolService)
     const quoteService = new QuoteService(publicClient, chainId, routeService)
-    const swapService = new SwapService(publicClient, chainId, routeService, quoteService)
+    const dataStreamsClient = options?.dataStreams ? new DataStreamsClient(options.dataStreams) : undefined
+    const reportsService = dataStreamsClient
+      ? new DataStreamsService(publicClient, chainId, dataStreamsClient, options?.dataStreamsRelayerFactory)
+      : undefined
+    const swapService = new SwapService(publicClient, chainId, routeService, quoteService, reportsService)
     const tradingService = new TradingService(publicClient, chainId, routeService)
     const liquidityService = new LiquidityService(publicClient, chainId, poolService, routeService)
     const borrowService = new BorrowService(publicClient, chainId)
 
-    // Return new mento
     return new Mento(
       chainId,
       tokenService,
@@ -167,7 +182,9 @@ export class Mento {
       swapService,
       tradingService,
       liquidityService,
-      borrowService
+      borrowService,
+      reportsService,
+      dataStreamsClient
     )
   }
 

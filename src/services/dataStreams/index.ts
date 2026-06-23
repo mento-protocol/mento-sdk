@@ -1,2 +1,2 @@
 export * from './DataStreamsClient'
-export * from './auth'
+export * from './DataStreamsService'
