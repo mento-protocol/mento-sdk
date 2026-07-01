@@ -43,7 +43,8 @@ export class DataStreamsClient {
     return report
   }
 
-  async listFeeds(): Promise<Array<{ feedID: string; name: string }>> {
+  async listFeeds(): Promise<Array<{ feedID: string; name?: string }>> {
+    // `name` is not guaranteed by the Data Streams API — some subscriptions return nameless feeds.
     return this.client.listFeeds()
   }
 
