@@ -80,6 +80,13 @@ if (approval) {
 await walletClient.sendTransaction(swap.params)
 ```
 
+## Data Streams (verify-on-swap) — beta
+
+The SDK can build swaps that carry their own DON-signed Chainlink Data Streams reports, verified and
+composed on-chain at swap time (no keeper). Report fetching needs a server-only HMAC secret, so this
+path must run on a backend. See [docs/data-streams.md](docs/data-streams.md) for setup, credentials,
+and the API. Passing no `dataStreams` credentials to `Mento.create` leaves behaviour unchanged.
+
 ## Routes
 
 ```typescript
