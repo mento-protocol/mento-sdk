@@ -43,8 +43,8 @@ export type ContractAddresses = {
   CDPLiquidityStrategy?: string
   OpenLiquidityStrategy?: string
 
-  // Data Streams (pull oracle). Not yet deployed on any chain (blockers B1/B13);
-  // supply via MentoClientOptions.dataStreamsRelayerFactory until address entries land here.
+  // Data Streams (pull oracle). Not yet deployed on any chain; supply via
+  // MentoClientOptions.dataStreamsRelayerFactory until address entries land here.
   DataStreamsRelayerFactory?: string
 }
 

@@ -24,7 +24,7 @@ export interface MentoClientOptions {
   dataStreams?: DataStreamsCredentials
   /**
    * Override for the DataStreamsRelayerFactory address. Required to use `mento.reports` until the
-   * factory is deployed and present in the address registry (blockers B1/B13).
+   * factory is deployed and present in the address registry.
    */
   dataStreamsRelayerFactory?: string
 }

@@ -34,7 +34,7 @@ export class DataStreamsService {
 
   /**
    * Resolves the DataStreamsRelayerFactory address from the override or the address registry.
-   * @throws if no factory is configured for the chain (it is not deployed anywhere yet — B1/B13).
+   * @throws if no factory is configured for the chain (it is not deployed anywhere yet).
    */
   getRelayerFactoryAddress(): Address {
     const address = this.relayerFactoryOverride ?? tryGetContractAddress(this.chainId as ChainId, 'DataStreamsRelayerFactory')

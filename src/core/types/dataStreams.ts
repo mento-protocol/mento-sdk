@@ -30,8 +30,3 @@ export interface ReportV4 {
 }
 
 export type DataStreamsReport = ReportV3 | ReportV4
-
-export const DataStreamsSchemaVersion = {
-  V3: '0x0003',
-  V4: '0x0004',
-} as const

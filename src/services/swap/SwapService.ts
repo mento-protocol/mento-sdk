@@ -296,6 +296,9 @@ export class SwapService {
     const poolAddresses = prepared.route.path.map((pool) => pool.poolAddr)
     const signedReportsPerHop = await this.dataStreams.fetchReportsForPools(poolAddresses)
 
+    // RouterWithReports is a superset of the base Router (adds swapExactTokensForTokensWithReports),
+    // so it occupies the same `Router` registry entry once deployed. Sending to that address is
+    // therefore correct; it assumes the deployed `Router` is (or is upgraded to) RouterWithReports.
     const routerAddress = getContractAddress(this.chainId as ChainId, 'Router')
     const data = this.encodeSwapWithReportsCall(
       amountIn,
