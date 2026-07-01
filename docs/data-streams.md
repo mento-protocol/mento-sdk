@@ -99,7 +99,8 @@ building blocks, all server-only:
 
 ## Report schemas
 
-The client decodes **V3** (crypto, feedId prefix `0x0003`, has `bid`/`ask`) and **V4** (RWA/forex,
-prefix `0x0004`, has `marketStatus`) reports. It **throws** on any other schema version rather than
-returning a mis-decoded price. A subscription may be provisioned for feeds of other schemas (e.g. V8);
-those are not supported by the swap path.
+The client decodes **V3** (crypto, feedId prefix `0x0003`, has `bid`/`ask`) and **V8** (RWA/forex,
+prefix `0x0008`, has `marketStatus`; the price comes from the report's `midPrice`, surfaced as
+`price`) reports. It **throws** on any other schema version rather than returning a mis-decoded price.
+The V8 schema supersedes the now-deprecated V4 (`0x0004`) forex schema. A subscription may be
+provisioned for feeds of other schemas; those are not supported by the swap path.

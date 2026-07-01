@@ -19,7 +19,7 @@ const CREDENTIALS: DataStreamsCredentials = {
 }
 
 const V3_FEED_ID = '0x00030000000000000000000000000000000000000000000000000000000000ab'
-const V4_FEED_ID = '0x00040000000000000000000000000000000000000000000000000000000000ab'
+const V8_FEED_ID = '0x00080000000000000000000000000000000000000000000000000000000000ab'
 
 /** The raw shape the official SDK returns (the fields our client reads off it). */
 function rawReport(feedID: string) {
@@ -34,8 +34,15 @@ function rawReport(feedID: string) {
 /** The decoded shape `decodeReport` returns, branched on schema version by feedId prefix. */
 function decodedFor(feedID: string) {
   const common = { nativeFee: 1000n, linkFee: 2000n, expiresAt: 1700003600 }
-  if (feedID.startsWith('0x0004')) {
-    return { ...common, version: 'V4', price: 1050000000000000000n, marketStatus: 2 }
+  if (feedID.startsWith('0x0008')) {
+    // V8 raw decode exposes the price as `midPrice` and a nanosecond `lastUpdateTimestamp`.
+    return {
+      ...common,
+      version: 'V8',
+      midPrice: 1050000000000000000n,
+      lastUpdateTimestamp: 1700000001000000000,
+      marketStatus: 2,
+    }
   }
   return { ...common, version: 'V3', price: 1050000000000000000n, bid: 1040000000000000000n, ask: 1060000000000000000n }
 }
@@ -115,13 +122,15 @@ describe('DataStreamsClient.getLatestReport', () => {
     expect(report.price).toBe(1050000000000000000n)
   })
 
-  it('decodes a V4 report with marketStatus and no bid/ask', async () => {
+  it('decodes a V8 report with marketStatus and midPrice as price, no bid/ask', async () => {
     const client = new DataStreamsClient(CREDENTIALS)
-    const report = await client.getLatestReport(V4_FEED_ID)
+    const report = await client.getLatestReport(V8_FEED_ID)
 
     expect('marketStatus' in report).toBe(true)
     expect('bid' in report).toBe(false)
     expect('ask' in report).toBe(false)
+    expect(report.price).toBe(1050000000000000000n) // surfaced from the raw report's midPrice
+    expect('lastUpdateTimestamp' in report).toBe(true)
   })
 
   it('throws on an unsupported schema version', async () => {
@@ -134,13 +143,13 @@ describe('DataStreamsClient.getLatestReport', () => {
 describe('DataStreamsClient.getBulkReports', () => {
   it('returns reports in the same order as the input feedIds', async () => {
     // SDK returns them out of order; the client must realign to the requested order.
-    underlying.getReportsBulk.mockResolvedValue([rawReport(V4_FEED_ID), rawReport(V3_FEED_ID)])
+    underlying.getReportsBulk.mockResolvedValue([rawReport(V8_FEED_ID), rawReport(V3_FEED_ID)])
 
     const client = new DataStreamsClient(CREDENTIALS)
-    const reports = await client.getBulkReports([V3_FEED_ID, V4_FEED_ID], 1700000000)
+    const reports = await client.getBulkReports([V3_FEED_ID, V8_FEED_ID], 1700000000)
 
     expect(reports[0].feedID).toBe(V3_FEED_ID)
-    expect(reports[1].feedID).toBe(V4_FEED_ID)
+    expect(reports[1].feedID).toBe(V8_FEED_ID)
   })
 
   it('does not cache results', async () => {
@@ -154,11 +163,11 @@ describe('DataStreamsClient.getBulkReports', () => {
   })
 
   it('throws when a requested feedId is missing from the response', async () => {
-    underlying.getReportsBulk.mockResolvedValue([rawReport(V3_FEED_ID)]) // V4 missing
+    underlying.getReportsBulk.mockResolvedValue([rawReport(V3_FEED_ID)]) // V8 missing
 
     const client = new DataStreamsClient(CREDENTIALS)
-    await expect(client.getBulkReports([V3_FEED_ID, V4_FEED_ID], 1700000000)).rejects.toThrow(
-      `no report returned for feedId ${V4_FEED_ID}`
+    await expect(client.getBulkReports([V3_FEED_ID, V8_FEED_ID], 1700000000)).rejects.toThrow(
+      `no report returned for feedId ${V8_FEED_ID}`
     )
   })
 })

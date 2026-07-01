@@ -115,8 +115,15 @@ async function mapReport(
     return { ...common, price: decoded.price, bid: decoded.bid, ask: decoded.ask }
   }
 
-  if (decoded.version === 'V4') {
-    return { ...common, price: decoded.price, marketStatus: decoded.marketStatus as 0 | 1 | 2 }
+  // V8 (RWA / forex) supersedes the deprecated V4 schema: the price is the report's `midPrice`, and
+  // it carries a nanosecond `lastUpdateTimestamp`.
+  if (decoded.version === 'V8') {
+    return {
+      ...common,
+      price: decoded.midPrice,
+      marketStatus: decoded.marketStatus as 0 | 1 | 2,
+      lastUpdateTimestamp: decoded.lastUpdateTimestamp,
+    }
   }
 
   throw new Error(`DataStreamsClient: unsupported report schema version "${decoded.version}" for feed ${feedID}`)
