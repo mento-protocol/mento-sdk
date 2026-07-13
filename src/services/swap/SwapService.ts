@@ -1,7 +1,7 @@
 import { Address, Hex, PublicClient, encodeFunctionData } from 'viem'
 import { RouteService } from '../routes'
 import { QuoteService } from '../quotes'
-import { DataStreamsService } from '../dataStreams'
+import { PullOracleService } from '../pullOracle'
 import { Route, CallParams } from '../../core/types'
 import { ROUTER_ABI, ERC20_ABI } from '../../core/abis'
 import { getContractAddress, ChainId } from '../../core/constants'
@@ -103,8 +103,8 @@ export class SwapService {
     private chainId: number,
     private routeService: RouteService,
     private quoteService: QuoteService,
-    /** Optional — required only for the Data Streams verify-on-swap path (`buildSwapWithReportsParams`). */
-    private dataStreams?: DataStreamsService
+    /** Optional — required only for the pull-oracle verify-on-swap path (`buildSwapWithReportsParams`). */
+    private pullOracle?: PullOracleService
   ) {}
 
   /**
@@ -250,11 +250,16 @@ export class SwapService {
   }
 
   /**
-   * Builds swap parameters for the Data Streams verify-on-swap path. Fetches a fresh DON-signed
-   * report for each hop's rate feed and encodes `RouterWithReports.swapExactTokensForTokensWithReports`,
-   * so the Router ingests + verifies the reports before pricing the swap (just-in-time).
+   * Builds swap parameters for the pull-oracle verify-on-swap path. Fetches a fresh provider
+   * update for each hop's rate feed (from the provider-specific data source selected by the
+   * relayer's on-chain adapter) and encodes `RouterWithReports.swapExactTokensForTokensWithReports`,
+   * so the Router ingests + verifies the updates before pricing the swap (just-in-time).
    *
-   * Requires the SDK to be created with `dataStreams` credentials and a `dataStreamsRelayerFactory`.
+   * The returned `params.value` is the total native verification fee across hops (0 for fee-less
+   * providers) — the router requires an exact match, so send it as the tx value verbatim.
+   *
+   * Requires the SDK to be created with at least one oracle data source (e.g. `dataStreams`
+   * credentials) and a `pullOracleRelayerFactory`.
    *
    * @param tokenIn The input token address.
    * @param tokenOut The output token address.
@@ -273,10 +278,10 @@ export class SwapService {
     options: SwapOptions,
     route?: Route
   ): Promise<SwapDetails> {
-    if (!this.dataStreams) {
+    if (!this.pullOracle) {
       throw new Error(
-        'Data Streams is not configured. Create the SDK with `dataStreams` credentials and ' +
-          '`dataStreamsRelayerFactory` to use swap-with-reports.'
+        'Pull-oracle sources are not configured. Create the SDK with `dataStreams` credentials ' +
+          '(and/or `oracleSources`) and a `pullOracleRelayerFactory` to use swap-with-reports.'
       )
     }
     validateAddress(recipient, 'recipient')
@@ -292,9 +297,9 @@ export class SwapService {
       tokenOut,
     })
 
-    // One signed-report bundle per hop, in route order (empty for any non-Data-Streams hop).
+    // One opaque update blob per hop, in route order (empty for any non-pull-oracle hop).
     const poolAddresses = prepared.route.path.map((pool) => pool.poolAddr)
-    const signedReportsPerHop = await this.dataStreams.fetchReportsForPools(poolAddresses)
+    const { updateDataPerHop, totalFee } = await this.pullOracle.fetchUpdateDataForPools(poolAddresses)
 
     // RouterWithReports is a superset of the base Router (adds swapExactTokensForTokensWithReports),
     // so it occupies the same `Router` registry entry once deployed. Sending to that address is
@@ -306,11 +311,11 @@ export class SwapService {
       prepared.routerRoutes,
       recipient as Address,
       options.deadline,
-      signedReportsPerHop
+      updateDataPerHop
     )
 
     return {
-      params: { to: routerAddress, data, value: '0' },
+      params: { to: routerAddress, data, value: totalFee.toString() },
       route: prepared.route,
       routerRoutes: prepared.routerRoutes,
       amountIn,
@@ -477,12 +482,12 @@ export class SwapService {
     routes: RouterRoute[],
     recipient: Address,
     deadline: bigint,
-    signedReportsPerHop: Hex[][]
+    updateDataPerHop: Hex[]
   ): string {
     return encodeFunctionData({
       abi: ROUTER_ABI,
       functionName: 'swapExactTokensForTokensWithReports',
-      args: [amountIn, amountOutMin, routes as ReadonlyRouterRoutes, recipient, deadline, signedReportsPerHop],
+      args: [amountIn, amountOutMin, routes as ReadonlyRouterRoutes, recipient, deadline, updateDataPerHop],
     })
   }
 }

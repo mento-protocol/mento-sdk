@@ -11,7 +11,8 @@ import { SwapService } from './services/swap'
 import { TradingService } from './services/trading'
 import { LiquidityService } from './services/liquidity'
 import { BorrowService } from './services/borrow'
-import { DataStreamsClient, DataStreamsService } from './services/dataStreams'
+import { DataStreamsClient } from './services/dataStreams'
+import { ChainlinkDataStreamsSource, PullOracleService, type IOracleDataSource } from './services/pullOracle'
 
 export interface MentoBatchOptions {
   batchSize?: number
@@ -21,12 +22,18 @@ export interface MentoBatchOptions {
 export interface MentoClientOptions {
   httpBatch?: MentoBatchOptions | false
   multicallBatch?: MentoBatchOptions | false
+  /** Chainlink Data Streams API credentials. Enables the Chainlink pull-oracle data source. */
   dataStreams?: DataStreamsCredentials
   /**
-   * Override for the DataStreamsRelayerFactory address. Required to use `mento.reports` until the
+   * Additional pull-oracle data sources (e.g. a Pyth or RedStone source). Merged with the
+   * Chainlink source created from `dataStreams` credentials.
+   */
+  oracleSources?: IOracleDataSource[]
+  /**
+   * Override for the PullOracleRelayerFactory address. Required to use `mento.reports` until the
    * factory is deployed and present in the address registry.
    */
-  dataStreamsRelayerFactory?: string
+  pullOracleRelayerFactory?: string
 }
 
 const DEFAULT_HTTP_BATCH_OPTIONS: Required<MentoBatchOptions> = {
@@ -99,11 +106,12 @@ export class Mento {
     public liquidity: LiquidityService,
     public borrow: BorrowService,
     /**
-     * Data Streams report service (rateFeedId -> legs -> signed reports, and the ingest helper).
-     * Defined only when `dataStreams` credentials were supplied to `Mento.create`.
+     * Pull-oracle update service (rateFeedId -> legs -> provider updateData, and the ingest
+     * helper). Provider-agnostic: the relayer's on-chain adapter selects the data source.
+     * Defined only when at least one oracle data source was supplied to `Mento.create`
+     * (via `dataStreams` credentials and/or `oracleSources`).
      */
-    public reports: DataStreamsService | undefined,
-    private dataStreams: DataStreamsClient | undefined
+    public reports: PullOracleService | undefined
   ) {}
 
   /**
@@ -164,10 +172,14 @@ export class Mento {
     const poolService = new PoolService(publicClient, chainId)
     const routeService = new RouteService(publicClient, chainId, poolService)
     const quoteService = new QuoteService(publicClient, chainId, routeService)
-    const dataStreamsClient = options?.dataStreams ? new DataStreamsClient(options.dataStreams) : undefined
-    const reportsService = dataStreamsClient
-      ? new DataStreamsService(publicClient, chainId, dataStreamsClient, options?.dataStreamsRelayerFactory)
-      : undefined
+    const oracleSources: IOracleDataSource[] = [...(options?.oracleSources ?? [])]
+    if (options?.dataStreams) {
+      oracleSources.push(new ChainlinkDataStreamsSource(new DataStreamsClient(options.dataStreams)))
+    }
+    const reportsService =
+      oracleSources.length > 0
+        ? new PullOracleService(publicClient, chainId, oracleSources, options?.pullOracleRelayerFactory)
+        : undefined
     const swapService = new SwapService(publicClient, chainId, routeService, quoteService, reportsService)
     const tradingService = new TradingService(publicClient, chainId, routeService)
     const liquidityService = new LiquidityService(publicClient, chainId, poolService, routeService)
@@ -183,8 +195,7 @@ export class Mento {
       tradingService,
       liquidityService,
       borrowService,
-      reportsService,
-      dataStreamsClient
+      reportsService
     )
   }
 

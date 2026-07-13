@@ -1,6 +1,6 @@
 # Chainlink Data Streams (verify-on-swap)
 
-> **Status: beta.** The on-chain contracts this feature targets (`DataStreamsRelayerFactory`,
+> **Status: beta.** The on-chain contracts this feature targets (`PullOracleRelayerFactory`,
 > `RouterWithReports`) are not yet deployed to mainnet. The SDK surface is stable and additive, but
 > the end-to-end path only works once those contracts are deployed and a factory address is
 > supplied. Keep it behind a feature flag in consuming apps until then.
@@ -45,7 +45,7 @@ does not authenticate against the testnet endpoint.
 ## Setup
 
 Pass `dataStreams` credentials (and, until the factory is in the address registry, an explicit
-`dataStreamsRelayerFactory` address) to `Mento.create`:
+`pullOracleRelayerFactory` address) to `Mento.create`:
 
 ```ts
 import { Mento } from '@mento-protocol/mento-sdk'
@@ -56,13 +56,18 @@ const mento = await Mento.create(chainId, publicClient, {
     userSecret: process.env.DATA_STREAMS_USER_SECRET!,
     baseUrl: process.env.DATA_STREAMS_BASE_URL, // optional
   },
-  dataStreamsRelayerFactory: process.env.DATA_STREAMS_RELAYER_FACTORY!,
+  pullOracleRelayerFactory: process.env.PULL_ORACLE_RELAYER_FACTORY!,
 })
 ```
 
 Both options are optional. Omit them and `Mento` behaves exactly as before — `mento.reports` is
-`undefined` and the Data Streams methods are unavailable. This makes the feature fully
+`undefined` and the pull-oracle methods are unavailable. This makes the feature fully
 backward-compatible.
+
+The architecture is provider-agnostic: `mento.reports` is a `PullOracleService` that resolves each
+rate feed's provider from its on-chain relayer adapter (`adapter().provider()`) and picks the
+matching `IOracleDataSource`. `dataStreams` credentials register the Chainlink Data Streams source;
+additional providers (Pyth, RedStone, ...) can be injected via `oracleSources`.
 
 ## Building a verify-on-swap transaction
 
@@ -77,21 +82,24 @@ const { params, amountOutMin, expectedAmountOut } = await mento.swap.buildSwapWi
 // `params` is { to, data, value } — return it to the client to sign and send.
 ```
 
-`buildSwapWithReportsParams` throws if `Mento` was created without `dataStreams` credentials. It
-fetches the signed reports for the route's rate feeds, then encodes a call to `RouterWithReports`.
+`buildSwapWithReportsParams` throws if `Mento` was created without any oracle data source. It
+fetches the provider update blob for each hop's rate feed, then encodes a call to
+`RouterWithReports`. `params.value` carries the total native verification fee (0 for Chainlink on
+Celo) — the router requires an exact match, so send it verbatim.
 
 ## Lower-level API
 
-`mento.reports` (a `DataStreamsService`, defined only when credentials were supplied) exposes the
-building blocks, all server-only:
+`mento.reports` (a `PullOracleService`, defined only when at least one source was supplied) exposes
+the building blocks, all server-only:
 
 | Method | Purpose |
 |---|---|
 | `resolveRelayer(rateFeedId)` | rateFeedId → deployed relayer address (via the factory) |
-| `resolveLegs(rateFeedId)` | the relayer's Data Streams legs (feedIds + invert flags) |
-| `fetchReports(rateFeedId)` | fetch the signed report blob(s) for a rate feed |
-| `fetchReportsForPools(pools)` | signed reports per hop, keyed by pool |
-| `buildIngestParams(rateFeedId, signedReports?)` | calldata to relay a report into `SortedOracles` |
+| `resolveLegs(rateFeedId)` | the relayer's legs (provider feedIds + invert flags) |
+| `resolveProvider(rateFeedId)` | which oracle provider serves the feed (via the on-chain adapter) |
+| `fetchUpdateData(rateFeedId)` | fetch the opaque update blob (+ verification fee) for a rate feed |
+| `fetchUpdateDataForPools(pools)` | `updateDataPerHop` + total fee for a swap route |
+| `buildIngestParams(rateFeedId, update?)` | calldata (+ value) to relay an update into `SortedOracles` |
 
 `DataStreamsClient` is the thin HMAC-authenticated wrapper over the official
 `@chainlink/data-streams-sdk` (report fetching + a short TTL cache). Prefer `mento.reports`; reach for

@@ -2,7 +2,7 @@ import { SwapService } from '../../../src/services/swap/SwapService'
 import { decodeFunctionData, type PublicClient } from 'viem'
 import type { RouteService } from '../../../src/services/routes'
 import type { QuoteService } from '../../../src/services/quotes'
-import type { DataStreamsService } from '../../../src/services/dataStreams'
+import type { PullOracleService } from '../../../src/services/pullOracle'
 import { ROUTER_ABI } from '../../../src/core/abis'
 import { ChainId } from '../../../src/core/constants'
 import { deadlineFromMinutes } from '../../../src/utils/deadline'
@@ -248,41 +248,59 @@ describe('SwapService', () => {
   })
 
   describe('buildSwapWithReportsParams()', () => {
-    const REPORT = '0xdeadbeef'
+    const UPDATE_DATA = '0xdeadbeef'
 
-    it('fetches per-hop reports and encodes swapExactTokensForTokensWithReports', async () => {
-      const fetchReportsForPools = jest.fn().mockResolvedValue([[REPORT]])
-      const dataStreams = { fetchReportsForPools } as unknown as DataStreamsService
+    function makeWithReports(totalFee = 0n) {
+      const fetchUpdateDataForPools = jest
+        .fn()
+        .mockResolvedValue({ updateDataPerHop: [UPDATE_DATA], totalFee })
+      const pullOracle = { fetchUpdateDataForPools } as unknown as PullOracleService
       const withReports = new SwapService(
         mockPublicClient,
         ChainId.CELO,
         mockRouteService,
         mockQuoteService,
-        dataStreams
+        pullOracle
       )
+      return { withReports, fetchUpdateDataForPools }
+    }
+
+    it('fetches per-hop update data and encodes swapExactTokensForTokensWithReports', async () => {
+      const { withReports, fetchUpdateDataForPools } = makeWithReports()
 
       const details = await withReports.buildSwapWithReportsParams(tokenIn, tokenOut, amountIn, recipient, {
         slippageTolerance: 0.5,
         deadline: deadlineFromMinutes(5),
       })
 
-      // One bundle fetched for the single hop's pool.
-      expect(fetchReportsForPools).toHaveBeenCalledWith([mockRoute.path[0].poolAddr])
+      // One blob fetched for the single hop's pool.
+      expect(fetchUpdateDataForPools).toHaveBeenCalledWith([mockRoute.path[0].poolAddr])
       expect(details.params.value).toBe('0')
 
       const decoded = decodeFunctionData({ abi: ROUTER_ABI, data: details.params.data as `0x${string}` })
       expect(decoded.functionName).toBe('swapExactTokensForTokensWithReports')
       expect(decoded.args[0]).toBe(amountIn)
-      expect(decoded.args[5]).toEqual([[REPORT]])
+      expect(decoded.args[5]).toEqual([UPDATE_DATA])
     })
 
-    it('throws when Data Streams is not configured on the SDK instance', async () => {
+    it('sets the total verification fee as the tx value (router requires an exact match)', async () => {
+      const { withReports } = makeWithReports(42n)
+
+      const details = await withReports.buildSwapWithReportsParams(tokenIn, tokenOut, amountIn, recipient, {
+        slippageTolerance: 0.5,
+        deadline: deadlineFromMinutes(5),
+      })
+
+      expect(details.params.value).toBe('42')
+    })
+
+    it('throws when no pull-oracle source is configured on the SDK instance', async () => {
       await expect(
         service.buildSwapWithReportsParams(tokenIn, tokenOut, amountIn, recipient, {
           slippageTolerance: 0.5,
           deadline: deadlineFromMinutes(5),
         })
-      ).rejects.toThrow(/Data Streams is not configured/)
+      ).rejects.toThrow(/Pull-oracle sources are not configured/)
     })
   })
 })

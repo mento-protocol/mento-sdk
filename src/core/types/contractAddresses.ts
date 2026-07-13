@@ -44,8 +44,8 @@ export type ContractAddresses = {
   OpenLiquidityStrategy?: string
 
   // Data Streams (pull oracle). Not yet deployed on any chain; supply via
-  // MentoClientOptions.dataStreamsRelayerFactory until address entries land here.
-  DataStreamsRelayerFactory?: string
+  // MentoClientOptions.pullOracleRelayerFactory until address entries land here.
+  PullOracleRelayerFactory?: string
 }
 
 /**
