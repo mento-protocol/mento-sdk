@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-05-06T12:40:03.576Z
+// Generated on 2026-07-14T18:29:17.848Z
 
 import type { RouteWithCost } from '../core/types'
 
@@ -8169,6 +8169,79 @@ export const cachedRoutes: Record<number, RouteWithCost[]> = {
           {
             "poolAddress": "0xD74728994135734968b03EFc03448394BaCb1e5f",
             "costPercent": 0.05
+          }
+        ]
+      }
+    },
+    {
+      "id": "EUROP-EURm",
+      "tokens": [
+        {
+          "address": "0x62A5E599c4f4bFA1024effFA15799a7a2Bb29dEC",
+          "symbol": "EUROP"
+        },
+        {
+          "address": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
+          "symbol": "EURm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xB68536B95c0B415e300835ae9c6B62E362c244Ca",
+          "token0": "0x62A5E599c4f4bFA1024effFA15799a7a2Bb29dEC",
+          "token1": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.1,
+        "hops": [
+          {
+            "poolAddress": "0xB68536B95c0B415e300835ae9c6B62E362c244Ca",
+            "costPercent": 0.1
+          }
+        ]
+      }
+    },
+    {
+      "id": "EUROP-USDm",
+      "tokens": [
+        {
+          "address": "0x62A5E599c4f4bFA1024effFA15799a7a2Bb29dEC",
+          "symbol": "EUROP"
+        },
+        {
+          "address": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "symbol": "USDm"
+        }
+      ],
+      "path": [
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xD74728994135734968b03EFc03448394BaCb1e5f",
+          "token0": "0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc",
+          "token1": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
+          "poolType": "FPMM"
+        },
+        {
+          "factoryAddr": "0x353ED52bF8482027C0e0b9e3c0e5d96A9F680980",
+          "poolAddr": "0xB68536B95c0B415e300835ae9c6B62E362c244Ca",
+          "token0": "0x62A5E599c4f4bFA1024effFA15799a7a2Bb29dEC",
+          "token1": "0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0",
+          "poolType": "FPMM"
+        }
+      ],
+      "costData": {
+        "totalCostPercent": 0.14995,
+        "hops": [
+          {
+            "poolAddress": "0xD74728994135734968b03EFc03448394BaCb1e5f",
+            "costPercent": 0.05
+          },
+          {
+            "poolAddress": "0xB68536B95c0B415e300835ae9c6B62E362c244Ca",
+            "costPercent": 0.1
           }
         ]
       }
