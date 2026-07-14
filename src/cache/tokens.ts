@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-05-06T12:39:32.137Z
+// Generated on 2026-07-14T18:28:33.128Z
 
 import type { Token } from '../core/types'
 
@@ -14,6 +14,7 @@ export enum TokenSymbol {
   CHFm = 'CHFm',
   COPm = 'COPm',
   EURC = 'EURC',
+  EUROP = 'EUROP',
   EURm = 'EURm',
   GBPm = 'GBPm',
   GHSm = 'GHSm',
@@ -273,6 +274,12 @@ export const cachedTokens: Record<number, readonly Token[]> = {
       symbol: TokenSymbol.EURm,
       name: 'Mento Euro',
       decimals: 18,
+    },
+    {
+      address: '0x62A5E599c4f4bFA1024effFA15799a7a2Bb29dEC',
+      symbol: TokenSymbol.EUROP,
+      name: 'Mento Mock EUROP',
+      decimals: 6,
     }
   ],
   // Chain 84532
@@ -461,6 +468,7 @@ export const TOKEN_ADDRESSES_BY_CHAIN: {
     [TokenSymbol.USDC]: '0xfbD2d6a7C3Cb4491647173D6eCb2a4473521cd66',
     [TokenSymbol.USDm]: '0x5eCc03111ad2A78F981A108759bc73BAE2AB31bc',
     [TokenSymbol.EURm]: '0x666D0a83cDbf3eC62bDb624d9bFcD8F6345Ba7D0',
+    [TokenSymbol.EUROP]: '0x62A5E599c4f4bFA1024effFA15799a7a2Bb29dEC',
   },
   84532: {
     [TokenSymbol.EURC]: '0xe36C65cF840C16F45A0bd89628B89a9414DFda82',
