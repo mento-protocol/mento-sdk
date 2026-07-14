@@ -63,8 +63,6 @@ jobs:
           node-version: '>=22.22.2 <23'
           registry-url: https://registry.npmjs.org
 
-      # Pinned rather than @latest: npm raises its engine floor over time, so a
-      # float silently breaks this job the moment it outpaces the Node above.
       - name: Upgrade npm for trusted publishing
         run: npm install -g npm@12
 
