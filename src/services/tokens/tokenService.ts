@@ -17,6 +17,7 @@ import type { PublicClient } from 'viem'
 const RESERVE_V2_CHAINS: Set<number> = new Set([
   ChainId.MONAD_TESTNET,
   ChainId.MONAD,
+  ChainId.POLYGON,
   ChainId.POLYGON_AMOY,
   ChainId.BASE_SEPOLIA,
 ])

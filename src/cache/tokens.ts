@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit manually.
-// Generated on 2026-07-14T18:28:33.128Z
+// Generated on 2026-07-16T20:28:42.927Z
 
 import type { Token } from '../core/types'
 
@@ -36,6 +36,33 @@ export enum TokenSymbol {
  * Cached tokens indexed by chain ID
  */
 export const cachedTokens: Record<number, readonly Token[]> = {
+  // Chain 137
+  137: [
+    {
+      address: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
+      symbol: TokenSymbol.USDC,
+      name: 'USD Coin',
+      decimals: 6,
+    },
+    {
+      address: '0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115',
+      symbol: TokenSymbol.USDm,
+      name: 'Mento Dollar',
+      decimals: 18,
+    },
+    {
+      address: '0x4D502d735B4C574B487Ed641ae87cEaE884731C7',
+      symbol: TokenSymbol.EURm,
+      name: 'Mento Euro',
+      decimals: 18,
+    },
+    {
+      address: '0x888883b5F5D21fb10Dfeb70e8f9722B9FB0E5E51',
+      symbol: TokenSymbol.EUROP,
+      name: 'EURØP',
+      decimals: 6,
+    }
+  ],
   // Chain 143
   143: [
     {
@@ -423,6 +450,12 @@ export const cachedTokens: Record<number, readonly Token[]> = {
 export const TOKEN_ADDRESSES_BY_CHAIN: {
   [chainId: number]: { [tokenSymbol in TokenSymbol]?: string }
 } = {
+  137: {
+    [TokenSymbol.USDC]: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
+    [TokenSymbol.USDm]: '0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115',
+    [TokenSymbol.EURm]: '0x4D502d735B4C574B487Ed641ae87cEaE884731C7',
+    [TokenSymbol.EUROP]: '0x888883b5F5D21fb10Dfeb70e8f9722B9FB0E5E51',
+  },
   143: {
     [TokenSymbol.GBPm]: '0x39bb4E0a204412bB98e821d25e7d955e69d40Fd1',
     [TokenSymbol.USDm]: '0xBC69212B8E4d445b2307C9D32dD68E2A4Df00115',
