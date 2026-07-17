@@ -11,6 +11,7 @@ import { generateConsolidatedContent, writeConsolidatedFile } from './fileGenera
 import { sortRoutesBySpread } from './spread'
 import { calculateStatistics, displayStatistics } from './statistics'
 import { PoolService, RouteService } from '../../src/services'
+import { cachedRoutes as existingCachedRoutes } from '../../src/cache/routes'
 
 /**
  * Generate all available routes (not just optimal)
@@ -41,10 +42,10 @@ async function generateRoutesForChain(chainId: SupportedChainId, batchSize = 10)
   const rpcUrl = rpcUrls[chainId]
   const chain = getChainConfig(chainId)
 
-  // Create viem PublicClient
+  // Create viem PublicClient with retries to ride out rate-limited public RPCs
   const publicClient = createPublicClient({
     chain,
-    transport: http(rpcUrl),
+    transport: http(rpcUrl, { retryCount: 4, retryDelay: 1000 }),
   }) as any
 
   const poolService = new PoolService(publicClient, chainId)
@@ -53,6 +54,13 @@ async function generateRoutesForChain(chainId: SupportedChainId, batchSize = 10)
   // Get all tradable pairs with all available routes - force fresh generation
   console.log(`Fetching all tradable pairs with all available routes...`)
   const pairs = await getAllRoutes(routeService)
+
+  // Pool discovery only throws when ALL factories fail; a single factory
+  // failing yields a reduced pool set that would silently shrink the cache.
+  const discoveryWarnings = poolService.getDiscoveryWarnings()
+  if (discoveryWarnings.length > 0) {
+    throw new Error(`Partial pool discovery for chain ${chainId}: ${discoveryWarnings.join('; ')}`)
+  }
 
   if (pairs.length === 0) {
     console.log(`No routes found for chain ${chainId}`)
@@ -63,6 +71,19 @@ async function generateRoutesForChain(chainId: SupportedChainId, batchSize = 10)
   console.log(`Fetching spreads from pool configurations...`)
   console.log(`   Using batch size of ${batchSize} concurrent requests`)
   const pairsWithSpread = await processRoutesInBatches(pairs, publicClient as any, batchSize)
+
+  // A route that failed its cost fetch must fail the run, not silently vanish
+  // from the cache: findRoute throws RouteNotFoundError for any pair missing
+  // from the cached file, even when its pools exist on-chain.
+  if (pairsWithSpread.length < pairs.length) {
+    const fetchedIds = new Set(pairsWithSpread.map((route) => route.id))
+    const missingPairs = [...new Set(pairs.map((route) => route.id))].filter((id) => !fetchedIds.has(id))
+    throw new Error(
+      `Cost data missing for ${pairs.length - pairsWithSpread.length} of ${pairs.length} routes` +
+        (missingPairs.length > 0 ? ` (pairs left with no route: ${missingPairs.join(', ')})` : '') +
+        ` - refusing to write a partial cache for chain ${chainId}`
+    )
+  }
   console.log(`\nSpread data fetched for all routes`)
 
   // Deduplicate routes to eliminate redundant symmetric pairs
@@ -101,8 +122,10 @@ export async function main(): Promise<void> {
 
   console.log(`Cache all available routes for chain(s): ${chainIdsToProcess.join(', ')} (batch size: ${batchSize})`)
 
-  // Generate routes for all chains
-  const routesByChain: { [chainId: number]: RouteWithCost[] } = {}
+  // Seed from the existing cache so single-chain runs don't wipe other chains,
+  // and failed chains keep their previously cached routes.
+  const routesByChain: { [chainId: number]: RouteWithCost[] } = { ...existingCachedRoutes }
+  const failedChains: number[] = []
 
   for (const chainId of chainIdsToProcess) {
     console.log(`\n\x1b[1mGenerating tradable pairs for chain ${chainId}...\x1b[0m`)
@@ -111,9 +134,14 @@ export async function main(): Promise<void> {
       routesByChain[chainId] = routes
     } catch (error) {
       console.error(`Error generating pairs for chain ${chainId}:`, error)
-      // Use empty array for failed chains
-      routesByChain[chainId] = []
+      console.error(`Keeping previously cached routes for chain ${chainId} (${routesByChain[chainId]?.length ?? 0})`)
+      failedChains.push(chainId)
     }
+  }
+
+  if (failedChains.length === chainIdsToProcess.length) {
+    console.error(`\n❌ All chains failed - cache file left untouched`)
+    process.exit(1)
   }
 
   // Generate consolidated cache file
@@ -121,10 +149,18 @@ export async function main(): Promise<void> {
   const content = generateConsolidatedContent(routesByChain)
   const fileName = writeConsolidatedFile(content, __dirname)
 
-  const totalRoutes = Object.values(routesByChain).reduce((sum, routes) => sum + routes.length, 0)
+  const succeededChains = chainIdsToProcess.filter((chainId) => !failedChains.includes(chainId))
+  const totalRoutes = succeededChains.reduce((sum, chainId) => sum + routesByChain[chainId].length, 0)
   console.log(
-    `\n✅ Successfully cached ${totalRoutes} routes across ${chainIdsToProcess.length} chains to src/cache/${fileName}`
+    `\n✅ Successfully cached ${totalRoutes} routes across ${succeededChains.length} chain(s) to src/cache/${fileName}`
   )
+
+  if (failedChains.length > 0) {
+    console.error(
+      `\n❌ Failed chains (previous cache preserved): ${failedChains.join(', ')} - fix and re-run with --chainId`
+    )
+    process.exit(1)
+  }
 
   console.log('\nAll done!')
 
@@ -134,4 +170,7 @@ export async function main(): Promise<void> {
 }
 
 // Run main function (this file is designed to be executed directly)
-main().catch(console.error)
+main().catch((error) => {
+  console.error(error)
+  process.exit(1)
+})

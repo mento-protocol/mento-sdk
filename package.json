@@ -1,7 +1,7 @@
 {
   "name": "@mento-protocol/mento-sdk",
   "description": "Official SDK for interacting with the Mento Protocol",
-  "version": "3.3.0-beta.2",
+  "version": "3.3.1",
   "license": "MIT",
   "author": "Mento Labs",
   "keywords": [
@@ -40,6 +40,7 @@
   ],
   "type": "commonjs",
   "scripts": {
+    "prepublishOnly": "pnpm build",
     "build": "pnpm clean && tsc --project ./tsconfig.json && tsc --project ./tsconfig.esm.json && echo '{\"type\":\"module\"}' > dist/esm/package.json",
     "clean": "rm -rf ./dist",
     "lint": "eslint src/**/*.ts tests/**/*.ts",

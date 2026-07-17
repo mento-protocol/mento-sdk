@@ -57,6 +57,11 @@ const CHAIN_CONFIGS: ChainTestConfig[] = [
     rpcEnvVar: 'MONAD_RPC_URL',
   },
   {
+    name: 'Polygon',
+    chainId: ChainId.POLYGON,
+    rpcEnvVar: 'POLYGON_RPC_URL',
+  },
+  {
     name: 'Polygon Amoy',
     chainId: ChainId.POLYGON_AMOY,
     rpcEnvVar: 'POLYGON_AMOY_RPC_URL',

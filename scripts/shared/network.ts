@@ -4,6 +4,7 @@ export const NETWORK_MAP: Record<string, number> = {
   ['celo-sepolia']: 11142220,
   monad: 143,
   ['monad-testnet']: 10143,
+  polygon: 137,
   ['polygon-amoy']: 80002,
   ['base-sepolia']: 84532,
 }
@@ -15,6 +16,7 @@ export const rpcUrls = {
   11142220: process.env.CELO_SEPOLIA_RPC_URL || 'https://forno.celo-sepolia.celo-testnet.org',
   143: process.env.MONAD_RPC_URL || 'https://rpc.monad.xyz',
   10143: process.env.MONAD_TESTNET_RPC_URL || 'https://testnet-rpc.monad.xyz',
+  137: process.env.POLYGON_RPC_URL || 'https://polygon.drpc.org',
   80002: process.env.POLYGON_AMOY_RPC_URL || 'https://polygon-amoy.drpc.org',
   84532: process.env.BASE_SEPOLIA_RPC_URL || 'https://base-sepolia.drpc.org',
 } as const

@@ -2,23 +2,29 @@ import type { Route, RouteWithCost } from '../../src/core/types'
 import type { PublicClient } from 'viem'
 import { calculateCostForRoute } from './spread'
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+interface FailedRoute {
+  route: Route
+  error: string
+}
+
 /**
- * Process routes in batches with controlled concurrency
+ * Run a single cost-fetch pass over the given routes
  */
-export async function processRoutesInBatches(
+async function runCostFetchPass(
   routes: readonly Route[],
   publicClient: PublicClient,
-  batchSize = 10
-): Promise<RouteWithCost[]> {
-  const results: RouteWithCost[] = []
-  const failedRoutes: Array<{ routeId: string; error: string }> = []
+  batchSize: number
+): Promise<{ succeeded: RouteWithCost[]; failed: FailedRoute[] }> {
+  const succeeded: RouteWithCost[] = []
+  const failed: FailedRoute[] = []
   let processed = 0
   let errors = 0
 
   for (let i = 0; i < routes.length; i += batchSize) {
     const batch = routes.slice(i, i + batchSize)
 
-    // Process batch concurrently with error handling
     const batchPromises = batch.map(async (route) => {
       try {
         const result = await calculateCostForRoute(route, publicClient)
@@ -27,31 +33,63 @@ export async function processRoutesInBatches(
         return result
       } catch (error) {
         errors++
-        failedRoutes.push({
-          routeId: route.id,
-          error: (error as Error).message,
-        })
+        failed.push({ route, error: (error as Error).message })
         process.stdout.write(`\r   Processing ${processed}/${routes.length} routes... (${errors} errors)`)
-
-        // Return null for failed routes - we'll filter them out later
         return null
       }
     })
 
     const batchResults = await Promise.all(batchPromises)
-
-    // Filter out null results (failed calculations) and add valid ones
     for (const result of batchResults) {
       if (result !== null) {
-        results.push(result)
+        succeeded.push(result)
       }
     }
   }
 
-  if (failedRoutes.length > 0) {
-    console.log(`\n   ${errors} routes failed to fetch cost data:`)
-    failedRoutes.forEach(({ routeId, error }) => {
-      console.log(`     - ${routeId}: ${error}`)
+  return { succeeded, failed }
+}
+
+/**
+ * Process routes in batches with controlled concurrency.
+ *
+ * Routes whose cost fetch fails (typically RPC rate limiting on public testnet
+ * endpoints) are retried in follow-up passes after a cooldown, so transient
+ * failures don't silently drop routes from the generated cache. Routes still
+ * failing after all passes are omitted from the result - callers are expected
+ * to verify completeness before writing the cache file.
+ */
+export async function processRoutesInBatches(
+  routes: readonly Route[],
+  publicClient: PublicClient,
+  batchSize = 10,
+  maxPasses = 5,
+  cooldownMs = 30_000
+): Promise<RouteWithCost[]> {
+  const results: RouteWithCost[] = []
+  let remaining: readonly Route[] = routes
+  let lastFailures: FailedRoute[] = []
+
+  for (let pass = 1; pass <= maxPasses && remaining.length > 0; pass++) {
+    if (pass > 1) {
+      console.log(
+        `\n   Retry pass ${pass}/${maxPasses}: ${remaining.length} routes failed - retrying after ${
+          cooldownMs / 1000
+        }s cooldown...`
+      )
+      await sleep(cooldownMs)
+    }
+
+    const { succeeded, failed } = await runCostFetchPass(remaining, publicClient, batchSize)
+    results.push(...succeeded)
+    remaining = failed.map((f) => f.route)
+    lastFailures = failed
+  }
+
+  if (lastFailures.length > 0) {
+    console.log(`\n   ${lastFailures.length} routes still failing after ${maxPasses} passes:`)
+    lastFailures.forEach(({ route, error }) => {
+      console.log(`     - ${route.id}: ${error}`)
     })
   }
 
