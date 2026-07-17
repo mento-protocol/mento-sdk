@@ -55,6 +55,13 @@ async function generateRoutesForChain(chainId: SupportedChainId, batchSize = 10)
   console.log(`Fetching all tradable pairs with all available routes...`)
   const pairs = await getAllRoutes(routeService)
 
+  // Pool discovery only throws when ALL factories fail; a single factory
+  // failing yields a reduced pool set that would silently shrink the cache.
+  const discoveryWarnings = poolService.getDiscoveryWarnings()
+  if (discoveryWarnings.length > 0) {
+    throw new Error(`Partial pool discovery for chain ${chainId}: ${discoveryWarnings.join('; ')}`)
+  }
+
   if (pairs.length === 0) {
     console.log(`No routes found for chain ${chainId}`)
     return []
