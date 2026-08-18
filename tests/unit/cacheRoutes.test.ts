@@ -3,7 +3,6 @@ import { PoolType } from '../../src/core/types'
 import { getPoolCostPercent } from '../../src/utils/costUtils'
 import { processRoutesInBatches } from '../../scripts/cacheRoutes/batchProcessor'
 import { assertCompleteChainGeneration } from '../../scripts/cacheRoutes/completeness'
-import { deduplicateRoutes } from '../../scripts/shared/routeDeduplication'
 import { calculateCostForRoute, createPoolCostMemo, sortRoutesBySpread } from '../../scripts/cacheRoutes/spread'
 import { calculateStatistics } from '../../scripts/cacheRoutes/statistics'
 
@@ -100,14 +99,14 @@ describe('cache route pipeline', () => {
 
   it('shares pool-cost reads between routes processed in one batch run', async () => {
     mockedGetPoolCostPercent.mockResolvedValue(0.5)
-    const forward = route([poolAB, poolBC])
-    const reverse = route([poolBC, poolAB], TOKEN_C)
-    const uniqueRoutes = deduplicateRoutes([forward, reverse])
+    const firstRoute = route([poolAB, poolBC])
+    const secondRoute = route([poolBC, poolCD], TOKEN_B)
 
-    const results = await processRoutesInBatches(uniqueRoutes, {} as never, 2, 1, 0)
+    const results = await processRoutesInBatches([firstRoute, secondRoute], {} as never, 2, 1, 0)
 
-    expect(results).toHaveLength(1)
-    expect(mockedGetPoolCostPercent).toHaveBeenCalledTimes(2)
+    expect(results).toHaveLength(2)
+    expect(results.map(({ id }) => id)).toEqual(['A-C', 'B-D'])
+    expect(mockedGetPoolCostPercent).toHaveBeenCalledTimes(3)
   })
 
   it('reports one-, two-, and three-hop routes', () => {
