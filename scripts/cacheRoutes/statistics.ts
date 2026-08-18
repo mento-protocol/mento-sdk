@@ -6,6 +6,7 @@ export interface RouteStatistics {
   hopDistribution: {
     oneHop: number
     twoHop: number
+    threeHop: number
   }
   topPairsWithMostRoutes: Array<{
     pairId: string
@@ -16,9 +17,7 @@ export interface RouteStatistics {
 /**
  * Calculate route distribution and pairing statistics
  */
-export function calculateStatistics(
-  pairs: RouteWithCost[]
-): RouteStatistics {
+export function calculateStatistics(pairs: RouteWithCost[]): RouteStatistics {
   // Count unique trading pairs for reference
   const uniquePairIds = new Set(pairs.map((pair) => pair.id))
 
@@ -32,6 +31,7 @@ export function calculateStatistics(
   const hopDistribution = {
     oneHop: pairs.filter((pair) => pair.path.length === 1).length,
     twoHop: pairs.filter((pair) => pair.path.length === 2).length,
+    threeHop: pairs.filter((pair) => pair.path.length === 3).length,
   }
 
   // Find top 3 pairs with most routes
@@ -57,9 +57,8 @@ export function displayStatistics(statistics: RouteStatistics): void {
     `   ${statistics.totalRoutes} total routes covering ${statistics.uniquePairs} unique trading pairs with multiple route options`
   )
   console.log(`   Direct routes (1 hop): ${statistics.hopDistribution.oneHop}`)
-  console.log(
-    `   Multi-hop routes (2 hops): ${statistics.hopDistribution.twoHop}`
-  )
+  console.log(`   Multi-hop routes (2 hops): ${statistics.hopDistribution.twoHop}`)
+  console.log(`   Multi-hop routes (3 hops): ${statistics.hopDistribution.threeHop}`)
 
   console.log(`\nTop Pairs with Most Route Options:`)
   statistics.topPairsWithMostRoutes.forEach((pair, index) => {

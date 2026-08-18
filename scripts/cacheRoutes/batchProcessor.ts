@@ -1,6 +1,6 @@
 import type { Route, RouteWithCost } from '../../src/core/types'
 import type { PublicClient } from 'viem'
-import { calculateCostForRoute } from './spread'
+import { calculateCostForRoute, createPoolCostMemo } from './spread'
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -15,7 +15,8 @@ interface FailedRoute {
 async function runCostFetchPass(
   routes: readonly Route[],
   publicClient: PublicClient,
-  batchSize: number
+  batchSize: number,
+  costMemo: ReturnType<typeof createPoolCostMemo>
 ): Promise<{ succeeded: RouteWithCost[]; failed: FailedRoute[] }> {
   const succeeded: RouteWithCost[] = []
   const failed: FailedRoute[] = []
@@ -27,7 +28,7 @@ async function runCostFetchPass(
 
     const batchPromises = batch.map(async (route) => {
       try {
-        const result = await calculateCostForRoute(route, publicClient)
+        const result = await calculateCostForRoute(route, publicClient, costMemo)
         processed++
         process.stdout.write(`\r   Processing ${processed}/${routes.length} routes... (${errors} errors)`)
         return result
@@ -69,6 +70,7 @@ export async function processRoutesInBatches(
   const results: RouteWithCost[] = []
   let remaining: readonly Route[] = routes
   let lastFailures: FailedRoute[] = []
+  const costMemo = createPoolCostMemo()
 
   for (let pass = 1; pass <= maxPasses && remaining.length > 0; pass++) {
     if (pass > 1) {
@@ -80,7 +82,7 @@ export async function processRoutesInBatches(
       await sleep(cooldownMs)
     }
 
-    const { succeeded, failed } = await runCostFetchPass(remaining, publicClient, batchSize)
+    const { succeeded, failed } = await runCostFetchPass(remaining, publicClient, batchSize, costMemo)
     results.push(...succeeded)
     remaining = failed.map((f) => f.route)
     lastFailures = failed

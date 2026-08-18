@@ -32,16 +32,16 @@ const mento = await Mento.create(ChainId.CELO, yourPublicClient)
 
 The SDK is organized into service namespaces:
 
-| Service | Description |
-|---------|-------------|
-| `mento.tokens` | Query stable tokens and collateral assets |
-| `mento.pools` | Discover and inspect liquidity pools |
-| `mento.routes` | Find trading routes (direct and multi-hop) |
-| `mento.quotes` | Get expected swap output amounts |
-| `mento.swap` | Build swap transactions with approvals |
-| `mento.trading` | Check circuit breakers and trading limits |
-| `mento.liquidity` | Add/remove liquidity, zap in/out |
-| `mento.borrow` | Open, adjust, and close troves |
+| Service           | Description                                |
+| ----------------- | ------------------------------------------ |
+| `mento.tokens`    | Query stable tokens and collateral assets  |
+| `mento.pools`     | Discover and inspect liquidity pools       |
+| `mento.routes`    | Find trading routes (direct and multi-hop) |
+| `mento.quotes`    | Get expected swap output amounts           |
+| `mento.swap`      | Build swap transactions with approvals     |
+| `mento.trading`   | Check circuit breakers and trading limits  |
+| `mento.liquidity` | Add/remove liquidity, zap in/out           |
+| `mento.borrow`    | Open, adjust, and close troves             |
 
 ## Token Queries
 
@@ -64,14 +64,10 @@ const amountIn = parseUnits('100', 18)
 const expectedOut = await mento.quotes.getAmountOut(USDm, CELO, amountIn)
 
 // Build a swap transaction (includes approval if needed)
-const { approval, swap } = await mento.swap.buildSwapTransaction(
-  USDm,
-  CELO,
-  amountIn,
-  recipientAddress,
-  ownerAddress,
-  { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
-)
+const { approval, swap } = await mento.swap.buildSwapTransaction(USDm, CELO, amountIn, recipientAddress, ownerAddress, {
+  slippageTolerance: 0.5,
+  deadline: deadlineFromMinutes(5),
+})
 
 // Execute with any viem wallet client
 if (approval) {
@@ -93,6 +89,9 @@ const routes = await mento.routes.getRoutes()
 // Generate fresh routes from blockchain
 const freshRoutes = await mento.routes.getRoutes({ cached: false })
 ```
+
+Routes use at most three hops. The SDK adds a three-hop route only when the
+discovered pool graph has no direct or two-hop path for the endpoint pair.
 
 ## Trading Status
 
@@ -116,15 +115,24 @@ if (!status.circuitBreakerOk) {
 ```typescript
 // Add liquidity to a pool
 const addTx = await mento.liquidity.buildAddLiquidityTransaction(
-  poolAddress, tokenA, amountA, tokenB, amountB,
-  recipient, owner,
+  poolAddress,
+  tokenA,
+  amountA,
+  tokenB,
+  amountB,
+  recipient,
+  owner,
   { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
 )
 
 // Zap in with a single token
 const zapTx = await mento.liquidity.buildZapInTransaction(
-  poolAddress, tokenIn, amountIn, 0.5, // split ratio
-  recipient, owner,
+  poolAddress,
+  tokenIn,
+  amountIn,
+  0.5, // split ratio
+  recipient,
+  owner,
   { slippageTolerance: 0.5, deadline: deadlineFromMinutes(5) }
 )
 
@@ -169,11 +177,7 @@ if (trove.status === 'zombie') {
 const params = await mento.borrow.getSystemParams('USDm')
 
 // Predict upfront fee before opening
-const fee = await mento.borrow.predictOpenTroveUpfrontFee(
-  'USDm',
-  parseUnits('1000', 18),
-  parseUnits('0.05', 18)
-)
+const fee = await mento.borrow.predictOpenTroveUpfrontFee('USDm', parseUnits('1000', 18), parseUnits('0.05', 18))
 ```
 
 Notes:
@@ -184,12 +188,20 @@ Notes:
 
 ## Supported Chains
 
-| Chain | Chain ID | Constant |
-|-------|----------|----------|
-| Celo Mainnet | 42220 | `ChainId.CELO` |
-| Celo Sepolia | 11142220 | `ChainId.CELO_SEPOLIA` |
+| Chain         | Chain ID | Constant                |
+| ------------- | -------- | ----------------------- |
+| Celo Mainnet  | 42220    | `ChainId.CELO`          |
+| Celo Sepolia  | 11142220 | `ChainId.CELO_SEPOLIA`  |
+| Monad         | 143      | `ChainId.MONAD`         |
+| Monad Testnet | 10143    | `ChainId.MONAD_TESTNET` |
+| Polygon       | 137      | `ChainId.POLYGON`       |
+| Polygon Amoy  | 80002    | `ChainId.POLYGON_AMOY`  |
+| Base Sepolia  | 84532    | `ChainId.BASE_SEPOLIA`  |
 
 ## Development
+
+Architecture decisions live in [`docs/adrs`](docs/adrs/README.md). Implementation plans live in
+[`docs/plans`](docs/plans/README.md).
 
 ```bash
 # Install dependencies

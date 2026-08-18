@@ -37,14 +37,18 @@ export function encodeRoutePath(path: Pool[], tokenIn: Address, _tokenOut: Addre
     )
   }
 
+  if (path.length > 3) {
+    throw new Error(`Route path has ${path.length} hops. The SDK supports at most 3 hops.`)
+  }
+
   // Validate all pools have required structure
   for (let i = 0; i < path.length; i++) {
     const pool = path[i]
     if (!pool.token0 || !pool.token1 || !pool.factoryAddr) {
       throw new Error(
         `Invalid pool structure at index ${i}: missing required fields. ` +
-        `Pool must have token0, token1, and factoryAddr. ` +
-        `Got: ${JSON.stringify(pool)}`
+          `Pool must have token0, token1, and factoryAddr. ` +
+          `Got: ${JSON.stringify(pool)}`
       )
     }
   }
@@ -80,8 +84,8 @@ export function encodeRoutePath(path: Pool[], tokenIn: Address, _tokenOut: Addre
     } else {
       throw new Error(
         `Route encoding error: Token ${currentTokenIn} not found in pool ${pool.poolAddr}. ` +
-        `Pool contains tokens: ${token0}, ${token1}. ` +
-        `This indicates the route path is invalid or tokens don't form a connected path.`
+          `Pool contains tokens: ${token0}, ${token1}. ` +
+          `This indicates the route path is invalid or tokens don't form a connected path.`
       )
     }
 

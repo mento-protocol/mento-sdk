@@ -7,12 +7,10 @@ import {
   hasCostData,
   type ConnectivityData,
 } from '../../../src/utils/routeUtils'
-import type {
-  Route,
-  RouteID,
-  RouteWithCost,
-} from '../../../src/core/types'
+import { encodeRoutePath } from '../../../src/utils/pathEncoder'
+import type { Route, RouteID, RouteWithCost } from '../../../src/core/types'
 import { PoolType } from '../../../src/core/types'
+import type { Address } from 'viem'
 
 /**
  * Unit tests for routeUtils
@@ -128,6 +126,32 @@ describe('routeUtils', () => {
   })
 
   describe('generateAllRoutes()', () => {
+    const makeDirectPair = (
+      tokenA: { address: string; symbol: string },
+      tokenB: { address: string; symbol: string },
+      poolNumber: number
+    ): Route => ({
+      id: [tokenA.symbol, tokenB.symbol].sort().join('-') as RouteID,
+      tokens: [tokenA, tokenB],
+      path: [
+        {
+          factoryAddr: FACTORY_ADDR,
+          poolAddr: `0x${poolNumber.toString(16).padStart(39, '0')}`,
+          token0: tokenA.address,
+          token1: tokenB.address,
+          poolType: PoolType.FPMM as `${PoolType}`,
+        },
+      ],
+    })
+
+    const linearFourTokenPairs = (): Route[] => {
+      const cUSD = { address: CUSD_ADDR, symbol: 'cUSD' }
+      const celo = { address: CELO_ADDR, symbol: 'CELO' }
+      const cEUR = { address: CEUR_ADDR, symbol: 'cEUR' }
+      const cREAL = { address: CREAL_ADDR, symbol: 'cREAL' }
+      return [makeDirectPair(cUSD, celo, 0x601), makeDirectPair(celo, cEUR, 0x602), makeDirectPair(cEUR, cREAL, 0x603)]
+    }
+
     it('should include all direct pairs', () => {
       const connectivity = buildConnectivityStructures(mockDirectPairs)
       const allRoutes = generateAllRoutes(connectivity)
@@ -148,9 +172,7 @@ describe('routeUtils', () => {
       expect(ceurUsdRoutes!.length).toBeGreaterThan(0)
 
       // Check that at least one route is 2-hop
-      const twoHopRoute = ceurUsdRoutes!.find(
-        (route) => route.path.length === 2
-      )
+      const twoHopRoute = ceurUsdRoutes!.find((route) => route.path.length === 2)
       expect(twoHopRoute).toBeDefined()
     })
 
@@ -163,16 +185,8 @@ describe('routeUtils', () => {
         for (const route of routes) {
           if (route.path.length === 2) {
             const [hop1, hop2] = route.path
-            const start =
-              hop1.token0 === hop2.token0 ||
-              hop1.token0 === hop2.token1
-                ? hop1.token1
-                : hop1.token0
-            const end =
-              hop2.token0 === hop1.token0 ||
-              hop2.token0 === hop1.token1
-                ? hop2.token1
-                : hop2.token0
+            const start = hop1.token0 === hop2.token0 || hop1.token0 === hop2.token1 ? hop1.token1 : hop1.token0
+            const end = hop2.token0 === hop1.token0 || hop2.token0 === hop1.token1 ? hop2.token1 : hop2.token0
 
             // Start and end should be different (not circular)
             expect(start).not.toBe(end)
@@ -253,6 +267,100 @@ describe('routeUtils', () => {
         expect(sym1 < sym2).toBe(true) // First symbol should come before second
       }
     })
+
+    it('should discover a three-hop route for a linear four-token graph', () => {
+      const connectivity = buildConnectivityStructures(linearFourTokenPairs())
+      const allRoutes = generateAllRoutes(connectivity)
+      const routes = allRoutes.get('cREAL-cUSD')
+
+      expect(routes).toHaveLength(1)
+      expect(routes?.[0].path).toHaveLength(3)
+      expect(routes?.[0].tokens.map((token) => token.symbol)).toEqual(['cREAL', 'cUSD'])
+      expect(
+        encodeRoutePath(
+          routes![0].path,
+          routes![0].tokens[0].address as Address,
+          routes![0].tokens[1].address as Address
+        )
+      ).toHaveLength(3)
+      expect(
+        encodeRoutePath(
+          routes![0].path,
+          routes![0].tokens[1].address as Address,
+          routes![0].tokens[0].address as Address
+        )
+      ).toHaveLength(3)
+    })
+
+    it('should suppress a three-hop route when a direct endpoint edge exists', () => {
+      const pairs = linearFourTokenPairs()
+      pairs.push(
+        makeDirectPair({ address: CUSD_ADDR, symbol: 'cUSD' }, { address: CREAL_ADDR, symbol: 'cREAL' }, 0x604)
+      )
+
+      const routes = generateAllRoutes(buildConnectivityStructures(pairs)).get('cREAL-cUSD')
+
+      expect(routes?.some((route) => route.path.length === 1)).toBe(true)
+      expect(routes?.some((route) => route.path.length === 3)).toBe(false)
+    })
+
+    it('should suppress a three-hop route when a two-hop endpoint path exists', () => {
+      const pairs = linearFourTokenPairs()
+      pairs.push(makeDirectPair({ address: CUSD_ADDR, symbol: 'cUSD' }, { address: CEUR_ADDR, symbol: 'cEUR' }, 0x605))
+
+      const routes = generateAllRoutes(buildConnectivityStructures(pairs)).get('cREAL-cUSD')
+
+      expect(routes?.some((route) => route.path.length === 2)).toBe(true)
+      expect(routes?.some((route) => route.path.length === 3)).toBe(false)
+    })
+
+    it('should not discover endpoint pairs that require four hops', () => {
+      const pairs = linearFourTokenPairs()
+      pairs.push(
+        makeDirectPair({ address: CREAL_ADDR, symbol: 'cREAL' }, { address: USDC_ADDR, symbol: 'USDC' }, 0x606)
+      )
+
+      const allRoutes = generateAllRoutes(buildConnectivityStructures(pairs))
+
+      expect(allRoutes.has('USDC-cUSD')).toBe(false)
+    })
+
+    it('should keep cyclic paths simple and avoid repeated tokens', () => {
+      const pairs = [
+        makeDirectPair({ address: CUSD_ADDR, symbol: 'cUSD' }, { address: CELO_ADDR, symbol: 'CELO' }, 0x607),
+        makeDirectPair({ address: CELO_ADDR, symbol: 'CELO' }, { address: CEUR_ADDR, symbol: 'cEUR' }, 0x608),
+        makeDirectPair({ address: CEUR_ADDR, symbol: 'cEUR' }, { address: CREAL_ADDR, symbol: 'cREAL' }, 0x609),
+        makeDirectPair({ address: CREAL_ADDR, symbol: 'cREAL' }, { address: CELO_ADDR, symbol: 'CELO' }, 0x60a),
+        makeDirectPair({ address: CREAL_ADDR, symbol: 'cREAL' }, { address: USDC_ADDR, symbol: 'USDC' }, 0x60b),
+      ]
+      const allRoutes = generateAllRoutes(buildConnectivityStructures(pairs))
+
+      for (const route of allRoutes.get('USDC-cUSD') ?? []) {
+        const pathTokens = new Set<string>()
+        for (const pool of route.path) {
+          pathTokens.add(pool.token0)
+          pathTokens.add(pool.token1)
+        }
+        expect(pathTokens.size).toBe(route.path.length + 1)
+      }
+    })
+
+    it('should canonicalize forward and reverse traversal of a three-hop path', () => {
+      const pairs = linearFourTokenPairs()
+      const reversedPairs = pairs.map((pair) => ({
+        ...pair,
+        tokens: [pair.tokens[1], pair.tokens[0]] as [(typeof pair.tokens)[0], (typeof pair.tokens)[1]],
+        path: pair.path.map((pool) => ({ ...pool, token0: pool.token1, token1: pool.token0 })),
+      }))
+
+      const forward = generateAllRoutes(buildConnectivityStructures(pairs)).get('cREAL-cUSD')
+      const reverse = generateAllRoutes(buildConnectivityStructures(reversedPairs)).get('cREAL-cUSD')
+      const signature = (route: Route) => route.path.map((pool) => pool.poolAddr)
+
+      expect(forward).toHaveLength(1)
+      expect(reverse).toHaveLength(1)
+      expect(signature(forward![0])).toEqual(signature(reverse![0]))
+    })
   })
 
   describe('selectOptimalRoutes()', () => {
@@ -265,11 +373,7 @@ describe('routeUtils', () => {
     })
 
     it('should return array of selected routes', () => {
-      const selected = selectOptimalRoutes(
-        allRoutes,
-        false,
-        connectivity.addrToSymbol
-      )
+      const selected = selectOptimalRoutes(allRoutes, false, connectivity.addrToSymbol)
 
       expect(Array.isArray(selected)).toBe(true)
       expect(selected.length).toBeGreaterThan(0)
@@ -277,26 +381,16 @@ describe('routeUtils', () => {
 
     it('should select single route when only one available', () => {
       // Mock single route scenario
-      const singleRouteMap = new Map([
-        ['CELO-cUSD' as RouteID, [mockDirectPairs[0]]],
-      ])
+      const singleRouteMap = new Map([['CELO-cUSD' as RouteID, [mockDirectPairs[0]]]])
 
-      const selected = selectOptimalRoutes(
-        singleRouteMap,
-        false,
-        connectivity.addrToSymbol
-      )
+      const selected = selectOptimalRoutes(singleRouteMap, false, connectivity.addrToSymbol)
 
       expect(selected.length).toBe(1)
       expect(selected[0]).toEqual(mockDirectPairs[0])
     })
 
     it('should return all routes when returnAllRoutes is true', () => {
-      const selected = selectOptimalRoutes(
-        allRoutes,
-        true,
-        connectivity.addrToSymbol
-      )
+      const selected = selectOptimalRoutes(allRoutes, true, connectivity.addrToSymbol)
 
       // Should return all routes (not just optimal ones)
       let totalRoutes = 0
@@ -308,11 +402,7 @@ describe('routeUtils', () => {
     })
 
     it('should apply optimization when returnAllRoutes is false', () => {
-      const selected = selectOptimalRoutes(
-        allRoutes,
-        false,
-        connectivity.addrToSymbol
-      )
+      const selected = selectOptimalRoutes(allRoutes, false, connectivity.addrToSymbol)
 
       // Should have one route per unique pair (optimized selection)
       const uniquePairIds = new Set(selected.map((r) => r.id))
@@ -346,9 +436,65 @@ describe('routeUtils', () => {
 
       const best = selectBestRoute(candidatesWithCost, addrToSymbol)
 
-      expect(
-        (best as RouteWithCost).costData.totalCostPercent
-      ).toBe(0.3)
+      expect((best as RouteWithCost).costData.totalCostPercent).toBe(0.3)
+    })
+
+    it('should resolve equal costs independently of candidate order', () => {
+      const lowerPath: RouteWithCost = {
+        ...mockDirectPairs[0],
+        costData: { totalCostPercent: 0.3, hops: [] },
+      }
+      const higherPath: RouteWithCost = {
+        ...mockDirectPairs[0],
+        path: [
+          {
+            ...mockDirectPairs[0].path[0],
+            poolAddr: '0x9000000000000000000000000000000000000009',
+          },
+        ],
+        costData: { totalCostPercent: 0.3, hops: [] },
+      }
+      const addrToSymbol = new Map([
+        [CELO_ADDR, 'CELO'],
+        [CUSD_ADDR, 'cUSD'],
+      ])
+
+      const first = selectBestRoute([higherPath, lowerPath], addrToSymbol)
+      const second = selectBestRoute([lowerPath, higherPath], addrToSymbol)
+
+      expect(first.path[0].poolAddr).toBe(mockDirectPairs[0].path[0].poolAddr)
+      expect(second.path[0].poolAddr).toBe(mockDirectPairs[0].path[0].poolAddr)
+    })
+
+    it('should exclude a three-hop candidate when a shorter candidate exists', () => {
+      const shorter: RouteWithCost = {
+        ...mockDirectPairs[0],
+        costData: { totalCostPercent: 0.8, hops: [] },
+      }
+      const threeHop: RouteWithCost = {
+        id: 'CELO-cUSD' as RouteID,
+        tokens: mockDirectPairs[0].tokens,
+        path: [
+          mockDirectPairs[1].path[0],
+          {
+            factoryAddr: FACTORY_ADDR,
+            poolAddr: '0x3000000000000000000000000000000000000098',
+            token0: CEUR_ADDR,
+            token1: CREAL_ADDR,
+            poolType: PoolType.FPMM as `${PoolType}`,
+          },
+          mockDirectPairs[2].path[0],
+        ],
+        costData: { totalCostPercent: 0.1, hops: [] },
+      }
+      const addrToSymbol = new Map([
+        [CELO_ADDR, 'CELO'],
+        [CUSD_ADDR, 'cUSD'],
+        [CEUR_ADDR, 'cEUR'],
+        [CREAL_ADDR, 'cREAL'],
+      ])
+
+      expect(selectBestRoute([threeHop, shorter], addrToSymbol)).toBe(shorter)
     })
 
     it('should prefer direct route over multi-hop (Tier 2)', () => {
@@ -477,10 +623,7 @@ describe('routeUtils', () => {
     })
 
     it('should return first route if no better heuristic applies (Tier 4)', () => {
-      const candidates: Route[] = [
-        mockDirectPairs[0],
-        mockDirectPairs[1],
-      ]
+      const candidates: Route[] = [mockDirectPairs[0], mockDirectPairs[1]]
 
       const addrToSymbol = new Map([
         [CELO_ADDR, 'CELO'],

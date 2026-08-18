@@ -27,7 +27,8 @@ export interface Route {
   /**
    * Array of exchange hops needed to execute the trade
    * Length 1: Direct route (single pool)
-   * Length 2: Two-hop route via intermediate token through two pools
+   * Length 2: Two-hop route via an intermediate token through two pools
+   * Length 3: Three-hop route only when no direct or two-hop path exists
    * Order matters for execution
    */
   path: Array<Pool>
