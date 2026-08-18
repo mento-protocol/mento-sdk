@@ -449,7 +449,8 @@ describe('routeUtils', () => {
         path: [
           {
             ...mockDirectPairs[0].path[0],
-            poolAddr: '0x9000000000000000000000000000000000000009',
+            poolType: PoolType.Virtual as `${PoolType}`,
+            poolAddr: '0x0000000000000000000000000000000000000009',
           },
         ],
         costData: { totalCostPercent: 0.3, hops: [] },

@@ -72,6 +72,21 @@ describe('RouteService', () => {
     expect(second.path.map((pool) => pool.poolAddr)).toEqual(['0x43', '0x44'])
   })
 
+  it('selects equal-cost, equal-hop cached candidates with the shared path order', async () => {
+    const virtual = makeCachedRoute([makePool('0x01', token0, token1, 'Virtual')], 0.3)
+    const fpmm = makeCachedRoute([makePool('0xff', token0, token1)], 0.3)
+
+    setCachedRoutes([virtual, fpmm])
+    const first = await service.findRoute(token0, token1)
+
+    const reorderedService = new RouteService(mockPublicClient, ChainId.CELO, mockPoolService)
+    setCachedRoutes([fpmm, virtual])
+    const second = await reorderedService.findRoute(token0, token1)
+
+    expect(first.path[0].poolAddr).toBe('0xff')
+    expect(second.path[0].poolAddr).toBe('0xff')
+  })
+
   it('does not let a cheaper three-hop cached route compete with a shorter route', async () => {
     const expensiveTwoHop = makeCachedRoute(makePath(['0x45', '0x46']), 0.8)
     const cheapThreeHop = makeCachedRoute(makePath(['0x47', '0x48', '0x49']), 0.3)
@@ -112,13 +127,18 @@ describe('RouteService', () => {
   })
 })
 
-function makePool(poolAddr: string, poolToken0 = token0, poolToken1 = token1) {
+function makePool(
+  poolAddr: string,
+  poolToken0 = token0,
+  poolToken1 = token1,
+  poolType: 'FPMM' | 'Virtual' = 'FPMM'
+) {
   return {
     factoryAddr: '0x7000000000000000000000000000000000000007',
     poolAddr,
     token0: poolToken0,
     token1: poolToken1,
-    poolType: 'FPMM' as const,
+    poolType,
   }
 }
 

@@ -2,6 +2,7 @@ import type { Route, RouteWithCost } from '../../src/core/types'
 import type { Pool } from '../../src/core/types'
 import type { PublicClient } from 'viem'
 import { getPoolCostPercent } from '../../src/utils/costUtils'
+import { compareRoutePath } from '../../src/utils/routeUtils'
 
 /**
  * Cache of in-flight and completed pool-cost reads for one cache-generation run.
@@ -116,22 +117,5 @@ function compareRouteIdentity(first: Route, second: Route): number {
   if (first.id < second.id) return -1
   if (first.id > second.id) return 1
 
-  const hopDifference = first.path.length - second.path.length
-  if (hopDifference !== 0) return hopDifference
-
-  const firstKey = deterministicPathKey(first)
-  const secondKey = deterministicPathKey(second)
-  if (firstKey < secondKey) return -1
-  if (firstKey > secondKey) return 1
-  return 0
-}
-
-function deterministicPathKey(route: Route): string {
-  return route.path
-    .map((pool) =>
-      [pool.poolType, pool.factoryAddr, pool.poolAddr, pool.token0, pool.token1]
-        .map((value) => value.toLowerCase())
-        .join(':')
-    )
-    .join('|')
+  return compareRoutePath(first, second)
 }

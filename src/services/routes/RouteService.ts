@@ -2,7 +2,12 @@ import { PoolService } from '../pools'
 import { ERC20_ABI } from '../../core/abis'
 import { RouteNotFoundError } from '../../core/errors'
 import { Route, RouteID, Pool, RouteWithCost, RouteToken } from '../../core/types'
-import { buildConnectivityStructures, generateAllRoutes, selectOptimalRoutes } from '../../utils/routeUtils'
+import {
+  buildConnectivityStructures,
+  compareRoutePath,
+  generateAllRoutes,
+  selectOptimalRoutes,
+} from '../../utils/routeUtils'
 import { canonicalSymbolKey } from '../../utils/sortUtils'
 import { PublicClient } from 'viem'
 import { multicall } from '../../utils/multicall'
@@ -350,13 +355,8 @@ function isPreferredCachedRoute(candidate: Route | RouteWithCost, current: Route
     if (candidateCost !== currentCost) return candidateCost < currentCost
   }
 
-  // Hop count is the deterministic fallback when costs tie or are unavailable.
-  if (candidate.path.length !== current.path.length) {
-    return candidate.path.length < current.path.length
-  }
-
-  // Keep exact cost and hop ties independent of cached route order as well.
-  return routePathKey(candidate) < routePathKey(current)
+  // Hop count and exact path ties use the shared deterministic route order.
+  return compareRoutePath(candidate, current) < 0
 }
 
 function getRouteCost(route: Route | RouteWithCost): number | undefined {
@@ -364,12 +364,4 @@ function getRouteCost(route: Route | RouteWithCost): number | undefined {
 
   const cost = route.costData?.totalCostPercent
   return typeof cost === 'number' && Number.isFinite(cost) ? cost : undefined
-}
-
-function routePathKey(route: Route): string {
-  return route.path
-    .map((pool) =>
-      [pool.poolAddr, pool.factoryAddr, pool.token0, pool.token1].map((value) => value.toLowerCase()).join(':')
-    )
-    .join('|')
 }

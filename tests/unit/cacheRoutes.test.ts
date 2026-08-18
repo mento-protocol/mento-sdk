@@ -132,7 +132,13 @@ describe('cache route pipeline', () => {
       costData: { totalCostPercent: 0.5, hops: [] },
     }
     const higherPath = {
-      ...route([{ ...poolAB, poolAddr: '0x9000000000000000000000000000000000000009' }]),
+      ...route([
+        {
+          ...poolAB,
+          poolType: PoolType.Virtual as `${PoolType}`,
+          poolAddr: '0x0000000000000000000000000000000000000009',
+        },
+      ]),
       costData: { totalCostPercent: 0.5, hops: [] },
     }
     const signature = (routes: Route[]) => routes.map((entry) => entry.path.map((pool) => pool.poolAddr).join('|'))

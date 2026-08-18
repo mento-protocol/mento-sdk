@@ -566,7 +566,7 @@ export function selectBestRoute(candidates: Route[], addrToSymbol: Map<Address, 
 
   // Tier 2: Prefer direct routes (single-hop, lower risk)
   const directRoutes = eligibleCandidates.filter((candidate) => candidate.path.length === 1)
-  if (directRoutes.length > 0) return [...directRoutes].sort(compareRoutePathOrder)[0]
+  if (directRoutes.length > 0) return [...directRoutes].sort(compareRoutePath)[0]
 
   // Tier 3: Prefer routes through major stablecoins (better liquidity)
   const stablecoins = ['USDm', 'EURm', 'USDC', 'USDT']
@@ -576,29 +576,41 @@ export function selectBestRoute(candidates: Route[], addrToSymbol: Map<Address, 
       return symbol !== undefined && stablecoins.includes(symbol)
     })
   })
-  if (routesWithStablecoin.length > 0) return [...routesWithStablecoin].sort(compareRoutePathOrder)[0]
+  if (routesWithStablecoin.length > 0) return [...routesWithStablecoin].sort(compareRoutePath)[0]
 
   // Tier 4: Use a stable path key so discovery order cannot change the result.
-  return [...eligibleCandidates].sort(compareRoutePathOrder)[0]
+  return [...eligibleCandidates].sort(compareRoutePath)[0]
 }
 
 function compareCostedRoutes(candidate: RouteWithCost, current: RouteWithCost): number {
   const costDifference = candidate.costData.totalCostPercent - current.costData.totalCostPercent
-  return costDifference || compareRoutePathOrder(candidate, current)
+  return costDifference || compareRoutePath(candidate, current)
 }
 
-function compareRoutePathOrder(first: Route, second: Route): number {
+/**
+ * Compares route paths by hop count and a stable pool identity key.
+ *
+ * Callers must apply their own higher-level ordering before this comparator,
+ * such as route ID or cost preference.
+ */
+export function compareRoutePath(first: Route, second: Route): number {
   const hopDifference = first.path.length - second.path.length
   if (hopDifference !== 0) return hopDifference
 
-  const firstKey = deterministicPathKey(first)
-  const secondKey = deterministicPathKey(second)
+  const firstKey = deterministicRoutePathKey(first)
+  const secondKey = deterministicRoutePathKey(second)
   if (firstKey < secondKey) return -1
   if (firstKey > secondKey) return 1
   return 0
 }
 
-function deterministicPathKey(route: Route): string {
+/**
+ * Returns the canonical, case-insensitive key for a route's pool path.
+ *
+ * Keep this ordering stable across fresh route selection, cache generation,
+ * and cached route lookup.
+ */
+export function deterministicRoutePathKey(route: Route): string {
   return route.path
     .map((pool) =>
       [pool.poolType, pool.factoryAddr, pool.poolAddr, pool.token0, pool.token1]
