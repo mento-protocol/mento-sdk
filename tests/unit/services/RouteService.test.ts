@@ -127,12 +127,7 @@ describe('RouteService', () => {
   })
 })
 
-function makePool(
-  poolAddr: string,
-  poolToken0 = token0,
-  poolToken1 = token1,
-  poolType: 'FPMM' | 'Virtual' = 'FPMM'
-) {
+function makePool(poolAddr: string, poolToken0 = token0, poolToken1 = token1, poolType: 'FPMM' | 'Virtual' = 'FPMM') {
   return {
     factoryAddr: '0x7000000000000000000000000000000000000007',
     poolAddr,
