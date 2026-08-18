@@ -32,10 +32,15 @@ describe('encodeRoutePath', () => {
     ])
   })
 
-  it('rejects a path longer than three hops', () => {
+  it('encodes a connected four-pool path for compatibility with the Router', () => {
     const fourHopPath = [...path, makePool('0x5400000000000000000000000000000000000054', tokenD, tokenE)]
 
-    expect(() => encodeRoutePath(fourHopPath, tokenA, tokenE)).toThrow('The SDK supports at most 3 hops')
+    expect(encodeRoutePath(fourHopPath, tokenA, tokenE)).toEqual([
+      { from: tokenA, to: tokenB, factory },
+      { from: tokenB, to: tokenC, factory },
+      { from: tokenC, to: tokenD, factory },
+      { from: tokenD, to: tokenE, factory },
+    ])
   })
 })
 

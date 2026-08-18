@@ -20,7 +20,7 @@ export type ReadonlyRouterRoutes = readonly { from: Address; to: Address; factor
  * @param tokenIn - The input token address (determines swap direction)
  * @param _tokenOut - The output token address (unused but kept for API clarity)
  * @returns Array of RouterRoute objects for the contract call
- * @throws {Error} If path is empty, too long, or contains invalid pools
+ * @throws {Error} If path is empty or contains invalid pools
  *
  * @example
  * ```typescript
@@ -35,10 +35,6 @@ export function encodeRoutePath(path: Pool[], tokenIn: Address, _tokenOut: Addre
     throw new Error(
       'Internal error: Route path is empty. This should not happen - routes are validated before encoding.'
     )
-  }
-
-  if (path.length > 3) {
-    throw new Error(`Route path has ${path.length} hops. The SDK supports at most 3 hops.`)
   }
 
   // Validate all pools have required structure
