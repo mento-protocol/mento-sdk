@@ -90,8 +90,9 @@ const routes = await mento.routes.getRoutes()
 const freshRoutes = await mento.routes.getRoutes({ cached: false })
 ```
 
-Routes use at most three hops. The SDK adds a three-hop route only when the
-discovered pool graph has no direct or two-hop path for the endpoint pair.
+Automatically discovered routes use at most three hops. The SDK adds a
+three-hop route only when the discovered pool graph has no direct or two-hop
+path for the endpoint pair. Caller-supplied connected paths may be longer.
 
 ## Trading Status
 

@@ -18,7 +18,7 @@ The cached pairs provide:
 pnpm cacheRoutes
 ```
 
-### Cache specific network
+### Cache a specific network
 
 ```bash
 # By network name
