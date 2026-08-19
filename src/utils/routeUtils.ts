@@ -4,6 +4,14 @@ import { canonicalSymbolKey } from './sortUtils'
 type TokenSymbol = string
 type Address = string
 
+const MAX_DISCOVERED_ROUTE_HOPS = 3
+
+interface DiscoveredRoute {
+  route: Route
+  start: Address
+  end: Address
+}
+
 /**
  * =============================================================================
  * ROUTE GENERATION UTILITIES
@@ -173,11 +181,10 @@ export function buildConnectivityStructures(directRoutes: Route[]): Connectivity
  *
  * This function implements a route discovery algorithm that:
  *
- * 1. **Adds all direct routes** (single-hop routes)
- * 2. **Discovers two-hop routes** using graph traversal.
- * 3. **Discovers eligible three-hop routes** using bounded simple-path
- *    traversal. A three-hop route is added only when its endpoint pair has no
- *    direct or two-hop route.
+ * 1. **Adds all direct routes** (single-hop routes).
+ * 2. **Discovers multi-hop candidates** with one bounded simple-path traversal.
+ * 3. **Keeps every two-hop route** and only the shortest routes with three or
+ *    more hops. The current discovery limit is three hops.
  *
  * **Route Deduplication**: Multiple routes between the same token pair
  * are collected in arrays, allowing the selection algorithm to choose
@@ -214,31 +221,10 @@ export function generateAllRoutes(connectivityData: ConnectivityData): Map<Route
     allRoutes.get(route.id)!.push(route)
   }
 
-  // Step 2: Generate two-hop routes before considering three-hop routes. The
-  // endpoint IDs collected here define the minimum-distance eligibility rule.
-  const reachableWithinTwoHops = new Set<RouteID>(allRoutes.keys())
-  const seenGeneratedPaths = new Set<string>()
+  // Step 2: Discover every simple multi-hop candidate in one bounded traversal.
+  const discoveredRoutes: DiscoveredRoute[] = []
 
-  for (const [start, neighbors] of tokenGraph.entries()) {
-    for (const intermediate of neighbors) {
-      const secondHopNeighbors = tokenGraph.get(intermediate)
-      if (!secondHopNeighbors) continue
-
-      for (const end of secondHopNeighbors) {
-        if (end === start) continue
-
-        const twoHopRoute = createTwoHopRoute(start, intermediate, end, addrToSymbol, directRouteMap)
-        if (twoHopRoute) {
-          addGeneratedRoute(allRoutes, twoHopRoute, start, end, addrToSymbol, seenGeneratedPaths)
-        }
-      }
-    }
-  }
-
-  for (const routeId of allRoutes.keys()) reachableWithinTwoHops.add(routeId)
-
-  // Step 3: Enumerate simple paths with a hard maximum of three hops. The
-  // visited token and pool sets prevent cycles and repeated exchanges.
+  // OUTER LOOP: "For each starting token..." (e.g., USDm, CELO, EURm, etc.)
   for (const start of tokenGraph.keys()) {
     discoverSimplePaths(
       start,
@@ -246,15 +232,41 @@ export function generateAllRoutes(connectivityData: ConnectivityData): Map<Route
       [],
       new Set([start]),
       new Set<string>(),
-      3,
+      MAX_DISCOVERED_ROUTE_HOPS,
       tokenGraph,
       addrToSymbol,
       directRouteMap,
-      (route, pathStart, pathEnd) => {
-        if (route.path.length !== 3 || reachableWithinTwoHops.has(route.id)) return
-        addGeneratedRoute(allRoutes, route, pathStart, pathEnd, addrToSymbol, seenGeneratedPaths)
-      }
+      (route, pathStart, pathEnd) => discoveredRoutes.push({ route, start: pathStart, end: pathEnd })
     )
+  }
+
+  // Step 3: Determine the minimum structural distance for every endpoint pair.
+  // Direct routes seed the map with one hop. The traversal supplies distances
+  // from two hops up to MAX_DISCOVERED_ROUTE_HOPS.
+  const minimumHopsByRouteId = new Map<RouteID, number>()
+  for (const routeId of allRoutes.keys()) minimumHopsByRouteId.set(routeId, 1)
+
+  for (const { route } of discoveredRoutes) {
+    const minimumHops = minimumHopsByRouteId.get(route.id)
+    if (minimumHops === undefined || route.path.length < minimumHops) {
+      minimumHopsByRouteId.set(route.id, route.path.length)
+    }
+  }
+
+  // Preserve existing two-hop alternatives, including alternatives for direct
+  // pairs. Routes with three or more hops are eligible only when they are the
+  // shortest structural path for their endpoint pair. Insert every two-hop
+  // route first to preserve the existing route and map order.
+  const seenGeneratedPaths = new Set<string>()
+  for (const { route, start, end } of discoveredRoutes) {
+    if (route.path.length !== 2) continue
+    addGeneratedRoute(allRoutes, route, start, end, addrToSymbol, seenGeneratedPaths)
+  }
+
+  for (const { route, start, end } of discoveredRoutes) {
+    const minimumHops = minimumHopsByRouteId.get(route.id)
+    if (route.path.length < 3 || route.path.length !== minimumHops) continue
+    addGeneratedRoute(allRoutes, route, start, end, addrToSymbol, seenGeneratedPaths)
   }
 
   return allRoutes
@@ -279,7 +291,10 @@ function discoverSimplePaths(
 ): void {
   if (path.length === maxHops) return
 
+  // RECURSIVE LOOP: "Where can I go from the current token?"
+  // Example: USDm → CELO then inspects CELO's neighbors, such as EURm.
   for (const next of tokenGraph.get(current) ?? []) {
+    // Skip circular paths such as USDm → CELO → USDm.
     if (visitedTokens.has(next)) continue
 
     const currentSymbol = addrToSymbol.get(current)
@@ -293,6 +308,8 @@ function discoverSimplePaths(
     const nextVisitedTokens = new Set(visitedTokens).add(next)
     const nextVisitedPools = new Set(visitedPools).add(poolSignature(pool))
 
+    // Two or more pools define a potential multi-hop route.
+    // Example: USDm → CELO → EURm is a two-hop route.
     if (nextPath.length >= 2) {
       const route = createRouteFromPath(start, next, nextPath, addrToSymbol)
       if (route) onRoute(route, start, next)

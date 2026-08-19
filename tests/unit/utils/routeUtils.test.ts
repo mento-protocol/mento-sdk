@@ -162,6 +162,24 @@ describe('routeUtils', () => {
       expect(allRoutes.has('cREAL-cUSD')).toBe(true)
     })
 
+    it('should preserve parallel direct pools for the same pair', () => {
+      const first = makeDirectPair(
+        { address: CUSD_ADDR, symbol: 'cUSD' },
+        { address: CELO_ADDR, symbol: 'CELO' },
+        0x501
+      )
+      const second = makeDirectPair(
+        { address: CUSD_ADDR, symbol: 'cUSD' },
+        { address: CELO_ADDR, symbol: 'CELO' },
+        0x502
+      )
+
+      const routes = generateAllRoutes(buildConnectivityStructures([first, second])).get('CELO-cUSD')
+
+      expect(routes).toHaveLength(2)
+      expect(routes?.map((route) => route.path[0].poolAddr)).toEqual([first.path[0].poolAddr, second.path[0].poolAddr])
+    })
+
     it('should find 2-hop routes via graph traversal', () => {
       const connectivity = buildConnectivityStructures(mockDirectPairs)
       const allRoutes = generateAllRoutes(connectivity)
@@ -255,6 +273,46 @@ describe('routeUtils', () => {
       const celoUsdRoutes = allRoutes.get('CELO-cUSD')
       expect(celoUsdRoutes).toBeDefined()
       expect(celoUsdRoutes!.length).toBeGreaterThan(1) // Direct + at least one 2-hop via USDC
+    })
+
+    it('should preserve a direct route and every two-hop alternative for the same pair', () => {
+      const cUSD = { address: CUSD_ADDR, symbol: 'cUSD' }
+      const celo = { address: CELO_ADDR, symbol: 'CELO' }
+      const cEUR = { address: CEUR_ADDR, symbol: 'cEUR' }
+      const cREAL = { address: CREAL_ADDR, symbol: 'cREAL' }
+      const pairs = [
+        makeDirectPair(cUSD, cREAL, 0x511),
+        makeDirectPair(cUSD, celo, 0x512),
+        makeDirectPair(celo, cREAL, 0x513),
+        makeDirectPair(cUSD, cEUR, 0x514),
+        makeDirectPair(cEUR, cREAL, 0x515),
+      ]
+
+      const routes = generateAllRoutes(buildConnectivityStructures(pairs)).get('cREAL-cUSD')
+
+      expect(routes?.map((route) => route.path.length)).toEqual([1, 2, 2])
+      expect(routes?.slice(1).map((route) => route.path.map((pool) => pool.poolAddr))).toEqual([
+        [pairs[2].path[0].poolAddr, pairs[1].path[0].poolAddr],
+        [pairs[4].path[0].poolAddr, pairs[3].path[0].poolAddr],
+      ])
+    })
+
+    it('should add all two-hop endpoint pairs before eligible three-hop pairs', () => {
+      const tokenA = { address: CUSD_ADDR, symbol: 'A' }
+      const tokenB = { address: CELO_ADDR, symbol: 'B' }
+      const tokenC = { address: CEUR_ADDR, symbol: 'C' }
+      const tokenD = { address: CREAL_ADDR, symbol: 'D' }
+      const tokenE = { address: USDC_ADDR, symbol: 'E' }
+      const pairs = [
+        makeDirectPair(tokenA, tokenB, 0x521),
+        makeDirectPair(tokenA, tokenC, 0x522),
+        makeDirectPair(tokenB, tokenD, 0x523),
+        makeDirectPair(tokenD, tokenE, 0x524),
+      ]
+
+      const routeIds = [...generateAllRoutes(buildConnectivityStructures(pairs)).keys()]
+
+      expect(routeIds.slice(pairs.length)).toEqual(['A-D', 'B-C', 'B-E', 'A-E', 'C-D'])
     })
 
     it('should create canonical pair IDs (sorted symbols)', () => {
