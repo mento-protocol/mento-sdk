@@ -8,65 +8,76 @@ The cached pairs provide:
 
 - Instant access to tradable pairs without blockchain queries
 - Pre-computed spread data for optimal route selection
-- Support for both direct and multi-hop trading routes
+- Support for direct, two-hop, and eligible three-hop trading routes
 
 ## Usage
 
 ### Cache all networks
 
 ```bash
-pnpm cacheTradablePairs
+pnpm cacheRoutes
 ```
 
-### Cache specific network
+### Cache a specific network
 
 ```bash
 # By network name
-pnpm cacheTradablePairs --network celo
-pnpm cacheTradablePairs -n celo-sepolia
+pnpm cacheRoutes --network celo
+pnpm cacheRoutes -n celo-sepolia
 
 # By chain ID
-pnpm cacheTradablePairs --chainId 42220
-pnpm cacheTradablePairs -c 11142220
+pnpm cacheRoutes --chainId 42220
+pnpm cacheRoutes -c 11142220
 ```
 
 ### Control batch size
 
 ```bash
 # Adjust concurrent request batch size (default: 10)
-pnpm cacheTradablePairs --batchSize 5
-pnpm cacheTradablePairs -b 20
+pnpm cacheRoutes --batchSize 5
+pnpm cacheRoutes -b 20
 ```
 
 ## Supported Networks
 
-| Network      | Chain ID   |
-| ------------ | ---------- |
-| Celo Mainnet | 42220      |
-| Celo Sepolia | 11142220   |
+| Network       | Chain ID |
+| ------------- | -------- |
+| Celo Mainnet  | 42220    |
+| Celo Sepolia  | 11142220 |
+| Monad         | 143      |
+| Monad Testnet | 10143    |
+| Polygon       | 137      |
+| Polygon Amoy  | 80002    |
+| Base Sepolia  | 84532    |
 
 ## Output
 
-The script generates TypeScript files in `src/constants/`:
+The script generates `src/cache/routes.ts`.
 
-- `tradablePairs.42220.ts` - Celo mainnet pairs
-- `tradablePairs.11142220.ts` - Celo Sepolia testnet pairs
+The cache contains routes for every supported chain. A route entry includes:
 
-Each file exports a `TradablePairWithSpread[]` array containing:
-
-- Pair ID (e.g., "cEUR-cUSD")
-- Token assets with addresses and symbols
-- Exchange path (hops for routing)
-- Spread data (total percentage and per-hop breakdown)
+- Pair ID (for example, `cEUR-cUSD`)
+- Endpoint tokens with addresses and symbols
+- Ordered exchange path with one to three hops
+- Spread data with total and per-hop percentages
 
 ## How It Works
 
-1. **Fetch exchanges** from BiPoolManager via ExchangeService
-2. **Generate all routes** including direct and 2-hop paths
-3. **Fetch spread data** from pool configurations
-4. **Deduplicate routes** removing symmetric duplicates
+1. **Discover pools** through `PoolService`
+2. **Generate all routes** with a maximum of three hops
+   - A three-hop route is eligible only when no direct or two-hop path connects
+     the same endpoint pair in the discovered pool graph.
+   - Paths cannot repeat a token or pool.
+   - A path and its reverse are cached once.
+3. **Deduplicate routes** before pool-cost reads
+4. **Fetch spread data** from pool configurations
 5. **Sort by spread** (lowest/best first)
-6. **Write cache file** in TypeScript format
+6. **Write the cache file** in TypeScript format
+
+Pool-cost reads are memoized for one chain-generation run. A failed read is
+removed from the memo so a retry pass can fetch it again. Pool discovery and
+cost failures remain fail-closed: the script refuses to write a partial route
+set.
 
 ## When to Regenerate
 

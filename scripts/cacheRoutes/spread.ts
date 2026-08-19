@@ -1,14 +1,61 @@
 import type { Route, RouteWithCost } from '../../src/core/types'
+import type { Pool } from '../../src/core/types'
 import type { PublicClient } from 'viem'
 import { getPoolCostPercent } from '../../src/utils/costUtils'
+import { compareRoutePath } from '../../src/utils/routeUtils'
+
+/**
+ * Cache of in-flight and completed pool-cost reads for one cache-generation run.
+ * Rejected reads are removed by getMemoizedPoolCostPercent so a retry can run
+ * the RPC call again.
+ */
+export type PoolCostMemo = Map<string, Promise<number>>
+
+export function createPoolCostMemo(): PoolCostMemo {
+  return new Map<string, Promise<number>>()
+}
+
+function poolCostKey(pool: Pool): string {
+  return `${pool.poolType}:${pool.poolAddr.toLowerCase()}`
+}
+
+/**
+ * Read a pool cost once per cache-generation run.
+ *
+ * The promise is cached before it is awaited so concurrent routes that share a
+ * pool also share one RPC read. Failed promises are evicted for retry passes.
+ */
+export function getMemoizedPoolCostPercent(
+  pool: Pool,
+  publicClient: PublicClient,
+  memo: PoolCostMemo
+): Promise<number> {
+  const key = poolCostKey(pool)
+  const cached = memo.get(key)
+  if (cached) return cached
+
+  const read = Promise.resolve()
+    .then(() => getPoolCostPercent(pool, publicClient))
+    .catch((error: unknown) => {
+      memo.delete(key)
+      throw error
+    })
+
+  memo.set(key, read)
+  return read
+}
 
 /**
  * Calculate cost data for a route by fetching data from the individual pools
  */
-export async function calculateCostForRoute(route: Route, publicClient: PublicClient): Promise<RouteWithCost> {
+export async function calculateCostForRoute(
+  route: Route,
+  publicClient: PublicClient,
+  memo: PoolCostMemo = createPoolCostMemo()
+): Promise<RouteWithCost> {
   // Fetch all data concurrently
   const costDataPromises = route.path.map(async (hop) => {
-    const costPercent = await getPoolCostPercent(hop, publicClient)
+    const costPercent = await getMemoizedPoolCostPercent(hop, publicClient, memo)
     return {
       hop,
       costPercent,
@@ -52,8 +99,6 @@ export async function calculateCostForRoute(route: Route, publicClient: PublicCl
   }
 }
 
-
-
 /**
  * Sort routes by spread percentage (best routes first)
  */
@@ -61,9 +106,16 @@ export function sortRoutesBySpread(routes: RouteWithCost[]): RouteWithCost[] {
   return routes.sort((a, b) => {
     // Sort by total spread percentage (ascending - lower is better)
     // Routes without spread data go to the end
-    if (!a.costData && !b.costData) return 0
+    if (!a.costData && !b.costData) return compareRouteIdentity(a, b)
     if (!a.costData) return 1
     if (!b.costData) return -1
-    return a.costData.totalCostPercent - b.costData.totalCostPercent
+    return a.costData.totalCostPercent - b.costData.totalCostPercent || compareRouteIdentity(a, b)
   })
+}
+
+function compareRouteIdentity(first: Route, second: Route): number {
+  if (first.id < second.id) return -1
+  if (first.id > second.id) return 1
+
+  return compareRoutePath(first, second)
 }

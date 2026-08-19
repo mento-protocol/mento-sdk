@@ -20,7 +20,7 @@ export type ReadonlyRouterRoutes = readonly { from: Address; to: Address; factor
  * @param tokenIn - The input token address (determines swap direction)
  * @param _tokenOut - The output token address (unused but kept for API clarity)
  * @returns Array of RouterRoute objects for the contract call
- * @throws {Error} If path is empty, too long, or contains invalid pools
+ * @throws {Error} If path is empty or contains invalid pools
  *
  * @example
  * ```typescript
@@ -43,8 +43,8 @@ export function encodeRoutePath(path: Pool[], tokenIn: Address, _tokenOut: Addre
     if (!pool.token0 || !pool.token1 || !pool.factoryAddr) {
       throw new Error(
         `Invalid pool structure at index ${i}: missing required fields. ` +
-        `Pool must have token0, token1, and factoryAddr. ` +
-        `Got: ${JSON.stringify(pool)}`
+          `Pool must have token0, token1, and factoryAddr. ` +
+          `Got: ${JSON.stringify(pool)}`
       )
     }
   }
@@ -80,8 +80,8 @@ export function encodeRoutePath(path: Pool[], tokenIn: Address, _tokenOut: Addre
     } else {
       throw new Error(
         `Route encoding error: Token ${currentTokenIn} not found in pool ${pool.poolAddr}. ` +
-        `Pool contains tokens: ${token0}, ${token1}. ` +
-        `This indicates the route path is invalid or tokens don't form a connected path.`
+          `Pool contains tokens: ${token0}, ${token1}. ` +
+          `This indicates the route path is invalid or tokens don't form a connected path.`
       )
     }
 

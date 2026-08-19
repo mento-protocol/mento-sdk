@@ -4,6 +4,14 @@ import { canonicalSymbolKey } from './sortUtils'
 type TokenSymbol = string
 type Address = string
 
+const MAX_DISCOVERED_ROUTE_HOPS = 3
+
+interface DiscoveredRoute {
+  route: Route
+  start: Address
+  end: Address
+}
+
 /**
  * =============================================================================
  * ROUTE GENERATION UTILITIES
@@ -14,12 +22,12 @@ type Address = string
  * The main workflow is:
  *
  * 1. Build connectivity structures from direct trading pairs
- * 2. Generate all possible routes (direct + two-hop)
+ * 2. Generate all possible routes (direct + two-hop + eligible three-hop)
  * 3. Select optimal routes using cost data or heuristics
  *
  * ALGORITHM OVERVIEW:
  * - Creates a graph where tokens are nodes and direct exchanges are edges
- * - Uses graph traversal to find two-hop routes through intermediate tokens
+ * - Uses bounded graph traversal to find simple routes through intermediate tokens
  * - Optimizes route selection based on cost data when available
  * - Falls back to heuristics (prefer direct routes, major stablecoins)
  * =============================================================================
@@ -168,15 +176,15 @@ export function buildConnectivityStructures(directRoutes: Route[]): Connectivity
 }
 
 /**
- * Generates all possible routes (direct + two-hop) using connectivity data.
+ * Generates all possible routes (direct + two-hop + eligible three-hop) using
+ * connectivity data.
  *
  * This function implements a route discovery algorithm that:
  *
- * 1. **Adds all direct routes** (single-hop routes)
- * 2. **Discovers two-hop routes** using graph traversal:
- *    - For each token A, find its neighbors (tokens directly connected)
- *    - For each neighbor B, find B's neighbors
- *    - If B connects to token C (C ≠ A), then A->B->C is a valid route
+ * 1. **Adds all direct routes** (single-hop routes).
+ * 2. **Discovers multi-hop candidates** with one bounded simple-path traversal.
+ * 3. **Keeps every two-hop route** and only the shortest routes with three or
+ *    more hops. The current discovery limit is three hops.
  *
  * **Route Deduplication**: Multiple routes between the same token pair
  * are collected in arrays, allowing the selection algorithm to choose
@@ -213,42 +221,168 @@ export function generateAllRoutes(connectivityData: ConnectivityData): Map<Route
     allRoutes.get(route.id)!.push(route)
   }
 
-  // Step 2: Generate two-hop routes using graph traversal
-  // Algorithm: For each token, explore all paths of length 2
+  // Step 2: Discover every simple multi-hop candidate in one bounded traversal.
+  const discoveredRoutes: DiscoveredRoute[] = []
 
   // OUTER LOOP: "For each starting token..." (e.g., USDm, CELO, EURm, etc.)
-  for (const [start, neighbors] of tokenGraph.entries()) {
-    // MIDDLE LOOP: "Where can I go from the starting token?" (first hop)
-    // Example: If start = USDm, neighbors might be [CELO, USDC, KESm]
-    for (const intermediate of neighbors) {
-      // Get all tokens reachable from this intermediate token (second hop destinations)
-      const secondHopNeighbors = tokenGraph.get(intermediate)
-      if (!secondHopNeighbors) continue
+  for (const start of tokenGraph.keys()) {
+    discoverSimplePaths(
+      start,
+      start,
+      [],
+      new Set([start]),
+      new Set<string>(),
+      MAX_DISCOVERED_ROUTE_HOPS,
+      tokenGraph,
+      addrToSymbol,
+      directRouteMap,
+      (route, pathStart, pathEnd) => discoveredRoutes.push({ route, start: pathStart, end: pathEnd })
+    )
+  }
 
-      // INNER LOOP: "From the intermediate token, where can I go?" (second hop)
-      // Example: If intermediate = CELO, secondHopNeighbors might be [USDm, EURm, BRLm]
-      for (const end of secondHopNeighbors) {
-        // Skip circular routes like USDm → CELO → USDm (pointless)
-        if (end === start) continue
+  // Step 3: Determine the minimum structural distance for every endpoint pair.
+  // Direct routes seed the map with one hop. The traversal supplies distances
+  // from two hops up to MAX_DISCOVERED_ROUTE_HOPS.
+  const minimumHopsByRouteId = new Map<RouteID, number>()
+  for (const routeId of allRoutes.keys()) minimumHopsByRouteId.set(routeId, 1)
 
-        // At this point we have a potential route: start → intermediate → end
-        // Example: USDm → CELO → EURm
-
-        // Try to create a valid two-hop trading pair from this route
-        const twoHopRoute = createTwoHopRoute(start, intermediate, end, addrToSymbol, directRouteMap)
-
-        // If we successfully created the pair, add it to our collection
-        if (twoHopRoute) {
-          if (!allRoutes.has(twoHopRoute.id)) {
-            allRoutes.set(twoHopRoute.id, [])
-          }
-          allRoutes.get(twoHopRoute.id)!.push(twoHopRoute)
-        }
-      }
+  for (const { route } of discoveredRoutes) {
+    const minimumHops = minimumHopsByRouteId.get(route.id)
+    if (minimumHops === undefined || route.path.length < minimumHops) {
+      minimumHopsByRouteId.set(route.id, route.path.length)
     }
   }
 
+  // Preserve existing two-hop alternatives, including alternatives for direct
+  // pairs. Routes with three or more hops are eligible only when they are the
+  // shortest structural path for their endpoint pair. Insert every two-hop
+  // route first to preserve the existing route and map order.
+  const seenGeneratedPaths = new Set<string>()
+  for (const { route, start, end } of discoveredRoutes) {
+    if (route.path.length !== 2) continue
+    addGeneratedRoute(allRoutes, route, start, end, addrToSymbol, seenGeneratedPaths)
+  }
+
+  for (const { route, start, end } of discoveredRoutes) {
+    const minimumHops = minimumHopsByRouteId.get(route.id)
+    if (route.path.length < 3 || route.path.length !== minimumHops) continue
+    addGeneratedRoute(allRoutes, route, start, end, addrToSymbol, seenGeneratedPaths)
+  }
+
   return allRoutes
+}
+
+/**
+ * Walks a token graph up to `maxHops`, emitting only simple paths. The graph
+ * stores token connectivity while `directRouteMap` resolves each edge to the
+ * executable pool used by the route path.
+ */
+function discoverSimplePaths(
+  start: Address,
+  current: Address,
+  path: Pool[],
+  visitedTokens: Set<Address>,
+  visitedPools: Set<string>,
+  maxHops: number,
+  tokenGraph: Map<Address, Set<Address>>,
+  addrToSymbol: Map<Address, TokenSymbol>,
+  directRouteMap: Map<RouteID, Pool>,
+  onRoute: (route: Route, start: Address, end: Address) => void
+): void {
+  if (path.length === maxHops) return
+
+  // RECURSIVE LOOP: "Where can I go from the current token?"
+  // Example: USDm → CELO then inspects CELO's neighbors, such as EURm.
+  for (const next of tokenGraph.get(current) ?? []) {
+    // Skip circular paths such as USDm → CELO → USDm.
+    if (visitedTokens.has(next)) continue
+
+    const currentSymbol = addrToSymbol.get(current)
+    const nextSymbol = addrToSymbol.get(next)
+    if (!currentSymbol || !nextSymbol) continue
+
+    const pool = directRouteMap.get(canonicalSymbolKey(currentSymbol, nextSymbol) as RouteID)
+    if (!pool || visitedPools.has(poolSignature(pool))) continue
+
+    const nextPath = [...path, pool]
+    const nextVisitedTokens = new Set(visitedTokens).add(next)
+    const nextVisitedPools = new Set(visitedPools).add(poolSignature(pool))
+
+    // Two or more pools define a potential multi-hop route.
+    // Example: USDm → CELO → EURm is a two-hop route.
+    if (nextPath.length >= 2) {
+      const route = createRouteFromPath(start, next, nextPath, addrToSymbol)
+      if (route) onRoute(route, start, next)
+    }
+
+    discoverSimplePaths(
+      start,
+      next,
+      nextPath,
+      nextVisitedTokens,
+      nextVisitedPools,
+      maxHops,
+      tokenGraph,
+      addrToSymbol,
+      directRouteMap,
+      onRoute
+    )
+  }
+}
+
+function addGeneratedRoute(
+  allRoutes: Map<RouteID, Route[]>,
+  route: Route,
+  start: Address,
+  end: Address,
+  addrToSymbol: Map<Address, TokenSymbol>,
+  seenGeneratedPaths: Set<string>
+): void {
+  const canonicalRoute = canonicalizeGeneratedRoute(route, start, end, addrToSymbol)
+  const signature = `${canonicalRoute.id}:${canonicalRoute.path.map(poolSignature).join('|')}`
+  if (seenGeneratedPaths.has(signature)) return
+  seenGeneratedPaths.add(signature)
+
+  if (!allRoutes.has(canonicalRoute.id)) allRoutes.set(canonicalRoute.id, [])
+  allRoutes.get(canonicalRoute.id)!.push(canonicalRoute)
+}
+
+function createRouteFromPath(
+  startAddr: Address,
+  endAddr: Address,
+  path: Pool[],
+  addrToSymbol: Map<Address, TokenSymbol>
+): Route | null {
+  const startSymbol = addrToSymbol.get(startAddr)
+  const endSymbol = addrToSymbol.get(endAddr)
+  if (!startSymbol || !endSymbol || startAddr === endAddr) return null
+
+  const routeId = canonicalSymbolKey(startSymbol, endSymbol) as RouteID
+  const startToken: RouteToken = { address: startAddr, symbol: startSymbol }
+  const endToken: RouteToken = { address: endAddr, symbol: endSymbol }
+
+  return {
+    id: routeId,
+    tokens: startSymbol <= endSymbol ? [startToken, endToken] : [endToken, startToken],
+    path,
+  }
+}
+
+function canonicalizeGeneratedRoute(
+  route: Route,
+  startAddr: Address,
+  endAddr: Address,
+  addrToSymbol: Map<Address, TokenSymbol>
+): Route {
+  const startSymbol = addrToSymbol.get(startAddr)
+  const endSymbol = addrToSymbol.get(endAddr)
+  if (!startSymbol || !endSymbol || startSymbol < endSymbol) return route
+
+  return { ...route, path: [...route.path].reverse() }
+}
+
+function poolSignature(pool: Pool): string {
+  return `${pool.poolAddr}:${pool.factoryAddr}`
 }
 
 /**
@@ -397,8 +531,10 @@ export function selectOptimalRoutes(
 /**
  * Selects the best route from candidates using cost data or fallback heuristics.
  *
- * This function implements a sophisticated route selection algorithm with
- * multiple optimization tiers:
+ * This function implements a tiered route selection algorithm.
+ *
+ * **Eligibility guard**:
+ * - Exclude three-hop candidates when a direct or two-hop candidate exists
  *
  * **Tier 1 - Cost-Based Optimization** (Preferred):
  * - Use routes with cost data (actual cost information)
@@ -413,8 +549,8 @@ export function selectOptimalRoutes(
  * - For two-hop routes, prefer those going through major stablecoins
  * - Major FX currencies like USDm and EURm typically have better liquidity
  *
- * **Tier 4 - First Available** (Last Resort):
- * - If no other heuristics apply, use the first route found
+ * **Tier 4 - Deterministic Path Order** (Last Resort):
+ * - If no other heuristic applies, use the route with the lowest stable path key
  *
  * @param candidates - Array of possible routes for the same token pair
  * @param assetMap - Asset map for token symbol lookups
@@ -433,41 +569,102 @@ export function selectOptimalRoutes(
  * ```
  */
 export function selectBestRoute(candidates: Route[], addrToSymbol: Map<Address, TokenSymbol>): Route | RouteWithCost {
+  // A three-hop route is eligible only when no direct or two-hop candidate
+  // exists. Keep this invariant at selection time as a defense against stale
+  // or manually assembled candidate sets.
+  const shorterCandidates = candidates.filter((candidate) => candidate.path.length <= 2)
+  const eligibleCandidates = shorterCandidates.length > 0 ? shorterCandidates : candidates
+
   // Tier 1: Prefer routes with cost data (lowest cost wins)
-  const candidatesWithCost = candidates.filter(hasCostData)
+  const candidatesWithCost = eligibleCandidates.filter(hasCostData)
   if (candidatesWithCost.length > 0) {
-    return candidatesWithCost.reduce((best, current) =>
-      current.costData.totalCostPercent < best.costData.totalCostPercent ? current : best
-    )
+    return candidatesWithCost.reduce((best, current) => (compareCostedRoutes(current, best) < 0 ? current : best))
   }
 
   // Tier 2: Prefer direct routes (single-hop, lower risk)
-  const directRoute = candidates.find((c) => c.path.length === 1)
-  if (directRoute) return directRoute
+  const directRoutes = eligibleCandidates.filter((candidate) => candidate.path.length === 1)
+  if (directRoutes.length > 0) return [...directRoutes].sort(compareRoutePath)[0]
 
   // Tier 3: Prefer routes through major stablecoins (better liquidity)
   const stablecoins = ['USDm', 'EURm', 'USDC', 'USDT']
-  const routeWithStablecoin = candidates.find((candidate) => {
-    const intermediateToken = getIntermediateToken(candidate)
-    if (!intermediateToken) return false
-    const symbol = addrToSymbol.get(intermediateToken)
-    return symbol && stablecoins.includes(symbol)
+  const routesWithStablecoin = eligibleCandidates.filter((candidate) => {
+    return getIntermediateTokens(candidate).some((token) => {
+      const symbol = addrToSymbol.get(token)
+      return symbol !== undefined && stablecoins.includes(symbol)
+    })
   })
+  if (routesWithStablecoin.length > 0) return [...routesWithStablecoin].sort(compareRoutePath)[0]
 
-  // Tier 4: Use first available route as last resort
-  return routeWithStablecoin || candidates[0]
+  // Tier 4: Use a stable path key so discovery order cannot change the result.
+  return [...eligibleCandidates].sort(compareRoutePath)[0]
+}
+
+function compareCostedRoutes(candidate: RouteWithCost, current: RouteWithCost): number {
+  const costDifference = candidate.costData.totalCostPercent - current.costData.totalCostPercent
+  return costDifference || compareRoutePath(candidate, current)
 }
 
 /**
- * Extracts the intermediate token address from a two-hop route.
- * In a two-hop route A->B->C, this function finds token B (the intermediate).
+ * Compares route paths by hop count and a stable pool identity key.
+ *
+ * Callers must apply their own higher-level ordering before this comparator,
+ * such as route ID or cost preference.
+ */
+export function compareRoutePath(first: Route, second: Route): number {
+  const hopDifference = first.path.length - second.path.length
+  if (hopDifference !== 0) return hopDifference
+
+  const firstKey = deterministicRoutePathKey(first)
+  const secondKey = deterministicRoutePathKey(second)
+  if (firstKey < secondKey) return -1
+  if (firstKey > secondKey) return 1
+  return 0
+}
+
+/**
+ * Returns the canonical, case-insensitive key for a route's pool path.
+ *
+ * Keep this ordering stable across fresh route selection, cache generation,
+ * and cached route lookup.
+ */
+export function deterministicRoutePathKey(route: Route): string {
+  return route.path
+    .map((pool) =>
+      [pool.poolType, pool.factoryAddr, pool.poolAddr, pool.token0, pool.token1]
+        .map((value) => value.toLowerCase())
+        .join(':')
+    )
+    .join('|')
+}
+
+/**
+ * Extracts the first intermediate token address from a multi-hop route.
+ * In a two-hop route A->B->C, this function finds token B. For longer routes,
+ * it preserves the helper's original single-token return type and returns the
+ * first intermediate token.
  */
 export function getIntermediateToken(route: Route): Address | undefined {
-  // Find the common token between the two hops
-  const [hop1, hop2] = route.path
-  const hop1Tokens = [hop1.token0, hop1.token1]
-  const hop2Tokens = [hop2.token0, hop2.token1]
-  return hop1Tokens.find((addr) => hop2Tokens.includes(addr))
+  return getIntermediateTokens(route)[0]
+}
+
+/**
+ * Returns every intermediate token in an executable multi-hop path. Adjacent
+ * pools must share exactly one token for that token to be considered part of
+ * the path.
+ */
+export function getIntermediateTokens(route: Route): Address[] {
+  const intermediateTokens: Address[] = []
+
+  for (let index = 0; index < route.path.length - 1; index++) {
+    const currentPool = route.path[index]
+    const nextPool = route.path[index + 1]
+    const nextTokens = new Set([nextPool.token0, nextPool.token1])
+    const sharedTokens = [currentPool.token0, currentPool.token1].filter((token) => nextTokens.has(token))
+    if (sharedTokens.length !== 1) return []
+    intermediateTokens.push(sharedTokens[0])
+  }
+
+  return intermediateTokens
 }
 
 /**

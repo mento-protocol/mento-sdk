@@ -2,7 +2,12 @@ import { PoolService } from '../pools'
 import { ERC20_ABI } from '../../core/abis'
 import { RouteNotFoundError } from '../../core/errors'
 import { Route, RouteID, Pool, RouteWithCost, RouteToken } from '../../core/types'
-import { buildConnectivityStructures, generateAllRoutes, selectOptimalRoutes } from '../../utils/routeUtils'
+import {
+  buildConnectivityStructures,
+  compareRoutePath,
+  generateAllRoutes,
+  selectOptimalRoutes,
+} from '../../utils/routeUtils'
 import { canonicalSymbolKey } from '../../utils/sortUtils'
 import { PublicClient } from 'viem'
 import { multicall } from '../../utils/multicall'
@@ -23,8 +28,8 @@ export interface RouteOptions {
  * Handles route discovery for both direct (single-hop) and multi-hop trading paths.
  *
  * Routes are identified by their token pair and include the path of pools
- * needed to execute the trade. Multi-hop routes (up to 2 hops) are automatically
- * discovered when no direct route exists between two tokens.
+ * needed to execute the trade. The service discovers routes with at most three
+ * hops. It adds three-hop routes only when no direct or two-hop path exists.
  */
 export class RouteService {
   private symbolCache: Map<string, string> = new Map()
@@ -32,7 +37,11 @@ export class RouteService {
   private routeLookupCache = new Map<string, Map<string, Route>>()
   private routePromises = new Map<string, Promise<readonly (Route | RouteWithCost)[]>>()
 
-  constructor(private publicClient: PublicClient, private chainId: number, private poolService: PoolService) {}
+  constructor(
+    private publicClient: PublicClient,
+    private chainId: number,
+    private poolService: PoolService
+  ) {}
 
   /**
    * Generates all direct (single-hop) routes from available pools
@@ -102,7 +111,7 @@ export class RouteService {
   }
 
   /**
-   * Discovers all tradable routes including multi-hop routes (up to 2 hops)
+   * Discovers all tradable routes with at most three hops
    * Uses cached data by default for instant results, or generates fresh from blockchain
    *
    * @param options - Configuration options
@@ -174,7 +183,7 @@ export class RouteService {
    * if (route.path.length === 1) {
    *   console.log('Direct route available')
    * } else {
-   *   console.log('Two-hop route:', route.path)
+   *   console.log('Multi-hop route:', route.path)
    * }
    * ```
    */
@@ -209,7 +218,7 @@ export class RouteService {
     // Build connectivity structures for route finding
     const connectivity = buildConnectivityStructures(directRoutes)
 
-    // Generate all possible routes (direct + 2-hop)
+    // Generate direct, two-hop, and eligible three-hop routes
     const allRoutes = generateAllRoutes(connectivity)
 
     // Select routes based on returnAllRoutes flag
@@ -250,10 +259,12 @@ export class RouteService {
   private buildLookup(routes: readonly (Route | RouteWithCost)[]): Map<string, Route> {
     const lookup = new Map<string, Route>()
     for (const route of routes) {
-      lookup.set(
-        makeTokenPairKey(route.tokens[0].address, route.tokens[1].address),
-        route as Route
-      )
+      const key = makeTokenPairKey(route.tokens[0].address, route.tokens[1].address)
+      const current = lookup.get(key)
+
+      if (!current || isPreferredCachedRoute(route, current)) {
+        lookup.set(key, route as Route)
+      }
     }
     return lookup
   }
@@ -320,4 +331,37 @@ export class RouteService {
 function makeTokenPairKey(tokenA: string, tokenB: string): string {
   const [first, second] = [tokenA.toLowerCase(), tokenB.toLowerCase()].sort()
   return `${first}:${second}`
+}
+
+function isPreferredCachedRoute(candidate: Route | RouteWithCost, current: Route): boolean {
+  const candidateIsThreeHop = candidate.path.length === 3
+  const currentIsThreeHop = current.path.length === 3
+
+  // Three-hop routes must not compete with direct or two-hop routes. This also
+  // protects lookups from a stale or manually produced cache that violates the
+  // route-generation eligibility rule.
+  if (candidateIsThreeHop !== currentIsThreeHop) {
+    return currentIsThreeHop
+  }
+
+  const candidateCost = getRouteCost(candidate)
+  const currentCost = getRouteCost(current)
+
+  // A measured cost is preferred over a route without cost data. When both
+  // costs are available, lower cost is preferred.
+  if (candidateCost !== undefined || currentCost !== undefined) {
+    if (candidateCost === undefined) return false
+    if (currentCost === undefined) return true
+    if (candidateCost !== currentCost) return candidateCost < currentCost
+  }
+
+  // Hop count and exact path ties use the shared deterministic route order.
+  return compareRoutePath(candidate, current) < 0
+}
+
+function getRouteCost(route: Route | RouteWithCost): number | undefined {
+  if (!('costData' in route)) return undefined
+
+  const cost = route.costData?.totalCostPercent
+  return typeof cost === 'number' && Number.isFinite(cost) ? cost : undefined
 }
