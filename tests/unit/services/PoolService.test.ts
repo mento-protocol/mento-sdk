@@ -128,10 +128,13 @@ describe('PoolService', () => {
         })
       })
 
-      it('should throw if no pools discovered from any factory', async () => {
+      it('should report an empty chain, not a failure, when every factory returns no pools', async () => {
         mockPublicClient.readContract.mockImplementation(
           async ({ functionName }: any) => {
             if (functionName === 'deployedFPMMAddresses') {
+              return []
+            }
+            if (functionName === 'getAllPools') {
               return []
             }
             if (functionName === 'getExchanges') {
@@ -142,7 +145,7 @@ describe('PoolService', () => {
         )
 
         await expect(service.getPools()).rejects.toThrow(
-          'Failed to discover any pools from any factory'
+          `No pools exist on chain ${ChainId.CELO}: FPMM factory returned no pools; Virtual factory returned no pools`
         )
       })
     })
@@ -204,7 +207,7 @@ describe('PoolService', () => {
         expect(tokensCalls.length).toBe(mockVirtualPools.length)
       })
 
-      it('should throw when getAllPools returns empty', async () => {
+      it('should report an empty chain when getAllPools returns empty', async () => {
         mockPublicClient.readContract.mockImplementation(
           async ({ functionName }: any) => {
             if (functionName === 'deployedFPMMAddresses') {
@@ -221,7 +224,7 @@ describe('PoolService', () => {
         )
 
         await expect(service.getPools()).rejects.toThrow(
-          'Failed to discover any pools from any factory'
+          `No pools exist on chain ${ChainId.CELO}: FPMM factory returned no pools; Virtual factory returned no pools`
         )
       })
 
@@ -365,7 +368,7 @@ describe('PoolService', () => {
     })
 
     describe('error handling', () => {
-      it('should throw generic error if all factory fetches fail', async () => {
+      it('should surface the underlying RPC errors when all factory fetches fail', async () => {
         mockPublicClient.readContract.mockImplementation(
           async ({ functionName }: any) => {
             if (functionName === 'deployedFPMMAddresses') {
@@ -382,8 +385,9 @@ describe('PoolService', () => {
         )
 
         await expect(service.getPools()).rejects.toThrow(
-          'Failed to discover any pools from any factory'
+          `Pool discovery failed on chain ${ChainId.CELO}`
         )
+        await expect(service.getPools()).rejects.toThrow('RPC connection failed')
       })
 
       it('should throw when FPMM returns empty and Virtual fetch fails', async () => {
@@ -402,9 +406,12 @@ describe('PoolService', () => {
           }
         )
 
+        // A single failed factory still counts as a failed lookup while no other
+        // factory produced pools - the cache scripts rely on this to abort a write.
         await expect(service.getPools()).rejects.toThrow(
-          'Failed to discover any pools from any factory'
+          `Pool discovery failed on chain ${ChainId.CELO}`
         )
+        expect(service.getDiscoveryWarnings()).toEqual([expect.stringContaining('Failed to fetch Virtual pools')])
       })
 
       it('should skip exchanges with invalid asset count when matching exchangeIds', async () => {
@@ -451,7 +458,8 @@ describe('PoolService', () => {
         )
 
         await expect(unsupportedService.getPools()).rejects.toThrow(
-          'Failed to discover any pools from any factory'
+          'No pools exist on chain 99999: FPMM factory is not deployed on this chain; ' +
+            'Virtual factory is not deployed on this chain'
         )
       })
     })

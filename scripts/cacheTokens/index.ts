@@ -4,6 +4,8 @@ import { ERC20_ABI } from '../../src/core/abis'
 import type { Token } from '../../src/core/types'
 import { PoolService, RouteService } from '../../src/services'
 import { getChainConfig, retryOperation } from '../../src/utils'
+import { cachedTokens as existingCachedTokens } from '../../src/cache/tokens'
+import { assertCompleteChainGeneration } from '../shared/completeness'
 import { rpcUrls, type SupportedChainId } from '../shared/network'
 import { parseCommandLineArgs, printUsageTips } from './cli'
 import { generateConsolidatedContent, writeConsolidatedFile } from './fileGenerator'
@@ -67,6 +69,14 @@ async function fetchTokensForChain(chainId: SupportedChainId): Promise<Token[]> 
 
   const directRoutes = await routeService.getDirectRoutes()
 
+  // Pool discovery only throws when every factory query fails; a single factory
+  // failing yields a reduced pool set that would silently shrink this chain's
+  // token list.
+  const discoveryWarnings = poolService.getDiscoveryWarnings()
+  if (discoveryWarnings.length > 0) {
+    throw new Error(`Partial pool discovery for chain ${chainId}: ${discoveryWarnings.join('; ')}`)
+  }
+
   const uniqueAddresses = new Map<string, string>()
   directRoutes.forEach((route) => {
     route.tokens.forEach((token) => {
@@ -100,8 +110,10 @@ export async function main(): Promise<void> {
 
   console.log(`📡 Cache tokens for chain(s): ${chainIdsToProcess.join(', ')}`)
 
-  // Fetch tokens for all chains
-  const tokensByChain: { [chainId: number]: Token[] } = {}
+  // Seed from the existing cache so a successful single-chain run does not
+  // remove tokens for chains that were not requested.
+  const tokensByChain: { [chainId: number]: readonly Token[] } = { ...existingCachedTokens }
+  const failedChains: number[] = []
 
   for (const chainId of chainIdsToProcess) {
     console.log(`\n🔄 \x1b[1mFetching tokens for chain ${chainId}...\x1b[0m`)
@@ -111,17 +123,22 @@ export async function main(): Promise<void> {
       tokensByChain[chainId] = tokens
     } catch (error) {
       console.error(`❌ Error fetching tokens for chain ${chainId}:`, error)
-      // Use empty array for failed chains
-      tokensByChain[chainId] = []
+      console.error(`The cache write will be blocked because chain ${chainId} failed`)
+      failedChains.push(chainId)
     }
   }
+
+  // A failed chain must abort the write: keeping its stale entry is better than
+  // publishing a cache with that chain's tokens (and their TokenSymbol members)
+  // silently removed.
+  assertCompleteChainGeneration('Token', chainIdsToProcess, failedChains)
 
   // Generate consolidated cache file
   console.log(`\n🔄 \x1b[1mGenerating consolidated tokens cache file...\x1b[0m`)
   const content = generateConsolidatedContent(tokensByChain)
   const fileName = writeConsolidatedFile(content, __dirname)
 
-  const totalTokens = Object.values(tokensByChain).reduce((sum, tokens) => sum + tokens.length, 0)
+  const totalTokens = chainIdsToProcess.reduce((sum, chainId) => sum + tokensByChain[chainId].length, 0)
   console.log(
     `✅ Successfully cached ${totalTokens} tokens across ${chainIdsToProcess.length} chains to src/cache/${fileName}`
   )
@@ -131,4 +148,7 @@ export async function main(): Promise<void> {
 }
 
 // Execute if run directly
-main().catch(console.error)
+main().catch((error) => {
+  console.error(error)
+  process.exit(1)
+})

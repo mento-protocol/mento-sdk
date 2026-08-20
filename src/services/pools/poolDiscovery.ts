@@ -12,14 +12,35 @@ import { sortTokenAddresses } from '../../utils/sortUtils'
 import { multicall } from '../../utils/multicall'
 
 /**
+ * Reports whether the FPMM factory is deployed on a chain.
+ *
+ * A source that is not configured is never queried, so its empty result means
+ * something different from a query that returned no pools or failed. Callers
+ * need that distinction to report accurate discovery errors.
+ */
+export function isFPMMSourceConfigured(chainId: number): boolean {
+  return Boolean(tryGetContractAddress(chainId as ChainId, 'FPMMFactory'))
+}
+
+/**
+ * Reports whether the contracts backing virtual pool discovery are deployed on a chain.
+ */
+export function isVirtualPoolSourceConfigured(chainId: number): boolean {
+  return Boolean(
+    tryGetContractAddress(chainId as ChainId, 'VirtualPoolFactory') &&
+      tryGetContractAddress(chainId as ChainId, 'BiPoolManager')
+  )
+}
+
+/**
  * Fetches all FPMM pools from the FPMM Factory
  */
 export async function fetchFPMMPools(publicClient: PublicClient, chainId: number): Promise<Pool[]> {
-  const fpmmFactoryAddress = tryGetContractAddress(chainId as ChainId, 'FPMMFactory')
-
-  if (!fpmmFactoryAddress) {
+  if (!isFPMMSourceConfigured(chainId)) {
     return []
   }
+
+  const fpmmFactoryAddress = tryGetContractAddress(chainId as ChainId, 'FPMMFactory') as string
 
   try {
     // Get all deployed FPMM pool addresses
@@ -67,12 +88,12 @@ export async function fetchFPMMPools(publicClient: PublicClient, chainId: number
  * then resolves token pairs and exchange IDs from each pool and BiPoolManager.
  */
 export async function fetchVirtualPools(publicClient: PublicClient, chainId: number): Promise<Pool[]> {
-  const virtualPoolFactoryAddress = tryGetContractAddress(chainId as ChainId, 'VirtualPoolFactory')
-  const biPoolManagerAddress = tryGetContractAddress(chainId as ChainId, 'BiPoolManager')
-
-  if (!virtualPoolFactoryAddress || !biPoolManagerAddress) {
+  if (!isVirtualPoolSourceConfigured(chainId)) {
     return []
   }
+
+  const virtualPoolFactoryAddress = tryGetContractAddress(chainId as ChainId, 'VirtualPoolFactory') as string
+  const biPoolManagerAddress = tryGetContractAddress(chainId as ChainId, 'BiPoolManager') as string
 
   try {
     // Fetch active pool addresses and all exchanges in parallel

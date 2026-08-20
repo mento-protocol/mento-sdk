@@ -60,6 +60,18 @@ RPC URLs are configured in `scripts/shared/network.ts`:
 - Celo Mainnet (42220): `https://forno.celo.org`
 - Celo Sepolia (11142220): `https://forno.celo-sepolia.celo-testnet.org`
 
+## Failure Handling
+
+The script is fail-closed. If any requested chain fails - a partial pool
+discovery, or a failure to discover any pools at all - the run reports the
+failing chain, leaves `src/cache/tokens.ts` untouched, and exits non-zero.
+Without that guard a transient RPC error would write an empty token array for
+that chain and drop its symbols from the `TokenSymbol` enum, and the cache
+files ship in the npm package.
+
+Chains that were not requested are seeded from the existing cache, so a
+single-chain run only replaces that chain's tokens.
+
 ## When to Regenerate
 
 Regenerate cached tokens when:
