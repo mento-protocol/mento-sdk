@@ -12,7 +12,7 @@ import { sortRoutesBySpread } from './spread'
 import { calculateStatistics, displayStatistics } from './statistics'
 import { PoolService, RouteService } from '../../src/services'
 import { cachedRoutes as existingCachedRoutes } from '../../src/cache/routes'
-import { assertCompleteChainGeneration } from './completeness'
+import { assertCompleteChainGeneration } from '../shared/completeness'
 
 /**
  * Generate all available routes (not just optimal)
@@ -141,7 +141,7 @@ export async function main(): Promise<void> {
     }
   }
 
-  assertCompleteChainGeneration(chainIdsToProcess, failedChains)
+  assertCompleteChainGeneration('Route', chainIdsToProcess, failedChains)
 
   // Generate consolidated cache file
   console.log(`\n\x1b[1mGenerating consolidated routes cache file...\x1b[0m`)

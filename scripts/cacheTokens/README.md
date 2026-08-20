@@ -26,22 +26,18 @@ pnpm cacheTokens --chain-ids=42220,11142220
 
 ## Output
 
-The script generates TypeScript files in two locations:
+The script generates a single consolidated file, `src/cache/tokens.ts`, containing:
 
-**Individual token files (per chain) in `src/cache/`:**
+- `TokenSymbol` enum - All unique token symbols across all chains
+- `cachedTokens` - `readonly Token[]` per chain ID
+- `TOKEN_ADDRESSES_BY_CHAIN` - Address mapping by chain and symbol
+- `getCachedTokens()` - Tokens for a chain, or an empty array if it has none
+- `getCachedTokensSync()` - Tokens for a chain, throwing if it has none
+- `getTokenAddress()` - Helper to get token address by symbol
+- `findTokenBySymbol()` - Helper to find token by symbol
 
-- `tokens.42220.ts` - Celo Mainnet tokens (readonly Token[])
-- `tokens.11142220.ts` - Celo Sepolia Testnet tokens (readonly Token[])
-
-**Main index file in `src/utils/`:**
-
-- `tokens.ts` - Contains:
-  - `TokenSymbol` enum - All unique token symbols across all chains
-  - `TOKEN_ADDRESSES_BY_CHAIN` - Address mapping by chain and symbol
-  - `getCachedTokens()` - Async token loading function
-  - `getCachedTokensSync()` - Synchronous token loading function
-  - `getTokenAddress()` - Helper to get token address by symbol
-  - `findTokenBySymbol()` - Helper to find token by symbol
+All of these are synchronous - the cache is a static module, so nothing is loaded
+at runtime.
 
 ## What Gets Generated
 
@@ -55,10 +51,22 @@ Everything is computed dynamically from blockchain data:
 
 ## Configuration
 
-RPC URLs are configured in `scripts/shared/network.ts`:
+RPC URLs for every supported chain are configured in `scripts/shared/network.ts`,
+each overridable through an environment variable (`CELO_RPC_URL`,
+`BASE_SEPOLIA_RPC_URL`, and so on). Running the script with no `--network`,
+`--chainId`, or `--chain-ids` flag caches every chain listed there.
 
-- Celo Mainnet (42220): `https://forno.celo.org`
-- Celo Sepolia (11142220): `https://forno.celo-sepolia.celo-testnet.org`
+## Failure Handling
+
+The script is fail-closed. If any requested chain fails - a partial pool
+discovery, or a failure to discover any pools at all - the run reports the
+failing chain, leaves `src/cache/tokens.ts` untouched, and exits non-zero.
+Without that guard a transient RPC error would write an empty token array for
+that chain and drop its symbols from the `TokenSymbol` enum, and the cache
+files ship in the npm package.
+
+Chains that were not requested are seeded from the existing cache, so a
+single-chain run only replaces that chain's tokens.
 
 ## When to Regenerate
 
@@ -75,17 +83,15 @@ Regenerate cached tokens when:
 📡 Cache tokens for chain(s): 42220, 11142220
 
 🔄 Fetching tokens for chain 42220...
-📡 Fetching tokens from blockchain...
+📡 Fetching direct routes from blockchain...
+📡 Fetching token metadata for 20 unique tokens...
 ✅ Fetched 20 unique tokens
 
 🔄 Fetching tokens for chain 11142220...
-📡 Fetching tokens from blockchain...
+📡 Fetching direct routes from blockchain...
+📡 Fetching token metadata for 20 unique tokens...
 ✅ Fetched 20 unique tokens
 
-🔄 Generating tokens.ts index file...
-✅ Successfully generated tokens index file at src/utils/tokens.ts
-
-🔄 Generating per-chain cache files...
-✅ Successfully cached 20 tokens to tokens.42220.ts
-✅ Successfully cached 20 tokens to tokens.11142220.ts
+🔄 Generating consolidated tokens cache file...
+✅ Successfully cached 40 tokens across 2 chains to src/cache/tokens.ts
 ```

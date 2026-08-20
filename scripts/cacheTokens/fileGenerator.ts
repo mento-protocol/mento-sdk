@@ -21,7 +21,7 @@ function getCacheDir(scriptDir: string): string {
  * Generate the consolidated tokens.ts cache file content
  */
 export function generateConsolidatedContent(
-  tokensByChain: { [chainId: number]: Token[] }
+  tokensByChain: { [chainId: number]: readonly Token[] }
 ): string {
   const chainIds = Object.keys(tokensByChain)
     .map(Number)

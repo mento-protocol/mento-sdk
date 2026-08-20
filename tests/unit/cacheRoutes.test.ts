@@ -2,7 +2,7 @@ import type { Pool, Route, RouteID } from '../../src/core/types'
 import { PoolType } from '../../src/core/types'
 import { getPoolCostPercent } from '../../src/utils/costUtils'
 import { processRoutesInBatches } from '../../scripts/cacheRoutes/batchProcessor'
-import { assertCompleteChainGeneration } from '../../scripts/cacheRoutes/completeness'
+import { assertCompleteChainGeneration } from '../../scripts/shared/completeness'
 import { calculateCostForRoute, createPoolCostMemo, sortRoutesBySpread } from '../../scripts/cacheRoutes/spread'
 import { calculateStatistics } from '../../scripts/cacheRoutes/statistics'
 
@@ -150,7 +150,15 @@ describe('cache route pipeline', () => {
   })
 
   it('blocks the cache write when any requested chain fails', () => {
-    expect(() => assertCompleteChainGeneration([137, 42220], [42220])).toThrow('cache file left untouched')
-    expect(() => assertCompleteChainGeneration([137, 42220], [])).not.toThrow()
+    expect(() => assertCompleteChainGeneration('Route', [137, 42220], [42220])).toThrow('cache file left untouched')
+    expect(() => assertCompleteChainGeneration('Route', [137, 42220], [])).not.toThrow()
+  })
+
+  // The token cache shares the guard: a failed chain there used to be written as
+  // an empty token array, dropping that chain's TokenSymbol members too.
+  it('names the cache that was left untouched', () => {
+    expect(() => assertCompleteChainGeneration('Token', [42220, 84532], [84532])).toThrow(
+      'Token cache generation failed for chain(s) 84532 of requested chain(s) 42220, 84532 - cache file left untouched'
+    )
   })
 })

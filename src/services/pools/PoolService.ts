@@ -1,6 +1,11 @@
 import { Pool, PoolType, PoolDetails, PoolRebalancePreview } from '../../core/types'
 import { PublicClient } from 'viem'
-import { fetchFPMMPools, fetchVirtualPools } from './poolDiscovery'
+import {
+  fetchFPMMPools,
+  fetchVirtualPools,
+  isFPMMSourceConfigured,
+  isVirtualPoolSourceConfigured,
+} from './poolDiscovery'
 import {
   fetchFPMMPoolDetailsBatch,
   fetchVirtualPoolDetailsBatch,
@@ -71,39 +76,97 @@ export class PoolService {
   }
 
   private async loadPools(): Promise<Pool[]> {
-    const warnings: string[] = []
-    const settled = await Promise.allSettled([
-      fetchFPMMPools(this.publicClient, this.chainId),
-      fetchVirtualPools(this.publicClient, this.chainId),
-    ])
+    const sources = [
+      {
+        name: 'FPMM',
+        configured: isFPMMSourceConfigured(this.chainId),
+        fetch: () => fetchFPMMPools(this.publicClient, this.chainId),
+      },
+      {
+        name: 'Virtual',
+        configured: isVirtualPoolSourceConfigured(this.chainId),
+        fetch: () => fetchVirtualPools(this.publicClient, this.chainId),
+      },
+    ]
+
+    const settled = await Promise.allSettled(sources.map((source) => source.fetch()))
 
     const pools: Pool[] = []
-    const [fpmmResult, virtualResult] = settled
+    const warnings: string[] = []
+    // Tracked separately so a chain with nothing deployed is not reported as a
+    // failed lookup: both cases end with zero pools but need different fixes.
+    const emptySources: string[] = []
+    const unconfiguredSources: string[] = []
 
-    if (fpmmResult.status === 'fulfilled') {
-      pools.push(...fpmmResult.value)
-    } else {
-      warnings.push(`Failed to fetch FPMM pools: ${fpmmResult.reason instanceof Error ? fpmmResult.reason.message : String(fpmmResult.reason)}`)
-    }
+    settled.forEach((result, index) => {
+      const { name, configured } = sources[index]
 
-    if (virtualResult.status === 'fulfilled') {
-      pools.push(...virtualResult.value)
-    } else {
-      warnings.push(`Failed to fetch Virtual pools: ${virtualResult.reason instanceof Error ? virtualResult.reason.message : String(virtualResult.reason)}`)
-    }
+      if (result.status === 'rejected') {
+        const reason = result.reason instanceof Error ? result.reason.message : String(result.reason)
+        const prefix = `Failed to fetch ${name} pools`
+        // The fetchers already prefix their own errors; only add it for a
+        // rejection that came from somewhere else.
+        warnings.push(reason.startsWith(prefix) ? reason : `${prefix}: ${reason}`)
+        return
+      }
+
+      if (!configured) {
+        unconfiguredSources.push(name)
+        return
+      }
+
+      if (result.value.length === 0) {
+        emptySources.push(name)
+        return
+      }
+
+      pools.push(...result.value)
+    })
 
     this.discoveryWarnings = warnings
 
-    // Only throw if NO pools were discovered from any factory
     if (pools.length === 0) {
-      throw new Error(
-        'Failed to discover any pools from any factory. ' +
-          'All pool factory queries failed. Check network connectivity and RPC endpoint.'
-      )
+      throw new Error(this.describeEmptyDiscovery(warnings, emptySources, unconfiguredSources))
     }
 
     this.poolsCache = pools
     return pools
+  }
+
+  /**
+   * Builds the error for a discovery run that produced no pools, distinguishing
+   * a failed lookup from a chain that has no pools to find.
+   */
+  private describeEmptyDiscovery(
+    warnings: readonly string[],
+    emptySources: readonly string[],
+    unconfiguredSources: readonly string[]
+  ): string {
+    const details = [
+      ...warnings,
+      ...emptySources.map((name) => `${name} factory returned no pools`),
+      ...unconfiguredSources.map((name) => `${name} factory is not deployed on this chain`),
+    ]
+
+    if (warnings.length === 0) {
+      return (
+        `No pools exist on chain ${this.chainId}: ${details.join('; ')}. ` +
+        'This is not a lookup failure - no factory has any pool to discover.'
+      )
+    }
+
+    // A source that returned no pools, or that is not deployed here at all, did
+    // not fail: saying every query failed would send the reader after an RPC
+    // problem that only affected some of them.
+    const cause =
+      emptySources.length === 0 && unconfiguredSources.length === 0
+        ? 'every pool factory query failed'
+        : 'no factory produced pools, and at least one query failed'
+
+    return (
+      `Pool discovery failed on chain ${this.chainId}: ${cause}. ` +
+      `Check network connectivity and RPC endpoint. ${details.join('; ')}`
+    )
   }
 
   /**
