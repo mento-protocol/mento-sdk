@@ -142,21 +142,30 @@ export class PoolService {
     emptySources: readonly string[],
     unconfiguredSources: readonly string[]
   ): string {
-    if (warnings.length > 0) {
-      return (
-        `Pool discovery failed on chain ${this.chainId}: every pool factory query that ran failed. ` +
-        `Check network connectivity and RPC endpoint. ${warnings.join(' ')}`
-      )
-    }
-
     const details = [
+      ...warnings,
       ...emptySources.map((name) => `${name} factory returned no pools`),
       ...unconfiguredSources.map((name) => `${name} factory is not deployed on this chain`),
     ]
 
+    if (warnings.length === 0) {
+      return (
+        `No pools exist on chain ${this.chainId}: ${details.join('; ')}. ` +
+        'This is not a lookup failure - no factory has any pool to discover.'
+      )
+    }
+
+    // A source that returned no pools, or that is not deployed here at all, did
+    // not fail: saying every query failed would send the reader after an RPC
+    // problem that only affected some of them.
+    const cause =
+      emptySources.length === 0 && unconfiguredSources.length === 0
+        ? 'every pool factory query failed'
+        : 'no factory produced pools, and at least one query failed'
+
     return (
-      `No pools exist on chain ${this.chainId}: ${details.join('; ')}. ` +
-      'This is not a lookup failure - no factory has any pool to discover.'
+      `Pool discovery failed on chain ${this.chainId}: ${cause}. ` +
+      `Check network connectivity and RPC endpoint. ${details.join('; ')}`
     )
   }
 

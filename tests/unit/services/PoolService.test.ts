@@ -385,7 +385,7 @@ describe('PoolService', () => {
         )
 
         await expect(service.getPools()).rejects.toThrow(
-          `Pool discovery failed on chain ${ChainId.CELO}`
+          `Pool discovery failed on chain ${ChainId.CELO}: every pool factory query failed`
         )
         await expect(service.getPools()).rejects.toThrow('RPC connection failed')
       })
@@ -408,9 +408,16 @@ describe('PoolService', () => {
 
         // A single failed factory still counts as a failed lookup while no other
         // factory produced pools - the cache scripts rely on this to abort a write.
-        await expect(service.getPools()).rejects.toThrow(
-          `Pool discovery failed on chain ${ChainId.CELO}`
+        // The FPMM query succeeded here, so the error must not claim they all failed.
+        const error = await service.getPools().catch((thrown: Error) => thrown)
+
+        expect(error).toBeInstanceOf(Error)
+        expect((error as Error).message).toContain(
+          `Pool discovery failed on chain ${ChainId.CELO}: no factory produced pools, and at least one query failed`
         )
+        expect((error as Error).message).toContain('Failed to fetch Virtual pools')
+        expect((error as Error).message).toContain('FPMM factory returned no pools')
+        expect((error as Error).message).not.toContain('every pool factory query failed')
         expect(service.getDiscoveryWarnings()).toEqual([expect.stringContaining('Failed to fetch Virtual pools')])
       })
 
