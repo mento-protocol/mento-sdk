@@ -7,9 +7,10 @@ human needs.
 
 ## What the agent does
 
-1. Selects open, non-draft PRs authored by `dependabot[bot]` on `dependabot/**`
-   branches with auto-merge off. A `do-not-merge` or `dependabot:manual` label
-   is a hold: the agent researches the PR but writes nothing to it.
+1. Selects open PRs authored by `dependabot[bot]` on `dependabot/**` branches
+   with auto-merge off. Draft PRs and PRs labelled `do-not-merge` or
+   `dependabot:manual` are holds: the agent researches them and reports them
+   as `needs decision`, but writes nothing to them.
 2. Researches every version change against upstream changelogs and releases.
 3. Merges current `main` if needed, repairs conflicts and lockfile coupling,
    and runs the repository gates with a frozen lockfile:
