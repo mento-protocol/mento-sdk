@@ -1,0 +1,65 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+#
+# CodeRabbit review profile for mento-sdk. Adapted from
+# monitoring-monorepo/.coderabbit.yaml (ADR 0066 there). CodeRabbit reads this
+# file from the SOURCE branch of the PR it reviews, and the organization-level
+# Global overrides rank above it for the keys they pin (profile,
+# request_changes_workflow, auto_review.enabled, auto_review.drafts,
+# auto_pause_after_reviewed_commits).
+#
+# Key names verified against docs.coderabbit.ai/reference/configuration on
+# 2026-09-10.
+reviews:
+  # quiet | chill | assertive. Pinned so a vendor default change cannot raise
+  # verbosity.
+  profile: chill
+
+  # Keep CodeRabbit advisory. A bot CHANGES_REQUESTED review does not clear
+  # itself on a later clean push and would block the one-approval merge gate.
+  request_changes_workflow: false
+
+  # Verbosity levers.
+  poem: false
+  sequence_diagrams: false
+  suggested_labels: false
+  suggested_reviewers: false
+  auto_apply_labels: false
+  collapse_walkthrough: true
+
+  path_instructions:
+    - path: 'src/**/*.ts'
+      instructions: |
+        This package is a published TypeScript SDK (CommonJS and ESM builds) built on viem.
+        Treat any change to an exported type, function signature, or default behaviour as a public API change and say so.
+        Keep `src/` free of Node built-in modules; the library must run in browsers.
+        Read the ADRs under `docs/adrs/` before reporting a design defect that an accepted ADR already decides.
+    - path: 'tests/**/*.test.ts'
+      instructions: |
+        Unit tests under `tests/unit` must not need network access or a live RPC.
+        Integration tests under `tests/integration` may use `CELO_MAINNET_RPC_URL` and are not run in CI.
+
+  # Generated and machine-written files. Reviewing them spends billed files on
+  # diffs no human authored.
+  path_filters:
+    - '!pnpm-lock.yaml'
+    # Written by `pnpm cacheRoutes` and `pnpm cacheTokens` (header says
+    # "This file is auto-generated. Do not edit manually.").
+    - '!src/cache/**'
+    # Vendored contract ABIs; source of truth is the deployments repo.
+    - '!src/core/abis/**'
+    - '!dist/**'
+    - '!coverage/**'
+
+  auto_review:
+    enabled: true
+    # Empty means the default branch flow only.
+    base_branches: []
+    drafts: false
+    # No author filter. Dependabot PRs must get the opening review too; until
+    # 2026-09-10 no Dependabot PR in this repo had ever received a bot review.
+    ignore_usernames: []
+    # This repo opens a handful of PRs per month, so the per-push cost that
+    # made monitoring-monorepo turn incremental reviews off does not apply.
+    # Revisit if the CodeRabbit usage report shows repeated re-billing here.
+    auto_incremental_review: true
+    auto_pause_after_reviewed_commits: 5
