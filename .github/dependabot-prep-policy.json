@@ -1,0 +1,115 @@
+{
+  "schema": "dependabot-prep-policy:v3",
+  "executionModel": "trusted-openclaw-agent",
+  "operatingRevision": "autonomous-decisions-v1",
+  "workflow": {
+    "skill": "dependabot-prep",
+    "revision": "trusted-agent-v1",
+    "runtimes": ["openclaw", "codex", "claude"],
+    "hostProfile": "portable-serial"
+  },
+  "repository": "mento-protocol/mento-sdk",
+  "baseRef": "main",
+  "canonicalPlaybook": "docs/dependabot-automation.md",
+  "authority": {
+    "source": "live-main",
+    "candidateInstructions": "not-authority",
+    "requireCurrentPolicyBeforeWrites": true
+  },
+  "admission": {
+    "author": {
+      "id": 49699333,
+      "login": "dependabot[bot]",
+      "type": "Bot"
+    },
+    "sameRepository": true,
+    "headRefPrefix": "dependabot/",
+    "openOnly": true,
+    "drafts": "needs-decision-no-state-change",
+    "autoMergeMustBeDisabled": true,
+    "vetoLabels": ["do-not-merge", "dependabot:manual"],
+    "unexplainedForeignCommits": "needs-decision"
+  },
+  "limits": {
+    "activeBatches": 1,
+    "batchMinutes": 60,
+    "perPullRequestMinutes": 30,
+    "repairAttempts": 3
+  },
+  "coordination": {
+    "lockPath": "portable-skill-default",
+    "allWriters": "same-atomic-lock-before-writes",
+    "release": "owner-only-after-local-work-stops"
+  },
+  "validation": {
+    "packageManager": "pnpm",
+    "install": "pnpm install --frozen-lockfile",
+    "gates": ["pnpm build", "pnpm lint", "pnpm test:unit", "pnpm size"],
+    "requiredChecks": "none-in-branch-protection; CI workflow on Node 18/20/22 is the effective gate"
+  },
+  "changes": {
+    "allowed": [
+      "dependency-source-repairs",
+      "manifest-and-lockfile-updates",
+      "focused-tests",
+      "package-installation",
+      "local-build-and-test",
+      "merge-current-main",
+      "request-current-head-review",
+      "answer-review-feedback"
+    ],
+    "needsDecisionPaths": [
+      ".github/workflows/**",
+      ".github/dependabot-prep-policy.json",
+      ".coderabbit.yaml",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "docs/dependabot-automation.md"
+    ],
+    "needsDecisionPathExceptions": {
+      ".github/workflows/**": "version-only-ci-coupling-for-package-patch-or-minor"
+    },
+    "majorOrRuntimeUpdate": "research-and-repair-with-documented-validation",
+    "push": {
+      "existingPullRequestBranchOnly": true,
+      "fastForwardOnly": true,
+      "explicitRefspec": true,
+      "recheckRemoteHeadBeforePush": true,
+      "lease": "exact-ref-and-observed-nonzero-sha"
+    }
+  },
+  "handoff": {
+    "verdicts": ["ready-for-maintainer-decision", "needs-decision", "blocked"],
+    "reviewer": {
+      "id": 136622811,
+      "login": "coderabbitai[bot]",
+      "type": "Bot",
+      "trigger": "@coderabbitai review",
+      "requestPolicy": "once-per-exact-head-when-no-current-head-review-exists"
+    },
+    "reviewCommit": "exact-final-head",
+    "actionableFeedback": "address-and-answer-every-item",
+    "humanApprovalAndMerge": "maintainer-only"
+  },
+  "reporting": {
+    "prCommentMarker": "<!-- dependabot-prep:summary:v1 -->",
+    "finalDelivery": "invoking-session"
+  },
+  "forbiddenActions": [
+    "approve",
+    "merge",
+    "close",
+    "mark-ready-for-review",
+    "enable-auto-merge",
+    "disable-auto-merge",
+    "dismiss-review",
+    "resolve-thread",
+    "unresolve-thread",
+    "force-push",
+    "rebase",
+    "recreate",
+    "rerun-checks",
+    "weaken-security-or-checks",
+    "expose-secrets"
+  ]
+}
