@@ -2,8 +2,8 @@ import assert from 'node:assert/strict'
 import { spawnSync } from 'node:child_process'
 import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
-import { delimiter, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { delimiter, extname, join } from 'node:path'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import test from 'node:test'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
@@ -38,15 +38,44 @@ function policyTree() {
   return git(['mktree'], `040000 tree ${github}\t.github\n`)
 }
 
+function pnpmLauncherCommand(execPath) {
+  return ['.js', '.cjs', '.mjs'].includes(extname(execPath).toLowerCase()) ? [process.execPath, execPath] : [execPath]
+}
+
 function realPnpmCommand() {
   const { npm_execpath: execPath } = { ...process.env }
-  if (execPath && existsSync(execPath)) return [process.execPath, execPath]
+  if (execPath && existsSync(execPath)) return pnpmLauncherCommand(execPath)
   const found = spawnSync('/usr/bin/env', ['sh', '-c', 'command -v pnpm'], {
     encoding: 'utf8',
   })
   const resolved = found.stdout?.trim()
   return found.status === 0 && resolved ? [resolved] : null
 }
+
+test('pnpm launcher supports native executables and JavaScript entry points', () => {
+  const nativeCommand = pnpmLauncherCommand(process.execPath)
+  assert.deepEqual(nativeCommand, [process.execPath])
+  const native = spawnSync(nativeCommand[0], [...nativeCommand.slice(1), '-e', "process.stdout.write('native')"], {
+    encoding: 'utf8',
+  })
+  assert.equal(native.status, 0, native.stderr)
+  assert.equal(native.stdout, 'native')
+
+  const directory = mkdtempSync(join(tmpdir(), 'sdk-pnpm-launcher-'))
+  try {
+    const launcher = join(directory, 'pnpm.cjs')
+    writeFileSync(launcher, "process.stdout.write(process.argv.slice(2).join(' '))\n")
+    const javaScriptCommand = pnpmLauncherCommand(launcher)
+    assert.deepEqual(javaScriptCommand, [process.execPath, launcher])
+    const javaScript = spawnSync(javaScriptCommand[0], [...javaScriptCommand.slice(1), 'from', 'javascript'], {
+      encoding: 'utf8',
+    })
+    assert.equal(javaScript.status, 0, javaScript.stderr)
+    assert.equal(javaScript.stdout, 'from javascript')
+  } finally {
+    rmSync(directory, { recursive: true, force: true })
+  }
+})
 
 function documentedInvocation(args) {
   const command = realPnpmCommand()
@@ -226,6 +255,32 @@ test('the wrapper injects the candidate policy into the pinned CLI', () => {
     assert.deepEqual(argv.slice(4, configFlag), ['claims', 'read'])
     assert.match(argv[configFlag + 1], /dependabot-claim-policy-[^/]+\/dependabot-prep-policy\.json$/u)
     assert.deepEqual(argv.slice(configFlag + 2), ['--pr', '123', '--json'])
+  } finally {
+    rmSync(directory, { recursive: true, force: true })
+  }
+})
+
+test('the claim wrapper rejects runtimes older than Node 22.12', () => {
+  const directory = mkdtempSync(join(tmpdir(), 'sdk-claim-runtime-'))
+  try {
+    const launcher = join(directory, 'old-node.mjs')
+    const wrapperUrl = pathToFileURL(join(root, wrapperPath)).href
+    writeFileSync(
+      launcher,
+      `Object.defineProperty(process.versions, 'node', { value: '22.11.0' })\nawait import(${JSON.stringify(wrapperUrl)})\n`
+    )
+    const run = spawnSync(process.execPath, [launcher], {
+      cwd: root,
+      encoding: 'utf8',
+      env: {
+        ...process.env,
+        DEPENDABOT_CLAIM_POLICY_REF: policyTree(),
+      },
+    })
+    assert.equal(run.status, 3, run.stderr)
+    assert.match(run.stderr, /requires Node\.js >=22\.12\.0/u)
+    assert.match(run.stderr, /current runtime is Node\.js 22\.11\.0/u)
+    assert.match(run.stderr, /SDK remains supported on Node\.js >=18/u)
   } finally {
     rmSync(directory, { recursive: true, force: true })
   }

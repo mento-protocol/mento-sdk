@@ -36,6 +36,11 @@ pnpm dependabot:claim -- claims renew --pr <number> --token <current-token> --ru
 pnpm dependabot:claim -- claims release --pr <number> --token <current-token> --run-id <run-id> --outcome <verdict> --json
 ```
 
+Claim operations require Node.js 22.12 or newer because the pinned
+`@mento-protocol/issues@0.1.0` CLI declares `node >=22.12`. This narrower
+automation requirement does not change the SDK's `node >=18` support contract;
+use a newer runtime only for `pnpm dependabot:claim` commands.
+
 `claims read` is read-only. `claims claim` acquires an unowned claim or takes
 over one only after its lease and grace period expire. Each successful renewal
 rotates the token; every subsequent command must use the new token. A guarded

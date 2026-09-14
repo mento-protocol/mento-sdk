@@ -53,6 +53,7 @@ const POLICY_SCHEMA = 'dependabot-prep-policy:v4'
 const POLICY_PATH = '.github/dependabot-prep-policy.json'
 const DEFAULT_POLICY_REF = 'refs/remotes/origin/main'
 const BINARY = 'mento-issues'
+const MINIMUM_CLAIM_NODE_VERSION = [22, 12, 0]
 const EXIT_USAGE = 2
 const EXIT_CONFIG = 3
 // The npm package-name grammar, scoped or unscoped, with a leading dash
@@ -173,6 +174,17 @@ if (typeof pin?.name !== 'string' || !PACKAGE_NAME.test(pin.name)) {
 }
 if (typeof pin?.version !== 'string' || !/^\d+\.\d+\.\d+$/u.test(pin.version)) {
   fail(EXIT_CONFIG, 'policy coordination.claims.package.version must be an exact x.y.z version')
+}
+
+const currentNodeVersion = process.versions.node.split('.').map(Number)
+if (
+  currentNodeVersion[0] < MINIMUM_CLAIM_NODE_VERSION[0] ||
+  (currentNodeVersion[0] === MINIMUM_CLAIM_NODE_VERSION[0] && currentNodeVersion[1] < MINIMUM_CLAIM_NODE_VERSION[1])
+) {
+  fail(
+    EXIT_CONFIG,
+    `dependabot:claim requires Node.js >=${MINIMUM_CLAIM_NODE_VERSION.join('.')} because ${pin.name}@${pin.version} requires Node >=22.12; current runtime is Node.js ${process.versions.node}. The SDK remains supported on Node.js >=18, but claim operations must use a newer runtime.`
+  )
 }
 
 // Some pnpm releases forward their own separator, so the documented
