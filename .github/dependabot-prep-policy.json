@@ -1,10 +1,10 @@
 {
-  "schema": "dependabot-prep-policy:v3",
+  "schema": "dependabot-prep-policy:v4",
   "executionModel": "trusted-openclaw-agent",
   "operatingRevision": "autonomous-decisions-v1",
   "workflow": {
     "skill": "dependabot-prep",
-    "revision": "trusted-agent-v1",
+    "revision": "trusted-agent-v2",
     "runtimes": ["openclaw", "codex", "claude"],
     "hostProfile": "portable-serial"
   },
@@ -31,26 +31,70 @@
     "unexplainedForeignCommits": "needs-decision"
   },
   "limits": {
-    "activeBatches": 1,
     "batchMinutes": 60,
     "perPullRequestMinutes": 30,
     "repairAttempts": 3
   },
   "coordination": {
-    "lockPath": "portable-skill-default",
-    "allWriters": "same-atomic-lock-before-writes",
-    "release": "owner-only-after-local-work-stops"
+    "primitive": "github-ref-claims",
+    "claims": {
+      "schema": "mento-claims-config:v1",
+      "profile": "pr",
+      "namespace": "refs/mento-claims/v1/pr",
+      "scopeTemplate": "refs/mento-claims/v1/pr/{pr}",
+      "kind": "mento-claim",
+      "payloadVersion": 1,
+      "author": {
+        "name": "Mento claims",
+        "email": "claims@users.noreply.github.com"
+      },
+      "ttlMinutes": 30,
+      "renewMinutes": 10,
+      "graceMinutes": 10,
+      "maxTtlMinutes": 60,
+      "minRemainingSeconds": 360,
+      "skewToleranceSeconds": 300,
+      "label": "dependabot-prep:claimed",
+      "markerRevision": "v2",
+      "requiredBefore": ["branch-push", "review-request"],
+      "advisoryBefore": ["summary-comment", "inline-reply", "long-wait"],
+      "allowOverrides": false,
+      "allowCloudWriters": false,
+      "command": ["pnpm", "dependabot:claim", "--"],
+      "package": {
+        "name": "@mento-protocol/issues",
+        "version": "0.1.0"
+      }
+    },
+    "hostLock": {
+      "scope": "host-local-heavy-tree",
+      "path": "${XDG_STATE_HOME:-$HOME/.local/state}/dependabot-prep/active",
+      "pathMacos": "$HOME/Library/Application Support/dependabot-prep/active",
+      "purpose": "process-tree-resource-cap-only-not-cross-host-serialization"
+    },
+    "allWriters": "claim-required-before-push-and-review-request-advisory-otherwise",
+    "unavailable": "read-only-for-that-pull-request",
+    "release": "owner-only-whenever-run-stops-acting-on-pull-request"
+  },
+  "decisions": {
+    "default": "best-supported-reversible-choice-and-continue",
+    "uncertaintyAloneBlocks": false,
+    "materialChoices": "maintained-pr-comment-with-evidence-risk-confidence-and-alternatives",
+    "lowConfidence": "request-input-in-pr-comment-and-continue-safe-work",
+    "consolidation": "only-proven-coupling-lowest-numbered-eligible-pr-keep-siblings-open",
+    "explicitHoldsAndForbiddenActions": "never-override"
   },
   "validation": {
     "packageManager": "pnpm",
     "install": "pnpm install --frozen-lockfile",
-    "gates": ["pnpm build", "pnpm lint", "pnpm test:unit", "pnpm size"],
+    "gates": ["pnpm dependabot:policy:test", "pnpm build", "pnpm lint", "pnpm test:unit", "pnpm size"],
     "requiredChecks": "none-in-branch-protection; CI workflow on Node 18/20/22 is the effective gate"
   },
   "changes": {
     "allowed": [
       "dependency-source-repairs",
       "manifest-and-lockfile-updates",
+      "documented-runtime-contract-updates",
       "focused-tests",
       "package-installation",
       "local-build-and-test",
@@ -64,22 +108,42 @@
       ".coderabbit.yaml",
       "AGENTS.md",
       "CLAUDE.md",
-      "docs/dependabot-automation.md"
+      "docs/dependabot-automation.md",
+      "scripts/dependabot-claim.mjs",
+      "scripts/dependabot-policy.test.mjs"
     ],
     "needsDecisionPathExceptions": {
       ".github/workflows/**": "version-only-ci-coupling-for-package-patch-or-minor"
     },
+    "needsDecisionTriggers": [
+      "security-control-changes",
+      "automation-policy-changes",
+      "weakened-or-disabled-checks",
+      "credential-or-permission-changes",
+      "unexplained-history",
+      "irreversible-or-out-of-scope-product-or-architecture-changes"
+    ],
+    "needsDecisionPublication": false,
     "majorOrRuntimeUpdate": "research-and-repair-with-documented-validation",
     "push": {
       "existingPullRequestBranchOnly": true,
       "fastForwardOnly": true,
       "explicitRefspec": true,
       "recheckRemoteHeadBeforePush": true,
-      "lease": "exact-ref-and-observed-nonzero-sha"
+      "lease": "exact-ref-and-observed-nonzero-sha",
+      "proveFastForwardBeforeLease": true,
+      "noOpPush": false
     }
   },
   "handoff": {
     "verdicts": ["ready-for-maintainer-decision", "needs-decision", "blocked"],
+    "exactHeadAndBase": true,
+    "containsCurrentMain": true,
+    "mergeable": true,
+    "autoMergeMustBeDisabled": true,
+    "requiredChecks": "all-live-required-checks-with-authenticated-producers",
+    "checkEvidence": "exact-head-app-or-status-creator-and-workflow-binding",
+    "additionalChecks": "all-affected-repository-gates",
     "reviewer": {
       "id": 136622811,
       "login": "coderabbitai[bot]",
@@ -88,12 +152,40 @@
       "requestPolicy": "once-per-exact-head-when-no-current-head-review-exists"
     },
     "reviewCommit": "exact-final-head",
+    "feedback": "all-surfaces-including-walkthroughs-and-followups",
     "actionableFeedback": "address-and-answer-every-item",
-    "humanApprovalAndMerge": "maintainer-only"
+    "disputedFeedback": "investigate-decide-and-answer-with-evidence-no-unproven-ready",
+    "answeredUnresolvedThreads": "list-for-maintainer",
+    "humanApprovalAndMerge": "maintainer-only",
+    "recheckOnHeadOrBaseDrift": true
   },
   "reporting": {
     "prCommentMarker": "<!-- dependabot-prep:summary:v1 -->",
+    "prCommentClaimMarkerSchema": "mento-dependabot-preparation:v2",
     "finalDelivery": "invoking-session"
+  },
+  "research": {
+    "scope": "every-dependency-in-every-pull-request-including-manual",
+    "tupleFields": ["name", "fromVersion", "toVersion"],
+    "sources": ["upstream-release-notes", "upstream-changelog", "migration-guide", "security-advisory"],
+    "fallback": "verified-upstream-project-page-with-explicit-source-gaps",
+    "requireLiveVerification": true,
+    "reportFields": [
+      "source-links",
+      "breaking-changes",
+      "repository-impact",
+      "recommendation",
+      "risk",
+      "confidence",
+      "confidence-rationale",
+      "source-gaps"
+    ],
+    "unavailable": "blocked-and-operationally-incomplete"
+  },
+  "security": {
+    "dependabotCi": "secretless",
+    "githubActionsRefs": "full-lowercase-40-hex-sha",
+    "checksAndSecurityControls": "never-weaken"
   },
   "forbiddenActions": [
     "approve",
@@ -102,13 +194,16 @@
     "mark-ready-for-review",
     "enable-auto-merge",
     "disable-auto-merge",
+    "enqueue-merge",
     "dismiss-review",
     "resolve-thread",
     "unresolve-thread",
+    "delete-claim-refs",
     "force-push",
     "rebase",
     "recreate",
     "rerun-checks",
+    "publish-needs-decision-changes",
     "weaken-security-or-checks",
     "expose-secrets"
   ]
