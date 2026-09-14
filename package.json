@@ -41,6 +41,8 @@
   "type": "commonjs",
   "scripts": {
     "prepublishOnly": "pnpm build",
+    "dependabot:claim": "node scripts/dependabot-claim.mjs",
+    "dependabot:policy:test": "node --test scripts/dependabot-policy.test.mjs",
     "build": "pnpm clean && tsc --project ./tsconfig.json && tsc --project ./tsconfig.esm.json && echo '{\"type\":\"module\"}' > dist/esm/package.json",
     "clean": "rm -rf ./dist",
     "lint": "eslint src/**/*.ts tests/**/*.ts",
