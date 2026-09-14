@@ -13,6 +13,8 @@ const wrapperPath = 'scripts/dependabot-claim.mjs'
 const testPath = 'scripts/dependabot-policy.test.mjs'
 const hostLock = '${XDG_STATE_HOME:-$HOME/.local/state}/dependabot-prep/active'
 const hostLockMacos = '$HOME/Library/Application Support/dependabot-prep/active'
+const [nodeMajor, nodeMinor] = process.versions.node.split('.').map(Number)
+const claimRuntimeTest = nodeMajor > 22 || (nodeMajor === 22 && nodeMinor >= 12) ? test : test.skip
 
 function read(path) {
   return readFileSync(join(root, path), 'utf8')
@@ -226,7 +228,7 @@ test('the claims package stays external and lifecycle scripts stay disabled', ()
   assert.doesNotMatch(wrapper, /@mento-protocol\/issues/u)
 })
 
-test('the wrapper injects the candidate policy into the pinned CLI', () => {
+claimRuntimeTest('the wrapper injects the candidate policy into the pinned CLI', () => {
   const directory = mkdtempSync(join(tmpdir(), 'sdk-claim-test-'))
   try {
     const stub = join(directory, 'pnpm')
@@ -286,7 +288,7 @@ test('the claim wrapper rejects runtimes older than Node 22.12', () => {
   }
 })
 
-test('the documented pnpm command preserves plain and guarded arguments', () => {
+claimRuntimeTest('the documented pnpm command preserves plain and guarded arguments', () => {
   const pin = policy().coordination.claims.package
   const plain = documentedInvocation(['--', 'claims', 'read', '--pr', '123', '--json'])
   assert.equal(plain.run.status, 0, plain.run.stderr)
