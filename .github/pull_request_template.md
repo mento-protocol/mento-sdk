@@ -1,24 +1,36 @@
-### Description
+<!-- markdownlint-disable MD041 -->
 
-_A few sentences describing the overall effects and goals of the pull request's commits.
-What is the current behavior, and what is the updated/expected behavior with this PR?_
+## tl;dr
 
-### Other changes
+<!--
+Two to four plain-language sentences, about 60 words: who had which problem,
+what this PR changes, and what the reader should expect after merge. No file
+names, flags, or SHAs. A teammate from another team should be able to stop here.
+-->
 
-_Describe any minor or "drive-by" changes here._
+## The Problem
 
-### Tested
+<!-- Up to three bullets: what the SDK did before and its concrete effect. -->
 
-_An explanation of how the changes were tested or an explanation as to why they don't need to be._
+## The Solution
 
-### Related issues
+<!--
+Up to five bullets: what it does now, plus one line for any material limit
+or non-goal.
+-->
 
-- Fixes #[issue number here]
+## Backwards compatibility
 
-### Backwards compatibility
+<!-- One line: compatible, or what breaks and for whom. -->
 
-_Brief explanation of why these changes are/are not backwards compatible._
+## Validation
 
-### Documentation
+<!--
+One line per check, on the head you pushed. Group passes on one line:
+`pnpm test` 42 ✓, `pnpm lint` ✓, `pnpm size` ✓. Skipped, failed, and
+not-proven items each get their own line. Whole body: about 250 words, 400 at most.
+-->
 
-_The set of community facing docs that have been added/modified because of this change_
+## Related issues
+
+- Fixes #
