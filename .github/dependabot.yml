@@ -1,13 +1,18 @@
  
+# Schedule: every second Monday at 06:00 UTC for all ecosystems.
+# Dependabot parses cron with the fugit library. `mon%2` matches Mondays whose
+# week count since Monday 2018-12-31 is even (exact 14-day cadence; next runs
+# 2026-10-26 and 2026-11-09). Plain cron cannot express "every other week".
+# Security updates ignore the schedule and still open immediately.
+# Source: https://github.com/dependabot/dependabot-core/issues/12246
 version: 2
 updates:
   # ── npm dependencies ───────────────────────────────────────────
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "monthly"
-      day: "monday"
-      time: "06:00"
+      interval: "cron"
+      cronjob: "0 6 * * mon%2"
       timezone: "UTC"
  
     cooldown:
@@ -46,9 +51,8 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "06:00"
+      interval: "cron"
+      cronjob: "0 6 * * mon%2"
       timezone: "UTC"
  
     cooldown:
