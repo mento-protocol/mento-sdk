@@ -127,7 +127,7 @@ test('v4 policy binds the installed trusted-agent-v2 workflow', () => {
     skill: 'dependabot-prep',
     revision: 'trusted-agent-v2',
     runtimes: ['openclaw', 'codex', 'claude'],
-    hostProfile: 'portable-serial',
+    hostProfile: 'managed-host-or-portable-serial',
   })
   assert.equal(config.repository, 'mento-protocol/mento-sdk')
   assert.equal(config.baseRef, 'main')
@@ -138,7 +138,7 @@ test('v4 policy binds the installed trusted-agent-v2 workflow', () => {
   assert.equal(Object.hasOwn(config.limits, 'activeBatches'), false)
 })
 
-test('claim configuration is exact and uses one host-wide heavy slot', () => {
+test('claim configuration fences mutations and uses the host resource adapter', () => {
   const config = policy()
   const claims = config.coordination.claims
   assert.equal(config.coordination.primitive, 'github-ref-claims')
@@ -153,18 +153,54 @@ test('claim configuration is exact and uses one host-wide heavy slot', () => {
   assert.ok(claims.ttlMinutes <= claims.maxTtlMinutes)
   assert.ok(claims.graceMinutes * 60 > claims.skewToleranceSeconds)
   assert.equal(claims.markerRevision, 'v2')
-  assert.deepEqual(claims.requiredBefore, ['branch-push', 'review-request'])
+  assert.deepEqual(claims.requiredBefore, ['branch-push', 'review-request', 'thread-resolve', 'check-rerun', 'merge'])
   assert.deepEqual(claims.advisoryBefore, ['summary-comment', 'inline-reply', 'long-wait'])
   assert.equal(claims.allowOverrides, false)
   assert.equal(claims.allowCloudWriters, false)
   assert.deepEqual(claims.command, ['pnpm', 'dependabot:claim', '--'])
   assert.deepEqual(claims.package, {
     name: '@mento-protocol/issues',
-    version: '0.1.0',
+    version: '0.3.0',
   })
+  assert.equal(config.coordination.hostLock.when, 'no-host-managed-facility')
   assert.equal(config.coordination.hostLock.scope, 'host-local-heavy-tree')
   assert.equal(config.coordination.hostLock.path, hostLock)
   assert.equal(config.coordination.hostLock.pathMacos, hostLockMacos)
+})
+
+test('maintenance remains explicit and preserves preparation and human-review boundaries', () => {
+  const config = policy()
+  const playbook = read(playbookPath)
+  assert.equal(config.maintenance.defaultMode, 'prep')
+  assert.equal(config.maintenance.optIn, '--authorized-maintenance')
+  assert.equal(
+    config.maintenance.authority,
+    'explicit-exact-repository-user-grant-required-not-implied-by-mode-or-schedule'
+  )
+  assert.deepEqual(config.maintenance.prepForbiddenActions, ['merge', 'rerun-checks'])
+  assert.equal(
+    config.maintenance.merge,
+    'exact-head-squash-only-after-fresh-all-clear-including-required-human-approval'
+  )
+  assert.ok(config.changes.allowed.includes('resolve-verified-fixed-review-threads'))
+  for (const action of [
+    'approve',
+    'dismiss-review',
+    'unresolve-thread',
+    'enable-auto-merge',
+    'disable-auto-merge',
+    'enqueue-merge',
+    'weaken-security-or-checks',
+  ]) {
+    assert.ok(config.forbiddenActions.includes(action), action)
+  }
+  for (const gate of ['thread-resolve', 'check-rerun', 'merge']) {
+    assert.ok(config.coordination.claims.requiredBefore.includes(gate), gate)
+    assert.equal(config.coordination.claims.advisoryBefore.includes(gate), false, gate)
+  }
+  assert.ok(playbook.includes('one human approving'))
+  assert.ok(playbook.includes('--match-head-commit <sha>'))
+  assert.ok(playbook.includes('Declined or unproven findings stay open'))
 })
 
 test('policy, playbook, helper, and CI carry every v2 binding', () => {
@@ -250,7 +286,7 @@ claimRuntimeTest('the wrapper injects the candidate policy into the pinned CLI',
     assert.ok(configFlag > 0)
     assert.deepEqual(argv.slice(0, 4), [
       '--config.ignore-scripts=true',
-      '--package=@mento-protocol/issues@0.1.0',
+      '--package=@mento-protocol/issues@0.3.0',
       'dlx',
       'mento-issues',
     ])
