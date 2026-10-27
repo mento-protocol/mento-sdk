@@ -1,12 +1,12 @@
 {
   "schema": "dependabot-prep-policy:v4",
   "executionModel": "trusted-openclaw-agent",
-  "operatingRevision": "autonomous-decisions-v1",
+  "operatingRevision": "authorized-maintenance-v1",
   "workflow": {
     "skill": "dependabot-prep",
     "revision": "trusted-agent-v2",
     "runtimes": ["openclaw", "codex", "claude"],
-    "hostProfile": "portable-serial"
+    "hostProfile": "managed-host-or-portable-serial"
   },
   "repository": "mento-protocol/mento-sdk",
   "baseRef": "main",
@@ -56,25 +56,37 @@
       "skewToleranceSeconds": 300,
       "label": "dependabot-prep:claimed",
       "markerRevision": "v2",
-      "requiredBefore": ["branch-push", "review-request"],
+      "requiredBefore": ["branch-push", "review-request", "thread-resolve", "check-rerun", "merge"],
       "advisoryBefore": ["summary-comment", "inline-reply", "long-wait"],
       "allowOverrides": false,
       "allowCloudWriters": false,
       "command": ["pnpm", "dependabot:claim", "--"],
       "package": {
         "name": "@mento-protocol/issues",
-        "version": "0.1.0"
+        "version": "0.3.0"
       }
     },
     "hostLock": {
       "scope": "host-local-heavy-tree",
+      "when": "no-host-managed-facility",
       "path": "${XDG_STATE_HOME:-$HOME/.local/state}/dependabot-prep/active",
       "pathMacos": "$HOME/Library/Application Support/dependabot-prep/active",
       "purpose": "process-tree-resource-cap-only-not-cross-host-serialization"
     },
-    "allWriters": "claim-required-before-push-and-review-request-advisory-otherwise",
+    "allWriters": "claim-required-before-push-review-request-thread-resolve-check-rerun-and-merge",
     "unavailable": "read-only-for-that-pull-request",
     "release": "owner-only-whenever-run-stops-acting-on-pull-request"
+  },
+  "maintenance": {
+    "defaultMode": "prep",
+    "optIn": "--authorized-maintenance",
+    "authority": "explicit-exact-repository-user-grant-required-not-implied-by-mode-or-schedule",
+    "standingAuthority": "carry-source-selection-actions-expiry-and-revocation-through-workers-and-daily-runs",
+    "prepForbiddenActions": ["merge", "rerun-checks"],
+    "merge": "exact-head-squash-only-after-fresh-all-clear-including-required-human-approval",
+    "rerunChecks": "one-bounded-attempt-for-diagnosed-infrastructure-failure-within-original-budget",
+    "hostCapacity": "managed-wrapper-and-configured-capacity-otherwise-single-slot-fallback",
+    "activation": "published-claims-package-and-updated-skill-required-before-job-activation"
   },
   "decisions": {
     "default": "best-supported-reversible-choice-and-continue",
@@ -88,7 +100,7 @@
     "packageManager": "pnpm",
     "install": "pnpm install --frozen-lockfile",
     "gates": ["pnpm dependabot:policy:test", "pnpm build", "pnpm lint", "pnpm test:unit", "pnpm size"],
-    "requiredChecks": "none-in-branch-protection; CI workflow on Node 18/20/22 is the effective gate"
+    "requiredChecks": "none-in-branch-protection; CI workflow on Node 22/24 is the effective gate"
   },
   "changes": {
     "allowed": [
@@ -100,7 +112,8 @@
       "local-build-and-test",
       "merge-current-main",
       "request-current-head-review",
-      "answer-review-feedback"
+      "answer-review-feedback",
+      "resolve-verified-fixed-review-threads"
     ],
     "needsDecisionPaths": [
       ".github/workflows/**",
@@ -155,8 +168,8 @@
     "feedback": "all-surfaces-including-walkthroughs-and-followups",
     "actionableFeedback": "address-and-answer-every-item",
     "disputedFeedback": "investigate-decide-and-answer-with-evidence-no-unproven-ready",
-    "answeredUnresolvedThreads": "list-for-maintainer",
-    "humanApprovalAndMerge": "maintainer-only",
+    "answeredUnresolvedThreads": "declined-or-unproven-findings-stay-open-list-for-maintainer",
+    "humanApprovalAndMerge": "human-approval-required-merge-maintainer-only-unless-explicit-authorized-maintenance",
     "recheckOnHeadOrBaseDrift": true
   },
   "reporting": {
@@ -189,20 +202,17 @@
   },
   "forbiddenActions": [
     "approve",
-    "merge",
     "close",
     "mark-ready-for-review",
     "enable-auto-merge",
     "disable-auto-merge",
     "enqueue-merge",
     "dismiss-review",
-    "resolve-thread",
     "unresolve-thread",
     "delete-claim-refs",
     "force-push",
     "rebase",
     "recreate",
-    "rerun-checks",
     "publish-needs-decision-changes",
     "weaken-security-or-checks",
     "expose-secrets"
