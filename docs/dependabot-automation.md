@@ -92,9 +92,10 @@ cross-host writer authority and does not replace a PR claim.
 4. Push only a proven fast-forward to the existing Dependabot ref, through
    `claims guard --gate push`, with an explicit refspec and an exact observed
    head lease. Record the new head in the renewed claim.
-5. Request CodeRabbit at most once per exact head with
-   `@coderabbitai review`, through `claims guard --gate review-request`, when
-   no current-head CodeRabbit review or request exists.
+5. Request Codex at most once per exact head with `@codex review`, through
+   `claims guard --gate review-request`, when no current-head Codex review or
+   request exists. CodeRabbit skips Dependabot-authored PRs, so it is not the
+   Dependabot reviewer here; it stays advisory on human PRs.
 6. Address every valid finding, answer declined findings with evidence on the
    original surface, and monitor exact-head checks and review under a guarded
    wait.
