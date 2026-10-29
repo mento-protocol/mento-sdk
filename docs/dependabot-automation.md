@@ -146,12 +146,28 @@ audit artifacts; preparation agents never delete them or create/delete labels.
 
 ## What stays human
 
-Branch protection requires one approving review, and only a human gives it.
-After that approval, the agent may merge a PR at ALL CLEAR with an exact-head
-squash merge under `claims guard --gate merge` (runner 0.3.0 or newer), then
-verify the result. The agent never approves, closes, rebases, force-pushes,
+The merge decision stays with a maintainer. A maintainer approves a Dependabot
+PR in one of two ways:
+
+- an approving review on GitHub, or
+- a message in an authenticated agent session (Slack) from an approver listed
+  in `handoff.maintainerApproval.sessionApprovers` that names the PR.
+
+A session approval covers the PR head at the time of the message, plus later
+heads whose only change is a merge of current `main`. Any other new commit
+needs a new approval. Before merging, the agent links the approval message and
+the bound head in the PR's summary comment.
+
+After an approval, the agent merges at ALL CLEAR with an exact-head squash
+merge under `claims guard --gate merge` (runner 0.3.0 or newer), then verifies
+the result. For session approvals, branch protection must list the agent's
+login as allowed to bypass required pull request reviews; the agent then
+merges with `--admin`, which replaces the GitHub review and no other gate. All
+required checks, Codex review, feedback and holds still apply.
+
+The agent never submits an approving review, closes, rebases, force-pushes,
 changes auto-merge, reruns checks, resolves threads, changes repository
-settings, or deletes claim refs, and never bypasses the required review.
+settings, or deletes claim refs.
 
 ## Invocation
 
