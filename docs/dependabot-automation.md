@@ -1,7 +1,8 @@
 # Dependabot preparation
 
-The portable `dependabot-prep` skill at revision `trusted-agent-v2` prepares
-open Dependabot PRs in this repository for a human merge decision. The
+The portable `dependabot-prep` skill at revision `trusted-agent-v2` maintains
+open Dependabot PRs in this repository through ALL CLEAR, an exact-head squash
+merge and post-merge verification: the agent may merge at ALL CLEAR. The
 machine-readable contract is `.github/dependabot-prep-policy.json`, using
 `dependabot-prep-policy:v4`. An agent whose installed workflow revision or
 understood policy schema differs must stop before any write.
@@ -57,6 +58,9 @@ The following operations are fenced through the claim wrapper:
 - `review-request` uses `claims guard --gate review-request`.
 - `long-wait` uses the advisory `claims guard --gate wait` so the lease renews
   while CI or review is pending.
+- `merge` uses `claims guard --gate merge`. `thread-resolve` and
+  `check-rerun` are classified as mandatory gates too, but this policy still
+  forbids thread resolution and check reruns.
 - `summary-comment` and `inline-reply` use `claims verify` before publication.
 
 For claim-command exits, `0` proceeds; `10`, `11`, `14`, and `15` follow the
@@ -96,11 +100,35 @@ cross-host writer authority and does not replace a PR claim.
    with `@codex review`, through `claims guard --gate review-request`, when no
    current-head Codex review, reaction or request exists. A clean Codex
    review is a 👍 reaction whose review-state comment names the exact head;
-   findings arrive as review comments. CodeRabbit does not review Dependabot
-   PRs, so it is not the technical reviewer for this workflow.
+   findings arrive as review comments.
+   CodeRabbit (`coderabbitai[bot]`, id `136622811`) is an advisory reviewer.
+   If it does not review the exact head (rate-limited, review skipped, no bot
+   seat, paused or absent), that does not block merge; record it in the
+   summary. If it does post findings on the PR, they are mandatory: address and
+   answer every actionable item, exactly like Codex findings, before merge.
+   Request it with `@coderabbitai review` at most once per exact head.
 6. Address every valid finding, answer declined findings with evidence on the
    original surface, and monitor exact-head checks and review under a guarded
    wait.
+7. At ALL CLEAR, merge. ALL CLEAR means:
+   - the exact head contains current `main`;
+   - the CI workflow is green on that head;
+   - every gate in step 3 passes;
+   - a current-head Codex review exists with its findings disposed;
+   - any CodeRabbit findings are disposed;
+   - a maintainer approval is present: a GitHub approving review, or a
+     session approval bound to this head (see _What stays human_);
+   - there is no hold, no draft state, and auto-merge is disabled.
+
+   Re-read all of these immediately before merging. Then squash-merge through
+   `claims guard --gate merge` with
+   `gh pr merge <n> --squash --match-head-commit <sha>`. Add `--admin` only
+   for a session approval, where it replaces the GitHub review and no other
+   gate. Never enable auto-merge, and never retry on drift.
+
+8. Verify the outcome. This library has no deployment: post-merge `main` CI
+   must go green. Publishing to npm stays the manual `publish_npm.yml`
+   workflow_dispatch, so a merge is never a release.
 
 Budget: 60 minutes per batch, 30 active repair minutes and three repair
 attempts per PR.
@@ -167,7 +195,8 @@ required checks, Codex review, feedback and holds still apply.
 
 The agent never submits an approving review, closes, rebases, force-pushes,
 changes auto-merge, reruns checks, resolves threads, changes repository
-settings, or deletes claim refs.
+settings, deletes claim refs or publishes to npm. It merges only as step 7
+describes.
 
 ## Invocation
 

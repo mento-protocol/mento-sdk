@@ -153,7 +153,7 @@ test('claim configuration is exact and uses one host-wide heavy slot', () => {
   assert.ok(claims.ttlMinutes <= claims.maxTtlMinutes)
   assert.ok(claims.graceMinutes * 60 > claims.skewToleranceSeconds)
   assert.equal(claims.markerRevision, 'v2')
-  assert.deepEqual(claims.requiredBefore, ['branch-push', 'review-request'])
+  assert.deepEqual(claims.requiredBefore, ['branch-push', 'review-request', 'thread-resolve', 'check-rerun', 'merge'])
   assert.deepEqual(claims.advisoryBefore, ['summary-comment', 'inline-reply', 'long-wait'])
   assert.equal(claims.allowOverrides, false)
   assert.equal(claims.allowCloudWriters, false)
@@ -165,6 +165,35 @@ test('claim configuration is exact and uses one host-wide heavy slot', () => {
   assert.equal(config.coordination.hostLock.scope, 'host-local-heavy-tree')
   assert.equal(config.coordination.hostLock.path, hostLock)
   assert.equal(config.coordination.hostLock.pathMacos, hostLockMacos)
+})
+
+test('the agent merges at ALL CLEAR but never approves', () => {
+  const config = policy()
+  assert.equal(config.forbiddenActions.includes('merge'), false)
+  for (const action of ['approve', 'enable-auto-merge', 'enqueue-merge', 'dismiss-review', 'force-push']) {
+    assert.ok(config.forbiddenActions.includes(action), action)
+  }
+  assert.equal(config.handoff.humanApprovalAndMerge, 'maintainer-approval-then-agent-exact-head-merge')
+  assert.equal(config.handoff.maintainerApproval.agentApprovalReview, 'never')
+  assert.equal(config.handoff.rollout, 'post-merge-main-ci-green; npm-publish-stays-manual-workflow-dispatch')
+  assert.ok(config.handoff.verdicts.includes('rollout-verified'))
+  assert.ok(config.handoff.verdicts.includes('merged-rollout-pending'))
+  assert.ok(config.coordination.claims.requiredBefore.includes('merge'))
+})
+
+test('CodeRabbit is advisory when unavailable and mandatory when it has findings', () => {
+  const config = policy()
+  const [coderabbit] = config.handoff.advisoryReviewers
+  assert.equal(config.handoff.advisoryReviewers.length, 1)
+  assert.equal(coderabbit.id, 136622811)
+  assert.equal(coderabbit.login, 'coderabbitai[bot]')
+  assert.equal(coderabbit.unavailable, 'advisory-does-not-block')
+  assert.ok(coderabbit.unavailableIncludes.includes('rate-limited'))
+  assert.equal(coderabbit.findings, 'mandatory-address-and-answer-every-actionable-item-before-merge')
+  assert.equal(config.handoff.reviewer.login, 'chatgpt-codex-connector[bot]')
+  const playbook = read(playbookPath)
+  assert.ok(playbook.includes('rate-limited'))
+  assert.ok(playbook.includes('merge at ALL CLEAR'))
 })
 
 test('policy, playbook, helper, and CI carry every v2 binding', () => {

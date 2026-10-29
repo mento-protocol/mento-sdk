@@ -56,7 +56,7 @@
       "skewToleranceSeconds": 300,
       "label": "dependabot-prep:claimed",
       "markerRevision": "v2",
-      "requiredBefore": ["branch-push", "review-request"],
+      "requiredBefore": ["branch-push", "review-request", "thread-resolve", "check-rerun", "merge"],
       "advisoryBefore": ["summary-comment", "inline-reply", "long-wait"],
       "allowOverrides": false,
       "allowCloudWriters": false,
@@ -136,7 +136,13 @@
     }
   },
   "handoff": {
-    "verdicts": ["ready-for-maintainer-decision", "needs-decision", "blocked"],
+    "verdicts": [
+      "rollout-verified",
+      "merged-rollout-pending",
+      "ready-for-maintainer-decision",
+      "needs-decision",
+      "blocked"
+    ],
     "exactHeadAndBase": true,
     "containsCurrentMain": true,
     "mergeable": true,
@@ -151,6 +157,18 @@
       "trigger": "@codex review",
       "requestPolicy": "once-per-exact-head-when-no-current-head-review-exists"
     },
+    "advisoryReviewers": [
+      {
+        "id": 136622811,
+        "login": "coderabbitai[bot]",
+        "type": "Bot",
+        "trigger": "@coderabbitai review",
+        "requestPolicy": "at-most-once-per-exact-head",
+        "unavailable": "advisory-does-not-block",
+        "unavailableIncludes": ["rate-limited", "review-skipped", "no-bot-seat", "paused", "absent"],
+        "findings": "mandatory-address-and-answer-every-actionable-item-before-merge"
+      }
+    ],
     "reviewCommit": "exact-final-head",
     "feedback": "all-surfaces-including-walkthroughs-and-followups",
     "actionableFeedback": "address-and-answer-every-item",
@@ -166,6 +184,7 @@
       "githubEnforcement": "agent-login-on-main-pull-request-bypass-list",
       "agentApprovalReview": "never"
     },
+    "rollout": "post-merge-main-ci-green; npm-publish-stays-manual-workflow-dispatch",
     "recheckOnHeadOrBaseDrift": true
   },
   "reporting": {
