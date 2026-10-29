@@ -79,7 +79,7 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "5.9.3",
     "yargs-parser": "^22.0.0",
-    "dotenv": "^17.3.1"
+    "dotenv": "^18.0.7"
   },
   "dependencies": {
     "viem": "^2.21.44"
