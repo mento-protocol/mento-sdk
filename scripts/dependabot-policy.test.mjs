@@ -160,7 +160,7 @@ test('claim configuration is exact and uses one host-wide heavy slot', () => {
   assert.deepEqual(claims.command, ['pnpm', 'dependabot:claim', '--'])
   assert.deepEqual(claims.package, {
     name: '@mento-protocol/issues',
-    version: '0.1.0',
+    version: '0.3.0',
   })
   assert.equal(config.coordination.hostLock.scope, 'host-local-heavy-tree')
   assert.equal(config.coordination.hostLock.path, hostLock)
@@ -250,7 +250,7 @@ claimRuntimeTest('the wrapper injects the candidate policy into the pinned CLI',
     assert.ok(configFlag > 0)
     assert.deepEqual(argv.slice(0, 4), [
       '--config.ignore-scripts=true',
-      '--package=@mento-protocol/issues@0.1.0',
+      '--package=@mento-protocol/issues@0.3.0',
       'dlx',
       'mento-issues',
     ])
