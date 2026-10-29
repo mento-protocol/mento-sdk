@@ -156,7 +156,18 @@
     "actionableFeedback": "address-and-answer-every-item",
     "disputedFeedback": "investigate-decide-and-answer-with-evidence-no-unproven-ready",
     "answeredUnresolvedThreads": "list-for-maintainer",
-    "humanApprovalAndMerge": "human-approval-then-agent-exact-head-merge",
+    "humanApprovalAndMerge": "maintainer-approval-then-agent-exact-head-merge",
+    "maintainerApproval": {
+      "accepted": ["github-approving-review", "authenticated-session-message"],
+      "sessionApprovers": [
+        { "githubLogin": "chapati23", "slackUserId": "U06S6HCHV9C" }
+      ],
+      "sessionScope": "explicitly-named-pull-requests-only",
+      "binding": "head-at-approval-or-later-heads-that-only-merge-current-main",
+      "record": "summary-comment-links-approval-message-and-bound-head-before-merge",
+      "githubEnforcement": "agent-login-on-main-pull-request-bypass-list",
+      "agentApprovalReview": "never"
+    },
     "recheckOnHeadOrBaseDrift": true
   },
   "reporting": {
