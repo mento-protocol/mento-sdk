@@ -63,7 +63,7 @@
       "command": ["pnpm", "dependabot:claim", "--"],
       "package": {
         "name": "@mento-protocol/issues",
-        "version": "0.1.0"
+        "version": "0.3.0"
       }
     },
     "hostLock": {
@@ -156,7 +156,7 @@
     "actionableFeedback": "address-and-answer-every-item",
     "disputedFeedback": "investigate-decide-and-answer-with-evidence-no-unproven-ready",
     "answeredUnresolvedThreads": "list-for-maintainer",
-    "humanApprovalAndMerge": "maintainer-only",
+    "humanApprovalAndMerge": "human-approval-then-agent-exact-head-merge",
     "recheckOnHeadOrBaseDrift": true
   },
   "reporting": {
@@ -189,7 +189,6 @@
   },
   "forbiddenActions": [
     "approve",
-    "merge",
     "close",
     "mark-ready-for-review",
     "enable-auto-merge",
