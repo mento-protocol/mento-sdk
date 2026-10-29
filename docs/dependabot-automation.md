@@ -123,6 +123,7 @@ cross-host writer authority and does not replace a PR claim.
    `claims guard --gate merge` with
    `gh pr merge <n> --squash --match-head-commit <sha>`. Never use `--admin`,
    never enable auto-merge, and never retry on drift.
+
 8. Verify the outcome. This library has no deployment: post-merge `main` CI
    must go green. Publishing to npm stays the manual `publish_npm.yml`
    workflow_dispatch, so a merge is never a release.

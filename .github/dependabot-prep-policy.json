@@ -136,7 +136,13 @@
     }
   },
   "handoff": {
-    "verdicts": ["rollout-verified", "merged-rollout-pending", "ready-for-maintainer-decision", "needs-decision", "blocked"],
+    "verdicts": [
+      "rollout-verified",
+      "merged-rollout-pending",
+      "ready-for-maintainer-decision",
+      "needs-decision",
+      "blocked"
+    ],
     "exactHeadAndBase": true,
     "containsCurrentMain": true,
     "mergeable": true,
