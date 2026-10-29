@@ -37,7 +37,7 @@ pnpm dependabot:claim -- claims release --pr <number> --token <current-token> --
 ```
 
 Claim operations require Node.js 22.12 or newer because the pinned
-`@mento-protocol/issues@0.1.0` CLI declares `node >=22.12`. This narrower
+`@mento-protocol/issues@0.3.0` CLI declares `node >=22.12`. This narrower
 automation requirement does not change the SDK's `node >=18` support contract;
 use a newer runtime only for `pnpm dependabot:claim` commands.
 
@@ -68,7 +68,7 @@ preserved for the next owner.
 
 The wrapper reads the policy blob from `refs/remotes/origin/main`, never from
 the candidate working tree, verifies the v4 schema and exact claims package pin,
-and invokes `@mento-protocol/issues@0.1.0` through `pnpm dlx` with lifecycle
+and invokes `@mento-protocol/issues@0.3.0` through `pnpm dlx` with lifecycle
 scripts disabled. It does not add that package to this repository. The
 `DEPENDABOT_CLAIM_POLICY_REF` override is reserved for structural tests and
 rollout rehearsal against a committed candidate revision; every use is printed.
@@ -146,9 +146,12 @@ audit artifacts; preparation agents never delete them or create/delete labels.
 
 ## What stays human
 
-Branch protection requires one approving review. The agent never approves,
-merges, closes, rebases, force-pushes, changes auto-merge, reruns checks,
-resolves threads, changes repository settings, or deletes claim refs.
+Branch protection requires one approving review, and only a human gives it.
+After that approval, the agent may merge a PR at ALL CLEAR with an exact-head
+squash merge under `claims guard --gate merge` (runner 0.3.0 or newer), then
+verify the result. The agent never approves, closes, rebases, force-pushes,
+changes auto-merge, reruns checks, resolves threads, changes repository
+settings, or deletes claim refs, and never bypasses the required review.
 
 ## Invocation
 
