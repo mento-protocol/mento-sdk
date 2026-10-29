@@ -145,10 +145,10 @@
     "checkEvidence": "exact-head-app-or-status-creator-and-workflow-binding",
     "additionalChecks": "all-affected-repository-gates",
     "reviewer": {
-      "id": 136622811,
-      "login": "coderabbitai[bot]",
+      "id": 199175422,
+      "login": "chatgpt-codex-connector[bot]",
       "type": "Bot",
-      "trigger": "@coderabbitai review",
+      "trigger": "@codex review",
       "requestPolicy": "once-per-exact-head-when-no-current-head-review-exists"
     },
     "reviewCommit": "exact-final-head",
