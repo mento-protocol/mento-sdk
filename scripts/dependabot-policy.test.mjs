@@ -153,18 +153,47 @@ test('claim configuration is exact and uses one host-wide heavy slot', () => {
   assert.ok(claims.ttlMinutes <= claims.maxTtlMinutes)
   assert.ok(claims.graceMinutes * 60 > claims.skewToleranceSeconds)
   assert.equal(claims.markerRevision, 'v2')
-  assert.deepEqual(claims.requiredBefore, ['branch-push', 'review-request'])
+  assert.deepEqual(claims.requiredBefore, ['branch-push', 'review-request', 'thread-resolve', 'check-rerun', 'merge'])
   assert.deepEqual(claims.advisoryBefore, ['summary-comment', 'inline-reply', 'long-wait'])
   assert.equal(claims.allowOverrides, false)
   assert.equal(claims.allowCloudWriters, false)
   assert.deepEqual(claims.command, ['pnpm', 'dependabot:claim', '--'])
   assert.deepEqual(claims.package, {
     name: '@mento-protocol/issues',
-    version: '0.1.0',
+    version: '0.3.0',
   })
   assert.equal(config.coordination.hostLock.scope, 'host-local-heavy-tree')
   assert.equal(config.coordination.hostLock.path, hostLock)
   assert.equal(config.coordination.hostLock.pathMacos, hostLockMacos)
+})
+
+test('the agent merges at ALL CLEAR but never approves', () => {
+  const config = policy()
+  assert.equal(config.forbiddenActions.includes('merge'), false)
+  for (const action of ['approve', 'enable-auto-merge', 'enqueue-merge', 'dismiss-review', 'force-push']) {
+    assert.ok(config.forbiddenActions.includes(action), action)
+  }
+  assert.equal(config.handoff.humanApproval, 'maintainer-only')
+  assert.equal(config.handoff.merge, 'agent-exact-head-squash-at-all-clear')
+  assert.equal(Object.hasOwn(config.handoff, 'humanApprovalAndMerge'), false)
+  assert.ok(config.handoff.verdicts.includes('rollout-verified'))
+  assert.ok(config.handoff.verdicts.includes('merged-rollout-pending'))
+  assert.ok(config.coordination.claims.requiredBefore.includes('merge'))
+})
+
+test('CodeRabbit is advisory when unavailable and mandatory when it has findings', () => {
+  const config = policy()
+  const [coderabbit] = config.handoff.advisoryReviewers
+  assert.equal(config.handoff.advisoryReviewers.length, 1)
+  assert.equal(coderabbit.id, 136622811)
+  assert.equal(coderabbit.login, 'coderabbitai[bot]')
+  assert.equal(coderabbit.unavailable, 'advisory-does-not-block')
+  assert.ok(coderabbit.unavailableIncludes.includes('rate-limited'))
+  assert.equal(coderabbit.findings, 'mandatory-address-and-answer-every-actionable-item-before-merge')
+  assert.equal(config.handoff.reviewer.login, 'chatgpt-codex-connector[bot]')
+  const playbook = read(playbookPath)
+  assert.ok(playbook.includes('rate-limited'))
+  assert.ok(playbook.includes('merge at ALL CLEAR'))
 })
 
 test('policy, playbook, helper, and CI carry every v2 binding', () => {
@@ -250,7 +279,7 @@ claimRuntimeTest('the wrapper injects the candidate policy into the pinned CLI',
     assert.ok(configFlag > 0)
     assert.deepEqual(argv.slice(0, 4), [
       '--config.ignore-scripts=true',
-      '--package=@mento-protocol/issues@0.1.0',
+      '--package=@mento-protocol/issues@0.3.0',
       'dlx',
       'mento-issues',
     ])
