@@ -173,9 +173,9 @@ test('the agent merges at ALL CLEAR but never approves', () => {
   for (const action of ['approve', 'enable-auto-merge', 'enqueue-merge', 'dismiss-review', 'force-push']) {
     assert.ok(config.forbiddenActions.includes(action), action)
   }
-  assert.equal(config.handoff.humanApproval, 'maintainer-only')
-  assert.equal(config.handoff.merge, 'agent-exact-head-squash-at-all-clear')
-  assert.equal(Object.hasOwn(config.handoff, 'humanApprovalAndMerge'), false)
+  assert.equal(config.handoff.humanApprovalAndMerge, 'maintainer-approval-then-agent-exact-head-merge')
+  assert.equal(config.handoff.maintainerApproval.agentApprovalReview, 'never')
+  assert.equal(config.handoff.rollout, 'post-merge-main-ci-green; npm-publish-stays-manual-workflow-dispatch')
   assert.ok(config.handoff.verdicts.includes('rollout-verified'))
   assert.ok(config.handoff.verdicts.includes('merged-rollout-pending'))
   assert.ok(config.coordination.claims.requiredBefore.includes('merge'))

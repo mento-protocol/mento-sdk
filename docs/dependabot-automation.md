@@ -116,13 +116,15 @@ cross-host writer authority and does not replace a PR claim.
    - every gate in step 3 passes;
    - a current-head Codex review exists with its findings disposed;
    - any CodeRabbit findings are disposed;
-   - the maintainer approval that branch protection requires is present;
+   - a maintainer approval is present: a GitHub approving review, or a
+     session approval bound to this head (see _What stays human_);
    - there is no hold, no draft state, and auto-merge is disabled.
 
    Re-read all of these immediately before merging. Then squash-merge through
    `claims guard --gate merge` with
-   `gh pr merge <n> --squash --match-head-commit <sha>`. Never use `--admin`,
-   never enable auto-merge, and never retry on drift.
+   `gh pr merge <n> --squash --match-head-commit <sha>`. Add `--admin` only
+   for a session approval, where it replaces the GitHub review and no other
+   gate. Never enable auto-merge, and never retry on drift.
 
 8. Verify the outcome. This library has no deployment: post-merge `main` CI
    must go green. Publishing to npm stays the manual `publish_npm.yml`
@@ -172,8 +174,26 @@ audit artifacts; preparation agents never delete them or create/delete labels.
 
 ## What stays human
 
-Branch protection requires one approving review from a maintainer. The agent
-never approves its own or any PR. It never closes, rebases, force-pushes,
+The merge decision stays with a maintainer. A maintainer approves a Dependabot
+PR in one of two ways:
+
+- an approving review on GitHub, or
+- a message in an authenticated agent session (Slack) from an approver listed
+  in `handoff.maintainerApproval.sessionApprovers` that names the PR.
+
+A session approval covers the PR head at the time of the message, plus later
+heads whose only change is a merge of current `main`. Any other new commit
+needs a new approval. Before merging, the agent links the approval message and
+the bound head in the PR's summary comment.
+
+After an approval, the agent merges at ALL CLEAR with an exact-head squash
+merge under `claims guard --gate merge` (runner 0.3.0 or newer), then verifies
+the result. For session approvals, branch protection must list the agent's
+login as allowed to bypass required pull request reviews; the agent then
+merges with `--admin`, which replaces the GitHub review and no other gate. All
+required checks, Codex review, feedback and holds still apply.
+
+The agent never submits an approving review, closes, rebases, force-pushes,
 changes auto-merge, reruns checks, resolves threads, changes repository
 settings, deletes claim refs or publishes to npm. It merges only as step 7
 describes.

@@ -1,4 +1,5 @@
-import { celo, polygon, polygonAmoy, baseSepolia, type Chain } from 'viem/chains'
+import type { Chain } from 'viem'
+import { celo, polygon, polygonAmoy, baseSepolia } from './selectedChains'
 import { defineChain } from 'viem'
 import { ChainId } from '../core/constants/chainId'
 
