@@ -92,9 +92,12 @@ cross-host writer authority and does not replace a PR claim.
 4. Push only a proven fast-forward to the existing Dependabot ref, through
    `claims guard --gate push`, with an explicit refspec and an exact observed
    head lease. Record the new head in the renewed claim.
-5. Request CodeRabbit at most once per exact head with
-   `@coderabbitai review`, through `claims guard --gate review-request`, when
-   no current-head CodeRabbit review or request exists.
+5. Request Codex (`chatgpt-codex-connector[bot]`) at most once per exact head
+   with `@codex review`, through `claims guard --gate review-request`, when no
+   current-head Codex review, reaction or request exists. A clean Codex
+   review is a 👍 reaction whose review-state comment names the exact head;
+   findings arrive as review comments. CodeRabbit does not review Dependabot
+   PRs, so it is not the technical reviewer for this workflow.
 6. Address every valid finding, answer declined findings with evidence on the
    original surface, and monitor exact-head checks and review under a guarded
    wait.
