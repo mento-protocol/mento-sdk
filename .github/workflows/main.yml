@@ -47,6 +47,9 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Check ESM and CommonJS entry points
+        run: pnpm test:esm
+
       - name: Lint
         run: pnpm lint
 
