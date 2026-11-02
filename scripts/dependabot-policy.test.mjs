@@ -181,6 +181,23 @@ test('the agent merges at ALL CLEAR but never approves', () => {
   assert.ok(config.coordination.claims.requiredBefore.includes('merge'))
 })
 
+test('the agent resolves only verified agent threads and reruns only infrastructure failures', () => {
+  const config = policy()
+  for (const action of ['resolve-thread', 'rerun-checks']) {
+    assert.equal(config.forbiddenActions.includes(action), false, action)
+  }
+  assert.ok(config.forbiddenActions.includes('unresolve-thread'))
+  assert.equal(config.handoff.threadResolution.humanThreads, 'never-resolve')
+  assert.equal(config.handoff.threadResolution.declinedOrUnproven, 'stay-open-list-for-maintainer')
+  assert.equal(config.handoff.checkReruns.maxPerHeadAndCheck, 1)
+  assert.equal(config.handoff.checkReruns.codeOrTestFailures, 'repair-never-rerun')
+  for (const gate of ['thread-resolve', 'check-rerun']) {
+    assert.ok(config.coordination.claims.requiredBefore.includes(gate), gate)
+  }
+  assert.equal(config.handoff.threadResolution.claimGate, 'thread-resolve')
+  assert.equal(config.handoff.checkReruns.claimGate, 'check-rerun')
+})
+
 test('CodeRabbit is advisory when unavailable and mandatory when it has findings', () => {
   const config = policy()
   const [coderabbit] = config.handoff.advisoryReviewers

@@ -88,7 +88,7 @@
     "packageManager": "pnpm",
     "install": "pnpm install --frozen-lockfile",
     "gates": ["pnpm dependabot:policy:test", "pnpm build", "pnpm lint", "pnpm test:unit", "pnpm size"],
-    "requiredChecks": "none-in-branch-protection; CI workflow on Node 18/20/22 is the effective gate"
+    "requiredChecks": "none-in-branch-protection; CI workflow on Node 22/24 is the effective gate"
   },
   "changes": {
     "allowed": [
@@ -100,7 +100,9 @@
       "local-build-and-test",
       "merge-current-main",
       "request-current-head-review",
-      "answer-review-feedback"
+      "answer-review-feedback",
+      "resolve-verified-fixed-review-threads",
+      "rerun-checks-once-after-diagnosed-infrastructure-failure"
     ],
     "needsDecisionPaths": [
       ".github/workflows/**",
@@ -174,6 +176,19 @@
     "actionableFeedback": "address-and-answer-every-item",
     "disputedFeedback": "investigate-decide-and-answer-with-evidence-no-unproven-ready",
     "answeredUnresolvedThreads": "list-for-maintainer",
+    "threadResolution": {
+      "allowed": "own-agent-or-bot-review-threads-whose-fix-is-verified-on-the-exact-head",
+      "declinedOrUnproven": "stay-open-list-for-maintainer",
+      "humanThreads": "never-resolve",
+      "claimGate": "thread-resolve"
+    },
+    "checkReruns": {
+      "allowed": "failed-jobs-only-after-diagnosed-infrastructure-failure",
+      "maxPerHeadAndCheck": 1,
+      "codeOrTestFailures": "repair-never-rerun",
+      "budget": "within-original-batch-and-per-pull-request-limits",
+      "claimGate": "check-rerun"
+    },
     "humanApprovalAndMerge": "maintainer-approval-then-agent-exact-head-merge",
     "maintainerApproval": {
       "accepted": ["github-approving-review", "authenticated-session-message"],
@@ -223,13 +238,11 @@
     "disable-auto-merge",
     "enqueue-merge",
     "dismiss-review",
-    "resolve-thread",
     "unresolve-thread",
     "delete-claim-refs",
     "force-push",
     "rebase",
     "recreate",
-    "rerun-checks",
     "publish-needs-decision-changes",
     "weaken-security-or-checks",
     "expose-secrets"

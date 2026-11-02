@@ -58,9 +58,9 @@ The following operations are fenced through the claim wrapper:
 - `review-request` uses `claims guard --gate review-request`.
 - `long-wait` uses the advisory `claims guard --gate wait` so the lease renews
   while CI or review is pending.
-- `merge` uses `claims guard --gate merge`. `thread-resolve` and
-  `check-rerun` are classified as mandatory gates too, but this policy still
-  forbids thread resolution and check reruns.
+- `merge` uses `claims guard --gate merge`.
+- `thread-resolve` uses `claims guard --gate thread-resolve`.
+- `check-rerun` uses `claims guard --gate check-rerun`.
 - `summary-comment` and `inline-reply` use `claims verify` before publication.
 
 For claim-command exits, `0` proceeds; `10`, `11`, `14`, and `15` follow the
@@ -193,10 +193,18 @@ login as allowed to bypass required pull request reviews; the agent then
 merges with `--admin`, which replaces the GitHub review and no other gate. All
 required checks, Codex review, feedback and holds still apply.
 
+The agent resolves a review thread only when it was opened by an agent or
+bot reviewer and the fix is verified on the exact head. Declined or unproven
+findings and every human thread stay open and are listed for the maintainer.
+
+The agent reruns a failed check only after diagnosing an infrastructure
+failure (runner loss, registry or network outage, provider rate limit), at
+most once per head and check, failed jobs only, within the original batch and
+per-PR budget. Code and test failures are repaired, never rerun.
+
 The agent never submits an approving review, closes, rebases, force-pushes,
-changes auto-merge, reruns checks, resolves threads, changes repository
-settings, deletes claim refs or publishes to npm. It merges only as step 7
-describes.
+changes auto-merge, unresolves threads, changes repository settings, deletes
+claim refs or publishes to npm. It merges only as step 7 describes.
 
 ## Invocation
 
