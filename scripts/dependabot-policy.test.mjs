@@ -169,6 +169,8 @@ test('claim configuration is exact and uses one host-wide heavy slot', () => {
 
 test('the agent merges at ALL CLEAR but never approves', () => {
   const config = policy()
+  assert.equal(config.handoff.reviewer.login, 'chatgpt-codex-connector[bot]')
+  assert.ok(read(playbookPath).includes('merge at ALL CLEAR'))
   assert.equal(config.forbiddenActions.includes('merge'), false)
   for (const action of ['approve', 'enable-auto-merge', 'enqueue-merge', 'dismiss-review', 'force-push']) {
     assert.ok(config.forbiddenActions.includes(action), action)
@@ -197,7 +199,6 @@ test('the agent resolves only verified agent threads and reruns only infrastruct
   assert.equal(config.handoff.threadResolution.claimGate, 'thread-resolve')
   assert.equal(config.handoff.checkReruns.claimGate, 'check-rerun')
 })
-
 
 test('policy, playbook, helper, and CI carry every v2 binding', () => {
   const config = policy()
