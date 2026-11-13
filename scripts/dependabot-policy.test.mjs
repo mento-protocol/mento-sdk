@@ -198,13 +198,6 @@ test('the agent resolves only verified agent threads and reruns only infrastruct
   assert.equal(config.handoff.checkReruns.claimGate, 'check-rerun')
 })
 
-test('retired CodeRabbit cannot be requested by the preparation policy', () => {
-  const config = policy()
-  assert.deepEqual(config.handoff.advisoryReviewers, [])
-  assert.equal(config.handoff.reviewer.login, 'chatgpt-codex-connector[bot]')
-  assert.ok(!JSON.stringify(config.handoff).includes('@coderabbitai'))
-  assert.ok(read(playbookPath).includes('Do not request CodeRabbit reviews.'))
-})
 
 test('policy, playbook, helper, and CI carry every v2 binding', () => {
   const config = policy()
@@ -219,7 +212,6 @@ test('policy, playbook, helper, and CI carry every v2 binding', () => {
     'package.json',
     '.github/workflows/main.yml',
     '.github/dependabot.yml',
-    '.coderabbit.yaml',
     'AGENTS.md',
     'CLAUDE.md',
     'README.md',

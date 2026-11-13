@@ -107,7 +107,6 @@
     "needsDecisionPaths": [
       ".github/workflows/**",
       ".github/dependabot-prep-policy.json",
-      ".coderabbit.yaml",
       "AGENTS.md",
       "CLAUDE.md",
       "docs/dependabot-automation.md",
@@ -159,7 +158,6 @@
       "trigger": "@codex review",
       "requestPolicy": "once-per-exact-head-when-no-current-head-review-exists"
     },
-    "advisoryReviewers": [],
     "reviewCommit": "exact-final-head",
     "feedback": "all-surfaces-including-walkthroughs-and-followups",
     "actionableFeedback": "address-and-answer-every-item",

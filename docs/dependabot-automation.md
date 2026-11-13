@@ -101,7 +101,6 @@ cross-host writer authority and does not replace a PR claim.
    current-head Codex review, reaction or request exists. A clean Codex
    review is a 👍 reaction whose review-state comment names the exact head;
    findings arrive as review comments.
-   CodeRabbit is retired. Do not request CodeRabbit reviews.
 
 6. Address every valid finding, answer declined findings with evidence on the
    original surface, and monitor exact-head checks and review under a guarded
