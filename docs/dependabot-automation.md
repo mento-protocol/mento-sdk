@@ -101,12 +101,8 @@ cross-host writer authority and does not replace a PR claim.
    current-head Codex review, reaction or request exists. A clean Codex
    review is a 👍 reaction whose review-state comment names the exact head;
    findings arrive as review comments.
-   CodeRabbit (`coderabbitai[bot]`, id `136622811`) is an advisory reviewer.
-   If it does not review the exact head (rate-limited, review skipped, no bot
-   seat, paused or absent), that does not block merge; record it in the
-   summary. If it does post findings on the PR, they are mandatory: address and
-   answer every actionable item, exactly like Codex findings, before merge.
-   Request it with `@coderabbitai review` at most once per exact head.
+   CodeRabbit is retired. Do not request CodeRabbit reviews.
+
 6. Address every valid finding, answer declined findings with evidence on the
    original surface, and monitor exact-head checks and review under a guarded
    wait.
@@ -115,7 +111,7 @@ cross-host writer authority and does not replace a PR claim.
    - the CI workflow is green on that head;
    - every gate in step 3 passes;
    - a current-head Codex review exists with its findings disposed;
-   - any CodeRabbit findings are disposed;
+   - all existing actionable review findings are disposed;
    - a maintainer approval is present: a GitHub approving review, or a
      session approval bound to this head (see _What stays human_);
    - there is no hold, no draft state, and auto-merge is disabled.

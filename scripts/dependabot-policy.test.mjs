@@ -198,19 +198,12 @@ test('the agent resolves only verified agent threads and reruns only infrastruct
   assert.equal(config.handoff.checkReruns.claimGate, 'check-rerun')
 })
 
-test('CodeRabbit is advisory when unavailable and mandatory when it has findings', () => {
+test('retired CodeRabbit cannot be requested by the preparation policy', () => {
   const config = policy()
-  const [coderabbit] = config.handoff.advisoryReviewers
-  assert.equal(config.handoff.advisoryReviewers.length, 1)
-  assert.equal(coderabbit.id, 136622811)
-  assert.equal(coderabbit.login, 'coderabbitai[bot]')
-  assert.equal(coderabbit.unavailable, 'advisory-does-not-block')
-  assert.ok(coderabbit.unavailableIncludes.includes('rate-limited'))
-  assert.equal(coderabbit.findings, 'mandatory-address-and-answer-every-actionable-item-before-merge')
+  assert.deepEqual(config.handoff.advisoryReviewers, [])
   assert.equal(config.handoff.reviewer.login, 'chatgpt-codex-connector[bot]')
-  const playbook = read(playbookPath)
-  assert.ok(playbook.includes('rate-limited'))
-  assert.ok(playbook.includes('merge at ALL CLEAR'))
+  assert.ok(!JSON.stringify(config.handoff).includes('@coderabbitai'))
+  assert.ok(read(playbookPath).includes('Do not request CodeRabbit reviews.'))
 })
 
 test('policy, playbook, helper, and CI carry every v2 binding', () => {
