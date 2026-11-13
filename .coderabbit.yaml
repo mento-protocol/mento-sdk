@@ -1,6 +1,7 @@
 # CodeRabbit is retired. Disable automatic reviews and replies.
 # Remove the organization app installation; Global overrides can supersede this file.
 reviews:
+  review_status: false
   profile: chill
 
   request_changes_workflow: false
